@@ -1,0 +1,66 @@
+<bindings   xmlns="http://www.mozilla.org/xbl"
+            xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+            xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+            xmlns:xbl="http://www.mozilla.org/xbl"
+            xmlns:html="http://www.w3.org/1999/xhtml"
+            xmlns:change="http://www.rbs-change.eu/change-4.2/taglib/phptal">
+
+    <binding id="wBookmarksToolbar" extends="layout.wBlockToolbar#wBaseBlockToolbar">
+
+        <implementation>
+
+            <method name="onInitialize">
+                <body><![CDATA[
+                    var _func = "onInitialize";
+                    var _args = [];
+                    try
+                    {
+
+                    }
+                    catch (e)
+                    {
+                         wCore.error(_func, _args, e);
+                    }
+                ]]></body>
+            </method>
+
+            <method name="onUpdate">
+                <body><![CDATA[
+                    var _func = "onUpdate";
+                    var _args = [];
+                    try
+                    {
+
+                    }
+                    catch (e)
+                    {
+                        wCore.error(_func, _args, e);
+                    }
+                ]]></body>
+            </method>
+
+            <method name="editBookmarks">
+                <body><![CDATA[
+                    try
+                    {
+                    	var mainEditor = document.getElementById('mainEditor');
+                    	wToolkit.setDialogParam(mainEditor);
+                        wToolkit.dialog('website', 'EditBookmarks', null, {chrome: 'yes', dialog: 'yes', titlebar: 'no', close: 'no'}, true);
+                    }
+                    catch (e)
+                    {
+                        wCore.error("editBookmarks", [], e);
+                    }
+                ]]></body>
+            </method>
+
+        </implementation>
+
+        <xbl:content xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:xbl="http://www.mozilla.org/xbl" xmlns:html="http://www.w3.org/1999/xhtml" orient="vertical">
+            <toolbar anonid="toolbar" flex="1" class="change-toolbar">
+                <toolbarseparator/>
+                <toolbarbutton image="{HttpHost}/icons/small/bookmarks.png" label="&amp;modules.uixul.bo.layout.BookmarksEdit;" oncommand="editBookmarks();" />
+            </toolbar>
+        </xbl:content>
+    </binding>
+</bindings>

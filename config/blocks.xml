@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<blocks>
+	<block type="empty" icon="selection" label="&amp;modules.uixul.bo.layout.EmptyBlock;" />
+	<block type="richtext" icon="richtext" label="&amp;modules.uixul.bo.layout.RichTextBlock;" />
+	<block type="modules_website_bookmarks" icon="bookmark" label="&amp;modules.uixul.bo.layout.BookmarksBlock;" />
+	<block type="layout" columns="2" requiresNewEditor="true" icon="layout-2-columns" label="&amp;modules.website.bo.blocks.Two-col;" />
+	<block type="modules_website_sitemap" icon="sitemap" label="&amp;modules.website.bo.blocks.Sitemap;" />
+	<block type="modules_website_exception" icon="bug" label="&amp;modules.website.bo.blocks.Exception;" />
+	<block type="modules_website_thread" hidden="true" label="&amp;modules.website.bo.blocks.Thread;" afterAll="true"/>
+	<block type="modules_website_menu" hidden="true" label="&amp;modules.website.bo.blocks.Menu;">
+		<parameters>
+			<parameter name="depth" type="Integer" default-value="1" />
+			<parameter name="template" type="String" default-value="default" />
+			<parameter name="deployonlycurrentpath" type="Boolean" default-value="false" />
+		</parameters>
+	</block>
+	<block type="modules_website_taggedmenu" display="tag: ; template: default; depth: 1; deployonlycurrentpath: false" hidden="true" label="&amp;modules.website.bo.blocks.TaggedMenu;" />
+	<block type="modules_website_contextualmenu" display="template: default; depth: 2; startwebsitelevel: 1; deployall: false" hidden="true" label="&amp;modules.website.bo.blocks.ContextualMenu;" />
+	<block type="modules_website_switchlanguage" display="viewall: true;showflag: small;" hidden="true" label="&amp;modules.website.bo.blocks.SwitchLanguage;">
+		<parameters>
+			<parameter name="viewall" type="Boolean" default-value="true" />
+			<parameter name="showflag" type="String" default-value="small" />
+		</parameters>
+	</block>
+	<block type="modules_website_iframe" icon="iframe" label="&amp;modules.website.bo.blocks.Iframe;">
+		<parameters>
+			<parameter name="title" type="String" min-occurs="1" />
+			<parameter name="url" type="String" min-occurs="1" default-value="about:blank" />
+			<parameter name="width" type="Integer" default-value="640" min-occurs="1" />
+			<parameter name="height" type="Integer" default-value="480" min-occurs="1" />
+			<parameter name="scrolling" type="String" from-list="modules_iframe/scrolling" min-occurs="1" default-value="auto" />
+			<parameter name="text" type="LongString" default-value="" cols="46" rows="4" />
+		</parameters>
+	</block>
+	<block type="modules_website_edit" display="" icon="edit" label="&amp;modules.website.bo.blocks.Edit;" />
+	<block type="modules_website_Missing" display="" hidden="true" label="&amp;modules.website.bo.blocks.Missing.Title;" />
+	<!--
+		For now modules_website_editlist is not mature <block type="modules_website_editlist" display="" icon=""
+		label="&amp;modules.website.bo.blocks.EditList;" />
+	-->
+	<!-- Dashboard blocks -->
+	<block type="modules_website_dashboardpagevalidation" icon="task" dashboard="true" label="&amp;modules.website.bo.dashboard.Page-validation;" />
+	<block type="modules_website_dashboardorphanpages" icon="orphan-pages" dashboard="true" label="&amp;modules.website.bo.dashboard.Orphanpages;">
+		<parameters>
+			<parameter name="website" type="modules_website/website" max-occurs="1" />
+		</parameters>
+	</block>
+	<block type="modules_website_DashboardLastModifiedPages" display="" icon="page" dashboard="true" label="&amp;modules.website.bo.blocks.DashboardLastModifiedPages.Title;" />
+	<!-- Deprecated blocks -->
+	<block type="modules_website_copyright" hidden="true" label="&amp;modules.website.bo.blocks.Copyright;" />
+	<block type="modules_website_footer" hidden="true" label="&amp;modules.website.bo.blocks.Footer;" />
+	<block type="modules_website_header" hidden="true" label="&amp;modules.website.bo.blocks.Header;" />
+	<block type="modules_website_main" hidden="true" label="&amp;modules.website.bo.blocks.Main;" />
+	<block type="modules_website_quicklinks" hidden="true" label="&amp;modules.website.bo.blocks.Quicklinks;" />
+	<block type="modules_website_sidebar" hidden="true" label="&amp;modules.website.bo.blocks.Sidebar;" />
+</blocks>

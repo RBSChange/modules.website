@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<script>
+	<binding fileName="modules/website/persistentdocument/import/website_binding.xml" />
+
+	<website label="Site web par défaut" byTag="default_modules_website_default-website"
+			protocol="http" localizebypath="true" template="tplOneTwoColumns">
+
+		<page label="Page d'accueil" isHomePage="true"
+			template="tplOne" id="homepage" />
+
+		<topic label="Outils" navigationVisibility="hidden">
+			<page label="Imprimer" indexingstatus="false">
+				<tag name="contextual_website_website_print" />
+				<changecontent for="content-block">
+					<changeblock type="richtext">
+						<![CDATA[<p>Ici vos instructions pour imprimer une page. (Cette page n'est utilisée que lorsque javascript n'est pas activé)</p>]]>
+					</changeblock>
+				</changecontent>
+			</page>
+			<page label="Ajouter aux favoris" indexingstatus="false" navigationVisibility="hidden">
+				<tag name="contextual_website_website_favorite" />
+				<changecontent for="content-block">
+					<changeblock type="richtext">
+						<![CDATA[<p>Ici vos instructions pour ajouter une page aux favoris. (Cette page n'est utilisée que lorsque javascript n'est pas activé)</p>]]>
+					</changeblock>
+				</changecontent>
+			</page>
+			<page label="Plan du site" id="sitemap" indexingstatus="false">
+				<changecontent for="content-block">
+					<changeblock type="richtext">
+						<![CDATA[<h2 class="heading-two">Plan du site</h2>]]>
+					</changeblock>
+					<changeblock type="modules_website_sitemap" />
+				</changecontent>
+			</page>
+			<page label="Mentions légales" id="legal" >
+				<tag name="contextual_website_website_legal" />
+				<changecontent for="content-block">
+					<changeblock type="richtext">
+						<![CDATA[<p>Ici vos mentions légales.</p>]]>
+					</changeblock>
+				</changecontent>
+			</page>
+			<page label="Aide" indexingstatus="false">
+				<tag name="contextual_website_website_help" />
+				<changecontent for="content-block">
+					<changeblock type="richtext">
+						<![CDATA[<p>Ici votre texte aidant un visiteur à s'orienter dans votre site.</p>]]>
+					</changeblock>
+				</changecontent>
+			</page>
+			<page label="Résultat de recherche" indexingstatus="false" navigationVisibility="hidden">
+			    <tag name="contextual_website_website_modules_solrsearch_page-results"/>
+			    <changecontent for="content-block">
+					<changeblock type="modules_solrsearch_searchresults" />
+				</changecontent>
+			</page>
+		</topic>
+
+		<topic label="Système" navigationVisibility="hidden">
+			<page label="Page non trouvée (404)" indexingstatus="false" navigationVisibility="hidden">
+				<tag name="contextual_website_website_error404" />
+			</page>
+			<page label="Erreur générale (500)" indexingstatus="false" navigationVisibility="hidden">
+				<tag name="contextual_website_website_server-error" />
+				<changecontent for="content-block">
+				   <changeblock type="richtext">
+					 <![CDATA[<h2>Erreur serveur</h2>]]>
+				   </changeblock>
+				   <changeblock type="modules_website_exception" />
+				</changecontent>
+			</page>
+			<page label="Accès restreint (401.1)" indexingstatus="false" navigationVisibility="hidden">
+				<tag name="contextual_website_website_error401-1" />
+			</page>
+		</topic>
+
+		<menus>
+			<menu label="Menu entête de page">
+				<tag name="contextual_website_website_menu-header" />
+				<menuitemfunction label="Imprimer" function="print" />
+				<menuitemfunction label="Ajouter aux favoris"
+					function="AddToFavorite" />
+				<menuitempage pageid="sitemap" />
+			</menu>
+
+			<menu label="Menu principal">
+				<tag name="contextual_website_website_menu-main" />
+				<menuitempage pageid="homepage" />
+			</menu>
+
+			<menu label="Menu pied de page">
+				<tag name="contextual_website_website_menu-footer" />
+				<menuitempage pageid="homepage" />
+				<menuitempage pageid="legal" />
+				<menuitempage pageid="sitemap" />
+			</menu>
+
+		</menus>
+	</website>
+</script>
+

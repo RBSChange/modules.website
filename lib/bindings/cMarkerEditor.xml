@@ -1,0 +1,296 @@
+<?xml version="1.0"?>
+<bindings xmlns="http://www.mozilla.org/xbl" xmlns:xbl="http://www.mozilla.org/xbl" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<binding id="cMarkerSpecificPropertiesSection" extends="layout.cDocumentEditor#cFieldsGroup">
+		<content>
+			<xul:groupbox flex="1">
+				<xul:caption xbl:inherits="label"/>
+				<children />
+			</xul:groupbox>			
+		</content>
+	</binding>
+	
+	<binding id="cMarkersPanel" extends="layout.cDocumentEditor#cDocumentEditorPanel">
+		<implementation>
+			<field name="mTargetId"></field>
+			<field name="mPageSize">20</field>
+			<field name="mDocumentTotal">0</field>
+			<field name="mStartIndex">0</field>
+			<field name="mEndIndex">0</field>
+		
+			<constructor><![CDATA[
+				wCore.debug("cMarkersList.constructor");
+				this.getElementByAnonId('pagination-toolbox').setAttribute('collapsed', 'true');
+			]]></constructor>
+
+			<method name="getInitializeParameters">
+				<body><![CDATA[
+					return {
+						modulename: "website",
+						action: "LoadMarkersProperties", 
+						cmpref: this.documentEditor.documentid, 
+						lang: Context.W_LANG,
+						startIndex: this.mStartIndex,
+						pageSize: this.mPageSize
+					};
+				]]></body>
+			</method>
+
+			<method name="fireInitializeComplete">
+				<parameter name="result" />
+				<body><![CDATA[
+					if (result.status != "OK")
+					{
+						this.showErrorMessage(result.contents.errorMessage);
+					}
+					else
+					{									
+						var docs = result.contents.documents;
+						var doc;
+						var row;
+						var rows = document.getAnonymousElementByAttribute(this, 'anonid', 'document-rows');
+						for (var i = 0; i < docs.length; i++)
+						{
+							doc = docs[i];
+							row = rows.childNodes[i+1];
+							if (row == null)
+							{
+								row = document.createElementNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'row');
+								row.className = 'document';
+								row.panel = this;
+								rows.appendChild(row);
+							}
+							else
+							{
+								row.removeAttribute('collapsed');
+							}
+							
+							for (var name in doc)
+							{
+								row.setAttribute(name, doc[name]);
+							}
+						}
+						while (row = rows.childNodes[i+1])
+						{
+							row.setAttribute('collapsed', 'true');
+							i++;
+						}
+						this.updateNavigation(result.contents);
+					}
+					this.mInitialized = true;
+					this.gotoTop();
+				]]></body>
+			</method>
+	
+			<method name="refresh">
+				<body><![CDATA[
+					this.documentEditor.executeServerAction('markers', 'Initialize');
+				]]></body>
+			</method>
+	
+			<method name="updateNavigation">
+				<parameter name="contents" />
+				<body><![CDATA[
+					this.mDocumentTotal = parseInt(contents.total);
+					this.mStartIndex = parseInt(contents.startIndex);
+					
+					var viewDoc = contents.documents.length;
+					wCore.debug('viewDoc = '+viewDoc);
+					this.mEndIndex = this.mStartIndex + viewDoc;
+	
+					document.getAnonymousElementByAttribute(this, "anonid", "navigationtotal").value = this.mDocumentTotal;
+					var disableBack = (this.mStartIndex == 0);
+					document.getAnonymousElementByAttribute(this, "anonid", "navigationbegin").disabled = disableBack;
+					document.getAnonymousElementByAttribute(this, "anonid", "navigationback2").disabled = disableBack;
+					document.getAnonymousElementByAttribute(this, "anonid", "navigationback").disabled = disableBack;
+					var disableNext = (this.mEndIndex >= this.mDocumentTotal);
+					document.getAnonymousElementByAttribute(this, "anonid", "navigationnext").disabled = disableNext;
+					document.getAnonymousElementByAttribute(this, "anonid", "navigationnext2").disabled = disableNext;
+					document.getAnonymousElementByAttribute(this, "anonid", "navigationend").disabled = disableNext;
+					
+					var navigationindex = document.getAnonymousElementByAttribute(this, "anonid", "navigationindex");
+					navigationindex.value = (this.mStartIndex + 1) + ' - ' + (this.mStartIndex + viewDoc);
+				]]></body>
+			</method>
+
+			<method name="navigateBegin">
+				<body><![CDATA[
+					this.mStartIndex = 0;
+					this.refresh();
+				]]></body>
+			</method>
+
+			<method name="navigateBack">
+				<parameter name="quick" />
+				<body><![CDATA[
+					this.mStartIndex -= this.mPageSize;
+					if (quick && (this.mStartIndex - (5 * this.mPageSize) >= 0))
+					{
+						this.mStartIndex -= (5 * this.mPageSize);
+					}
+					this.mStartIndex -= this.mPageSize;
+					this.refresh();
+				]]></body>
+			</method>
+
+			<method name="navigateNext">
+				<parameter name="quick" />
+				<body><![CDATA[
+					this.mStartIndex += this.mPageSize;
+					if (quick && (this.mStartIndex + (5 * this.mPageSize) < this.mDocumentTotal))
+					{
+						this.mStartIndex += (5 * this.mPageSize);
+					}
+					this.refresh();
+				]]></body>
+			</method>
+
+			<method name="navigateEnd">
+				<body><![CDATA[
+					this.mStartIndex = this.mDocumentTotal - (this.mDocumentTotal % this.mPageSize);
+					if (this.mStartIndex == this.mDocumentTotal)
+					{
+						this.mStartIndex -= this.mPageSize;
+					}
+					this.refresh();
+				]]></body>
+			</method>
+			
+			<method name="edit">
+				<parameter name="id" />
+				<parameter name="model" />
+				<body><![CDATA[
+					var uri = ['website', 'openDocument', 'modules_website_marker', id, 'properties', model].join(',');
+					openActionUri(uri);
+				]]></body>
+			</method>
+			
+			<method name="delete">
+				<parameter name="id" />
+				<body><![CDATA[
+					if (confirm("Etes vous sur de vouloir supprimer ce marqueur ?"))
+					{
+						var me = this;
+						var callBack = function(result) {me.refresh();};
+						wCore.executeJSON('website', 'DeleteJSON', {cmpref: id, lang: Context.W_LANG}, callBack, true);
+					}
+				]]></body>
+			</method>	
+
+			<method name="add">
+				<parameter name="markerType" />
+				<body><![CDATA[
+					wCore.debug('cMarkersList.add');
+					var parentId = this.documentEditor.documentid;
+					wCore.debug('cMarkersList.add parentId = '+parentId);
+					var editor = this.documentEditor.module.createDocumentEditor('modules_website_marker', parentId);
+					editor.setAttribute('markerType', markerType);
+				]]></body>
+			</method>
+		</implementation>
+		<handlers>		
+			<handler event="fieldChanged"><![CDATA[
+				var target = event.originalTarget;
+				wCore.debug('fieldChanged '+target.name+ ', '+target.localName );
+				if (target.localName == 'cfield' && target.name == 'targetId')
+				{
+					this.mTargetId = target.value;
+				}
+			]]></handler>
+			<handler event="command"><![CDATA[
+				var target = event.originalTarget;
+				if (target.localName == 'toolbarbutton' && target.hasAttribute('action'))
+				{
+					switch (target.getAttribute('action'))
+					{						
+						case 'edit':
+							this.edit(target.getAttribute('documentId'), target.getAttribute('documentModel'));
+							break;	
+						case 'delete':
+							this.delete(target.getAttribute('documentId'));
+							break;
+						case 'add':
+							this.add(target.getAttribute('markerType'));
+							break;
+					}
+					return;
+				}
+				else if (target.localName == 'button' && target.getAttribute('action') == 'refresh')
+				{
+					this.refresh();
+				}
+			]]></handler>
+		</handlers>	
+		<resources>
+			<stylesheet src="modules.uixul.cEditorGrid" />
+		</resources>		
+		<content>
+			<xul:vbox flex="1">
+				<xul:cmessageinfo anonid="message" />
+				<xul:toolbar anonid="result-toolbar">
+					{MARKER_CREATION_BUTTONS}
+					<xul:spacer flex="1" />
+				</xul:toolbar>
+				<xul:toolbox anonid="pagination-toolbox" orient="horizontal" class="change-toolbox">
+					<xul:toolbar align="center" pack="center" anonid="navigationtb" orient="horizontal" flex="1" class="change-toolbar">
+						<xul:toolbarbutton anonid="navigationbegin" disabled="true" oncommand="navigateBegin()" image="{HttpHost}/icons/small/control-begin.png" tooltiptext="&amp;modules.uixul.bo.general.Navigate-begin;" />
+						<xul:toolbarbutton anonid="navigationback2" disabled="true" oncommand="navigateBack(true)" image="{HttpHost}/icons/small/control-double-backward.png" tooltiptext="&amp;modules.uixul.bo.general.Navigate-back-quick;" />
+						<xul:toolbarbutton anonid="navigationback" disabled="true" oncommand="navigateBack()" image="{HttpHost}/icons/small/control-backward.png" tooltiptext="&amp;modules.uixul.bo.general.Navigate-back;" />
+						<xul:hbox align="center">
+							<xul:label anonid="navigationpagelabel" value="&amp;modules.uixul.bo.general.Documents;" />
+							<xul:label anonid="navigationindex" value="0" />
+							<xul:label anonid="navigationpageseparator" value="&amp;modules.uixul.bo.general.out-of;" />
+							<xul:label anonid="navigationtotal" value="0" />
+						</xul:hbox>
+						<xul:toolbarbutton anonid="navigationnext" disabled="true" oncommand="navigateNext()" image="{HttpHost}/icons/small/control-forward.png" tooltiptext="&amp;modules.uixul.bo.general.Navigate-next;" />
+						<xul:toolbarbutton anonid="navigationnext2" disabled="true" oncommand="navigateNext(true)" image="{HttpHost}/icons/small/control-double-forward.png" tooltiptext="&amp;modules.uixul.bo.general.Navigate-next-quick;" />
+						<xul:toolbarbutton anonid="navigationend" disabled="true" oncommand="navigateEnd()" image="{HttpHost}/icons/small/control-end.png" tooltiptext="&amp;modules.uixul.bo.general.Navigate-end;" />
+					</xul:toolbar>
+				</xul:toolbox>
+					<xul:grid flex="1">
+						<xul:columns class="columns" />
+						<xul:rows anonid="document-rows">
+							<xul:row class="head" />
+						</xul:rows>
+					</xul:grid>
+				<children/>
+			</xul:vbox>
+		</content>	
+	</binding>
+	
+	<binding id="cMarkersPanelColumns">
+		<content>
+			<xul:column />
+			<xul:column flex="1" />
+			<xul:column flex="1" />
+			<xul:column flex="1" />
+			<xul:column />
+		</content>
+	</binding>
+	
+	<binding id="cMarkersPanelHead">
+		<content>
+			<xul:label value="" />
+			<xul:label value="Libellé" />
+			<xul:label value="Type" />
+			<xul:label value="Langues" />
+			<xul:label value="Actions" />
+		</content>
+	</binding>
+	
+	<binding id="cMarkersPanelDocument">
+		<content>
+			<xul:hbox pack="center" align="center">
+				<xul:image xbl:inherits="hidden=isNotPublished" src="{HttpHost}/icons/small/published-document.png"  />
+				<xul:image xbl:inherits="hidden=isPublished" src="{HttpHost}/icons/small/publishable-document.png"  />
+			</xul:hbox>
+			<xul:label xbl:inherits="value=label" />
+			<xul:label xbl:inherits="value=type" />
+			<xul:label xbl:inherits="value=langs" />
+			<xul:toolbar class="actions">
+				<xul:toolbarbutton xbl:inherits="documentId=id,documentModel=model" action="edit" hidespinbuttons="true" image="{HttpHost}/icons/small/edit.png" label="&amp;modules.uixul.bo.actions.Edit;" />
+				<xul:toolbarbutton xbl:inherits="documentId=id" action="delete" hidespinbuttons="true" image="{HttpHost}/icons/small/delete.png" label="&amp;modules.uixul.bo.actions.Delete;" />
+			</xul:toolbar>
+		</content>
+	</binding>
+</bindings>

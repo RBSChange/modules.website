@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<change:templates xmlns:change="http://www.rbs.fr/change/1.0/schema">
+	<change:template content-type="html" id="tplMailing">
+		<div id="global">
+			<div id="header"/>
+			<div id="center">
+				<div id="content">
+					<change:content id="content-block"/>
+				</div>
+			</div>
+			<div id="footer">
+					<change:content id="footer-block"/>
+			</div>
+		</div>
+		<div id="copyright">
+			<change:templateblock type="modules_website_taggedmenu" 
+								  __tag="contextual_website_website_menu-copyright" 
+								  __template="copyright" __depth="0"/>
+		</div>
+	</change:template>
+
+	<change:template content-type="xul" id="tplMailing">
+		<vbox>
+			<vbox id="global">
+				<div id="header"></div>
+				<hbox id="center">
+					<vbox id="content" flex="1">
+						<change:content id="content-block"/>
+					</vbox>
+				</hbox>
+				<hbox id="footer">
+					<change:content flex="1" id="footer-block"/>	
+				</hbox>
+			</vbox>
+			<div id="copyright">
+				<change:templateblock type="modules_website_taggedmenu" 
+									  __tag="contextual_website_website_menu-copyright" 
+									  __template="copyright" 
+									  __depth="1"/>
+			</div>
+		</vbox>
+	</change:template>
+</change:templates>

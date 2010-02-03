@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel>
+	<section labeli18n="modules.uixul.bo.doceditor.fieldsgroup.Title">
+		<field name="stylesheet" emptylabel="" />
+		<field name="skin" />
+		<field name="navigationVisibility" />
+		<field name="referenceURI" type="hidden"/>
+	</section>
+	
+	<xul>
+		<javascript>
+			<field name="mEditReferenceButton">null</field>
+			
+			<constructor><![CDATA[
+				this.mEditReferenceButton = this.addActionButton('&modules.website.bo.actions.EditReferenceButton;', wToolkit.getIcon('edit', 'small'));
+				var me = this;
+				this.mEditReferenceButton.addEventListener('command', function(event) {me.onEditReference();}, true);	
+			]]></constructor>
+			
+			<method name="onEditReference">
+				<parameter name="event" />
+				<body><![CDATA[
+					var uri = this.fields.referenceURI.value;
+					wCore.debug('onEditReference open:' + uri);
+					var fromURI = ['website', 'openDocument', 'modules_website_systemtopic', this.mDocumentId, 'properties'].join(',');
+					wCore.debug('onEditReference from:' + fromURI);
+					openActionUri(uri, fromURI);
+				]]></body>
+			</method>
+		</javascript>
+	</xul>	
+</panel>

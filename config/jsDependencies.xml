@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scripts>
+	<!-- JQuery -->
+	<script name="modules.website.lib.js.jquery" />
+	<script name="modules.website.lib.js.jquery-easing">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-ifixpng">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery" />
+		</dependencies>
+	</script>
+
+	<script name="modules.website.lib.frontoffice">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery" />
+			<dependency name="modules.website.lib.js.jquery-easing" />
+			<dependency name="modules.website.lib.js.jquery-ifixpng" />
+		</dependencies>
+	</script>
+
+	<script name="modules.website.lib.editcontent">
+	</script>
+
+	<script name="modules.website.lib.bbeditor.jtageditor">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery" />
+		</dependencies>
+	</script>
+	
+	<script name="modules.website.lib.js.jquery-qtip">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery" />
+		</dependencies>
+	</script>
+
+	<!-- JQuery UI Core -->
+	<script name="modules.website.lib.js.jquery-ui">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery" />
+		</dependencies>
+	</script>
+
+	<!-- JQuery UI Interactions -->
+	<script name="modules.website.lib.js.jquery-ui-interactions-all">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui-draggable" />
+			<dependency name="modules.website.lib.js.jquery-ui-dropable" />
+			<dependency name="modules.website.lib.js.jquery-ui-resizable" />
+			<dependency name="modules.website.lib.js.jquery-ui-selectable" />
+			<dependency name="modules.website.lib.js.jquery-ui-sortable" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-ui-draggable">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-ui-dropable">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-ui-resizable">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-ui-selectable">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-ui-sortable">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui" />
+		</dependencies>
+	</script>
+
+	<!-- JQuery UI Widgets -->
+	<script name="modules.website.lib.js.jquery-ui-widgets-all">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui-accordion" />
+			<dependency name="modules.website.lib.js.jquery-ui-dialog" />
+			<dependency name="modules.website.lib.js.jquery-ui-slider" />
+			<dependency name="modules.website.lib.js.jquery-ui-tabs" />
+			<dependency name="modules.website.lib.js.jquery-ui-datepicker" />
+			<dependency name="modules.website.lib.js.jquery-ui-progressbar" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-ui-accordion">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-ui-dialog">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-ui-slider">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-ui-tabs">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-ui-datepicker">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-ui-progressbar">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui" />
+		</dependencies>
+	</script>
+
+	<!-- JQuery UI effects -->
+	<script name="modules.website.lib.js.jquery-ui-effects">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-ui-effects-all">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui-effects" />
+			<dependency name="modules.website.lib.js.jquery-ui-effects-blind" />
+			<dependency name="modules.website.lib.js.jquery-ui-effects-bounce" />
+			<dependency name="modules.website.lib.js.jquery-ui-effects-clip" />
+			<dependency name="modules.website.lib.js.jquery-ui-effects-drop" />
+			<dependency name="modules.website.lib.js.jquery-ui-effects-explode" />
+			<dependency name="modules.website.lib.js.jquery-ui-effects-fold" />
+			<dependency name="modules.website.lib.js.jquery-ui-effects-highlight" />
+			<dependency name="modules.website.lib.js.jquery-ui-effects-pulsate" />
+			<dependency name="modules.website.lib.js.jquery-ui-effects-scale" />
+			<dependency name="modules.website.lib.js.jquery-ui-effects-shake" />
+			<dependency name="modules.website.lib.js.jquery-ui-effects-slide" />
+			<dependency name="modules.website.lib.js.jquery-ui-effects-transfer" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-ui-effects-blind">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui-effects" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-ui-effects-bounce">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui-effects" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-ui-effects-clip">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui-effects" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-ui-effects-drop">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui-effects" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-ui-effects-explode">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui-effects" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-ui-effects-fold">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui-effects" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-ui-effects-highlight">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui-effects" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-ui-effects-pulsate">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui-effects" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-ui-effects-scale">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui-effects" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-ui-effects-shake">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui-effects" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-ui-effects-slide">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui-effects" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-ui-effects-transfer">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui-effects" />
+		</dependencies>
+	</script>
+</scripts>

@@ -1,0 +1,15 @@
+#bannerLocation{
+	width: 950px;
+	min-width: 950px;
+	max-width: 950px;
+}
+#left-content-block{
+	width: 214px;
+	min-width: 214px;
+	max-width: 214px;
+}
+#content-block{
+	width: 100%;
+	min-width: 100%;
+	max-width: 100%;
+}

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localization>
+	<entity id="property.page-composition">
+		<locale lang="fr">Composition de la page</locale>
+		<locale lang="en">Page content</locale>
+	</entity>
+	<entity id="property.free-content">
+		<locale lang="fr">Contenu libre</locale>
+		<locale lang="en">Free content</locale>
+	</entity>
+	<entity id="property.edit-page-content">
+		<locale lang="fr">Modifier</locale>
+		<locale lang="en">Editing</locale>
+	</entity>
+	<entity id="property.menuitemdocument">
+		<locale lang="fr">Document lié</locale>
+		<locale lang="en">Linked document</locale>
+	</entity>
+	<entity id="property.reference">
+		<locale lang="fr">document de référence</locale>
+		<locale lang="en">reference document</locale>
+	</entity>
+	<entity id="property.edit-menuitemdocument">
+		<locale lang="fr">Editer...</locale>
+		<locale lang="en">Edit...</locale>
+	</entity>
+	<entity id="current-page-composition">
+		<locale lang="fr">{blockCount} bloc(s) dynamique(s) et {richtextCount} bloc(s) texte(s)</locale>
+		<locale lang="en">{blockCount} dynamic block(s) and {richtextCount} text block(s)</locale>
+	</entity>
+	<entity id="current-word-count-empty">
+		<locale lang="fr">vide</locale>
+		<locale lang="en">empty</locale>
+	</entity>
+	<entity id="current-word-count-singular">
+		<locale lang="fr">1 mot</locale>
+		<locale lang="en">1 word</locale>
+	</entity>
+	<entity id="current-word-count">
+		<locale lang="fr">{wordCount} mots</locale>
+		<locale lang="en">{wordCount} words</locale>
+	</entity>
+	<entity id="edit-content-link">
+		<locale lang="fr">éditer le contenu...</locale>
+		<locale lang="en">edit page content</locale>
+	</entity>
+	<entity id="fieldsgroup.specific-properties">
+		<locale lang="fr">propriétés spécifiques</locale>
+		<locale lang="en">edit page content</locale>
+	</entity>
+	<entity id="tab.markers">
+		<locale lang="fr">marqueurs</locale>
+		<locale lang="en">markers</locale>
+	</entity>
+</localization>

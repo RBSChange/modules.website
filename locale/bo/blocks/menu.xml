@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<localization>
+  <entity id="Depth">
+    <locale lang="fr">Profondeur</locale>
+    <locale lang="en">Depth</locale>
+    <locale lang="de">Tiefe</locale>
+  </entity>
+  <entity id="Depth-help">
+    <locale lang="fr">Profondeur maximal que le menu peut afficher</locale>
+    <locale lang="de">maximale Tiefe, die das Menu anzeigen kann</locale>
+  </entity>
+  <entity id="Template">
+    <locale lang="fr">Template</locale>
+    <locale lang="de">Template</locale>
+  </entity>
+  <entity id="Template-help">
+    <locale lang="fr">Suffixe du nom du template à utiliser</locale>
+    <locale lang="de">das Suffix des zu nutzenden Templatenamens</locale>
+  </entity>
+  <entity id="Deployonlycurrentpath">
+    <locale lang="fr">Déployer seulement le chemin de navigation</locale>
+    <locale lang="de">ausschliesslich den Browserweg entwickeln</locale>
+  </entity>
+  <entity id="Deployonlycurrentpath-help">
+    <locale lang="fr">Seul le chemin permettant d'acceder à cette page sera deployer</locale>
+    <locale lang="de">Es wird ausschliesslich der Weg entwickelt, der zu dieser Seite führt</locale>
+  </entity>
+</localization>

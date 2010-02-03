@@ -1,0 +1,3 @@
+Version: 2.0.4 ?
+
+Ajout d'un champ au document website pour l'ajout systématique de l'intitulé de site dans la balise <title> des pages.

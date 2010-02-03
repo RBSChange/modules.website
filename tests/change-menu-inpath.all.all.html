@@ -1,0 +1,4 @@
+<ul change:menu="menuObject menu; itemName item; maxLevel 10; liInPathClass inPath">
+	<a tal:condition="repeat/item/isCurrent" href="item/getUrl" tal:content="item/getLabel" class="current"></a>
+	<a tal:condition="not: repeat/item/isCurrent" href="item/getUrl" tal:content="item/getLabel"></a>
+</ul>

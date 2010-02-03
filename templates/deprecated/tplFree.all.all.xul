@@ -1,0 +1,57 @@
+<wlayout id="mainLayout" editable="true">
+
+    <wtemplate id="tplFree">
+
+    	<div orient="vertical">
+
+	    	<div id="global" orient="vertical">
+
+				<div id="main" />
+
+				<div id="center" orient="horizontal">
+
+					<div id="sidebar" />
+
+					<div id="content" orient="vertical">
+
+						<div id="thread" />
+
+						<div id="content-block" />
+
+					</div>
+
+				</div>
+
+				<div id="footer" />
+
+			</div>
+
+			<div id="copyright" />
+
+		</div>
+
+    </wtemplate>
+
+    <wlocationset>
+
+	    <wlocation target="main" editable="false" />
+	    <wlocation target="sidebar" editable="false" />
+	    <wlocation target="thread" editable="false" />
+	    <wlocation target="content-block" editable="false" />
+	    <wlocation target="footer" editable="false" />
+	    <wlocation target="copyright" editable="false" />
+
+    </wlocationset>
+
+    <wblockset>
+
+    	<wblock target="main" type="modules_website_main" editable="false" movable="false" />
+    	<wblock target="sidebar" type="modules_website_sidebar" editable="false" movable="false" />
+    	<wblock target="thread" type="modules_website_thread" editable="false" movable="false" />
+    	<wblock target="content-block" type="free" editable="true" movable="false" />
+    	<wblock target="footer" type="modules_website_footer" editable="false" movable="false" />
+    	<wblock target="copyright" type="modules_website_copyright" editable="false" movable="false" />
+
+    </wblockset>
+
+</wlayout>

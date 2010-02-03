@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<style tal:replace="cssInclusion" />
+<window 
+	i18n:attributes="title &modules.website.bo.infoblock.header;"
+        orient="vertical"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	onload="blockInit();">
+	
+	<script type="text/javascript"><![CDATA[
+	 var param = null;
+     var type = '${blockType}';
+    
+     function blockInit()
+     {
+     	
+     	//type, references, configuration, layoutType, content
+     	param = window.opener.wToolkit.dialogParam;
+
+     	var a;
+		var datadiv = document.getElementById("info")
+		var li;
+		
+		for(a in param)
+		{
+			if (a == "configuration")
+			{
+				initConfiguration(param[a]);
+			}
+			else if (a == "content")
+			{
+				li = document.createElementNS("http://www.w3.org/1999/xhtml", "html:li");
+				var div = document.createElementNS("http://www.w3.org/1999/xhtml", "html:div");
+				div.setAttribute("style", "overflow: auto; border: 1px inset white; height: 128px;");
+				var contenttext = document.createTextNode(param[a]);
+				div.appendChild(contenttext);
+				var headertext = document.createTextNode(a + " : ");
+				li.appendChild(headertext);
+				li.appendChild(div);
+				datadiv.appendChild(li);
+			}
+			else
+			{
+				li = document.createElementNS("http://www.w3.org/1999/xhtml", "html:li");
+				var headertext = document.createTextNode(a + " : " + param[a]);
+				li.appendChild(headertext);
+	  			datadiv.appendChild(li);
+	  		}
+		}
+     }  
+     
+     function initConfiguration(configuration)
+     {		
+     	var a;
+		var datadiv = document.getElementById("configuration")
+		var li;
+		for(a in configuration)
+		{
+		 	li = document.createElementNS("http://www.w3.org/1999/xhtml", "html:li");
+  			var headertext = document.createTextNode(a + " : " + configuration[a]);
+			li.appendChild(headertext);
+	  		datadiv.appendChild(li);
+		}
+     }    
+	]]>
+</script>	
+<toolbox flex="1">
+        <toolbar class="main-change-toolbox" style="padding: 0px; margin: 0px; -moz-appearance: none !important;">
+            <image change:image="logo_product.png"/>
+            <spacer flex="1"/>
+            <toolbarbutton change:icon="error/small shadow" oncommand="self.close()" />
+        </toolbar>
+	<html:div change:translate="&modules.website.bo.infoblock.headerEllipsis;" style="font-weight: bold; font-size: 1.5em;">Parametres du bloc</html:div>
+  	<html:div change:translate="&modules.website.bo.infoblock.CommonparamLabel;" style="font-weight: bold; text-decoration: underline;">Paramètres communs</html:div>	
+	<html:ul id="info">
+	</html:ul>
+	<html:div change:translate="&modules.website.bo.infoblock.SpecificparamLabel;" style="font-weight: bold; text-decoration: underline;">Configuration spécifique</html:div>	
+	<html:ul id="configuration">
+	</html:ul>
+</toolbox>
+</window>

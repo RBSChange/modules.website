@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<localization extend="modules.generic.document.folder">
+	<entity id="document-name">
+		<locale lang="fr">dossier de marqueurs</locale>
+		<locale lang="en">markers folder</locale>
+	</entity>
+</localization>

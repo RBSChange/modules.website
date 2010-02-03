@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<localization>
+  <entity id="document-name">
+    <locale lang="fr">version de page</locale>
+    <locale lang="en">page version</locale>
+    <locale lang="de">Seitenversion</locale>
+  </entity>
+  <entity id="edition-form-title">
+    <locale lang="fr">propriétés de la page</locale>
+    <locale lang="en">page properties</locale>
+    <locale lang="de">Seiteneinstellungen</locale>
+  </entity>
+  <entity id="generalities">
+    <locale lang="fr">propriétés principales</locale>
+    <locale lang="en">main data</locale>
+    <locale lang="de">Haupteinstellungen</locale>
+  </entity>
+  <entity id="publication">
+    <locale lang="fr">publication</locale>
+    <locale lang="en">publication</locale>
+    <locale lang="de">Veröffentlichung</locale>
+  </entity>
+  <entity id="referencing">
+    <locale lang="fr">référencement</locale>
+    <locale lang="en">referencing</locale>
+    <locale lang="de">Referenzierung</locale>
+  </entity>
+  <entity id="titleinformations">
+    <locale lang="fr">intitulé de la page</locale>
+    <locale lang="en">page title</locale>
+    <locale lang="de">Seitentitel</locale>
+  </entity>
+  <entity id="layoutinformations">
+    <locale lang="fr">mise en page</locale>
+    <locale lang="en">page layout</locale>
+    <locale lang="de">Seitenlayout</locale>
+  </entity>
+  <entity id="dateinformations">
+    <locale lang="fr">date de publication</locale>
+    <locale lang="en">publication date</locale>
+    <locale lang="de">Veröffentlichungsdatum</locale>
+  </entity>
+  <entity id="label">
+    <locale lang="fr">nom de page</locale>
+    <locale lang="en">page name</locale>
+    <locale lang="de">Seitenname</locale>
+  </entity>
+  <entity id="label-help">
+    <locale lang="fr">intitulé du document à usage exclusivement interne, utilisé pour l'affichage du document en Backoffice.</locale>
+    <locale lang="en">document title for strictly internal usage, used for document back-office display.</locale>
+    <locale lang="de">Dokumententitel ausschliesslich zur internen Nutzung, nur für Backoffice Dokumentenanzeigen.</locale>
+  </entity>
+  <entity id="navigationtitle">
+    <locale lang="fr">texte de lien</locale>
+    <locale lang="en">link text</locale>
+    <locale lang="de">Linktext</locale>
+  </entity>
+  <entity id="navigationtitle-help">
+    <locale lang="fr">intitulé court pour les éléments de navigation (menus, file d'ariane, etc. - 80 caractères max.)</locale>
+    <locale lang="en">short title for navigation's elements (menus, breadcrumb, etc. - 80 characters max.)</locale>
+    <locale lang="de">kurzer Titel für die Navigationselemente (Menüs, Leitfaden, usw. - max. 80 Zeichen)</locale>
+  </entity>
+  <entity id="metatitle">
+    <locale lang="fr">titre de page</locale>
+    <locale lang="en">page title</locale>
+    <locale lang="de">Seitentitel</locale>
+  </entity>
+  <entity id="metatitle-help">
+    <locale lang="fr">intitulé complet qui sera affiché dans la barre de titre du navigateur (correspond à la balise TITLE utilisée pour le référencement). Taille conseillée : 60 à 80 caractères. Placez les mots-clés les plus importants au début.</locale>
+    <locale lang="en">full title displayed in your browser's title bar (corresponds to TITLE tag used for referencing).</locale>
+    <locale lang="de">In der Browsertitelleiste angezeigter kompletter Titel (entspricht dem TITLE Tag für die Referenzierung). Empfohlene Grösse: 60 bis 80 Zeichen. Setzen Sie die wichtigsten Stichwörter an den Anfang.</locale>
+  </entity>
+  <entity id="template">
+    <locale lang="fr">modèle de page</locale>
+    <locale lang="en">page template</locale>
+    <locale lang="de">Seitentemplate</locale>
+  </entity>
+  <entity id="template-help">
+    <locale lang="fr">si le modèle d'origine est modifié, effectuer une mise à jour grâce au bouton ci-contre.</locale>
+    <locale lang="en">if the original template has been modified, proceed to its update thanks to the next button.</locale>
+    <locale lang="de">Wird der ursprüngliche Template geändert, aktualisieren Sie bitte mit folgendem Button.</locale>
+  </entity>
+  <entity id="updatetemplate">
+    <locale lang="fr">mettre à jour le modèle</locale>
+    <locale lang="en">update template</locale>
+    <locale lang="de">Template aktualisieren</locale>
+  </entity>
+  <entity id="updatetemplatequestion">
+    <locale lang="fr">voulez-vous vraiment mettre à jour le modèle de page ? Un mauvais modèle de page peut corrompre le contenu existant...</locale>
+    <locale lang="en">are you sure to update this template ? A bad template could corrupt the existing content...</locale>
+    <locale lang="de">möchten Sie das Template wirklich aktualisieren? Ein schlechtes Template könnte den bestehenden Inhalt korrumpieren.</locale>
+  </entity>
+  <entity id="skin">
+    <locale lang="fr">habillage</locale>
+    <locale lang="en">skin</locale>
+    <locale lang="de">Skin</locale>
+  </entity>
+  <entity id="skin-help">
+    <locale lang="fr">déposer ici un Habillage pour l'appliquer à l'élément</locale>
+    <locale lang="en">drop a Skin here in order to apply it to the element</locale>
+    <locale lang="de">legen Sie hier einen Skin ab, der den Elementen angewendet wird</locale>
+  </entity>
+  <entity id="description">
+    <locale lang="fr">description</locale>
+    <locale lang="en">description</locale>
+    <locale lang="de">Beschreibung</locale>
+  </entity>
+  <entity id="description-help">
+    <locale lang="fr">description de la page utilisée pour le référencement. Taille conseillée : entre 160 et 180 caractères. Placez les mots-clés les plus importants en début.</locale>
+    <locale lang="en">description of the page for search engines</locale>
+    <locale lang="de">Seitenbeschreibung für die Referenzierung. Empfohlene Grösse: zwischen 160 und 180 Zeichen. Setzen Sie die wichtigsten Stichwörter an den Anfang.</locale>
+  </entity>
+  <entity id="startpublicationdate">
+    <locale lang="fr">début</locale>
+    <locale lang="en">start</locale>
+    <locale lang="de">Anfang</locale>
+  </entity>
+  <entity id="startpublicationdate-help">
+    <locale lang="fr">La date de début de publication indique la date à partir de laquelle la page pourra être consultée par les internautes. Avant cette date, la page ne sera pas consultable.</locale>
+    <locale lang="en">The start publication date indicates the date from which the users will be able to view the page. Before this date, the page will not be viewable.</locale>
+    <locale lang="de">Das Anfangsdatum der Veröffentlichung zeigt das Datum an, ab dem die Benutzer die Seite sehen können. Vor diesem Datum wird die Seite nicht sichtbar sein.</locale>
+  </entity>
+  <entity id="endpublicationdate">
+    <locale lang="fr">fin</locale>
+    <locale lang="en">end</locale>
+    <locale lang="de">Ende</locale>
+  </entity>
+  <entity id="endpublicationdate-help">
+    <locale lang="fr">La date de fin de publication indique la date jusqu'à laquelle la page pourra être consultée par les internautes. Après cette date, la page ne sera plus consultable.</locale>
+    <locale lang="en">The end publication date indicates the date to which the users will be able to view the page. After this date, the page will not be viewable anymore.</locale>
+    <locale lang="de">Das Enddatum der Veröffentlichung zeigt das Datum an, bis zu dem die Benutzer die Seite sehen können. Nach diesem Datum wird die Seite nicht mehr sichtbar sein.</locale>
+  </entity>
+  <entity id="indexingStatus">
+    <locale lang="fr">page indexable</locale>
+    <locale lang="en">indexable page</locale>
+    <locale lang="de">indexierbare Seite</locale>
+  </entity>
+  <entity id="indexingstatus-help">
+    <locale lang="fr">activer/désactiver l'indexation de la page</locale>
+    <locale lang="en">enable/disabled page indexing</locale>
+    <locale lang="de">Seitenindexierung aktivieren/deaktivieren</locale>
+  </entity>
+  <entity id="robotsmeta">
+    <locale lang="fr">Gestion des robots</locale>
+    <locale lang="en">Robots management</locale>
+  </entity>
+  <entity id="keywords">
+    <locale lang="fr">mots-clefs</locale>
+    <locale lang="en">keywords</locale>
+    <locale lang="de">Stichwörter</locale>
+  </entity>
+  <entity id="keywords-help">
+    <locale lang="fr">mots-clés associés à la page et séparés par des virgules. Limitez aux mots-clés les plus pertinents pour le contenu de la page.</locale>
+    <locale lang="en">comma-separated keywords related to the page</locale>
+    <locale lang="de">der Seite assoziierte Stichwörter, durch Kommata abgetrennt. Begrenzen Sie sich bitte für den Seiteninhalt auf die relevantesten Stichwörter.</locale>
+  </entity>
+  <entity id="author">
+    <locale lang="fr">auteur</locale>
+    <locale lang="en">author</locale>
+    <locale lang="de">Autor</locale>
+  </entity>
+  <entity id="author-help">
+    <locale lang="fr">nom de l'auteur de la page</locale>
+    <locale lang="en">name of the page's author</locale>
+    <locale lang="de">Name des Seitenautors</locale>
+  </entity>
+  <entity id="navigationVisibility">
+    <locale lang="fr">visibilité</locale>
+    <locale lang="en">visibility</locale>
+    <locale lang="de">Sichtbarkeit</locale>
+  </entity>
+  <entity id="navigationVisibility-help">
+    <locale lang="fr">visibilité dans les menus de navigation</locale>
+    <locale lang="en">visibility in navigation menus</locale>
+    <locale lang="de">Sichtbarkeit in den Navigationsmenüs</locale>
+  </entity>
+  <entity id="isHomePage">
+    <locale lang="fr">page d'accueil du site</locale>
+    <locale lang="en">website's homepage</locale>
+    <locale lang="de">Startseite der Webseite</locale>
+  </entity>
+  <entity id="isIndexPage">
+    <locale lang="fr">page d'index de la rubrique parente</locale>
+    <locale lang="en">parent topic's index page</locale>
+    <locale lang="de">Indexseite der Mutterrubrik</locale>
+  </entity>
+  <entity id="default-version-label">
+    <locale lang="fr">version n°{count} de {label}</locale>
+    <locale lang="en">version #{count} of {label}</locale>
+    <locale lang="de">Version Nr. {count} von {label}</locale>
+  </entity>
+  <entity id="usehttps">
+    <locale lang="fr">Mode sécurisé (https)</locale>
+  </entity>
+  <entity id="usehttps-help">
+    <locale lang="fr">La page ne sera visible qu’à partir d’une URL du type  https://... . Nécessite que le serveur soit spécialement configuré pour supporter ce protocole.</locale>
+  </entity>
+</localization>

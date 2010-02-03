@@ -1,0 +1,85 @@
+@import url(/modules/website/style/tplBase.css);
+
+#contextualmenuverticalLocation{
+	background-color: none/*@var menucontextualleftbgcolor*/;
+	background-image: /*@var menucontextualleftbgimage*/;
+	background-position: top left/*@var menucontextualleftbgposition*/;
+	background-repeat: no-repeat/*@var menucontextualleftbgrepeat*/;
+	border-color: transparent/*@var menucontextualleftbordercolor*/;
+	border-style: none/*@var menucontextualleftborderstyle*/;
+	border-width: 0px/*@var menucontextualleftborderwidth*/;
+}
+
+ul.contextual-menu-vertical{
+	font-family: "Trebuchet MS", verdana, arial, helvetica, sans-serif/*@var menucontextualleftfontfamily*/;
+}
+ul.contextual-menu-vertical>li{
+	border-bottom-color: #ccc;
+	list-style-type: disc/*@var menucontextualleftoneliststyletype*/;
+	list-style-position: inside;
+	list-style-image: none;
+	background-color: none/*@var menucontextualleftonebgcolor*/;
+	background-image: /*@var menucontextualleftoneimage*/;
+	background-position: top left/*@var menucontextualleftoneimageposition*/;
+	background-repeat: no-repeat/*@var menucontextualleftoneimagerepeat*/;
+}
+ul.contextual-menu-vertical>li.current{
+	list-style-type: square/*@var menucontextualleftonecurrentliststyletype*/;
+	list-style-position: inside;
+	list-style-image: none;
+	background-color: none/*@var menucontextualleftonecurrentbgcolor*/;
+	background-image: /*@var menucontextualleftonecurrentimage*/;
+	background-position: top left/*@var menucontextualleftonecurrentimageposition*/;
+	background-repeat: no-repeat/*@var menucontextualleftonecurrentimagerepeat*/;
+}
+ul.contextual-menu-vertical>li a{
+	color: #205d97/*@var menucontextualleftonefgcolor*/;
+	text-decoration: none/*@var menucontextualleftonetextdecoration*/;
+}
+ul.contextual-menu-vertical>li a:hover{
+	color: #000/*@var menucontextualleftonehoverfgcolor*/;
+	text-decoration: none/*@var menucontextualleftonehovertextdecoration*/;
+	background-color: none/*@var menucontextualleftonehoverbgcolor*/;
+	background-image: /*@var menucontextualleftonehoverimage*/;
+	background-position: top left/*@var menucontextualleftonehoverimageposition*/;
+	background-repeat: no-repeat/*@var menucontextualleftonehoverimagerepeat*/;
+}
+ul.contextual-menu-vertical>li.current strong{
+	color: #000/*@var menucontextualleftonecurrentfgcolor*/;
+}
+
+#leftsidebarLocation{
+	width: 214px;
+	float: left;
+}
+#rightsidebarLocation{
+	width: 214px;
+	float: right;
+}
+#contentLocation{
+	width: 950px;
+}
+#informationLocation{
+	width: 504px;
+	float: left;
+}
+#informationpaddingLocation{
+	padding-left: 18px;
+	float: left;
+}
+#threadLocation{
+	width: 486px;
+}
+#freeLocation{
+	width: 100%;
+}
+
+ul.contextual-menu-vertical li{
+	padding: 4px 10px;
+	margin: 0 10px;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	background-color: none;
+}
+
+@import url(/modules/website/style/tplTwoThreeColumns.xul.all.css);

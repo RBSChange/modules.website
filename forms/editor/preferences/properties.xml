@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel>
+	<section labeli18n="modules.website.document.preferences.Edition-form-title">
+		<field name="checkersrecipient" />
+	</section>
+</panel>

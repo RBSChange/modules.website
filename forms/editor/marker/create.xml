@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel>
+	<section labeli18n="modules.uixul.bo.doceditor.fieldsgroup.Title">
+		<field name="label" />
+		<field name="account" />
+		<field name="langs" type="checklist" />
+	</section>
+	<section labeli18n="modules.website.bo.doceditor.fieldsgroup.Specific-properties" class="marker-specific-properties">
+		<field name="specificPropertiesJSON" />
+	</section>
+	<xul>
+		<javascript>
+			<field name="markerType" />	
+			
+			<constructor><![CDATA[
+				this.extendMethodBefore("fireInitializeComplete", this.initializeCompletePageExtend);
+				document.getElementById('website_marker_create_specificPropertiesJSON_label').setAttribute('collapsed', 'true');
+			]]></constructor>
+
+			<method name="extendMethodBefore">
+				<parameter name="methodName" />
+				<parameter name="memberMethod" />
+				<body><![CDATA[
+					var base = this[methodName];
+					var me = this;
+					this[methodName] = function() {memberMethod.apply(me, arguments);base.apply(me, arguments);}				
+				]]></body>
+			</method>
+			
+			<method name="initializeCompletePageExtend">
+				<parameter name="result" />
+				<body><![CDATA[	
+					// Generate langs list.
+					var editor = this.documentEditor;
+					try
+					{
+						this.fields.langs.replaceItems({folderId: editor.parentid});
+					}
+					catch (e)
+					{
+						wCore.error("marker.createpanel.fireInitializeCompleteExtend", [], e);
+					}
+					
+					// Handle marker type.
+					if (editor.hasAttribute('markerType'))
+					{
+						this.markerType = editor.getAttribute('markerType');
+						editor.removeAttribute('markerType');
+					}
+					
+					if (this.markerType !== null)
+					{
+						var section = this.getElementByAnonId('field_specificPropertiesJSON');
+						section.setAttribute('fieldtype', 'marker'+this.markerType+'properties');
+					}
+					else
+					{
+						wCore.warn('[marker.create.initializeCompletePageExtent] no markerType!');
+					}
+				]]></body>
+			</method>
+			
+			<method name="getInsertParameters">
+				<body><![CDATA[
+					var moduleName = 'marker'+this.markerType;
+					var attributes = {
+						modulename: moduleName,
+						action: "InsertJSON",
+						parentref: this.documentEditor.parentid, 
+						lang: Context.W_LANG, 
+						modelname: 'modules_'+moduleName+'/'+moduleName,
+						documentproperties : this.mFieldNames.join(',')
+					};
+					
+					var fields = this.fields;
+					var field = null;
+					for (var name in fields)
+					{
+						field = fields[name];
+						if (field.modified)
+						{
+							attributes[name] = field.value;
+						}
+					}
+
+					if ("preparePropertiesValues" in this)
+					{
+						this.preparePropertiesValues(attributes);
+					}
+					
+					return attributes;
+				]]></body>
+			</method>
+		</javascript>
+	</xul>
+</panel>

@@ -1,0 +1,10 @@
+@import url(/modules/website/style/tplBase.css);
+
+#threadLocation{
+	width: 950px;
+}
+#freeLocation{
+	width: 950px;
+}
+
+@import url(/modules/website/style/tplOne.xul.all.css);

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<localization>
+  <entity id="label">
+    <locale lang="fr">libellé</locale>
+    <locale lang="en">label</locale>
+    <locale lang="de">Name</locale>
+  </entity>
+  <entity id="label-help">
+    <locale lang="fr">libellé</locale>
+    <locale lang="en">label</locale>
+    <locale lang="de">Name</locale>
+  </entity>
+  <entity id="tab.popupParameters">
+    <locale lang="fr">fenêtre</locale>
+    <locale lang="en">popup</locale>
+    <locale lang="de">Fenster</locale>
+  </entity>
+  <entity id="tab.generalities">
+    <locale lang="fr">propriétés principales</locale>
+    <locale lang="en">general data</locale>
+    <locale lang="de">Allgemeine Eigenschaften</locale>
+  </entity>
+  <entity id="tab.width">
+    <locale lang="fr">largeur</locale>
+    <locale lang="en">width</locale>
+    <locale lang="de">Breite</locale>
+  </entity>
+  <entity id="tab.height">
+    <locale lang="fr">hauteur</locale>
+    <locale lang="en">height</locale>
+    <locale lang="de">Höhe</locale>
+  </entity>
+</localization>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel>
+	<section labeli18n="modules.website.document.page.PrincipalInformations">
+		<field name="label" />
+		<field name="navigationtitle" />
+		<field name="navigationVisibility" />
+		<field name="indexingstatus" />
+	</section>
+	<section labeli18n="modules.website.document.page.LayoutInformations">
+		<field name="template" />
+		<field name="skin" />
+	</section>
+	<section labeli18n="modules.website.document.page.DateInformations">
+		<field name="startpublicationdate" />
+		<field name="endpublicationdate" />
+	</section>
+	<xul>
+		<javascript>		
+			<constructor><![CDATA[
+				var me = this;
+				this.extendMethod("fireInitializeComplete", this.updateDuplicateLabel);
+				this.extendMethod("updateCommandsUI", this.checkDisableEdit);
+			]]></constructor>			
+	
+			<method name="updateDuplicateLabel">
+				<parameter name="result" />
+				<body><![CDATA[
+					if (this.documentEditor.hasAttribute('duplicate'))
+					{
+						var labelField = this.fields.label;
+						labelField.focus();
+					}
+				]]></body>
+			</method>
+			
+			<method name="checkDisableEdit">
+				<parameter name="result" />
+				<body><![CDATA[
+					var button = this.getElementByAnonId('save_properties');
+					button.disabled = this.error;
+				]]></body>
+			</method>
+								
+			<method name="prepareInitializeValues">
+				<parameter name="values" />
+				<body><![CDATA[
+					if (this.documentEditor.hasAttribute('duplicate'))
+					{
+						values.duplicate = 'true';
+					}
+				]]></body>
+			</method>
+
+			<method name="preparePropertiesValues">
+				<parameter name="values" />
+				<body><![CDATA[
+					if (this.documentEditor.hasAttribute('duplicate'))
+					{
+						values.duplicate = 'true';
+					}
+				]]></body>
+			</method>
+		</javascript>
+	</xul>
+</panel>

@@ -1,0 +1,82 @@
+@import url(/modules/website/style/tplBase.css);
+
+#contextualmenuhorizontalLocation{
+	background-color: none/*@var menucontextualtopbgcolor*/;
+	background-image: url(/media/frontoffice/back_navigation-contextual.gif) /*@var menucontextualtopbgimage*/;
+	background-position: top left/*@var menucontextualtopbgposition*/;
+	background-repeat: no-repeat/*@var menucontextualtopbgrepeat*/;
+	border-top-color: transparent/*@var menucontextualtopbordertopcolor*/;
+	border-top-style: none/*@var menucontextualtopbordertopstyle*/;
+	border-top-width: 0px/*@var menucontextualtopbordertopwidth*/;
+	border-bottom-color: transparent/*@var menucontextualtopborderbottomcolor*/;
+	border-bottom-style: none/*@var menucontextualtopborderbottomstyle*/;
+	border-bottom-width: 0px/*@var menucontextualtopborderbottomwidth*/;
+}
+
+ul.contextual-menu-horizontal{
+	font-family: "Trebuchet MS", verdana, arial, helvetica, sans-serif/*@var menucontextualtopfontfamily*/;
+}
+ul.contextual-menu-horizontal li{
+	background-image: url(/media/frontoffice/back_navigation_separator.gif) /*@var menucontextualtopimage*/;
+	background-repeat: no-repeat/*@var menucontextualtopimagerepeat*/;
+	background-position: right top/*@var menucontextualtopimageposition*/;
+	background-color: transparent/*@var menucontextualtoplibgcolor*/;
+}
+ul.contextual-menu-horizontal li a{
+	color: #205d97/*@var menucontextualtopfgcolor*/;
+	text-decoration: none/*@var menucontextualtoptextdecoration*/;
+}
+ul.contextual-menu-horizontal li a:hover{
+	color: #000/*@var menucontextualtophoverfgcolor*/;
+	text-decoration: none/*@var menucontextualtophovertextdecoration*/;
+	background-color: transparent/*@var menucontextualtophoverlibgcolor*/;
+	background-image: /*@var menucontextualtophoverimage*/;
+	background-position: top left/*@var menucontextualtophoverimageposition*/;
+	background-repeat: no-repeat/*@var menucontextualtophoverimagerepeat*/;
+}
+ul.contextual-menu-horizontal li.current strong{
+	color: #000/*@var menucontextualtopcurrentfgcolor*/;
+}
+ul.contextual-menu-horizontal li.current{
+	background-image: url(/media/frontoffice/back_navigation_up.gif) /*@var menucontextualtopcurrentimage*/;
+	background-repeat: repeat-x/*@var menucontextualtopcurrentimagerepeat*/;
+	background-position: top left/*@var menucontextualtopcurrentimageposition*/;
+	background-color: transparent/*@var menucontextualtopcurrentlibgcolor*/;
+}
+
+#contextualmenuhorizontalLocation{
+	width: 950px;
+	float: left;
+}
+#rightsidebarLocation{
+	width: 214px;
+	float: left;
+}
+
+#informationLocation{
+	width: 736px;
+	float: left;
+}
+#informationpaddingLocation{
+	padding-right: 18px;
+	float: left;
+}
+#threadLocation{
+	float: left;
+	border-bottom-style: solid/*@var threadbottomborderstyle*/;
+	border-bottom-width: 1px/*@var threadbottomborderwidth*/;
+	width: 718px;
+}
+#freeLocation{
+	width: 100%;
+}
+
+ul.contextual-menu-horizontal li{
+	float: left;
+	display: block;
+	padding: 6px 18px;
+	background-color: none;
+	border-color: none;
+}
+
+@import url(/modules/website/style/tplSixTwoColumnsRight.xul.all.css);

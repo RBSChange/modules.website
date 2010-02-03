@@ -1,0 +1,22 @@
+@import url(/modules/website/style/tplBase.css);
+
+#leftsidebarLocation{
+	width: 214px;
+	float: left;
+}
+#informationLocation{
+	width: 736px;
+	float: left;
+}
+#informationpaddingLocation{
+	padding-left: 18px;
+	float: left;
+}
+#threadLocation{
+	width: 718px;
+}
+#freeLocation{
+	width: 100%;
+}
+
+@import url(/modules/website/style/tplOneTwoColumns.xul.all.css);

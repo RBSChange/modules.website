@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<change:templates xmlns:change="http://www.rbs.fr/change/1.0/schema">
+	<change:template id="tplFour">
+		<div id="wrapperLocation" orient="vertical">
+			<a name="top"></a>
+			<div id="topLocation" orient="horizontal">
+				<div id="headermenuLocation" orient="vertical">
+					<change:templateblock type="modules_website_taggedmenu" __tag="contextual_website_website_menu-header" __template="header" __depth="0"/>
+				</div>
+				<div id="switchlanguageLocation" orient="vertical">
+					<change:templateblock type="modules_website_switchlanguage" __viewall="false" __showflag=""/>
+				</div>
+				<a name="search"></a>
+				<div id="searchLocation" orient="vertical">
+					<change:templateblock type="modules_solrsearch_searchform" />
+				</div>
+			</div>
+			<div id="headerLocation" orient="vertical">
+				<div id="bannerLocation" orient="vertical">
+					<div id="logoLocation" orient="vertical">
+						<change:templateblock type="modules_website_logo" />
+					</div>
+				</div>
+			</div>
+			<div id="contentLocation" orient="horizontal">
+				<div id="leftsidebarLocation" orient="vertical">
+					<a name="menu"></a>
+					<div id="taggedmenuverticalLocation" orient="vertical">
+						<change:templateblock type="modules_website_taggedmenu" __tag="contextual_website_website_menu-main" __template="vertical" __depth="0"/>
+					</div>
+					<div id="leftsidebarfreeLocation" orient="vertical">
+						<change:content id="left-content-block"/>
+					</div>
+				</div>
+				<div id="informationLocation" orient="vertical">
+					<div id="informationpaddingLocation" orient="vertical">
+						<div id="threadLocation" orient="vertical">
+							<change:templateblock type="modules_website_thread" />
+						</div>
+						<a name="content"></a>
+						<div id="freeLocation" orient="vertical">
+							<change:content id="content-block"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="footerLocation" orient="horizontal">
+				<div id="footermenuLocation" orient="vertical">
+					<change:templateblock type="modules_website_taggedmenu" __tag="contextual_website_website_menu-footer" __template="footer" __depth="0" />
+				</div>
+				<div id="copyrightLocation" orient="vertical">
+					<change:templateblock type="modules_website_copyrights" />
+				</div>
+			</div>
+		</div>
+	</change:template>
+</change:templates>

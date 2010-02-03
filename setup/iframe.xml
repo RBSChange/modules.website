@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<script>
+	<binding fileName="modules/list/persistentdocument/import/list_binding.xml" />
+	
+	<systemfolder module="list" relatedmodule="iframe">
+	
+		<staticlist listid="modules_iframe/scrolling" 
+			description="Define how scrolling is used in iframe"
+			label="Scrolling value for modules iframe">
+			<staticitem label="&amp;modules.iframe.bo.general.list.scroll.Auto;" value="auto" />
+			<staticitem label="&amp;modules.iframe.bo.general.list.scroll.Yes;" value="yes" />
+			<staticitem label="&amp;modules.iframe.bo.general.list.scroll.No;" value="no" />
+		</staticlist>
+		
+	</systemfolder>
+</script>

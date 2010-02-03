@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<localization>
+  <entity id="document-name">
+    <locale lang="fr">préférences</locale>
+    <locale lang="en">preferences</locale>
+    <locale lang="de">Präferenzen</locale>
+  </entity>
+  <entity id="edition-form-title">
+    <locale lang="fr">préférences des sites et des pages</locale>
+    <locale lang="en">websites and pages preferences</locale>
+    <locale lang="de">Webseiten und Seiten Präferenzen</locale>
+  </entity>
+  <entity id="checkersrecipient">
+    <locale lang="fr">destinataire des vérifications</locale>
+    <locale lang="en">checkings recipients</locale>
+    <locale lang="de">Empfänger der Prüfungen</locale>
+  </entity>
+  <entity id="checkersrecipient-help">
+    <locale lang="fr">liste des utilisateurs recevant les notifications des processus de vérifications (liens, etc.)</locale>
+    <locale lang="en">list of users receiving notifications for checking processes (links, etc.)</locale>
+    <locale lang="de">Liste der Benutzer, die die Mitteilugen der Prüfungsprozesse (Links, usw.) erhalten.</locale>
+  </entity>
+</localization>

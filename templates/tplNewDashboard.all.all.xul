@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<change:templates xmlns:change="http://www.rbs.fr/change/1.0/schema">
+	<change:template content-type="html" id="tplNewDashboard">
+		<change:templateblock type="modules_dashboard_header" />
+		<change:content id="content-block" />
+	</change:template>
+	<change:template content-type="xul" id="tplNewDashboard">
+		<hbox flex="1">
+			<change:content id="content-block" />
+		</hbox>
+	</change:template>
+</change:templates>

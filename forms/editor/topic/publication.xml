@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel>	
+	{PUBLICATIONSECTION}
+	<xul>
+		<javascript>
+			<method name="getCommands">
+				<body><![CDATA[	
+					var editor = this.documentEditor;
+					var cmds = {};
+					cmds.deletecorrection = editor.hasPermission('Delete');
+					cmds.delete = cmds.deletecorrection;
+					cmds.startworkflow = false;
+					cmds.activate = false;
+					cmds.opentask = false;
+					cmds.deactivated = false;
+					cmds.reactivate = false;
+					return cmds;						
+				]]></body>
+			</method>
+		</javascript>
+	</xul>				
+</panel>

@@ -1,0 +1,5 @@
+<ul tal:condition="menuObject" change:menu="menuObject menuObject; masterUlClass footer-menu; liCurrentClass current; liInPathClass inpath; liFirstInLevelClass first; liLastInLevelClass last; itemName item">
+	<a tal:condition="not: repeat/item/isCurrent" change:menuitem="item" />
+	<strong tal:condition="repeat/item/isCurrent" tal:content="item/getLabel"/>
+	<span tal:condition="not: repeat/item/end" > | </span>
+</ul>

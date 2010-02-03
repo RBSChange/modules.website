@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<bindings xmlns="http://www.mozilla.org/xbl" xmlns:xbl="http://www.mozilla.org/xbl"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">	
+	
+	<binding id="cEditPageContent" extends="layout.cDocumentEditor#cProperty">
+		<implementation>
+			<field name="contentInfo">null</field>
+			
+			<method name="setValue">
+				<parameter name="val" />
+				<body><![CDATA[
+					this.contentInfo = val;
+				]]></body>
+			</method>
+			
+			<method name="editContent">
+				<body><![CDATA[
+					var edt = this.section.panel.documentEditor;
+					if (edt.isValidPanel('properties'))
+					{
+						if (!this.contentInfo)
+						{
+							wCore.debug('editContent: NO contentInfo');
+							this.contentInfo = {id:edt.documentInfos.id, lang: edt.documentInfos.vo}
+							if (edt.documentInfos.usecontextlang) {this.contentInfo.lang = Context.W_LANG;}
+						}
+						
+						var params = {cmpref: this.contentInfo.id, lang: this.contentInfo.lang};
+						var editUrl =  wToolkit.buildXulURL('website', 'EditContent', params, true);
+			
+						var module = edt.module;
+						var pageDeck = module.getElementByAnonId("pageDeck");
+						pageDeck.removeAttribute('editorLoaded');
+
+						var designFrame = module.getElementByAnonId("designFrame");    			
+						designFrame.setAttribute("src", editUrl);
+						pageDeck.selectedIndex = 3;
+			
+						window.setTimeout(function(){
+							if (pageDeck.hasAttribute('editorLoaded')) {wCore.debug("editor is loaded"); return;}
+							designFrame.setAttribute("src", "about:blank"); 
+							alert("&modules.uixul.bo.general.PageEditorLoadError;");  
+							pageDeck.selectedIndex = 0;
+							}, 30000);
+					}
+				]]></body>
+			</method>			
+		</implementation>
+		
+		<content>
+			<xul:hbox>
+				<xul:label class="label" xbl:inherits="value=label" />
+				<xul:label class="label separator" value=":" />
+				<xul:label class="text-link" onclick="document.getBindingParent(this).editContent()" value="&amp;modules.website.bo.doceditor.Edit-content-link;"/>
+			</xul:hbox>			
+		</content>
+	</binding>
+	
+	<binding id="cEditMenuitemDocument" extends="layout.cDocumentEditor#cProperty">
+		<implementation>
+			<field name="documentInfo">null</field>
+			<method name="setValue">
+				<parameter name="val" />
+				<body><![CDATA[
+					this.documentInfo = val;
+				]]></body>
+			</method>
+			
+			<method name="editDocument">
+				<body><![CDATA[
+					var itemData = this.documentInfo;
+					var uri = [itemData.module, 'openDocument', itemData.type, itemData.id].join(',');
+					openActionUri(uri);
+					/*
+					this.section.panel.documentEditor.module.openDocumentEditor(this.documentInfo);
+					*/		
+				]]></body>
+			</method>
+		</implementation>
+		
+		<content>
+			<xul:hbox>
+				<xul:label class="label" xbl:inherits="value=label" />
+				<xul:label class="label separator" value=":" />
+				<xul:label class="text-link" onclick="document.getBindingParent(this).editDocument()" value="&amp;modules.website.bo.doceditor.property.Edit-MenuitemDocument;"/>
+			</xul:hbox>			
+		</content>
+	</binding>
+</bindings>

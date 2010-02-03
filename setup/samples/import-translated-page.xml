@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<script>
+	<binding fileName="modules/website/persistentdocument/import/website_binding.xml" />
+	<binding fileName="modules/media/persistentdocument/import/media_binding.xml" />
+
+	<website byTag="default_modules_website_default-website" label-en="Default website en" template="tplOneTwoColumns">
+		<documentRef type="modules_website/topic" byLabel="Outils">
+			<documentRef type="modules_website/page" id="unePage" byLabel="Ajouter aux favoris" />
+			<documentRef type="modules_website/page" id="uneAutrePage" byTag="contextual_website_website_legal" />
+		</documentRef>
+		<topic byLabel="Multilingue" label-en="Multilingue en">
+			<page byLabel="page test" label-en="page test en" template="tplOneTwoColumns">
+				<changecontent for="content-block">
+					<changeblock type="richtext">
+						<![CDATA[
+							<h2>Bloc dans un layout implicite</h2>
+							<p>Un peu de contenu...</p>
+							<p>Lien vers une page : <a lang="fr" cmpref="{ref-id:unePage}">Ajouter aux favoris qsd</a></p>
+						]]>
+					</changeblock>
+				</changecontent>
+				<changecontent for="content-block" lang="en">
+					<changeblock type="richtext">
+						<![CDATA[
+							<h2>Block in an implicit layout</h2>
+							<p>Some contents...</p>
+							<p>Link to a page : <a lang="en" cmpref="{ref-id:uneAutrePage}">Mention légales</a></p>
+						]]>
+					</changeblock>
+				</changecontent>
+			</page>
+		</topic>
+	</website>
+</script>

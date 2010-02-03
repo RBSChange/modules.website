@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<localization>
+  <entity id="Page-validation">
+    <locale lang="fr">Pages à valider</locale>
+    <locale lang="de">freizugebende Seiten</locale>
+  </entity>
+  <entity id="task-label-validate">
+    <locale lang="fr">{author} vous demande de valider la page : </locale>
+    <locale lang="de">{author} bittet Sie die Seite freizugeben:</locale>
+  </entity>
+  <entity id="no-page-to-validate">
+    <locale lang="fr">Il n'y a pas de page à valider.</locale>
+    <locale lang="de">Keine freizugebende Seite vorhanden.</locale>
+  </entity>
+  <entity id="orphanpagesWithCount">
+    <locale lang="fr">pages orphelines {websiteLabel} ({count})</locale>
+    <locale lang="en">orphan pages {websiteLabel} {count}</locale>
+    <locale lang="de">verwaiste Seiten {websiteLabel} ({count})</locale>
+  </entity>
+  <entity id="orphanpages">
+    <locale lang="fr">pages orphelines</locale>
+    <locale lang="en">orphan pages</locale>
+    <locale lang="de">verwaiste Seiten</locale>
+  </entity>
+  <entity id="noOrphanPages">
+    <locale lang="fr">il n'y a aucune page orpheline</locale>
+    <locale lang="en">there are nor orphan pages</locale>
+    <locale lang="de">keine verwaiste Seite vorhanden</locale>
+  </entity>
+</localization>

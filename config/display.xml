@@ -1,0 +1,20 @@
+<config>
+	<display file="tplOne" style="modules.website.tplOne" label="&amp;modules.website.bo.general.template.TplOne;"/>
+	<display file="tplOneTwoColumns" style="modules.website.tplOneTwoColumns" label="&amp;modules.website.bo.general.template.TplOneTwoColumns;"/>
+	<display file="tplOneTwoColumnsRight" style="modules.website.tplOneTwoColumnsRight" label="&amp;modules.website.bo.general.template.TplOneTwoColumnsRight;"/>
+	<display file="tplOneThreeColumns" style="modules.website.tplOneThreeColumns" label="&amp;modules.website.bo.general.template.TplOneThreeColumns;"/>
+	<display file="tplTwo" style="modules.website.tplTwo" label="&amp;modules.website.bo.general.template.TplTwo;"/>
+	<display file="tplTwoThreeColumns" style="modules.website.tplTwoThreeColumns" label="&amp;modules.website.bo.general.template.TplTwoThreeColumns;"/>
+	<display file="tplThreeTwoColumns" style="modules.website.tplThreeTwoColumns" label="&amp;modules.website.bo.general.template.TplThreeTwoColumns;"/>
+	<display file="tplThree" style="modules.website.tplThree" label="&amp;modules.website.bo.general.template.TplThree;"/>
+	<display file="tplFour" style="modules.website.tplFour" label="&amp;modules.website.bo.general.template.TplFour;"/>
+	<display file="tplFourThreeColumns" style="modules.website.tplFourThreeColumns" label="&amp;modules.website.bo.general.template.TplFourThreeColumns;"/>
+	<display file="tplFive" style="modules.website.tplFive" label="&amp;modules.website.bo.general.template.TplFive;"/>
+	<display file="tplFiveThreeColumns" style="modules.website.tplFiveThreeColumns" label="&amp;modules.website.bo.general.template.TplFiveThreeColumns;"/>
+	<display file="tplSix" style="modules.website.tplSix" label="&amp;modules.website.bo.general.template.TplSix;"/>
+	<display file="tplSixTwoColumns" style="modules.website.tplSixTwoColumns" label="&amp;modules.website.bo.general.template.TplSixTwoColumns;"/>
+	<display file="tplSixTwoColumnsRight" style="modules.website.tplSixTwoColumnsRight" label="&amp;modules.website.bo.general.template.TplSixTwoColumnsRight;"/>
+	<display file="tplSixThreeColumns" style="modules.website.tplSixThreeColumns" label="&amp;modules.website.bo.general.template.TplSixThreeColumns;"/>
+
+	<display file="tplNewMailing" style="modules.emailing.tplNewMailing" label="&amp;modules.emailing.bo.general.Template.TplNewMailing;"/>
+</config>

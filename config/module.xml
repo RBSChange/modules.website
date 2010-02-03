@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<module>
+		<enabled>true</enabled>
+		<visible>true</visible>
+		<icon>website</icon>
+		<category>hot</category>
+	</module>
+	<project>
+		<entry name="jquery-ui-theme">south-street</entry>
+		<entry name="highlighter">website_MinimalHighlighter</entry>
+		<entry name="forms-use-qtip-help">true</entry>
+		<entry name="forms-use-qtip-error">true</entry>
+	</project>
+</config>

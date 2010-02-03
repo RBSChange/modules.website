@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel>
+	<section labeli18n="modules.website.document.page.PrincipalInformations">
+		<field name="label" />
+		<field name="navigationtitle" />
+		<field name="navigationVisibility" />
+		<field name="indexingstatus" />
+		<field name="usehttps" />
+	</section>
+	<section labeli18n="modules.website.document.page.LayoutInformations">
+		<field name="template" />
+		<field name="skin" />
+	</section>
+	<section labeli18n="modules.website.document.page.DateInformations">
+		<field name="startpublicationdate" />
+		<field name="endpublicationdate" />
+	</section>
+	<section labeli18n="modules.website.document.page.Referencing">
+		<field name="robotsmeta" />
+		<field name="metatitle" class="template" rows="3" />
+		<field name="description" class="template" rows="3" />
+		<field name="keywords" class="template" rows="3" />
+	</section>
+	<xul>
+		<javascript>
+			<field name="mEditContentButton">null</field>
+
+			<constructor><![CDATA[
+				this.mEditContentButton = this.addActionButton('&modules.website.bo.actions.EditContent;', wToolkit.getIcon('edit-page-content', 'small'));
+				var me = this;
+				this.mEditContentButton.addEventListener('command', function(event) {me.onEditContent();}, true);			
+				this.extendMethod("updateCommandsUI", this.updateEditContentUI);
+				this.extendMethod("fireInitializeComplete", this.initializeCompletePageExtent);
+			]]></constructor>
+
+			<method name="updateEditContentUI">
+				<parameter name="event" />
+				<body><![CDATA[
+					this.mEditContentButton.disabled = this.modified;
+				]]></body>
+			</method>
+
+			<method name="onEditContent">
+				<parameter name="event" />
+				<body><![CDATA[
+					this.documentEditor.module.editPageContentFromDocument(this.mDocumentId, this.mLang);
+				]]></body>
+			</method>
+			
+			<method name="initializeCompletePageExtent">
+				<parameter name="result" />
+				<body><![CDATA[
+				var fields = this.fields;
+				var metainfo = result.contents.metainfo;
+				
+				this.setMenuItems(metainfo.title, fields.metatitle);
+				this.setMenuItems(metainfo.description, fields.description);
+				this.setMenuItems(metainfo.keywords, fields.keywords);
+				]]></body>
+			</method>
+			
+			<method name="setMenuItems">
+				<parameter name="metas" />
+				<parameter name="field" />
+				<body><![CDATA[
+				var menuitems = field.getElementsByTagName('menuitem');
+				while (menuitems.length > 0) field.removeChild(menuitems.item(0));
+				
+				field.setAttribute('nocvar', (metas.length == 0) ? 'true' : 'false');
+				for (var i = 0; i < metas.length; i++)
+				{
+					var menuitem = document.createElement('menuitem');
+					menuitem.setAttribute('label', metas[i].label);
+					menuitem.setAttribute('cvar', metas[i].value);
+					menuitem.setAttribute('tooltiptext', metas[i].value);
+					field.appendChild(menuitem);
+				} 
+				]]></body>
+			</method>
+		</javascript>
+	</xul>
+</panel>

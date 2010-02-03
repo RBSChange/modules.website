@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<script>
+	<binding fileName="modules/website/persistentdocument/import/website_binding.xml" />
+	<binding fileName="modules/media/persistentdocument/import/media_binding.xml" />
+
+	<rootfolder module="media">
+		<folder byLabel="Exemple de media Actualité">
+			<documentRef type="modules_media/media" id="uneImage" byLabel="Anniversaire 3">
+				<tag name="default_modules_media_sample" />
+			</documentRef>
+		</folder>
+	</rootfolder>
+
+	<website byTag="default_modules_website_default-website" template="tplOneTwoColumns">
+		<documentRef type="modules_website/topic" byLabel="Outils">
+			<documentRef type="modules_website/page" id="unePage" byLabel="Ajouter aux favoris" />
+		</documentRef>
+		<topic byTag="default_modules_website_sample" label="Rubrique de test">
+			<topic byLabel="Sous-rubrique de test">
+				<topic byLabel="Sous-sous-rubrique de test">
+					<page label="page test" template="tplOne" id="homepage">
+						<changecontent for="content-block">
+							<changeblock type="richtext"><![CDATA[<h2>Page de test</h2>]]></changeblock>
+						</changecontent>
+					</page>
+				</topic>
+			</topic>
+			<page label="page test" template="tplOne" id="homepage">
+				<changecontent for="content-block">
+					<changeblock type="richtext">
+						<![CDATA[
+							<h2>Bloc dans un layout implicite</h2>
+							<p>Un peu de contenu...</p>
+							<p>
+								Lien vers une page : <a lang="fr" cmpref="{ref-id:unePage}">Ajouter aux favoris qsd</a><br/><br/>
+								Image : <img lang="fr" alt="RBS Change 4" cmpref="{ref-id:uneImage}" />
+							</p>
+						]]>
+					</changeblock>
+				</changecontent>
+			</page>
+		</topic>
+	</website>
+</script>

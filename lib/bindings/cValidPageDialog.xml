@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bindings xmlns="http://www.mozilla.org/xbl" 
+	xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" 
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+	xmlns:xbl="http://www.mozilla.org/xbl">
+		
+	<binding id="cValidPageDialog" extends="modules.task.cTaskDialog#cTaskDialog">
+		<implementation>		
+			<field name="title">"&amp;modules.website.bo.workflow.ValidPage.User-task-title;"</field>
+			<field name="description">"&amp;modules.website.bo.workflow.ValidPage.User-task-help;"</field>
+			<field name="loadDataModule">"website"</field>
+			<field name="loadDataAction">"LoadValidPageData"</field>
+			<field name="documentSectionClass">"cPageData"</field>
+		</implementation>		
+	</binding>
+	
+	<binding id="cPageData">
+		<content>
+			<xul:row xbl:inherits="differs=labelDiffers">
+				<xul:label value="&amp;modules.website.document.page.Label;"/>
+				<xul:label xbl:inherits="value=label" />
+			</xul:row>
+			<xul:row xbl:inherits="differs=navigationtitleDiffers">
+				<xul:label value="&amp;modules.website.document.page.Navigationtitle;"/>
+				<xul:label xbl:inherits="value=navigationtitle" />
+			</xul:row>
+			<xul:row xbl:inherits="differs=metatitleDiffers">
+				<xul:label value="&amp;modules.website.document.page.Metatitle;"/>
+				<xul:label xbl:inherits="value=metatitle" />
+			</xul:row>
+			<xul:row xbl:inherits="differs=descriptionDiffers">
+				<xul:label value="&amp;modules.website.document.page.Description;"/>
+				<xul:label xbl:inherits="value=description" />
+			</xul:row>
+			<xul:row xbl:inherits="differs=keywordsDiffers">
+				<xul:label value="&amp;modules.website.document.page.Keywords;"/>
+				<xul:label xbl:inherits="value=keywords" />
+			</xul:row>
+			<xul:row xbl:inherits="differs=indexingstatusDiffers">
+				<xul:label value="&amp;modules.website.document.page.Indexingstatus;"/>
+				<xul:label xbl:inherits="value=indexingstatus" />
+			</xul:row>
+			<xul:row xbl:inherits="differs=templateDiffers">
+				<xul:label value="&amp;modules.website.document.page.Template;"/>
+				<xul:label xbl:inherits="value=template" />
+			</xul:row>
+			<xul:row xbl:inherits="differs=skinDiffers">
+				<xul:label value="&amp;modules.website.document.page.Skin;"/>
+				<xul:label xbl:inherits="value=skin" />
+			</xul:row>
+			<xul:row xbl:inherits="differs=navigationVisibilityDiffers">
+				<xul:label value="&amp;modules.website.document.page.NavigationVisibility;"/>
+				<xul:label xbl:inherits="value=navigationVisibility" />
+			</xul:row>
+			<xul:row xbl:inherits="differs=startpublicationdateDiffers">
+				<xul:label value="&amp;modules.website.document.page.Startpublicationdate;"/>
+				<xul:label xbl:inherits="value=startpublicationdate" />
+			</xul:row>
+			<xul:row xbl:inherits="differs=endpublicationdateDiffers">
+				<xul:label value="&amp;modules.website.document.page.Endpublicationdate;"/>
+				<xul:label xbl:inherits="value=endpublicationdate" />
+			</xul:row>
+		</content>
+	</binding>
+</bindings>

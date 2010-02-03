@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<localization>
+  <entity id="ValidPage.User-task-title">
+    <locale lang="fr">valider la publication d'une page</locale>
+    <locale lang="en">validate page publishing</locale>
+    <locale lang="de">Veröffentlichung einer Seite bestätigen</locale>
+  </entity>
+  <entity id="ValidPage.Accept">
+    <locale lang="fr">accepter</locale>
+    <locale lang="en">accept</locale>
+    <locale lang="de">bestätigen</locale>
+  </entity>
+  <entity id="ValidPage.Refuse">
+    <locale lang="fr">refuser</locale>
+    <locale lang="en">refuse</locale>
+    <locale lang="de">ablehnen</locale>
+  </entity>
+  <entity id="ValidPage.User-task-help">
+    <locale lang="fr">vous devez valider les paramètres et contenus présentés ci-dessous. L'onglet "Paramètres de la page" présente les informations générales relatives au nom, référencement, modèle de page et dates de publication. L'onglet "Contenu de la page" affiche le contenu tel que le verra un internaute, une fois la page publiée.
+Pour continuer, insérez un commentaire qui sera renvoyé au rédacteur de la page, et cliquez sur le bouton "Accepter" ou "Refuser" présent en haut à droite de cet écran.</locale>
+    <locale lang="en">you have to validate parameters and contents presented below. The "page parameters" tab presents the main information related to the name, referencing, page template and publishing dates. "Page content" tab displays the content as the internaut will see it, once the page is published. 
+To continue, insert a commentary that will be sent to the page author, and click "accept" or "refuse" at the top right of this screen.</locale>
+    <locale lang="de">Sie müssen die unten angezeigten Einstellungen und Inhalte bestätigen. Der Reiter "Seiteneinstellungen" zeigt die allgemeneinen Informationen des Namens, der Referenzierung, des Seitetenmodells und des Veröffentlichungsdatums an. Der Reiter "Seiteninhalt" zeigt den Inhalt so an, wie ihn der Besucher sehen wird, wenn die Seite veröffentlicht wird.
+							Um fortzufahren, fügen Sie bitte einen Kommentar ein, der dem Seitenautor geschickt wird, und clicken Sie oben rechts entweder auf "freigeben" oder "ablehnen".</locale>
+  </entity>
+  <entity id="ValidPage.User-task-decision-commentary">
+    <locale lang="fr">commentaire (facultatif)</locale>
+    <locale lang="en">commentary</locale>
+    <locale lang="de">Kommentar</locale>
+  </entity>
+  <entity id="ValidPage.Indexing-status-activate">
+    <locale lang="fr">oui</locale>
+    <locale lang="en">yes</locale>
+    <locale lang="de">JA</locale>
+  </entity>
+  <entity id="ValidPage.Indexing-status-no-activate">
+    <locale lang="fr">non</locale>
+    <locale lang="en">no</locale>
+    <locale lang="de">NEIN</locale>
+  </entity>
+  <entity id="ValidPage.DocumentInformation">
+    <locale lang="fr">informations à valider</locale>
+    <locale lang="en">information to be validated</locale>
+    <locale lang="de">zu bestätigende Informationen</locale>
+  </entity>
+  <entity id="ValidPage.OriginalDocumentInformation">
+    <locale lang="fr">informations de la version actuellement publiée</locale>
+    <locale lang="en">information of the currently published version</locale>
+    <locale lang="de">Informationen der aktuell veröffentlichten Version</locale>
+  </entity>
+  <entity id="ValidPage.ContentToValidate">
+    <locale lang="fr">contenu à valider</locale>
+    <locale lang="en">content to be validated</locale>
+    <locale lang="de">zu bestätigender Inhalt</locale>
+  </entity>
+  <entity id="ValidPage.ContentInProduction">
+    <locale lang="fr">contenu de la version en production</locale>
+    <locale lang="en">content of the version in production</locale>
+    <locale lang="de">Inhalt der Version in Produktion</locale>
+  </entity>
+  <entity id="ValidPage.SynchScrollData">
+    <locale lang="fr">Synchroniser le déroulement des informations</locale>
+    <locale lang="en">Synchonize information flow</locale>
+    <locale lang="de">Informationsablauf synchronisieren</locale>
+  </entity>
+  <entity id="ValidPage.DataValidation">
+    <locale lang="fr">Paramètres de la page</locale>
+    <locale lang="en">page parameters</locale>
+    <locale lang="de">Seiteneinstellungen</locale>
+  </entity>
+  <entity id="ValidPage.ContentValidation">
+    <locale lang="fr">Contenu de la page</locale>
+    <locale lang="en">page content</locale>
+    <locale lang="de">Seiteninhalt</locale>
+  </entity>
+</localization>

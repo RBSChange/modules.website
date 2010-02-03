@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<localization>
+	<entity id="document-name">
+		<locale lang="fr">rubrique</locale>
+		<locale lang="en">topic</locale>
+		<locale lang="de">Rubrik</locale>
+	</entity>
+	<entity id="edition-form-title">
+		<locale lang="fr">propriétés de la rubrique</locale>
+		<locale lang="en">topic properties</locale>
+		<locale lang="de">Rubrikeinstellungen</locale>
+	</entity>
+	<entity id="label">
+		<locale lang="fr">intitulé de la rubrique</locale>
+		<locale lang="en">topic title</locale>
+		<locale lang="de">Rubriktitel</locale>
+	</entity>
+	<entity id="label-help">
+		<locale lang="fr">intitulé de la rubrique, tel qu'il apparaîtra dans les menus</locale>
+		<locale lang="en">topic title, may appear in the menus on the website</locale>
+		<locale lang="de">Name der Rubrik, als sie in der Menüs angezeigt wird.</locale>
+	</entity>
+
+	<entity id="description">
+		<locale lang="fr">description de la rubrique</locale>
+		<locale lang="en">topic description</locale>
+		<locale lang="de">Beschreibung der Rubrik</locale>
+	</entity>
+	<entity id="description-help">
+		<locale lang="fr">description de la rubrique</locale>
+		<locale lang="en">topic description</locale>
+		<locale lang="de">Beschreibung der Rubrik</locale>
+	</entity>
+
+	<entity id="stylesheet">
+		<locale lang="fr">feuille de styles</locale>
+		<locale lang="en">stylesheet</locale>
+		<locale lang="de">Layout-Datei</locale>
+	</entity>
+
+	<entity id="stylesheet-help">
+		<locale lang="fr">sélectionner une feuille de style pour l'appliquer à l'élément</locale>
+		<locale lang="en">select a sylesheet in order to apply it to the element</locale>
+		<locale lang="de">Bitte wählen Sie eine Layout-Datei um sie an den Element anzuwenden</locale>
+	</entity>
+
+	<entity id="url">
+		<locale lang="fr">libellé dans les URLs</locale>
+		<locale lang="en">label in URLs</locale>
+		<locale lang="de">Name in URLs</locale>
+	</entity>
+
+	<entity id="navigationVisibility">
+		<locale lang="fr">visibilité</locale>
+		<locale lang="en">visibility</locale>
+		<locale lang="de">Sichtbarkeit</locale>
+	</entity>
+	<entity id="navigationVisibility-help">
+		<locale lang="fr">visibilité dans les menus de navigation</locale>
+		<locale lang="en">visibility in navigation menus</locale>
+		<locale lang="de">Sichtbarkeit in Navigationsmenüs</locale>
+	</entity>
+
+	<entity id="skin">
+		<locale lang="fr">habillage</locale>
+		<locale lang="en">skin</locale>
+		<locale lang="de">Skin</locale>
+    </entity>
+
+  	<entity id="skin-help">
+		<locale lang="fr">déposer ici un Habillage pour l'appliquer à l'élément</locale>
+		<locale lang="en">drop a Skin here in order to apply it to the element</locale>
+		<locale lang="de">legen Sie her einen Skin ab, um ihn an den Element anzuwenden.</locale>
+	</entity>
+</localization>

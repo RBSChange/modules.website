@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<localization>
+  <entity id="document-name">
+    <locale lang="fr">élément de menu (page ou rubrique)</locale>
+    <locale lang="en">menu item (page or topic)</locale>
+    <locale lang="de">Menüitem (Seite oder Rubrik)</locale>
+  </entity>
+  <entity id="label">
+    <locale lang="fr">libellé</locale>
+    <locale lang="en">label</locale>
+    <locale lang="de">Name</locale>
+  </entity>
+  <entity id="label-help">
+    <locale lang="fr">libellé du lien qui apparaîtra dans les menus</locale>
+    <locale lang="en">link label that appears in the menus</locale>
+    <locale lang="de">Name des Links, der in den Menüs angezeigt wird</locale>
+  </entity>
+  <entity id="document">
+    <locale lang="fr">document</locale>
+    <locale lang="en">document</locale>
+    <locale lang="de">Dokument</locale>
+  </entity>
+  <entity id="document-help">
+    <locale lang="fr">document (page ou rubrique) vers lequel pointe l'élément de menu</locale>
+    <locale lang="en">document pointed by the menu item</locale>
+    <locale lang="de">Dokument, zu dem das Item weitergeleitet wird</locale>
+  </entity>
+  <entity id="popup">
+    <locale lang="fr">ouvrir dans une nouvelle fenêtre</locale>
+    <locale lang="en">open in a new window</locale>
+    <locale lang="de">in einem neuen Fenster öffnen</locale>
+  </entity>
+  <entity id="popup-help">
+    <locale lang="fr">permet d'indiquer que le lien devra s'ouvrir dans une nouvelle fenêtre</locale>
+    <locale lang="en">indicate that the link will open in a new window</locale>
+    <locale lang="de">zeigt an, dass der Link in einem neuen Fenster geöffnet wird</locale>
+  </entity>
+  <entity id="popupParameters">
+    <locale lang="fr">paramètres de la fenêtre</locale>
+    <locale lang="en">window parameters</locale>
+    <locale lang="de">Fenstereinstellungen</locale>
+  </entity>
+  <entity id="popupParameters-help">
+    <locale lang="fr">permet de définir les paramètres d'ouverture de la fenêtre</locale>
+    <locale lang="en">define the parameters for the new window to open</locale>
+    <locale lang="de">definiert die Öffnungseinstellungen des Fensters</locale>
+  </entity>
+  <entity id="active.subdocnotpublished">
+    <locale lang="fr">Le document ciblé n'est pas publié</locale>
+  </entity>
+  <entity id="active.subdocnotvisible">
+    <locale lang="fr">Le document ciblé n'est pas visible dans un menu</locale>
+  </entity>
+</localization>

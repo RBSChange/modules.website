@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<script>
+	<binding fileName="modules/website/persistentdocument/import/website_binding.xml" />
+	
+	<binding fileName="modules/list/persistentdocument/import/list_binding.xml" />
+	<binding fileName="modules/notification/persistentdocument/import/notification_binding.xml" />
+	<binding fileName="modules/workflow/persistentdocument/import/workflow_binding.xml" />
+	
+	<rootfolder module="preferences">
+		<websitepreferences />
+	</rootfolder>
+	
+	<systemfolder module="list" relatedmodule="website">
+		<dynamiclist listid="modules_website/templates"
+			label="Liste des templates" description="Liste des templates">
+		</dynamiclist>
+		
+		<dynamiclist listid="modules_website/stylesheets"
+			label="Liste des feuilles de styles" description="Liste des feuilles de styles">
+		</dynamiclist>
+		
+		<dynamiclist listid="modules_website/availablelangsforwebsite"
+			label="Liste des langues du site" description="Liste des langues du site">
+		</dynamiclist>
+		
+		<staticlist listid="modules_website/robotsmeta"
+			label="Gestion des robots" description="Gestion du comportements des robots d'indexation">
+				<staticitem label="&amp;modules.website.document.page.robotsmeta.index-follow;" value="index,follow"/>
+				<staticitem label="&amp;modules.website.document.page.robotsmeta.noindex-follow;" value="noindex,follow"/>
+				<staticitem label="&amp;modules.website.document.page.robotsmeta.index-nofollow;" value="index,nofollow"/>
+				<staticitem label="&amp;modules.website.document.page.robotsmeta.noindex-nofollow;" value="noindex,nofollow"/>
+		</staticlist>
+								
+		<staticlist listid="modules_website/navigationvisibility"
+			label="Visibilité des pages dans la navigation" description="Visibilité des pages dans la navigation">
+				<staticitem label="&amp;modules.website.bo.general.visibility.Visible;" value="1"/>
+				<staticitem label="&amp;modules.website.bo.general.visibility.Hidden-in-menu-only;" value="2"/>
+				<staticitem label="&amp;modules.website.bo.general.visibility.Hidden-in-sitemap-only;" value="4"/>
+				<staticitem label="&amp;modules.website.bo.general.visibility.Hidden;" value="0"/>
+		</staticlist>
+
+		<staticlist listid="modules_website/menuitemfunctionlist"
+			label="Items de menu fonctionnels" description="Items de menu fonctionnels">
+				<staticitem label="&amp;modules.website.bo.general.menuitemfunction.Print;" value="function:print"/>
+				<staticitem label="&amp;modules.website.bo.general.menuitemfunction.Add-to-favorites;" value="function:addToFavorite"/>
+				<staticitem label="&amp;modules.website.bo.general.menuitemfunction.View-as-pdf;" value="function:viewAsPDF"/>
+				<staticitem label="&amp;modules.website.bo.general.menuitemfunction.Top-of-page;" value="#top"/>
+				<staticitem label="&amp;modules.website.bo.general.menuitemfunction.To-content;" value="#content"/>
+				<staticitem label="&amp;modules.website.bo.general.menuitemfunction.To-main-menu;" value="#mainMenu"/>
+				<staticitem label="&amp;modules.website.bo.general.menuitemfunction.To-secondary-menu;" value="#secondaryMenu"/>
+				<staticitem label="&amp;modules.website.bo.general.menuitemfunction.To-search;" value="#search"/>
+		</staticlist>
+		
+		<staticlist listid="modules_website/protocol"
+			label="Protocol des sites web" description="Protocol des sites web">
+				<staticitem label="&amp;modules.website.bo.general.protocol.Http;" value="http"/>
+				<staticitem label="&amp;modules.website.bo.general.protocol.Https;" value="https"/>
+		</staticlist>	
+	</systemfolder>
+</script>

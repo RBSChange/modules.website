@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/static/schema/change-document/1.0.xsd"
+	model-version="1.0" icon="markers" has-url="false" backoffice-indexable="false" publish-on-day-change="false">
+	<properties>
+		<add name="account" type="String" min-occurs="1" max-occurs="1" />
+		<add name="langs" type="String" from-list="modules_website/availablelangsforwebsite" />
+	</properties>
+</document>

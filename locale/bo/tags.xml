@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<localization>
+<!-- special pages -->
+  <entity id="page-not-found">
+    <locale lang="fr">erreur 'non trouvé' (404)</locale>
+    <locale lang="en">error page 'not found' (404)</locale>
+    <locale lang="de">Fehler 'Seite nicht gefunden' (404)</locale>
+  </entity>
+  <entity id="unauthorized-access">
+    <locale lang="fr">Accès non autorisé (401.1)</locale>
+    <locale lang="en">Unauthorized access (401.1)</locale>
+    <locale lang="de">Nicht erlaubter Zugang (401.1)</locale>
+  </entity>
+  <entity id="server-error">
+    <locale lang="fr">erreur générale (500)</locale>
+    <locale lang="en">general error page (500)</locale>
+    <locale lang="de">Allgemeiner Fehler (500)</locale>
+  </entity>
+  <entity id="sales-condition">
+    <locale lang="fr">conditions générales de ventes</locale>
+    <locale lang="en">sales conditions</locale>
+    <locale lang="de">allgemeine Verkaufsbedingungen</locale>
+  </entity>
+  <entity id="print">
+    <locale lang="fr">modalités d'impression</locale>
+    <locale lang="en">print usage</locale>
+    <locale lang="de">Druckmodalitäten</locale>
+  </entity>
+  <entity id="help">
+    <locale lang="fr">aide</locale>
+    <locale lang="en">help</locale>
+    <locale lang="de">Hilfe</locale>
+  </entity>
+  <entity id="favorite">
+    <locale lang="fr">modalités d'ajout aux favoris</locale>
+    <locale lang="en">add to favorites usage</locale>
+    <locale lang="de">Modalitäten zu den Favoriten hinzufügen</locale>
+  </entity>
+  <entity id="legal-notice">
+    <locale lang="fr">mentions légales</locale>
+    <locale lang="en">legal notice</locale>
+    <locale lang="de">Impressum</locale>
+  </entity>
+<!-- websites -->
+  <entity id="default-website">
+    <locale lang="fr">site par défaut</locale>
+    <locale lang="en">default website</locale>
+    <locale lang="de">Standard Webseite</locale>
+  </entity>
+<!-- menus -->
+  <entity id="footer-menu">
+    <locale lang="fr">menu pied de page</locale>
+    <locale lang="en">footer menu</locale>
+    <locale lang="de">Fußzeilenmenü</locale>
+  </entity>
+  <entity id="header-menu">
+    <locale lang="fr">menu d'entête</locale>
+    <locale lang="en">header menu</locale>
+    <locale lang="de">Kopfzeilenmenü</locale>
+  </entity>
+  <entity id="contextual-menu">
+    <locale lang="fr">menu contextuel</locale>
+    <locale lang="en">contextual menu</locale>
+    <locale lang="de">Kontextualmenü</locale>
+  </entity>
+  <entity id="main-menu">
+    <locale lang="fr">menu principal</locale>
+    <locale lang="en">main menu</locale>
+    <locale lang="de">Hauptmenü</locale>
+  </entity>
+  <entity id="quicklinks-menu">
+    <locale lang="fr">menu liens</locale>
+    <locale lang="en">links menu</locale>
+    <locale lang="de">Linkmenü</locale>
+  </entity>
+  <entity id="copyright-menu">
+    <locale lang="fr">Copyright</locale>
+    <locale lang="en">Copyright</locale>
+    <locale lang="de">Copyright</locale>
+  </entity>
+  <entity id="logo">
+    <locale lang="fr">logo</locale>
+    <locale lang="en">logo</locale>
+    <locale lang="de">Logo</locale>
+  </entity>
+  <entity id="edit">
+    <locale lang="fr">Edition front-office</locale>
+    <locale lang="en">Front-office edition</locale>
+  </entity>
+</localization>

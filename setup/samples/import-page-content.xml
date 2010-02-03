@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<script>
+	<binding fileName="modules/website/persistentdocument/import/website_binding.xml" />
+	<binding fileName="modules/media/persistentdocument/import/media_binding.xml" />
+
+	<rootfolder module="media">
+		<folder byLabel="Exemple de media Actualité">
+			<documentRef type="modules_media/media" id="uneImage" byLabel="Anniversaire 3" />
+		</folder>
+	</rootfolder>
+
+	<website byTag="default_modules_website_default-website" template="tplOneTwoColumns">
+		<documentRef type="modules_website/topic" byLabel="Outils">
+			<documentRef type="modules_website/page" id="unePage" byLabel="Ajouter aux favoris" />
+		</documentRef>
+		<page byLabel="page test" template="tplOne" id="homepage">
+			<changecontent for="content-block">
+				<changeblock type="richtext">
+					<![CDATA[
+						<h2>Bloc dans un layout implicite</h2>
+						<p>Un peu de contenu...</p>
+						<p>
+							Lien vers une page : <a lang="fr" cmpref="{ref-id:unePage}">Ajouter aux favoris qsd</a><br/><br/>
+							Image : <img lang="fr" alt="RBS Change 4" cmpref="{ref-id:uneImage}" />
+						</p>
+					]]>
+				</changeblock>
+				<changeblock type="richtext">
+					<![CDATA[
+						<h2>Bloc dans un layout implicite</h2>
+						<p>Un peu de contenu...</p>
+					]]>
+				</changeblock>
+				<changelayout>
+					<changecolumn>
+						<changerow>
+							<changeblock type="richtext">
+								<![CDATA[
+									<h2>Page d'accueil</h2>
+									<p>Un peu de contenu...</p>
+								]]>
+							</changeblock>
+							<changeblock type="richtext">
+								<![CDATA[
+									<h2>Un autre bloc à côté</h2>
+									<p>Avec aussi un peu de contenu...</p>
+									<p>... et même un peu plus...</p>
+									<p>... et même un peu plus...</p>
+									<p>... et même un peu plus...</p>
+									<p>... et même un peu plus...</p>
+									<p>Voir beaucoup !</p>
+								]]>
+							</changeblock>
+						</changerow>
+						<changerow>
+							<changeblock type="richtext">
+								<![CDATA[
+									<h2>Un bloc en dessous</h2>
+									<p>Avec aussi un peu de contenu...</p>
+								]]>
+							</changeblock>
+							<changeblock type="richtext">
+								<![CDATA[
+									<h2>Un autre bloc à côté</h2>
+									<p>Avec aussi un peu de contenu...</p>
+								]]>
+							</changeblock>
+							<changeblock type="richtext">
+								<![CDATA[
+									<h2>Un autre bloc à côté</h2>
+									<p>Avec aussi un peu de contenu...</p>
+									<p>... et même un peu plus...</p>
+									<p>... et même un peu plus...</p>
+									<p>... et même un peu plus...</p>
+									<p>... et même un peu plus...</p>
+									<p>Voir beaucoup !</p>
+								]]>
+							</changeblock>
+						</changerow>
+					</changecolumn>
+				</changelayout>
+				<changelayout>
+					<changecolumn>
+						<changerow>
+							<changeblock type="richtext">
+								<![CDATA[
+									<h2>Un bloc</h2>
+									<p>Avec aussi un peu de contenu...</p>
+								]]>
+							</changeblock>
+							<changeblock type="richtext">
+								<![CDATA[
+									<h2>Un autre bloc à côté</h2>
+									<p>Avec aussi un peu de contenu...</p>
+									<p>... et même un peu plus...</p>
+									<p>... et même un peu plus...</p>
+									<p>... et même un peu plus...</p>
+									<p>... et même un peu plus...</p>
+									<p>Voir beaucoup !</p>
+								]]>
+							</changeblock>
+						</changerow>
+						<changerow>
+							<changeblock type="richtext">
+								<![CDATA[
+									<h2>Un bloc en dessous</h2>
+									<p>Avec aussi un peu de contenu...</p>
+								]]>
+							</changeblock>
+						</changerow>
+					</changecolumn>
+					<changecolumn>
+						<changerow>
+							<changeblock type="richtext">
+								<![CDATA[
+									<h2>Encore un bloc dans la 2e colonne</h2>
+									<p>Avec aussi un peu de contenu...</p>
+									<p>... et même un peu plus...</p>
+									<p>Voir beaucoup !</p>
+								]]>
+							</changeblock>
+						</changerow>
+					</changecolumn>
+				</changelayout>
+				<changeblock type="richtext">
+					<![CDATA[
+						<h2>Bloc dans un layout implicite</h2>
+						<p>Un peu de contenu...</p>
+					]]>
+				</changeblock>
+				<changeblock type="richtext">
+					<![CDATA[
+						<h2>Bloc dans un layout implicite</h2>
+						<p>Un peu de contenu...</p>
+					]]>
+				</changeblock>
+				<changelayout>
+					<changecolumn width="75">
+						<changerow>
+							<changeblock type="richtext">
+								<![CDATA[
+									<h2>Bloc dans une colonne de largeur 75%</h2>
+									<p>Un peu de contenu...</p>
+								]]>
+							</changeblock>
+						</changerow>
+						<changerow>
+							<changeblock type="richtext">
+								<![CDATA[
+									<h2>Bloc dans une colonne de largeur 75%</h2>
+									<p>Un peu de contenu...</p>
+								]]>
+							</changeblock>
+							<changeblock type="richtext">
+								<![CDATA[
+									<h2>Bloc dans une colonne de largeur 75%</h2>
+									<p>Un peu de contenu...</p>
+								]]>
+							</changeblock>
+						</changerow>
+					</changecolumn>
+					<changecolumn>
+						<changerow>
+							<changeblock type="richtext">
+								<![CDATA[
+									<h2>Bloc dans une colonne de largeur auto</h2>
+									<p>Un peu de contenu...</p>
+									<p>Un peu de contenu...</p>
+									<p>Un peu de contenu...</p>
+									<p>Un peu de contenu...</p>
+									<p>Un peu de contenu...</p>
+									<p>Un peu de contenu...</p>
+									<p>Un peu de contenu...</p>
+									<p>Un peu de contenu...</p>
+									<p>Un peu de contenu...</p>
+									<p>Un peu de contenu...</p>
+									<p>Un peu de contenu...</p>
+									<p>Un peu de contenu...</p>
+									<p>Un peu de contenu...</p>
+								]]>
+							</changeblock>
+						</changerow>
+					</changecolumn>
+				</changelayout>
+			</changecontent>
+		</page>
+	</website>
+</script>

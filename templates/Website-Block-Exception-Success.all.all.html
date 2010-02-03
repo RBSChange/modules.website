@@ -1,0 +1,12 @@
+<!-- TODO: translate -->
+<div tal:condition="exception">
+	<h3 tal:condition="not: exception/getLocalMessage">Une exception a été lancée : <span tal:replace="exception/getMessage"/></h3>
+	<h3 tal:condition="exception/getLocalMessage">Une exception a été lancée : <span tal:replace="exception/getLocaleMessage"/></h3>
+	<tal:block tal:condition="devMode">
+		<pre style="overflow: auto;" tal:content="exception/getTraceAsString"/>
+		<p>Pour plus d'information, veuillez <strong>consulter les logs de l'application</strong>.</p>
+	</tal:block>
+</div>
+<p tal:condition="not: exception">
+  Aucune exception n'a été transmise.
+</p>

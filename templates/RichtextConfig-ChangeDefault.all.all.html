@@ -1,0 +1,27 @@
+<script type="text/javascript" tal:omit-tag="">
+FCKConfig.ToolbarSets["Change"] = [
+	['Bold','Italic','Underline','StrikeThrough','-','Subscript','Superscript'],
+	['OrderedList','UnorderedList','-','Outdent','Indent','Blockquote'],
+	['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull'],
+	['Style','Table','Rule','SpecialChar'],
+	'/',
+	['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
+	['Cut','Copy','Paste','PasteText','PasteWord','-','Image','Link','Unlink','Anchor'], ['FitWindow'],
+];
+
+FCKConfig.JustifyClasses = ['normal text-align-left', 'normal text-align-center', 'normal text-align-right', 'normal text-align-justify'];
+
+FCKConfig.CustomStyles = {};
+FCKConfig.StylesXmlPath = '/index.php?module=website&action=RichtextConfig&configset=ChangeDefault&subset=styles';
+FCKConfig.EditorAreaCSS = '/index.php?module=website&action=RichtextConfig&configset=ChangeDefault&subset=css' ;
+
+FCKConfig.ImageBrowser = true ;
+FCKConfig.ImageBrowserURL = '/fckeditorbrowser/browser.html?Type=Image&Connector=' + encodeURIComponent('/index.php?module=website&action=RichtextConnector');
+FCKConfig.ImageUpload = false ;
+
+FCKConfig.LinkBrowser = true ;
+FCKConfig.LinkBrowserURL = '/fckeditorbrowser/browser.html?Connector=' + encodeURIComponent('/index.php?module=website&action=RichtextConnector');;
+FCKConfig.LinkUpload = false ;
+
+//FCKConfig.DocType = String.fromCharCode(60) + '!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"' + String.fromCharCode(62);
+</script>

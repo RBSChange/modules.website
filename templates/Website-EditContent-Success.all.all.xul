@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<style tal:replace="allStyleUrl" />
+<style tal:replace="cssInclusion" />
+<window orient="vertical"
+	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	onload="setPageLabel();">
+
+<tal:block tal:content="scriptlibrary" />
+<tal:block tal:content="scriptInclusion" />
+<script type="text/javascript"><![CDATA[
+	var pageData = {
+      id: ${PAGEID},
+      lang: "${PAGELANG}",
+      path: "${PAGEPATH}",
+      documentversion: ${PAGEVERSION}
+    };
+]]></script>
+<clayouteditor id="mainEditor" tal:content="pageContent" />
+</window>

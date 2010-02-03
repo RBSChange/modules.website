@@ -1,0 +1,4 @@
+<ul tal:condition="switchArray" >
+	<li tal:repeat="lang switchArray"><a class="link" tal:condition="lang/url" tal:attributes="href lang/url;title lang/title"><img tal:condition="lang/flagicon" tal:attributes="src lang/flagicon;alt lang/title" /><span tal:condition="not: lang/flagicon" tal:replace="lang/label" /></a><tal:block tal:condition="not: lang/url"><img tal:condition="lang/flagicon" tal:attributes="src lang/flagicon;alt lang/title" /><span tal:condition="not: lang/flagicon" tal:replace="lang/label"/></tal:block><span tal:condition="not: repeat/lang/end"> | </span></li>
+</ul>
+

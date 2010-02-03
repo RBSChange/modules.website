@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<script>
+  <binding fileName="modules/generic/persistentdocument/import/generic_binding.xml"/>
+  <binding name="preferences" className="website_PreferencesScriptDocumentElement"/>
+  <binding name="websitepreferences" className="website_PreferencesScriptDocumentElement"/>
+  <binding name="website" className="website_WebsiteScriptDocumentElement"/>
+  <binding name="topic" className="website_TopicScriptDocumentElement"/>
+  <binding name="page" className="website_PageScriptDocumentElement"/>
+  <binding name="pageversion" className="website_PageversionScriptDocumentElement"/>
+  <binding name="pagereference" className="website_PagereferenceScriptDocumentElement"/>
+  <binding name="pageexternal" className="website_PageexternalScriptDocumentElement"/>
+  <binding name="menufolder" className="website_MenufolderScriptDocumentElement"/>
+  <binding name="menus" className="website_MenusScriptDocumentElement"/>
+  <binding name="menu" className="website_MenuScriptDocumentElement"/>
+  <binding name="menuitem" className="website_MenuitemScriptDocumentElement"/>
+  <binding name="menuitemfunction" className="website_MenuitemfunctionScriptDocumentElement"/>
+  <binding name="menuitempage" className="website_MenuItemPageScriptDocumentElement"/>
+  <binding name="menuitemtext" className="website_MenuitemtextScriptDocumentElement"/>
+  <binding name="menuitemdocument" className="website_MenuitemdocumentScriptDocumentElement"/>
+  <binding name="changecontent" className="website_ScriptChangeContentElement"/>
+  <binding name="changelayout" className="website_ScriptChangeLayoutElement"/>
+  <binding name="changecolumn" className="website_ScriptChangeColumnElement"/>
+  <binding name="changerow" className="website_ScriptChangeRowElement"/>
+  <binding name="changeblock" className="website_ScriptChangeBlockElement"/>
+  <binding name="template" className="website_TemplateScriptDocumentElement"/>
+  <binding name="linkedtopic" className="website_LinkedtopicScriptDocumentElement"/>
+  <binding name="pagegroup" className="website_PagegroupScriptDocumentElement"/>
+  <binding name="systemtopic" className="website_SystemtopicScriptDocumentElement"/>
+  <binding name="markerfolder" className="website_MarkerfolderScriptDocumentElement"/>
+  <binding name="marker" className="website_MarkerScriptDocumentElement"/>
+</script>

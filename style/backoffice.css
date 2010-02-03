@@ -1,0 +1,96 @@
+treechildren::-moz-tree-image(modules_website_menufolder){
+	list-style-image: url(/icons/small/folder.png) ;
+}
+treechildren::-moz-tree-image(modules_website_markerfolder){
+	list-style-image: url(/icons/small/marker-folder.png) ;
+}
+treechildren::-moz-tree-image(modules_website_topic){
+	list-style-image: url(/icons/small/topic.png) ;
+}
+treechildren::-moz-tree-image(modules_website_systemtopic){
+	list-style-image: url(/icons/small/systemtopic.png) ;
+}
+treechildren::-moz-tree-image(modules_website_menu){
+	list-style-image: url(/icons/small/menu.png) ;
+}
+treechildren::-moz-tree-image(modules_website_website){
+	list-style-image: url(/icons/small/website.png) ;
+}
+treechildren::-moz-tree-cell-text(notVisible){
+	color: red;
+}
+treechildren::-moz-tree-image(modules_website_topic notVisible){
+	list-style-image: url(/icons/small/index_delete.png) ;
+}
+treechildren::-moz-tree-image(modules_website_topic notVisible){
+	list-style-image: url(/icons/small/index_delete.png) ;
+}
+treechildren::-moz-tree-image(modules_website_pagereference){
+	list-style-image: url(/icons/small/page-reference.png) ;
+}
+treechildren::-moz-tree-cell(modules_website_pagereference){
+	background-image: url(/icons/small/reference.png) ;
+	background-repeat: no-repeat;
+	background-position: left;
+}
+treechildren::-moz-tree-cell-text(modules_website_pagereference){
+	font-style: italic;
+	color: #303030;
+}
+treechildren::-moz-tree-image(modules_website_pagereference isIndexPage){
+	list-style-image: url(/icons/small/page-index.png) ;
+}
+treechildren::-moz-tree-image(modules_website_page){
+	list-style-image: url(/icons/small/page.png) ;
+}
+treechildren::-moz-tree-image(modules_website_pagegroup){
+	list-style-image: url(/icons/small/page-group.png) ;
+}
+treechildren::-moz-tree-image(modules_website_page isIndexPage){
+	list-style-image: url(/icons/small/page-index.png) ;
+}
+treechildren::-moz-tree-image(modules_website_pagegroup isIndexPage){
+	list-style-image: url(/icons/small/document_heart.png) ;
+}
+treechildren::-moz-tree-image(modules_website_page isHomePage){
+	list-style-image: url(/icons/small/page-home.png) ;
+}
+treechildren::-moz-tree-image(modules_website_pagegroup isHomePage){
+	list-style-image: url(/icons/small/page-home.png) ;
+}
+treechildren::-moz-tree-cell-text(modules_website_page isIndexPage){
+	font-weight:bold;
+}
+
+treechildren::-moz-tree-cell-text(modules_website_page isHomePage){
+	color: blue;
+	font-weight:bold;
+}
+treechildren::-moz-tree-cell-text(modules_website_pagegroup isHomePage){
+	color: blue;
+	font-weight:bold;
+}
+treechildren::-moz-tree-image(modules_website_pageexternal){
+	list-style-image: url(/icons/small/page-external.png) ;
+}
+treechildren::-moz-tree-image(modules_website_template){
+	list-style-image: url(/icons/small/document_notebook.png) ;
+}
+treechildren::-moz-tree-image(modules_website_preferences){
+	list-style-image: url(/icons/small/website.png) ;
+}
+treechildren::-moz-tree-image(modules_website_menuitem){
+	list-style-image: url(/icons/small/menuitem.png) ;
+}
+treechildren::-moz-tree-image(modules_website_menuitemdocument){
+	list-style-image: url(/icons/small/menuitem-document.png) ;
+}
+treechildren::-moz-tree-image(modules_website_menuitemfunction){
+	list-style-image: url(/icons/small/menuitem-function.png) ;
+}
+treechildren::-moz-tree-image(modules_website_pageversion){
+	list-style-image: url(/icons/small/page.png) ;
+}
+treechildren::-moz-tree-image(modules_website_menuitemtext){
+	list-style-image: url(/icons/small/menuitem-text.png) ;
+}

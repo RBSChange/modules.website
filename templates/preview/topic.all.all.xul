@@ -1,0 +1,64 @@
+<tabbox flex="1">
+
+	<tabs>
+		<tab i18n:attributes="label &modules.generic.backoffice.General;" />
+		<tab i18n:attributes="label &modules.generic.backoffice.Technical-information;" />
+	</tabs>
+
+	<tabpanels flex="1">
+
+		<tabpanel flex="1">
+			<grid flex="1" class="preview">
+				<columns>
+					<column />
+					<column flex="1" />
+				</columns>
+				<rows>
+					<row>
+						<label i18n:translate="&modules.generic.backoffice.Label;">Label</label>
+						<label tal:content="document/attributes/label" />
+					</row>
+					<row>
+						<label i18n:translate="&modules.generic.backoffice.Status;">Status</label>
+						<label tal:content="document/status" />
+					</row>
+					<row>
+						<label i18n:translate="&modules.generic.backoffice.Creation-date;">Creation date</label>
+						<label tal:content="document/creation_date" />
+					</row>
+					<row>
+						<label i18n:translate="&modules.generic.backoffice.Modification-date;">Modification date</label>
+						<label tal:content="document/modification_date" />
+					</row>
+					<row tal:define="visibility document/attributes/navigationVisibility">
+						<label i18n:translate="&modules.website.document.page.NavigationVisibility;">Visibilité</label>
+						<label tal:condition="php: visibility EQ 0" i18n:translate="&modules.website.bo.general.visibility.Hidden;" />
+						<label tal:condition="php: visibility EQ 1" i18n:translate="&modules.website.bo.general.visibility.Visible;" />
+						<label tal:condition="php: visibility EQ 2" i18n:translate="&modules.website.bo.general.visibility.Hidden-in-menu-only;" />
+					</row>
+				</rows>
+			</grid>
+		</tabpanel>
+
+		<tabpanel flex="1">
+			<grid flex="1" class="preview">
+				<columns>
+					<column />
+					<column flex="1" />
+				</columns>
+				<rows>
+					<row>
+						<label i18n:translate="&modules.generic.backoffice.Id;">ID</label>
+						<label tal:content="document/id" />
+					</row>
+					<row>
+						<label i18n:translate="&modules.generic.backoffice.Type;">Type</label>
+						<label tal:content="document/hrtype" />
+					</row>
+				</rows>
+			</grid>
+		</tabpanel>
+
+	</tabpanels>
+
+</tabbox>

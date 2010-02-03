@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<tags>
+	<tag label="&amp;modules.website.bo.tags.Header-menu;" icon="menu">contextual_website_website_menu-header</tag>
+	<tag label="&amp;modules.website.bo.tags.Footer-menu;" icon="menu">contextual_website_website_menu-footer</tag>
+	<tag label="&amp;modules.website.bo.tags.Main-menu;" icon="menu">contextual_website_website_menu-main</tag>
+	<tag label="&amp;modules.website.bo.tags.Quicklinks-menu;" icon="menu">contextual_website_website_menu-quicklinks</tag>
+	<tag label="&amp;modules.website.bo.tags.Copyright-menu;" icon="menu">contextual_website_website_menu-copyright</tag>
+</tags>

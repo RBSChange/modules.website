@@ -1,0 +1,45 @@
+<?php
+class website_ScriptChangeColumnElement extends import_ScriptBaseElement
+{
+	/**
+	 * @param DOMDocument $document
+	 * @param Integer $width
+	 */
+	public function generateColumn($document, $width = 100)
+	{
+		$newColumn = $document->createElementNS(website_PageService::CHANGE_PAGE_EDITOR_NS, "col");
+		$newColumn->setAttribute("widthPercentage", $width);
+		foreach ($this->script->getChildren($this) as $child)
+		{
+			if ($child instanceof website_ScriptChangeRowElement)
+			{
+				$newRow = $child->generateRow($document);
+				$newColumn->appendChild($newRow);
+			}
+		}
+		return $newColumn;
+	}
+	
+	/**
+	 * @return Boolean
+	 */
+	public function hasWidth()
+	{
+		return isset($this->attributes['width']);
+	}
+	
+	/**
+	 * @return Boolean
+	 */
+	public function getWidth()
+	{
+		if ($this->hasWidth())
+		{
+			return $this->attributes['width'];
+		}
+		else
+		{
+			return 0;
+		}
+	}
+}

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlrewriting>
+	<rules>
+		<rule documentModel="topic" viewMode="detail">
+			<template>/$label,$id/</template>
+		</rule>
+
+		<rule documentModel="page" viewMode="detail">
+			<template>/$navigationtitle,$id,$lang</template>
+		</rule>
+
+		<rule documentModel="pagereference" viewMode="detail">
+			<template>/$navigationtitle,$id,$lang</template>
+		</rule>
+
+		<rule documentModel="pagegroup" viewMode="detail">
+			<template>/$navigationtitle,$id,$lang</template>
+		</rule>
+
+
+		<rule documentModel="pageversion" viewMode="detail">
+			<template>/version/$navigationtitle,$id,$lang</template>
+		</rule>
+
+		<!-- Special pages rules -->
+
+		<!-- Print page -->
+		<rule pageTag="contextual_website_website_print" lang="fr">
+			<template>/imprimer</template>
+		</rule>
+		<rule pageTag="contextual_website_website_print" lang="en">
+			<template>/print</template>
+		</rule>
+
+		<!-- Add to favorites page -->
+		<rule pageTag="contextual_website_website_favorite" lang="fr">
+			<template>/ajouter-aux-favoris</template>
+		</rule>
+		<rule pageTag="contextual_website_website_favorite" lang="en">
+			<template>/add-to-favorites</template>
+		</rule>
+
+		<!-- Legal notice page -->
+		<rule pageTag="contextual_website_website_legal" lang="fr">
+			<template>/mentions-legales</template>
+		</rule>
+		<rule pageTag="contextual_website_website_legal" lang="en">
+			<template>/legal-notice</template>
+		</rule>
+
+		<!-- Help page -->
+		<rule pageTag="contextual_website_website_help" lang="fr">
+			<template>/aide</template>
+		</rule>
+		<rule pageTag="contextual_website_website_help" lang="en">
+			<template>/help</template>
+		</rule>
+
+
+		<rule redirection="website/ViewPageexternal">
+			<template>/external/$navigationtitle,$cmpref,$lang</template>
+			<parameters>
+				<parameter name="navigationtitle" />
+				<parameter name="cmpref" format="[0-9]+"/>
+				<parameter name="lang" />
+			</parameters>
+		</rule>
+
+	</rules>
+
+</urlrewriting>

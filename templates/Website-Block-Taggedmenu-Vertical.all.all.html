@@ -1,0 +1,4 @@
+<ul change:menu="menuObject menuObject; itemName item; masterUlClass tagged-menu-vertical; liCurrentClass current; liInPathClass inpath; liFirstInLevelClass first; liLastInLevelClass last">
+	<a tal:condition="not: repeat/item/isCurrent" change:menuitem="item" />
+	<strong tal:condition="repeat/item/isCurrent" tal:content="item/getLabel"/>
+</ul>

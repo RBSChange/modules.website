@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/static/schema/change-document/1.0.xsd" 
+	model-version="2.0" icon="page" indexable="true">
+	<properties>
+		<add name="startpublicationdate" localized="true"/>
+		<add name="endpublicationdate" localized="true"/>
+		<add name="publicationstatus" localized="true"/>
+
+		<add name="navigationtitle" type="String" min-occurs="1" localized="true" db-size="80" />
+
+		<add name="metatitle" type="LongString" localized="true" />
+		<add name="description" type="LongString" localized="true" />
+		<add name="keywords" type="LongString" localized="true" />
+		<add name="robotsmeta" type="String" db-size="20" from-list="modules_website/robotsmeta" default-value="index,follow" />
+
+		<add name="indexingstatus" type="Boolean" default-value="true" />
+
+		<add name="template" type="String" min-occurs="1" from-list="modules_website/templates" preserve-old-value="true"/>
+
+		<add name="content" type="XHTMLFragment" localized="true" />
+		<add name="skin" type="modules_skin/skin" />
+
+		<add name="navigationVisibility" type="Integer" min-occurs="1" from-list="modules_website/navigationvisibility" default-value="1" localized="true" />
+		<add name="isIndexPage" type="Boolean" min-occurs="1" default-value="false"/>
+		<add name="isHomePage" type="Boolean" min-occurs="1" default-value="false"/>
+
+		<add name="advancedreferencing" type="XHTMLFragment" localized="true" />
+    
+		<add name="isorphan" type="Boolean" default-value="false" />
+    	<add name="usehttps" type="Boolean" default-value="false" />
+	</properties>
+
+	<statuses default="DRAFT"/>
+
+	<workflow start-task="VALIDATIONPAGE">
+		<parameter name="AFFECT_TASKS_TO_SUPER_ADMIN">true</parameter>
+		<parameter name="NOTIFICATION_ACTIVATION">modules_website/sendactivatetoauthor</parameter>
+		<parameter name="NOTIFICATION_ERROR">modules_website/sendcanceltoauthor</parameter>
+	</workflow>
+</document>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<localization>
+	<entity id="bold">
+		<locale lang="fr">gras</locale>
+		<locale lang="en">bold</locale>
+	</entity>
+	<entity id="italic">
+		<locale lang="fr">italique</locale>
+		<locale lang="en">italic</locale>
+	</entity>
+	<entity id="underline">
+		<locale lang="fr">souligner</locale>
+		<locale lang="en">underline</locale>
+	</entity>
+	<entity id="strike">
+		<locale lang="fr">barrer</locale>
+		<locale lang="en">strike</locale>
+	</entity>
+	<entity id="picture">
+		<locale lang="fr">image</locale>
+		<locale lang="en">picture</locale>
+	</entity>
+	<entity id="link">
+		<locale lang="fr">lien</locale>
+		<locale lang="en">link</locale>
+	</entity>
+	<entity id="citation">
+		<locale lang="fr">citer</locale>
+		<locale lang="en">citation</locale>
+	</entity>
+	<entity id="code">
+		<locale lang="fr">code</locale>
+		<locale lang="en">code</locale>
+	</entity>
+</localization>

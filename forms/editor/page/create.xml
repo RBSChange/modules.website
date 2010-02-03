@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel>
+	<section labeli18n="modules.website.document.page.TitleInformations">
+		<field name="navigationtitle"/>
+		<field name="template"/>
+	</section>
+	<xul>
+		<javascript>						
+			<method name="preparePropertiesValues">
+				<parameter name="values" />
+				<body><![CDATA[
+					values.label = values.navigationtitle;
+					values.metatitle = values.navigationtitle;
+					values.documentproperties += ',label,metatitle';
+				]]></body>
+			</method>			
+		</javascript>
+	</xul> 		
+</panel>
