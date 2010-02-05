@@ -195,7 +195,6 @@
 				<column name="modificationdate" label="Modificationdate" flex="1"/>
 			</columns>
 			<contextactions>
-				<contextaction name="edit"/>
 				<contextaction name="createMenu"/>
 				<contextaction name="openFolder"/>
 			</contextactions>
