@@ -1407,17 +1407,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			{
 				if (f_util_StringUtils::isEmpty($html))
 				{
-					try
-					{
-						$html = "<strong>" . f_Locale::translate(block_BlockService::getInstance()->getBlockLabelFromBlockName($block['type'])) . "</strong>";
-					}
-					catch (Exception $e)
-					{
-						if (Framework::isDebugEnabled())
-						{
-							Framework::error(__METHOD__ . ': ' . $e->getMessage());
-						}
-					}
+					$html = "<strong>" . $this->getBlockLabelFromBlockType($block['type']) . "</strong>";
 				}
 				else
 				{
@@ -1426,9 +1416,30 @@ class website_PageService extends f_persistentdocument_DocumentService
 				$class = str_replace('_', '-', $block['type'] . ' ' . $block['package']);
 				$tmpDoc->loadXML('<div xmlns="http://www.w3.org/1999/xhtml" anonid="contentBlock"><div style="'.$this->buildInlineStyle($block['blockwidth']).'"><div class="'.$class.'">' . $html . '</div></div></div>');
 			}
-			$xulContent = str_replace('<htmlblock_'.$blockId.'/>', $tmpDoc->saveXML($tmpDoc->documentElement), $xulContent);
+			if ($tmpDoc->documentElement)
+			{
+				$xmlContent = $tmpDoc->saveXML($tmpDoc->documentElement);
+			}
+			else
+			{
+				$xmlContent = '<div xmlns="http://www.w3.org/1999/xhtml" anonid="contentBlock"><div style="'.$this->buildInlineStyle($block['blockwidth']).'"><div class="'.$class.'"><strong style="color:red;">' . $this->getBlockLabelFromBlockType($block['type'])  . ' : Invalid XML</strong></div></div></div>';
+			}
+			$xulContent = str_replace('<htmlblock_'.$blockId.'/>', $xmlContent , $xulContent);
 		}
 		return $xulContent;
+	}
+	
+	private function getBlockLabelFromBlockType($blockType)
+	{
+		try
+		{
+			return f_Locale::translateUI(block_BlockService::getInstance()->getBlockLabelFromBlockName($blockType));
+		}
+		catch (Exception $e)
+		{
+			Framework::exception($e);
+		}
+		return $blockType;
 	}
 
 	/**
@@ -1455,17 +1466,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			if (f_util_StringUtils::isEmpty($html))
 			{
-				try
-				{
-					$html = "<strong>" . f_Locale::translate(block_BlockService::getInstance()->getBlockLabelFromBlockName($block['type'])) . "</strong>";
-				}
-				catch (Exception $e)
-				{
-					if (Framework::isDebugEnabled())
-					{
-						Framework::error(__METHOD__ . ': ' . $e->getMessage());
-					}
-				}
+				$html = "<strong>" . $this->getBlockLabelFromBlockType($block['type']) . "</strong>";
 			}
 			else
 			{
@@ -1474,7 +1475,14 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$class = str_replace('_', '-', $block['type'] . ' ' . $block['package']);
 			$tmpDoc->loadXML('<div xmlns="http://www.w3.org/1999/xhtml" class="'.$class.'">' . $html . '</div>');
 		}
-		return $tmpDoc->saveXML($tmpDoc->documentElement);
+		if ($tmpDoc->documentElement)
+		{
+			return $tmpDoc->saveXML($tmpDoc->documentElement);
+		}
+		else 
+		{
+			return '<div xmlns="http://www.w3.org/1999/xhtml" class="'.$class.'"><strong style="color:red;">' . $this->getBlockLabelFromBlockType($block['type']) . ' : Invalid XML</strong></div>';
+		}
 	}
 
 	private $benchTimes = null;
