@@ -53,6 +53,17 @@ class website_MarkerfolderService extends generic_FolderService
 	}
 	
 	/**
+	 * @see f_persistentdocument_DocumentService::preDelete()
+	 *
+	 * @param website_persistentdocument_markerfolder $document
+	 */
+	protected function preDelete($document)
+	{
+		//DELETE All Marker inner folder
+		website_MarkerService::getInstance()->createQuery()->delete();
+	}
+
+	/**
 	 * @param website_persistentdocument_markerfolder $folder
 	 * @return Array
 	 */

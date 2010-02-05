@@ -118,15 +118,19 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	}
 
 	/**
-	 * Handle Website deletion: deletes the folder that holds the menus.
+	 * Handle Website deletion: deletes the folder that holds the menus and markers
 	 *
 	 * @param website_persistentdocument_website $document
 	 */
 	protected function preDelete($document)
 	{
-		$query = $this->pp->createQuery('modules_website/menufolder')->add(Restrictions::childOf($document->getId()));
-		$menuFolder = $query->findUnique();
-		$menuFolder->delete();
+		website_MenufolderService::getInstance()->getInstance()->createQuery()
+			->add(Restrictions::childOf($document->getId()))->delete();
+
+		website_MarkerfolderService::getInstance()->getInstance()->createQuery()
+			->add(Restrictions::childOf($document->getId()))->delete();
+			
+		TreeService::getInstance()->setTreeNodeCache(false);
 	}
 
 
