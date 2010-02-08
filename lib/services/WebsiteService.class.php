@@ -43,34 +43,46 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
     protected function preSave($document, $parentNodeId = null)
     {       
         $protocol = $document->getProtocol() . '://';
-        
-        if ($document->getLocalizebypath() && !$document->isNew())
+        $masterdomain = $document->getVoDomain();
+        $localizebypath = $document->getLocalizebypath();
+        $rc = RequestContext::getInstance(); 
+        $voLang = $document->getLang();
+        foreach ($document->getI18nInfo()->getLangs() as $lang) 
         {
-            $rq = RequestContext::getInstance(); 
-            $domaine = $document->getVoDomain();
-            
-            if ($document->getLang() != $rq->getLang())
-            {
-                $document->setDomain($domaine);
-                $document->setUrl($protocol.$domaine);
-            }
-            else
-            {
-                foreach ($rq->getSupportedLanguages() as $supportedLanguage) 
-                {
-                	if ($supportedLanguage != $document->getLang() && $document->isLangAvailable($supportedLanguage))
-                	{
-                	     $rq->beginI18nWork($supportedLanguage); 
-                         $document->setDomain($domaine);
-                         $document->setUrl($protocol.$domaine);
-                	     $rq->endI18nWork();
-                	}
-                } 
-            }
-        }
-        else
-        {
-            $document->setUrl($protocol.$document->getDomain());
+        	try 
+        	{
+        		Framework::debug(__METHOD__ . " $lang master $masterdomain");
+        		$rc->beginI18nWork($lang);
+        		 
+	        	if ($localizebypath)
+	        	{
+	        		Framework::debug(__METHOD__ . "By path $localizebypath");
+	        		$document->setDomain($masterdomain);
+	        		$document->setUrl($protocol.$masterdomain);
+	        	}
+	        	else if ($voLang !== $lang)
+	        	{
+	        		
+	        		$subDomain = preg_replace('/\.' . $voLang . '$/', '.'.$lang, $document->getDomain());
+	        		Framework::debug(__METHOD__ . "subDom $subDomain");
+	        		if ($masterdomain == $subDomain)
+	        		{
+	        			$subDomain = $masterdomain . '.' . $lang;	
+	        			Framework::debug(__METHOD__ . "add $subDomain");        			
+	        		}        		
+	        		$document->setDomain($subDomain);		
+        			$document->setUrl($protocol.$subDomain);
+	        	}
+	        	else
+	        	{
+	        		$document->setUrl($protocol.$masterdomain);
+	        	}
+        		$rc->endI18nWork();
+        	}
+        	catch (Exception $e)
+        	{
+        		 $rc->endI18nWork($e);
+        	}
         }
     }
 	
