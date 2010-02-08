@@ -10,6 +10,11 @@ class website_XHTMLCleanerHelper
 	 */
 	public static function clean($XHTMLFragment)
 	{
+		if (Framework::isInfoEnabled())
+		{
+			Framework::info(__METHOD__ . '::Original:' . $XHTMLFragment);
+		}
+
 		if (f_util_StringUtils::isEmpty($XHTMLFragment)) {return '';}
 		$domTemplate = new DOMDocument('1.0', 'UTF-8');
 		$domTemplate->substituteEntities = false;
@@ -18,8 +23,17 @@ class website_XHTMLCleanerHelper
 		$domTemplate->loadXML($xml);
 		$xslt = self::getCleanerXSLTProcessor();
 		$content = $xslt->transformToXml($domTemplate);
-		Framework::info(__METHOD__ . '::' . $content);
-		return str_replace(array('</body>', '<body/>', '<body>', '<body xmlns:php="http://php.net/xsl">', '<body xmlns:php="http://php.net/xsl"/>'), '', $content);
+		
+		$reg = array('/<a\s+([^>]*)\/>/i', '/<\/?body([^>]*)>\s*/i');
+		$replace = array('<a $1></a>', '');
+		$content = preg_replace($reg, $replace, $content);
+		
+		if (Framework::isInfoEnabled())
+		{
+			Framework::info(__METHOD__ . '::Cleaned:' . $content);
+		}
+		
+		return $content;
 	}
 
 	/**
