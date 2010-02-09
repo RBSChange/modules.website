@@ -71,7 +71,7 @@ where options in:
 		$moduleGenerator->setAuthor($this->getAuthor());
 		$blockPath = $moduleGenerator->generateBlock($blockName, $createTag, $icon);
 		
-		$this->getParent()->executeCommand("compile-blocks");
+		$this->getParent()->executeCommand("clear-webapp-cache");
 		
 		$this->quitOk("Block '$blockName' added in module '$moduleName'.
 Please now edit ".$blockPath.".");

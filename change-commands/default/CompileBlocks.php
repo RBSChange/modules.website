@@ -63,6 +63,7 @@ class commands_CompileBlocks extends commands_AbstractChangeCommand
 			{
 				return $this->quitError("All blocks could not be compiled: ".$this->errorCount." errors");
 			}
+			$this->getParent()->executeCommand("clearWebappCache");
 			return $this->quitOk("All blocks compiled successfully.");
 		}
 		else
