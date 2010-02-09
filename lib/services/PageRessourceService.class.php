@@ -240,7 +240,7 @@ class website_PageRessourceService extends BaseService
 		{
 			return null;
 		}
-		$relativePath = $this->getStylesheetRelativePath($stylesheetName, $rc->getUserAgentType(), $rc->getUserAgentTypeVersion(), $rc->getProtocol());		return $this->buildStylesheetInclusion($relativePath, "screen");
+		$relativePath = $this->getStylesheetRelativePath($stylesheetName, $rc->getUserAgentType(), $rc->getUserAgentTypeVersion(), $rc->getProtocol());		
 		return $this->buildStylesheetInclusion($relativePath, "screen");
 	}
 
@@ -404,8 +404,9 @@ class website_PageRessourceService extends BaseService
 			$fullName .= '-' . $this->skin->getIdentifier();
 		}
 		$fullName .= '.css';
+		$lang = RequestContext::getInstance()->getLang();
 		$websiteId = website_WebsiteModuleService::getInstance()->getCurrentWebsite()->getId();
-		return f_util_FileUtils::buildPath('cache', 'css', $protocol , $websiteId, $engine, $version, $fullName);
+		return f_util_FileUtils::buildPath('cache', 'css', $protocol , $websiteId, $lang, $engine, $version, $fullName);
 	}
 
 	/**

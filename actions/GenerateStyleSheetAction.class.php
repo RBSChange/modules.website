@@ -29,18 +29,20 @@ class website_GenerateStyleSheetAction extends website_Action
 		}
 		$prs = website_PageRessourceService::getInstance();
 		$parameters = explode("/", $request->getParameter("param"));
-		if (count($parameters) != 5)
+		if (count($parameters) != 6)
 		{
 			return View::NONE;
 		}
 		
 		$protocol = $parameters[0];
 		$websiteId = $parameters[1];
+		RequestContext::getInstance()->setLang($parameters[2]);
 		$website = DocumentHelper::getDocumentInstance($websiteId);
 		website_WebsiteModuleService::getInstance()->setCurrentWebsite($website);
-		$engine = $parameters[2];
-		$version = $parameters[3];
-		$stylesheet = substr($parameters[4], 0 , strrpos($parameters[4], '.'));
+		
+		$engine = $parameters[3];
+		$version = $parameters[4];
+		$stylesheet = substr($parameters[5], 0 , strrpos($parameters[5], '.'));
 		$skinSepIndex = strpos($stylesheet, '-');
 		
 		if ($skinSepIndex !== false)
