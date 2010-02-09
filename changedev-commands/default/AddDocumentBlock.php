@@ -100,6 +100,11 @@ Where <blockType> in:\n";
 		$blockGenerator->setBlockType($type);
 		$blockGenerator->setBlockIcon($icon);
 		$blockPath = $blockGenerator->generate();
+		
+		if ($blockGenerator->hasTag())
+		{
+			$this->getParent()->executeCommand("compile-tags");
+		}
 
 		$this->quitOk("Block of type $type added for document $docName in module '$moduleName'.
 Please now edit ".$blockPath.".");

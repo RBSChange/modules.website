@@ -62,6 +62,14 @@ class builder_DocumentBlockGenerator extends builder_BlockGenerator
 		$this->genTag = isset($genTag) && $genTag;
 		return $this->generateBlock(ucfirst($blockName), $this->genTag, $this->blockIcon);
 	}
+	
+	/**
+	 * @return Boolean
+	 */
+	function hasTag()
+	{
+		return $this->genTag;
+	}
 
 	/**
 	 * @return String[] [$folder, $tplName]
