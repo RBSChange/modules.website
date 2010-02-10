@@ -83,8 +83,8 @@ ul.header-menu li{
 ul.tagged-menu-horizontal li{
 	float: left;
 	display: block;
-	background-color: none;
-	border-color: none;
+	background-color: transparent;
+	border-color: transparent;
 }
 
 ul.thread li{

@@ -6,6 +6,11 @@ a.link:hover{
 	text-decoration: none/*@var linkhoverdecoration*/;
 	color: #696a12/*@var linkhoverfgcolor*/;
 }
+a.anchor{
+	text-decoration: none;
+	color: inherit;
+	font-weight: normal;
+}
 h1.title,.heading-one{
 	color: #696a12/*@var headingonefgcolor*/;
 	font-size: 1.8em/*@var headingonesize*/;
@@ -82,37 +87,37 @@ h6.title,.heading-six{
 h1.title,.heading-one{
 	border-bottom-style: solid/*@var headingoneborderstyle*/;
 	border-bottom-width: 1px/*@var headingoneborderwidth*/;
-	background-color: none/*@var headingonebgcolor*/;
+	background-color: transparent/*@var headingonebgcolor*/;
 	font-family: "Trebuchet MS", verdana, arial, helvetica, sans-serif/*@var headingonefontfamily*/;
 }
 h2.title,.heading-two{
 	border-bottom-style: solid/*@var headingtwoborderstyle*/;
 	border-bottom-width: 1px/*@var headingtwoborderwidth*/;
-	background-color: none/*@var headingtwobgcolor*/;
+	background-color: transparent/*@var headingtwobgcolor*/;
 	font-family: "Trebuchet MS", verdana, arial, helvetica, sans-serif/*@var headingtwofontfamily*/;
 }
 h3.title,.heading-three{
 	border-bottom-style: solid/*@var headingthreeborderstyle*/;
 	border-bottom-width: 1px/*@var headingthreeborderwidth*/;
-	background-color: none/*@var headingthreebgcolor*/;
+	background-color: transparent/*@var headingthreebgcolor*/;
 	font-family: "Trebuchet MS", verdana, arial, helvetica, sans-serif/*@var headingthreefontfamily*/;
 }
 h4.title,.heading-four{
 	border-bottom-style: solid/*@var headingfourborderstyle*/;
 	border-bottom-width: 1px/*@var headingfourborderwidth*/;
-	background-color: none/*@var headingfourbgcolor*/;
+	background-color: transparent/*@var headingfourbgcolor*/;
 	font-family: "Trebuchet MS", verdana, arial, helvetica, sans-serif/*@var headingfourfontfamily*/;
 }
 h5.title,.heading-five{
 	border-bottom-style: none/*@var headingfiveborderstyle*/;
 	border-bottom-width: 0px/*@var headingfiveborderwidth*/;
-	background-color: none/*@var headingfivebgcolor*/;
+	background-color: transparent/*@var headingfivebgcolor*/;
 	font-family: "Trebuchet MS", verdana, arial, helvetica, sans-serif/*@var headingfivefontfamily*/;
 }
 h6.title,.heading-six{
 	border-bottom-style: none/*@var headingsixborderstyle*/;
 	border-bottom-width: 0px/*@var headingsixborderwidth*/;
-	background-color: none/*@var headingsixbgcolor*/;
+	background-color: transparent/*@var headingsixbgcolor*/;
 	font-family: "Trebuchet MS", verdana, arial, helvetica, sans-serif/*@var headingsixfontfamily*/;
 }
 

@@ -112,7 +112,7 @@ body#richtext-body a.link{
 	background-image: /*@var contentbgimage*/;
 	background-position: top left/*@var contentbgposition*/;
 	background-repeat: no-repeat/*@var contentbgrepeat*/;
-	border-color: none/*@var contentbordercolor*/;
+	border-color: transparent/*@var contentbordercolor*/;
 	border-style: none/*@var contentborderstyle*/;
 	border-width: 0px/*@var contentborderwidth*/;
 }
@@ -138,4 +138,8 @@ body#richtext-body a.link{
 	float: left;
 	width: 475px;
 	text-align: right;
+}
+
+.richtext{
+	margin: 0/*@var richtextmargin*/;
 }
