@@ -338,6 +338,10 @@
 		<locale lang="fr">N°6 - 3 colonnes</locale>
 		<locale lang="en">N°6 - 3 columns</locale>
 	</entity>
+	<entity id="template.tplNewMailing">
+		<locale lang="fr">Template mailing</locale>
+		<locale lang="en">Mailing template</locale>
+	</entity>
 	<entity id="richtext-title1">
 		<locale lang="fr">titre de niveau 1</locale>
 		<locale lang="en">title level 1</locale>
