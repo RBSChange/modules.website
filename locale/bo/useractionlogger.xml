@@ -402,4 +402,76 @@
 	<entity id="log-update-menuitemdocument">
 		<locale lang="fr">log-update-menuitemdocument</locale>
 	</entity>
-<entity id="removeindexpage-pagereference"><locale lang="fr">removeindexpage.pagereference {lang} {documentlabel} {path}</locale></entity><entity id="log-removeindexpage-pagereference"><locale lang="fr">log-removeindexpage-pagereference</locale></entity><entity id="settopicindexpage-pagereference"><locale lang="fr">settopicindexpage.pagereference {lang} {documentlabel} {path}</locale></entity><entity id="log-settopicindexpage-pagereference"><locale lang="fr">log-settopicindexpage-pagereference</locale></entity><entity id="delete-menuitemdocument"><locale lang="fr">delete.menuitemdocument {documentlabel} {lang}</locale></entity><entity id="log-delete-menuitemdocument"><locale lang="fr">log-delete-menuitemdocument</locale></entity><entity id="deletelocalization-pagegroup"><locale lang="fr">deletelocalization.pagegroup {documentlabel} {lang} {path}</locale></entity><entity id="log-deletelocalization-pagegroup"><locale lang="fr">log-deletelocalization-pagegroup</locale></entity><entity id="delete-menu"><locale lang="fr">delete.menu {documentlabel}</locale></entity><entity id="log-delete-menu"><locale lang="fr">log-delete-menu</locale></entity><entity id="update-menuitemtext"><locale lang="fr">update.menuitemtext {lang} {documentlabel}</locale></entity><entity id="log-update-menuitemtext"><locale lang="fr">log-update-menuitemtext</locale></entity><entity id="saveredirectinfo-page"><locale lang="fr">saveredirectinfo.page {lang} {documentlabel} {path}</locale></entity><entity id="log-saveredirectinfo-page"><locale lang="fr">log-saveredirectinfo-page</locale></entity></localization>
+	<entity id="removeindexpage-pagereference">
+		<locale lang="fr">removeindexpage.pagereference {lang} {documentlabel} {path}</locale>
+	</entity>
+	<entity id="log-removeindexpage-pagereference">
+		<locale lang="fr">log-removeindexpage-pagereference</locale>
+	</entity>
+	<entity id="settopicindexpage-pagereference">
+		<locale lang="fr">settopicindexpage.pagereference {lang} {documentlabel} {path}</locale>
+	</entity>
+	<entity id="log-settopicindexpage-pagereference">
+		<locale lang="fr">log-settopicindexpage-pagereference</locale>
+	</entity>
+	<entity id="delete-menuitemdocument">
+		<locale lang="fr">delete.menuitemdocument {documentlabel} {lang}</locale>
+	</entity>
+	<entity id="log-delete-menuitemdocument">
+		<locale lang="fr">log-delete-menuitemdocument</locale>
+	</entity>
+	<entity id="deletelocalization-pagegroup">
+		<locale lang="fr">deletelocalization.pagegroup {documentlabel} {lang} {path}</locale>
+	</entity>
+	<entity id="log-deletelocalization-pagegroup">
+		<locale lang="fr">log-deletelocalization-pagegroup</locale>
+	</entity>
+	<entity id="delete-menu">
+		<locale lang="fr">delete.menu {documentlabel}</locale>
+	</entity>
+	<entity id="log-delete-menu">
+		<locale lang="fr">log-delete-menu</locale>
+	</entity>
+	<entity id="update-menuitemtext">
+		<locale lang="fr">update.menuitemtext {lang} {documentlabel}</locale>
+	</entity>
+	<entity id="log-update-menuitemtext">
+		<locale lang="fr">log-update-menuitemtext</locale>
+	</entity>
+	<entity id="saveredirectinfo-page">
+		<locale lang="fr">saveredirectinfo.page {lang} {documentlabel} {path}</locale>
+	</entity>
+	<entity id="log-saveredirectinfo-page">
+		<locale lang="fr">log-saveredirectinfo-page</locale>
+	</entity>
+	<entity id="deactivated-website">
+		<locale lang="fr">deactivated.website {lang} {documentlabel}</locale>
+	</entity>
+	<entity id="log-deactivated-website">
+		<locale lang="fr">log-deactivated-website</locale>
+	</entity>
+	<entity id="reactivate-website">
+		<locale lang="fr">reactivate.website {lang} {documentlabel}</locale>
+	</entity>
+	<entity id="log-reactivate-website">
+		<locale lang="fr">log-reactivate-website</locale>
+	</entity>
+	<entity id="savepermissions-rootfolder">
+		<locale lang="fr">savepermissions.rootfolder {documentlabel}</locale>
+	</entity>
+	<entity id="log-savepermissions-rootfolder">
+		<locale lang="fr">log-savepermissions-rootfolder</locale>
+	</entity>
+	<entity id="deactivated-website">
+		<locale lang="fr">deactivated.website {lang} {documentlabel}</locale>
+	</entity>
+	<entity id="log-deactivated-website">
+		<locale lang="fr">log-deactivated-website</locale>
+	</entity>
+	<entity id="reactivate-website">
+		<locale lang="fr">reactivate.website {lang} {documentlabel}</locale>
+	</entity>
+	<entity id="log-reactivate-website">
+		<locale lang="fr">log-reactivate-website</locale>
+	</entity>
+</localization>

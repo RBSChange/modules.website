@@ -70,4 +70,7 @@
   <actiondef modulename="website" actionname="delete.menu" label="modules.website.bo.useractionlogger.delete-menu"/>
   <actiondef modulename="website" actionname="update.menuitemtext" label="modules.website.bo.useractionlogger.update-menuitemtext"/>
   <actiondef modulename="website" actionname="saveredirectinfo.page" label="modules.website.bo.useractionlogger.saveredirectinfo-page"/>
+  <actiondef modulename="website" actionname="deactivated.website" label="modules.website.bo.useractionlogger.deactivated-website"/>
+  <actiondef modulename="website" actionname="reactivate.website" label="modules.website.bo.useractionlogger.reactivate-website"/>
+  <actiondef modulename="website" actionname="savepermissions.rootfolder" label="modules.website.bo.useractionlogger.savepermissions-rootfolder"/>
 </script>

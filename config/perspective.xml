@@ -39,7 +39,9 @@
 			</columns>
 			<contextactions>
 				<contextaction name="edit"/>
-				<contextaction name="delete"/>
+				<contextaction name="deactivated" />
+				<contextaction name="reactivate" />
+				<contextaction name="delete" />
 				<contextaction name="openTags"/>
 				<groupactions name="websitecreate_">
 					<contextaction name="createPage"/>

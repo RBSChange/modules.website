@@ -91,8 +91,8 @@ abstract class website_WizardBlockAction extends website_BlockAction
 		{
 			foreach ($invalidProperties as $propertyName => $rawValue)
 			{
-				$array = array('field' => Locale::translate(BeanUtils::getBeanProperyInfo($bean, $propertyName)->getLabelKey()), 'value' => $rawValue);
-				$this->addError(Locale::translate('&framework.validation.validator.InvalidValue;', $array));
+				$array = array('field' => f_Locale::translate(BeanUtils::getBeanProperyInfo($bean, $propertyName)->getLabelKey()), 'value' => $rawValue);
+				$this->addError(f_Locale::translate('&framework.validation.validator.InvalidValue;', $array));
 			}
 			$request->setAttribute("invalidProperties", $invalidProperties);
 		}

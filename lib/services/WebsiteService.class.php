@@ -51,24 +51,22 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
         {
         	try 
         	{
-        		Framework::debug(__METHOD__ . " $lang master $masterdomain");
-        		$rc->beginI18nWork($lang);
-        		 
+        		$rc->beginI18nWork($lang);       		 
 	        	if ($localizebypath)
 	        	{
-	        		Framework::debug(__METHOD__ . "By path $localizebypath");
 	        		$document->setDomain($masterdomain);
 	        		$document->setUrl($protocol.$masterdomain);
 	        	}
 	        	else if ($voLang !== $lang)
 	        	{
-	        		
-	        		$subDomain = preg_replace('/\.' . $voLang . '$/', '.'.$lang, $document->getDomain());
-	        		Framework::debug(__METHOD__ . "subDom $subDomain");
+	        		$subDomain = $document->getDomain();
+	        		if ($masterdomain == $subDomain)
+	        		{
+	        			$subDomain = preg_replace('/\.' . $voLang . '$/', '.'.$lang, $subDomain);
+	        		} 	        		
 	        		if ($masterdomain == $subDomain)
 	        		{
 	        			$subDomain = $masterdomain . '.' . $lang;	
-	        			Framework::debug(__METHOD__ . "add $subDomain");        			
 	        		}        		
 	        		$document->setDomain($subDomain);		
         			$document->setUrl($protocol.$subDomain);

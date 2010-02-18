@@ -13,7 +13,21 @@ class website_patch_0303 extends patch_BasePatch
 		parent::execute();
 		
 		// Update topic structure.
-		$this->executeSQLQuery("ALTER TABLE `m_website_doc_topic` ADD `referenceid` int(11);");
+		try 
+		{
+			$this->executeSQLQuery("ALTER TABLE `m_website_doc_topic` ADD `referenceid` int(11);");
+		}
+		catch (Exception $e)
+		{
+			if (strpos($e->getMessage(), '42S21') !== false)
+			{
+				$this->logWarning('Database already patched.');
+			}
+			else
+			{
+				throw $e;
+			}
+		}
 	}
 
 	/**

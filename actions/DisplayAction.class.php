@@ -30,6 +30,13 @@ class website_DisplayAction extends website_Action
 	 */
 	public function _execute($context, $request)
 	{
+		$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();	
+		if (!$website->isPublished())
+		{
+			include f_util_FileUtils::buildWebappPath('www', 'site-disabled.php');
+			return View::NONE;
+		}
+			
 		controller_ChangeController::setNoCache();
 		$pageId = $this->getDocumentIdFromRequest($request);
 		try
@@ -45,7 +52,7 @@ class website_DisplayAction extends website_Action
 				throw new PageException($pageId, PageException::PAGE_NO_ID);
 			}
 			
-			if (! $page->isPublished())
+			if (!$page->isPublished())
 			{
 				throw new PageException($pageId, PageException::PAGE_NOT_AVAILABLE);
 			}
