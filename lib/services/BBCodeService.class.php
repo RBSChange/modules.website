@@ -2,6 +2,11 @@
 class website_BBCodeService extends BaseService
 {
 	/**
+	 * @var String
+	 */
+	const URL_STRING_REGEXP = '(?:http\:\/\/|https\:\/\/|ftp\:\/\/)[a-zA-Z0-9,;\:\/\-\?\&\.\=\_\~\#\\\'\[\]\{\}]+';
+
+	/**
 	 * @var website_BBCodeService.
 	 */
 	protected static $instance;
@@ -21,7 +26,7 @@ class website_BBCodeService extends BaseService
 	/**
 	 * @var String[]
 	 */
-	private $codeContents = array();
+	protected $codeContents = array();
 	
 	/**
 	 * @param Array $matches
@@ -37,70 +42,60 @@ class website_BBCodeService extends BaseService
 	 * @param String $bbcode
 	 * @return String
 	 */
+	public function fixContent($bbcode)
+	{
+		// Fix URL tags.
+		$bbcode = preg_replace_callback('/\[url\]('.self::URL_STRING_REGEXP.'?)\[\/url\]/is', array($this, 'shortenUrl'), $bbcode);
+		
+		// Add URL tag over urls.
+		$bbcode = preg_replace_callback('/(?<=<br \/>|\s)('.self::URL_STRING_REGEXP.')(?=<br \/>|\s)/is', array($this, 'shortenUrl'), $bbcode);
+		
+		return $bbcode;
+	}
+	
+	/**
+	 * @param String $html
+	 * @return String
+	 */
+	protected function reinjectCodeContentFix($html)
+	{
+		if (count($this->codeContents))
+		{
+			foreach ($this->codeContents as $index => $content)
+			{
+				$html = str_replace('[code=' . $index . ']', '[code]'.$content.'[/code]', $html);
+			}
+			$this->codeContents = array();
+		}
+		return $html;
+	}
+	
+	/**
+	 * @param String $bbcode
+	 * @return String
+	 */
 	public function toHtml($bbcode)
 	{
-		if (empty($bbcode))
+		if (f_util_StringUtils::isEmpty($bbcode))
 		{
 			return null;
 		}
 		
 		// Extract all code tags.
-		$html = preg_replace_callback('(\[code\](.+?)\[\/code\])is', array($this, 'parseCode'), $bbcode);
+		$html = $this->extractCodeContent($bbcode);
 		
 		// Replace any html brackets with HTML Entities to prevent executing HTML or script
 		// Don't use strip_tags here because it breaks [url] search by replacing & with amp
 		$html = f_util_HtmlUtils::textToHtml($html);
 		
+		// Convert default BBCodes.
+		$html = $this->convertDefaultCodes($html);
 		
-		$pattern = array();
-		$replacement = array();
-				
-		// Check for bold text
-		$pattern[] = "(\[b\](.+?)\[\/b])is";
-		$replacement[] = '<b>$1</b>';
-		
-		// Check for Italics text
-		$pattern[] = "(\[i\](.+?)\[\/i\])is";
-		$replacement[] = '<i>$1</i>';
-
-		// Check for Underline text
-		$pattern[] = "(\[u\](.+?)\[\/u\])is";
-		$replacement[] = '<span style="text-decoration: underline;">$1</span>';		
-		
-		// Check for strike-through text
-		$pattern[] = "(\[s\](.+?)\[\/s\])is";
-		$replacement[] = '<s>$1</s>';
-		
-		//[quote]quoted text[/quote]
-		$pattern[] = "(\[quote\](.+?)\[\/quote\])is";
-		$replacement[] = '<blockquote>$1</blockquote>';	
-
-		$pattern[] = "(\[quote\=([^\]]*)\](.+?)\[\/quote\])is";
-		$replacement[] = '<blockquote cite="$1">$2</blockquote>';	
-		
-		// Images
-		$pattern[] = "/\[img\](.+?)\[\/img\]/";
-		$replacement[] = '<img src="$1" />';
-		
-		// Perform URL Search
-		$URLSearchString = " a-zA-Z0-9,;\:\/\-\?\&\.\=\_\~\#\'";
-		$pattern[] = "/\[url\]([$URLSearchString]+)\[\/url\]/";
-		$replacement[] = '<a href="$1" target="_blank">$1</a>';
-		
-		$pattern[] = "(\[url\=([$URLSearchString]+)\](.+?)\[\/url\])";
-		$replacement[] = '<a href="$1" target="_blank">$2</a>';
-		
-		$html = preg_replace($pattern, $replacement, $html);
+		// Handle specific bbcodes.
+		$html = $this->convertSpecificCodes($html);
 		
 		// Re-integrate code tags.
-		if (count($this->codeContents))
-		{
-			foreach ($this->codeContents as $index => $content)
-			{
-				$html = str_replace('[code=' . $index . ']', '<pre>'.$content.'</pre>', $html);
-			}
-			$this->codeContents = array();
-		}
+		$html = $this->reinjectCodeContent($html);
 		
 		return $html;
 	}
@@ -109,60 +104,183 @@ class website_BBCodeService extends BaseService
 	 * @param String $bbcode
 	 * @return String
 	 */
+	protected function extractCodeContent($bbcode)
+	{
+		return preg_replace_callback('(\[code\](.+?)\[\/code\])is', array($this, 'parseCode'), $bbcode);
+	}
+	
+	/**
+	 * @param String $html
+	 * @return String
+	 */
+	protected function convertDefaultCodes($html)
+	{
+		$pattern = array();
+		$replacement = array();
+				
+		// Check for bold text
+		$pattern[] = '/\[b\](.+?)\[\/b]/is';
+		$replacement[] = '<strong>$1</strong>';
+		
+		// Check for Italics text
+		$pattern[] = '/\[i\](.+?)\[\/i\]/is';
+		$replacement[] = '<em>$1</em>';
+
+		// Check for Underline text
+		$pattern[] = '/\[u\](.+?)\[\/u\]/is';
+		$replacement[] = '<span style="text-decoration: underline;">$1</span>';		
+		
+		// Check for strike-through text
+		$pattern[] = '/\[s\](.+?)\[\/s\]/is';
+		$replacement[] = '<del>$1</del>';
+		
+		//[quote]quoted text[/quote]
+		$pattern[] = '/\[quote\](.+?)\[\/quote\]/is';
+		$replacement[] = '<blockquote>$1</blockquote>';	
+
+		$pattern[] = '/\[quote\=([^\]]*)\](.+?)\[\/quote\]/is';
+		$replacement[] = '<blockquote cite="$1">$2</blockquote>';	
+		
+		// Images
+		$pattern[] = '/\[img\](.+?)\[\/img\]/';
+		$replacement[] = '<img src="$1" />';
+		
+		// Perform URL Search
+		$pattern[] = '/\[url\=('.self::URL_STRING_REGEXP.')\](.+)\[\/url\]/isU';
+		$replacement[] = '<a class="link" href="$1" target="_blank">$2</a>';
+		
+		return preg_replace($pattern, $replacement, $html);
+	}
+	
+	/**
+	 * @param String $html
+	 * @return String
+	 */
+	protected function reinjectCodeContent($html)
+	{
+		if (count($this->codeContents))
+		{
+			foreach ($this->codeContents as $index => $content)
+			{
+				$html = str_replace('[code=' . $index . ']', '<pre class="code">'.htmlspecialchars($content, ENT_COMPAT, "utf-8").'</pre>', $html);
+			}
+			$this->codeContents = array();
+		}
+		return $html;
+	}
+	
+	/**
+	 * @param String $html
+	 * @return String
+	 */
+	protected function convertSpecificCodes($html)
+	{
+		// Overload this method to handle specific bbcodes conversion.		
+		return $html;
+	}
+	
+	/**
+	 * @param String $bbcode
+	 * @return String
+	 * @deprecated use toText
+	 */
 	public function removeBBCode($bbcode)
 	{
-		if (empty($bbcode))
+		return $this->toText($bbcode);
+	}
+	
+	/**
+	 * @param String $bbcode
+	 * @return String
+	 */
+	public function toText($bbcode)
+	{
+		if (f_util_StringUtils::isEmpty($bbcode))
 		{
 			return null;
 		}
 		
 		// Replace any html brackets with HTML Entities to prevent executing HTML or script
 		// Don't use strip_tags here because it breaks [url] search by replacing & with amp
-		$html = htmlspecialchars($bbcode);
+		$text = htmlspecialchars($bbcode);
 		
+		// Handle default bbcodes.
+		$text = $this->removeDefaultCodes($text);
+		
+		// Handle specific bbcodes.
+		$text = $this->removeSpecificCodes($text);
+		
+		return $text;
+	}
+	
+	/**
+	 * @param String $text
+	 * @return String
+	 */
+	protected function removeDefaultCodes($text)
+	{
 		$pattern = array();
 		$replacement = array();
 				
 		// Check for bold text
-		$pattern[] = "(\[b\](.+?)\[\/b])is";
+		$pattern[] = '/\[b\](.+?)\[\/b]/is';
 		$replacement[] = '$1';
 		
 		// Check for Italics text
-		$pattern[] = "(\[i\](.+?)\[\/i\])is";
+		$pattern[] = '/\[i\](.+?)\[\/i\]/is';
 		$replacement[] = '$1';
 
 		// Check for Underline text
-		$pattern[] = "(\[u\](.+?)\[\/u\])is";
+		$pattern[] = '/\[u\](.+?)\[\/u\]/is';
 		$replacement[] = '$1';		
 		
 		// Check for strike-through text
-		$pattern[] = "(\[s\](.+?)\[\/s\])is";
+		$pattern[] = '/\[s\](.+?)\[\/s\]/is';
 		$replacement[] = '$1';
 		
-		//[quote]quoted text[/quote]
-		$pattern[] = "(\[quote\](.+?)\[\/quote\])is";
+		// [quote]quoted text[/quote]
+		$pattern[] = '/\[quote\](.+?)\[\/quote\]/is';
 		$replacement[] = '$1';	
 
-		$pattern[] = "(\[quote\=([^\]]*)\](.+?)\[\/quote\])is";
+		$pattern[] = '/\[quote\=([^\]]*)\](.+?)\[\/quote\]/is';
 		$replacement[] = '$2';	
 		
 		// Images
-		$pattern[] = "/\[img\](.+?)\[\/img\]/";
+		$pattern[] = '/\[img\](.+?)\[\/img\]/';
 		$replacement[] = '';		
 		
 		// Perform URL Search
-		$URLSearchString = " a-zA-Z0-9\:\/\-\?\&\.\=\_\~\#\'";
-		$pattern[] = "/\[url\]([$URLSearchString]*)\[\/url\]/";
-		$replacement[] = '$1';
-		
-		$pattern[] = "(\[url\=([$URLSearchString]*)\](.+?)\[/url\])";
+		$pattern[] = '/\[url\=(['.self::URL_STRING_REGEXP.')\](.+?)\[/url\]/';
 		$replacement[] = '$2';	
 		
-		//[code]code text[/code]
-		$pattern[] = "(\[code\](.+?)\[\/code\])is";
+		// [code]code text[/code]
+		$pattern[] = '/\[code\](.+?)\[\/code\]/is';
 		$replacement[] = '$1';	
 		
-		$html = preg_replace($pattern, $replacement, $html);
-		return $html;
-	}	
+		return preg_replace($pattern, $replacement, $text);
+	}
+	
+	/**
+	 * @param String $text
+	 * @return String
+	 */
+	protected function removeSpecificCodes($text)
+	{
+		// Overload this method to handle specific bbcodes removal.		
+		return $text;
+	}
+	
+	/**
+	 * @param Array $matches
+	 * @return String
+	 */
+	public function shortenUrl($matches)
+	{
+		$shortUrl = $matches[1];
+		if (f_util_StringUtils::strlen($shortUrl) > 50)
+		{
+			$shortUrl = f_util_StringUtils::substr($shortUrl, 0, 20) . '.....' . f_util_StringUtils::substr($shortUrl, -20);
+		}
+		return '[url=' . $matches[1] . ']' . $shortUrl . '[/url]';
+	}
 }
