@@ -69,13 +69,24 @@ class website_ChangeBlockRenderer
 			$this->moduleName = $params['module'];
 		}
 		echo '<div class="modules-'. $this->moduleName .'-'.  $this->actionName  .' modules-' . $this->moduleName . '">';
-		$this->executeBlockAction($this->getRequestParameters($params));
+		$this->executeBlockAction($this->getRequestParameters($params, $this->moduleName));
 		echo '</div>';
 	}
 	
-	private function getRequestParameters($extensionParams)
+	/**
+	 * @param Array $extensionParams
+	 * @param String $moduleName
+	 * @return Array
+	 */
+	private function getRequestParameters($extensionParams, $moduleName)
 	{
 		$parameters = array();
+		$globalRequest = HttpController::getInstance()->getContext()->getRequest();
+		if ($globalRequest->hasParameter($moduleName.'Param'))
+		{
+			$parameters = $globalRequest->getParameter($moduleName.'Param');
+		}
+		
 		if (isset($extensionParams['inheritedParams']))
 		{
 			$actionRequest = website_BlockController::getInstance()->getRequest();
