@@ -103,7 +103,14 @@ class website_UrlRewritingService extends BaseService
 					$rule->match($url);
 					return $rule;	
 				}
-				Controller::getInstance()->getContext()->getRequest()->setParameter($moduleName. 'Param', array(K::COMPONENT_ID_ACCESSOR => $info['document_id']));
+				$request = Controller::getInstance()->getContext()->getRequest(); 
+				$moduleParameters = $request->getModuleParameters($moduleName);
+				if (!is_array($moduleParameters))
+				{
+					$moduleParameters = array();
+				}
+				$moduleParameters[K::COMPONENT_ID_ACCESSOR] = $info['document_id'];
+				$request->setParameter($moduleName. 'Param', $moduleParameters);
 			}
 			else
 			{
@@ -821,7 +828,6 @@ class website_UrlRewritingService extends BaseService
 				$request->setParameter($name, $value);
 			}
 		}
-		
 		// forwards to the desired module/action
 		$controller->forward($module, $action);
 	}
