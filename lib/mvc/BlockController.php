@@ -58,7 +58,6 @@ class website_BlockController implements f_mvc_Controller
 	 * @var website_PageContextRecorder[]
 	 */
 	private $pageContextRecorderStack = array();
-	private $pageContextRecords = array();
 
 	/**
 	 * @var website_BlockActionContextRecorder[]
@@ -433,8 +432,7 @@ class website_BlockController implements f_mvc_Controller
 	{
 		// Put in cache
 		$this->simpleCache->writeToCache(self::HTML_CACHE_PATH, $this->getResponse()->getWriter()->peek());
-		$this->pageContextRecords = array_merge($this->pageContextRecords, f_util_ArrayUtils::lastElement($this->pageContextRecorderStack)->getRecords());
-		$this->simpleCache->writeToCache("page", "<?php " . implode('', $this->pageContextRecords));
+		$this->simpleCache->writeToCache("page", "<?php " . implode('', f_util_ArrayUtils::lastElement($this->pageContextRecorderStack)->getRecords()));
 	}
 
 	/**
