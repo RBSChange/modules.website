@@ -70,10 +70,12 @@ form.cmxform ul.errors li{
 .success{
 	color: green/*@var successcolor*/;
 }
-a.button{
+a.button{ 
 	font-size: 1em/*@var linkbuttonfontsize*/;
-	padding-left: 4px/*@var linkbuttonpaddingleft*/;
-	padding-right: 4px/*@var linkbuttonpaddingright*/;
+	padding-left: 5px/*@var linkbuttonpaddingleft*/;
+	padding-right: 5px/*@var linkbuttonpaddingright*/;
+	padding-top: 1px;
+	padding-bottom: 1px;
 	background-color: #b9c101/*@var linkbuttonbgcolor*/;
 	border-color: #ccc/*@var linkbuttonbordercolor*/;
 	border-width: 1px/*@var linkbuttonborderwidth*/;
@@ -83,6 +85,7 @@ a.button{
 	background-image: /*@var linkbuttonbgimage*/;
 	background-position: 0 0/*@var linkbuttonbgposition*/;
 	background-repeat: no-repeat/*@var linkbuttonbgrepeat*/;
+	text-decoration: none;
 }
 form.cmxform p.description,form.cmxform p.help-text,form.cmxform fieldset div,form.cmxform .free-text,form.cmxform .bottom-description{
 	margin-bottom: 16px/*@var descmarginbottom*/;
