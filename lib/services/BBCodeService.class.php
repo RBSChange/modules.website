@@ -250,8 +250,8 @@ class website_BBCodeService extends BaseService
 		$replacement[] = '';		
 		
 		// Perform URL Search
-		$pattern[] = '/\[url\=(['.self::URL_STRING_REGEXP.')\](.+?)\[/url\]/';
-		$replacement[] = '$2';	
+		$pattern[] = '/\[url\=(['.self::URL_STRING_REGEXP.')\](.+?)\[\/url\]/';
+		$replacement[] = '$2';
 		
 		// [code]code text[/code]
 		$pattern[] = '/\[code\](.+?)\[\/code\]/is';
