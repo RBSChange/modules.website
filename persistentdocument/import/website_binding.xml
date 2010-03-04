@@ -28,4 +28,5 @@
   <binding name="systemtopic" className="website_SystemtopicScriptDocumentElement"/>
   <binding name="markerfolder" className="website_MarkerfolderScriptDocumentElement"/>
   <binding name="marker" className="website_MarkerScriptDocumentElement"/>
+  <binding name="documenturl" className="website_DocumentURLElement"/>
 </script>
