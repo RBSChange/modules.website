@@ -14,8 +14,22 @@
 			<parameter name="deployonlycurrentpath" type="Boolean" default-value="false" />
 		</parameters>
 	</block>
-	<block type="modules_website_taggedmenu" display="tag: ; template: default; depth: 1; deployonlycurrentpath: false" hidden="true" label="&amp;modules.website.bo.blocks.TaggedMenu;" />
-	<block type="modules_website_contextualmenu" display="template: default; depth: 2; startwebsitelevel: 1; deployall: false" hidden="true" label="&amp;modules.website.bo.blocks.ContextualMenu;" />
+	<block type="modules_website_taggedmenu" display="tag: ; template: default; depth: 1; deployonlycurrentpath: false" hidden="true" label="&amp;modules.website.bo.blocks.TaggedMenu;">
+		<parameters>
+			<parameter name="tag" type="String" />
+			<parameter name="template" type="String" default-value="default" />
+			<parameter name="depth" type="Integer" default-value="1" />
+			<parameter name="deployonlycurrentpath" type="Boolean" default-value="false" />
+		</parameters>
+	</block>
+	<block type="modules_website_contextualmenu" display="template: default; depth: 2; startwebsitelevel: 1; deployall: false" hidden="true" label="&amp;modules.website.bo.blocks.ContextualMenu;">
+		<parameters>
+			<parameter name="template" type="String" default-value="default" />
+			<parameter name="depth" type="Integer" default-value="2" />
+			<parameter name="startwebsitelevel" type="Integer" default-value="1" />
+			<parameter name="deployall" type="Boolean" default="false" />
+		</parameters>
+	</block>
 	<block type="modules_website_switchlanguage" display="viewall: true;showflag: small;" hidden="true" label="&amp;modules.website.bo.blocks.SwitchLanguage;">
 		<parameters>
 			<parameter name="viewall" type="Boolean" default-value="true" />
@@ -32,6 +46,11 @@
 			<parameter name="text" type="LongString" default-value="" cols="46" rows="4" />
 		</parameters>
 	</block>
+	<block type="modules_website_Simplecontent" display="view" icon="" label="&amp;modules.website.bo.blocks.Simplecontent;" hidden="true">
+        <parameters>
+                <parameter name="view" type="String"/>
+        </parameters>
+  	</block>
 	<block type="modules_website_edit" display="" icon="edit" label="&amp;modules.website.bo.blocks.Edit;" />
 	<block type="modules_website_Missing" display="" hidden="true" label="&amp;modules.website.bo.blocks.Missing.Title;" />
 	<!--
