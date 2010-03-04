@@ -520,18 +520,29 @@ class website_BlockController implements f_mvc_Controller
 				}
 
 				// Blocks meta retrieval
-				$getMetaMethodName = "get".$methodSuffix."Metas";
 				$configuration = $this->action->getConfiguration();
 				if (f_util_ClassUtils::methodExists($configuration, "getEnablemetas") &&
-				$this->action->getConfiguration()->getEnablemetas() &&
-				$reflectionClass->hasMethod($getMetaMethodName))
+					$this->action->getConfiguration()->getEnablemetas())
 				{
-					$context = $this->getContext();
-					$metas = $this->action->$getMetaMethodName();
-					$metaPrefix = $this->action->getModuleName()."_".$this->action->getName();
-					foreach ($metas as $metaName => $metaValue)
+					$getMetaMethodName = null;
+					if ($reflectionClass->hasMethod("get".$methodSuffix."Metas"))
 					{
-						$context->addBlockMeta($metaPrefix.".".$metaName, $metaValue);
+						$getMetaMethodName = "get".$methodSuffix."Metas";
+					}
+					else if ($reflectionClass->hasMethod("getMetas"))
+					{
+						$getMetaMethodName = "getMetas";
+					}
+					
+					if ($getMetaMethodName !== null)
+					{
+						$context = $this->getContext();
+						$metas = $this->action->$getMetaMethodName();
+						$metaPrefix = $this->action->getModuleName()."_".$this->action->getName();
+						foreach ($metas as $metaName => $metaValue)
+						{
+							$context->addBlockMeta($metaPrefix.".".$metaName, $metaValue);
+						}
 					}
 				}
 			}
