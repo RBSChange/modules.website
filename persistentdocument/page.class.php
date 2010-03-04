@@ -73,7 +73,17 @@ class website_persistentdocument_page extends website_persistentdocument_pagebas
 	 */
 	protected function addTreeAttributes($moduleName, $treeType, &$nodeAttributes)
 	{
-		$nodeAttributes[f_tree_parser_AttributesBuilder::PLAINLINK_ATTRIBUTE] = LinkHelper::getUrl($this);
+		if ($treeType === 'wmultilist')
+		{
+			try
+			{
+				$nodeAttributes[f_tree_parser_AttributesBuilder::PLAINLINK_ATTRIBUTE] = LinkHelper::getDocumentUrl($this);
+			}
+			catch (Exception $e)
+			{
+				Framework::warn(__METHOD__ . ' ' . $e->getMessage());
+			}
+		}
 
 		if (!$this->getIndexingstatus())
 		{
