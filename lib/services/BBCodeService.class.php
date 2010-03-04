@@ -48,7 +48,7 @@ class website_BBCodeService extends BaseService
 		$bbcode = preg_replace_callback('/\[url\]('.self::URL_STRING_REGEXP.'?)\[\/url\]/is', array($this, 'shortenUrl'), $bbcode);
 		
 		// Add URL tag over urls.
-		$bbcode = preg_replace_callback('/(?<=<br \/>|\s)('.self::URL_STRING_REGEXP.')(?=<br \/>|\s)/is', array($this, 'shortenUrl'), $bbcode);
+		$bbcode = preg_replace_callback('/(?<=^|<br \/>|\s)('.self::URL_STRING_REGEXP.')(?=<br \/>|\s|$)/is', array($this, 'shortenUrl'), $bbcode);
 		
 		return $bbcode;
 	}
