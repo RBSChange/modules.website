@@ -445,6 +445,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	 */
 	final function __call($name, $arguments)
 	{
+		$matches = array();
 		if (preg_match('/^validate(.+)Input$/', $name, $matches))
 		{
 			if (count($arguments) != 2)
@@ -453,7 +454,8 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 			}
 			$executePart = $matches[1];
 			return $this->processValidation($executePart, $arguments[0], $arguments[1]);
-		} else
+		} 
+		else
 		{
 			throw new Exception("Method $name does not exist on " . get_class($this));
 		}
@@ -539,6 +541,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 		{
 			$bean = BeanUtils::getBean($bean);
 		}
+			
 		$validationResult = true;
 		foreach ($validationRules as $validationRuleDeclaration)
 		{
@@ -548,10 +551,10 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 			{
 				$propertyLabel = $this->getPropertyLabelFromBean($propertyName, $bean);
 
-				if ($bean !== null && $bean->getBeanModel()->hasProperty($propertyName))
+				if ($bean !== null && BeanUtils::hasProperty($bean, $propertyName))
 				{
 					$propertyValue = BeanUtils::getProperty($bean, $propertyName);
-					$propertyType = $bean->getBeanModel()->getBeanPropertyInfo($propertyName)->getType();
+					$propertyType = BeanUtils::getBeanPropertyInfo($bean, $propertyName)->getType();
 				}
 				else
 				{
