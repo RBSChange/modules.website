@@ -43,12 +43,15 @@
 			<method name="initializeCompletePageExtent">
 				<parameter name="result" />
 				<body><![CDATA[
-				var fields = this.fields;
-				var metainfo = result.contents.to.metainfo;
-				
-				this.setMenuItems(metainfo.title, fields.metatitle);
-				this.setMenuItems(metainfo.description, fields.description);
-				this.setMenuItems(metainfo.keywords, fields.keywords);
+				if (result.status == "OK")
+				{
+					var fields = this.fields;
+					var metainfo = result.contents.to.metainfo;
+					
+					this.setMenuItems(metainfo.title, fields.metatitle);
+					this.setMenuItems(metainfo.description, fields.description);
+					this.setMenuItems(metainfo.keywords, fields.keywords);
+				}
 				]]></body>
 			</method>
 			

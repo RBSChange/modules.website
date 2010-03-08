@@ -1334,8 +1334,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		
 		$contentData = array(
-			'pagecomposition' => f_Locale::translateUI('&modules.website.bo.doceditor.Current-page-composition;', array("blockCount" => $blockCount, "richtextCount" => $richtextCount)),
-			'editpagecontent' => array('id' => $document->getId(), 'lang' => $lang)
+			'pagecomposition' => f_Locale::translateUI('&modules.website.bo.doceditor.Current-page-composition;', array("blockCount" => $blockCount, "richtextCount" => $richtextCount))
 		);
 		
 		if ($wordCount == 0)

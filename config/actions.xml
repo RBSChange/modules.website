@@ -209,7 +209,8 @@
 		<body><![CDATA[
 			var document = listWidget.getSelectedItems()[0];
 			this.getModuleHeader().setEditedItem(document);
-			this.editPageContentFromDocument(document.id, this.getContextLang());
+			var lang = document.fromEditor ? document.lang : this.getContextLang();
+			this.editPageContentFromDocument(document.id, lang);
 		]]></body>
 	</action>
 	<action name="editPageContentIsActive">
@@ -294,10 +295,8 @@
 	<action name="initDefaultStruct">
 		<parameter name="listWidget"/>
 		<body><![CDATA[
-			var documents = listWidget.getSelectedComponents();
-			var id = documents.document[0].component.(@name=="id");
-			var lang = documents.document[0].component.(@name=="lang");
-			this.execute("%label%", "InitDefaultStruct", {{K::COMPONENT_ID_ACCESSOR}: id, {K::LANG_ACCESSOR}: lang });    
+			var document = listWidget.getSelectedItems()[0];
+			this.execute("InitDefaultStruct", "InitDefaultStruct", {cmpref: document.id, lang:this.getContextLang()});    
 		]]></body>
 	</action>
 </actions>

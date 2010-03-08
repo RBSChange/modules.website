@@ -36,5 +36,10 @@
 		labeli18n="modules.uixul.bo.doceditor.section.Urlrewriting" 
 		image="{HttpHost}/icons/small/urlrewriting.png">
 		<property name="currenturl" labeli18n="modules.uixul.bo.doceditor.property.Currenturl" class="link" />
-	</section>				
+	</section>	
+	
+	<section flex="1" name="tags" labeli18n="modules.uixul.bo.doceditor.section.Tags" 
+		image="{HttpHost}/icons/small/tags.png" viewempty="true">
+		<property name="tags" class="action" type="openTags" labeli18n="modules.uixul.bo.doceditor.property.Tags" />
+	</section>			
 </panel>

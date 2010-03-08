@@ -159,7 +159,6 @@
 				<contextaction name="openPage"/>
 				<contextaction name="openUrlRewritingPanel"/>
 				<contextaction name="removeFromMenu"/>
-				<contextaction name="openFolder"/>
 			</contextactions>
 		</model>
 		<model name="modules_website/pageversion">
@@ -311,7 +310,7 @@
 		<action name="reactivate" permission="ReActivate" icon="reactivate" label="&amp;modules.uixul.bo.actions.ReActivate;"/>
 		<action name="createEmptyPageVersionFromPage" single="true" permission="InitEmptyPageVersion" icon="new-empty-version" label="&amp;modules.website.bo.actions.Create-empty-page-version;"/>
 		<action name="createPageVersionFromPage" single="true" permission="InitDuplicatePageVersion" icon="new-version" label="&amp;modules.website.bo.actions.Create-page-version;"/>
-		<action name="openUrlRewritingPanel" single="true" permission="SetUrl" icon="urlrewriting" label="&amp;modules.uixul.bo.actions.Url-rewriting;"/>
+		<action name="openUrlRewritingPanel" single="true" permission="LoadRedirectInfo" icon="urlrewriting" label="&amp;modules.uixul.bo.actions.Url-rewriting;"/>
 		<action name="removeFromMenu" single="true" permission="RemoveFromMenu" icon="remove" label="&amp;modules.website.bo.actions.Remove-from-menu;"/>
 		<action name="createWebsite" single="true" permission="Insert_website" icon="add" label="&amp;modules.website.bo.actions.Create-website;"/>
 		<action name="checkLink" global="true" permission="CheckLink" icon="check" label="&amp;modules.website.bo.actions.Check-link;"/>

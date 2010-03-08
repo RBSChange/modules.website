@@ -336,4 +336,13 @@
   <entity id="systemtopic.Cannot-delete-non-empty-node">
     <locale lang="fr">Vous ne pouvez pas supprimer une rubrique système contenant des documents.</locale>
   </entity>
+  
+  <entity id="modules-website-loadfortranslation-page">
+    <locale lang="fr">vous n'avez pas les permissions suffisantes pour effectuer l'action suivante : "Traduire une page"</locale>
+    <locale lang="en">you don't have the appropriate permission to perform this operation : "Localize a page"</locale>
+  </entity>
+  <entity id="modules-website-loadfortranslation-pageversion">
+    <locale lang="fr">vous n'avez pas les permissions suffisantes pour effectuer l'action suivante : "Traduire une page"</locale>
+    <locale lang="en">you don't have the appropriate permission to perform this operation : "Localize a page"</locale>
+  </entity>  
 </localization>

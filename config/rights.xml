@@ -15,6 +15,12 @@
 		</document>
 		<document name="pageexternal" />
 		<document name="pageversion" />
+		
+		<document name="pagegroup">
+			<action name="SetTopicIndexPage" />
+			<action name="RemoveIndexPage" />
+		</document>		
+		
 		<document name="template" />
 		<document name="menufolder" />
 		<document name="menu" />
@@ -32,7 +38,6 @@
 		<action name="CheckTemplate" />
 		<action name="EditContent" />
 		<action name="SetHomePage" />
-		<action name="SetUrl" />
 		<action name="RemoveFromMenu" />
 		<action name="InitDuplicatePageVersion" />
 		<action name="InitEmptyPageVersion" />
@@ -67,6 +72,7 @@
 			<permission name="Load.page" />
 			<permission name="Load.pageexternal" />
 			<permission name="Load.pageversion" />
+			<permission name="Load.pagegroup" />
 			<permission name="Rename.page" />
 			<permission name="Rename.pageexternal" />
 			<permission name="Rename.pageversion" />
@@ -78,8 +84,11 @@
 			<permission name="Delete.pageversion" />
 			<permission name="Insert.page" />
 			<permission name="Insert.pageexternal" />
+			<permission name="Insert.pageversion" />
 			<permission name="Update.page" />
 			<permission name="Update.pageexternal" />
+			<permission name="Update.pageversion" />
+			<permission name="Update.pagegroup" />
 			<permission name="Duplicate.page" />
 			<permission name="Deactivated.page" />
 			<permission name="Deactivated.pageexternal" />
@@ -94,7 +103,8 @@
 			<permission name="EditContent" />
 			<permission name="CheckTemplate" />
 			<permission name="UpdateTemplate" />
-			<permission name="SetUrl" />
+			<permission name="LoadRedirectInfo" />
+			<permission name="SaveRedirectInfo" />
 			<permission name="LoadTags" />
 			<permission name="WizardSaveAsTemplate" />
 		</role>
@@ -129,11 +139,14 @@
 			<permission name="Update.menu" />
 			<permission name="SetTopicIndexPage.page" />
 			<permission name="RemoveIndexPage.page" />
+			<permission name="SetTopicIndexPage.pagegroup" />
+			<permission name="RemoveIndexPage.pagegroup" />
 			<permission name="SetHomePage" />
 			<permission name="AddToMenu" />
 			<permission name="RemoveFromMenu" />
 			<permission name="CheckLink" />
 			<permission name="InitDefaultStruct" />
+			<permission name="LoadRedirectInfo" />
 			<permission name="SaveRedirectInfo" />
 			<permission name="Deactivated.website" />
 			<permission name="ReActivate.website" />
@@ -143,6 +156,7 @@
 			<permission name="LoadForTranslation.*" />
 			<permission name="UpdateTranslation.*" />
 			<permission name="EditContent" />
+			<permission name="LoadRedirectInfo" />
 			<permission name="SaveRedirectInfo" />
 		</role>
 		<role name="Validator" extend="Guest">
@@ -153,6 +167,7 @@
 			<permission name="ReActivate.pageversion" />
 			<permission name="Activate.*" />
 			<permission name="Cancel.*" />
+			<permission name="LoadRedirectInfo" />
 		</role>
 		<role name="Guest" extend="User">
 			<permission name="Enabled" />

@@ -10,10 +10,9 @@
 	
 	<section name="content" 
 		labeli18n="modules.uixul.bo.doceditor.section.Content" 
-		image="{HttpHost}/icons/small/page-content.png">
-		<property name="pagecomposition" labeli18n="modules.website.bo.doceditor.property.Page-composition" />
+		image="{HttpHost}/icons/small/page-content.png">		
+		<property name="pagecomposition" class="action" type="editPageContent" labeli18n="modules.website.bo.doceditor.property.Page-composition" />
 		<property name="freecontent" labeli18n="modules.website.bo.doceditor.property.Free-content" />
-		<property name="editpagecontent" labeli18n="modules.website.bo.doceditor.property.Edit-page-content" />
 	</section>
 										
 	<section name="publication" linkedtab="publication"
