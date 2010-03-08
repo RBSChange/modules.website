@@ -43,7 +43,7 @@ class PHPTAL_Php_Attribute_CHANGE_paginator extends ChangeTalAttribute
 		
 		if (isset($params['template']))
 		{
-			$paginator->setTemplateModuleName($params['template']);
+			$paginator->setTemplateFileName($params['template']);
 		}
 		echo $paginator->execute();
 	}
