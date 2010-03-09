@@ -1,5 +1,5 @@
 <?php
-class website_InitDefaultStructAction extends website_Action
+class website_InitDefaultStructAction extends f_action_BaseJSONAction
 {
 	/**
 	 * @param Context $context
@@ -46,10 +46,9 @@ class website_InitDefaultStructAction extends website_Action
 		}
 		catch (Exception $e)
 		{
-			$this->setException($request, $e, true);
-			return self::getErrorView();
+			return $this->sendJSONException($e);
 		}
-		return self::getSuccessView();
+		return $this->sendJSON(array('id' => $website->getId()));
 	}
 	
 	/**

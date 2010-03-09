@@ -296,7 +296,7 @@
 		<parameter name="listWidget"/>
 		<body><![CDATA[
 			var document = listWidget.getSelectedItems()[0];
-			this.execute("InitDefaultStruct", "InitDefaultStruct", {cmpref: document.id, lang:this.getContextLang()});    
+			this.executeJSON("InitDefaultStruct", {cmpref: document.id, lang:this.getContextLang()});    
 		]]></body>
 	</action>
 </actions>
