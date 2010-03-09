@@ -229,7 +229,7 @@ abstract class website_lib_urlrewriting_Rule
 		{
 			$url = website_UrlRewritingService::getInstance()->removeSuffix($url);
 		}
-		$regExp = '!^'.$this->m_regExp.'$!';
+		$regExp = '!^'.$this->m_regExp.'$!i';
 
 		$m = null;
 		if (preg_match($regExp, $url, $m) )

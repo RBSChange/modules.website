@@ -10,33 +10,37 @@ class website_patch_0311 extends patch_BasePatch
 	 */
 	public function execute()
 	{
+		$this->log('Compile URL rewriting rules...');
+		exec("change.php compile-url-rewriting");
+		
 		$tagsRules = $this->loadRules();
 		$ts = TagService::getInstance();
 		$tm = f_persistentdocument_TransactionManager::getInstance();
-		$pp = $tm->getPersistentProvider();
-		
 		try 
 		{
-			$tm->beginTransaction();
-			
-			foreach ($tagsRules as $tagRule) 
+			$tm->beginTransaction();		
+			foreach ($tagsRules as $tag => $infos) 
 			{
-				$docs = $ts->getDocumentsByTag($tagRule['tag']);
+				$this->log('Check tag: ' . $tag);
+				$docs = $ts->getDocumentsByTag($tag);
 				foreach ($docs as $doc) 
 				{
-					if ($doc->isLangAvailable($tagRule['lang']))
+					$ds = $doc->getDocumentService();
+					$websiteId = $ds->getWebsiteId($doc);
+					if ($websiteId)
 					{
-						$documentId = $doc->getId();
-						$url = $tagRule['template'];
-						$lang = $tagRule['lang'];
-						$ds = $doc->getDocumentService();
-						$websiteId = $ds->getWebsiteId($doc);
-						if ($websiteId)
+						foreach ($doc->getI18nInfo()->getLangs() as $lang) 
 						{
-							$this->log("setUrlRewriting $documentId $lang -> $url");
-							$pp->removeUrlRewriting($documentId, $lang);
-							$ds->setUrlRewriting($doc, $lang, $url);
-							$pp->setUrlRewriting($documentId, $lang, $websiteId, $url, null, 200);
+							if (isset($infos[$lang]))
+							{
+								$url = $infos[$lang];
+								$this->applyRewriteUrl($doc, $lang, $url, $websiteId);
+							}
+							elseif (isset($infos['--']))
+							{
+								$url = $infos['--'];
+								$this->applyRewriteUrl($doc, $lang, $url, $websiteId);								
+							}
 						}
 					}
 				}
@@ -47,11 +51,14 @@ class website_patch_0311 extends patch_BasePatch
 		{
 			$tm->rollBack($e);
 		}
+		
+		
 	}
 
 	private function loadRules()
 	{
 		$result = array();
+		
 		$modules = ModuleService::getInstance()->getModules();
 		foreach ($modules as $module)
 		{
@@ -64,11 +71,14 @@ class website_patch_0311 extends patch_BasePatch
 				{
 					if ($node->getElementsByTagName('parameter')->length == 0)
 					{
-						$result[] = $this->extractRule($node);
+						list($tag, $lang, $template) = $this->extractRule($node);
+						if (!isset($result[$tag])) {$result[$tag] = array();}
+						$result[$tag][$lang] = $template; 
 					}
 				}								
 			}
 		}
+		
 		$filePath = f_util_FileUtils::buildWebeditPath('config', 'urlrewriting.xml');
 		if (is_readable($filePath))
 		{
@@ -78,11 +88,48 @@ class website_patch_0311 extends patch_BasePatch
 			{
 				if ($node->getElementsByTagName('parameter')->length == 0)
 				{
-					$result[] = $this->extractRule($node);
+					list($tag, $lang, $template) = $this->extractRule($node);
+					if (!isset($result[$tag])) {$result[$tag] = array();}
+					$result[$tag][$lang] = $template;
 				}
 			}								
 		}
 		return $result;
+	}
+	
+	/**
+	 * @param f_persistentdocument_PersistentDocument $doc
+	 * @param string $lang
+	 * @param string $url
+	 * @param integer $websiteId
+	 */
+	private function applyRewriteUrl($doc, $lang, $url, $websiteId)
+	{
+		$documentId = $doc->getId();
+		$this->log("NEW URL $documentId $lang -> $url");
+		$oldRewrite = $this->getPersistentProvider()->getUrlRewritingInfo($documentId, $lang);
+		$this->getPersistentProvider()->removeUrlRewriting($documentId, $lang);
+		$doc->getDocumentService()->setUrlRewriting($doc, $lang, $url);
+		$this->getPersistentProvider()->setUrlRewriting($documentId, $lang, $websiteId, $url, null, 200);	
+		
+		foreach ($oldRewrite as $data) 
+		{
+			if ($data['redirect_type'] == '200')
+			{
+				if ($data['from_url'] != $url)
+				{
+					$this->log("NEW 301 REDIRECT $documentId $lang -> " . $data['from_url']);
+					$this->getPersistentProvider()
+					->setUrlRewriting($documentId, $lang, $websiteId, $data['from_url'], $url, 301);
+				}
+			}
+			else if ($data['from_url'] != $url)
+			{
+				$this->log($data['redirect_type'] . " REDIRECT $documentId $lang -> " . $data['from_url']);
+				$this->getPersistentProvider()
+					->setUrlRewriting($documentId, $lang, $websiteId, $data['from_url'], $url, $data['redirect_type']);
+			}
+		}		
 	}
 	
 	/**
@@ -92,8 +139,13 @@ class website_patch_0311 extends patch_BasePatch
 	{
 		$tag = $node->getAttribute('pageTag');
 		$lang = $node->getAttribute('lang');
+		if (f_util_StringUtils::isEmpty($lang)) {$lang = '--';}
 		$template = $node->getElementsByTagName('template')->item(0)->textContent;
-		return array('tag' => $tag, 'lang' => $lang, 'template' => $template);
+		if (substr($template, -1) !== '/')
+		{
+			$template .= website_UrlRewritingService::getInstance()->getSuffix();
+		}
+		return array($tag, $lang, $template);
 	}
 	
 	/**

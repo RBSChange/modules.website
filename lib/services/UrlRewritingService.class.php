@@ -464,6 +464,11 @@ class website_UrlRewritingService extends BaseService
 	 */
 	public function getTagUrl($tag, $website = null, $lang = null, $additionnalParameters = array())
 	{
+		if ($lang === null)
+		{
+			$lang = RequestContext::getInstance()->getLang();
+		}
+		
 		$ts = TagService::getInstance();
 		if (!$ts->isFunctionalTag($tag))
 		{
