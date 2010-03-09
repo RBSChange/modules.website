@@ -96,9 +96,9 @@ class website_BlockController implements f_mvc_Controller
 	 */
 	function forward($moduleName, $actionName)
 	{
+		$this->pushAction($this->getActionInstanceByModuleAndName($moduleName, $actionName));
 		try
 		{
-			$this->pushAction($this->getActionInstanceByModuleAndName($moduleName, $actionName));
 			$currentRequest = f_util_ArrayUtils::lastElement($this->actionRequestStack);
 			// TODO : take care of website_BlockAction::SUBMIT_PARAMETER_NAME value ! (must reinitialize to the proper value)
 			if ($currentRequest === null)
