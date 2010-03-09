@@ -181,49 +181,59 @@ class LinkHelper
 	
 	public static function getTagUrl($tag, $lang = null, $parameters = array())
 	{
+		$urs = website_UrlRewritingService::getInstance();
+		$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();		
+		$url = $urs->getTagUrl($tag, $website, $lang, $parameters);
+		if ($url !== null) {return $url;}
+		
 		$ts = TagService::getInstance();
-		$document = null;
-
-		if ($ts->isExclusiveTag($tag))
+		try 
 		{
-			$document = $ts->getDocumentByExclusiveTag($tag);
-		}
-		else if ($ts->isFunctionalTag($tag))
-		{
-			$currentPageId = website_WebsiteModuleService::getInstance()->getCurrentPageId();
-			if ($currentPageId)
+			$document = null;
+			if ($ts->isExclusiveTag($tag))
 			{
-				$currentPage = DocumentHelper::getDocumentInstance($currentPageId);
-				$document = $ts->getDocumentBySiblingTag($tag, $currentPage);
+				$document = $ts->getDocumentByExclusiveTag($tag);
 			}
-		}
-		else if ($ts->isContextualTag($tag) && $ts->getTagContext($tag) == 'modules_website/website')
-		{
-			$currentPageId = website_WebsiteModuleService::getInstance()->getCurrentPageId();
-			if ($currentPageId)
+			else if ($ts->isFunctionalTag($tag))
 			{
-				$currentPage = DocumentHelper::getDocumentInstance($currentPageId);
-				$website = website_WebsiteModuleService::getInstance()->getParentWebsite($currentPage);
-				$document = $ts->getDocumentByContextualTag($tag, $website);
+				$currentPageId = website_WebsiteModuleService::getInstance()->getCurrentPageId();
+				if ($currentPageId)
+				{
+					$currentPage = DocumentHelper::getDocumentInstance($currentPageId);
+					$document = $ts->getDocumentBySiblingTag($tag, $currentPage);
+				}
 			}
-		}
-		else
-		{
-			$taggedDocuments = $ts->getDocumentsByTag($tag);
-			if (f_util_ArrayUtils::isNotEmpty($taggedDocuments))
+			else if ($ts->isContextualTag($tag) && $ts->getTagContext($tag) == 'modules_website/website')
 			{
-				$document = $taggedDocuments[0];
+				$currentPageId = website_WebsiteModuleService::getInstance()->getCurrentPageId();
+				if ($currentPageId)
+				{
+					$currentPage = DocumentHelper::getDocumentInstance($currentPageId);
+					$website = website_WebsiteModuleService::getInstance()->getParentWebsite($currentPage);
+					$document = $ts->getDocumentByContextualTag($tag, $website);
+				}
 			}
-		}
-		
-		if ($document !== null)
+			else
+			{
+				$taggedDocuments = $ts->getDocumentsByTag($tag);
+				if (f_util_ArrayUtils::isNotEmpty($taggedDocuments))
+				{
+					$document = $taggedDocuments[0];
+				}
+			}
+			
+			if ($document !== null)
+			{
+				return self::getDocumentUrl($document, $lang, $parameters);
+			}
+			else
+			{
+				Framework::warn(__METHOD__ . ' no document found for tag ' . $tag);
+			}
+		} 
+		catch (Exception $e)
 		{
-			return self::getDocumentUrl($document, $lang, $parameters);
-		}
-		
-		if (Framework::isWarnEnabled())
-		{
-			Framework::warn(__METHOD__ . ' no document found for tag ' . $tag);
+			Framework::warn(__METHOD__ . ' ' . $e->getMessage());
 		}
 		return '';
 	}

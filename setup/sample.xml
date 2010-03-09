@@ -22,6 +22,8 @@
 		<topic label="Outils" label-en="Tools" navigationVisibility="hidden" navigationVisibility-en="hidden">
 			<page label="Imprimer" label-en="Print" indexingstatus="false"
 				byTag="contextual_website_website_print">
+				<documenturl lang="fr" url="/imprimer" />
+				<documenturl lang="en" url="/print" />
 				<changecontent for="content-block">
 					<changeblock type="richtext">
 						<![CDATA[<p>Ici vos instructions pour imprimer une page. (Cette page n'est utilisée que lorsque javascript n'est pas activé)</p>]]>
@@ -35,6 +37,8 @@
 			</page>
 			<page label="Ajouter aux favoris" label-en="Add to favorites" indexingstatus="false" navigationVisibility="hidden" navigationVisibility-en="hidden"
 				byTag="contextual_website_website_favorite">
+				<documenturl lang="fr" url="/ajouter-aux-favoris" />
+				<documenturl lang="en" url="/add-to-favorites" />
 				<changecontent for="content-block">
 					<changeblock type="richtext">
 						<![CDATA[<p>Ici vos instructions pour ajouter une page aux favoris. (Cette page n'est utilisée que lorsque javascript n'est pas activé)</p>]]>
@@ -62,6 +66,8 @@
 			</page>
 			<page label="Mentions légales" id="legal" label-en="Legal notice"
 				byTag="contextual_website_website_legal">
+				<documenturl lang="fr" url="/mentions-legales" />
+				<documenturl lang="en" url="/legal-notice" />
 				<changecontent for="content-block">
 					<changeblock type="richtext">
 						<![CDATA[<p>Ici vos mentions légales.</p>]]>
@@ -75,6 +81,8 @@
 			</page>
 			<page label="aide" indexingstatus="false" id="help" label-en="Help"
 				byTag="contextual_website_website_help">
+				<documenturl lang="fr" url="/aide" />
+				<documenturl lang="en" url="/help" />
 				<changecontent for="content-block">
 					<changeblock type="richtext">
 						<![CDATA[<p>Ici votre texte aidant un visiteur à s'orienter dans votre site.</p>]]>

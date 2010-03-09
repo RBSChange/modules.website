@@ -123,8 +123,16 @@ class website_urlrewriting_RulesParser extends BaseService
 				}
 				else if (isset($rule['pageTag']))
 				{
-					$php[] = "\$rule = new website_lib_urlrewriting_TaggedPageRule(";
-					$php[] = "\t// package\n\t'".$packageName."',\n\t// URL template\n\t'" . $template . "',\n\t// Page tag\n\t'".strval($rule['pageTag'])."',\n\tarray\t(";
+					if ($rule->parameters instanceof SimpleXMLElement && $rule->parameters->parameter instanceof SimpleXMLElement)
+					{
+						$php[] = "\$rule = new website_lib_urlrewriting_TaggedPageRule(";
+						$php[] = "\t// package\n\t'".$packageName."',\n\t// URL template\n\t'" . $template . "',\n\t// Page tag\n\t'".strval($rule['pageTag'])."',\n\tarray\t(";
+					}
+					else
+					{
+						echo 'Tag rule with no parameter is ignored : ' . $packageName . ' ' .$template . ' -> ' .strval($rule['pageTag']) . "\n";
+						continue;
+					}
 				}
 				else
 				{

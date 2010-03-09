@@ -11,6 +11,7 @@
 		<topic label="Outils" navigationVisibility="hidden">
 			<page label="Imprimer" indexingstatus="false">
 				<tag name="contextual_website_website_print" />
+				<documenturl lang="fr" url="/imprimer" />
 				<changecontent for="content-block">
 					<changeblock type="richtext">
 						<![CDATA[<p>Ici vos instructions pour imprimer une page. (Cette page n'est utilisée que lorsque javascript n'est pas activé)</p>]]>
@@ -19,6 +20,7 @@
 			</page>
 			<page label="Ajouter aux favoris" indexingstatus="false" navigationVisibility="hidden">
 				<tag name="contextual_website_website_favorite" />
+				<documenturl lang="fr" url="/ajouter-aux-favoris" />
 				<changecontent for="content-block">
 					<changeblock type="richtext">
 						<![CDATA[<p>Ici vos instructions pour ajouter une page aux favoris. (Cette page n'est utilisée que lorsque javascript n'est pas activé)</p>]]>
@@ -35,23 +37,28 @@
 			</page>
 			<page label="Mentions légales" id="legal" >
 				<tag name="contextual_website_website_legal" />
+				<documenturl lang="fr" url="/mentions-legales" />
 				<changecontent for="content-block">
 					<changeblock type="richtext">
 						<![CDATA[<p>Ici vos mentions légales.</p>]]>
 					</changeblock>
 				</changecontent>
 			</page>
-			<page label="Aide" indexingstatus="false">
+			<page label="Aide" indexingstatus="false" id="help">
 				<tag name="contextual_website_website_help" />
+				<documenturl lang="fr" url="/aide" />
 				<changecontent for="content-block">
 					<changeblock type="richtext">
 						<![CDATA[<p>Ici votre texte aidant un visiteur à s'orienter dans votre site.</p>]]>
 					</changeblock>
 				</changecontent>
 			</page>
-			<page label="Résultat de recherche" indexingstatus="false" navigationVisibility="hidden">
-			    <tag name="contextual_website_website_modules_solrsearch_page-results"/>
+			<page label="Résultat de recherche" indexingstatus="false" navigationVisibility="hidden"
+				byTag="contextual_website_website_modules_solrsearch_page-results">
 			    <changecontent for="content-block">
+			    	<changeblock type="richtext">
+						<![CDATA[<h2>Résultat de recherche</h2>]]>
+					</changeblock>
 					<changeblock type="modules_solrsearch_searchresults" />
 				</changecontent>
 			</page>
@@ -60,6 +67,11 @@
 		<topic label="Système" navigationVisibility="hidden">
 			<page label="Page non trouvée (404)" indexingstatus="false" navigationVisibility="hidden">
 				<tag name="contextual_website_website_error404" />
+				<changecontent for="content-block">
+				   <changeblock type="richtext">
+					 <![CDATA[<h2>Page non trouvée (Erreur 404)</h2><p>La page demandée n'existe pas.<br/><a href="/">Retour à l'accueil</a>.</p>]]>
+				   </changeblock>
+				</changecontent>
 			</page>
 			<page label="Erreur générale (500)" indexingstatus="false" navigationVisibility="hidden">
 				<tag name="contextual_website_website_server-error" />
@@ -70,17 +82,36 @@
 				   <changeblock type="modules_website_exception" />
 				</changecontent>
 			</page>
+			
 			<page label="Accès restreint (401.1)" indexingstatus="false" navigationVisibility="hidden">
 				<tag name="contextual_website_website_error401-1" />
+				<changecontent for="content-block">
+				   <changeblock type="richtext">
+					 <![CDATA[<h2>Cette page est protégée d'accès</h2><p>Veuillez vous identifier en utilisant le formulaire ci-dessous.</p>]]>
+				   </changeblock>
+				   <changeblock type="modules_users_authentication" />
+				</changecontent>
+			</page>
+			
+			<page label="Edition front-office" indexingstatus="false" navigationVisibility="hidden">
+				<tag name="contextual_website_website_modules_website_edit" />
+				<changecontent for="content-block">
+				   <changeblock type="modules_website_edit" />
+				</changecontent>
 			</page>
 		</topic>
 
 		<menus>
-			<menu label="Menu entête de page">
+			<menu label="Menu d'accès rapide" byTag="contextual_website_website_menu-quicklinks">
+				<menuitemfunction label="aller au contenu" url="#content" />
+				<menuitemfunction label="aller au menu principal" url="#mainMenu" />
+				<menuitempage pageid="help" />
+			</menu>
+			
+			<menu label="Menu en haut de page">
 				<tag name="contextual_website_website_menu-header" />
 				<menuitemfunction label="Imprimer" function="print" />
-				<menuitemfunction label="Ajouter aux favoris"
-					function="AddToFavorite" />
+				<menuitemfunction label="Ajouter aux favoris" function="AddToFavorite" />
 				<menuitempage pageid="sitemap" />
 			</menu>
 
@@ -89,13 +120,16 @@
 				<menuitempage pageid="homepage" />
 			</menu>
 
-			<menu label="Menu pied de page">
+			<menu label="Menu en bas de page">
 				<tag name="contextual_website_website_menu-footer" />
 				<menuitempage pageid="homepage" />
 				<menuitempage pageid="legal" />
 				<menuitempage pageid="sitemap" />
 			</menu>
 
+			<menu label="Menu copyright">
+				<tag name="contextual_website_website_menu-copyright" />
+			</menu>
 		</menus>
 	</website>
 </script>

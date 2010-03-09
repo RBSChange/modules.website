@@ -376,45 +376,7 @@ class website_UrlRewritingService extends BaseService
 				return $this->generateUrl($website, $lang, $url, $additionnalParameters);
 			}
 		}
-		
-		$ts = TagService::getInstance();
-		$tags = $ts->getTags($document);
-		
-		foreach ($tags as $tag)
-		{
-			if ($ts->isExclusiveTag($tag) || $ts->isContextualTag($tag))
-			{
-				$rule = $this->findRuleByTagAndLang($tag, $lang);
-				if ($rule === null)
-				{
-					$moduleName = null;
-					if ($ts->isDetailPageTag($tag, $moduleName))
-					{
-						$rule = $this->findRuleByModuleActionAndLang($moduleName, 'ViewDetail', $lang);
-					}
-					else if ($ts->isListPageTag($tag, $moduleName))
-					{
-						$rule = $this->findRuleByModuleActionAndLang($moduleName, 'ViewList', $lang);
-					}
-				}
-				
-				if ($rule instanceof website_lib_urlrewriting_Rule)
-				{
-					$ruleParameterNames = array_keys($rule->getParameters());
-					$ruleParameters = array();
-					foreach ($ruleParameterNames as $ruleParameterName)
-					{
-						if (array_key_exists($ruleParameterName, $additionnalParameters))
-						{
-							$ruleParameters[$ruleParameterName] = $additionnalParameters[$ruleParameterName];
-							unset($additionnalParameters[$ruleParameterName]);
-						}
-					}
-					return $this->generateUrlByRule($website, $lang, $rule, $ruleParameters, $additionnalParameters);
-				}
-			}
-		}
-		
+
 		$rule = $this->findRuleByDocumentAndLang($document, $lang);
 		
 		if ($rule === null)
@@ -490,6 +452,56 @@ class website_UrlRewritingService extends BaseService
 		}
 		$result = $this->generateUrlByRule($website, $lang, $rule, $parameters, $additionnalParameters);
 		return $result;
+	}
+	
+	/**
+	 * Builds and returns the URL for a tag.
+	 * @param string $tag
+	 * @param website_persistentdocument_website $website
+	 * @param string $lang
+	 * @param array $parameters
+	 * @return string or null
+	 */
+	public function getTagUrl($tag, $website = null, $lang = null, $additionnalParameters = array())
+	{
+		$ts = TagService::getInstance();
+		if (!$ts->isFunctionalTag($tag))
+		{
+			$rule = $this->findRuleByTagAndLang($tag, $lang);
+			if ($rule === null)
+			{
+				$moduleName = null;
+				if ($ts->isDetailPageTag($tag, $moduleName))
+				{
+					$rule = $this->findRuleByModuleActionAndLang($moduleName, 'ViewDetail', $lang);
+				}
+				else if ($ts->isListPageTag($tag, $moduleName))
+				{
+					$rule = $this->findRuleByModuleActionAndLang($moduleName, 'ViewList', $lang);
+				}
+			}
+			
+			if ($rule instanceof website_lib_urlrewriting_Rule)
+			{
+				$ruleParameterNames = array_keys($rule->getParameters());
+				$ruleParameters = array();
+				foreach ($ruleParameterNames as $ruleParameterName)
+				{
+					if (array_key_exists($ruleParameterName, $additionnalParameters))
+					{
+						$ruleParameters[$ruleParameterName] = $additionnalParameters[$ruleParameterName];
+						unset($additionnalParameters[$ruleParameterName]);
+					}
+				}
+				if ($website === null)
+				{
+					$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+				}
+				return $this->generateUrlByRule($website, $lang, $rule, $ruleParameters, $additionnalParameters);
+			}
+		}
+		
+		return null;
 	}
 	
 	/**

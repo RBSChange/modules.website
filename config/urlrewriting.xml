@@ -22,7 +22,7 @@
 			<template>/version/$navigationtitle,$id,$lang</template>
 		</rule>
 
-		<!-- Special pages rules -->
+		<!-- START DEPRECATED Special pages rules -->
 
 		<!-- Print page -->
 		<rule pageTag="contextual_website_website_print" lang="fr">
@@ -55,7 +55,8 @@
 		<rule pageTag="contextual_website_website_help" lang="en">
 			<template>/help</template>
 		</rule>
-
+		
+		<!-- END DEPRECATED Special pages rules -->
 
 		<rule redirection="website/ViewPageexternal">
 			<template>/external/$navigationtitle,$cmpref,$lang</template>
