@@ -44,11 +44,24 @@ class website_BBCodeService extends BaseService
 	 */
 	public function fixContent($bbcode)
 	{
+		// -- Fix URL tags.
+		
+		// Add quotation marks around URLs.
+		$bbcode = preg_replace_callback('/\[(url)=('.self::URL_STRING_REGEXP.'?)\](.*)\[\/(url)\]/is', array($this, 'addQuotesAroundUrl'), $bbcode);
+				
 		// Fix URL tags.
 		$bbcode = preg_replace_callback('/\[url\]('.self::URL_STRING_REGEXP.'?)\[\/url\]/is', array($this, 'shortenUrl'), $bbcode);
 		
-		// Add URL tag over urls.
+		// Add URL tag over URLs.
 		$bbcode = preg_replace_callback('/(?<=^|<br \/>|\s)('.self::URL_STRING_REGEXP.')(?=<br \/>|\s|$)/is', array($this, 'shortenUrl'), $bbcode);
+
+		// -- Fix IMG tags.
+		
+		// Add quotation marks around URLs.
+		$bbcode = preg_replace_callback('/\[(img)=('.self::URL_STRING_REGEXP.'?)\](.*)\[\/(img)\]/is', array($this, 'addQuotesAroundUrl'), $bbcode);
+		
+		// Fix URL tags.
+		$bbcode = preg_replace('/\[img\]('.self::URL_STRING_REGEXP.'?)\[\/img\]/is', '[img="$1"][/img]', $bbcode);
 		
 		return $bbcode;
 	}
@@ -134,7 +147,7 @@ class website_BBCodeService extends BaseService
 		$pattern[] = '/\[s\](.+?)\[\/s\]/is';
 		$replacement[] = '<del>$1</del>';
 		
-		//[quote]quoted text[/quote]
+		// [quote]quoted text[/quote]
 		$pattern[] = '/\[quote\](.+?)\[\/quote\]/is';
 		$replacement[] = '<blockquote>$1</blockquote>';	
 
@@ -142,11 +155,11 @@ class website_BBCodeService extends BaseService
 		$replacement[] = '<blockquote cite="$1">$2</blockquote>';	
 		
 		// Images
-		$pattern[] = '/\[img\](.+?)\[\/img\]/';
-		$replacement[] = '<img src="$1" />';
+		$pattern[] = '/\[img=\&quot\;('.self::URL_STRING_REGEXP.')\&quot\;\](.*?)\[\/img\]/is';
+		$replacement[] = '<img src="$1" alt="$2" title="$2" />';
 		
 		// Perform URL Search
-		$pattern[] = '/\[url\=('.self::URL_STRING_REGEXP.')\](.+)\[\/url\]/isU';
+		$pattern[] = '/\[url=\&quot\;('.self::URL_STRING_REGEXP.')\&quot\;\](.+?)\[\/url\]/is';
 		$replacement[] = '<a class="link" href="$1" target="_blank">$2</a>';
 		
 		return preg_replace($pattern, $replacement, $html);
@@ -246,11 +259,11 @@ class website_BBCodeService extends BaseService
 		$replacement[] = '$2';	
 		
 		// Images
-		$pattern[] = '/\[img\](.+?)\[\/img\]/';
-		$replacement[] = '';		
-		
+		$pattern[] = '/\[img=\&quot\;('.self::URL_STRING_REGEXP.')\&quot\;\](.*?)\[\/img\]/is';
+		$replacement[] = ' $2 ';		
+
 		// Perform URL Search
-		$pattern[] = '/\[url\=(['.self::URL_STRING_REGEXP.')\](.+?)\[\/url\]/';
+		$pattern[] = '/\[url=\&quot\;('.self::URL_STRING_REGEXP.')\&quot\;\](.+?)\[\/url\]/is';
 		$replacement[] = '$2';
 		
 		// [code]code text[/code]
@@ -281,6 +294,42 @@ class website_BBCodeService extends BaseService
 		{
 			$shortUrl = f_util_StringUtils::substr($shortUrl, 0, 20) . '.....' . f_util_StringUtils::substr($shortUrl, -20);
 		}
-		return '[url=' . $matches[1] . ']' . $shortUrl . '[/url]';
+		return '[url="' . $matches[1] . '"]' . $shortUrl . '[/url]';
+	}
+	
+	/**
+	 * @param Array $matches
+	 * @return String
+	 */
+	public function addQuotesAroundUrl($matches)
+	{
+		$stringToFix = $matches[2].']'.$matches[3];
+		$fixedString = '';
+		$openBrackets = 0;
+		$lenght = f_util_StringUtils::strlen($stringToFix);
+		for ($i = 0 ; $i < $lenght ; $i++)
+		{
+			$char = f_util_StringUtils::substr($stringToFix, $i, 1);
+			if ($char == '[')
+			{
+				$openBrackets++;
+			}
+			else if ($char == ']')
+			{
+				if ($openBrackets > 0)
+				{
+					$openBrackets--;
+				}
+				// It is the URL tag closing bracket.
+				else 
+				{
+					$fixedString .= '"';
+					$fixedString .= f_util_StringUtils::substr($stringToFix, $i);
+					break;
+				}
+			}
+			$fixedString .= $char;
+		}
+		return '['.$matches[1].'="' . $fixedString . '[/'.$matches[4].']';
 	}
 }
