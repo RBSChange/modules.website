@@ -286,6 +286,15 @@ class website_Page implements f_mvc_Context
 		$parentId = f_util_ArrayUtils::lastElement($this->getAncestorIds());
 		return DocumentHelper::getDocumentInstance($parentId);
 	}
+	
+	/**
+	 * @return website_persistentdocument_website
+	 */
+	public function getWebsite()
+	{
+		$websiteId = f_util_ArrayUtils::firstElement($this->getAncestorIds());
+		return DocumentHelper::getDocumentInstance($websiteId);
+	}
 
 	private $metas = array();
 
