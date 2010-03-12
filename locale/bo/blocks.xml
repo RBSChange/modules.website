@@ -59,4 +59,8 @@
     <locale lang="fr">bloc recherché : {originalClassName}</locale>
     <locale lang="en">missing block: {originalClassName}</locale>
   </entity>
+  <entity id="contextualmenu">
+  	<locale lang="fr">Menu contextuel</locale>
+    <locale lang="en">Contextual menu</locale>
+  </entity>
 </localization>
