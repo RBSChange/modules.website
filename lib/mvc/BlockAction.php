@@ -533,9 +533,10 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	 * @param String $validationRules
 	 * @param website_BlockActionRequest $request
 	 * @param f_mvc_Bean|null $bean
+	 * @param String $relKey
 	 * @return Boolean
 	 */
-	protected final function processValidationRules($validationRules, $request, $bean)
+	protected final function processValidationRules($validationRules, $request, $bean, $relKey = null)
 	{
 		if ($bean !== null)
 		{
@@ -571,7 +572,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 					$validationResult = false;
 					foreach ($validationErrors as $validationError)
 					{
-						$this->addError($validationError);
+						$this->addError($validationError, $relKey);
 					}
 					$this->addErrorsForProperty($propertyName, $validationErrors);
 				}
@@ -596,7 +597,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 						{
 							foreach ($propertyErrors as $propertyError)
 							{
-								$this->addError($propertyError);
+								$this->addError($propertyError, $relKey);
 							}
 						}
 						else
