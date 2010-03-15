@@ -16,7 +16,14 @@
 				this.extendMethodBefore("fireInitializeComplete", this.initializeCompletePageExtend);
 				document.getElementById('website_marker_create_specificPropertiesJSON_label').setAttribute('collapsed', 'true');
 			]]></constructor>
-
+			
+			<method name="prepareInitializeValues">
+				<parameter name="attributes" />
+				<body><![CDATA[
+					attributes.documentproperties = 'label,account,langs';		
+				]]></body>
+			</method>			
+			
 			<method name="extendMethodBefore">
 				<parameter name="methodName" />
 				<parameter name="memberMethod" />

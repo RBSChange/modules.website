@@ -6,4 +6,5 @@
 		<add name="account" type="String" min-occurs="1" max-occurs="1" />
 		<add name="langs" type="String" from-list="modules_website/availablelangsforwebsite" />
 	</properties>
+	<statuses default="ACTIVE"/>
 </document>
