@@ -66,10 +66,12 @@
 	</block>
 	<block type="modules_website_DashboardLastModifiedPages" display="" icon="page" dashboard="true" label="&amp;modules.website.bo.blocks.DashboardLastModifiedPages.Title;" />
 	<!-- Deprecated blocks -->
+	
 	<block type="modules_website_copyright" hidden="true" label="&amp;modules.website.bo.blocks.Copyright;" />
 	<block type="modules_website_footer" hidden="true" label="&amp;modules.website.bo.blocks.Footer;" />
 	<block type="modules_website_header" hidden="true" label="&amp;modules.website.bo.blocks.Header;" />
 	<block type="modules_website_main" hidden="true" label="&amp;modules.website.bo.blocks.Main;" />
 	<block type="modules_website_quicklinks" hidden="true" label="&amp;modules.website.bo.blocks.Quicklinks;" />
 	<block type="modules_website_sidebar" hidden="true" label="&amp;modules.website.bo.blocks.Sidebar;" />
+	<block type="modules_website_threadOld" hidden="true" afterAll="true" />
 </blocks>
