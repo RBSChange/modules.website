@@ -143,6 +143,14 @@ class website_PagereferenceService extends website_PageService
 			$this->tm->rollBack($e);
 		}
 	}
+	
+	/**
+	 * @param website_persistentdocument_page $page
+	 */
+	protected function synchronizeReferences($page)
+	{
+		return;
+	}
 
 	/**
 	 * Synchronisation des tags de $pageReference en fonction des tags de $page

@@ -4,10 +4,11 @@ abstract class website_TaggerBlockAction extends website_BlockAction
 	/**
 	 * Called when the block is inserted into a page content
 	 * @param website_persistentdocument_Page $page
+	 * @param Boolean $absolute true if block was introduced considering all versions (langs) of the page
 	 */
-	function onPageInsertion($page)
+	function onPageInsertion($page, $absolute = false)
 	{
-		if ($this->canApplyTag($page))
+		if ($absolute && $this->canApplyTag($page))
 		{
 			TagService::getInstance()->addTag($page, $this->getTag(), false);
 		}
@@ -17,10 +18,11 @@ abstract class website_TaggerBlockAction extends website_BlockAction
 	 * Called when the block is removed from a page content
 	 * tag the page if some page is not already tagged with the block's tag
 	 * @param website_persistentdocument_Page $page
+	 * @param Boolean $absolute true if block was removed considering all versions (langs) of the page
 	 */
-	function onPageRemoval($page)
+	function onPageRemoval($page, $absolute = false)
 	{
-		if ($this->canApplyTag($page))
+		if ($absolute && $this->canApplyTag($page))
 		{
 			TagService::getInstance()->removeTag($page, $this->getTag());
 		}

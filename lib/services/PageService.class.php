@@ -46,19 +46,10 @@ class website_PageService extends f_persistentdocument_DocumentService
 		return $this->pp->createQuery('modules_website/page');
 	}
 
-
 	/**
 	 * @param website_persistentdocument_page $page
 	 */
-	protected function generatePageCache($page)
-	{
-		$this->synchronizeReferences($page);
-	}
-
-	/**
-	 * @param website_persistentdocument_page $page
-	 */
-	private function synchronizeReferences($page)
+	protected function synchronizeReferences($page)
 	{
 		if ($page instanceof website_persistentdocument_page)
 		{
@@ -93,7 +84,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 				website_TopicService::getInstance()->publishDocumentIfPossible($parentDocument, array('childrenPublicationStatusChanged' => $document));
 			}
 		}
-				
+
 		if ("CORRECTION" == $oldPublicationStatus && isset($params["cause"]) && "activate" == $params["cause"])
 		{
 			$correction = DocumentHelper::getDocumentInstance($params["correctionId"]);
@@ -101,7 +92,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$newDom = $this->getDomFromPageContent($document);
 			$this->doBlockCallbacks($document, $oldDom, $newDom);
 		}
-		$this->generatePageCache($document);
+		$this->synchronizeReferences($document);
 	}
 
 
@@ -211,10 +202,10 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$blockInfosMeta[$lang]['dynamicBlockCount'] = $blockCount;
 		$blockInfosMeta[$lang]['richtextBlockCount'] = $richtextCount;
 		$blockInfosMeta[$lang]['wordCount'] = $wordCount;
-		
+
 		$document->setMetaMultiple('blockInfos', $blockInfosMeta);
 	}
-	
+
 	/**
 	 * @param website_persistentdocument_page $document
 	 */
@@ -275,21 +266,21 @@ class website_PageService extends f_persistentdocument_DocumentService
 						{
 							list($dummy, $moduleName) = explode('_', $blockInfoArray["package"]);
 							$metaPrefix = $moduleName."_".$blockInfoArray["name"].".";
-							
+
 							$newMetas = array();
 							foreach ($blockInfo->getTitleMetas() as $meta)
 							{
 								$newMetas[] = $metaPrefix . $meta;
 							}
 							$metasAvailable["title"] = array_merge($metasAvailable["title"], $newMetas);
-							
+
 							$newMetas = array();
 							foreach ($blockInfo->getDescriptionMetas() as $meta)
 							{
 								$newMetas[] = $metaPrefix . $meta;
 							}
 							$metasAvailable["description"] = array_merge($metasAvailable["description"], $newMetas);
-							
+
 							$newMetas = array();
 							foreach ($blockInfo->getKeywordsMetas() as $meta)
 							{
@@ -301,7 +292,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 				}
 			}
 		}
-		
+
 		return $metasAvailable;
 	}
 
@@ -311,7 +302,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	protected function postSave($document, $parentNodeId = null)
 	{
-		$this->generatePageCache($document);
+		$this->synchronizeReferences($document);
 	}
 
 	/**
@@ -325,7 +316,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		return !f_util_StringUtils::isEmpty($page->getContent()) && parent::isPublishable($page);
 	}
 
-	
+
 	/**
 	 * Returns the full name of the page's template.
 	 *
@@ -534,7 +525,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$is->update($document);
 		}
 		// Regenerate the page cache
-		$this->generatePageCache($document);
+		$this->synchronizeReferences($document);
 	}
 
 	/**
@@ -904,7 +895,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$result = "";
 		$pageContent = $page->getContent();
 		if ($pageContent === null) { return $result; }
-		
+
 		$contentDOM = new DOMDocument('1.0', 'UTF-8');
 		if ($contentDOM->loadXML($pageContent) == false)
 		{
@@ -986,6 +977,36 @@ class website_PageService extends f_persistentdocument_DocumentService
 		return $doc;
 	}
 
+	private function hasBlockInOtherLangs($page, $type, &$otherLangsBlocks)
+	{
+		$rq = RequestContext::getInstance();
+		$contextLang = $rq->getLang();
+		foreach ($page->getI18nInfo()->getLangs() as $lang)
+		{
+			if ($lang !== $contextLang)
+			{
+				if (!isset($otherLangsBlocks[$lang]))
+				{
+					$rq->beginI18nWork($lang);
+					$otherLangDom = f_util_DOMUtils::fromString($page->getContent());
+					$otherLangBlocks = $this->getBlocksFromDom($otherLangDom);
+					$rq->endI18nWork();
+					$otherLangsBlocks[$lang] = $otherLangBlocks;
+				}
+				else
+				{
+					$otherLangBlocks = $otherLangsBlocks[$lang];
+				}
+
+				if (isset($otherLangBlocks[$type]))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	/**
 	 * @param website_persistentdocument_page $page
 	 * @param DOMDocument $oldPageContentDom
@@ -995,18 +1016,25 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		$oldBlocks = $this->getBlocksFromDom($oldPageContentDom);
 		$newBlocks = $this->getBlocksFromDom($newPageContentDom);
+
+		$otherLangsBlocks = array();
+		
 		foreach ($newBlocks as $type => $newBlock)
 		{
 			if (!isset($oldBlocks[$type]))
 			{
-				$newBlock->onPageInsertion($page);
+				$hasBlock = $this->hasBlockInOtherLangs($page, $type, $otherLangsBlocks);
+				$newBlock->onPageInsertion($page, !$hasBlock);
 			}
 		}
 		foreach ($oldBlocks as $type => $oldBlock)
 		{
 			if (!isset($newBlocks[$type]))
 			{
-				$oldBlock->onPageRemoval($page);
+				$rq = RequestContext::getInstance();
+				$contextLang = $rq->getLang();
+				$hasBlock = $this->hasBlockInOtherLangs($page, $type, $otherLangsBlocks);
+				$oldBlock->onPageRemoval($page, !$hasBlock);
 			}
 		}
 	}
@@ -1034,22 +1062,22 @@ class website_PageService extends f_persistentdocument_DocumentService
 						{
 							$block = $class->newInstance();
 							$blockInfo = $this->buildBlockInfo($type,
-								$this->parseBlockParameters($blockElem),
-								$blockElem->getAttribute('lang'),
-								$blockElem->getAttribute('blockwidth'),
-								$blockElem->getAttribute('editable') != 'false',
-								$blockElem);
-							
+							$this->parseBlockParameters($blockElem),
+							$blockElem->getAttribute('lang'),
+							$blockElem->getAttribute('blockwidth'),
+							$blockElem->getAttribute('editable') != 'false',
+							$blockElem);
+
 							if (isset($blockInfo['lang']))
 							{
 								$block->setLang($blockInfo['lang']);
 							}
-			
+
 							foreach ($blockInfo['parameters'] as $name => $value)
 							{
 								$block->setConfigurationParameter($name, $value);
 							}
-							
+
 							$blocks[$type] = $block;
 						}
 					}
@@ -1321,7 +1349,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$lang = $document->getLang();
 		}
 		$blockCount = $richtextCount = $wordCount = 0;
-		
+
 		if ($document->hasMeta('blockInfos'))
 		{
 			$blockInfos = $document->getMetaMultiple('blockInfos');
@@ -1330,13 +1358,13 @@ class website_PageService extends f_persistentdocument_DocumentService
 				$blockCount = $blockInfos[$lang]['dynamicBlockCount'];
 				$richtextCount = $blockInfos[$lang]['richtextBlockCount'];
 				$wordCount = $blockInfos[$lang]['wordCount'];
-			}	
+			}
 		}
-		
+
 		$contentData = array(
 			'pagecomposition' => f_Locale::translateUI('&modules.website.bo.doceditor.Current-page-composition;', array("blockCount" => $blockCount, "richtextCount" => $richtextCount))
 		);
-		
+
 		if ($wordCount == 0)
 		{
 			$contentData['freecontent'] = f_Locale::translateUI('&modules.website.bo.doceditor.Current-word-count-empty;');
@@ -1427,7 +1455,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		return $xulContent;
 	}
-	
+
 	private function getBlockLabelFromBlockType($blockType)
 	{
 		try
@@ -1478,14 +1506,14 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			return $tmpDoc->saveXML($tmpDoc->documentElement);
 		}
-		else 
+		else
 		{
 			return '<div xmlns="http://www.w3.org/1999/xhtml" class="'.$class.'"><strong style="color:red;">' . $this->getBlockLabelFromBlockType($block['type']) . ' : Invalid XML</strong></div>';
 		}
 	}
 
 	private $benchTimes = null;
-	
+
 	private function addBenchTime($key)
 	{
 		if ($this->benchTimes !== null)
@@ -1502,79 +1530,115 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$this->benchTimes['c'] = $current;
 		}
 	}
-	
+
 	/**
 	 * @param website_persistentdocument_page $page
 	 */
 	public function render($page)
 	{
-		if (Framework::inDevelopmentMode() && Framework::isDebugEnabled())
+		if (Framework::inDevelopmentMode())
 		{
-			$current = microtime(true);
-			$this->benchTimes = array('renderStart' => $current, 'c' => $current);
+			$cache = null;
+			if (Framework::isDebugEnabled())
+			{
+				$current = microtime(true);
+				$this->benchTimes = array('renderStart' => $current, 'c' => $current);
+			}
 		}
-		
-		$templateDOM = website_PageRessourceService::getInstance()->getPagetemplateAsDOMDocument($page);
-		$templateXpath = $this->getXPathInstance($templateDOM);
-		$htmlTemplate = $this->getChangeTemplateByContentType(self::CHANGE_TEMPLATE_TYPE_HTML, $templateXpath);
-
-		$contentDOM = new DOMDocument('1.0', 'UTF-8');
-		$contentDOM->loadXML($page->getContent());
-		$contentXpath = $this->getXPathInstance($contentDOM);
-		$this->mergeTemplateAndContent($templateXpath, $contentXpath, $htmlTemplate);
-
-		$domTemplate = new DOMDocument('1.0', 'UTF-8');
-		$domTemplate->preserveWhiteSpace = false;
-		$domTemplate->appendChild($domTemplate->importNode($htmlTemplate, true));
-		$htmlTemplate = null; $templateDOM = null;
-
-		if (!$domTemplate->documentElement->hasAttribute('id'))
+		else
 		{
-			$domTemplate->documentElement->setAttribute('id', $page->getTemplate());
+			$cache = new f_SimpleCache(__METHOD__, array($page->getId(), RequestContext::getInstance()->getLang()), array($page->getId()));
 		}
-		
-		$this->addBenchTime('templateLoading');
 
-		$xsl = new DOMDocument('1.0', 'UTF-8');
-		$xsl->load(FileResolver::getInstance()->setPackageName('modules_website')
+		if ($cache !== null && $cache->exists('blocksAndHtmlBody'))
+		{
+			$cachedData = $cache->readFromCache('blocksAndHtmlBody');
+			$pageRenderInfo = unserialize($cachedData);
+			$blocks = $pageRenderInfo['blocks'];
+			$htmlBody = $pageRenderInfo['htmlBody'];
+
+			$controller = website_BlockController::getInstance();
+			$controller->setPage($page);
+
+			$pageContext = $controller->getContext();
+			$this->addFavIconInfo($pageContext);
+			$pageContext->addContainerStylesheet();
+		}
+		else
+		{
+			$templateDOM = website_PageRessourceService::getInstance()->getPagetemplateAsDOMDocument($page);
+			$templateXpath = $this->getXPathInstance($templateDOM);
+			$htmlTemplate = $this->getChangeTemplateByContentType(self::CHANGE_TEMPLATE_TYPE_HTML, $templateXpath);
+
+			$contentDOM = new DOMDocument('1.0', 'UTF-8');
+			$contentDOM->loadXML($page->getContent());
+			$contentXpath = $this->getXPathInstance($contentDOM);
+			$this->mergeTemplateAndContent($templateXpath, $contentXpath, $htmlTemplate);
+
+			$domTemplate = new DOMDocument('1.0', 'UTF-8');
+			$domTemplate->preserveWhiteSpace = false;
+			$domTemplate->appendChild($domTemplate->importNode($htmlTemplate, true));
+			$htmlTemplate = null; $templateDOM = null;
+
+			if (!$domTemplate->documentElement->hasAttribute('id'))
+			{
+				$domTemplate->documentElement->setAttribute('id', $page->getTemplate());
+			}
+
+			$this->addBenchTime('templateLoading');
+
+			$xsl = new DOMDocument('1.0', 'UTF-8');
+			$xsl->load(FileResolver::getInstance()->setPackageName('modules_website')
 			->setDirectory('lib')->getPath('pageRenderContentTransform.xsl'));
-		$xslt = new XSLTProcessor();
-		$xslt->importStylesheet($xsl);
-		$pageContent = $xslt->transformToDoc($domTemplate);
-		$this->addBenchTime('templateFill');
-		
-		$blocks = $this->generateBlocks($pageContent);
-		$this->addBenchTime('blocksParsing');
-		
-		$this->buildBlockContainerForFrontOffice($pageContent, $blocks);
-		$this->addBenchTime('blocksContainerGenerating');
-		$pageContent->preserveWhiteSpace = false;
-		$htmlBody = $pageContent->saveXML($pageContent->documentElement);
+			$xslt = new XSLTProcessor();
+			$xslt->importStylesheet($xsl);
+			$pageContent = $xslt->transformToDoc($domTemplate);
+			$this->addBenchTime('templateFill');
 
-		$controller = website_BlockController::getInstance();
-		$controller->setPage($page);
-				
-		$pageContext = $controller->getContext();
-		$this->addFavIconInfo($pageContext);
-		$pageContext->addContainerStylesheet();
-			
-		$this->addBenchTime('pageContextInitialize');
+			$blocks = $this->generateBlocks($pageContent);
+			$this->addBenchTime('blocksParsing');
+
+			$this->buildBlockContainerForFrontOffice($pageContent, $blocks);
+			$this->addBenchTime('blocksContainerGenerating');
+			$pageContent->preserveWhiteSpace = false;
+			$htmlBody = $pageContent->saveXML($pageContent->documentElement);
+
+			$controller = website_BlockController::getInstance();
+			$controller->setPage($page);
+
+			$pageContext = $controller->getContext();
+			$this->addFavIconInfo($pageContext);
+			$pageContext->addContainerStylesheet();
+
+			$this->addBenchTime('pageContextInitialize');
+			if ($cache !== null)
+			{
+				$cache->writeToCache("blocksAndHtmlBody", serialize(array("blocks" => $blocks, "htmlBody" => $htmlBody)));
+			}
+		}
+
 		$this->populateHTMLBlocks($controller, $blocks);
 		$this->addBenchTime('blocksGenerating');
-			
-		$htmlBody = preg_replace('/<a([^>]+)\/>/i', '<a$1></a>', $htmlBody);
-		$htmlBody = preg_replace('/\s*<div([^>]+)\/>\s*/i', '<div$1>&#160;</div>', $htmlBody);
 
+		$htmlBody = preg_replace(self::$htmlBodyFrom, self::$htmlBodyTo, $htmlBody);
+
+		$strFrom = array();
+		$strTo = array();
 		foreach ($blocks as $blockId => $block)
 		{
-			$htmlBody = str_replace('<htmlblock_'.$blockId.'/>', $block['html'], $htmlBody);
+			$strFrom[] = '<htmlblock_'.$blockId.'/>';
+			$strTo[] = $block['html'];
 		}
+		$htmlBody = str_replace($strFrom, $strTo, $htmlBody);
 		$this->addBenchTime('htmlGenerating');
-		$pageContext->benchTimes = $this->benchTimes;		
+		$pageContext->benchTimes = $this->benchTimes;
 		$pageContext->renderHTMLBody($htmlBody, website_PageRessourceService::getInstance()->getGlobalTemplate());
-		
 	}
-	
+
+	private static $htmlBodyFrom = array('/<a([^>]+)\/>/i', '/\s*<div([^>]+)\/>\s*/i');
+	private static $htmlBodyTo = array('<a$1></a>', '<div$1>&#160;</div>');
+
+
 	/**
 	 * @param website_Page $pageContext
 	 */
@@ -1587,21 +1651,21 @@ class website_PageService extends f_persistentdocument_DocumentService
 			if ($favicon->isContextLangAvailable())
 			{
 				$info = $favicon->getInfo();
-				$type = $info['extension'] == 'ico' ? 'image/x-icon' : $favicon->getMimetype(); 
+				$type = $info['extension'] == 'ico' ? 'image/x-icon' : $favicon->getMimetype();
 				$url = $favicon->getDocumentService()->generateAbsoluteUrl($favicon, null, array());
 			}
 			else
 			{
 				RequestContext::getInstance()->beginI18nWork($favicon->getLang());
 				$info = $favicon->getInfo();
-				$type = $info['extension'] == 'ico' ? 'image/x-icon' : $favicon->getMimetype(); 
+				$type = $info['extension'] == 'ico' ? 'image/x-icon' : $favicon->getMimetype();
 				$url = $favicon->getDocumentService()->generateAbsoluteUrl($favicon, null, array());
-				RequestContext::getInstance()->endI18nWork();						
+				RequestContext::getInstance()->endI18nWork();
 			}
-			
+
 			$pageContext->addLink('icon', $type, $url);
 			$pageContext->addLink('shortcut icon', $type, $url);
-		}		
+		}
 	}
 
 	/**
@@ -1646,7 +1710,12 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$class .= ' ' . $blockInfos['parameters']['class'];
 		}
 		$blockInfos['class'] = $class . ' ' . str_replace('_', '-', $packageName);
+
 		$blockInfos['DomNode'] = $DomNode;
+		if ($DomNode !== null && $DomNode->hasAttribute("id"))
+		{
+			$blockInfos["id"] = $DomNode->getAttribute("id");
+		}
 
 		return $blockInfos;
 	}
@@ -1689,7 +1758,11 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		$blockPriorities = array();
 		$bench = $this->benchTimes !== null;
-		
+		if ($bench)
+		{
+			$this->benchTimes['blocks'] = array();
+		}
+
 		foreach ($blocks as $blockId => $block)
 		{
 			$className = $this->getBlockClassNameForSpecs($block);
@@ -1728,7 +1801,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 				$blockPriorities[$blockId] = $classInstance->getOrder();
 			}
 		}
-		
+
 		asort($blockPriorities);
 		$blockPriorities = array_reverse($blockPriorities, true);
 		$httpRequest = f_mvc_HTTPRequest::getInstance();
@@ -1750,9 +1823,20 @@ class website_PageService extends f_persistentdocument_DocumentService
 				$blockCache->doAction();
 				$blocks[$blockId]['html'] = $blockCache->doView();
 			}
-			
-			if ($bench) {$this->benchTimes['b_'.$blockId]['rendering'] = microtime(true) - $start;}
-			
+
+			if ($bench)
+			{
+				if (isset($blocks[$blockId]['id']))
+				{
+					$benchId = $blocks[$blockId]['id'];
+				}
+				else
+				{
+					$benchId = 'b_'.$blockId;
+				}
+				$this->benchTimes['blocks'][$benchId]['rendering'] = microtime(true) - $start;
+			}
+
 			unset($blocks[$blockId]['blockaction']);
 		}
 	}
@@ -1772,7 +1856,14 @@ class website_PageService extends f_persistentdocument_DocumentService
 				$div->setAttribute('style', $blocks[$blockId]['parameters']['style']);
 			}
 			$div->setAttribute('class', $blockData['class']);
-			$div->setAttribute('id', 'b_'. $blockId);
+			if (isset($blockData['id']))
+			{
+				$div->setAttribute('id', $blockData['id']);
+			}
+			else
+			{
+				$div->setAttribute('id', 'b_'. $blockId);
+			}
 			$div->appendChild($pageContent->createElement('htmlblock_' . $blockId));
 			$node->parentNode->replaceChild($div, $node);
 			unset($blocks[$blockId]['DomNode']);

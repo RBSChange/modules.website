@@ -173,7 +173,7 @@ class website_PagegroupService extends website_PageService
 
 					$this->pp->updateDocument($pagegroup);
 
-					$this->generatePageCache($pagegroup);
+					$this->synchronizeReferences($pagegroup);
 
 					$this->tm->commit();
 				} catch (Exception $e)
@@ -199,7 +199,7 @@ class website_PagegroupService extends website_PageService
 					}
 				} else if ($newPublicationStatus == 'PUBLICATED')
 				{
-					$this->generatePageCache($pagegroup);
+					$this->synchronizeReferences($pagegroup);
 				}
 			}
 		}
