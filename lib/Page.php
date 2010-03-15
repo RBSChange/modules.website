@@ -335,7 +335,6 @@ class website_Page implements f_mvc_Context
 	private $metaReplaceTo = array();
 
 	/**
-	 * @param String $dest "title"|"description"|"keywords"
 	 * @param String $name
 	 * @param String $value
 	 */
