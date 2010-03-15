@@ -256,7 +256,7 @@
 			<method name="delete">
 				<parameter name="id" />
 				<body><![CDATA[
-					if (confirm("Etes vous sur de vouloir supprimer cette version ?"))
+					if (confirm("&modules.website.bo.doceditor.page-version-list.Confirm-delete-version;"))
 					{
 						var me = this;
 						var callBack = function(result) {me.refresh();};
@@ -268,7 +268,7 @@
 			<method name="newVersion">
 				<parameter name="id" />
 				<body><![CDATA[
-					if (confirm("Etes vous sur de vouloir créer une nouvelle version à partir de celle-ci?"))
+					if (confirm("&modules.website.bo.doceditor.page-version-list.Confirm-duplicate-version;"))
 					{
 						this.getPanel().onDuplicateVersion(id);
 					}
@@ -340,17 +340,17 @@
 						<xul:rows anonid="document-rows">
 							<xul:row class="head">
 								<xul:label sortonfield="label" anonid="label" 
-									value="Libellé" />
+									value="&modules.website.bo.doceditor.page-version-list.Label;" />
 								<xul:label sortonfield="startpublicationdate" anonid="startpublicationdateColumn"
-									value="Début de publication" />
+									value="&modules.website.bo.doceditor.page-version-list.Startpublicationdate;" />
 								<xul:label sortonfield="endpublicationdate" anonid="endpublicationdateColumn"
-									value="Fin de publication" />
+									value="&modules.website.bo.doceditor.page-version-list.Endpublicationdate;" />
 								<xul:label sortonfield="status" anonid="publicationstatusColumn"
-									value="Etat" />
+									value="&modules.website.bo.doceditor.page-version-list.Status;" />
 								<xul:label anonid="currentlabelColumn"
-									value="En cours" />
+									value="&modules.website.bo.doceditor.page-version-list.Current;" />
 								<xul:label anonid="actionsColumn"
-									value="Actions" />
+									value="&modules.website.bo.doceditor.page-version-list.Actions;" />
 							</xul:row>
 						</xul:rows>
 					</xul:grid>

@@ -52,4 +52,30 @@
 		<locale lang="fr">marqueurs</locale>
 		<locale lang="en">markers</locale>
 	</entity>
+	
+	
+	<entity id="page-version-list.label">
+		<locale lang="fr">libellé</locale>
+	</entity>
+	<entity id="page-version-list.startpublicationdate">
+		<locale lang="fr">début de publication</locale>
+	</entity>
+	<entity id="page-version-list.endpublicationdate">
+		<locale lang="fr">fin de publication</locale>
+	</entity>
+	<entity id="page-version-list.status">
+		<locale lang="fr">etat</locale>
+	</entity>
+	<entity id="page-version-list.current">
+		<locale lang="fr">en cours</locale>
+	</entity>
+	<entity id="page-version-list.actions">
+		<locale lang="fr">actions</locale>
+	</entity>
+	<entity id="page-version-list.confirm-delete-version">
+		<locale lang="fr">êtes-vous sûr de vouloir supprimer cette version ?</locale>
+	</entity>
+	<entity id="page-version-list.confirm-duplicate-version">
+		<locale lang="fr">êtes-vous sûr de vouloir créer une nouvelle version à partir de celle-ci ?</locale>
+	</entity>
 </localization>
