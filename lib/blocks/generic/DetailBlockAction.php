@@ -29,9 +29,10 @@ abstract class website_DetailBlockAction extends website_TaggerBlockAction
 	 * Called when the block is inserted into a page content:
 	 * hide page From Menus And SiteMap and call website_TaggerBlockAction::onPageInsertion()
 	 * @param website_persistentdocument_Page $page
-	 * @see lib/blocks/website_TaggerBlockAction#onPageInsertion($page)
+	 * @param Boolean $absolute true if block was introduced considering all versions (langs) of the page
+	 * @see lib/blocks/website_TaggerBlockAction#onPageInsertion($page, $absolute)
 	 */
-	function onPageInsertion($page)
+	function onPageInsertion($page, $absolute = false)
 	{
 		if ($this->hidePageFromMenusAndSiteMap())
 		{
@@ -41,12 +42,12 @@ abstract class website_DetailBlockAction extends website_TaggerBlockAction
 				$page->save();
 			}
 		}
-		parent::onPageInsertion($page);
+		parent::onPageInsertion($page, $absolute);
 	}
 	
 	/**
 	 * Should the block hide page from menus and sitemap ?
-	 * @see onPageInsertion($page)
+	 * @see onPageInsertion($page, $absolute)
 	 * @see getDocumentParameter()
 	 * @return Boolean true if the block is not statically associated with a document
 	 */
