@@ -13,7 +13,7 @@
 				availableparameters="{documentId}, {documentLabel}, {documentLang}, {documentPath}, {workflowId}, {workflowLabel}, {transitionId}, {transitionLabel}, {currentUserId}, {currentUserFullname}, {__LAST_COMMENTARY}, {__LAST_DECISION}"
 				subject="Annulation de la validation pour la page  : {documentLabel}"
 				header="Processus de validation d'une page"
-				body="La validation de la page &lt;strong&gt;{documentPath} / {documentLabel}&lt;/strong&gt; à été effectuée par {currentUserFullname} :&lt;br/&gt;
+				body="La validation de la page &lt;strong&gt;{documentPath}&lt;/strong&gt; à été effectuée par {currentUserFullname} :&lt;br/&gt;
 - Décision : {__LAST_DECISION}&lt;br/&gt;
 - Commentaire : {__LAST_COMMENTARY}&lt;br/&gt;
 &lt;br/&gt;
