@@ -59,10 +59,23 @@ class website_MarkerfolderService extends generic_FolderService
 	 */
 	protected function preDelete($document)
 	{
-		//DELETE All Marker inner folder
+		// DELETE All Marker inner folder.
 		website_MarkerService::getInstance()->createQuery()->delete();
 	}
 
+	/**
+	 * @see f_persistentdocument_DocumentService::onMoveToStart()
+	 * @param website_persistentdocument_markerfolder $document
+	 * @param Integer $destId
+	 */
+	protected function onMoveToStart($document, $destId)
+	{
+		if ($this->getParentOf($document)->getId() !== $destId)
+		{
+			throw new BaseException('Can\'t move a markerfolder from a website to another!', 'modules.website.errors.Cant-move-markerfolder-to-other-website');
+		}
+	}
+	
 	/**
 	 * @param website_persistentdocument_markerfolder $folder
 	 * @return Array

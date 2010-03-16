@@ -32,6 +32,8 @@
 				<drop model="modules_website/pagegroup" action="move"/>
 				<drop model="modules_website/topic" action="move"/>
 				<drop model="modules_website/pageexternal" action="move"/>
+				<drop model="modules_website/menufolder" action="move"/>
+				<drop model="modules_website/markerfolder" action="move"/>
 			</drops>
 			<styles properties="toolbartype isHomePage isIndexPage visibility notindexable block"/>
 			<columns>
@@ -196,8 +198,8 @@
 				<column name="modificationdate" label="Modificationdate" flex="1"/>
 			</columns>
 			<contextactions>
-				<contextaction name="createMenu"/>
 				<contextaction name="openFolder"/>
+				<contextaction name="createMenu"/>
 			</contextactions>
 		</model>		
 		<model name="modules_website/menu">

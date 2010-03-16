@@ -34,5 +34,17 @@ class website_MenufolderService extends f_persistentdocument_DocumentService
 	{
 		return $this->pp->createQuery('modules_website/menufolder');
 	}
-
+	
+	/**
+	 * @see f_persistentdocument_DocumentService::onMoveToStart()
+	 * @param website_persistentdocument_menufolder $document
+	 * @param Integer $destId
+	 */
+	protected function onMoveToStart($document, $destId)
+	{
+		if ($this->getParentOf($document)->getId() !== $destId)
+		{
+			throw new BaseException('Can\'t move a menufolder from a website to another!', 'modules.website.errors.Cant-move-menufolder-to-other-website');
+		}
+	}
 }
