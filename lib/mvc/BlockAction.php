@@ -82,11 +82,15 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 		}
 		if ("true" == $blockInfo->getAttribute("afterAll"))
 		{
-			return -1;
+			return -100;
 		}
 		if ("true" == $blockInfo->getAttribute("beforeAll"))
 		{
-			return 1;
+			return 100;
+		}
+		if ($blockInfo->hasAttribute("order"))
+		{
+			return intval($blockInfo->getAttribute("order"));
 		}
 		return 0;
 	}
