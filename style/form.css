@@ -20,6 +20,12 @@ form.cmxform label, form.cmxform div.textfield-label{
 	padding-right: 12px/*@var labelpaddingright*/;
 	width: 33%/*@var labelwidth*/;
 }
+form.cmxform .help-text
+{
+	clear: both;
+	margin-left: 33%/*@var labelwidth*/;
+	padding-left: 12px/*@var labelpaddingright*/;
+}
 
 form.cmxform div.textfield-label{
 	float: left;
@@ -90,4 +96,9 @@ a.button{
 form.cmxform p.description,form.cmxform p.help-text,form.cmxform fieldset div,form.cmxform .free-text,form.cmxform .bottom-description{
 	margin-bottom: 16px/*@var descmarginbottom*/;
 	line-height: 1.4em/*@var desclineheight*/;
+}
+
+form.cmxform .jTagEditor
+{
+	padding: 0;	
 }
