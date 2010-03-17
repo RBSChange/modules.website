@@ -983,25 +983,38 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$contextLang = $rq->getLang();
 		foreach ($page->getI18nInfo()->getLangs() as $lang)
 		{
-			if ($lang !== $contextLang)
+			if ($lang === $contextLang) {continue;}	
+			if (isset($otherLangsBlocks[$lang]))
 			{
-				if (!isset($otherLangsBlocks[$lang]))
+				$otherLangBlocks = $otherLangsBlocks[$lang];
+			}
+			else
+			{
+				try 
 				{
 					$rq->beginI18nWork($lang);
-					$otherLangDom = f_util_DOMUtils::fromString($page->getContent());
-					$otherLangBlocks = $this->getBlocksFromDom($otherLangDom);
+					if (f_util_StringUtils::isNotEmpty($page->getContent()))
+					{
+						$otherLangDom = f_util_DOMUtils::fromString($page->getContent());
+						$otherLangBlocks = $this->getBlocksFromDom($otherLangDom);					
+						$otherLangsBlocks[$lang] = $otherLangBlocks;
+					}
+					else
+					{
+						$otherLangBlocks = array();
+						$otherLangsBlocks[$lang] = $otherLangBlocks;
+					}
 					$rq->endI18nWork();
-					$otherLangsBlocks[$lang] = $otherLangBlocks;
 				}
-				else
+				catch (Exception $e)
 				{
-					$otherLangBlocks = $otherLangsBlocks[$lang];
+					$rq->endI18nWork($e);
 				}
-
-				if (isset($otherLangBlocks[$type]))
-				{
-					return true;
-				}
+			}
+			
+			if (isset($otherLangBlocks[$type]))
+			{
+				return true;
 			}
 		}
 		return false;
