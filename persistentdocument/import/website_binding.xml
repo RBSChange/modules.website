@@ -29,4 +29,5 @@
   <binding name="markerfolder" className="website_MarkerfolderScriptDocumentElement"/>
   <binding name="marker" className="website_MarkerScriptDocumentElement"/>
   <binding name="documenturl" className="website_DocumentURLElement"/>
+  <binding name="websitetopicsfolder" className="website_WebsitetopicsfolderScriptDocumentElement"/>
 </script>

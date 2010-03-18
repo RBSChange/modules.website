@@ -94,3 +94,6 @@ treechildren::-moz-tree-image(modules_website_pageversion){
 treechildren::-moz-tree-image(modules_website_menuitemtext){
 	list-style-image: url(/icons/small/menuitem-text.png) ;
 }
+treechildren::-moz-tree-image(modules_website_websitetopicsfolder){
+	list-style-image: url(/icons/small/website-folder.png) ;
+}
