@@ -41,10 +41,28 @@ class website_RewriteUrlAction extends f_action_BaseAction
 		{
 			$pattern = '/^\/('. implode('|', $websiteInfo['langs']) .')\//';
 			$matches = array();
-			if (preg_match($pattern, $requestedUrl, $matches))
+		 	if ($requestedUrl === '/'.$websiteInfo['langs'][0].'/')
+			{
+				 $context->getController()->redirectToUrl('/');
+			}
+			elseif (preg_match($pattern, $requestedUrl, $matches))
 			{
 			    $lang = $matches[1];
 			    $requestedUrl = str_replace($matches[0], '/', $requestedUrl);
+			    $websiteInfo['langs'][0];
+			}
+			elseif (preg_match('/^\/('. implode('|', $websiteInfo['langs']) .')$/', $requestedUrl, $matches))
+			{
+				$lang = $matches[1];
+				if ($lang === $websiteInfo['langs'][0])
+				{
+					$context->getController()->redirectToUrl('/');
+				}
+				else
+				{
+					$context->getController()->redirectToUrl($requestedUrl.'/');
+				}
+				return View::NONE;
 			}
 		}
 		
