@@ -1031,7 +1031,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$newBlocks = $this->getBlocksFromDom($newPageContentDom);
 
 		$otherLangsBlocks = array();
-		
+
 		foreach ($newBlocks as $type => $newBlock)
 		{
 			if (!isset($oldBlocks[$type]))
@@ -1480,6 +1480,59 @@ class website_PageService extends f_persistentdocument_DocumentService
 			Framework::exception($e);
 		}
 		return $blockType;
+	}
+
+	/**
+	 * @param websitePage $pageContext
+	 * @return website_Breadcrumb
+	 */
+	function getDefaultBreadcrumb($pageContext)
+	{
+		$pageDocument = $pageContext->getPersistentPage();
+		
+		$breadcrumb = new website_Breadcrumb();
+		
+		if (! $pageDocument->getIsHomePage())
+		{
+			foreach ($pageContext->getAncestorIds() as $ancestorId)
+			{
+				$ancestor = DocumentHelper::getDocumentInstance($ancestorId);
+				if (! $ancestor->isPublished())
+				{
+					continue;
+				}
+
+				if ($ancestor instanceof website_persistentdocument_website)
+				{
+					$siteUrl = LinkHelper::getDocumentUrl($ancestor);
+					$homeTitle = f_Locale::translate('&modules.website.frontoffice.thread.Homepage-href-name;');
+						
+					$breadcrumb->addElement($homeTitle, $siteUrl);
+					$pageContext->addLink("home", "text/html", $siteUrl, $homeTitle);
+				}
+				else if ($ancestor instanceof website_persistentdocument_topic)
+				{
+					if ($ancestor->getNavigationVisibility() != 1)
+					{
+						continue;
+					}
+					$breadcrumb->addElement($ancestor->getLabel(), LinkHelper::getDocumentUrl($ancestor));
+				}
+			}
+		}
+
+		if ($pageDocument->getNavigationVisibility() == 1)
+		{
+			// current page is visible and then the last element of breadcrumb
+			$breadcrumb->addElement($pageContext->getNavigationtitle());
+		}
+		else
+		{
+			$lastElem = $breadcrumb->getLastElement();
+			$lastElem->href = null;
+		}
+		
+		return $breadcrumb;
 	}
 
 	/**
