@@ -152,7 +152,9 @@ class block_BlockCache
 		if ($this->isCacheEnabled)
 		{
 		  	$this->isRequestCacheEnabled = $blockAction->isGlobalRequestCacheEnabled();
-		  	$this->simpleCache = new f_SimpleCache(get_class($blockAction), $blockAction->getCacheKeyParameters(), $blockAction->getCacheSpecifications());
+		  	$keyParameters = $blockAction->getCacheKeyParameters();
+			$keyParameters["https"] = RequestContext::getInstance()->inHTTPS();
+		  	$this->simpleCache = new f_SimpleCache(get_class($blockAction), $keyParameters, $blockAction->getCacheSpecifications());
 		}
 	}
 	

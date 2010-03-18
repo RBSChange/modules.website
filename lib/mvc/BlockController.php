@@ -324,7 +324,10 @@ class website_BlockController implements f_mvc_Controller
 
 			if ($this->isCacheEnabled() && $this->action->isCacheEnabled())
 			{
-				$this->pushSimpleCache(new f_SimpleCache(get_class($this->action), $this->action->getCacheKeyParameters($this->actionRequest), $this->action->getCacheDependencies()));
+				$keyParameters = $this->action->getCacheKeyParameters($this->actionRequest);
+				$keyParameters["https"] = $requestContext->inHTTPS();
+				$cache = new f_SimpleCache(get_class($this->action), $keyParameters, $this->action->getCacheDependencies());
+				$this->pushSimpleCache($cache);
 				// Read from cache
 				if ($this->isActionInCache())
 				{
