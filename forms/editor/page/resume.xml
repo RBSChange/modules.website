@@ -42,6 +42,6 @@
 	
 	<section flex="1" name="tags" labeli18n="modules.uixul.bo.doceditor.section.Tags" 
 		image="{HttpHost}/icons/small/tags.png" viewempty="true">
-		<property name="tags" class="action" type="openTags" labeli18n="modules.uixul.bo.doceditor.property.Tags" />
+		<property name="tagsaction" class="action" type="openTags" labeli18n="modules.uixul.bo.doceditor.property.Tags" />
 	</section>
 </panel>
