@@ -8,13 +8,9 @@ class commands_AddDocumentBlock extends commands_AbstractChangedevCommand
 	{
 		$usage = "<moduleName> <documentName> <blockType> [icon].
 Where <blockType> in:\n";
-		foreach (glob("modules/website/templates/builder/documentblocks/*.tpl") as $template)
+		foreach ($this->getValidTypes() as $type)
 		{
-			$tplName = basename($template);
-			if (preg_match("/^Block(.*)Action.php.tpl$/", $tplName, $matches))
-			{
-				$usage .= "- ". f_util_StringUtils::lcfirst($matches[1])."\n";
-			}
+			$usage .= "- ". $type."\n";
 		}
 		return $usage;
 	}
@@ -65,17 +61,9 @@ Where <blockType> in:\n";
 		}
 		if ($completeParamCount == 2)
 		{
-			$templates = array();
-			foreach (glob("modules/website/templates/builder/documentblocks/*.tpl") as $template)
-			{
-				$tplName = basename($template);
-				if (preg_match("/^Block(.*)Action.php.tpl$/", $tplName, $matches))
-				{
-					$templates[] = f_util_StringUtils::lcfirst($matches[1]);
-				}
-			}
-			return $templates;
+			return $this->getValidTypes();
 		}
+		return null;
 	}
 
 	/**
@@ -88,10 +76,35 @@ Where <blockType> in:\n";
 		$moduleName = $params[0];
 		$docName = $params[1];
 		$type = $params[2];
+		if (!in_array($type, $this->getValidTypes()))
+		{
+			throw new Exception("Unknown type $type!");
+		}
 
 		$this->message("== Add $type document block for $moduleName/$docName ==");
+		
+		if (isset($params[3]))
+		{
+			$icon = $params[3];
+		}
+		else 
+		{
+			switch ($type)
+			{
+				case 'list': 
+					$icon = 'list-block';
+					break;
 
-		$icon = isset($params[3]) ? $params[3] : null;
+				case 'detail': 
+					$model = f_persistentdocument_PersistentDocumentModel::getInstance($moduleName, $docName);
+					$icon = $model->getIcon();
+					break;
+					
+				default:
+					$icon = '';
+					break;
+			}
+		}
 
 		$this->loadFramework();
 		$blockGenerator = new builder_DocumentBlockGenerator($moduleName);
@@ -108,5 +121,23 @@ Where <blockType> in:\n";
 
 		$this->quitOk("Block of type $type added for document $docName in module '$moduleName'.
 Please now edit ".$blockPath.".");
+	}
+	
+	/**
+	 * @return String[]
+	 */
+	private function getValidTypes()
+	{
+		$types = array();
+		foreach (glob("modules/website/templates/builder/documentblocks/*.tpl") as $template)
+		{
+			$tplName = basename($template);
+			$matches = array();
+			if (preg_match("/^Block(.*)Action.php.tpl$/", $tplName, $matches))
+			{
+				$types[] = f_util_StringUtils::lcfirst($matches[1]);
+			}
+		}
+		return $types;
 	}
 }
