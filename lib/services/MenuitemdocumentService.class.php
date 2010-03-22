@@ -57,10 +57,12 @@ class website_MenuitemdocumentService extends website_MenuitemService
 	{
 		$data = parent::getResume($document, $forModuleName, array('properties' => true, 'publication' => true, 'history' => true));
 		$itemDoc = $document->getDocument();
-		$data['content'] = array('editMenuitemDocument' => array('id' => $itemDoc->getId(),
-								 'module' => $itemDoc->getPersistentModel()->getModuleName(),
-								 'type' => str_replace('/', '_', $itemDoc->getDocumentModelName()),
-								 'label' => $itemDoc->getLabel()));
+		$data['content'] = array(
+			'editMenuitemDocument' => array('id' => $itemDoc->getId(),
+			'module' => $itemDoc->getPersistentModel()->getModuleName(),
+			'type' => str_replace('/', '_', $itemDoc->getDocumentModelName()),
+			'label' => $itemDoc->getLabel())
+		);
 		
 		return $data;
 	}
@@ -69,21 +71,69 @@ class website_MenuitemdocumentService extends website_MenuitemService
 	 * @param website_persistentdocument_menuitemdocument $document
 	 * @return void
 	 */
-	function preSave($document)
+	protected function preSave($document)
 	{
-		$pageOrTopic = $document->getDocument();
+		$this->refreshLabel($document);
+	}
+	
+	/**
+	 * @param f_persistentdocument_Document $document
+	 */
+	public function synchronizeLabelForRelatedMenuItems($document)
+	{
+		$document = DocumentHelper::getByCorrection($document);
+		$query = $this->createQuery()->add(Restrictions::eq('document', $document));
+		foreach ($query->find() as $menuitem)
+		{
+			$menuitem->setLabel($document->getLabel());
+			$menuitem->save();
+		}
+	}
+	
+	/**
+	 * @param f_persistentdocument_Document $document
+	 */
+	public function removeTranslationForRelatedMenuItems($document)
+	{
+		$document = DocumentHelper::getByCorrection($document);
+		$query = $this->createQuery()->add(Restrictions::eq('document', $document));
+		foreach ($query->find() as $menuitem)
+		{
+			$menuitem->delete();
+		}
+	}
+	
+	/**
+	 * @param website_persistentdocument_menuitemdocument $menuitem
+	 */
+	protected function refreshLabel($menuitem)
+	{
+		$pageOrTopic = $menuitem->getDocument();
 		if ($pageOrTopic !== null)
 		{
 			// Of course this is not the same name ... pff.
-			if ($pageOrTopic instanceof website_persistentdocument_page)
+			$rc = RequestContext::getInstance();
+			foreach ($pageOrTopic->getI18nInfo()->getLangs() as $lang)
 			{
-				$label = $pageOrTopic->getNavigationtitle();
+				try
+				{
+					$rc->beginI18nWork($lang);
+					if ($pageOrTopic instanceof website_persistentdocument_page)
+					{
+						$label = $pageOrTopic->getNavigationtitle();
+					}
+					else
+					{
+						$label = $pageOrTopic->getLabel();
+					}
+					$menuitem->setLabel($label);
+					$rc->endI18nWork();
+				}
+				catch (Exception $e)
+				{
+					$rc->endI18nWork($e);
+				}
 			}
-			else
-			{
-				$label = $pageOrTopic->getLabel();
-			}
-			$document->setLabel($label);
 		}
 	}
 }

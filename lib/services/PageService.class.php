@@ -1,7 +1,6 @@
 <?php
 class website_PageService extends f_persistentdocument_DocumentService
 {
-
 	/**
 	 * @var website_PageService
 	 */
@@ -303,6 +302,18 @@ class website_PageService extends f_persistentdocument_DocumentService
 	protected function postSave($document, $parentNodeId = null)
 	{
 		$this->synchronizeReferences($document);
+		if ($document->isPropertyModified('navigationtitle'))
+		{
+			website_MenuitemdocumentService::getInstance()->synchronizeLabelForRelatedMenuItems($document);
+		}
+	}
+	
+	/**
+	 * @param website_persistentdocument_page $document
+	 */
+	protected function postDeleteLocalized($document)
+	{
+		website_MenuitemdocumentService::getInstance()->removeTranslationForRelatedMenuItems($document);
 	}
 
 	/**
@@ -315,7 +326,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		return !f_util_StringUtils::isEmpty($page->getContent()) && parent::isPublishable($page);
 	}
-
 
 	/**
 	 * Returns the full name of the page's template.

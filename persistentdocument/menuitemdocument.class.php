@@ -71,6 +71,9 @@ class website_persistentdocument_menuitemdocument extends website_persistentdocu
 		$nodeAttributes['isTranslatable'] = "false";
 	}
 	
+	/**
+	 * @return String
+	 */
 	public function getPublicationstatus()
 	{
 		$doc = $this->getDocument();
@@ -80,5 +83,4 @@ class website_persistentdocument_menuitemdocument extends website_persistentdocu
 		}
 		return parent::getPublicationstatus();
 	}
-	
 }

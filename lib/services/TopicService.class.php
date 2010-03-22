@@ -22,7 +22,6 @@ class website_TopicService extends f_persistentdocument_DocumentService
 		return self::$instance;
 	}
 
-
 	/**
 	 * @return website_persistentdocument_topic
 	 */
@@ -176,6 +175,26 @@ class website_TopicService extends f_persistentdocument_DocumentService
 		}
 	}
 
+	/**
+	 * @param website_persistentdocument_topic $document
+	 * @param Integer $parentNodeId
+	 */
+	protected function postSave($document, $parentNodeId = null)
+	{
+		if ($document->isPropertyModified('label'))
+		{
+			website_MenuitemdocumentService::getInstance()->synchronizeLabelForRelatedMenuItems($document);
+		}
+	}
+	
+	/**
+	 * @param website_persistentdocument_topic $document
+	 */
+	protected function postDeleteLocalized($document)
+	{
+		website_MenuitemdocumentService::getInstance()->removeTranslationForRelatedMenuItems($document);
+	}
+	
 	/**
 	 * @param website_persistentdocument_topic $topic
 	 */
