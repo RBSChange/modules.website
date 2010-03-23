@@ -4,7 +4,11 @@
 	<block type="richtext" icon="richtext" label="&amp;modules.uixul.bo.layout.RichTextBlock;" />
 	<block type="modules_website_bookmarks" icon="bookmark" label="&amp;modules.uixul.bo.layout.BookmarksBlock;" />
 	<block type="layout" columns="2" requiresNewEditor="true" icon="layout-2-columns" label="&amp;modules.website.bo.blocks.Two-col;" />
-	<block type="modules_website_sitemap" icon="sitemap" label="&amp;modules.website.bo.blocks.Sitemap;" />
+	<block type="modules_website_sitemap" icon="sitemap" label="&amp;modules.website.bo.blocks.Sitemap;">
+		<parameters>
+			<parameter name="column" type="Boolean" default-value="false" />
+		</parameters>
+	</block>
 	<block type="modules_website_exception" icon="bug" label="&amp;modules.website.bo.blocks.Exception;" />
 	<block type="modules_website_thread" hidden="true" label="&amp;modules.website.bo.blocks.Thread;" afterAll="true"/>
 	<block type="modules_website_menu" hidden="true" label="&amp;modules.website.bo.blocks.Menu;">

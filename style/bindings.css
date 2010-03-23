@@ -1,9 +1,6 @@
 wblocktoolbar[type="modules_website_bookmarks"]{
 	-moz-binding: url(binding:modules.website.wBookmarksToolbar#wBookmarksToolbar);
 }
-wblocktoolbar[type="modules_website_sitemap"]{
-	-moz-binding: url(binding:modules.website.wSitemapToolbar#wSitemapToolbar);
-}
 cproperty[propertyname="editpagecontent"]{
 	-moz-binding: url(binding:modules.website.cEditorsProperties#cEditPageContent);
 }

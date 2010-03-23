@@ -24,7 +24,7 @@ class website_BlockSitemapAction extends website_BlockAction
 	 */
 	public function getCacheKeyParameters($request)
 	{
-		return array("column" => $this->findParameterValue("column"),  
+		return array("column" => $this->getConfiguration()->getColumn(),  
 			"context->website" => website_WebsiteModuleService::getInstance()->getCurrentWebsite()->getId(),
 		    "lang->id" => RequestContext::getInstance()->getLang());
 	}
@@ -41,9 +41,8 @@ class website_BlockSitemapAction extends website_BlockAction
         $ws = website_WebsiteModuleService::getInstance();
         $siteMap = $ws->getSitemap($ws->getCurrentWebsite());
         $request->setAttribute('sitemap', $siteMap);
-        $column = $this->findParameterValue("column");
-        
-        if (!empty($column))
+        $column = $this->getConfiguration()->getColumn();        
+        if ($column)
         {
         	return website_BlockView::SUCCESS . "Column";
         }

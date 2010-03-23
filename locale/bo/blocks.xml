@@ -63,4 +63,14 @@
   	<locale lang="fr">Menu contextuel</locale>
     <locale lang="en">Contextual menu</locale>
   </entity>
+  <entity id="sitemap.column">
+	<locale lang="fr">Afficher en colonnes</locale>
+	<locale lang="en">Display in columns</locale>
+	<locale lang="de">In Spalten anzeigen</locale>
+  </entity>
+   <entity id="sitemap.column-help">
+	<locale lang="fr">Afficher en colonnes</locale>
+	<locale lang="en">Display in columns</locale>
+	<locale lang="de">In Spalten anzeigen</locale>
+  </entity>
 </localization>
