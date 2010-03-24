@@ -44,6 +44,41 @@ class website_BBCodeService extends BaseService
 	 */
 	public function fixContent($bbcode)
 	{
+		if (f_util_StringUtils::isEmpty($bbcode))
+		{
+			return null;
+		}
+		
+		// Extract all code tags.
+		$bbcode = $this->extractCodeContentFix($bbcode);
+		
+		// Handle default bbcodes.
+		$bbcode = $this->fixDefaultCodes($bbcode);		
+			
+		// Handle specific bbcodes.
+		$bbcode = $this->fixSpecificCodes($bbcode);		
+		
+		// Re-integrate code tags.
+		$bbcode = $this->reinjectCodeContentFix($bbcode);
+		
+		return $bbcode;
+	}
+	
+	/**
+	 * @param String $bbcode
+	 * @return String
+	 */
+	protected function extractCodeContentFix($bbcode)
+	{
+		return $this->extractCodeContent($bbcode);
+	}
+	
+	/**
+	 * @param String $bbcode
+	 * @return String
+	 */
+	protected function fixDefaultCodes($bbcode)
+	{
 		// -- Fix URL tags.
 		
 		// Add quotation marks around URLs.
@@ -63,6 +98,16 @@ class website_BBCodeService extends BaseService
 		// Fix URL tags.
 		$bbcode = preg_replace('/\[img\]('.self::URL_STRING_REGEXP.'?)\[\/img\]/is', '[img="$1"][/img]', $bbcode);
 		
+		return $bbcode;
+	}
+	
+	/**
+	 * @param String $bbcode
+	 * @return String
+	 */
+	protected function fixSpecificCodes($bbcode)
+	{
+		// Overload this method to fix specific bbcodes.		
 		return $bbcode;
 	}
 	
@@ -152,7 +197,8 @@ class website_BBCodeService extends BaseService
 		$replacement[] = '<blockquote>$1</blockquote>';	
 
 		$pattern[] = '/\[quote\=([^\]]*)\](.+?)\[\/quote\]/is';
-		$replacement[] = '<blockquote cite="$1">$2</blockquote>';	
+		$quoteLabel = f_Locale::translate('&modules.website.bbeditor.someone-saidLabel;');
+		$replacement[] = '<blockquote cite="$1"><strong>$1 '.$quoteLabel.'</strong><br />$2</blockquote>';	
 		
 		// Images
 		$pattern[] = '/\[img=\&quot\;('.self::URL_STRING_REGEXP.')\&quot\;\](.*?)\[\/img\]/is';
