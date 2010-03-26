@@ -1686,6 +1686,10 @@ $(document).ready(function() {
 		{
 			return self::buildPropertyValue($name);
 		}
+		if (self::$currentAction === null)
+		{
+			throw new Exception('No current action... Do you use a PHPTAL from extension outside from a <form change:form="" ...></form>?');
+		}
 		return self::$currentAction->findParameterValue($name);
 	}
 
