@@ -1612,7 +1612,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	public function render($page)
 	{
-		if (Framework::inDevelopmentMode())
+		if (Framework::inDevelopmentMode() || $page->isNew())
 		{
 			$cache = null;
 			if (Framework::isDebugEnabled())
