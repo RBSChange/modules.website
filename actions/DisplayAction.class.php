@@ -38,6 +38,7 @@ class website_DisplayAction extends website_Action
 		}
 			
 		controller_ChangeController::setNoCache();
+		$this->setContentType('text/html');
 		$pageId = $this->getDocumentIdFromRequest($request);
 		try
 		{

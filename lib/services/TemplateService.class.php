@@ -126,7 +126,7 @@ class website_TemplateService extends f_persistentdocument_DocumentService
 				throw new TemplateNotFoundException($templateName.".xul");
 			}
 			// TODO: make a context
-			$templateContent = $template->execute();
+			$templateContent = $template->execute(true);
 		}
 		
 		$content = new DOMDocument('1.0', 'UTF-8');
