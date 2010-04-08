@@ -59,7 +59,7 @@
         <xbl:content xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:xbl="http://www.mozilla.org/xbl" xmlns:html="http://www.w3.org/1999/xhtml" orient="vertical">
             <toolbar anonid="toolbar" flex="1" class="change-toolbar">
                 <toolbarseparator/>
-                <toolbarbutton image="{HttpHost}/icons/small/bookmarks.png" label="&amp;modules.uixul.bo.layout.BookmarksEdit;" oncommand="editBookmarks();" />
+                <toolbarbutton image="{IconsBase}/small/bookmarks.png" label="&amp;modules.uixul.bo.layout.BookmarksEdit;" oncommand="editBookmarks();" />
             </toolbar>
         </xbl:content>
     </binding>

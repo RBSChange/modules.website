@@ -233,18 +233,18 @@
 				</xul:toolbar>
 				<xul:toolbox anonid="pagination-toolbox" orient="horizontal" class="change-toolbox">
 					<xul:toolbar align="center" pack="center" anonid="navigationtb" orient="horizontal" flex="1" class="change-toolbar">
-						<xul:toolbarbutton anonid="navigationbegin" disabled="true" oncommand="navigateBegin()" image="{HttpHost}/icons/small/control-begin.png" tooltiptext="&amp;modules.uixul.bo.general.Navigate-begin;" />
-						<xul:toolbarbutton anonid="navigationback2" disabled="true" oncommand="navigateBack(true)" image="{HttpHost}/icons/small/control-double-backward.png" tooltiptext="&amp;modules.uixul.bo.general.Navigate-back-quick;" />
-						<xul:toolbarbutton anonid="navigationback" disabled="true" oncommand="navigateBack()" image="{HttpHost}/icons/small/control-backward.png" tooltiptext="&amp;modules.uixul.bo.general.Navigate-back;" />
+						<xul:toolbarbutton anonid="navigationbegin" disabled="true" oncommand="navigateBegin()" image="{IconsBase}/small/control-begin.png" tooltiptext="&amp;modules.uixul.bo.general.Navigate-begin;" />
+						<xul:toolbarbutton anonid="navigationback2" disabled="true" oncommand="navigateBack(true)" image="{IconsBase}/small/control-double-backward.png" tooltiptext="&amp;modules.uixul.bo.general.Navigate-back-quick;" />
+						<xul:toolbarbutton anonid="navigationback" disabled="true" oncommand="navigateBack()" image="{IconsBase}/small/control-backward.png" tooltiptext="&amp;modules.uixul.bo.general.Navigate-back;" />
 						<xul:hbox align="center">
 							<xul:label anonid="navigationpagelabel" value="&amp;modules.uixul.bo.general.Documents;" />
 							<xul:label anonid="navigationindex" value="0" />
 							<xul:label anonid="navigationpageseparator" value="&amp;modules.uixul.bo.general.out-of;" />
 							<xul:label anonid="navigationtotal" value="0" />
 						</xul:hbox>
-						<xul:toolbarbutton anonid="navigationnext" disabled="true" oncommand="navigateNext()" image="{HttpHost}/icons/small/control-forward.png" tooltiptext="&amp;modules.uixul.bo.general.Navigate-next;" />
-						<xul:toolbarbutton anonid="navigationnext2" disabled="true" oncommand="navigateNext(true)" image="{HttpHost}/icons/small/control-double-forward.png" tooltiptext="&amp;modules.uixul.bo.general.Navigate-next-quick;" />
-						<xul:toolbarbutton anonid="navigationend" disabled="true" oncommand="navigateEnd()" image="{HttpHost}/icons/small/control-end.png" tooltiptext="&amp;modules.uixul.bo.general.Navigate-end;" />
+						<xul:toolbarbutton anonid="navigationnext" disabled="true" oncommand="navigateNext()" image="{IconsBase}/small/control-forward.png" tooltiptext="&amp;modules.uixul.bo.general.Navigate-next;" />
+						<xul:toolbarbutton anonid="navigationnext2" disabled="true" oncommand="navigateNext(true)" image="{IconsBase}/small/control-double-forward.png" tooltiptext="&amp;modules.uixul.bo.general.Navigate-next-quick;" />
+						<xul:toolbarbutton anonid="navigationend" disabled="true" oncommand="navigateEnd()" image="{IconsBase}/small/control-end.png" tooltiptext="&amp;modules.uixul.bo.general.Navigate-end;" />
 					</xul:toolbar>
 				</xul:toolbox>
 					<xul:grid flex="1">
@@ -281,15 +281,15 @@
 	<binding id="cMarkersPanelDocument">
 		<content>
 			<xul:hbox pack="center" align="center">
-				<xul:image xbl:inherits="hidden=isNotPublished" src="{HttpHost}/icons/small/published-document.png"  />
-				<xul:image xbl:inherits="hidden=isPublished" src="{HttpHost}/icons/small/publishable-document.png"  />
+				<xul:image xbl:inherits="hidden=isNotPublished" src="{IconsBase}/small/published-document.png"  />
+				<xul:image xbl:inherits="hidden=isPublished" src="{IconsBase}/small/publishable-document.png"  />
 			</xul:hbox>
 			<xul:label xbl:inherits="value=label" />
 			<xul:label xbl:inherits="value=type" />
 			<xul:label xbl:inherits="value=langs" />
 			<xul:toolbar class="actions">
-				<xul:toolbarbutton xbl:inherits="documentId=id,documentModel=model" action="edit" hidespinbuttons="true" image="{HttpHost}/icons/small/edit.png" label="&amp;modules.uixul.bo.actions.Edit;" />
-				<xul:toolbarbutton xbl:inherits="documentId=id" action="delete" hidespinbuttons="true" image="{HttpHost}/icons/small/delete.png" label="&amp;modules.uixul.bo.actions.Delete;" />
+				<xul:toolbarbutton xbl:inherits="documentId=id,documentModel=model" action="edit" hidespinbuttons="true" image="{IconsBase}/small/edit.png" label="&amp;modules.uixul.bo.actions.Edit;" />
+				<xul:toolbarbutton xbl:inherits="documentId=id" action="delete" hidespinbuttons="true" image="{IconsBase}/small/delete.png" label="&amp;modules.uixul.bo.actions.Delete;" />
 			</xul:toolbar>
 		</content>
 	</binding>

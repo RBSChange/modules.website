@@ -51,9 +51,11 @@ class website_PreviewPageAction extends website_Action
     private function getPreviewUrl ($content)
     {
         $md5 = md5($content);
-        $relPath = 'cache/htmlpreview/preview-' . $md5 . '.html';
-        $filePath = f_util_FileUtils::buildWebappPath('www', $relPath);
+        $fileName = 'preview-' . $md5 . '.html';  
+        $filePath = f_util_FileUtils::buildWebCachePath('htmlpreview', $fileName);
         f_util_FileUtils::writeAndCreateContainer($filePath, $content);
-        return Framework::getUIBaseUrl() . '/'.$relPath;
+        
+        $relPath = '/cache/www/htmlpreview/';
+        return Framework::getUIBaseUrl() . $relPath. $fileName;
     }
 }

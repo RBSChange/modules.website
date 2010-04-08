@@ -135,7 +135,7 @@ class website_XHTMLCleanerHelper
 			catch (Exception $e)
 			{
 				Framework::exception($e);
-				$src = "/icons/normal/unknown.png";
+				$src = "/changeicons/normal/unknown.png";
 				$element->removeAttribute('cmpref');
 				$alt = $element->getAttribute('alt');
 				$element->setAttribute('alt', $alt . ' (Invalid media document # '. $elementId . ')');
@@ -144,7 +144,7 @@ class website_XHTMLCleanerHelper
 		else if (f_util_StringUtils::beginsWith($src, 'file:'))
 		{
 			$element->setAttribute('alt', $src);
-			$src = "/icons/normal/environment_error.png";
+			$src = "/changeicons/normal/environment_error.png";
 			$element->removeAttribute('height');
 			$element->removeAttribute('width');
 		}

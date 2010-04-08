@@ -76,4 +76,31 @@ class website_lib_urlrewriting_DocumentModelRule
 	{
 		return $this->viewMode;
 	}
+	
+	public function checkMatchRedirection($url)
+	{
+		if (isset($this->m_lastMatches['id']) && $this->viewMode == 'detail')
+		{
+			try 
+			{
+				$document = DocumentHelper::getDocumentInstance($this->m_lastMatches['id'], $this->documentModel);
+				$lang = RequestContext::getInstance()->getLang();
+				$currentURL = LinkHelper::getDocumentUrl($document, $lang);
+				if (strpos($currentURL, $url) === false)
+				{
+					if (Framework::isInfoEnabled())
+					{
+						Framework::info(__METHOD__ . " Permanently redirect $url -> $currentURL");
+					}
+					$this->setRedirectionUrl($currentURL);
+					$this->setMovedPermanently(true);
+					$this->m_lang = $lang;
+				}
+			}
+			catch (Exception $e)
+			{
+				Framework::exception($e);
+			}
+		}
+	}
 }

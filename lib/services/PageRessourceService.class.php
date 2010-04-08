@@ -117,7 +117,7 @@ class website_PageRessourceService extends BaseService
 	{
 		$relativePath = $this->getStylesheetRelativePath(self::GLOBAL_SCREEN_NAME, $engine, $version, $protocol);
 
-		$absolutePath = f_util_FileUtils::buildWebappPath('www', $relativePath);
+		$absolutePath = f_util_FileUtils::buildDocumentRootPath($relativePath);
 		if (!file_exists($absolutePath) || file_exists($relativePath.".deleted") || Framework::inDevelopmentMode())
 		{
 			$this->buildGlobalScreenStylesheetAtPath($absolutePath);
@@ -146,7 +146,7 @@ class website_PageRessourceService extends BaseService
 	{
 		$relativePath = $this->getStylesheetRelativePath(self::GLOBAL_DASHBOARD_NAME, $engine, $version, $protocol);
 
-		$absolutePath = f_util_FileUtils::buildWebappPath('www', $relativePath);
+		$absolutePath = f_util_FileUtils::buildDocumentRootPath($relativePath);
 		if (!file_exists($absolutePath) || file_exists($relativePath.".deleted")  || Framework::inDevelopmentMode())
 		{
 			$this->buildDashboardStylesheetAtPath($absolutePath);
@@ -189,7 +189,7 @@ class website_PageRessourceService extends BaseService
 	public function getGlobalPrintStylesheet($engine, $version, $protocol)
 	{
 		$relativePath = $this->getStylesheetRelativePath(self::GLOBAL_PRINT_NAME, $engine, $version, $protocol);
-		$absolutePath = f_util_FileUtils::buildWebappPath('www', $relativePath);
+		$absolutePath = f_util_FileUtils::buildDocumentRootPath($relativePath);
 		if (!file_exists($absolutePath) || file_exists($relativePath.".deleted") || Framework::inDevelopmentMode())
 		{
 			$this->buildGlobalPrintStylesheetAtPath($absolutePath);
@@ -204,7 +204,7 @@ class website_PageRessourceService extends BaseService
 	public function getStylesheet($name, $engine, $version, $protocol)
 	{
 		$relativePath = $this->getStylesheetRelativePath($name, $engine, $version, $protocol);
-		$absolutePath = f_util_FileUtils::buildWebappPath('www', $relativePath);
+		$absolutePath = f_util_FileUtils::buildDocumentRootPath($relativePath);
 		if (!file_exists($absolutePath) || file_exists($relativePath.".deleted") || Framework::inDevelopmentMode())
 		{
 			f_util_FileUtils::mkdir(dirname($absolutePath));
@@ -406,7 +406,7 @@ class website_PageRessourceService extends BaseService
 		$fullName .= '.css';
 		$lang = RequestContext::getInstance()->getLang();
 		$websiteId = website_WebsiteModuleService::getInstance()->getCurrentWebsite()->getId();
-		return f_util_FileUtils::buildPath('cache', 'css', $protocol , $websiteId, $lang, $engine, $version, $fullName);
+		return f_util_FileUtils::buildPath('cache', 'www', 'css', $protocol , $websiteId, $lang, $engine, $version, $fullName);
 	}
 
 	/**

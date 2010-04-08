@@ -52,7 +52,7 @@ class website_UrlRewritingService extends BaseService
 	 */
 	protected function __construct()
 	{
-		$this->m_compiledRulesFile = WEBAPP_HOME . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . 'urlrewriting_rules.php';
+		$this->m_compiledRulesFile = f_util_FileUtils::buildChangeBuildPath('urlrewriting_rules.php');
 		$this->importRules();
 	}
 	
@@ -124,6 +124,10 @@ class website_UrlRewritingService extends BaseService
 		{
 			// find rule for URL
 			$rule = $this->findMatchingRule($url);
+			if ($rule instanceof website_lib_urlrewriting_DocumentModelRule) 
+			{
+				$rule->checkMatchRedirection($url);
+			}
 		}
 		
 		return $rule;
@@ -812,8 +816,12 @@ class website_UrlRewritingService extends BaseService
 			{
 				header("HTTP/1.1 302 Found");
 			}
-			$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
-			$url = $this->generateUrl($website, $rule->getLang(), $rule->getRedirectionUrl(), array());
+			$url = $rule->getRedirectionUrl();
+			if (strpos($url, 'http') !== 0)
+			{
+				$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+				$url = $this->generateUrl($website, $rule->getLang(), $rule->getRedirectionUrl(), array());
+			}
 			header("Location: ".$url);
 			exit();
 		}

@@ -10,8 +10,8 @@ class website_Setup extends object_InitDataSetup
 		//Ajout des liens symboliques pour l'utilisation de fckeditor en front office
 		$repositoryPath = f_util_FileUtils::buildWebeditPath('libs', 'fckeditor');
 		$browserPath = f_util_FileUtils::buildWebeditPath('modules', 'website',  'lib', 'fckeditor', 'browser');
-		$webappFckPath = f_util_FileUtils::buildWebappPath('www', 'fckeditor');
-		$webappBrowserPath = f_util_FileUtils::buildWebappPath('www', 'fckeditorbrowser');
+		$webappFckPath = f_util_FileUtils::buildDocumentRootPath('fckeditor');
+		$webappBrowserPath = f_util_FileUtils::buildDocumentRootPath('fckeditorbrowser');
 		
 		if (is_link($webappFckPath))
 		{

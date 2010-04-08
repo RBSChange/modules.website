@@ -35,14 +35,14 @@ class website_GetRobotsTxtAction extends f_action_BaseAction
 			}
 		}
 		
-		$path = f_util_FileUtils::buildWebappPath('media', 'frontoffice', $_SERVER['HTTP_HOST'] . '.robots.txt');
+		$path = f_util_FileUtils::buildWebeditPath('media', 'frontoffice', $_SERVER['HTTP_HOST'] . '.robots.txt');
 		if (file_exists($path))
 		{
 			$contents = f_util_FileUtils::read($path);
 		}
 		else
 		{
-			$contents = f_util_FileUtils::read(f_util_FileUtils::buildWebappPath('media', 'frontoffice', 'robots.txt'));
+			$contents = f_util_FileUtils::read(f_util_FileUtils::buildWebeditPath('media', 'frontoffice', 'robots.txt'));
 		}
 		header('Content-type: text/plain');
 		header('Content-length: '.strlen($contents));

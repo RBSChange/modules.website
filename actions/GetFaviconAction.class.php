@@ -33,14 +33,14 @@ class website_GetFaviconAction extends f_action_BaseAction
 			}
 		}	
 		$this->setContentType('image/x-icon');
-		$path = f_util_FileUtils::buildWebappPath('media', 'frontoffice', $_SERVER['HTTP_HOST'] . '.ico');
+		$path = f_util_FileUtils::buildWebeditPath('media', 'frontoffice', $_SERVER['HTTP_HOST'] . '.ico');
 		if (file_exists($path))
 		{
 			readfile($path);	
 		}
 		else
 		{
-			readfile(f_util_FileUtils::buildWebappPath('media', 'frontoffice', 'favicon.ico'));
+			readfile(f_util_FileUtils::buildWebeditPath('media', 'frontoffice', 'favicon.ico'));
 		}	
 		return View::NONE;			
 	}

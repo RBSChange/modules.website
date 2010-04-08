@@ -33,7 +33,7 @@ class website_DisplayAction extends website_Action
 		$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();	
 		if (!$website->isPublished())
 		{
-			include f_util_FileUtils::buildWebappPath('www', 'site-disabled.php');
+			include f_util_FileUtils::buildWebeditPath('site-disabled.php');
 			return View::NONE;
 		}
 			

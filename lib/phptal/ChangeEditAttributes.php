@@ -95,21 +95,21 @@ class PHPTAL_Php_Attribute_CHANGE_edit extends ChangeTalAttribute
 					if ($isCorrection)
 					{
 						$title = f_Locale::translate("&modules.website.frontoffice.this-is-the-correction-of;", array("documentLabel", $document->getLabel()));
-						$src = LinkHelper::getRessourceLink("/icons/small/correction.png");
+						$src = LinkHelper::getRessourceLink("/changeicons/small/correction.png");
 						$html .= "<img src=\"".$src->getUrl()."\" ".f_util_HtmlUtils::buildAttribute("alt", $title)." ".f_util_HtmlUtils::buildAttribute("title", $title)." />";
 					}
 
 					if (!$isCorrection)
 					{
 						$title = f_Locale::translate("&modules.website.frontoffice.there-is-a-correction;");
-						$src = LinkHelper::getRessourceLink("/icons/small/correction.png");
+						$src = LinkHelper::getRessourceLink("/changeicons/small/correction.png");
 						$html .= "<img src=\"".$src->getUrl()."\" ".f_util_HtmlUtils::buildAttribute("alt", $title)." ".f_util_HtmlUtils::buildAttribute("title", $title)." />";
 
 						// TODO: something on generic/ViewDetail with corrections.
 						$html .= "<a ".f_util_HtmlUtils::buildAttribute("href", LinkHelper::getDocumentUrl(DocumentHelper::getDocumentInstance($document->getCorrectionid())));
 						$title = f_Locale::translate("&modules.website.frontoffice.viewCorrection-document;", array("label" => $document->getLabel()));
 						$html .= " ".f_util_HtmlUtils::buildAttribute("title", $title);
-						$src = LinkHelper::getRessourceLink("/icons/small/preview.png");
+						$src = LinkHelper::getRessourceLink("/changeicons/small/preview.png");
 						$html .= "><img src=\"".$src->getUrl()."\" alt=\"\" />";
 						$html .= "</a>";
 					}
@@ -129,7 +129,7 @@ class PHPTAL_Php_Attribute_CHANGE_edit extends ChangeTalAttribute
 					$html .= "<a ".f_util_HtmlUtils::buildAttribute("href", LinkHelper::getDocumentUrl($document));
 					$title = f_Locale::translate("&modules.website.frontoffice.view-document;", array("label" => $document->getLabel()));
 					$html .= " ".f_util_HtmlUtils::buildAttribute("title", $title);
-					$src = LinkHelper::getRessourceLink("/icons/small/preview.png");
+					$src = LinkHelper::getRessourceLink("/changeicons/small/preview.png");
 					$html .= "><img src=\"".$src->getUrl()."\" alt=\"\" />";
 					$html .= "</a>";
 				}
@@ -203,7 +203,7 @@ class PHPTAL_Php_Attribute_CHANGE_edit extends ChangeTalAttribute
 				$linkParams["onclick"] = "return confirm('".f_Locale::translate("&modules.website.frontoffice.are-you-sure-you-want-js;", array("action" => "'+this.getAttribute('title')+'"))."');";
 			}
 			$html = PHPTAL_Php_Attribute_CHANGE_actionlink::renderActionlink($linkParams);
-			$src = LinkHelper::getRessourceLink("/icons/small/".$icon.".png");
+			$src = LinkHelper::getRessourceLink("/changeicons/small/".$icon.".png");
 			$html .= "<img src=\"".$src->getUrl()."\" alt=\"\" /></a>";
 			return $html;
 		}

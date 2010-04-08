@@ -14,7 +14,7 @@ class website_IndexAction extends website_Action
 		{
 			if (($homePage = $ws->getIndexPage($website)) === null || !$homePage->isPublished())
 			{
-				require(f_util_FileUtils::buildWebappPath("www/site-disabled.php"));
+				require(f_util_FileUtils::buildWebeditPath("site-disabled.php"));
 				return View::NONE ;
 			}
 			else

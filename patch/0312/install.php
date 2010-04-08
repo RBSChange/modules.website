@@ -21,7 +21,7 @@ class website_patch_0312 extends patch_BasePatch
 	 */
 	public function execute()
 	{
-		$oldthreadTemplate = f_util_FileUtils::buildWebappPath('modules', 'website', 'templates', 'Website-Block-Thread-Success.all.all.html');
+		$oldthreadTemplate = f_util_FileUtils::buildOverridePath('modules', 'website', 'templates', 'Website-Block-Thread-Success.all.all.html');
 		if (file_exists($oldthreadTemplate))
 		{
 			$newPath = str_replace('Thread-Success', 'ThreadOld-Success', $oldthreadTemplate);

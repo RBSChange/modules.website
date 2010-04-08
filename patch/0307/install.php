@@ -18,34 +18,36 @@ class website_patch_0307 extends patch_BasePatch
 		//compile-documents
 		//compile-db-schema
 		
-		$to = f_util_FileUtils::buildWebappPath('media', 'frontoffice', 'favicon.ico');
-		if (!file_exists($to))
+		$to = f_util_FileUtils::buildWebeditPath('media', 'frontoffice', 'favicon.ico');
+		$path = f_util_FileUtils::buildDocumentRootPath('favicon.ico');
+		if (file_exists($path))
 		{
-			$path = f_util_FileUtils::buildWebappPath('www', 'favicon.ico');
-			if (file_exists($path))
+			if (file_exists($to))
 			{
-				rename($path, $to);
+				unlink($to);
 			}
-			else
-			{
-				$from = f_util_FileUtils::buildFrameworkPath('builder', 'webapp', 'media', 'frontoffice', 'favicon.ico');
-				f_util_FileUtils::cp($from, $to);
-			}
+			rename($path, $to);
+		}
+		else if (!file_exists($to))
+		{
+			$from = f_util_FileUtils::buildFrameworkPath('builder', 'home', 'media', 'frontoffice', 'favicon.ico');
+			f_util_FileUtils::cp($from, $to);
 		}
 		
-		$to = f_util_FileUtils::buildWebappPath('media', 'frontoffice', 'robots.txt');
-		if (!file_exists($to))
+		$to = f_util_FileUtils::buildWebeditPath('media', 'frontoffice', 'robots.txt');
+		$path = f_util_FileUtils::buildDocumentRootPath('robots.txt');
+		if (file_exists($path))
 		{
-			$path = f_util_FileUtils::buildWebappPath('www', 'robots.txt');
-			if (file_exists($path))
+			if (file_exists($to))
 			{
-				rename($path, $to);
+				unlink($to);
 			}
-			else
-			{
-				$from = f_util_FileUtils::buildFrameworkPath('builder', 'webapp', 'media', 'frontoffice', 'robots.txt');
-				f_util_FileUtils::cp($from, $to);
-			}
+			rename($path, $to);
+		}
+		else if (!file_exists($to))
+		{
+			$from = f_util_FileUtils::buildFrameworkPath('builder', 'home', 'media', 'frontoffice', 'robots.txt');
+			f_util_FileUtils::cp($from, $to);
 		}
 	}
 
