@@ -102,6 +102,7 @@ class website_MarkerfolderService extends generic_FolderService
 	/**
 	 * @param f_persistentdocument_PersistentDocument $document
 	 * @param string $forModuleName
+	 * @param array $allowedSections
 	 * @return array
 	 */
 	public function getResume($document, $forModuleName, $allowedSections = null)

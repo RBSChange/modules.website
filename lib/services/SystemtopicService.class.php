@@ -55,6 +55,7 @@ class website_SystemtopicService extends website_TopicService
 	/**
 	 * @param website_persistentdocument_systemtopic $document
 	 * @param string $forModuleName
+	 * @param array $allowedSections
 	 * @return array
 	 */
 	public function getResume($document, $forModuleName, $allowedSections = null)

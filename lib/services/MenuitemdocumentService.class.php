@@ -51,9 +51,10 @@ class website_MenuitemdocumentService extends website_MenuitemService
 	/**
 	 * @param website_persistentdocument_page $document
 	 * @param string $forModuleName
+	 * @param array $allowedSections
 	 * @return array
 	 */
-	public function getResume($document, $forModuleName)
+	public function getResume($document, $forModuleName, $allowedSections = null)
 	{
 		$data = parent::getResume($document, $forModuleName, array('properties' => true, 'publication' => true, 'history' => true));
 		$itemDoc = $document->getDocument();

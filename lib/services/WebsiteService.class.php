@@ -223,11 +223,12 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	/**
 	 * @param website_persistentdocument_website $document
 	 * @param string $forModuleName
+	 * @param array $allowedSections
 	 * @return array
 	 */
-	public function getResume($document, $forModuleName)
+	public function getResume($document, $forModuleName, $allowedSections = null)
 	{
-		$data = parent::getResume($document, $forModuleName);
+		$data = parent::getResume($document, $forModuleName, $allowedSections);
 		$rc = RequestContext::getInstance();
 		$contextlang = $rc->getLang();
 		$usecontextlang = $document->isLangAvailable($contextlang);
