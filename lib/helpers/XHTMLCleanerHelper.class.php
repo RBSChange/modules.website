@@ -10,11 +10,6 @@ class website_XHTMLCleanerHelper
 	 */
 	public static function clean($XHTMLFragment)
 	{
-		if (Framework::isInfoEnabled())
-		{
-			Framework::info(__METHOD__ . '::Original:' . $XHTMLFragment);
-		}
-
 		if (f_util_StringUtils::isEmpty($XHTMLFragment)) {return '';}
 		$domTemplate = new DOMDocument('1.0', 'UTF-8');
 		$domTemplate->substituteEntities = false;
@@ -27,12 +22,6 @@ class website_XHTMLCleanerHelper
 		$reg = array('/<a\s+([^>]*)\/>/i', '/<\/?body([^>]*)>\s*/i');
 		$replace = array('<a $1></a>', '');
 		$content = preg_replace($reg, $replace, $content);
-		
-		if (Framework::isInfoEnabled())
-		{
-			Framework::info(__METHOD__ . '::Cleaned:' . $content);
-		}
-		
 		return $content;
 	}
 
