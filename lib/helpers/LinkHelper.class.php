@@ -179,6 +179,14 @@ class LinkHelper
 		return $url;
 	}	
 	
+	/**
+	 * @param f_persistentdocument_PersistentDocument $document
+	 */
+	public static function getPermalink($document)
+	{
+		return self::getActionUrl('website', 'Permalink', array('cmpref' => $document->getId()));
+	}
+	
 	public static function getTagUrl($tag, $lang = null, $parameters = array())
 	{
 		$urs = website_UrlRewritingService::getInstance();
