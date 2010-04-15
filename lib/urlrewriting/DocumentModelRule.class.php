@@ -92,6 +92,10 @@ class website_lib_urlrewriting_DocumentModelRule
 					{
 						Framework::info(__METHOD__ . " Permanently redirect $url -> $currentURL");
 					}
+					if (f_util_ArrayUtils::isNotEmpty($_GET))
+					{
+						$currentURL .= "?" . http_build_query($_GET);
+					}
 					$this->setRedirectionUrl($currentURL);
 					$this->setMovedPermanently(true);
 					$this->m_lang = $lang;

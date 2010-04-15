@@ -66,7 +66,13 @@
 				<parameter name="lang" />
 			</parameters>
 		</rule>
-
+		
+		<rule redirection="website/Permalink">
+			<template>/permalink/$cmpref</template>
+			<parameters>
+				<parameter name="cmpref" format="[0-9]+"/>
+			</parameters>
+		</rule>
 	</rules>
 
 </urlrewriting>
