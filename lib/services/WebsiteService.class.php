@@ -97,6 +97,12 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 		{
 			throw new Exception('Cannot insert a website into another website.');
 		}
+		
+		if ($document->getRobottxt() == null)
+		{
+			$default = f_util_FileUtils::read(f_util_FileUtils::buildWebeditPath('media', 'frontoffice', 'robots.txt'));
+			$document->setRobottxt($default);
+		}
 	}
 
 
