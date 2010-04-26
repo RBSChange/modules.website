@@ -71,7 +71,7 @@ ul.tagged-menu-vertical>li.current strong{
 }
 
 ul.tagged-menu-horizontal li{
-	background-color: none/*@var menumaintoplibgcolor*/;
+	background-color: transparent/*@var menumaintoplibgcolor*/;
 }
 
 ul.tagged-menu-vertical li{

@@ -11,12 +11,12 @@ body{
 	font-size: 80%/*@var textsize*/;
 }
 body#richtext-body{
-	background: !important/*@var contentbgcolor*/;
+	background-color: transparent/*@var contentbgcolor*/;
 	text-align: left!important;
 }
 body#richtext-body a.link{
-	text-decoration: underline!important/*@var linkdecoration*/;
-	color: #696a12!important/*@var linkfgcolor*/;
+	text-decoration: underline/*@var linkdecoration*/;
+	color: #696a12/*@var linkfgcolor*/;
 }
 #bannerLocation{
 	height: 220px/*@var bannerheight*/;

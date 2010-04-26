@@ -19,7 +19,7 @@ ul.tagged-menu-vertical>li{
 	list-style-position: inside;
 	list-style-image: none;
 	background-color: none/*@var menumainleftonebgcolor*/;
-	background-image: /*@var menumainleftoneimage*/;
+	background-image: none/*@var menumainleftoneimage*/;
 	background-position: top left/*@var menumainleftoneimageposition*/;
 	background-repeat: no-repeat/*@var menumainleftoneimagerepeat*/;
 }
@@ -28,7 +28,7 @@ ul.tagged-menu-vertical>li.current{
 	list-style-position: inside;
 	list-style-image: none;
 	background-color: none/*@var menumainleftonecurrentbgcolor*/;
-	background-image: /*@var menumainleftonecurrentimage*/;
+	background-image: none/*@var menumainleftonecurrentimage*/;
 	background-position: top left/*@var menumainleftonecurrentimageposition*/;
 	background-repeat: no-repeat/*@var menumainleftonecurrentimagerepeat*/;
 }
@@ -40,7 +40,7 @@ ul.tagged-menu-vertical>li a:hover{
 	color: #000/*@var menumainleftonehoverfgcolor*/;
 	text-decoration: none/*@var menumainleftonehovertextdecoration*/;
 	background-color: none/*@var menumainleftonehoverbgcolor*/;
-	background-image: /*@var menumainleftonehoverimage*/;
+	background-image: none/*@var menumainleftonehoverimage*/;
 	background-position: top left/*@var menumainleftonehoverimageposition*/;
 	background-repeat: no-repeat/*@var menumainleftonehoverimagerepeat*/;
 }
