@@ -1185,7 +1185,7 @@ $(document).ready(function() {
 
 		}
 		$datePickerParam .= '}';
-		return self::renderInputByType("text", $params) . '<span>' . $format . "</span><script type=\"text/javascript\">//<![CDATA[\n\$(document).ready(function(){\$('#" . $params['id'] . "').datePicker($datePickerParam);});\n//]]></script>";
+		return self::renderInputByType("text", $params) . '<span>' . $format . "</span><script type=\"text/javascript\">//<![CDATA[\n\$(document).ready(function(){\$('[id=" . $params['id'] . "]').datePicker($datePickerParam);});\n//]]></script>";
 	}
 
 	/**
