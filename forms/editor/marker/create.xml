@@ -71,7 +71,7 @@
 				<body><![CDATA[
 					var moduleName = 'marker'+this.markerType;
 					var attributes = {
-						modulename: moduleName,
+						modulename: 'website',
 						action: "InsertJSON",
 						parentref: this.documentEditor.parentid, 
 						lang: Context.W_LANG, 

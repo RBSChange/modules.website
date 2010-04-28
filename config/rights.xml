@@ -29,7 +29,6 @@
 		<document name="menuitemfunction" />
 		<document name="menuitemtext" />
 		<document name="markerfolder" />
-		<document name="marker" />
 		<action name="Display">
 			<permission name="AuthenticatedFrontUser" />
 		</action>
@@ -43,8 +42,6 @@
 		<action name="InitEmptyPageVersion" />
 		<action name="WizardSaveAsTemplate" />
 		<action name="InitDefaultStruct" />
-		<document name="markerfolder" />
-		<document name="marker" />
 	</actions>
 	<roles>
 		<role name="Admin">
@@ -116,6 +113,7 @@
 			<permission name="Load.menu" />
 			<permission name="Load.menuitemfunction" />
 			<permission name="Load.menuitemdocument" />
+			<permission name="Load.markerfolder" />
 			<permission name="Rename.topic" />
 			<permission name="Rename.menu" />
 			<permission name="Rename.menuitemfunction" />
