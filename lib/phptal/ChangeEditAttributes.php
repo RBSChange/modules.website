@@ -68,7 +68,8 @@ class PHPTAL_Php_Attribute_CHANGE_edit extends ChangeTalAttribute
 	 */
 	public static function renderEdit($params)
 	{
-		if (website_phptal_EditAttribute::isActive())
+		if (website_phptal_EditAttribute::isActive() && 
+			($params["document"] instanceof f_persistentdocument_PersistentDocument))
 		{
 			$currentURL = LinkHelper::getCurrentUrl();
 			$document = $params["document"];
