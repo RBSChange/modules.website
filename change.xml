@@ -32,12 +32,6 @@
       </versions>
     </dependency>
     <dependency>
-      <name>pear/HTTP_Header</name>
-      <versions>
-        <version>1.2.0</version>
-      </versions>
-    </dependency>
-    <dependency>
       <name>lib/fckeditor</name>
       <versions>
         <version>2.6.3</version>

@@ -33,8 +33,7 @@ class website_GetSearchEngineFileAction extends f_action_BaseAction
 			}
 		}
 		
-		$HTTP_Header= new HTTP_Header();
-		$HTTP_Header->sendStatusCode(404);
+		f_web_http_Header::setStatus(404);
     	return View::NONE;
 	}
 	

@@ -7,9 +7,7 @@ abstract class website_ErrorAction extends website_Action
 	 */
 	public function _execute($context, $request)
 	{
-		$HTTP_Header= new HTTP_Header();
-		$HTTP_Header->sendStatusCode($this->getStatus());
-
+		f_web_http_Header::setStatus($this->getStatus());
 		try
 		{
 			$page = $this->getPage();
