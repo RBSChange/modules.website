@@ -729,4 +729,17 @@ class website_Page implements f_mvc_Context
 			}
 		}
 	}
+	/**
+	 * Doctype for the HTML output, defaults to XHTML 1.0 Strict but if you define DEFAULT_DOC_TYPE to 'XHMTL-1.0-Transitional'
+	 * you can swith to XHTML 1.0 Transitional.
+	 * @return String
+	 */
+	public function getDoctype()
+	{
+		if (defined('DEFAULT_DOC_TYPE') && 'DEFAULT_DOC_TYPE' == 'XHMTL-1.0-Transitional')
+		{
+			return '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
+		}
+		return '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
+	}
 }
