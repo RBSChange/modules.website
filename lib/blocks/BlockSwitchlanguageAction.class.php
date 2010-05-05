@@ -54,7 +54,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 		{
 			$rc->beginI18nWork($lang);
 			$isPageLink = ($page->isContextLangAvailable() && $page->isPublished());
-			if ($isPageLink || ($viewall && $homePage->isPublished()))
+			if ($website->isPublished() && ($isPageLink || ($viewall && $homePage->isPublished())))
 			{
 				$switchArray[$lang] = array();
 				$switchArray[$lang]['label'] = strtoupper($lang);
