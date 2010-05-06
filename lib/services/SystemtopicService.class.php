@@ -60,6 +60,8 @@ class website_SystemtopicService extends website_TopicService
 	 */
 	public function getResume($document, $forModuleName, $allowedSections = null)
 	{	
+		$urlrewriting = null;
+
 		if (($allowedSections === null && $document->getPersistentModel()->hasURL()) || isset($allowedSections['urlrewriting']))
 		{
 			$reference = $document->getReference();
