@@ -417,6 +417,10 @@ class LinkHelper
         {
             $label = $document->getNavigationtitle();
         }
+        else if (f_util_ClassUtils::methodExists($document, 'getLabelAsHtml'))
+        {
+            $label = $document->getLabelAsHtml();
+        }
         else
         {
             $label = $document->getLabel();
