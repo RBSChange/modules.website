@@ -4,7 +4,7 @@ class website_BBCodeService extends BaseService
 	/**
 	 * @var String
 	 */
-	const URL_STRING_REGEXP = '(?:http\:\/\/|https\:\/\/|ftp\:\/\/)[a-zA-Z0-9,;\:\/\-\?\&\.\=\_\~\#\\\'\[\]\{\}]+';
+	const URL_STRING_REGEXP = '(?:http\:\/\/|https\:\/\/|ftp\:\/\/)[a-zA-Z0-9,;\:\/\-\+\?\&\.\=\_\~\#\\\'\[\]\{\}]+';
 
 	/**
 	 * @var website_BBCodeService.
