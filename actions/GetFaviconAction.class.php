@@ -32,7 +32,7 @@ class website_GetFaviconAction extends f_action_BaseAction
 				return View::NONE;
 			}
 		}	
-		$this->setContentType('image/x-icon');
+		$this->setContentType($website->getFaviconMimeType());
 		$path = f_util_FileUtils::buildWebeditPath('media', 'frontoffice', $_SERVER['HTTP_HOST'] . '.ico');
 		if (file_exists($path))
 		{
