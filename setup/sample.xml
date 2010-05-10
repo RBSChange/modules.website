@@ -97,16 +97,10 @@
 			<page label="Résultat de recherche" label-en="Search résults" indexingstatus="false" navigationVisibility="hidden" navigationVisibility-en="hidden"
 				byTag="contextual_website_website_modules_solrsearch_page-results">
 			    <changecontent for="content-block">
-			    	<changeblock type="richtext">
-						<![CDATA[<h2>Résultat de recherche</h2>]]>
-					</changeblock>
-					<changeblock type="modules_solrsearch_searchresults" />
+			    	<changeblock type="modules_solrsearch_results" />
 				</changecontent>
 				<changecontent for="content-block" lang="en">
-			    	<changeblock type="richtext">
-						<![CDATA[<h2>Search results</h2>]]>
-					</changeblock>
-					<changeblock type="modules_solrsearch_searchresults" />
+			    	<changeblock type="modules_solrsearch_results" />
 				</changecontent>
 			</page>
 		</topic>

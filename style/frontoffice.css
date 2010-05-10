@@ -150,7 +150,8 @@ ul.footer-menu li{
 	margin: 0;
 }
 
-.modules-solrsearch-searchform{
+.modules-solrsearch-searchform,
+.modules-solrsearch-form{
 	padding: 10px 10px 4px 10px;
 }
 

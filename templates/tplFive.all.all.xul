@@ -12,7 +12,7 @@
 				</div>
 				<a name="search"></a>
 				<div id="searchLocation" orient="vertical">
-					<change:templateblock type="modules_solrsearch_searchform" />
+					<change:templateblock type="modules_solrsearch_form" />
 				</div>
 			</div>
 			<div id="headerLocation" orient="vertical">
