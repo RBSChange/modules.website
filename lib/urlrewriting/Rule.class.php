@@ -144,6 +144,7 @@ abstract class website_lib_urlrewriting_Rule
 		}
 		else
 		{
+			$matches = array();
 			if (preg_match('/\.([a-z0-9]{2,})$/', $this->m_template, $matches))
 			{
 				$this->m_suffix = $matches[1];
@@ -171,7 +172,9 @@ abstract class website_lib_urlrewriting_Rule
 	 */
 	private function buildRegExp()
 	{
-		$this->m_regExp = str_replace(array('.'), array('\\.'), $this->m_template);
+		$search = array('.', '(', ')', '{', '}', '[', ']');
+		$replace = array('\\.', '\(', '\)', '\{', '\}', '\[', '\]');
+		$this->m_regExp = str_replace($search, $replace, $this->m_template);
 		$matches = array();
 		if (preg_match_all('/\$([a-z]+)/i', $this->m_regExp, $matches))
 		{
@@ -249,7 +252,7 @@ abstract class website_lib_urlrewriting_Rule
 			// append default-valued parameters
 			foreach ($this->m_parameters as $name => $parameter)
 			{
-				if ( ! isset($matches[$name]) )
+				if (!isset($matches[$name]) && isset($parameter['value']))
 				{
 					$matches[$name] = f_util_Convert::fixDataType($parameter['value']);
 				}
