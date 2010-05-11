@@ -6,7 +6,7 @@ abstract class website_TaggerBlockAction extends website_BlockAction
 	 * @param website_persistentdocument_Page $page
 	 * @param Boolean $absolute true if block was introduced considering all versions (langs) of the page
 	 */
-	function onPageInsertion($page, $absolute = false)
+	public function onPageInsertion($page, $absolute = false)
 	{
 		if ($absolute && $this->canApplyTag($page))
 		{
@@ -16,11 +16,10 @@ abstract class website_TaggerBlockAction extends website_BlockAction
 
 	/**
 	 * Called when the block is removed from a page content
-	 * tag the page if some page is not already tagged with the block's tag
 	 * @param website_persistentdocument_Page $page
 	 * @param Boolean $absolute true if block was removed considering all versions (langs) of the page
 	 */
-	function onPageRemoval($page, $absolute = false)
+	public function onPageRemoval($page, $absolute = false)
 	{
 		if ($absolute && $this->canApplyTag($page))
 		{
@@ -42,6 +41,10 @@ abstract class website_TaggerBlockAction extends website_BlockAction
 	 */
 	protected function canApplyTag($page)
 	{
-		return !$page->getPersistentModel()->useCorrection() || $page->getCorrectionofid() === null;
+		if ($page->getPersistentModel()->useCorrection() && $page->getCorrectionofid() !== null)
+		{
+			return false;
+		}
+		return !$this->hasConfigurationParameter('cmpref') || f_util_StringUtils::isEmpty($this->getConfigurationParameter('cmpref'));
 	}
 }
