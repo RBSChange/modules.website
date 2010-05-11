@@ -211,7 +211,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 	public function getBlockMetaInfos($document)
 	{
 		$metasAvailable = array("title" => array(), "description" => array(), "keywords" => array());
-		$lang = RequestContext::getInstance()->getLang();
 		$content = $document->getContent();
 
 		if (f_util_StringUtils::isEmpty($content))
@@ -263,7 +262,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 						}
 						else if ($blockInfo->hasMeta() && $blockConfig->getEnablemetas())
 						{
-							list($dummy, $moduleName) = explode('_', $blockInfoArray["package"]);
+							list(, $moduleName) = explode('_', $blockInfoArray["package"]);
 							$metaPrefix = $moduleName."_".$blockInfoArray["name"].".";
 
 							$newMetas = array();
@@ -1054,8 +1053,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			if (!isset($newBlocks[$type]))
 			{
-				$rq = RequestContext::getInstance();
-				$contextLang = $rq->getLang();
 				$hasBlock = $this->hasBlockInOtherLangs($page, $type, $otherLangsBlocks);
 				$oldBlock->onPageRemoval($page, !$hasBlock);
 			}
