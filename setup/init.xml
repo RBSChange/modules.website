@@ -56,5 +56,11 @@
 				<staticitem label="&amp;modules.website.bo.general.protocol.Http;" value="http"/>
 				<staticitem label="&amp;modules.website.bo.general.protocol.Https;" value="https"/>
 		</staticlist>	
+		
+		<staticlist listid="modules_website/defaultstructure"
+			label="Structure par défaut">
+				<staticitem label="&amp;modules.website.bo.general.structure.Default;" value="defaultsite.xml"/>
+				<staticitem label="&amp;modules.website.bo.general.structure.Sample;" value="sample.xml"/>
+		</staticlist>
 	</systemfolder>
 </script>

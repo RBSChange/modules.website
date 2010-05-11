@@ -131,6 +131,67 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 		$markerFolder = website_MarkerfolderService::getInstance()->getNewDocumentInstance();
 		$markerFolder->setLabel('&modules.website.bo.general.Marker-folder-label;');
 		$markerFolder->save($document->getId());
+		
+		$initScript = $document->getStructureinit();
+		if (f_util_StringUtils::isNotEmpty($initScript))
+		{
+			$scriptPath = f_util_FileUtils::buildWebeditPath('modules', 'website', 'setup', $initScript);
+			if (is_readable($scriptPath))
+			{
+				$this->generateDefaultStructure($document, $scriptPath);
+			}
+		}
+	}
+	/**
+	 * @param website_persistentdocument_website $website
+	 * @param string $scriptPath
+	 */	
+	public function initDefaultStruct($website, $scriptPath)
+	{
+		if (!is_readable($scriptPath))
+		{
+			throw new BaseException('Invalid website import script', 'modules.website.errors.Invalid-website-import-script');
+		}
+		try 
+		{
+			$this->tm->beginTransaction();
+			$this->generateDefaultStructure($website, $scriptPath);
+			$this->tm->commit();
+		}
+		catch (Exception $e)
+		{
+			$this->tm->rollBack($e);
+			throw $e;
+		}
+	}
+	
+	/**
+	 * @param website_persistentdocument_website $website
+	 * @param string $scriptPath
+	 */
+	private function generateDefaultStructure($website, $scriptPath)
+	{
+		$script = new DOMDocument('1.0', 'UTF-8');
+		$script->load($scriptPath);
+		
+		$xmlWebsite = $script->getElementsByTagName('website')->item(0);
+		$xmlWebsite->setAttribute('documentid', $website->getId());
+		$xmlWebsite->setAttribute('domain', $website->getDomain());
+		$xmlWebsite->setAttribute('url', $website->getUrl());
+		
+		$xmlWebsite->removeAttribute('label');
+		$xmlWebsite->removeAttribute('label-en');
+		$xmlWebsite->removeAttribute('protocol');
+		$xmlWebsite->removeAttribute('localizebypath');
+		$xmlWebsite->removeAttribute('byTag');
+		
+		$tmpFile = f_util_FileUtils::getTmpFile('Script_');
+		$script->save($tmpFile);
+
+		$scriptReader = import_ScriptReader::getInstance();
+		Framework::info('Import Default Struct : ' . $tmpFile);
+		$scriptReader->execute($tmpFile);
+		@unlink($tmpFile);
 	}
 
 	/**

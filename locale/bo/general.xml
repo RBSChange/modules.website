@@ -395,4 +395,21 @@
 		<locale lang="fr">non renseigné</locale>
 		<locale lang="en">N.A.</locale>
 	</entity>
+	
+	<entity id="notification.no-default-website">
+		<locale lang="fr">Il n'existe pas de site web par défaut</locale>
+	</entity>
+	
+	<entity id="structure.no-content">
+		<locale lang="fr">Site vide</locale>
+	</entity>
+		
+	<entity id="structure.default">
+		<locale lang="fr">Structure standard</locale>
+	</entity>
+	
+	<entity id="structure.sample">
+		<locale lang="fr">structure d'exemple</locale>
+		<locale lang="en">sample Structure</locale>
+	</entity>
 </localization>

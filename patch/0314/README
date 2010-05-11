@@ -1,0 +1,3 @@
+Version: 3.0.2
+- Ajout d'un avertissement si pas de site par défaut.
+- Ajout du choix de la structure du site dans le formulaire de création.

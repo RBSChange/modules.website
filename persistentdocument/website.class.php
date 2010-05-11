@@ -1,6 +1,27 @@
 <?php
 class website_persistentdocument_website extends website_persistentdocument_websitebase
 {
+	
+	/**
+	 * @var string
+	 */
+	private $structureinit;
+	
+	/**
+	 * @return string
+	 */
+	public function getStructureinit()
+	{
+		return $this->structureinit;
+	}
+	
+	/**
+	 * @param string $structureinit
+	 */
+	public function setStructureinit($structureinit)
+	{
+		$this->structureinit = $structureinit;
+	}
 	/**
 	 * @return string
 	 */
@@ -17,4 +38,6 @@ class website_persistentdocument_website extends website_persistentdocument_webs
 	{
 		return $this->getUrl() . '/favicon.ico';
 	}
+	
+
 }

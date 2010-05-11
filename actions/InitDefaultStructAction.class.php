@@ -23,16 +23,8 @@ class website_InitDefaultStructAction extends f_action_BaseJSONAction
 					{
 						$scriptPath = f_util_FileUtils::buildWebeditPath('modules', 'website', 'setup', 'sample.xml');
 					}
-					if (!is_readable($scriptPath))
-					{
-						throw new BaseException('Website default structure script is unreadable', 'modules.website.bo.actions.Unreadable-default-website-script');
-					}
-					$tempFileName = $this->updateScript($scriptPath, $website);
 					
-					$scriptReader = import_ScriptReader::getInstance();
-					Framework::info('Import Default Struct : ' . $tempFileName);
-					$scriptReader->execute($tempFileName);
-					@unlink($tempFileName);
+					website_WebsiteService::getInstance()->initDefaultStruct($website, $scriptPath);
 				}
 				else
 				{

@@ -304,11 +304,6 @@
     <locale lang="en">Invalid website</locale>
     <locale lang="de">Webseite ungültig.</locale>
   </entity>
-  <entity id="Unreadable-default-website-script">
-    <locale lang="fr">Le script d'initialisation d'un nouveau site n'est pas lisible.</locale>
-    <locale lang="en">An error occured whil reading the initialization script.</locale>
-    <locale lang="de">Der Script zur initialisierung einer neuen Webseite ist unlesbar.</locale>
-  </entity>
   <entity id="AddNewEmptyVersionButton">
     <locale lang="fr">créer une nouvelle version vide</locale>
   </entity>

@@ -4,6 +4,11 @@
 		<field name="label" />
 		<field name="domain" />
 		<field name="localizebypath" />
+		<field name="structureinit" labeli18n="modules.website.document.website.Structureinit"
+			shorthelp="&amp;modules.website.document.website.Structureinit-help;"
+			type="dropdownlist" listid="modules_website/defaultstructure" 
+			emptylabel="&amp;modules.website.bo.general.structure.No-content;"/>
+			
 		<field name="stylesheet" emptylabel="" />
 		<field name="skin" />
 	</section>

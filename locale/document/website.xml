@@ -186,4 +186,13 @@
 		<locale lang="fr">contenu XML du fichier MSN (/LiveSearchSiteAuth.xml)</locale>
 		<locale lang="en">XML content of the MSN identification file (/LiveSearchSiteAuth.xml)</locale>
 	</entity>
+	
+	
+	<entity id="structureinit">
+		<locale lang="fr">structure par défaut</locale>
+		<locale lang="en">default Structur</locale>
+	</entity>
+	<entity id="structureinit-help">
+		<locale lang="fr">Scripte à utiliser pour initialiser la structure du site.</locale>
+	</entity>
 </localization>

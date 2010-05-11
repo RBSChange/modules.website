@@ -54,4 +54,23 @@ class website_ModuleService extends ModuleBaseService
 		}
 		return null;
 	}
+	
+	/**
+	 * @return array
+	 */
+	public function checkInitModuleInfos()
+	{
+		$result = array();
+		$defaultWebsite = website_WebsiteModuleService::getInstance()->getDefaultWebsite();
+		$result['websites'] = ($defaultWebsite->isNew()) ? array() : array($defaultWebsite->getId());		
+		$result['createwebsite'] = count($result['websites']) == 0;
+		if ($result['createwebsite'])
+		{
+			$result['createwebsite'] = f_permission_PermissionService::getInstance()
+			->hasPermission(users_UserService::getInstance()->getCurrentBackEndUser(), 
+				'modules_website.Insert.website',
+				ModuleService::getInstance()->getRootFolderId('websites'));
+		}
+		return $result;
+	}
 }

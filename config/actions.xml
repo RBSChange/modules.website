@@ -1,5 +1,38 @@
 <?xml version="1.0"?>
-<actions extends="generic">
+<actions>
+
+	<action name="onModuleInit">
+		<body><![CDATA[
+			this.executeJSON("CheckModuleInit", {cmpref: this.mRootFolderId, lang:this.getContextLang()});
+		]]></body>
+	</action>
+	
+	<action name="onCheckModuleInitSuccess">
+		<parameter name="result" />
+		<body><![CDATA[
+			if (result.contents.websites.length == 0)
+			{
+				wCore.debug(wCore.dump(result.contents));
+				var notifZone = this.getElementByAnonId('initnotification');
+				if (result.contents.createwebsite)
+				{
+					var insertWebsiteAction = this.getActionInfo('createWebsite');
+					
+					var callback = function (notif, bI) {bI.module.createDocumentEditor('modules_website_website', bI.module.mRootFolderId)};
+					var buttons = [{callback:callback, label:insertWebsiteAction.label, accessKey:"", module: this}];
+					notifZone.appendNotification("&amp;modules.website.bo.general.notification.No-default-website;", 
+						'createwebsite', wToolkit.getIcon('website', 'small'), notifZone.PRIORITY_CRITICAL_BLOCK, buttons);
+				}
+				else
+				{
+					notifZone.appendNotification("&amp;modules.website.bo.general.notification.No-default-website;", 
+						'nodefaultwebsite', wToolkit.getIcon('website', 'small'), notifZone.PRIORITY_WARNING_LOW, []);
+				}
+			
+			}
+		]]></body>
+	</action>
+				
 	<action name="checkLink">
 		<parameter name="listWidget"/>
 		<body><![CDATA[
