@@ -13,6 +13,10 @@ class website_DocumentURLElement extends import_ScriptBaseElement
 			
 			$ds = $document->getDocumentService();
 			$websiteId = $ds->getWebsiteId($document); 
+			if ($websiteId == null)
+			{
+				$websiteId = 0;
+			}
 			$url = $this->attributes['url'];
 			
 			$lang = isset($this->attributes['lang']) ? $this->attributes['lang'] : $document->getLang();
