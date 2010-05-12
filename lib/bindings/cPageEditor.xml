@@ -34,255 +34,11 @@
 		</content>
 	</binding>
 	
-	<binding id="cPageVersionList"  extends="form.cField#cAbstractField">
-
+	<binding id="cPageVersionGrid"  extends="widgets.cGrid#cAbstractSortableGrid">
 		<implementation>
-			<field name="mValue">null</field>
-			<field name="mSortOnColId">null</field>
-			
-			
-			<method name="setInitialValue">
-				<parameter name="val" />
-				<body><![CDATA[
-					var fval = this.fixString(val);
-					this.setAttribute("initialvalue", fval);
-					if (fval != '')
-					{
-						this.mValue = wCore.parseJSON(fval);
-					}
-					else
-					{
-						this.mValue = null;
-					}
-					this.onLoad();
-				]]></body>
-			</method>
-			
-			<property name="value">
-				<getter><![CDATA[
-					if (this.mValue != null)
-					{
-						return wCore.stringifyJSON(this.mValue);
-					}
-					return '';
-				]]></getter>
-				<setter><![CDATA[
-					var fval = this.fixString(val);
-					if (fval != '')
-					{
-						this.mValue = wCore.parseJSON(fval);
-					}
-					else
-					{
-						this.mValue = null;
-					}
-					this.onLoad();
-				]]></setter>
-			</property>
-						
-			<method name="reset">
-				<body><![CDATA[
-					this.setInitialValue(this.initialvalue);
-				]]></body>
-			</method>
-				
 			<constructor><![CDATA[
-				this.setAttribute("valid", "true");
-				this.setInitialValue(this.initialvalue);
+				this.fireEvent('gridInitialised');
 			]]></constructor>
-	
-			<method name="valueChanged">
-				<body><![CDATA[
-					this.dispatchFieldEvent('fieldChanged');
-					if (this.initialvalue != this.value)
-					{
-						if (!this.modified) 
-						{
-							this.setAttribute("modified", "true");
-							this.dispatchFieldEvent('fieldModified');
-						}
-					}
-					else
-					{
-						if (this.modified) 
-						{
-							this.removeAttribute("modified");
-							this.dispatchFieldEvent('fieldRestored');
-						}			
-					}
-				]]></body>
-			</method>
-			
-			<method name="focus">
-				<body><![CDATA[
-					wCore.debug(wCore.getStackText());
-				]]></body>
-			</method>			
-		
-			<method name="cleanList">
-				<body><![CDATA[
-					var rows = this.getElementByAnonId('document-rows');
-					while (rows.lastChild && rows.lastChild.getAttribute('class') != 'head')  
-					{
-						rows.removeChild(rows.lastChild);
-					}
-				]]></body>
-			</method>
-			
-				
-			<method name="onLoad">
-				<body><![CDATA[
-					this.cleanList();
-					if (this.mValue != null)
-					{
-						if (this.mSortOnColId)
-						{
-							var col = this.getElementByAnonId(this.mSortOnColId);
-							this.orderRows(col.getAttribute('sortonfield'), col.getAttribute('sortDirection'));
-						}
-					
-						for (var i = 0; i < this.mValue.versions.length; i++)
-						{
-							var item = this.mValue.versions[i];
-							this.addItem(item);
-						}
-					}
-				]]></body>
-			</method>				
-
-			<method name="orderRows">
-				<parameter name="fieldName" />
-				<parameter name="direction" />
-				<body><![CDATA[
-				
-				 var asc = direction === "asc";
-				 var name = fieldName;
-				 this.mValue.versions.sort(function(a, b) {
-				 	if (a[name] == b[name])
-				 	{
-				 		return 0;
-				 	} 
-				 	else if (a[name] < b[name])
-				 	{
-				 		return asc ? -1 : 1;
-				 	}
-				 	else
-				 	{
-				 		return asc ? 1 : -1;
-				 	}
-				 });
-				]]></body>
-			</method>	
-								
-			<method name="addItem">
-				<parameter name="jsnode" />
-				<body><![CDATA[
-					var row = document.createElement('row');
-					row.setAttribute('class', 'document');
-					row.setAttribute('documentId', jsnode.id);
-					row.setAttribute('publicationstatus', jsnode.publicationstatus);
-					row.setAttribute('current', jsnode.current ? "true" : "false");
-					 
-					var cell = row.appendChild(document.createElement('label'));
-					cell.setAttribute('value', jsnode.label);
-					
-					cell = row.appendChild(document.createElement('label'));
-					cell.setAttribute('value', jsnode.startpublicationdate);
-					
-					cell = row.appendChild(document.createElement('label'));
-					cell.setAttribute('value', jsnode.endpublicationdate);
-
-					cell = row.appendChild(document.createElement('label'));
-					cell.setAttribute('value', jsnode.status);
-					
-					cell = row.appendChild(document.createElement('label'));
-					cell.setAttribute('value', jsnode.currentlabel);
-					
-					cell = row.appendChild(document.createElement('toolbar'));
-					cell.setAttribute('class', 'actions');
-					var button = cell.appendChild(document.createElement('toolbarbutton'));
-					button.setAttribute('action', 'edit');
-					button.setAttribute('documentId', jsnode.id);
-					button.setAttribute('image', '{IconsBase}/small/edit.png');
-					button.setAttribute('label', "&modules.uixul.bo.actions.Edit;");
-
-					var button = cell.appendChild(document.createElement('toolbarbutton'));
-					button.setAttribute('action', 'newversion');
-					button.setAttribute('documentId', jsnode.id);
-					button.setAttribute('image', '{IconsBase}/small/add.png');
-					button.setAttribute('label', "&modules.uixul.bo.actions.Duplicate;");
-										
-					var button = cell.appendChild(document.createElement('toolbarbutton'));
-					button.setAttribute('action', 'delete');
-					button.setAttribute('documentId', jsnode.id);
-					button.setAttribute('image', '{IconsBase}/small/delete.png');
-					button.setAttribute('label', "&modules.uixul.bo.actions.Delete;");
-
-
-					this.getElementByAnonId('document-rows').appendChild(row);
-				]]></body>
-			</method>
-			
-			<method name="handleSort">
-				<parameter name="node" />
-				<body><![CDATA[
-					if (node.getAttribute('anonid') == this.mSortOnColId)
-					{
-						var dir = (node.getAttribute('sortDirection') == 'asc') ? 'desc' : 'asc';
-						node.setAttribute('sortDirection', dir);
-					}
-					else
-					{
-						if (this.mSortOnColId)
-						{
-							this.getElementByAnonId(this.mSortOnColId).removeAttribute('sortDirection');
-						}
-						this.mSortOnColId = node.getAttribute('anonid');
-						node.setAttribute('sortDirection', 'asc');
-					}
-					this.refresh();
-				]]></body>
-			</method>
-			
-
-			<method name="edit">
-				<parameter name="id" />
-				<body><![CDATA[
-					var uri = ['website', 'openDocument', 'modules_website_pageversion', id, 'properties'].join(',');
-					openActionUri(uri);
-				]]></body>
-			</method>
-			
-			<method name="delete">
-				<parameter name="id" />
-				<body><![CDATA[
-					if (confirm("&modules.website.bo.doceditor.page-version-list.Confirm-delete-version;"))
-					{
-						var me = this;
-						var callBack = function(result) {me.refresh();};
-						wCore.executeJSON('website', 'DeleteJSON', {cmpref: id, lang: Context.W_LANG}, callBack, true);
-					}
-				]]></body>
-			</method>	
-
-			<method name="newVersion">
-				<parameter name="id" />
-				<body><![CDATA[
-					if (confirm("&modules.website.bo.doceditor.page-version-list.Confirm-duplicate-version;"))
-					{
-						this.getPanel().onDuplicateVersion(id);
-					}
-				]]></body>
-			</method>	
-						
-			<method name="refresh">
-				<body><![CDATA[
-					var me = this;
-					var callBack = function(result) {me.mValue = result.contents; me.onLoad();};
-					var panel = this.getPanel();
-					wCore.executeJSON('website', 'GetPageGroupVersions', {cmpref: panel.mDocumentId, lang: panel.mLang}, callBack, true);				
-				]]></body>
-			</method>
 			
 			<method name="getPanel">
 				<body><![CDATA[	
@@ -290,72 +46,131 @@
 					while (pnode && !pnode.mDocumentId) {pnode = pnode.parentNode;}
 					return pnode;				
 				]]></body>
-			</method>				
-								
-		</implementation>
-		
-		<handlers>		
-			<handler event="command"><![CDATA[
-				var target = event.originalTarget;
-				if (target.localName == 'toolbarbutton' && target.hasAttribute('action'))
-				{
-					switch (target.getAttribute('action'))
-					{						
-						case 'edit':
-							this.edit(target.getAttribute('documentId'));
-							break;	
-						case 'delete':
-							this.delete(target.getAttribute('documentId'));
-							break;
-						case 'newversion':
-							this.newVersion(target.getAttribute('documentId'));
-							break;	
+			</method>	
+			
+			
+			<method name="execute_edit">
+				<parameter name="rowNode" />
+				<parameter name="rowData" />			
+				<body><![CDATA[
+					if (this.disabled) {return;}
+					var uri = ['website', 'openDocument', 'modules_website_pageversion', rowData.id, 'properties'].join(',');
+					openActionUri(uri);
+				]]></body>
+			</method>
+			
+			<method name="execute_delete">
+				<parameter name="rowNode" />
+				<parameter name="rowData" />			
+				<body><![CDATA[
+					if (this.disabled) {return;}
+					if (confirm("&modules.website.bo.doceditor.page-version-list.Confirm-delete-version;"))
+					{
+						var me = this;
+						var callBack = function(result) {me.onDeleted(result);};
+						wCore.executeJSON('website', 'DeleteJSON', {cmpref: rowData.id, lang: rowData.lang}, callBack, true);
 					}
-					return;
-				}
-			]]></handler>
-			<handler event="click" button="0" clickcount="1"><![CDATA[
-				var target = event.originalTarget;
-				if (target.localName == 'label' && target.hasAttribute('sortonfield'))
-				{
-					this.handleSort(target);
-					return;
-				}
-			]]></handler>
-		</handlers>	
-		<resources>
-			<stylesheet src="modules.uixul.cEditorGrid" />
-		</resources>		
+				]]></body>
+			</method>
+			
+			<method name="execute_newversion">
+				<parameter name="rowNode" />
+				<parameter name="rowData" />			
+				<body><![CDATA[
+					if (this.disabled) {return;}
+					if (confirm("&modules.website.bo.doceditor.page-version-list.Confirm-duplicate-version;"))
+					{
+						this.getPanel().onDuplicateVersion(rowData.id);
+					}
+				]]></body>
+			</method>
+						
+			<method name="onDeleted">
+				<parameter name="result" />
+				<body><![CDATA[
+					var panel = this.getPanel();
+					if (result.status = 'OK' && result.contents.id == 0 && this.getRowCount() == 2)
+					{
+						panel.documentEditor.executeBackToList();
+						return;
+					}
+					
+					panel.documentEditor.clearTabs();
+					panel.documentEditor.executeServerAction('properties', 'Initialize');
+				]]></body>
+			</method>	
+				
+			<method name="setCellValue">
+				<parameter name="cell" />
+				<parameter name="name" />
+				<parameter name="dataRow" />
+				<body><![CDATA[	
+					var value = dataRow[name];			
+					switch (name)
+					{
+						case 'startpublicationdate': 
+							value = dataRow['uistartpublicationdate'];
+							break;
+						case 'endpublicationdate': 
+							value = dataRow['uiendpublicationdate'];
+							break;							
+					}
+					
+					if ('value' in cell)
+					{
+						cell.value = value;
+					}
+					else
+					{
+						cell.setAttribute('value', value);
+					}
+				]]></body>
+			</method>						
+		</implementation>
+			
 		<content>
-			<xul:vbox flex="1">
-					<xul:grid flex="1">
-						<xul:columns>
-							<xul:column flex="3" />
-							<xul:column flex="1" />
-							<xul:column flex="1" />
-							<xul:column flex="1" />
-							<xul:column flex="1" />
-							<xul:column />
-						</xul:columns>
-						<xul:rows anonid="document-rows">
-							<xul:row class="head">
-								<xul:label sortonfield="label" anonid="label" 
-									value="&modules.website.bo.doceditor.page-version-list.Label;" />
-								<xul:label sortonfield="startpublicationdate" anonid="startpublicationdateColumn"
-									value="&modules.website.bo.doceditor.page-version-list.Startpublicationdate;" />
-								<xul:label sortonfield="endpublicationdate" anonid="endpublicationdateColumn"
-									value="&modules.website.bo.doceditor.page-version-list.Endpublicationdate;" />
-								<xul:label sortonfield="status" anonid="publicationstatusColumn"
-									value="&modules.website.bo.doceditor.page-version-list.Status;" />
-								<xul:label anonid="currentlabelColumn"
-									value="&modules.website.bo.doceditor.page-version-list.Current;" />
-								<xul:label anonid="actionsColumn"
-									value="&modules.website.bo.doceditor.page-version-list.Actions;" />
-							</xul:row>
-						</xul:rows>
-					</xul:grid>
-				<children/>
-			</xul:vbox>		
+			<xul:grid flex="1" anonid="grid" xbl:inherits="disabled">
+				<xul:columns>
+					<xul:column flex="3" />
+					<xul:column flex="1" />
+					<xul:column flex="1" />
+					<xul:column flex="1" />
+					<xul:column flex="1" />
+					<xul:column />
+				</xul:columns>
+				<xul:rows>
+					<xul:row class="head" anonid="head-row">
+						<xul:label name="label" sortonfield="true"
+							value="&amp;modules.website.bo.doceditor.page-version-list.Label;" />
+						<xul:label name="startpublicationdate" sortonfield="true"
+							value="&amp;modules.website.bo.doceditor.page-version-list.Startpublicationdate;" />
+						<xul:label name="endpublicationdate" sortonfield="true"
+							value="&amp;modules.website.bo.doceditor.page-version-list.Endpublicationdate;" />
+						<xul:label name="status" sortonfield="true"
+							value="&amp;modules.website.bo.doceditor.page-version-list.Status;" />
+						<xul:label name="currentlabel"
+							value="&amp;modules.website.bo.doceditor.page-version-list.Current;" />
+						<xul:label name="actionrow"
+							value="&amp;modules.website.bo.doceditor.page-version-list.Actions;" />
+					</xul:row>
+				</xul:rows>
+			</xul:grid>
+			
+			<xul:row anonid="template-row" class="document" hidden="true">
+				<xul:label value="" />
+				<xul:label value="" />
+				<xul:label value="" />
+				<xul:label value="" />
+				<xul:label value="" />
+				<xul:toolbar class="actions">
+					<xul:toolbarbutton action="edit" image="{IconsBase}/small/edit.png" 
+						tooltiptext="&amp;modules.uixul.bo.actions.Edit;" />
+					<xul:toolbarbutton action="newversion" image="{IconsBase}/small/add.png" 
+						tooltiptext="&amp;modules.uixul.bo.actions.Duplicate;" />
+					<xul:toolbarbutton action="delete" image="{IconsBase}/small/delete.png" 
+						tooltiptext="&amp;modules.uixul.bo.actions.Delete;" />
+				</xul:toolbar>
+			</xul:row>	
 		</content>	
 	</binding>
 </bindings>

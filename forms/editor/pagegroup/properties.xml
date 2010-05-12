@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <panel>
 	<section labeli18n="modules.website.document.pagegroup.VersionTitle">
-		<fieldinput name="versionsJSON" type="pageversionlist"/>
+		<fieldinput name="versionsJSON" type="namedgridlist" flex="1" />
 	</section>
 	<xul>
 		<javascript>
@@ -28,7 +28,6 @@
 					var module = this.documentEditor.module;
 					var editor = module.getDocumentEditor('modules_website_pageversion');
 					editor.removeAttribute('duplicate');
-					//this.documentEditor.setAttribute('fromURI', ['website', 'openDocument', 'modules_website_pagegroup', this.mDocumentId, 'properties'].join(','));
 					module.createDocumentEditor('modules_website_pageversion', this.mDocumentId);
 				]]></body>
 			</method>
@@ -39,7 +38,6 @@
 					var module = this.documentEditor.module;
 					var editor = module.getDocumentEditor('modules_website_pageversion');
 					editor.setAttribute('duplicate', 'true');
-					//this.documentEditor.setAttribute('fromURI', ['website', 'openDocument', 'modules_website_pagegroup', this.mDocumentId, 'properties'].join(','));
 					module.createDocumentEditor('modules_website_pageversion', id);
 				]]></body>
 			</method>

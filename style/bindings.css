@@ -16,8 +16,8 @@ wdialog[template="ValidPage"] rows.cPageData{
 wdialog[template="savetemplate"]{
 	-moz-binding: url(binding:modules.website.cSaveTemplateDialog#cSaveTemplate);
 }
-cfield[fieldtype="pageversionlist"]{
-	-moz-binding: url(binding:modules.website.cPageEditor#cPageVersionList);
+gridlist.versionsJSON{
+	-moz-binding: url(binding:modules.website.cPageEditor#cPageVersionGrid);
 }
 cfield[fieldtype="markerslist"]{
 	-moz-binding: url(binding:modules.website.cMarkerEditor#cMarkersList);

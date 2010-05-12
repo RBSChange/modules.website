@@ -51,7 +51,7 @@ class website_persistentdocument_pagegroup extends website_persistentdocument_pa
 		foreach ($versions as $version) 
 		{
 			$info = $version->getInfoForPageGroup();
-			$info['current'] =$info['id'] == $currentversionId;
+			$info['current'] = $info['id'] == $currentversionId;
 			if ($info['current'])
 			{
 				$info['currentlabel'] = f_Locale::translateUI('&framework.boolean.True;');
@@ -60,7 +60,6 @@ class website_persistentdocument_pagegroup extends website_persistentdocument_pa
 			{
 				$info['currentlabel'] = '';
 			}
-			$info['current'] =    
 			$data[] = $info;	
 		}
 		return array('versions' => $data);
@@ -71,6 +70,7 @@ class website_persistentdocument_pagegroup extends website_persistentdocument_pa
 	 */
 	public function getVersionsJSON()
 	{
-		return JsonService::getInstance()->encode($this->getVersionsInfo());
+		$datas = $this->getVersionsInfo();
+		return JsonService::getInstance()->encode($datas['versions']);
 	}
 }
