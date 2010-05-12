@@ -33,14 +33,13 @@
 			<vbox flex="1">
 				<toolbox orient="vertical" class="change-toolbox">
 					<toolbar flex="1" class="change-toolbar" style="font-size: 9pt; border-bottom: 1px solid silver !important;">
-						<toolbarbutton change:icon="nav_left_blue/small shadow" label="Back to content editing" i18n:attributes="label &amp;modules.uixul.bo.layout.BackToContentEditing;"
+						<toolbarbutton image="{IconsBase}/small/previous.png" label="Back to content editing" i18n:attributes="label &amp;modules.uixul.bo.layout.BackToContentEditing;"
 							oncommand="backToContentEditing()" />
 						<toolbarseparator />
 
-						<toolbarbutton change:icon="printer/small shadow" label="Print page content" i18n:attributes="label &amp;modules.uixul.bo.layout.Print;"
+						<toolbarbutton image="{IconsBase}/small/printer.png" label="Print page content" i18n:attributes="label &amp;modules.uixul.bo.layout.Print;"
 							oncommand="wToolkit.printFrame(document.getElementById('previewFrame'));" />
 						<toolbarspacer flex="1" />
-						<!-- label id="previewPageLabel" class="toolbarLabel" value="" / -->
 					</toolbar>
 				</toolbox>
 				<iframe anonid="previewFrame" src="about:blank" flex="1" />

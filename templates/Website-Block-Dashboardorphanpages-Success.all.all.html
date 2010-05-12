@@ -7,7 +7,7 @@
 		<div style="max-height: 200px; overflow: auto;">
 			<ul tal:condition="orphanPages" class="no-bullet">
 				<li tal:repeat="orphanPage orphanPages">
-					<img change:icon="document/small shadow"/>
+					<img change:icon="document/small"/>
 					<a href="#" i18n:attributes="title &amp;modules.website.bo.actions.OpenPageEllipsis;" onclick="${orphanPage/link}">
 					<strong>${orphanPage/label}</strong></a><small tal:condition="orphanPage/thread">&nbsp;(<span tal:replace="orphanPage/thread" />)</small>&nbsp;-&nbsp;<small tal:content="orphanPage/modificationDate" />
 					<a class="contextual-action" href="#" tal:attributes="onclick orphanPage/locate" i18n:attributes="title &amp;modules.uixul.bo.general.LocateInModuleEllipsis;"><img change:icon="view/small"/></a>

@@ -10,7 +10,7 @@
 	
 	<section name="content" 
 		labeli18n="modules.uixul.bo.doceditor.section.Content" 
-		image="{IconsBase}/small/shadow/contract.png">
+		image="{IconsBase}/small/page-content.png">
 		<property name="pagecomposition" labeli18n="modules.website.bo.doceditor.property.Page-composition" />
 		<property name="freecontent" labeli18n="modules.website.bo.doceditor.property.Free-content" />
 	</section>
