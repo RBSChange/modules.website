@@ -9,7 +9,7 @@ class website_UnavailableAction extends f_action_BaseAction
 	public function _execute($context, $request)
 	{
 		f_web_http_Header::setStatus(503);
-		die("<h1>Unavailable</h1>");
+		die("<h1>Service Unavailable</h1>");
 	}
 	
 	public function isSecure()

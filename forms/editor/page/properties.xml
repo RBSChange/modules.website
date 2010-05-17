@@ -63,17 +63,11 @@
 				<parameter name="metas" />
 				<parameter name="field" />
 				<body><![CDATA[
-				var menuitems = field.getElementsByTagName('menuitem');
-				while (menuitems.length > 0) field.removeChild(menuitems.item(0));
 				
-				field.setAttribute('nocvar', (metas.length == 0) ? 'true' : 'false');
+				field.clearSubstitutions();
 				for (var i = 0; i < metas.length; i++)
 				{
-					var menuitem = document.createElement('menuitem');
-					menuitem.setAttribute('label', metas[i].label);
-					menuitem.setAttribute('cvar', metas[i].value);
-					menuitem.setAttribute('tooltiptext', metas[i].value);
-					field.appendChild(menuitem);
+					field.addSubstitution(metas[i].label, metas[i].value);
 				} 
 				]]></body>
 			</method>

@@ -110,9 +110,10 @@ class website_Page implements f_mvc_Context
 		$this->attributes['description'] = $page->getDescription();
 		$this->attributes['keywords'] = $page->getKeywords();
 		$this->addMeta('robots', $page->getRobotsmeta());
-
-		$this->setPlainMarker(website_MarkerService::getInstance()->getHtmlMarker(website_WebsiteModuleService::getInstance()->getCurrentWebsite()));
-		
+		if (!$page->isNew())
+		{
+			$this->setPlainMarker(website_MarkerService::getInstance()->getHtmlMarker(website_WebsiteModuleService::getInstance()->getCurrentWebsite()));
+		}
 		$this->page = $page;
 	}
 
