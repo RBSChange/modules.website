@@ -3,5 +3,6 @@
 	<panel name="resume" />
 	<panel name="properties" />
 	<panel name="permission" />
+	<panel name="localization" />
 	<panel name="history" />
 </panels>
