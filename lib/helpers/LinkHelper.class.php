@@ -220,6 +220,14 @@ class LinkHelper
 					$website = website_WebsiteModuleService::getInstance()->getParentWebsite($currentPage);
 					$document = $ts->getDocumentByContextualTag($tag, $website);
 				}
+				else
+				{
+					$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+					if (!$website->isNew())
+					{
+						$document = $ts->getDocumentByContextualTag($tag, $website);
+					}
+				}
 			}
 			else
 			{
