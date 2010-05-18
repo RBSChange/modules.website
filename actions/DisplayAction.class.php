@@ -95,19 +95,11 @@ class website_DisplayAction extends website_Action
 		$controller = $context->getController();
 		// FIXME - INTCOURS - Better PageException mechanism :
 		$request->setParameter('message', f_Locale::translate('&modules.website.exception.page-' . $e->getCode() . ';', array('param' => $e->getMessage())));
-		Framework::warn(sprintf('[website_DisplayAction] Cannot display requested Page (ID="%d") : %s', $pageId, $request->getParameter('message')));
-		switch ($e->getCode())
+		if (Framework::isWarnEnabled())
 		{
-			case PageException::PAGE_NO_ID :
-			case PageException::PAGE_BAD_WEBSITE :
-				// No ID or no Handler, 404 :
-				$controller->forward('website', 'Error404');
-				break;
-			default :
-				// Misc. issue, Page is Unavailable :
-				$controller->forward('website', 'Unavailable');
-				break;
+			Framework::warn(__METHOD__ . 'Cannot display requested Page (ID="' . $pageId . '") : ' . $request->getParameter('message'));
 		}
+		$controller->forward('website', 'Error404');
 	}
 	/**
 	 * Page display is not secure (except for extranet pages?...).
