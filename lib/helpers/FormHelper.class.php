@@ -129,7 +129,7 @@ class website_FormHelper
 
 		$formAttributes = array();
 		$formAttributes["method"] = self::getValue($params, "method", "post");
-		$formAttributes["action"] = self::getCurrentFormAction($idParam);
+		$formAttributes["action"] = self::getCurrentFormAction($idParam, $params);
 		$formAttributes["id"] = self::$formId;
 		$formAttributes["name"] = self::$formId;
 		$formAttributes["enctype"] = self::getValue($params, "enctype", "multipart/form-data");
@@ -168,15 +168,26 @@ class website_FormHelper
 	}
 
 	/**
+	 * @param String $idParam
+	 * @param array<String, String> $params
 	 * @return String
 	 */
-	private static function getCurrentFormAction($idParam = null)
+	private static function getCurrentFormAction($idParam = null, $params)
 	{
-		if ($idParam !== null)
+		$action = "";
+		if (isset($params["action"]))
 		{
-			return "#".self::$formId;
+			$action .= $params["action"];
 		}
-		return "";
+		elseif (isset($params["tag"]))
+		{
+			$action .= LinkHelper::getTagUrl($params["tag"], RequestContext::getInstance()->getLang());
+		}
+		if ($idParam !== null && strpos($action, "#") === false)
+		{
+			return $action."#".self::$formId;
+		}
+		return $action;
 	}
 
 	/**
