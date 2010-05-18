@@ -6,7 +6,7 @@
  */
 class PHPTAL_Php_Attribute_CHANGE_actionlink extends ChangeTalAttribute
 {
-	private static $preservedAttributes = array("onclick" => true, "class" => true, "title" => true);
+	private static $preservedAttributes = array("onclick" => true, "class" => true, "title" => true, "rel" => true);
 	public function start()
 	{
 		$this->tag->headFootDisabled = true;
