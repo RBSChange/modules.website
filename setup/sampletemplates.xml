@@ -11,7 +11,7 @@
 		</folder>
 	</rootfolder>
 	
-	<contact byLabel="Eric HAUSWALD - RBS" id="contact1" publicationstatus="PUBLICATED" />
+	<contact byLabel="RBS Change - RBS" id="contact1" publicationstatus="PUBLICATED" />
 	<form byLabel="Formulaire de contact" id="form1" />
 
 	<website byTag="default_modules_website_default-website">
