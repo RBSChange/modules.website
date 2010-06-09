@@ -63,7 +63,19 @@ class website_persistentdocument_page extends website_persistentdocument_pagebas
 	{
 		$this->topic = $topic;
 	}
-
+	
+	
+	function setDefaultContent($contentName)
+	{
+	   $parts = explode('::', $contentName);
+	   $this->setTemplate($parts[0]);
+	   if (count($parts) == 2)
+	   {
+	   		$template = DocumentHelper::getDocumentInstance($parts[1], 'modules_website/template');
+	   		$this->setContent($template->getContent());
+	   }	
+	}
+	
 	// protected methods
 
 	/**

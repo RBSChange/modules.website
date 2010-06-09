@@ -65,4 +65,10 @@
     <locale lang="en">drop a Skin here in order to apply it to the element</locale>
     <locale lang="de">legen Sie hier einen Skin ab, der den Elementen angewendet wird</locale>
   </entity>
+	<entity id="allowedpagetemplate">
+		<locale lang="fr">Gabarits de pages</locale>
+	</entity>	
+	<entity id="allowedpagetemplate-help">
+		<locale lang="fr">Liste des gabarits de pages autorisé sur ce site</locale>
+	</entity>	
 </localization>

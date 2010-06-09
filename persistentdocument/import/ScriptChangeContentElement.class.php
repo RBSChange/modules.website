@@ -43,7 +43,7 @@ class website_ScriptChangeContentElement extends import_ScriptBaseElement
 		}
 		else
 		{
-			$contentZones = website_TemplateService::getInstance()->getChangeContentIds($page->getTemplate());
+			$contentZones = theme_PagetemplateService::getInstance()->getChangeContentIds($page->getTemplate());
 			if (f_util_ArrayUtils::isEmpty($contentZones))
 			{
 				throw new Exception("No insertion point defined in template");

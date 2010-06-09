@@ -1,48 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/static/schema/change-document/1.0.xsd" 
-	model-version="1.0" icon="website" publish-on-day-change="false" linked-to-root-module="true">
+<document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/static/schema/change-document/1.0.xsd" model-version="1.0" icon="website" publish-on-day-change="false" linked-to-root-module="true">
   <properties>
-  	<add name="publicationstatus" localized="true"/>
-  	
-    <add name="description" type="LongString" localized="true" />
-    
-    <add name="localizebypath" type="Boolean" max-occurs="1" default-value="0" />
-   
-    <add name="url" type="String" min-occurs="1" localized="true" />
-    <add name="protocol" type="String" min-occurs="1" db-size="10" 
-    	from-list="modules_website/protocol" default-value="http"/>
+    <add name="publicationstatus" localized="true"/>
+    <add name="description" type="LongString" localized="true"/>
+    <add name="localizebypath" type="Boolean" max-occurs="1" default-value="0"/>
+    <add name="url" type="String" min-occurs="1" localized="true"/>
+    <add name="protocol" type="String" min-occurs="1" db-size="10" from-list="modules_website/protocol" default-value="http"/>
     <add name="domain" type="String" min-occurs="1" localized="true" db-size="100">
-    	<constraints>domain:true;unique:true</constraints>
+      <constraints>domain:true;unique:true</constraints>
     </add>
-    
-	<add name="indexPage" type="modules_website/page" />
+    <add name="indexPage" type="modules_website/page"/>
     <add name="stylesheet" type="String" from-list="modules_website/stylesheets"/>
-    <add name="skin" type="modules_skin/skin" />
-    
-    <add name="alwaysappendtitle" type="Boolean" default-value="true" />
-    
-    <add name="favicon" type="modules_media/media" />
-
+    <add name="skin" type="modules_skin/skin"/>
+    <add name="alwaysappendtitle" type="Boolean" default-value="true"/>
+    <add name="favicon" type="modules_media/media"/>
+    <add name="allowedpagetemplate" type="modules_theme/pagetemplate" max-occurs="-1"/>
   </properties>
-  
   <serializedproperties>
-		<add name="robottxt" type="LongString" />
-		
-  		<add name="googlefileid" type="String" />
-  		<add name="googlefilecontent" type="String" />
-  		
- 		<add name="yahoofileid" type="String" />
-  		<add name="yahoofilecontent" type="String" />
-  		
-  		<add name="msnfilecontent" type="LongString" />
+    <add name="robottxt" type="LongString"/>
+    <add name="googlefileid" type="String"/>
+    <add name="googlefilecontent" type="String"/>
+    <add name="yahoofileid" type="String"/>
+    <add name="yahoofilecontent" type="String"/>
+    <add name="msnfilecontent" type="LongString"/>
   </serializedproperties>
-
   <children>
-  	<child name="topics" type="modules_website/topic" />
-  	<child name="pages" type="modules_website/page" />
-  	<child name="externalPages" type="modules_website/pageexternal" />
-  	<child name="menus" type="modules_website/menu" />
+    <child name="topics" type="modules_website/topic"/>
+    <child name="pages" type="modules_website/page"/>
+    <child name="externalPages" type="modules_website/pageexternal"/>
+    <child name="menus" type="modules_website/menu"/>
   </children>
-  <statuses default="PUBLICATED" /> 
+  <statuses default="PUBLICATED"/>
 </document>

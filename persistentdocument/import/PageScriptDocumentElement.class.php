@@ -16,23 +16,6 @@ class website_PageScriptDocumentElement extends import_ScriptDocumentElement
 	{
 		$properties = parent::getDocumentProperties();
 		$properties['template'] = $this->getAncestorAttribute('template');
-		
-		$pathWhereToFindDisplays = FileResolver::getInstance()->setPackageName('modules_website')->setDirectory('config')->getPath('display.xml');
-		$displayConfig = new DOMDocument('1.0', 'UTF-8');
-		$displayConfig->load($pathWhereToFindDisplays);
-		foreach ($displayConfig->getElementsByTagName('display') as $display)
-		{
-			if ($display->hasAttribute('aliases'))
-			{
-				$aliases = explode(' ', $display->getAttribute('aliases'));
-				if (in_array($properties['template'], $aliases))
-				{
-					$properties['template'] = $display->getAttribute('file');
-					break;
-				}
-			}
-		}
-		
 		$page = $this->getPersistentDocument();
 		if (isset($properties['url']))
 		{

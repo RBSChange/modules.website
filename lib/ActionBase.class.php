@@ -106,16 +106,6 @@ class website_ActionBase extends f_action_BaseAction
 	}
 
 	/**
-	 * Returns the website_TemplateService to handle documents of type "modules_website/template".
-	 *
-	 * @return website_TemplateService
-	 */
-	public function getTemplateService()
-	{
-		return website_TemplateService::getInstance();
-	}
-
-	/**
 	 * Returns the website_PageService to handle documents of type "modules_website/page".
 	 *
 	 * @return website_PageService

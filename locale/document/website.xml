@@ -60,6 +60,15 @@
 		<locale lang="en">select a sylesheet in order to apply it to the element</locale>
 		<locale lang="de">Bitte wählen Sie einen Stylesheet um es dem Element anzuwenden</locale>
 	</entity>
+	
+	<entity id="allowedpagetemplate">
+		<locale lang="fr">Gabarits de pages</locale>
+	</entity>	
+	
+	<entity id="allowedpagetemplate-help">
+		<locale lang="fr">Liste des gabarits de pages autorisé sur ce site</locale>
+	</entity>		
+	
 	<entity id="localizebypath">
 		<locale lang="fr">Localisation par chemin</locale>
 		<locale lang="en">Path localisation</locale>

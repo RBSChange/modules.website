@@ -2,9 +2,8 @@
 
 class website_PageRessourceService extends BaseService
 {
-	const GLOBAL_SCREEN_NAME = 'frontoffice';
+	const GLOBAL_SCREEN_NAME = 'screen';
 	const GLOBAL_PRINT_NAME = 'print';
-	const GLOBAL_DASHBOARD_NAME = 'dashboard';
 
 	/**
 	 * @var f_web_CSSVariables
@@ -69,12 +68,36 @@ class website_PageRessourceService extends BaseService
 
 	/**
 	 * @param website_persistentdocument_page $page
+	 * @param boolean $throwException
+	 * @return theme_persistentdocument_pagetemplate
+	 */	
+	public function getPageTemplate($page, $throwException = true)
+	{		
+		$template = theme_PagetemplateService::getInstance()->getByCodeName($page->getTemplate());
+		if ($throwException && !$template)
+		{
+			throw new TemplateNotFoundException($page->getTemplate());
+		}
+		return $template;
+	}
+	
+	/**
+	 * @param website_persistentdocument_page $page
+	 * @return DOMDocument
+	 */
+	public function getPageDocType($page)
+	{
+		$template = $this->getPageTemplate($page, false);
+		return  ($template) ? $template->getDocTypeDeclaration() : null;
+	}	
+	
+	/**
+	 * @param website_persistentdocument_page $page
 	 * @return DOMDocument
 	 */
 	public function getPagetemplateAsDOMDocument($page)
 	{
-		$page->setTemplateUserAgent('all.all');
-		return website_TemplateService::getInstance()->getContent($page->getTemplate());
+		return $this->getPageTemplate($page)->getDOMContent();
 	}
 
 	/**
@@ -83,144 +106,62 @@ class website_PageRessourceService extends BaseService
 	 */
 	public function getBackpagetemplateAsDOMDocument($page)
 	{
-		$page->setTemplateUserAgent('all.all');
-		return website_TemplateService::getInstance()->getContent($page->getTemplate());
+		return $this->getPageTemplate($page)->getDOMContent();
 	}
-
+	
 	/**
-	 * Gets the <link .../> tag for the combination of all frontoffice (and website/generic richtext) stylesheets
-	 *
-	 * @return String
-	 */
-	public function getGlobalScreenStylesheetInclusion()
-	{
-		$rc = RequestContext::getInstance();
-		$relativePath = $this->getStylesheetRelativePath(self::GLOBAL_SCREEN_NAME, $rc->getUserAgentType(), $rc->getUserAgentTypeVersion(), $rc->getProtocol());
-		return $this->buildStylesheetInclusion($relativePath, "screen");
-	}
-
-	/**
-	 * Gets the <style media="screen">.... tag for the combination of all frontoffice (and website/generic richtext) stylesheets
+	 * @param integer[] $ancestorsId
 	 * @return string
 	 */
-	public function getGlobalScreenStylesheetInLine()
-	{
-		$tmpFile = f_util_FileUtils::getTmpFile('css');
-		$this->buildGlobalScreenStylesheetAtPath($tmpFile);
-		$css = file_get_contents($tmpFile);
-		unlink($tmpFile);
-		$basUrl = 'http://' . website_WebsiteModuleService::getInstance()->getCurrentWebsite()->getDomain() . '/';
-		return '<base href="'. $basUrl .'" /><style type="text/css" media="screen">' . $css . '</style>';
-	}
-
-	public function getGlobalScreenStylesheet($engine, $version, $protocol)
-	{
-		$relativePath = $this->getStylesheetRelativePath(self::GLOBAL_SCREEN_NAME, $engine, $version, $protocol);
-
-		$absolutePath = f_util_FileUtils::buildDocumentRootPath($relativePath);
-		if (!file_exists($absolutePath) || file_exists($relativePath.".deleted") || Framework::inDevelopmentMode())
+	public function getContainerStyleIdByAncestorIds($ancestorsId)
+	{		
+		if (f_util_ArrayUtils::isEmpty($ancestorsId))
 		{
-			$this->buildGlobalScreenStylesheetAtPath($absolutePath);
+			return null;
 		}
-		if (file_exists($relativePath.".deleted"))
+		
+		$ancestors = array();
+		foreach (array_reverse($ancestorsId) as $ancestorId)
 		{
-			unlink($relativePath.".deleted");
+			$ancestors[] = DocumentHelper::getDocumentInstance($ancestorId);
 		}
-		return file_get_contents($relativePath);
+		return $this->getContainerStyleId($ancestors);
 	}
-
-
+	
 	/**
-	 * Gets the <link .../> tag for the combination of all frontoffice (and website/generic richtext) stylesheets
-	 *
-	 * @return String
+	 * @param f_persistentdocument_PersistentDocument[] $ancestors
+	 * @return string
 	 */
-	public function getDashboardStylesheetInclusion()
-	{
-		$rc = RequestContext::getInstance();
-		$relativePath = $this->getStylesheetRelativePath(self::GLOBAL_DASHBOARD_NAME, $rc->getUserAgentType(), $rc->getUserAgentTypeVersion(), $rc->getProtocol());
-		return $this->buildStylesheetInclusion($relativePath, "screen");
-	}
-
-	public function getDashboardStylesheet($engine, $version, $protocol)
-	{
-		$relativePath = $this->getStylesheetRelativePath(self::GLOBAL_DASHBOARD_NAME, $engine, $version, $protocol);
-
-		$absolutePath = f_util_FileUtils::buildDocumentRootPath($relativePath);
-		if (!file_exists($absolutePath) || file_exists($relativePath.".deleted")  || Framework::inDevelopmentMode())
+	public function getContainerStyleIdByAncestors($ancestors)
+	{		
+		if (f_util_ArrayUtils::isEmpty($ancestors))
 		{
-			$this->buildDashboardStylesheetAtPath($absolutePath);
+			return null;
 		}
-		if (file_exists($relativePath.".deleted"))
-		{
-			unlink($relativePath.".deleted");
-		}
-		return file_get_contents($relativePath);
+		return $this->getContainerStyleId(array_reverse($ancestors));
 	}
-
+	
 	/**
-	 * @param String $path
+	 * @param f_persistentdocument_PersistentDocument[] $ancestors
+	 * @return string
 	 */
-	private function buildDashboardStylesheetAtPath($path)
+	private function getContainerStyleId($ancestors)
 	{
-		f_util_FileUtils::mkdir(dirname($path));
-		$fh = fopen($path, 'w');
-		$stylesheetIds = array('modules.generic.frontoffice', 'modules.generic.richtext', 'modules.dashboard.dashboard');
-		foreach ($stylesheetIds as $stylesheetId)
+		foreach ($ancestors as $ancestor)
 		{
-			$this->appendStylesheetContent($fh, $stylesheetId, K::HTML);
+			if ($ancestor instanceof website_persistentdocument_topic  || 
+				$ancestor instanceof website_persistentdocument_website) 
+			{
+				$stylesheet = $ancestor->getStylesheet();
+				if ($stylesheet !== null)
+				{
+					return 'modules.website.' . $stylesheet;
+				}
+			}
 		}
-		fclose($fh);
+		return null;	
 	}
-
-
-	/**
-	 * Gets the <link .../> tag for the combination of all print stylesheets
-	 *
-	 * @return String
-	 */
-	public function getGlobalPrintStylesheetInclusion()
-	{
-		$rc = RequestContext::getInstance();
-		$relativePath = $this->getStylesheetRelativePath(self::GLOBAL_PRINT_NAME, $rc->getUserAgentType(), $rc->getUserAgentTypeVersion(), $rc->getProtocol());
-		return $this->buildStylesheetInclusion($relativePath, "print");
-	}
-
-	public function getGlobalPrintStylesheet($engine, $version, $protocol)
-	{
-		$relativePath = $this->getStylesheetRelativePath(self::GLOBAL_PRINT_NAME, $engine, $version, $protocol);
-		$absolutePath = f_util_FileUtils::buildDocumentRootPath($relativePath);
-		if (!file_exists($absolutePath) || file_exists($relativePath.".deleted") || Framework::inDevelopmentMode())
-		{
-			$this->buildGlobalPrintStylesheetAtPath($absolutePath);
-		}
-		if (file_exists($relativePath.".deleted"))
-		{
-			unlink($relativePath.".deleted");
-		}
-		return file_get_contents($relativePath);
-	}
-
-	public function getStylesheet($name, $engine, $version, $protocol)
-	{
-		$relativePath = $this->getStylesheetRelativePath($name, $engine, $version, $protocol);
-		$absolutePath = f_util_FileUtils::buildDocumentRootPath($relativePath);
-		if (!file_exists($absolutePath) || file_exists($relativePath.".deleted") || Framework::inDevelopmentMode())
-		{
-			f_util_FileUtils::mkdir(dirname($absolutePath));
-			$fh = fopen($absolutePath, 'w');
-			$this->appendStylesheetContent($fh, $name, K::HTML);
-			fclose($fh);
-		}
-		if (file_exists($relativePath.".deleted"))
-		{
-			unlink($relativePath.".deleted");
-		}
-		return file_get_contents($relativePath);
-	}
-
-
-
+	
 	/**
 	 * Gets the <link .../> tag for the current page's template stylesheet
 	 *
@@ -228,22 +169,22 @@ class website_PageRessourceService extends BaseService
 	 */
 	public function getPageStylesheetInclusion()
 	{
-		$rc = RequestContext::getInstance();
 		$page = $this->getPage();
 		if ($page === null)
 		{
 			return null;
 		}
-
-		$stylesheetName = $this->getStylesheetNameForCurrentPage();
-		if ($stylesheetName == null)
+		$template = $this->getPageTemplate($page, false);
+		if ($template === null)
 		{
 			return null;
-		}
+		}		
+		$stylesheetName = $template->getId() . '/' . self::GLOBAL_SCREEN_NAME;
+		$rc = RequestContext::getInstance();
 		$relativePath = $this->getStylesheetRelativePath($stylesheetName, $rc->getUserAgentType(), $rc->getUserAgentTypeVersion(), $rc->getProtocol());		
 		return $this->buildStylesheetInclusion($relativePath, "screen");
 	}
-
+	
 	/**
 	 * Gets the <style media="screen">.... tag for the current page's template stylesheet
 	 * @return String
@@ -255,63 +196,120 @@ class website_PageRessourceService extends BaseService
 		{
 			return null;
 		}
-
-		$stylesheetName = $this->getStylesheetNameForCurrentPage();
-		if ($stylesheetName == null)
+		$template = $this->getPageTemplate($page, false);
+		if ($template === null)
 		{
 			return null;
 		}
-		$ss = StyleService::getInstance();
-		$engine = $ss->getFullEngineName();
-		$css = $ss->getCSS($stylesheetName, $engine, $this->getSkin());
-		if ($css)
-		{
-			return '<style type="text/css" media="screen">' . $css . '</style>';
-		}
-		return null;
+		
+		$rc = RequestContext::getInstance();
+		$css = $this->getTemplateScreenStylesheet($template, $rc->getUserAgentType(), $rc->getUserAgentTypeVersion(), $rc->getProtocol());
+		return $this->buildStylesheetInline($css);
 	}
-
+	
 	/**
-	 * @param Integer $parentId
+	 * @param theme_persistentdocument_pagetemplate $template
+	 * @param string $engine
+	 * @param string $version
+	 * @param string $protocol
+	 * @return string
 	 */
-	public function getTemplateDefinitionsByParentId($parentId)
-	{
-		//$parentId is unused in the default implementation...
-		return website_TemplateService::getInstance()->getStaticTemplates();
-	}
-
+	public function getTemplateScreenStylesheet($template, $engine, $version, $protocol)
+	{	
+		$stylesheetName = $template->getId() . '/' . self::GLOBAL_SCREEN_NAME;
+		$relativePath = $this->getStylesheetRelativePath($stylesheetName, $engine, $version, $protocol);
+		$fullengine =  $engine.'.'. $version;
+		$absolutePath = f_util_FileUtils::buildDocumentRootPath($relativePath);
+		if (!file_exists($absolutePath) || file_exists($relativePath.".deleted") || Framework::inDevelopmentMode())
+		{
+			f_util_FileUtils::mkdir(dirname($absolutePath));
+			$fh = fopen($absolutePath, 'w');
+			foreach ($template->getScreenStyleIds() as $styleName) 
+			{
+				$this->appendStylesheetContent($fh, $styleName, $fullengine);
+			}
+			fclose($fh);
+		}
+		if (file_exists($relativePath.".deleted"))
+		{
+			unlink($relativePath.".deleted");
+		}
+		return file_get_contents($absolutePath);			
+	}	
+	
 	/**
+	 * Gets the <link .../> tag for the combination of all print stylesheets
+	 *
 	 * @return String
 	 */
-	protected function getStylesheetNameForCurrentPage()
+	public function getPagePrintStylesheetInclusion()
 	{
 		$page = $this->getPage();
 		if ($page === null)
 		{
 			return null;
 		}
-		return $this->getStylesheetNameForPage($page);
-	}
-
-	public function getStylesheetNameForPage($page)
-	{
-		$templateName = $page->getTemplate();
-		$pathWhereToFindDisplays = FileResolver::getInstance()->setPackageName('modules_website')->setDirectory('config')->getPath('display.xml');
-		$displayConfig = new DOMDocument('1.0', 'UTF-8');
-		$displayConfig->load($pathWhereToFindDisplays);
-		foreach ($displayConfig->getElementsByTagName('display') as $display)
+		$template = $this->getPageTemplate($page, false);
+		if ($template === null)
 		{
-			if (($display->getAttribute('file') == $templateName) && $display->hasAttribute('style'))
-			{
-				$stylesheetName = $display->getAttribute('style');
-				$stylesheetName = explode('.', $stylesheetName);
-				$stylesheetName = $stylesheetName[count($stylesheetName) - 1];
-				return 'modules.website.' . $stylesheetName;
-			}
-		}
-		return null;
+			return null;
+		}		
+		$stylesheetName = $template->getId() . '/' . self::GLOBAL_PRINT_NAME;
+		
+		$rc = RequestContext::getInstance();
+		$relativePath = $this->getStylesheetRelativePath($stylesheetName, $rc->getUserAgentType(), $rc->getUserAgentTypeVersion(), $rc->getProtocol());
+		return $this->buildStylesheetInclusion($relativePath, "print");
 	}
-
+	
+	/**
+	 * @param theme_persistentdocument_pagetemplate $template
+	 * @param string $engine
+	 * @param string $version
+	 * @param string $protocol
+	 * @return string
+	 */
+	public function getTemplatePrintStylesheet($template, $engine, $version, $protocol)
+	{	
+		$stylesheetName = $template->getId() . '/' . self::GLOBAL_PRINT_NAME;
+		$relativePath = $this->getStylesheetRelativePath($stylesheetName, $engine, $version, $protocol);
+		$fullengine =  $engine.'.'. $version;
+		$absolutePath = f_util_FileUtils::buildDocumentRootPath($relativePath);
+		if (!file_exists($absolutePath) || file_exists($relativePath.".deleted") || Framework::inDevelopmentMode())
+		{
+			f_util_FileUtils::mkdir(dirname($absolutePath));
+			$fh = fopen($absolutePath, 'w');
+			foreach ($template->getPrintStyleIds() as $styleName) 
+			{
+				$this->appendStylesheetContent($fh, $styleName, $fullengine);
+			}
+			fclose($fh);
+		}
+		if (file_exists($relativePath.".deleted"))
+		{
+			unlink($relativePath.".deleted");
+		}
+		return file_get_contents($absolutePath);			
+	}	
+	
+	public function getStylesheet($name, $engine, $version, $protocol)
+	{
+		$relativePath = $this->getStylesheetRelativePath($name, $engine, $version, $protocol);
+		$absolutePath = f_util_FileUtils::buildDocumentRootPath($relativePath);
+		$fullengine =  $engine.'.'. $version;
+		if (!file_exists($absolutePath) || file_exists($relativePath.".deleted") || Framework::inDevelopmentMode())
+		{
+			f_util_FileUtils::mkdir(dirname($absolutePath));
+			$fh = fopen($absolutePath, 'w');
+			$this->appendStylesheetContent($fh, $name, $fullengine);
+			fclose($fh);
+		}
+		if (file_exists($relativePath.".deleted"))
+		{
+			unlink($relativePath.".deleted");
+		}
+		return file_get_contents($absolutePath);
+	}
+	
 	/**
 	 * Returns the path of the "Global template" used to render the page
 	 *
@@ -332,68 +330,35 @@ class website_PageRessourceService extends BaseService
 
 	public function getAvailableScripts()
 	{
-		$pageTemplate = ($this->getPage() !== null) ? $this->getPage()->getTemplate() : "";
-		$frontOfficeScriptsCache = f_util_FileUtils::buildCachePath("frontofficeScripts.". $pageTemplate);
-		if (AG_DEVELOPMENT_MODE)
+		$page = $this->getPage();
+		if ($page === null) {return array();}
+	
+		$template = $this->getPageTemplate($page, false);
+		if ($template === null) {return array();}
+		
+		$frontOfficeScriptsCache = f_util_FileUtils::buildCachePath("frontofficeScripts.". str_replace('/', '.', $template->getCodename()));
+		if (Framework::inDevelopmentMode())
 		{
 			if (file_exists($frontOfficeScriptsCache))
 			{
 				unlink($frontOfficeScriptsCache);
 			}
-			return $this->_getAvailableScripts();
+			return $template->getScriptIds();
 		}
 		if (!file_exists($frontOfficeScriptsCache))
 		{
-			$availableScripts = $this->_getAvailableScripts();
+			$availableScripts = $template->getScriptIds();
 			f_util_FileUtils::writeAndCreateContainer($frontOfficeScriptsCache, serialize($availableScripts), f_util_FileUtils::OVERRIDE);
 			return $availableScripts;
 		}
 		return unserialize(file_get_contents($frontOfficeScriptsCache));
 	}
 
-	private function _getAvailableScripts()
-	{
-		$fileResolver = FileResolver::getInstance();
-
-		$availableScripts = array();
-		foreach (ModuleService::getInstance()->getModulesObj() as $module)
-		{
-			$scriptPath = $fileResolver->setPackageName($module->getFullName())->setDirectory('lib')->getPath('frontoffice.js');
-			if ($scriptPath)
-			{
-				$availableScripts[] = 'modules.'.$module->getName().'.lib.frontoffice';
-			}
-		}
-		$page = $this->getPage();
-		if ($page !== null)
-		{
-			$templateName = $page->getTemplate();
-			$pathWhereToFindDisplays = $fileResolver->setPackageName('modules_website')->setDirectory('config')->getPath('display.xml');
-			$displayConfig = new DOMDocument('1.0', 'UTF-8');
-			$displayConfig->load($pathWhereToFindDisplays);
-
-			foreach ($displayConfig->getElementsByTagName('display') as $display)
-			{
-				if (($display->getAttribute('file') == $templateName) && $display->hasAttribute('script'))
-				{
-					$scriptName = $display->getAttribute('script');
-					$scriptPath = $fileResolver->setPackageName('modules_website')->setDirectory('lib')->getPath($scriptName . '.js');
-					if ($scriptPath)
-					{
-						$availableScripts[] = 'modules.website.lib.' . $scriptName;
-					}
-					break;
-				}
-			}
-		}
-		return $availableScripts;
-	}
-
 	/**
 	 * @param String $name
 	 * @param String $engine
 	 * @param String $version
-	 * @param String $https
+	 * @param String $protocol
 	 * @return String
 	 */
 	private function getStylesheetRelativePath($name, $engine, $version, $protocol = 'http')
@@ -411,7 +376,7 @@ class website_PageRessourceService extends BaseService
 
 	/**
 	 * @param String $styleSheetRelativePath
-	 * @param String $mediaType
+	 * @param String $mediaType (screen | print)
 	 * @return String
 	 */
 	private function buildStylesheetInclusion($styleSheetRelativePath, $mediaType)
@@ -419,87 +384,26 @@ class website_PageRessourceService extends BaseService
 		$inclusionSrc = LinkHelper::getRessourceLink('/' . $styleSheetRelativePath)->getUrl();
 		return '<link rel="stylesheet" href="' . $inclusionSrc . '" type="text/css" media="' . $mediaType . '" />';
 	}
-
+	
 	/**
-	 * @param String $path
+	 * @param string $css
+	 * @param string $mediaType (screen | print)
+	 * @return string
 	 */
-	private function buildGlobalScreenStylesheetAtPath($path)
+	private function buildStylesheetInline($css, $mediaType = 'screen')
 	{
-
-		f_util_FileUtils::mkdir(dirname($path));
-		$fh = fopen($path, 'w');
-		foreach ($this->getStylesheetIdsForGlobalScreen() as $stylesheetId)
-		{
-			$this->appendStylesheetContent($fh, $stylesheetId, K::HTML);
-		}
-		fclose($fh);
+		if (empty($css)) {return null;}
+		return '<style type="text/css" media="' . $mediaType . '">' . $css . '</style>';
 	}
-
-	/**
-	 * @return String[]
-	 */
-	protected function getStylesheetIdsForGlobalScreen()
-	{
-		$ss = StyleService::getInstance();
-		$stylesheetArray = array('modules.generic.frontoffice', 'modules.generic.richtext', 'modules.website.frontoffice', 'modules.website.richtext');
-		foreach (ModuleService::getInstance()->getModulesObj() as $changeModule)
-		{
-			$moduleName = $changeModule->getName();
-			if ($moduleName == "website" || $moduleName == "generic")
-			{
-				continue;
-			}
-			$stylesheetId = 'modules.' . $moduleName . '.frontoffice';
-			$stylesheetPath = $ss->getSourceLocation($stylesheetId);
-			if ($stylesheetPath)
-			{
-				$stylesheetArray[] = $stylesheetId;
-			}
-		}
-		return $stylesheetArray;
-	}
-
-	/**
-	 * @param String $path
-	 */
-	private function buildGlobalPrintStylesheetAtPath($path)
-	{
-		f_util_FileUtils::mkdir(dirname($path));
-		$ss = StyleService::getInstance();
-
-		$fh = fopen($path, 'w');
-		$this->appendStylesheetContent($fh, 'modules.generic.print', K::HTML);
-		$this->appendStylesheetContent($fh, 'modules.website.print', K::HTML);
-
-		foreach (ModuleService::getInstance()->getModulesObj() as $changeModule)
-		{
-			$moduleName = $changeModule->getName();
-			if ($moduleName == "website" || $moduleName == "generic")
-			{
-				continue;
-			}
-			$stylesheetId = 'modules.' . $moduleName . '.print';
-			$stylesheetPath = $ss->getSourceLocation($stylesheetId);
-			if ($stylesheetPath)
-			{
-				$this->appendStylesheetContent($fh, $stylesheetId, K::HTML);
-			}
-		}
-		fclose($fh);
-	}
-
-
 
 	/**
 	 * @param Ressource $fileHandle
 	 * @param String $styleName
-	 * @param String $mimeContentType
+	 * @param String $fullengine
 	 */
-	private function appendStylesheetContent($fileHandle, $styleName, $mimeContentType)
+	private function appendStylesheetContent($fileHandle, $styleName, $fullengine)
 	{
-		$ss = StyleService::getInstance();
-		$engine = $ss->getFullEngineName($mimeContentType);
-		$content = StyleService::getInstance()->getCSS($styleName, $engine, $this->getSkin());
+		$content = StyleService::getInstance()->getCSS($styleName, $fullengine, $this->getSkin());
 		if ($content !== null)
 		{
 			fwrite($fileHandle, $content);

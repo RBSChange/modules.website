@@ -274,74 +274,10 @@
 		<locale lang="en">loading page editor</locale>
 		<locale lang="de">Seiteneditor wird geladen</locale>
 	</entity>
-	<entity id="template.tplOne">
-		<locale lang="fr">N°1 - 1 colonne</locale>
-		<locale lang="en">N°1 - 1 column</locale>
-	</entity>
-	<entity id="template.tplOneTwoColumns">
-		<locale lang="fr">N°1 - 2 colonnes (gauche)</locale>
-		<locale lang="en">N°1 - 2 columns (left)</locale>
-	</entity>
-	<entity id="template.tplOneTwoColumnsRight">
-		<locale lang="fr">N°1 - 2 colonnes (droite)</locale>
-		<locale lang="en">N°1 - 2 columns (right)</locale>
-	</entity>
-	<entity id="template.tplOneThreeColumns">
-		<locale lang="fr">N°1 - 3 colonnes</locale>
-		<locale lang="en">N°1 - 3 columns</locale>
-	</entity>
-	<entity id="template.tplTwo">
-		<locale lang="fr">N°2 - 2 colonnes</locale>
-		<locale lang="en">N°2 - 2 columns</locale>
-	</entity>
-	<entity id="template.tplTwoThreeColumns">
-		<locale lang="fr">N°2 - 3 colonnes</locale>
-		<locale lang="en">N°2 - 3 columns</locale>
-	</entity>
-	<entity id="template.tplThree">
-		<locale lang="fr">N°3 - 3 colonnes</locale>
-		<locale lang="en">N°3 - 3 columns</locale>
-	</entity>
-	<entity id="template.tplThreeTwoColumns">
-		<locale lang="fr">N°3 - 2 colonnes</locale>
-		<locale lang="en">N°3 - 2 columns</locale>
-	</entity>
-	<entity id="template.tplFour">
-		<locale lang="fr">N°4 - 2 colonnes</locale>
-		<locale lang="en">N°4 - 2 columns</locale>
-	</entity>
-	<entity id="template.tplFourThreeColumns">
-		<locale lang="fr">N°4 - 3 colonnes</locale>
-		<locale lang="en">N°4 - 3 columns</locale>
-	</entity>
-	<entity id="template.tplFive">
-		<locale lang="fr">N°5 - 2 colonnes</locale>
-		<locale lang="en">N°5 - 2 columns</locale>
-	</entity>
-	<entity id="template.tplFiveThreeColumns">
-		<locale lang="fr">N°5 - 3 colonnes</locale>
-		<locale lang="en">N°5 - 3 columns</locale>
-	</entity>
-	<entity id="template.tplSix">
-		<locale lang="fr">N°6 - 1 colonne</locale>
-		<locale lang="en">N°6 - 1 column</locale>
-	</entity>
-	<entity id="template.tplSixTwoColumns">
-		<locale lang="fr">N°6 - 2 colonnes (gauche)</locale>
-		<locale lang="en">N°6 - 2 columns (left)</locale>
-	</entity>
-	<entity id="template.tplSixTwoColumnsRight">
-		<locale lang="fr">N°6 - 2 colonnes (droite)</locale>
-		<locale lang="en">N°6 - 2 columns (right)</locale>
-	</entity>
-	<entity id="template.tplSixThreeColumns">
-		<locale lang="fr">N°6 - 3 colonnes</locale>
-		<locale lang="en">N°6 - 3 columns</locale>
-	</entity>
-	<entity id="template.tplNewMailing">
-		<locale lang="fr">Template mailing</locale>
-		<locale lang="en">Mailing template</locale>
-	</entity>
+	<entity id="not-allowed">
+		<locale lang="fr">non autorisé</locale>
+		<locale lang="en">not allowed</locale>
+	</entity>	
 	<entity id="richtext-title1">
 		<locale lang="fr">titre de niveau 1</locale>
 		<locale lang="en">title level 1</locale>
@@ -411,5 +347,75 @@
 	<entity id="structure.sample">
 		<locale lang="fr">structure d'exemple</locale>
 		<locale lang="en">sample Structure</locale>
+	</entity>
+	
+	<!-- OBSOLETE LOCALES -->
+	<entity id="template.tplOne">
+		<locale lang="fr">N°1 - 1 colonne</locale>
+		<locale lang="en">N°1 - 1 column</locale>
+	</entity>
+	<entity id="template.tplOneTwoColumns">
+		<locale lang="fr">N°1 - 2 colonnes (gauche)</locale>
+		<locale lang="en">N°1 - 2 columns (left)</locale>
+	</entity>
+	<entity id="template.tplOneTwoColumnsRight">
+		<locale lang="fr">N°1 - 2 colonnes (droite)</locale>
+		<locale lang="en">N°1 - 2 columns (right)</locale>
+	</entity>
+	<entity id="template.tplOneThreeColumns">
+		<locale lang="fr">N°1 - 3 colonnes</locale>
+		<locale lang="en">N°1 - 3 columns</locale>
+	</entity>
+	<entity id="template.tplTwo">
+		<locale lang="fr">N°2 - 2 colonnes</locale>
+		<locale lang="en">N°2 - 2 columns</locale>
+	</entity>
+	<entity id="template.tplTwoThreeColumns">
+		<locale lang="fr">N°2 - 3 colonnes</locale>
+		<locale lang="en">N°2 - 3 columns</locale>
+	</entity>
+	<entity id="template.tplThree">
+		<locale lang="fr">N°3 - 3 colonnes</locale>
+		<locale lang="en">N°3 - 3 columns</locale>
+	</entity>
+	<entity id="template.tplThreeTwoColumns">
+		<locale lang="fr">N°3 - 2 colonnes</locale>
+		<locale lang="en">N°3 - 2 columns</locale>
+	</entity>
+	<entity id="template.tplFour">
+		<locale lang="fr">N°4 - 2 colonnes</locale>
+		<locale lang="en">N°4 - 2 columns</locale>
+	</entity>
+	<entity id="template.tplFourThreeColumns">
+		<locale lang="fr">N°4 - 3 colonnes</locale>
+		<locale lang="en">N°4 - 3 columns</locale>
+	</entity>
+	<entity id="template.tplFive">
+		<locale lang="fr">N°5 - 2 colonnes</locale>
+		<locale lang="en">N°5 - 2 columns</locale>
+	</entity>
+	<entity id="template.tplFiveThreeColumns">
+		<locale lang="fr">N°5 - 3 colonnes</locale>
+		<locale lang="en">N°5 - 3 columns</locale>
+	</entity>
+	<entity id="template.tplSix">
+		<locale lang="fr">N°6 - 1 colonne</locale>
+		<locale lang="en">N°6 - 1 column</locale>
+	</entity>
+	<entity id="template.tplSixTwoColumns">
+		<locale lang="fr">N°6 - 2 colonnes (gauche)</locale>
+		<locale lang="en">N°6 - 2 columns (left)</locale>
+	</entity>
+	<entity id="template.tplSixTwoColumnsRight">
+		<locale lang="fr">N°6 - 2 colonnes (droite)</locale>
+		<locale lang="en">N°6 - 2 columns (right)</locale>
+	</entity>
+	<entity id="template.tplSixThreeColumns">
+		<locale lang="fr">N°6 - 3 colonnes</locale>
+		<locale lang="en">N°6 - 3 columns</locale>
+	</entity>
+	<entity id="template.tplNewMailing">
+		<locale lang="fr">Template mailing</locale>
+		<locale lang="en">Mailing template</locale>
 	</entity>
 </localization>

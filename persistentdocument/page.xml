@@ -16,7 +16,7 @@
 
 		<add name="indexingstatus" type="Boolean" default-value="true" />
 
-		<add name="template" type="String" min-occurs="1" from-list="modules_website/templates" preserve-old-value="true"/>
+		<add name="template" type="String" min-occurs="1" />
 
 		<add name="content" type="XHTMLFragment" localized="true" />
 		<add name="skin" type="modules_skin/skin" />

@@ -22,39 +22,21 @@ class website_GetEditContentStylesheetsAction extends f_action_BaseAction
 	private function renderStylesheets($page)
 	{
 		// include stylesheets
-		$modules = array();
 		$moduleService = ModuleService::getInstance();
-		$availableModules = $moduleService->getModules();		
+		$availableModules = $moduleService->getModules();	
+		$styleArray = array('modules.website.backoffice', 'modules.uixul.backoffice', 
+		 'modules.generic.backoffice', 'modules.uixul.EditContent');
+			
 		foreach ($availableModules as $availableModule)
 		{
 			$moduleName = $moduleService->getShortModuleName($availableModule);
-			$modules[] = $moduleName;
+			$styleArray[] = 'modules.' . $moduleName . '.bindings';
 		}
-		
-		$styleArray = array('modules.generic.frontoffice', 'modules.generic.richtext',
-			'modules.website.frontoffice', 'modules.website.richtext');
 
-		// Module backoffice styles :
-		foreach ($modules as $module)
-		{
-			
-			if (($module == 'website') || ($module == 'uixul') || ($module == 'generic'))
-			{
-				$styleArray[] = 'modules.' . $module . '.backoffice';
-			}
-			else
-			{
-				$styleArray[] = 'modules.' . $module . '.frontoffice';
-			}
-			$styleArray[] = 'modules.' . $module . '.bindings';
-		}
-		
-		$styleArray[] = 'modules.uixul.EditContent';
 		$ss = StyleService::getInstance();
-		
+
 		$skinId = $page->getSkinId();
-		$skin = ($skinId) ? DocumentHelper::getDocumentInstance($skinId) : null;
-		
+		$skin = ($skinId) ? DocumentHelper::getDocumentInstance($skinId) : null;		
 		foreach ($styleArray as $stylename)
 		{
 			echo $ss->getCSS($stylename, $ss->getFullEngineName('xul'), $skin);

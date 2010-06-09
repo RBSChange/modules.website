@@ -8,7 +8,7 @@
 		<field name="usehttps" />
 	</section>
 	<section labeli18n="modules.website.document.page.LayoutInformations">
-		<field name="template" />
+		<field name="template" type="dropdownlist" nocache="true" />
 		<field name="skin" />
 	</section>
 	<section labeli18n="modules.website.document.page.DateInformations">
@@ -51,12 +51,26 @@
 				<parameter name="result" />
 				<body><![CDATA[
 				var fields = this.fields;
-				var metainfo = result.contents.metainfo;
-				
-				this.setMenuItems(metainfo.title, fields.metatitle);
-				this.setMenuItems(metainfo.description, fields.description);
-				this.setMenuItems(metainfo.keywords, fields.keywords);
+				try
+				{
+					var pid = this.mDocumentId;
+					var field = fields.template;
+					field.replaceItems({pageid: pid,cmpref:"modules_website/templates"});
+					
+					if (result.contents.metainfo)
+					{
+						var metainfo = result.contents.metainfo;				
+						this.setMenuItems(metainfo.title, fields.metatitle);
+						this.setMenuItems(metainfo.description, fields.description);
+						this.setMenuItems(metainfo.keywords, fields.keywords);
+					}
+				}
+				catch (e)
+				{
+					wCore.error("pageversion.properties.initializeCompletePageExtent", [result], e);
+				}
 				]]></body>
+				
 			</method>
 			
 			<method name="setMenuItems">

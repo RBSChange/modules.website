@@ -542,47 +542,45 @@ class website_Page implements f_mvc_Context
 	{
 		$prs = website_PageRessourceService::getInstance();
 		$styleInclusions = array();
-		if (!$this->page->isNew())
-		{
-			$skin = $this->getSkin();
-			$prs->setSkin($skin);
-			if ($skin && $skin->isNew())
-			{
-				$styleInclusions[] = $prs->getGlobalScreenStylesheetInLine();
-				$pageStylesheetInclusion = $prs->getPageStylesheetInLine();
-				if ($pageStylesheetInclusion)
-				{
-					$styleInclusions[] = $pageStylesheetInclusion;
-				}
-			}
-			else
-			{
-				$styleInclusions[] = $prs->getGlobalScreenStylesheetInclusion();
-				$pageStylesheetInclusion = $prs->getPageStylesheetInclusion();
-				if ($pageStylesheetInclusion)
-				{
-					$styleInclusions[] = $pageStylesheetInclusion;
-				}
-				$styleInclusions[] = $prs->getGlobalPrintStylesheetInclusion();
-			}
 
+		$skin = $this->getSkin();
+		$prs->setSkin($skin);
+		if ($skin && $skin->isNew())
+		{
+			$style = $prs->getPageStylesheetInLine();
+			if ($style)
+			{
+				$styleInclusions[] = $style;
+			}
 		}
+		else
+		{
+			$style = $prs->getPageStylesheetInclusion();
+			if ($style)
+			{
+				$styleInclusions[] = $style;
+			}
+			
+			$style = $prs->getPagePrintStylesheetInclusion();
+			if ($style)
+			{
+				$styleInclusions[] = $style;
+			}
+		}
+
 		return implode(K::CRLF, $styleInclusions);
 	}
 
 	protected function getScripts()
 	{
 		$js = JsService::getInstance();
-		$html = "";
-		if (!$this->page->isNew())
+		$frontofficeScripts = website_PageRessourceService::getInstance()->getAvailableScripts();
+		foreach ($frontofficeScripts as $script)
 		{
-			$frontofficeScripts = website_PageRessourceService::getInstance()->getAvailableScripts();
-			foreach ($frontofficeScripts as $script)
-			{
-				$js->registerScript($script);
-			}
-			$html .= $js->execute();
+			$js->registerScript($script);
 		}
+		$html = $js->execute();
+
 		if (isset($this->attributes['scripts']))
 		{
 			$frontofficeScriptsComputed = $js->getComputedRegisteredScripts();
@@ -714,33 +712,27 @@ class website_Page implements f_mvc_Context
 	}
 	
 	public function addContainerStylesheet()
-	{		
-		$ancestors = array_reverse($this->getAncestorIds());
-		foreach ($ancestors as $ancestorId)
+	{	
+		$stylesheet = website_PageRessourceService::getInstance()->getContainerStyleIdByAncestorIds($this->getAncestorIds());
+		if ($stylesheet !== null)
 		{
-			$doc = DocumentHelper::getDocumentInstance($ancestorId);
-			if (f_util_ClassUtils::methodExists($doc, 'getStylesheet'))
-			{
-				$stylesheet = $doc->getStylesheet();
-			}
-			if ($stylesheet !== null)
-			{
-				$this->addStyle('modules.website.' . $stylesheet);
-				return;
-			}
+			$this->addStyle($stylesheet);
 		}
 	}
-	/**
-	 * Doctype for the HTML output, defaults to XHTML 1.0 Strict but if you define DEFAULT_DOC_TYPE to 'XHMTL-1.0-Transitional'
-	 * you can swith to XHTML 1.0 Transitional.
-	 * @return String
-	 */
+	
+	private $docType;
+	
+	public function setDoctype($docType)
+	{
+		$this->docType = $docType;	
+	}
+	
 	public function getDoctype()
 	{
-		if (defined('DEFAULT_DOC_TYPE') && 'DEFAULT_DOC_TYPE' == 'XHMTL-1.0-Transitional')
+		if ($this->docType)
 		{
-			return '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
+			return $this->docType;
 		}
-		return '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
+		return '';
 	}
 }

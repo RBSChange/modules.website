@@ -166,7 +166,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$blockCount = 0;
 		// Process new page content
 		$xpath = $this->getXPathInstance($contentDOM);
-		foreach (website_TemplateService::getInstance()->getChangeContentIds($document->getTemplate()) as $id)
+		foreach (theme_PagetemplateService::getInstance()->getChangeContentIds($document->getTemplate()) as $id)
 		{
 			$blockNodes = $xpath->query('//change:content[@id="' . $id . '"]//change:block');
 			foreach ($blockNodes as $blockNode)
@@ -226,7 +226,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 
 		// Process new page content
 		$xpath = $this->getXPathInstance($contentDOM);
-		foreach (website_TemplateService::getInstance()->getChangeContentIds($document->getTemplate()) as $id)
+		foreach (theme_PagetemplateService::getInstance()->getChangeContentIds($document->getTemplate()) as $id)
 		{
 			$blockNodes = $xpath->query('//change:content[@id="' . $id . '"]//change:block');
 			foreach ($blockNodes as $blockNode)
@@ -334,31 +334,11 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	public function getTemplateName($document)
 	{
-		$ts = website_TemplateService::getInstance();
-
-		if ($ts->isDynamicTemplate($document->getTemplate()))
+		$template = theme_PagetemplateService::getInstance()->getByCodeName($document->getTemplate());
+		if ($template)
 		{
-			$template = $ts->getDynamicTemplate($document->getTemplate());
-
 			return $template->getLabel();
-		} else
-		{
-			$pathWhereToFindDisplays = FileResolver::getInstance()->setPackageName('modules_website')->setDirectory('config')->getPath('display.xml');
-
-			if ($pathWhereToFindDisplays)
-			{
-				$displayConfig = f_object_XmlObject::getInstanceFromFile($pathWhereToFindDisplays)->getRootElement();
-
-				foreach ($displayConfig->display as $display)
-				{
-					if ((string)$display['file'] == $document->getTemplate())
-					{
-						return (string)$display['label'];
-					}
-				}
-			}
 		}
-
 		return $document->getTemplate();
 	}
 
@@ -867,16 +847,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	private function initContent($page)
 	{
-		$templateService = website_TemplateService::getInstance();
-		if ($templateService->isDynamicTemplate($page->getTemplate()))
-		{
-			$template = $templateService->getDynamicTemplate($page->getTemplate());
-			$page->setContent($template->getContent());
-			$page->setTemplate($template->getTemplate());
-		} else
-		{
-			$page->setContent('<change:contents xmlns:change="' . self::CHANGE_PAGE_EDITOR_NS . '" />');
-		}
+		$page->setContent('<change:contents xmlns:change="' . self::CHANGE_PAGE_EDITOR_NS . '" />');
 	}
 
 	/**
@@ -913,7 +884,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		// Process new page content
 		$xpath = $this->getXPathInstance($contentDOM);
-		foreach (website_TemplateService::getInstance()->getChangeContentIds($page->getTemplate()) as $id)
+		foreach (theme_PagetemplateService::getInstance()->getChangeContentIds($page->getTemplate()) as $id)
 		{
 			$newRichtextNodes = $xpath->query('//change:content[@id="'. $id .'"]//change:richtextcontent');
 			foreach ($newRichtextNodes as $richtTextNode)
@@ -1630,7 +1601,8 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$pageRenderInfo = unserialize($cachedData);
 			$blocks = $pageRenderInfo['blocks'];
 			$htmlBody = $pageRenderInfo['htmlBody'];
-
+			$docType = $pageRenderInfo['docType'];
+			
 			$controller = website_BlockController::getInstance();
 			$controller->setPage($page);
 
@@ -1640,7 +1612,9 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		else
 		{
-			$templateDOM = website_PageRessourceService::getInstance()->getPagetemplateAsDOMDocument($page);
+			$wsprs = website_PageRessourceService::getInstance();
+			$docType = $wsprs->getPageDocType($page);
+			$templateDOM = $wsprs->getPagetemplateAsDOMDocument($page);
 			$templateXpath = $this->getXPathInstance($templateDOM);
 			$htmlTemplate = $this->getChangeTemplateByContentType(self::CHANGE_TEMPLATE_TYPE_HTML, $templateXpath);
 
@@ -1687,10 +1661,12 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$this->addBenchTime('pageContextInitialize');
 			if ($cache !== null)
 			{
-				$cache->writeToCache("blocksAndHtmlBody", serialize(array("blocks" => $blocks, "htmlBody" => $htmlBody)));
+				$cache->writeToCache("blocksAndHtmlBody", serialize(array("blocks" => $blocks, "htmlBody" => $htmlBody, "docType" => $docType)));
 			}
 		}
 
+		$pageContext->setDoctype($docType);
+		
 		$this->populateHTMLBlocks($controller, $blocks);
 		$this->addBenchTime('blocksGenerating');
 

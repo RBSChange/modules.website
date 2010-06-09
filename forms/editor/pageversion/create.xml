@@ -7,7 +7,8 @@
 		<field name="indexingstatus" />
 	</section>
 	<section labeli18n="modules.website.document.page.LayoutInformations">
-		<field name="template" />
+		<field name="defaultContent" type="dropdownlist" required="true" 
+			label="Gabarit de la page" nocache="true"></field>
 		<field name="skin" />
 	</section>
 	<section labeli18n="modules.website.document.page.DateInformations">
@@ -25,10 +26,25 @@
 			<method name="updateDuplicateLabel">
 				<parameter name="result" />
 				<body><![CDATA[
-					if (this.documentEditor.hasAttribute('duplicate'))
+					try
+					{	
+						var fields = this.fields;
+						var pid = this.documentEditor.parentid;
+						var field = fields.defaultContent;
+						if (this.documentEditor.hasAttribute('duplicate'))
+						{
+							field.setInitialValue(result.contents.template);
+							field.replaceItems({pageid: pid,cmpref:"modules_website/templates"});
+							fields.label.focus();
+						}
+						else
+						{
+							field.replaceItems({parentid: pid,cmpref:"modules_website/templates"});
+						}
+					}
+					catch (e)
 					{
-						var labelField = this.fields.label;
-						labelField.focus();
+						wCore.error("pageversion.createpanel.updateDuplicateLabel", [result], e);
 					}
 				]]></body>
 			</method>
@@ -47,6 +63,7 @@
 					if (this.documentEditor.hasAttribute('duplicate'))
 					{
 						values.duplicate = 'true';
+						values.documentproperties += ',template';
 					}
 				]]></body>
 			</method>
@@ -57,6 +74,8 @@
 					if (this.documentEditor.hasAttribute('duplicate'))
 					{
 						values.duplicate = 'true';
+						values.template = this.fields.defaultContent.value;
+						values.documentproperties += ',template';
 					}
 				]]></body>
 			</method>

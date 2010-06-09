@@ -24,24 +24,18 @@ class website_EditContentSuccessView extends f_view_BaseView
 			->setArgSeparator(f_web_HttpLink::ESCAPE_SEPARATOR);
 		$this->setAttribute('allStyleUrl', '<?xml-stylesheet href="' . $link->getUrl() . '" type="text/css"?>');
 		
-			
-		$stylesheetName = website_PageRessourceService::getInstance()->getStylesheetNameForPage($document);
-		if ($stylesheetName)
+		$wprs = website_PageRessourceService::getInstance();
+		$template = $wprs->getPageTemplate($document);
+		
+		foreach ($template->getScreenStyleIds() as $styleId) 
 		{
-			$this->getStyleService()->registerStyle($stylesheetName);
+			$this->getStyleService()->registerStyle($styleId);
 		}
-		
-		
-		$ancestors = $ps->getAncestorsOf($document);
-		foreach ($ancestors as $ancestor)
+
+		$containerStyleId = $wprs->getContainerStyleIdByAncestors($ps->getAncestorsOf($document));
+		if ($containerStyleId)
 		{
-			if (($ancestor->getDocumentModelName() == 'modules_website/website') || ($ancestor->getDocumentModelName() == 'modules_website/topic'))
-			{
-				if ($ancestor->getStylesheet())
-				{
-					$this->getStyleService()->registerStyle('modules.website.' . $ancestor->getStylesheet());
-				}
-			}
+			$this->getStyleService()->registerStyle($containerStyleId);
 		}
 
 		$skinId = $document->getSkinId();

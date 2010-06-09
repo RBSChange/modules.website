@@ -2,10 +2,33 @@
 <panel>
 	<section labeli18n="modules.website.document.page.TitleInformations">
 		<field name="navigationtitle"/>
-		<field name="template"/>
+		<field name="defaultContent" type="dropdownlist" required="true" 
+			label="Gabarit de la page" nocache="true"></field>
 	</section>
 	<xul>
-		<javascript>						
+		<javascript>
+			<constructor><![CDATA[
+				this.extendMethod('fireInitializeComplete', this.fireInitializeCompleteExtend);
+			]]></constructor>
+									
+			<method name="fireInitializeCompleteExtend">
+				<parameter name="result" />
+				<body><![CDATA[
+					try
+					{		
+						var pid = this.documentEditor.parentid;
+						var field = this.fields.defaultContent;
+						wCore.debug('parentid: '+ pid);
+						field.replaceItems({parentid: pid,cmpref:"modules_website/templates"});
+					}
+					catch (e)
+					{
+						wCore.error("page.createpanel.fireInitializeCompleteExtend", [result], e);
+					}
+				]]></body>
+			</method>	
+			
+			
 			<method name="preparePropertiesValues">
 				<parameter name="values" />
 				<body><![CDATA[
@@ -13,7 +36,7 @@
 					values.metatitle = values.navigationtitle;
 					values.documentproperties += ',label,metatitle';
 				]]></body>
-			</method>			
+			</method>		
 		</javascript>
 	</xul> 		
 </panel>

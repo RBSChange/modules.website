@@ -22,40 +22,94 @@ class website_ListTemplatesService extends BaseService implements list_ListItems
 
 	/**
 	 * Returns an array of available templates for the website module.
-	 *
+	 * @deprecated 
 	 * @return array
 	 */
 	public function getItems()
 	{
+		$request = Controller::getInstance()->getContext()->getRequest();
+		$addPageDefaultContent = false;
+		$documentId = null;
+		$currentTemplate = null;
+		
+		if ($request->hasParameter('parentid'))
+		{
+			$documentId = intval($request->getParameter('parentid'));
+			$addPageDefaultContent = true;
+		}
+		else if ($request->hasParameter('pageid'))
+		{
+			$documentId = intval($request->getParameter('pageid'));
+			$page = DocumentHelper::getDocumentInstance($documentId, "modules_website/page");
+			$currentTemplate = theme_PagetemplateService::getInstance()->getByCodeName($page->getTemplate());
+		}
+		
+		if (!$documentId)
+		{
+			$templates = website_TemplateService::getInstance()->createQuery()
+				->add(Restrictions::published())
+				->find();			
+		}
+		else
+		{
+			$templates = theme_ModuleService::getInstance()->getAllowedTemplateForDocumentId($documentId);			
+		}
 		
 		$items = array();
-
-		
-		$items[] = new list_Item(f_Locale::translateUI('&modules.website.bo.general.Template-list-staticLabel;'), '', 'group');
-		$parentId = Controller::getInstance()->getContext()->getRequest()->getParameter(K::PARENT_ID_ACCESSOR, null);
-		foreach (website_PageRessourceService::getInstance()->getTemplateDefinitionsByParentId($parentId) as $templateProps)
+		foreach ($templates as $template)
 		{
-			if (isset($templateProps['group']))
+			if (DocumentHelper::isEquals($currentTemplate, $template))
 			{
-				$items[] = new list_Item(f_Locale::translateUI($templateProps['group']), '', 'group');
+				$currentTemplate = null;
 			}
-			$items[] = new list_Item(f_Locale::translateUI($templateProps['label']), $templateProps['file']);
+			$items[] = new list_Item($template->getLabel(), $template->getCodename());
 		}
-
 		
-		$dynamicTemplates = website_TemplateService::getInstance()->getDynamicTemplates();
-		
-		if (count($dynamicTemplates))
+		if (count($templates) && $addPageDefaultContent)
 		{
-			$items[] = new list_Item(f_Locale::translateUI('&modules.website.bo.general.Template-list-dynamicLabel;'), '', 'group');
+			$codesNames = array();
+			foreach ($templates as $template) 
+			{
+				$codesNames[$template->getCodename()] = $template->getLabel();
+			}
 			
-			foreach ($dynamicTemplates as $dynamicTemplate)
+			$pageContents = website_TemplateService::getInstance()->createQuery()
+				->add(Restrictions::published())
+				->add(Restrictions::in('template', array_keys($codesNames)))
+				->find();
+			
+			if (count($pageContents))
 			{
-				$items[] = new list_Item($dynamicTemplate->getLabel(), 'cmpref::' . $dynamicTemplate->getId());
+				foreach ($pageContents as $pageContent) 
+				{
+					$code = $pageContent->getTemplate();
+					$label = $codesNames[$code] . ' / ' . $pageContent->getLabel();
+					$items[] = new list_Item($label, $code . '::' . $pageContent->getId());
+				}
 			}
 		}
 		
+		usort($items, array($this, 'sortItem'));
+		
+		if ($currentTemplate)
+		{
+			$label = $currentTemplate->getLabel() . ' (' . f_Locale::translateUI('&modules.website.bo.general.Not-allowed;') .')';
+			$item = new list_Item($label , $currentTemplate->getCodename());
+			array_unshift($items, $item);
+		}
 		return $items;
 	}
-
+	
+	/**
+	 * @param list_Item $a
+	 * @param list_Item $b
+	 */
+	public function sortItem($a, $b)
+	{
+		if ($a->getLabel() === $b->getLabel())
+		{
+			return 0;		
+		}
+		return ($a->getLabel() > $b->getLabel()) ? 1 : -1;
+	}	
 }

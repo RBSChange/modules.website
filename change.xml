@@ -32,6 +32,12 @@
       </versions>
     </dependency>
     <dependency>
+      <name>change-module/theme</name>
+      <versions>
+        <version>3.0.3</version>
+      </versions>
+    </dependency>
+    <dependency>
       <name>lib/fckeditor</name>
       <versions>
         <version>2.6.3</version>

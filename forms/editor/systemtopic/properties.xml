@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <panel>
 	<section labeli18n="modules.uixul.bo.doceditor.fieldsgroup.Title">
-		<field name="stylesheet" emptylabel="" />
+		<field name="allowedpagetemplate" />
 		<field name="skin" />
 		<field name="navigationVisibility" />
+		<field name="stylesheet" emptylabel="" />
 		<field name="referenceURI" type="hidden"/>
 	</section>
 	

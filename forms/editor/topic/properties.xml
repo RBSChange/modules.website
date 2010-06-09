@@ -4,7 +4,8 @@
 		<field name="label" />
 		<field name="navigationVisibility" />
 		<field name="description" />
-		<field name="stylesheet" emptylabel="" />
+		<field name="allowedpagetemplate" />
 		<field name="skin" />
+		<field name="stylesheet" emptylabel="" />
 	</section>
 </panel>
