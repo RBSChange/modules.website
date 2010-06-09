@@ -1415,19 +1415,14 @@ $(document).ready(function() {
 			$params['id'] = $oldId;
 		}
 
-		// The labels for radio buttons must not be rendered as required.
-		if (isset($params['required']))
-		{
-			$oldRequiredValue = $params['required'];
-		}
-		else
-		{
-			$oldRequiredValue = null;
-		}
+		// The labels for radio buttons must be always rendernd ans as not required.
+		$oldRequiredValue = (isset($params['required'])) ? $params['required'] : null;
 		$params['required'] = false;
+		$oldLabeledValue = (isset($params['labeled'])) ? $params['labeled'] : null;
+		$params['labeled'] = true;
+		
 		$result .= self::buildRadio("true", f_Locale::translate($trueLabel), $params, true);
 		$result .= self::buildRadio("false", f_Locale::translate($falseLabel), $params, true);
-
 		if (isset($params["unknownValue"]))
 		{
 			if (isset($params['unknownLabelKey']))
@@ -1440,18 +1435,26 @@ $(document).ready(function() {
 			}
 			else
 			{
-				$unknownLabel = f_Locale::translate("&modules.uixul.bo.general.Unknown;");
+				$unknownLabel = f_Locale::translate('&modules.uixul.bo.general.Unknown;');
 			}
-
-			$result .= self::buildRadio("", $unknownLabel, $params);
+			$result .= self::buildRadio('', $unknownLabel, $params);
 		}
+		
 		if ($oldRequiredValue === null)
 		{
-			unset($params["required"]);
+			unset($params['required']);
 		}
 		else
 		{
 			$params['required'] = $oldRequiredValue;
+		}
+		if ($oldLabeledValue === null)
+		{
+			unset($params['labeled']);
+		}
+		else
+		{
+			$params['labeled'] = $oldLabeledValue;
 		}
 
 		return $result;
