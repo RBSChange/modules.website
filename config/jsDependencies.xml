@@ -29,7 +29,6 @@
 			<dependency name="modules.website.lib.js.jquery" />
 			<dependency name="modules.website.lib.js.jquery-easing" />
 			<dependency name="modules.website.lib.js.jquery-ifixpng" />
-			<dependency name="modules.website.lib.js.mootools-core" />
 		</dependencies>
 	</script>
 
