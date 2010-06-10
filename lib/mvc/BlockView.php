@@ -132,28 +132,8 @@ class website_BlockView
 		if ($this->templateObject === null)
 		{
 			$templateName = ucfirst($request->getModuleName()) .'-'. $this->getName($request);
-			$moduleName = $request->getModuleName();
-			$actionConfig = $request->getAttribute('configuration');
-			if ($actionConfig->getConfigurationParameter('allowthemetemplate', false))
-			{
-				list($theme, ) = explode('/', $request->getContext()->getAttribute("website_page")->getPersistentPage()->getTemplate());
-				$packageName = 'themes_' . $theme;
-				try 
-				{
-					$this->templateObject = TemplateLoader::getInstance()->setMimeContentType(K::HTML)->setPackageName($packageName)
-															->setDirectory('blocktemplates/'. $moduleName)->load($templateName);
-				}
-				catch (TemplateNotFoundException $e)
-				{
-					Framework::warn(__METHOD__ . ' : ' . $e->getMessage());
-				}
-			}
-			
-			if ($this->templateObject === null)
-			{
-				$this->templateObject = TemplateLoader::getInstance()->setMimeContentType(K::HTML)
-											->setDirectory('templates')->setPackageName( 'modules_' . $request->getModuleName())->load($templateName);
-			}
+			$this->templateObject = TemplateLoader::getInstance()->setMimeContentType(K::HTML)
+										->setDirectory('templates')->setPackageName( 'modules_' . $request->getModuleName())->load($templateName);
 		}
 		
 		$template = $this->templateObject;
