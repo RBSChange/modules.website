@@ -39,7 +39,7 @@ class website_FormHelper
 			{
 				self::$context->addScript('modules.website.lib.js.jquery-qtip');
 
-				$html .= "<script type=\"text/javascript\">$(document).ready(function() {";
+				$html .= "<script type=\"text/javascript\">jQuery(document).ready(function() {";
 				if ($useQTipHelp)
 				{
 					$helpOptions = Framework::getConfigurationValue("modules/website/forms-qtip-help-options", "position: {
@@ -88,24 +88,24 @@ class website_FormHelper
 				if ($useQTipHelp && $useQTipError)
 				{
 				$html .= "
-   $('input[title], textarea[title], label[title]').each(function(i) {
-   		var elem = $(this);
+   jQuery('input[title], textarea[title], label[title]').each(function(i) {
+   		var elem = jQuery(this);
    		elem.qtip(elem.hasClass('error') ? qTipErrorOptions : qTipOptions);
    });";
 				}
 				elseif ($useQTipError)
 				{
 					$html .= "
-   $('label[title].error').each(function(i) {
-   		var elem = $(this);
+   jQuery('label[title].error').each(function(i) {
+   		var elem = jQuery(this);
    		elem.qtip(qTipErrorOptions);
    });";
 				}
 				elseif ($useQTipHelp)
 				{
 					$html .= "
-   $('input[title], textarea[title]').each(function(i) {
-   		var elem = $(this);
+   jQuery('input[title], textarea[title]').each(function(i) {
+   		var elem = jQuery(this);
    		elem.qtip(qTipOptions);
    });";
 				}
@@ -628,7 +628,7 @@ function SetUrl(fileUrl, width, height, fileAlt, fileKey, fileLabel, property)
 		{
 			elems.appendChild(newElem);
 		}
-		$.fn.fancybox.close();
+		jQuery.fn.fancybox.close();
 	}
 	else
 	{
@@ -685,8 +685,8 @@ function Documentpicker_removeFromPicker(property, id)
 	}
 }
 
-$(document).ready(function() {
-	$('a.picker-choose').fancybox({
+jQuery(document).ready(function() {
+	jQuery('a.picker-choose').fancybox({
 		'frameWidth' : ".$params['width'].",
 		'frameHeight' : ".$params['height'].",
 		'zoomSpeedIn' : 0,
@@ -695,7 +695,7 @@ $(document).ready(function() {
 		'centerOnScroll' : false
 	  });
 
-	$('a.document-preview').fancybox({
+	jQuery('a.document-preview').fancybox({
 		'frameWidth' : ".$params['previewWidth'].",
 		'frameHeight' : ".$params['previewHeight'].",
 		'zoomSpeedIn' : 0,
@@ -712,7 +712,7 @@ $(document).ready(function() {
 		$value = BeanUtils::getProperty(self::$bean, $propertyName);
 
 		// The label
-		$params["onclick"] = "$('#".$params["id"]."_choose').click();";
+		$params["onclick"] = "jQuery('#".$params["id"]."_choose').click();";
 		$html .= self::buildLabel($params);
 		unset($params["onclick"]);
 
@@ -945,8 +945,8 @@ $(document).ready(function() {
 			self::setDefaultValue("previewHeight", "600", $params);
 
 			$code .= "<script type=\"text/javascript\">
-				if (!document.all) $(document).ready(function() {
-					$('a.fancypreview').fancybox({
+				if (!document.all) jQuery(document).ready(function() {
+					jQuery('a.fancypreview').fancybox({
 						'frameWidth' : ".$params['previewWidth'].",
 						'frameHeight' : ".$params['previewHeight'].",
 						'zoomSpeedIn' : 0,
@@ -954,14 +954,14 @@ $(document).ready(function() {
 						'hideOnContentClick' : false,
 						'centerOnScroll' : false
 	  			});});
-	  			$(document).ready(function() {
-	  				$('input.uploadfield-addbutton').each(function (i) {
+	  			jQuery(document).ready(function() {
+	  				jQuery('input.uploadfield-addbutton').each(function (i) {
 	  					this.disabled = true;
 	  				});
 	  				
-	  				$('ul.uploads input[type = checkbox]').each(function (i) {
-	  					$(this).hide();
-	  					var labelElem = $(this.nextSibling).hide();
+	  				jQuery('ul.uploads input[type = checkbox]').each(function (i) {
+	  					jQuery(this).hide();
+	  					var labelElem = jQuery(this.nextSibling).hide();
 	  					var removeAnchor = document.createElement('a');
 	  					removeAnchor.setAttribute('href', '#');
 	  					removeAnchor.className = 'button';
@@ -969,7 +969,7 @@ $(document).ready(function() {
 	  					removeAnchor.setAttribute('title', this.getAttribute('title'));
 	  					var space = document.createTextNode(' ');
 	  					labelElem.after(space);
-	  					$(space).after(removeAnchor);
+	  					jQuery(space).after(removeAnchor);
 	  					
 	  					var checkboxInput = this;
 	  					jQuery(removeAnchor).click(function() {
@@ -994,7 +994,7 @@ $(document).ready(function() {
 	  				while (current.nextSibling != null)
 	  				{
 	  					current = current.nextSibling;
-	  					$(current).find('input[type = hidden]').each(function (i) {
+	  					jQuery(current).find('input[type = hidden]').each(function (i) {
 	  						var matches = this.getAttribute('name').match(/^(.*)\[(.*)\]$/);
 	  						var newName = matches[1]+'['+(parseInt(matches[2])-1)+']';
 	  						this.setAttribute('name', newName);
@@ -1074,7 +1074,7 @@ $(document).ready(function() {
 	{
 		self::setDefaultValue('class', 'textfield', $params);
 		self::$context->addScript('modules.website.lib.js.durationPicker');
-		return self::renderInputByType("text", $params) . "<script type=\"text/javascript\">//<![CDATA[\n\$(document).ready(function(){durationPicker(\$('#" . $params['id'] . "'));});\n//]]></script>";
+		return self::renderInputByType("text", $params) . "<script type=\"text/javascript\">//<![CDATA[\njQuery(document).ready(function(){durationPicker(jQuery('#" . $params['id'] . "'));});\n//]]></script>";
 	}
 
 	public static function renderDocumentinput($params, $ctx)
@@ -1196,7 +1196,7 @@ $(document).ready(function() {
 
 		}
 		$datePickerParam .= '}';
-		return self::renderInputByType("text", $params) . '<span>' . $format . "</span><script type=\"text/javascript\">//<![CDATA[\n\$(document).ready(function(){\$('[id=" . $params['id'] . "]').datePicker($datePickerParam);});\n//]]></script>";
+		return self::renderInputByType("text", $params) . '<span>' . $format . "</span><script type=\"text/javascript\">//<![CDATA[\njQuery(document).ready(function(){jQuery('[id=" . $params['id'] . "]').datePicker($datePickerParam);});\n//]]></script>";
 	}
 
 	/**

@@ -23,6 +23,7 @@
 	<xsl:template match="change:template">
 		<body>
 			<xsl:copy-of select="@id" />
+			<xsl:copy-of select="@class" />
 			<div>
 				<xsl:apply-templates />
 			</div>

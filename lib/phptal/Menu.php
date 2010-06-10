@@ -21,6 +21,7 @@ class PHPTAL_Php_Attribute_CHANGE_menu extends PHPTAL_Php_Attribute_TAL_Repeat
         $liFirstInLevelClass = '';
         $liLastClass = '';
         $liLastInLevelClass = '';
+        $liHasChildrenClass = '';
         $liClassByLevel = array();
         $ulClassByLevel = array();
         $columnBreak = array();
@@ -94,6 +95,9 @@ class PHPTAL_Php_Attribute_CHANGE_menu extends PHPTAL_Php_Attribute_TAL_Repeat
             		break;
                 case 'anchors':
             		$anchors = f_util_Convert::toInteger($value);
+            		break;
+            	case 'lihaschildrenclass':
+            		$liHasChildrenClass = $value;
             		break;
             	case 'lifirstinlevelclass':
             		$liFirstInLevelClass = $value;
@@ -180,7 +184,7 @@ class PHPTAL_Php_Attribute_CHANGE_menu extends PHPTAL_Php_Attribute_TAL_Repeat
 		$g->doSetVar($this->controller.'->listTag', '"'.$listTag.'"');
 		$g->doSetVar($this->controller.'->onlyTopics', $onlyTopics ? 'true' : 'false');
 		$g->doSetVar($this->controller.'->itemIndex', '0');
-
+		$g->doSetVar($this->controller.'->liHasChildrenClass', '"' . $liHasChildrenClass .'"');
         $g->doIf($this->controller.'->length == 0');
         $g->doSetVar($this->controller.'->end', 'true');
         $g->doEnd();
@@ -353,7 +357,7 @@ class PHPTAL_Php_Attribute_CHANGE_menu extends PHPTAL_Php_Attribute_TAL_Repeat
     	}
 
     	// Check if element is the last one in the current level
-    	if ($controller->liLastInLevelClass)
+    	if (true)
     	{
 	    	$nextIndex = $controller->index + 1;
     		if (!isset($controller->source[$nextIndex]))
@@ -363,6 +367,7 @@ class PHPTAL_Php_Attribute_CHANGE_menu extends PHPTAL_Php_Attribute_TAL_Repeat
     		else
     		{
     			$isLastInLevel = true;
+    			$hasChildren = false;
     			// Skip descendent elements (level is greater than current element's level).
     			while (isset($controller->source[$nextIndex]))
     			{
@@ -382,6 +387,10 @@ class PHPTAL_Php_Attribute_CHANGE_menu extends PHPTAL_Php_Attribute_TAL_Repeat
 		    			$isLastInLevel = false;
 		    			break;
 		    		}
+		    		else 
+		    		{
+		    			$hasChildren = true;
+		    		}
 		    		$nextIndex++;
     			}
     			// Is the current element the last one?
@@ -389,6 +398,12 @@ class PHPTAL_Php_Attribute_CHANGE_menu extends PHPTAL_Php_Attribute_TAL_Repeat
     			{
     				$class[] = $controller->liLastInLevelClass;
     			}
+    			if ($hasChildren)
+    			{
+    				$class[] = $controller->liHasChildrenClass;
+    			}
+    			
+    			
     		}
     	}
 

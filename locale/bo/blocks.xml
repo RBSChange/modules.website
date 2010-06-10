@@ -60,17 +60,21 @@
     <locale lang="en">missing block: {originalClassName}</locale>
   </entity>
   <entity id="contextualmenu">
-  	<locale lang="fr">Menu contextuel</locale>
+    <locale lang="fr">Menu contextuel</locale>
     <locale lang="en">Contextual menu</locale>
   </entity>
   <entity id="sitemap.column">
-	<locale lang="fr">Afficher en colonnes</locale>
-	<locale lang="en">Display in columns</locale>
-	<locale lang="de">In Spalten anzeigen</locale>
+    <locale lang="fr">Afficher en colonnes</locale>
+    <locale lang="en">Display in columns</locale>
+    <locale lang="de">In Spalten anzeigen</locale>
   </entity>
-   <entity id="sitemap.column-help">
-	<locale lang="fr">Afficher en colonnes</locale>
-	<locale lang="en">Display in columns</locale>
-	<locale lang="de">In Spalten anzeigen</locale>
+  <entity id="sitemap.column-help">
+    <locale lang="fr">Afficher en colonnes</locale>
+    <locale lang="en">Display in columns</locale>
+    <locale lang="de">In Spalten anzeigen</locale>
+  </entity>
+  <entity id="xhtmltemplate.title">
+    <locale lang="fr">Gabarit XHTML</locale>
+    <locale lang="en">Template XHTML</locale>
   </entity>
 </localization>

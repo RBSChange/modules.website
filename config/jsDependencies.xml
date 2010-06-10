@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scripts>
 	<!-- JQuery -->
-	<script name="modules.website.lib.js.jquery" />
+	<script name="modules.website.lib.js.jquery-noconflict">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-core" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.jquery-core" />
+	<script name="modules.website.lib.js.jquery">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-core" />
+			<dependency name="modules.website.lib.js.jquery-noconflict" />
+		</dependencies>
+	</script>
 	<script name="modules.website.lib.js.jquery-easing">
 		<dependencies>
 			<dependency name="modules.website.lib.js.jquery" />
@@ -18,6 +29,7 @@
 			<dependency name="modules.website.lib.js.jquery" />
 			<dependency name="modules.website.lib.js.jquery-easing" />
 			<dependency name="modules.website.lib.js.jquery-ifixpng" />
+			<dependency name="modules.website.lib.js.mootools-core" />
 		</dependencies>
 	</script>
 
@@ -29,7 +41,7 @@
 			<dependency name="modules.website.lib.js.jquery" />
 		</dependencies>
 	</script>
-	
+
 	<script name="modules.website.lib.js.jquery-qtip">
 		<dependencies>
 			<dependency name="modules.website.lib.js.jquery" />

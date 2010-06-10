@@ -367,7 +367,19 @@ class website_Page implements f_mvc_Context
 		{
 			$this->attributes['links'] = array();
 		}
-		$linkParams = array('href' => $href, 'rel' => $relation, 'type' => $type);
+		$linkParams = array();
+		if ($href !== null)
+		{
+			$linkParams['href'] = $href;
+		}
+		if ($relation !== null)
+		{
+			$linkParams['rel'] = $relation;
+		}
+		if ($type !== null)
+		{
+			$linkParams['type'] = $type;
+		}
 		if ($title !== null)
 		{
 			$linkParams['title'] = $title;

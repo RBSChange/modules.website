@@ -42,7 +42,11 @@ class <{$className}> extends block_BlockConfiguration
 	public function <{$property->getPhpGetter()}>DefaultValue()
 	{
 <{if $property->hasDefaultValue()}>
+<{if $property->getDefaultValue() == "null"}>
+		return null;
+<{else}>
 		return f_util_Convert::toInteger('<{$property->getDefaultValue()}>');
+<{/if}>
 <{else}>
 		return 0;
 <{/if}>
