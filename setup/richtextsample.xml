@@ -9,8 +9,8 @@
 		</folder>
 	</rootfolder>
 
-	<website byTag="default_modules_website_default-website" template="tplOne">
-		<page label="Exemples de texte" template="tplOne" navigationVisibility="hidden">
+	<website byTag="default_modules_website_default-website" template="webfactory/tplOne">
+		<page label="Exemples de texte" template="webfactory/tplOne" navigationVisibility="hidden">
 			<changecontent for="content-block">
 				<changelayout>
 					<changecolumn>

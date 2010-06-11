@@ -11,21 +11,21 @@
 		</folder>
 	</rootfolder>
 
-	<website byTag="default_modules_website_default-website" template="tplOneTwoColumns">
+	<website byTag="default_modules_website_default-website" template="webfactory/tplOneTwoColumns">
 		<documentRef type="modules_website/topic" byLabel="Outils">
 			<documentRef type="modules_website/page" id="unePage" byLabel="Ajouter aux favoris" />
 		</documentRef>
 		<topic byTag="default_modules_website_sample" label="Rubrique de test">
 			<topic byLabel="Sous-rubrique de test">
 				<topic byLabel="Sous-sous-rubrique de test">
-					<page label="page test" template="tplOne" id="homepage">
+					<page label="page test" template="webfactory/tplOne">
 						<changecontent for="content-block">
 							<changeblock type="richtext"><![CDATA[<h2>Page de test</h2>]]></changeblock>
 						</changecontent>
 					</page>
 				</topic>
 			</topic>
-			<page label="page test" template="tplOne" id="homepage">
+			<page label="page test" template="webfactory/tplOne">
 				<changecontent for="content-block">
 					<changeblock type="richtext">
 						<![CDATA[

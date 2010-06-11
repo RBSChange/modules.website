@@ -3,10 +3,10 @@
 	<binding fileName="modules/website/persistentdocument/import/website_binding.xml" />
 
 	<website label="Site web par défaut" byTag="default_modules_website_default-website"
-			protocol="http" localizebypath="true" template="tplOneTwoColumns">
+			protocol="http" localizebypath="true" template="webfactory/tplOneTwoColumns">
 
 		<page label="Page d'accueil" isHomePage="true"
-			template="tplOne" id="homepage" />
+			template="webfactory/tplOne" id="homepage" />
 
 		<topic label="Outils" navigationVisibility="hidden">
 			<page label="Imprimer" indexingstatus="false">

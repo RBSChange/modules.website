@@ -9,11 +9,11 @@
 		</folder>
 	</rootfolder>
 
-	<website byTag="default_modules_website_default-website" template="tplOneTwoColumns">
+	<website byTag="default_modules_website_default-website" template="webfactory/tplOneTwoColumns">
 		<documentRef type="modules_website/topic" byLabel="Outils">
 			<documentRef type="modules_website/page" id="unePage" byLabel="Ajouter aux favoris" />
 		</documentRef>
-		<page byLabel="page test" template="tplOne" id="homepage">
+		<page byLabel="page test" template="webfactory/tplOne" id="homepage">
 			<changecontent for="content-block">
 				<changeblock type="richtext">
 					<![CDATA[

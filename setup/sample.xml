@@ -3,10 +3,10 @@
 	<binding fileName="modules/website/persistentdocument/import/website_binding.xml" />
 
 	<website label="Site web par défaut" label-en="Default website"
-			protocol="http" localizebypath="true" template="tplTwo"
+			protocol="http" localizebypath="true" template="webfactory/tplTwo"
 			byTag="default_modules_website_default-website">
 		<page label="Page d'accueil" label-en="Homepage" isHomePage="true"
-			template="tplOne" id="homepage">
+			template="webfactory/tplOne" id="homepage">
 			<changecontent for="content-block">
 				<changeblock type="richtext">
 					<![CDATA[<h2>Bienvenue</h2><p>...</p>]]>
@@ -150,7 +150,7 @@
 				</changecontent>
 			</page>
 			<page label="Edition front-office" label-en="Frontoffice edition" indexingstatus="false" navigationVisibility="hidden" navigationVisibility-en="hidden"
-				byTag="contextual_website_website_modules_website_edit" template="tplOne">
+				byTag="contextual_website_website_modules_website_edit" template="webfactory/tplOne">
 				<changecontent for="content-block">
 				   <changeblock type="modules_website_edit" />
 				</changecontent>

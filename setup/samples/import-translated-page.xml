@@ -3,13 +3,13 @@
 	<binding fileName="modules/website/persistentdocument/import/website_binding.xml" />
 	<binding fileName="modules/media/persistentdocument/import/media_binding.xml" />
 
-	<website byTag="default_modules_website_default-website" label-en="Default website en" template="tplOneTwoColumns">
+	<website byTag="default_modules_website_default-website" label-en="Default website en" template="webfactory/tplOneTwoColumns">
 		<documentRef type="modules_website/topic" byLabel="Outils">
 			<documentRef type="modules_website/page" id="unePage" byLabel="Ajouter aux favoris" />
 			<documentRef type="modules_website/page" id="uneAutrePage" byTag="contextual_website_website_legal" />
 		</documentRef>
 		<topic byLabel="Multilingue" label-en="Multilingue en">
-			<page byLabel="page test" label-en="page test en" template="tplOneTwoColumns">
+			<page byLabel="page test" label-en="page test en" template="webfactory/tplOneTwoColumns">
 				<changecontent for="content-block">
 					<changeblock type="richtext">
 						<![CDATA[

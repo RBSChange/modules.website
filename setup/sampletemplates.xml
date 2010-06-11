@@ -17,8 +17,8 @@
 	<website byTag="default_modules_website_default-website">
 		<topic label="Templates de base" navigationVisibility="visible">
 		
-			<page byLabel="tplOne.css" navigationtitle="tplOne.css" metatitle="tplOne.css" 
-					template="tplOne" navigationVisibility="visible">
+			<page byLabel="tplOne" navigationtitle="tplOne" metatitle="tplOne" 
+					template="webfactory/tplOne" navigationVisibility="visible">
 				<changecontent for="content-block">
 					<changelayout>
 						<changecolumn>
@@ -38,8 +38,8 @@
 				</changecontent>
 			</page>	
 			
-			<page byLabel="tplOneTwoColumns.css" navigationtitle="tplOneTwoColumns.css" metatitle="tplOneTwoColumns.css" 
-					template="tplOneTwoColumns" navigationVisibility="2">
+			<page byLabel="tplOneTwoColumns" navigationtitle="tplOneTwoColumns" metatitle="tplOneTwoColumns" 
+					template="webfactory/tplOneTwoColumns" navigationVisibility="2">
 				<changecontent for="content-block">
 					<changelayout>
 						<changecolumn>
@@ -69,8 +69,8 @@
 				</changecontent>				
 			</page>				
 			
-			<page byLabel="tplOneTwoColumnsRight.css" navigationtitle="tplOneTwoColumnsRight.css" metatitle="tplOneTwoColumnsRight.css" 
-					template="tplOneTwoColumnsRight" navigationVisibility="2">
+			<page byLabel="tplOneTwoColumnsRight" navigationtitle="tplOneTwoColumnsRight" metatitle="tplOneTwoColumnsRight" 
+					template="webfactory/tplOneTwoColumnsRight" navigationVisibility="2">
 				<changecontent for="content-block">
 					<changelayout>
 						<changecolumn>
@@ -100,8 +100,8 @@
 				</changecontent>				
 			</page>				
 			
-			<page byLabel="tplOneThreeColumns.css" navigationtitle="tplOneThreeColumns.css" metatitle="tplOneThreeColumns.css" 
-					template="tplOneThreeColumns" navigationVisibility="2">
+			<page byLabel="tplOneThreeColumns" navigationtitle="tplOneThreeColumns" metatitle="tplOneThreeColumns" 
+					template="webfactory/tplOneThreeColumns" navigationVisibility="2">
 				<changecontent for="content-block">
 					<changelayout>
 						<changecolumn>
@@ -141,8 +141,8 @@
 				</changecontent>				
 			</page>				
 			
-			<page byLabel="tplTwo.css" navigationtitle="tplTwo.css" metatitle="tplTwo.css" 
-					template="tplTwo" navigationVisibility="visible">
+			<page byLabel="tplTwo" navigationtitle="tplTwo" metatitle="tplTwo" 
+					template="webfactory/tplTwo" navigationVisibility="visible">
 				<changecontent for="content-block">
 					<changelayout>
 						<changecolumn>
@@ -172,8 +172,8 @@
 				</changecontent>					
 			</page>				
 			
-			<page byLabel="tplTwoThreeColumns.css" navigationtitle="tplTwoThreeColumns.css" metatitle="tplTwoThreeColumns.css" 
-					template="tplTwoThreeColumns" navigationVisibility="2">
+			<page byLabel="tplTwoThreeColumns" navigationtitle="tplTwoThreeColumns" metatitle="tplTwoThreeColumns" 
+					template="webfactory/tplTwoThreeColumns" navigationVisibility="2">
 				<changecontent for="content-block">
 					<changelayout>
 						<changecolumn>
@@ -213,8 +213,8 @@
 				</changecontent>					
 			</page>	
 			
-			<page byLabel="tplThreeTwoColumns.css" navigationtitle="tplThreeTwoColumns.css" metatitle="tplThreeTwoColumns.css" 
-					template="tplThreeTwoColumns" navigationVisibility="2">
+			<page byLabel="tplThreeTwoColumns" navigationtitle="tplThreeTwoColumns" metatitle="tplThreeTwoColumns" 
+					template="webfactory/tplThreeTwoColumns" navigationVisibility="2">
 				<changecontent for="content-block">
 					<changelayout>
 						<changecolumn>
@@ -244,8 +244,8 @@
 				</changecontent>					
 			</page>	
 			
-			<page byLabel="tplThree.css" navigationtitle="tplThree.css" metatitle="tplThree.css" 
-					template="tplThree" navigationVisibility="visible">
+			<page byLabel="tplThree" navigationtitle="tplThree" metatitle="tplThree" 
+					template="webfactory/tplThree" navigationVisibility="visible">
 				<changecontent for="content-block">
 					<changelayout>
 						<changecolumn>
@@ -285,8 +285,8 @@
 				</changecontent>					
 			</page>
 			
-			<page byLabel="tplFour.css" navigationtitle="tplFour.css" metatitle="tplFour.css" 
-					template="tplFour" navigationVisibility="visible">
+			<page byLabel="tplFour" navigationtitle="tplFour" metatitle="tplFour" 
+					template="webfactory/tplFour" navigationVisibility="visible">
 				<changecontent for="content-block">
 					<changelayout>
 						<changecolumn>
@@ -316,8 +316,8 @@
 				</changecontent>				
 			</page>				
 			
-			<page byLabel="tplFourThreeColumns.css" navigationtitle="tplFourThreeColumns.css" metatitle="tplFourThreeColumns.css" 
-					template="tplFourThreeColumns" navigationVisibility="2">
+			<page byLabel="tplFourThreeColumns" navigationtitle="tplFourThreeColumns" metatitle="tplFourThreeColumns" 
+					template="webfactory/tplFourThreeColumns" navigationVisibility="2">
 				<changecontent for="content-block">
 					<changelayout>
 						<changecolumn>
@@ -357,8 +357,8 @@
 				</changecontent>					
 			</page>	
 			
-			<page byLabel="tplFive.css" navigationtitle="tplFive.css" metatitle="tplFive.css" 
-					template="tplFive" navigationVisibility="visible">
+			<page byLabel="tplFive" navigationtitle="tplFive" metatitle="tplFive" 
+					template="webfactory/tplFive" navigationVisibility="visible">
 				<changecontent for="content-block">
 					<changelayout>
 						<changecolumn>
@@ -388,8 +388,8 @@
 				</changecontent>					
 			</page>	
 			
-			<page byLabel="tplFiveThreeColumns.css" navigationtitle="tplFiveThreeColumns.css" metatitle="tplFiveThreeColumns.css" 
-					template="tplFiveThreeColumns" navigationVisibility="2">
+			<page byLabel="tplFiveThreeColumns" navigationtitle="tplFiveThreeColumns" metatitle="tplFiveThreeColumns" 
+					template="webfactory/tplFiveThreeColumns" navigationVisibility="2">
 				<changecontent for="content-block">
 					<changelayout>
 						<changecolumn>
@@ -429,8 +429,8 @@
 				</changecontent>					
 			</page>	
 			
-			<page byLabel="tplSix.css" navigationtitle="tplSix.css" metatitle="tplSix.css" 
-					template="tplSix" navigationVisibility="visible">
+			<page byLabel="tplSix" navigationtitle="tplSix" metatitle="tplSix" 
+					template="webfactory/tplSix" navigationVisibility="visible">
 				<changecontent for="content-block">
 					<changelayout>
 						<changecolumn>
@@ -470,8 +470,8 @@
 				</changecontent>					
 			</page>	
 			
-			<page byLabel="tplSixTwoColumns.css" navigationtitle="tplSixTwoColumns.css" metatitle="tplSixTwoColumns.css" 
-					template="tplSixTwoColumns" navigationVisibility="2">
+			<page byLabel="tplSixTwoColumns" navigationtitle="tplSixTwoColumns" metatitle="tplSixTwoColumns" 
+					template="webfactory/tplSixTwoColumns" navigationVisibility="2">
 				<changecontent for="content-block">
 					<changelayout>
 						<changecolumn>
@@ -501,8 +501,8 @@
 				</changecontent>						
 			</page>	
 			
-			<page byLabel="tplSixTwoColumnsRight.css" navigationtitle="tplSixTwoColumnsRight.css" metatitle="tplSixTwoColumnsRight.css" 
-					template="tplSixTwoColumnsRight" navigationVisibility="2">
+			<page byLabel="tplSixTwoColumnsRight" navigationtitle="tplSixTwoColumnsRight" metatitle="tplSixTwoColumnsRight" 
+					template="webfactory/tplSixTwoColumnsRight" navigationVisibility="2">
 				<changecontent for="content-block">
 					<changelayout>
 						<changecolumn>
@@ -532,8 +532,8 @@
 				</changecontent>					
 			</page>	
 			
-			<page byLabel="tplSixThreeColumns.css" navigationtitle="tplSixThreeColumns.css" metatitle="tplSixThreeColumns.css" 
-					template="tplSixThreeColumns" navigationVisibility="2">
+			<page byLabel="tplSixThreeColumns" navigationtitle="tplSixThreeColumns" metatitle="tplSixThreeColumns" 
+					template="webfactory/tplSixThreeColumns" navigationVisibility="2">
 				<changecontent for="content-block">
 					<changelayout>
 						<changecolumn>
