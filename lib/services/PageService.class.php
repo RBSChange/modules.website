@@ -1431,9 +1431,8 @@ class website_PageService extends f_persistentdocument_DocumentService
 				else
 				{
 					$html = f_util_HtmlUtils::cleanHtmlForBackofficeEdition($html);
-				}
-				$class = str_replace('_', '-', $block['type'] . ' ' . $block['package']);
-				$tmpDoc->loadXML('<div xmlns="http://www.w3.org/1999/xhtml" anonid="contentBlock"><div style="'.$this->buildInlineStyle($block['blockwidth']).'"><div class="'.$class.'">' . $html . '</div></div></div>');
+				}				
+				$tmpDoc->loadXML('<div xmlns="http://www.w3.org/1999/xhtml" anonid="contentBlock"><div style="'.$this->buildInlineStyle($block['blockwidth']).'"><div class="'.$block['class'].'">' . $html . '</div></div></div>');
 			}
 			if ($tmpDoc->documentElement)
 			{
@@ -1441,6 +1440,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			}
 			else
 			{
+				$class = str_replace('_', '-', $block['type'] . ' ' . $block['package']);
 				$xmlContent = '<div xmlns="http://www.w3.org/1999/xhtml" anonid="contentBlock"><div style="'.$this->buildInlineStyle($block['blockwidth']).'"><div class="'.$class.'"><strong style="color:red;">' . $this->getBlockLabelFromBlockType($block['type'])  . ' : Invalid XML</strong></div></div></div>';
 			}
 			$xulContent = str_replace('<htmlblock_'.$blockId.'/>', $xmlContent , $xulContent);
@@ -1544,7 +1544,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			{
 				$html = f_util_HtmlUtils::cleanHtmlForBackofficeEdition($html);
 			}
-			$class = str_replace('_', '-', $block['type'] . ' ' . $block['package']);
+			$class = str_replace('_', '-', $block['type'] . ' ' . $block['package']);	
 			$tmpDoc->loadXML('<div xmlns="http://www.w3.org/1999/xhtml" class="'.$class.'">' . $html . '</div>');
 		}
 		if ($tmpDoc->documentElement)

@@ -13,8 +13,7 @@ class website_BlankAction extends website_Action
 	{
 		header("Expires: " . gmdate("D, d M Y H:i:s", time()+60) . " GMT");
 		$skinId = null;
-		$styles = array('modules.generic.frontoffice', 'modules.generic.richtextbo');
-		
+		$styles = array('modules.generic.frontoffice', 'modules.generic.richtextbo');	
 		try
 		{
 			$documentId = $this->getDocumentIdFromRequest($request);
@@ -24,15 +23,14 @@ class website_BlankAction extends website_Action
 				if ($document instanceof website_persistentdocument_page)
 				{
 					$ps = website_PageService::getInstance();
-
-					$skinId = $document->getSkinId();
-					
-					$stylesheet = website_PageRessourceService::getInstance()->getStylesheetNameForPage($document);
-					if ($stylesheet !== null)
+					$skinId = $document->getSkinId();	
+		
+					$template = website_PageRessourceService::getInstance()->getPageTemplate($document, false);
+					if ($template)
 					{
-						$styles[] = $stylesheet;
+						$styles = array_merge(array('modules.generic.richtextbo'), $template->getScreenStyleIds()); 
 					}
-					
+						
 					$ancestors = $ps->getAncestorsOf($document);
 					$ancestors = array_reverse($ancestors);
 					foreach ($ancestors as $ancestor)
@@ -64,7 +62,7 @@ class website_BlankAction extends website_Action
 			$styles[] = $request->getParameter('specificstylesheet');
 		}
 
-		$request->setAttribute('stylesheetPath', StyleService::getInstance()->getStylePath($styles, K::HTML, $skinId));
+		$request->setAttribute('stylesheetPath', StyleService::getInstance()->getStylePath($styles, K::XUL, $skinId));
 		
 		return View::SUCCESS;
 	}
