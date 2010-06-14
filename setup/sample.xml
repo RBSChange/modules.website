@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <script>
+	<!-- 
+		WARNING: before importing this file, you need to install webfactory theme.
+	-->
 	<binding fileName="modules/website/persistentdocument/import/website_binding.xml" />
+	<binding fileName="modules/theme/persistentdocument/import/theme_binding.xml" />
 
-	<website label="Site web par défaut" label-en="Default website"
-			protocol="http" localizebypath="true" template="webfactory/tplTwo"
-			byTag="default_modules_website_default-website">
+	<pagetemplate byCodename="webfactory/tplOne" id="tplOne" />
+	<pagetemplate byCodename="webfactory/tplTwo" id="tplTwo" />
+
+	<website label="Site web par défaut" label-en="Default website"	protocol="http" localizebypath="true"
+		allowedpagetemplate-refids="tplOne,tplTwo" template="webfactory/tplTwo" byTag="default_modules_website_default-website">
 		<page label="Page d'accueil" label-en="Homepage" isHomePage="true"
 			template="webfactory/tplOne" id="homepage">
 			<changecontent for="content-block">
