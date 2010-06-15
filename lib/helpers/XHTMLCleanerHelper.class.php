@@ -14,7 +14,16 @@ class website_XHTMLCleanerHelper
 		$domTemplate = new DOMDocument('1.0', 'UTF-8');
 		$domTemplate->substituteEntities = false;
 		$domTemplate->resolveExternals = true;
-		$xml = '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "file://'. WEBEDIT_HOME .'/modules/website/lib/fckeditor/xhtml1DTD/xhtml1-transitional.dtd"><body>' . $XHTMLFragment . '</body>';
+		if (DIRECTORY_SEPARATOR !== '/')
+		{
+			$dtdPath = 'file:///' . str_replace(DIRECTORY_SEPARATOR, '/', realpath(WEBEDIT_HOME .'/framework/f_web/dtd/xhtml1-transitional.dtd'));
+		}
+		else
+		{
+			$dtdPath = 'file://' . realpath(WEBEDIT_HOME .'/framework/f_web/dtd/xhtml1-transitional.dtd');
+		}
+		
+		$xml = '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "'.$dtdPath.'"><body>' . $XHTMLFragment . '</body>';
 		$domTemplate->loadXML($xml);
 		$xslt = self::getCleanerXSLTProcessor();
 		$content = $xslt->transformToXml($domTemplate);
