@@ -48,6 +48,18 @@ class website_ScriptChangeBlockElement extends import_ScriptBaseElement
 						$scriptElement = $this->script->getDocumentElementById($value);
 						$value = $scriptElement->getPersistentDocument()->getId();
 					}
+					else if($data[1] == 'refids' && f_util_StringUtils::isNotEmpty($value))
+					{
+						$name = $data[0];
+						$values = array();
+						foreach (explode(',', $value) as $id)
+						{
+							$scriptElement = $this->script->getDocumentElementById($id);
+							$values[] = $scriptElement->getPersistentDocument()->getId();
+						}
+						$value = implode(',', $values);
+						
+					}
 				}
 				
 				$bloc->setAttribute($name, $value);
