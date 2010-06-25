@@ -40,7 +40,15 @@ class website_GenerateStyleSheetAction extends website_Action
 			}
 			
 			$protocol = $parameters[0];
-			$website = DocumentHelper::getDocumentInstance($parameters[1], "modules_website/website");
+			$websiteId = intval($parameters[1]);
+			if ($websiteId <= 0)
+			{
+				$website =  website_WebsiteModuleService::getInstance()->getDefaultWebsite();
+			}
+			else
+			{
+				$website = DocumentHelper::getDocumentInstance($websiteId, "modules_website/website");
+			}
 			
 			RequestContext::getInstance()->setLang($parameters[2]);		
 			website_WebsiteModuleService::getInstance()->setCurrentWebsite($website);

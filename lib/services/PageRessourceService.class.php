@@ -371,6 +371,7 @@ class website_PageRessourceService extends BaseService
 		$fullName .= '.css';
 		$lang = RequestContext::getInstance()->getLang();
 		$websiteId = website_WebsiteModuleService::getInstance()->getCurrentWebsite()->getId();
+		if ($websiteId < 0) {$websiteId = 0;}
 		return f_util_FileUtils::buildPath('cache', 'www', 'css', $protocol , $websiteId, $lang, $engine, $version, $fullName);
 	}
 
