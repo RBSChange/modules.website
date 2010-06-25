@@ -27,7 +27,7 @@ class website_FormHelper
 		self::$currentAction = $controller->getProcessedAction();
 		self::$currentBlockId = self::$currentAction->getBlockId();
 		self::$currentActionRequest = $controller->getRequest();
-		self::$moduleName = self::$currentAction->getModuleName();
+		self::$moduleName = (isset($params["module"])) ? $params["module"] : self::$currentAction->getModuleName();
 		self::$context = $controller->getContext();
 
 		if (!self::$wasCalled)
@@ -136,7 +136,7 @@ class website_FormHelper
 		$formAttributes["class"] = self::getValue($params, "class", "cmxform");
 
 		$html .= "<form" . f_util_HtmlUtils::buildAttributes($formAttributes).">";
-		$html .= "<div><a ".f_util_HtmlUtils::buildAttribute("name", self::$formId)."></a></div>";
+		//$html .= "<div><a ".f_util_HtmlUtils::buildAttribute("name", self::$formId)."></a></div>";
 
 		return $html;
 	}
