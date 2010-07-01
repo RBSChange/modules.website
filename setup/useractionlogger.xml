@@ -73,4 +73,7 @@
   <actiondef modulename="website" actionname="deactivated.website" label="modules.website.bo.useractionlogger.deactivated-website"/>
   <actiondef modulename="website" actionname="reactivate.website" label="modules.website.bo.useractionlogger.reactivate-website"/>
   <actiondef modulename="website" actionname="savepermissions.rootfolder" label="modules.website.bo.useractionlogger.savepermissions-rootfolder"/>
+  <actiondef modulename="website" actionname="update.systemtopic" label="modules.website.bo.useractionlogger.update-systemtopic"/>
+  <actiondef modulename="website" actionname="update.systemtopic" label="modules.website.bo.useractionlogger.update-systemtopic"/>
+  <actiondef modulename="website" actionname="savetemplate.template" label="modules.website.bo.useractionlogger.savetemplate-template"/>
 </script>
