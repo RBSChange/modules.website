@@ -59,6 +59,7 @@ class website_BlockMenuAction extends website_BlockAction
         	{
         		$menuObject = website_WebsiteModuleService::getInstance()->getMenu($menu, $depth);
         	}
+        	$request->setAttribute('menuDocument', $menu);
         	$request->setAttribute('menuObject', $menuObject);
         	$request->setAttribute('currentPage', $page);
         	$request->setAttribute('currentWebsite', $website);
