@@ -89,6 +89,30 @@ class <{$className}> extends block_BlockConfiguration
 		}
 		return $result;
 	}
+	
+	public function <{$property->getPhpGetter()}>Safe()
+	{
+		$result = array();
+		if ($this->hasConfigurationParameter('<{$property->getName()}>'))
+		{
+			$ids = explode(',', $this->configurationArray['<{$property->getName()}>']);
+			foreach ($ids as $id) 
+			{
+				if (is_numeric($id))
+				{
+					try
+					{
+						$result[] = DocumentHelper::getDocumentInstance($id);
+					}
+					catch (Exception $e)
+					{
+						Framework::warn(__METHOD__." ".$e->getMessage());
+					}
+				}
+			}
+		}
+		return $result;
+	}
 		
 	/**
 	 * @return integer[]
@@ -118,6 +142,25 @@ class <{$className}> extends block_BlockConfiguration
 			if (is_numeric($this->configurationArray['<{$property->getName()}>']))
 			{
 				return DocumentHelper::getDocumentInstance($this->configurationArray['<{$property->getName()}>']);
+			}
+		}
+		return null;
+	}
+	
+	public function <{$property->getPhpGetter()}>Safe()
+	{
+		if ($this->hasConfigurationParameter('<{$property->getName()}>'))
+		{
+			if (is_numeric($this->configurationArray['<{$property->getName()}>']))
+			{
+				try
+				{
+					return DocumentHelper::getDocumentInstance($this->configurationArray['<{$property->getName()}>']);
+				}
+				catch (Exception $e)
+				{
+					Framework::warn(__METHOD__." ".$e->getMessage());
+				}
 			}
 		}
 		return null;
