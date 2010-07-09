@@ -88,7 +88,27 @@ class <{$className}> extends block_BlockConfiguration
 			}
 		}
 		return $result;
-	}		
+	}
+		
+	/**
+	 * @return integer[]
+	 */	
+	public function <{$property->getPhpGetter()}>Ids()
+	{
+		$result = array();
+		if ($this->hasConfigurationParameter('<{$property->getName()}>'))
+		{
+			$ids = explode(',', $this->configurationArray['<{$property->getName()}>']);
+			foreach ($ids as $id) 
+			{
+				if (is_numeric($id))
+				{
+					$result[] = intval($id);
+				}
+			}
+		}
+		return $result;
+	}	
 		<{else}>
 				
 	public function <{$property->getPhpGetter()}>()
@@ -101,7 +121,22 @@ class <{$className}> extends block_BlockConfiguration
 			}
 		}
 		return null;
-	}	
+	}
+
+	/**
+	 * @return integer
+	 */
+	public function <{$property->getPhpGetter()}>Id()
+	{
+		if ($this->hasConfigurationParameter('<{$property->getName()}>'))
+		{
+			if (is_numeric($this->configurationArray['<{$property->getName()}>']))
+			{
+				return intval($this->configurationArray['<{$property->getName()}>']);
+			}
+		}
+		return null;
+	}		
 		<{/if}>	
 	<{else}>	
 	

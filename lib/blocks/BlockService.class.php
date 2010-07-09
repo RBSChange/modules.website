@@ -338,9 +338,8 @@ class block_BlockService extends BaseService
 	public function compileBlocksForPackage($packageName)
 	{
 		$shortPackageName = substr($packageName, 0, 8) == 'modules_' ? substr($packageName, 8) : $packageName;
-		
 		$blockInfoArray = array();
-		$blockFiles = FileResolver::getInstance()->setPackageName($packageName)->getPaths('config/blocks.xml');
+		$blockFiles = FileResolver::getInstance()->setPackageName('modules_' . $shortPackageName)->getPaths('config/blocks.xml');
 		if ($blockFiles === null)
 		{
 			$filePath = $this->getBlockListPhpFilepath($shortPackageName);

@@ -34,13 +34,9 @@ class commands_CompileBlocks extends commands_AbstractChangeCommand
 	function getParameters($completeParamCount, $params, $options, $current)
 	{
 		$components = array();
-		foreach (glob("modules/*", GLOB_ONLYDIR) as $module)
+		foreach (glob("modules/*/config", GLOB_ONLYDIR) as $module)
 		{
-			if (!is_writeable($module))
-			{
-				continue;
-			}
-			$components[] = basename($module);
+			$components[] = basename(dirname($module));
 		}
 		return array_diff($components, $params);
 	}
@@ -88,7 +84,7 @@ class commands_CompileBlocks extends commands_AbstractChangeCommand
 			{
 				return $this->quitError("All blocks could not be compiled: ".$this->errorCount." errors");
 			}
-			return $this->quitOk("All blocks compiled successfully.");
+			return $this->quitOk("blocks compiled successfully.");
 		}
 	}
 
