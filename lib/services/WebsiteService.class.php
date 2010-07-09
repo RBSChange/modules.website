@@ -320,4 +320,13 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 		}			
 		return $data;
 	}
+	
+	/**
+	 * @param website_persistentdocument_website $document
+	 * @return integer
+	 */
+	public function getWebsiteId($document)
+	{
+		return $document->getId();
+	}
 }

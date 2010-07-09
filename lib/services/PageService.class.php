@@ -1988,4 +1988,29 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		return "min-width:$widthInPx;max-width:$widthInPx;width:$widthInPx";
 	}
+	
+	/**
+	 * @param website_persistentdocument_page $document or null
+	 * @param integer $websiteId
+	 * @return array
+	 */
+	public function getReplacementsForTweet($document, $websiteId)
+	{
+		$label = array(
+			'name' => 'label',
+			'label' => f_Locale::translateUI('&modules.website.document.page.Label;'),
+			'maxLength' => 80
+		);
+		$shortUrl = array(
+			'name' => 'shortUrl', 
+			'label' => f_Locale::translateUI('&modules.twitterconnect.bo.general.Short-url;'),
+			'maxLength' => 30
+		);
+		if ($document !== null)
+		{
+			$label['value'] = f_util_StringUtils::shortenString($document->getLabel(), 80);
+			$shortUrl['value'] = website_ShortenUrlService::getInstance()->shortenUrl(LinkHelper::getDocumentUrl($document));
+		}
+		return array($label, $shortUrl);
+	}
 }
