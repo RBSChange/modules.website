@@ -105,9 +105,10 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 
 	/**
 	 * @param String $parameterName
+	 * @param String $defaultValue
 	 * @return mixed
 	 */
-	protected function findLocalParameterValue($parameterName)
+	protected function findLocalParameterValue($parameterName, $defaultValue = null)
 	{
 		if ($this->hasNonEmptyConfigurationParameter($parameterName))
 		{
@@ -131,7 +132,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 		{
 			return $actionRequest->getParameter($parameterName);
 		}
-		return null;
+		return $defaultValue;
 	}
 
 	/**
