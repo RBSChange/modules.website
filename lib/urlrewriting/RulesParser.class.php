@@ -104,9 +104,12 @@ class website_urlrewriting_RulesParser extends BaseService
 				{
 					$template = '/';
 				}
-
+				$isDocumentRule = false;
+				$isActionRule = false;
+				$isTagRule = false;
 				if (isset($rule['documentModel']))
 				{
+					$isDocumentRule = true;
 					$documentModel = strval($rule['documentModel']);
 					if (strpos($documentModel, '/') === false)
 					{
@@ -117,6 +120,7 @@ class website_urlrewriting_RulesParser extends BaseService
 				}
 				else if (isset($rule['redirection']))
 				{
+					$isActionRule = true;
 					list($module, $action) = explode('/', strval($rule['redirection']));
 					$php[] = "\$rule = new website_lib_urlrewriting_ModuleActionRule(";
 					$php[] = "\t// package\n\t'".$packageName."',\n\t// URL template\n\t'" . $template . "',\n\t// Module\n\t'".$module."',\n\t// Action\n\t'".$action."',\n\tarray\t(";
@@ -125,6 +129,7 @@ class website_urlrewriting_RulesParser extends BaseService
 				{
 					if ($rule->parameters instanceof SimpleXMLElement && $rule->parameters->parameter instanceof SimpleXMLElement)
 					{
+						$isTagRule = true;
 						$php[] = "\$rule = new website_lib_urlrewriting_TaggedPageRule(";
 						$php[] = "\t// package\n\t'".$packageName."',\n\t// URL template\n\t'" . $template . "',\n\t// Page tag\n\t'".strval($rule['pageTag'])."',\n\tarray\t(";
 					}
@@ -192,8 +197,18 @@ class website_urlrewriting_RulesParser extends BaseService
 				{
 					$php[] = "\$rule->setCondition('" . strval($rule['condition']) . "');";
 				}
-
-				$php[] = "\$this->addRule(\$rule);";
+				if ($isDocumentRule)
+				{
+					$php[] = "\$this->addDocumentRule(\$rule);";
+				}
+				else if ($isActionRule)
+				{
+					$php[] = "\$this->addActionRule(\$rule);";
+				}
+				else if ($isTagRule)
+				{
+					$php[] = "\$this->addTagRule(\$rule);";
+				}
 			}
 		}
 		else
