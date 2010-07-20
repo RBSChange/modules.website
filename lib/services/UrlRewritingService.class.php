@@ -72,8 +72,16 @@ class website_UrlRewritingService extends BaseService
 	 */
 	protected function __construct()
 	{
-		$this->m_compiledRulesFile = f_util_FileUtils::buildChangeBuildPath('urlrewriting_rules.php');
-		$this->importRules();
+		$sPath = f_util_FileUtils::buildChangeBuildPath('urlrewriting_rules.ser');
+		if (!file_exists($sPath))
+		{
+			include_once (website_urlrewriting_RulesParser::getInstance()->getCachedFilePath());
+			file_put_contents($sPath, serialize(array($this->m_documentRules, $this->m_actionRules, $this->m_tagRules)));
+		}
+		else 
+		{
+			list($this->m_documentRules, $this->m_actionRules, $this->m_tagRules) = unserialize(file_get_contents($sPath));
+		}
 	}
 	
 	/**
@@ -693,16 +701,6 @@ class website_UrlRewritingService extends BaseService
 			
 			return LinkHelper::getParametrizedLink($parameters)->getUrl();
 		}
-	}
-	
-	/**
-	 * Loads the URL rewriting rules.
-	 *
-	 * @see website_urlrewriting_RulesParser
-	 */
-	protected function importRules()
-	{
-		include_once (website_urlrewriting_RulesParser::getInstance()->getCachedFilePath());
 	}
 	
 	/**

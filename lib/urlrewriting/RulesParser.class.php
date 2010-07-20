@@ -70,6 +70,11 @@ class website_urlrewriting_RulesParser extends BaseService
 			}
 			$php[] = '?>';
 			f_util_FileUtils::write( $this->compiledRulesFile, join(K::CRLF, $php), f_util_FileUtils::OVERRIDE );
+			$serializedPath = f_util_FileUtils::buildChangeBuildPath('urlrewriting_rules.ser');
+			if (file_exists($serializedPath))
+			{
+				unlink($serializedPath);
+			}
 		}
 	}
 
