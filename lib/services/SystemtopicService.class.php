@@ -73,7 +73,7 @@ class website_SystemtopicService extends website_TopicService
 			}
 		}
 
-		$data = parent::getResume($document, $forModuleName, array('properties' => true, 'localization' => true, 'history' => true));
+		$data = parent::getResume($document, $forModuleName, array('properties' => true, 'publication' => true, 'localization' => true, 'history' => true));
 		$rc = RequestContext::getInstance();
 		$contextlang = $rc->getLang();
 		$usecontextlang = $document->isLangAvailable($contextlang);
@@ -121,7 +121,7 @@ class website_SystemtopicService extends website_TopicService
 		$reference = $document->getReference();
 		if ($reference === null)
 		{
-			return;
+			return false;
 		}
 		$ds = $reference->getDocumentService();
 		if (f_util_ClassUtils::methodExists($ds, 'isSystemtopicPublishable'))

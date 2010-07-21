@@ -14,8 +14,7 @@
 		<field name="robottxt" />
 		<field name="stylesheet" emptylabel="" />
 	</section>	
-	
-	
+		
 	<section labeli18n="modules.website.document.website.Section-searchengine">
 		<section labeli18n="modules.website.document.website.Section-google">
 			<field name="googlefileid" />

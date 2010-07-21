@@ -16,6 +16,9 @@ wdialog[template="ValidPage"] rows.cPageData{
 wdialog[template="savetemplate"]{
 	-moz-binding: url(binding:modules.website.cSaveTemplateDialog#cSaveTemplate);
 }
+wdialog[template="InitializeStructure"]{
+	-moz-binding: url(binding:modules.website.cInitializeStructure#cInitializeStructureDialog);
+}
 gridlist.versionsJSON{
 	-moz-binding: url(binding:modules.website.cPageEditor#cPageVersionGrid);
 }

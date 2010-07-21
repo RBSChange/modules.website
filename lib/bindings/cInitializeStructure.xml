@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<bindings xmlns="http://www.mozilla.org/xbl" xmlns:xbl="http://www.mozilla.org/xbl"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">	
+	
+	<binding id="cInitializeStructureDialog" extends="core.wDialog#wDialog">
+		<resources>
+			<stylesheet src="modules.website.cInitializeStructureDialog" />
+		</resources>
+		<implementation>
+			<field name="mInitialized">false</field>
+			<field name="mConfig">null</field>
+		
+			<constructor><![CDATA[
+				wCore.debug('cInitializeStructureDialog.constructor');
+			]]></constructor>
+			
+			<method name="onInitialize">
+				<body><![CDATA[
+					this.resizeTo(500, 200);					
+					var me = this;
+					var callBack = function(result) { me.onLoadRessources(result); };
+					var containerId = ('pageContainerId' in this.parameters) ? this.parameters.pageContainerId : this.parameters.documentId;
+					wCore.executeJSON('website', 'LoadPageTemplatesInfosByContainer', { containerId: containerId }, callBack, true);				
+				]]></body>
+			</method>
+			
+			<method name="onLoadRessources">
+				<parameter name="result" />			
+				<body><![CDATA[
+					this.mConfig = {};
+					this.mInitialized = true;
+					var field = this.getElementByAnonId('template');
+					if (result.contents.length > 0)
+					{
+						for (var i in result.contents)
+						{
+							var itemInfos = result.contents[i];
+							this.mConfig[itemInfos.codename] = itemInfos;
+							var item = field.appendItem(itemInfos.label, itemInfos.codename);
+						}
+					}
+					else
+					{
+						this.getElementByAnonId('form-panel').setAttribute('hidden', 'true');
+						this.getElementByAnonId('importing-panel').setAttribute('hidden', 'true');
+						this.getElementByAnonId('message-panel').removeAttribute('hidden');
+						this.appendMessage("&modules.website.bo.dialog.No-page-template;", true);
+					}
+				]]></body>
+			</method>
+			
+			<method name="onClose">
+				<body><![CDATA[
+					this.parameters.module.refreshMainViewDeck();
+					this.controller.closeModalDialog();
+				]]></body>
+			</method>
+			
+			<method name="handleSelected">
+				<parameter name="list" />
+				<body><![CDATA[
+					var templateName = this.getElementByAnonId('template').value;
+					try
+					{
+						this.getElementByAnonId('form-panel').setAttribute('hidden', 'true');
+						this.getElementByAnonId('importing-panel').removeAttribute('hidden');
+						this.getElementByAnonId('message-panel').setAttribute('hidden', 'true');
+						var result = this.parameters.callback(templateName);
+						this.onStructureInitialized(result);
+					}
+					catch (e)
+					{
+						wCore.error("onOk", [template], e);
+						this.getElementByAnonId('form-panel').removeAttribute('hidden');
+						this.getElementByAnonId('importing-panel').setAttribute('hidden', 'true');
+						this.getElementByAnonId('message-panel').setAttribute('hidden', 'true');
+					}					
+				]]></body>
+			</method>
+			
+			<method name="onStructureInitialized">
+				<parameter name="result" />
+				<body><![CDATA[
+					this.getElementByAnonId('form-panel').setAttribute('hidden', 'true');
+					this.getElementByAnonId('importing-panel').setAttribute('hidden', 'true');
+					this.getElementByAnonId('message-panel').removeAttribute('hidden');
+					if (result.status == 'OK')
+					{
+						this.appendMessage("&modules.website.bo.dialog.Structure-initialized;", false);
+					}
+					else
+					{
+						this.appendMessage(result.contents.errorMessage, true);
+					}
+				]]></body>
+			</method>
+			
+			<method name="appendMessage">
+				<parameter name="msg" />
+				<parameter name="error" />
+				<body><![CDATA[
+					var messageBox = this.getElementByAnonId('messageBox');
+					var txts = msg.split("\n");
+					for (var i = 0; i < txts.length; i++)
+					{
+						var node = messageBox.appendChild(document.createElement('description'));
+						node.className = (error) ? 'error' : 'message';
+						node.textContent = txts[i];
+					}
+				]]></body>
+			</method>
+		</implementation>
+		<handlers>
+			<handler event="fieldChanged"><![CDATA[
+				var templateName = this.getElementByAnonId('template').value;
+				var item = this.mConfig[templateName];
+				if (item)
+				{
+					this.getElementByAnonId('submitButton').removeAttribute('disabled');
+					if (item.hasPreviewImage)
+					{
+						var url = wCore.buildServerUrl('theme', 'PreviewImage', {cmpref: item.id, lang:Context.W_LANG, 'max-height':100, 'max-width':150});
+						this.getElementById('previewimage').setAttribute('src', url);
+						return;
+					}
+				}
+				else
+				{
+					this.getElementByAnonId('submitButton').setAttribute('disabled', 'true');
+				}
+				this.getElementById('previewimage').setAttribute('src', 'about:blank');
+			]]></handler>
+		</handlers>
+		<xbl:content>
+			<xul:vbox flex="1">
+				<xul:hbox class="dialog-header">
+					<xul:label value="&amp;modules.website.bo.dialog.Import-structure-title;" class="dialog-title" />
+					<xul:spacer flex="1" />
+					<xul:vbox pack="center">
+						<xul:toolbarbutton height="16" width="16" image="{IconsBase}/small/delete.png" oncommand="onClose()" tooltiptexts="&amp;modules.uixul.bo.dialog.Cancel;" />
+					</xul:vbox>
+				</xul:hbox>
+				<xul:hbox flex="1">
+					<xul:deck anonid="deck" flex="1">
+						<xul:vbox anonid="form-panel" flex="1">
+							<xul:vbox flex="1">
+								<xul:hbox>
+									<xul:vbox flex="1" pack="center">
+										<xul:description>&amp;modules.website.bo.dialog.Select-page-template;</xul:description>
+										<xul:spacer height="5px"/>
+										<xul:cfield anonid="template" name="template" fieldtype="dropdownlist" hidehelp="true" />
+									</xul:vbox>
+									<xul:spacer width="5"/>
+									<xul:vbox width="150" height="100" align="center" pack="center">
+										<xul:image anonid="previewimage" src="{IconsBase}/small/document.png" />
+									</xul:vbox>
+								</xul:hbox>
+								<xul:spacer height="10px" />
+								<xul:hbox align="center" pack="center"><xul:button anonid="submitButton" disabled="true" image="{IconsBase}/small/check.png" label="&amp;modules.website.bo.dialog.Initialize;" oncommand="handleSelected()" /></xul:hbox>								
+							</xul:vbox>
+						</xul:vbox>
+						<xul:vbox anonid="importing-panel" flex="1">
+							<xul:spacer height="15px" />
+							<xul:hbox pack="center">
+								<xul:image src="{HttpHost}/media/backoffice/loading_40.gif" height="40px" width="40px" />
+							</xul:hbox>
+							<xul:spacer height="16px" />
+							<xul:hbox pack="center">
+								<xul:description style="font-size:18px" value="&amp;modules.website.bo.dialog.Importing-structure;" />
+							</xul:hbox>
+						</xul:vbox>
+						<xul:vbox anonid="message-panel" flex="1">
+							<xul:vbox anonid="messageBox" flex="1" />
+						</xul:vbox>
+					</xul:deck>
+				</xul:hbox>
+			</xul:vbox>
+		</xbl:content>
+	</binding>
+</bindings>

@@ -44,22 +44,24 @@ class website_TopicService extends f_persistentdocument_DocumentService
 	 */
 	public function isPublishable($document)
 	{
-		if (parent::isPublishable($document))
+		if (!parent::isPublishable($document))
 		{
-			$node = TreeService::getInstance()->getInstanceByDocument($document);
-			if ($node && $node->hasChildren())
+			return false;
+		}
+		
+		$node = TreeService::getInstance()->getInstanceByDocument($document);
+		if ($node && $node->hasChildren())
+		{
+			if ($this->hasPublishedPages($document))
 			{
-				if ($this->hasPublishedPages($document))
-				{
-					return true;
-				}
-				
-				if ($this->hasPublishedTopics($document)) 
-				{
-					return true;
-				}
+				return true;
+			}
+			else if ($this->hasPublishedTopics($document)) 
+			{
+				return true;
 			}
 		}
+		$this->setActivePublicationStatusInfo($document, '&modules.website.document.systemtopic.publication.no-published-page-or-subtopic;');
 		return false;
 	}
 	

@@ -324,12 +324,23 @@
 				'modules_website/pagegroup', 'modules_website/pagereference', 'modules_website/pageexternal']);
 		]]></body>
 	</action>
-
+	
 	<action name="initDefaultStruct">
-		<parameter name="listWidget"/>
+		<parameter name="listWidget" />
 		<body><![CDATA[
-			var document = listWidget.getSelectedItems()[0];
-			this.executeJSON("InitDefaultStruct", {cmpref: document.id, lang:this.getContextLang()});    
+			try
+			{
+				var documentId = listWidget.getSelectedItems()[0].id;
+				var lang = this.getContextLang();
+				var callback = function (pageTemplateName) {
+					return wCore.executeJSON('website', 'InitializeStructure', { cmpref: documentId, moduleName: 'website', scriptName: 'sample', pageTemplateName: pageTemplateName, lang: lang}, null, true);
+				};
+				getController().openModalDialog(this, 'InitializeStructure', {documentId: documentId, module: this, callback: callback });
+			}
+			catch (e)
+			{
+				wCore.error('website.initDefaultStruct', [], e);
+			}
 		]]></body>
 	</action>
 </actions>
