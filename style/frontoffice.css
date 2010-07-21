@@ -15,12 +15,6 @@ ul.header-menu li span{
 ul.tagged-menu-horizontal{
 	font-family: "Trebuchet MS", verdana, arial, helvetica, sans-serif/*@var menumaintopfontfamily*/;
 }
-ul.tagged-menu-horizontal li{
-	background-image: url(/media/frontoffice/back_navigation_separator.gif) /*@var menumaintopimage*/;
-	background-repeat: no-repeat/*@var menumaintopimagerepeat*/;
-	background-position: right top/*@var menumaintopimageposition*/;
-	background-color: transparent/*@var menumaintoplibgcolor*/;
-}
 ul.tagged-menu-horizontal li a.link{
 	padding: 6px 18px;
     display: block;
@@ -44,13 +38,6 @@ ul.tagged-menu-horizontal li a.link:hover{
 ul.tagged-menu-horizontal li.current strong{
 	color: #000/*@var menumaintopcurrentfgcolor*/;
 }
-ul.tagged-menu-horizontal li.current{
-	background-image: url(/media/frontoffice/back_navigation_up.gif) /*@var menumaintopcurrentimage*/;
-	background-repeat: repeat-x/*@var menumaintopcurrentimagerepeat*/;
-	background-position: top left/*@var menumaintopcurrentimageposition*/;
-	background-color: transparent/*@var menumaintopcurrentlibgcolor*/;
-}
-
 ul.thread li a.link{
 	color: #205d97/*@var threadafgcolor*/;
 	text-decoration: none/*@var threadatextdecoration*/;
