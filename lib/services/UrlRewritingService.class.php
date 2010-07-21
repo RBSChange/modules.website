@@ -8,6 +8,26 @@ class website_UrlRewritingService extends BaseService
 	const DEFAULT_URL_SUFFIX = '.html';
 	
 	/**
+	 * @var Array
+	 */	
+	private $m_documentRules = array();
+	
+	/**
+	 * @var Array
+	 */	
+	private $m_actionRules = array();
+	
+	/**
+	 * @var Array
+	 */	
+	private $m_tagRules = array();
+	
+	/**
+	 * @var Array
+	 */	
+	private $m_registeredRules = array();
+	
+	/**
 	 * Unique instance of the UrlRewritter
 	 *
 	 * @var website_UrlRewritingService.
@@ -52,8 +72,16 @@ class website_UrlRewritingService extends BaseService
 	 */
 	protected function __construct()
 	{
-		$this->m_compiledRulesFile = f_util_FileUtils::buildChangeBuildPath('urlrewriting_rules.php');
-		$this->importRules();
+		$sPath = f_util_FileUtils::buildChangeBuildPath('urlrewriting_rules.ser');
+		if (!file_exists($sPath))
+		{
+			include_once (website_urlrewriting_RulesParser::getInstance()->getCachedFilePath());
+			file_put_contents($sPath, serialize(array($this->m_documentRules, $this->m_actionRules, $this->m_tagRules)));
+		}
+		else 
+		{
+			list($this->m_documentRules, $this->m_actionRules, $this->m_tagRules) = unserialize(file_get_contents($sPath));
+		}
 	}
 	
 	/**
@@ -141,11 +169,34 @@ class website_UrlRewritingService extends BaseService
 	 */
 	private function findMatchingRule($url)
 	{
-		foreach ($this->m_rules as $rule)
+		foreach ($this->m_documentRules as $rules)
 		{
-			if ($rule->match($url))
+			foreach ($rules as $rule)
 			{
-				return $rule;
+				if ($rule->match($url))
+				{
+					return $rule;
+				}
+			}
+		}
+		foreach ($this->m_actionRules as $rules)
+		{
+			foreach ($rules as $rule)
+			{
+				if ($rule->match($url))
+				{
+					return $rule;
+				}
+			}
+		}
+		foreach ($this->m_tagRules as $rules)
+		{
+			foreach ($rules as $rule)
+			{
+				if ($rule->match($url))
+				{
+					return $rule;
+				}
 			}
 		}
 		return null;
@@ -158,30 +209,20 @@ class website_UrlRewritingService extends BaseService
 	 */
 	private function findRuleByTagAndLang($tag, $lang = null)
 	{
-		$localizedRule = null;
-		$nonLocalizedRule = null;
-		foreach ($this->m_rules as $rule)
+		if (isset($this->m_tagRules[$tag]))
 		{
-			if ($rule instanceof website_lib_urlrewriting_TaggedPageRule && $rule->hasTag($tag))
+			foreach ($this->m_tagRules[$tag] as $rule)
 			{
-				switch ($rule->getDefinedLang())
+				$definedLang = $rule->getDefinedLang();
+				if ($definedLang === $lang)
 				{
-					case $lang :
-						$localizedRule = $rule;
-						break;
-					case null :
-						$nonLocalizedRule = $rule;
-						break;
+					return $rule;
+				}
+				else if ($definedLang === null)
+				{
+					return $rule;
 				}
 			}
-		}
-		if ($localizedRule)
-		{
-			return $localizedRule;
-		}
-		if ($nonLocalizedRule)
-		{
-			return $nonLocalizedRule;
 		}
 		return null;
 	}
@@ -194,30 +235,20 @@ class website_UrlRewritingService extends BaseService
 	 */
 	private function findRuleByModuleActionAndLang($module, $action, $lang = null)
 	{
-		$localizedRule = null;
-		$nonLocalizedRule = null;
-		foreach ($this->m_rules as $rule)
+		if (isset($this->m_actionRules[$module.'#'.$action]))
 		{
-			if ($rule instanceof website_lib_urlrewriting_ModuleActionRule && $rule->getModule() == $module && $rule->getAction() == $action)
-			{
-				switch ($rule->getDefinedLang())
+			foreach ($this->m_actionRules[$module.'#'.$action] as $rule)
+			{	
+				$definedLang = $rule->getDefinedLang();
+				if ($definedLang === $lang)
 				{
-					case $lang :
-						$localizedRule = $rule;
-						break;
-					case null :
-						$nonLocalizedRule = $rule;
-						break;
+					return $rule;
+				}
+				else if ($definedLang === null)
+				{
+					return $rule;
 				}
 			}
-		}
-		if ($localizedRule)
-		{
-			return $localizedRule;
-		}
-		if ($nonLocalizedRule)
-		{
-			return $nonLocalizedRule;
 		}
 		return null;
 	}
@@ -229,88 +260,62 @@ class website_UrlRewritingService extends BaseService
 	 */
 	private function findRuleByDocumentAndLang($document, $lang = null)
 	{
-		return $this->findRuleByDocumentModelNameAndLang($document, $document->getDocumentModelName(), $lang);
-	}
-	
-	/**
-	 * @param f_persistentdocument_PersistentDocument $document
-	 * @param String $documentModelName
-	 * @param string $lang
-	 * @return website_lib_urlrewriting_DocumentModelRule
-	 */
-	private function findRuleByDocumentModelNameAndLang($document, $documentModelName, $lang = null)
-	{
+		$documentModelName = $document->getDocumentModelName();
+		if (!isset($this->m_documentRules[$documentModelName]))
+		{
+			return null;
+		}
+		
 		$localizedRule = null;
 		$nonLocalizedRule = null;
 		$nonLocalizedConditionalRule = null;
-		$localizedConditionalRule = null;
-		
-		foreach ($this->m_rules as $rule)
-		{
-			if ($rule instanceof website_lib_urlrewriting_DocumentModelRule && $rule->getDocumentModelName() == $documentModelName)
-			{
-				// A documentmodel based rule for the given $document has been found.
-				// Let's see if the rule is localized and is matching the given $lang.
-				if ($rule->getDefinedLang() == $lang)
-				{
-					
-					// Check rule's condition
-					if ($rule->hasCondition() && is_null($localizedConditionalRule))
-					{
-						if ($rule->checkCondition($document))
-						{
-							$localizedConditionalRule = $rule;
-						}
-					}
-					else if (is_null($localizedRule))
-					{
-						$localizedRule = $rule;
-					}
-				}
-				else if ($rule->getDefinedLang() == null)
-				{
-					// Check rule's condition
-					if ($rule->hasCondition() && is_null($nonLocalizedConditionalRule))
-					{
-						if ($rule->checkCondition($document))
-						{
-							$nonLocalizedConditionalRule = $rule;
-						}
-					}
-					else if (is_null($nonLocalizedRule))
-					{
-						$nonLocalizedRule = $rule;
-					}
-				}
-			}
 			
-			// If $localizedConditionalRule is not null here, we can stop searching
-			// for another rule since it is the best one.
-			if ($localizedConditionalRule)
-			{
-				break;
-			}
-		}
-		
-		// Return the best matching rule :
-		if ($localizedConditionalRule)
+		foreach ($this->m_documentRules[$documentModelName] as $rule)
 		{
-			return $localizedConditionalRule;
+			$definedLang = $rule->getDefinedLang();
+			// A documentmodel based rule for the given $document has been found.
+			// Let's see if the rule is localized and is matching the given $lang.
+			if ($definedLang === $lang)
+			{	
+				// Check rule's condition
+				if ($rule->hasCondition())
+				{
+					if ($rule->checkCondition($document))
+					{
+						return $rule;
+					}
+				}
+				else if ($localizedRule === null)
+				{
+					$localizedRule = $rule;
+			
+				}
+			}
+			else if ($definedLang === null)
+			{
+				if ($localizedRule !== null)
+				{
+					return $localizedRule;
+				}
+				// Check rule's condition
+				if ($rule->hasCondition() && $nonLocalizedConditionalRule === null)
+				{
+					if ($rule->checkCondition($document))
+					{
+						$nonLocalizedConditionalRule = $rule;
+					}
+				}
+				else if ($nonLocalizedRule === null)
+				{
+					$nonLocalizedRule = $rule;
+				}
+			}
 		}
 		if ($nonLocalizedConditionalRule)
 		{
 			return $nonLocalizedConditionalRule;
 		}
-		if ($localizedRule)
-		{
-			return $localizedRule;
-		}
-		if ($nonLocalizedRule)
-		{
-			return $nonLocalizedRule;
-		}
-		
-		return null;
+		return $nonLocalizedRule;
 	}
 	
 	private static $fromURL = array('/[^a-z0-9_\-\.]+/i', '/\-+/i', '/\.+/i');
@@ -382,15 +387,6 @@ class website_UrlRewritingService extends BaseService
 		}
 
 		$rule = $this->findRuleByDocumentAndLang($document, $lang);
-		
-		if ($rule === null)
-		{
-			$sourceModel = $document->getPersistentModel()->getSourceInjectionModel();
-			if ($sourceModel !== null)
-			{
-				$rule = $this->findRuleByDocumentModelNameAndLang($document, $sourceModel->getName(), $lang);
-			}
-		}
 		
 		if ($rule === null)
 		{
@@ -578,14 +574,12 @@ class website_UrlRewritingService extends BaseService
 		{
 			$parameters = array();
 		}
-		$parameters[AG_MODULE_ACCESSOR] = $module;
-		$parameters[AG_ACTION_ACCESSOR] = 'ViewDetail';
 		$parameters[$module . 'Param'] = array(K::COMPONENT_ID_ACCESSOR => $document->getId());
 		if (! is_null($lang))
 		{
 			$parameters[K::LANG_ACCESSOR] = $lang;
 		}
-		return WebController::getInstance()->genURL(website_WebsiteModuleService::getInstance()->getCurrentWebsite()->getUrl() . '/', $parameters);
+		return LinkHelper::getActionUrl($module, 'ViewDetail', $parameters);
 	}
 	
 	/**
@@ -619,6 +613,7 @@ class website_UrlRewritingService extends BaseService
 	 */
 	public function getUrl($module, $action, $parameters = null)
 	{
+		
 		$url = null;
 		
 		if (! is_array($parameters))
@@ -636,42 +631,12 @@ class website_UrlRewritingService extends BaseService
 			$parameters['lang'] = $lang;
 		}
 		
-		$rule = null;
-		$localized = false;
+		$rule = $this->findRuleByModuleActionAndLang($module, $action, $lang);
 		
-		// Search for a rule that match module and action...
-		// If possible, use the rule that matches the language parameter,
-		// if it exists.
-		foreach ($this->m_rules as $testingRule)
-		{
-			if ($testingRule instanceof website_lib_urlrewriting_ModuleActionRule)
-			{
-				if ($testingRule->getModule() == $module && $testingRule->getAction() == $action)
-				{
-					if ($testingRule->getDefinedLang() !== null)
-					{
-						if ($lang == $testingRule->getDefinedLang())
-						{
-							$rule = $testingRule;
-							$localized = true;
-							break;
-						}
-					}
-					else
-					{
-						// Keep on searching for a localized rule (no break statement),
-						// and skip future non-localized rules (only the first is kept).
-						if ($rule === null)
-						{
-							$rule = $testingRule;
-						}
-					}
-				}
-			}
-		}
 		
 		if ($rule !== null)
 		{	
+			$localized = $rule->getDefinedLang() !== null;
 			// Add all the parameters defined in the rule, skipping
 			// parameters defined in $parameters argument and 'module'/'action'.
 			// If the rule is localized, skip the 'lang' parameter.
@@ -739,27 +704,66 @@ class website_UrlRewritingService extends BaseService
 	}
 	
 	/**
-	 * Loads the URL rewriting rules.
-	 *
-	 * @see website_urlrewriting_RulesParser
+	 * @param website_lib_urlrewriting_DocumentModelRule $rule
 	 */
-	protected function importRules()
+	private function addDocumentRule($rule)
 	{
-		include_once (website_urlrewriting_RulesParser::getInstance()->getCachedFilePath());
+		$key = $rule->getDocumentModelName();
+		if (!isset($this->m_documentRules[$key]))
+		{
+			$this->m_documentRules[$key] = array($rule);
+		}
+		else if ($rule->getDefinedLang() !== null)
+		{
+			array_unshift($this->m_documentRules[$key], $rule);
+		}
+		else
+		{
+			$this->m_documentRules[$key][] = $rule;
+		}
+		$this->m_registeredRules[$rule->getUniqueId()] = true;
 	}
 	
 	/**
-	 * Adds a rule to the service.
-	 *
-	 * @param website_lib_urlrewriting_Rule $rule The rule to add.
+	 * @param website_lib_urlrewriting_ModuleActionRule $rule
 	 */
-	public function addRule($rule)
+	private function addActionRule($rule)
 	{
-		if ($this->ruleExists($rule))
+		$key = $rule->getModule().'#'.$rule->getAction();
+		if (!isset($this->m_actionRules[$key]))
 		{
-			throw new UrlRewritingException('Rule "' . $rule->getUniqueId() . '" is already registered.');
+			$this->m_actionRules[$key] = array($rule);
 		}
-		$this->m_rules[$rule->getUniqueId()] = $rule;
+		else if ($rule->getDefinedLang() !== null)
+		{
+			array_unshift($this->m_actionRules[$key], $rule);
+		}
+		else
+		{
+			$this->m_actionRules[$key][] = $rule;
+		}
+		$this->m_registeredRules[$rule->getUniqueId()] = true;
+	}
+	
+	/**
+	 * @param website_lib_urlrewriting_TaggedPageRule $rule
+	 */
+	private function addTagRule($rule)
+	{
+		$key = $rule->getPageTag();
+		if (!isset($this->m_tagRules[$key]))
+		{
+			$this->m_tagRules[$key] = array($rule);
+		}
+		else if ($rule->getDefinedLang() !== null)
+		{
+			array_unshift($this->m_tagRules[$key], $rule);
+		}
+		else
+		{
+			$this->m_tagRules[$key][] = $rule;
+		}
+		$this->m_registeredRules[$rule->getUniqueId()] = true;
 	}
 	
 	/**
@@ -773,28 +777,14 @@ class website_UrlRewritingService extends BaseService
 	}
 	
 	/**
-	 * Indicates whether a rule has already been registered.
-	 *
-	 * @param website_lib_urlrewriting_Rule $rule
-	 * @return boolean
-	 */
-	public function ruleExists($rule)
-	{
-		if ($rule instanceof website_lib_urlrewriting_Rule)
-		{
-			$rule = $rule->getUniqueId();
-		}
-		return array_key_exists($rule, $this->m_rules);
-	}
-	
-	/**
 	 * Removes all the registered rules.
-	 *
-	 * @return void
 	 */
 	public function removeAllRules()
 	{
 		$this->m_rules = array();
+		$this->m_actionRules = array();
+		$this->m_documentRules = array();
+		$this->m_tagRules = array();
 	}
 	
 	/**
@@ -1057,5 +1047,48 @@ class website_UrlRewritingService extends BaseService
 	public function removeSuffix($url)
 	{
 		return preg_replace('/\.([a-z0-9]{2,})$/', '', $url);
+	}
+	
+	
+	/**
+	 * Indicates whether a rule has already been registered.
+	 *
+	 * @param website_lib_urlrewriting_Rule $rule
+	 * @deprecated (with no replacement)
+	 * @return boolean
+	 */
+	public function ruleExists($rule)
+	{
+		if (Framework::isWarnEnabled())
+		{
+			Framework::warn(__METHOD__ . ' has been deprecated. Please remove calls to this method!');
+		}
+		return isset($this->m_registeredRules[$rule->getUniqueId()]);
+	}
+	
+	/**
+	 * Adds a rule to the service.
+	 *
+	 * @param website_lib_urlrewriting_Rule $rule The rule to add.
+	 * @deprecated (with no replacement)
+	 */
+	public function addRule($rule)
+	{
+		if ($rule instanceof website_lib_urlrewriting_DocumentModelRule)
+		{
+			$this->addDocumentRule($rule);
+		}
+		else if ($rule instanceof website_lib_urlrewriting_ModuleActionRule)
+		{
+			$this->addActionRule($rule);
+		}
+		else if ($rule instanceof website_lib_urlrewriting_TaggedPageRule)
+		{
+			$this->addTagRule($rule);
+		}
+		else 
+		{
+			throw new Exception(__METHOD__ . " Invalid rule type " . get_class($rule));
+		}
 	}
 }
