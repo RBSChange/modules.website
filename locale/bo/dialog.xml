@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<localization>
+	<entity id="import-structure-title">
+		<locale lang="fr">importer la structure par défaut</locale>
+	</entity>
+	<entity id="select-page-template">
+		<locale lang="fr">Sélectionnez le template à associer aux pages.</locale>
+	</entity>
+	<entity id="importing-structure">
+		<locale lang="fr">Initialisation de la structure...</locale>
+	</entity>
+	<entity id="structure-initialized">
+		<locale lang="fr">Structure initialisée.</locale>
+	</entity>
+	<entity id="no-page-template">
+		<locale lang="fr">Il n'y a aucun template de page affecté au conteneur.</locale>
+	</entity>
+	<entity id="initialize">
+		<locale lang="fr">lancer l'initialisation</locale>
+	</entity>
+</localization>

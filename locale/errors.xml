@@ -351,9 +351,12 @@
 	<entity id="cant-move-markerfolder-to-other-website">
 		<locale lang="fr">vous ne pouvez pas déplacer les marqueurs vers un autre site web.</locale>
 	</entity>
-	<entity id="invalid-website-import-script">
-	    <locale lang="fr">Le script d'initialisation d'un nouveau site n'est pas lisible.</locale>
+	<entity id="import-script-not-found">
+	    <locale lang="fr">Le script d'initialisation est introuvable.</locale>
+	</entity>
+	<entity id="invalid-import-script">
+	    <locale lang="fr">Le script d'initialisation n'est pas lisible.</locale>
 	    <locale lang="en">An error occured whil reading the initialization script.</locale>
-	    <locale lang="de">Der Script zur initialisierung einer neuen Webseite ist unlesbar.</locale>
+	    <locale lang="de">Der Script zur initialisierung ist unlesbar.</locale>
 	</entity>
 </localization>

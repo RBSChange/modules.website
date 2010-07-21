@@ -348,6 +348,9 @@
 		<locale lang="fr">structure d'exemple</locale>
 		<locale lang="en">sample Structure</locale>
 	</entity>
+	<entity id="structure-initialized">
+		<locale lang="fr">La structure a bien été initialisée.</locale>
+	</entity>
 	
 	<!-- OBSOLETE LOCALES -->
 	<entity id="template.tplOne">
