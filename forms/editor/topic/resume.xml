@@ -8,7 +8,7 @@
 		<property name="creationdate" labeli18n="modules.uixul.bo.doceditor.property.Creationdate" />
 	</section>
 											
-	<section name="publication"
+	<section name="publication" linkedtab="publication"
 		labeli18n="modules.uixul.bo.doceditor.section.Status" 
 		image="{IconsBase}/small/status.png">
 		<property name="status" labeli18n="modules.uixul.bo.doceditor.property.Status"/>

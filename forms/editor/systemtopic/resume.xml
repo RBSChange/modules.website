@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <panel>	
-	<section name="properties" linkedtab="properties"
-		labeli18n="modules.uixul.bo.doceditor.section.Properties" 
+	<section name="properties" linkedtab="properties" labeli18n="modules.uixul.bo.doceditor.section.Properties" 
 		image="{IconsBase}/small/edit-properties.png">
 		<property name="label" labeli18n="modules.uixul.bo.doceditor.property.Label" />
 		<property name="author" labeli18n="modules.uixul.bo.doceditor.property.Author" />
@@ -9,14 +8,17 @@
 		<property name="reference" labeli18n="modules.website.bo.doceditor.property.Reference" />
 	</section>
 	
+	<section name="publication"	labeli18n="modules.uixul.bo.doceditor.section.Status" 
+		image="{IconsBase}/small/status.png">
+		<property name="status" labeli18n="modules.uixul.bo.doceditor.property.Status"/>
+	</section>
+		
 	<section name="history" linkedtab="history" actiontexti18n="modules.uixul.bo.doceditor.section.action.View"
-		labeli18n="modules.uixul.bo.doceditor.section.History" 
-		image="{IconsBase}/small/history.png">
+		labeli18n="modules.uixul.bo.doceditor.section.History" image="{IconsBase}/small/history.png">
 		<property name="modificationdate" labeli18n="modules.uixul.bo.doceditor.property.Modificationdate"/>
 	</section>
 	
-	<section name="localization" linkedtab="localization"
-		labeli18n="modules.uixul.bo.doceditor.section.Localization" 
+	<section name="localization" linkedtab="localization" labeli18n="modules.uixul.bo.doceditor.section.Localization" 
 		image="{IconsBase}/small/translate.png">
 		<property name="languages" type="langs" labeli18n="modules.uixul.bo.doceditor.property.Languages"/>
 	</section>	

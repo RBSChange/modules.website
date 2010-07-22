@@ -3,17 +3,21 @@
  * website_SystemtopicScriptDocumentElement
  * @package modules.website.persistentdocument.import
  */
-class website_SystemtopicScriptDocumentElement extends import_ScriptDocumentElement
+class website_SystemtopicScriptDocumentElement extends website_TopicScriptDocumentElement
 {
-    /**
-     * @return website_persistentdocument_systemtopic
-     */
-    protected function initPersistentDocument()
-    {
-    	return website_SystemtopicService::getInstance()->getNewDocumentInstance();
-    }
-    
-    /**
+	/**
+	 * @return website_persistentdocument_systemtopic
+	 */
+	protected function initPersistentDocument()
+	{
+		if (isset($this->attributes['documentid']))
+		{
+			return DocumentHelper::getDocumentInstance($this->attributes['documentid'], 'modules_website/systemtopic');
+		}
+		return website_SystemtopicService::getInstance()->getNewDocumentInstance();
+	}
+
+	/**
 	 * @return f_persistentdocument_PersistentDocumentModel
 	 */
 	protected function getDocumentModel()

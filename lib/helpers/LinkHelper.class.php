@@ -149,7 +149,7 @@ class LinkHelper
 		{
 			if (Framework::isInfoEnabled())
 			{
-				Framework::info(__METHOD__ . ' No url rewriting Founded for document : ' . $document->__toString());
+				Framework::info(__METHOD__ . ' No url rewriting Found for document : ' . $document->__toString());
 			}
 			$url = $urs->getNonRewrittenDocumentUrl($document, $lang, $parameters);
 		}	

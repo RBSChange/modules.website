@@ -40,7 +40,7 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	 * @param Integer $parentNodeId Parent node ID where to save the document (optionnal).
 	 * @return void
 	 */
-    protected function preSave($document, $parentNodeId = null)
+    protected function preSave($document, $parentNodeId)
     {       
         $protocol = $document->getProtocol() . '://';
         $masterdomain = $document->getVoDomain();
@@ -111,7 +111,7 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	 * @param Integer $parentNodeId Parent node ID where to save the document (optionnal).
 	 * @return void
 	 */
-	protected function postInsert($document, $parentNodeId = null)
+	protected function postInsert($document, $parentNodeId)
 	{
 		$query = $this->createQuery()->add(Restrictions::hasTag(WebsiteConstants::TAG_DEFAULT_WEBSITE));
 
@@ -142,29 +142,7 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 			}
 		}
 	}
-	/**
-	 * @param website_persistentdocument_website $website
-	 * @param string $scriptPath
-	 */	
-	public function initDefaultStruct($website, $scriptPath)
-	{
-		if (!is_readable($scriptPath))
-		{
-			throw new BaseException('Invalid website import script', 'modules.website.errors.Invalid-website-import-script');
-		}
-		try 
-		{
-			$this->tm->beginTransaction();
-			$this->generateDefaultStructure($website, $scriptPath);
-			$this->tm->commit();
-		}
-		catch (Exception $e)
-		{
-			$this->tm->rollBack($e);
-			throw $e;
-		}
-	}
-	
+		
 	/**
 	 * @param website_persistentdocument_website $website
 	 * @param string $scriptPath
@@ -328,5 +306,15 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	public function getWebsiteId($document)
 	{
 		return $document->getId();
+	}
+	
+	// Deprecated methods.
+	
+	/**
+	 * @deprecated use website_ModuleService::inititalizeStructure()
+	 */	
+	public function initDefaultStruct($website, $scriptPath)
+	{
+		throw new Exception('Deprecated call to initDefaultStruct!');
 	}
 }
