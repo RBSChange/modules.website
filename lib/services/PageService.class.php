@@ -1581,7 +1581,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	public function render($page)
 	{
-		if (Framework::inDevelopmentMode() || $page->isNew())
+		if (Framework::inDevelopmentMode() || $page->isNew() || $page->isPropertyModified('content'))
 		{
 			$cache = null;
 			if (Framework::isDebugEnabled())
