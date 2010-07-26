@@ -16,12 +16,12 @@ class website_XHTMLCleanerHelper
 		$domTemplate->resolveExternals = true;
 		if (DIRECTORY_SEPARATOR !== '/')
 		{
-			$dtdPath = 'file:///' . str_replace(DIRECTORY_SEPARATOR, '/', realpath(WEBEDIT_HOME .'/framework/f_web/dtd/xhtml1-transitional.dtd'));
+			$dtdPath = 'file:///' . str_replace(array(DIRECTORY_SEPARATOR, ' '), array('/', '%20'), realpath(WEBEDIT_HOME .'/framework/f_web/dtd/xhtml1-transitional.dtd'));
 		}
 		else
 		{
-			$dtdPath = 'file://' . realpath(WEBEDIT_HOME .'/framework/f_web/dtd/xhtml1-transitional.dtd');
-		}
+			$dtdPath = 'file://' . str_replace(' ', '%20', realpath(WEBEDIT_HOME .'/framework/f_web/dtd/xhtml1-transitional.dtd'));
+		}	
 		
 		$xml = '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "'.$dtdPath.'"><body>' . $XHTMLFragment . '</body>';
 		$domTemplate->loadXML($xml);
