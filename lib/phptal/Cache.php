@@ -75,7 +75,7 @@ class website_ChangeCacheRenderer
 	 */
 	private function isCacheEnabled()
 	{
-		return f_SimpleCache::isEnabled() && (!defined("AG_DISABLE_BLOCK_CACHE") || !AG_DISABLE_BLOCK_CACHE);
+		return f_DataCacheService::getInstance()->isEnabled() && (!defined("AG_DISABLE_BLOCK_CACHE") || !AG_DISABLE_BLOCK_CACHE);
 	}
 	
 	/**
@@ -113,8 +113,9 @@ class website_ChangeCacheRenderer
 		{
 			$currentSimpleCache = f_util_ArrayUtils::lastElement(self::$simpleCacheStack);
 			$content = ob_get_clean();
-			$currentSimpleCache->writeToCache('html', $content);
-			echo file_get_contents($currentSimpleCache->getCachePath('html'));
+			$currentSimpleCache->setValue('html', $content);
+			f_DataCacheService::getInstance()->writeToCache($currentSimpleCache);
+			echo $currentSimpleCache->getValue('html');
 		}
 		catch (Exception $e)
 		{
@@ -140,7 +141,7 @@ class website_ChangeCacheRenderer
 		$rc = RequestContext::getInstance();
 		$key['lang'] = $rc->getLang();
 		$key['engine'] = $rc->getUserAgentType() . ':' . $rc->getUserAgentTypeVersion();
-		self::$simpleCacheStack[] = new f_SimpleCache($cachePath, $params, self::getCacheDependencies($params));
+		self::$simpleCacheStack[] = f_DataCacheService::getInstance()->readFromCache($cachePath, $params, self::getCacheDependencies($params));
 	}
 	
 	private static function popSimpleCache()
@@ -160,10 +161,10 @@ class website_ChangeCacheRenderer
 		self::pushSimpleCache($params);
 		
 		$currentSimpleCache = f_util_ArrayUtils::lastElement(self::$simpleCacheStack);
-		if ($currentSimpleCache->exists('html'))
+		if (f_DataCacheService::getInstance()->exists($currentSimpleCache))
 		{
 			self::$isInCache = true;
-			echo file_get_contents($currentSimpleCache->getCachePath('html'));
+			echo $currentSimpleCache->getValue('html');
 		}
 		else
 		{

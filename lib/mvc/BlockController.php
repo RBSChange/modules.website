@@ -316,6 +316,7 @@ class website_BlockController implements f_mvc_Controller
 	private function processInternal()
 	{
 		$requestContext = RequestContext::getInstance();
+		$cacheItem = null;
 		try
 		{
 			$requestContext->beginI18nWork($this->action->getLang());
@@ -326,13 +327,12 @@ class website_BlockController implements f_mvc_Controller
 			{
 				$keyParameters = $this->action->getCacheKeyParameters($this->actionRequest);
 				$keyParameters["https"] = $requestContext->inHTTPS();
-				$cache = new f_SimpleCache(get_class($this->action), $keyParameters, $this->action->getCacheDependencies());
-				$this->pushSimpleCache($cache);
-				// Read from cache
-				if ($this->isActionInCache())
+				$cacheItem = f_DataCacheService::getInstance()->readFromCache(get_class($this->action), $keyParameters, $this->action->getCacheDependencies());
+				
+				if ($this->isActionInCache($cacheItem))
 				{
-					$this->processActionFromCache();
-					$this->endProcessing();
+					$this->processActionFromCache($cacheItem);
+					$this->endProcessing($cacheItem);
 					return;
 				}
 				$this->startCacheRecorders();
@@ -342,7 +342,7 @@ class website_BlockController implements f_mvc_Controller
 
 			if (!$this->shouldRedirect)
 			{
-				$this->endProcessing();
+				$this->endProcessing($cacheItem);
 			}
 			else
 			{
@@ -352,7 +352,7 @@ class website_BlockController implements f_mvc_Controller
 		}
 		catch (Exception $e)
 		{
-			$this->endProcessing();
+			$this->endProcessing($cacheItem);
 			$requestContext->endI18nWork($e);
 		}
 	}
@@ -386,27 +386,32 @@ class website_BlockController implements f_mvc_Controller
 	/**
 	 * @param Exception $e
 	 */
-	private function endProcessing($e = null)
+	private function endProcessing($cacheItem = null, $e = null)
 	{
 		if ($this->isCacheEnabled() && $this->action->isCacheEnabled() && $this->isRecording())
 		{
 
 			if ($e == null)
 			{
-				$this->putActionInCache();
+				$this->putActionInCache($cacheItem);
 			}
 			else
 			{
-				$this->simpleCache->setInvalid();
+				$cacheItem->setInvalid();
 			}
 			$this->stopCacheRecorders();
-			$this->popSimpleCache();
+			//$this->popSimpleCache();
 		}
 
 		if ($e !== null)
 		{
 			throw $e;
 		}
+	}
+	
+	private function getCacheItem()
+	{
+		return f_util_ArrayUtils::firstElement($this->simpleCacheStack);
 	}
 
 	/**
@@ -431,11 +436,12 @@ class website_BlockController implements f_mvc_Controller
 	/**
 	 * @param website_BlockAction $action
 	 */
-	private function putActionInCache()
+	private function putActionInCache($cacheItem)
 	{
-		// Put in cache
-		$this->simpleCache->writeToCache(self::HTML_CACHE_PATH, $this->getResponse()->getWriter()->peek());
-		$this->simpleCache->writeToCache("page", "<?php " . implode('', f_util_ArrayUtils::lastElement($this->pageContextRecorderStack)->getRecords()));
+		$cacheItem->setValue(self::HTML_CACHE_PATH, $this->getResponse()->getWriter()->peek());
+		$cacheItem->setValue(self::PAGE_CACHE_PATH, "<?php " . implode('', f_util_ArrayUtils::lastElement($this->pageContextRecorderStack)->getRecords()));
+		$cacheItem->setValidity(true);
+		f_DataCacheService::getInstance()->writeToCache($cacheItem);
 	}
 
 	/**
@@ -754,7 +760,7 @@ class website_BlockController implements f_mvc_Controller
 	 */
 	private function isCacheEnabled()
 	{
-		return f_SimpleCache::isEnabled() &&
+		return f_DataCacheService::getInstance()->isEnabled() &&
 		 (!defined("AG_DISABLE_BLOCK_CACHE") || !AG_DISABLE_BLOCK_CACHE) &&
 		 !$this->blockContext->getAttribute(website_BlockAction::BLOCK_BO_MODE_ATTRIBUTE, false);
 	}
@@ -764,18 +770,26 @@ class website_BlockController implements f_mvc_Controller
 		// empty
 	}
 
-	private function isActionInCache()
+	/**
+	 * Enter description here...
+	 *
+	 * @param f_DataCacheItem $cacheItem
+	 * @return Boolean
+	 */
+	private function isActionInCache($cacheItem)
 	{
-		return $this->simpleCache->exists(self::HTML_CACHE_PATH);
+		return $cacheItem->isValid();
 	}
 
 	/**
+	 * @param f_DataCacheItem $cacheItem
 	 */
-	private function processActionFromCache()
+	private function processActionFromCache($cacheItem)
 	{
-		$page = $this->getContext();
-		@include ($this->simpleCache->getCachePath("page"));
-		$this->getResponse()->getWriter()->write($this->simpleCache->readFromCache(self::HTML_CACHE_PATH));
+		$htmlContent = $cacheItem->getValue(self::HTML_CACHE_PATH);
+		$code = trim($cacheItem->getValue(self::CONTEXT_CACHE_PATH), "<?php");
+		eval($code);
+		$this->getResponse()->getWriter()->write($htmlContent);
 	}
 
 	/**
@@ -806,23 +820,15 @@ class website_BlockController implements f_mvc_Controller
 		$this->responseStack[] = new website_BlockActionResponse();
 	}
 
-	private function pushSimpleCache($simpleCache)
+	private function pushSimpleCache($cacheItem)
 	{
-		$this->simpleCacheStack[] = $simpleCache;
-		$this->simpleCache = $simpleCache;
+		$this->simpleCacheStack[] = $cacheItem;
 	}
 
 	private function popSimpleCache()
 	{
-		array_pop($this->simpleCacheStack);
-		if (f_util_ArrayUtils::isNotEmpty($this->simpleCacheStack))
-		{
-			$this->simpleCache = f_util_ArrayUtils::firstElement($this->simpleCacheStack);
-		}
-		else
-		{
-			$this->simpleCache = null;
-		}
+		$cacheItem = array_pop($this->simpleCacheStack);
+	//	f_DataCacheService::getInstance()->writeToCache($cacheItem);
 	}
 
 
