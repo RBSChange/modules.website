@@ -6,6 +6,7 @@ class website_TopicScriptDocumentElement extends import_ScriptDocumentElement
 	 */
 	protected function initPersistentDocument()
 	{
+		// Deprecated attribute documentid. Use byDocumentId generic attribute.
 		if (isset($this->attributes['documentid']))
 		{
 			return DocumentHelper::getDocumentInstance($this->attributes['documentid'], 'modules_website/topic');

@@ -15,6 +15,7 @@ class website_WebsiteScriptDocumentElement extends import_ScriptDocumentElement
 				return $documents[0];
 			}
 		}
+		// Deprecated attribute documentid. Use byDocumentId generic attribute.
 		if (isset($this->attributes['documentid']))
 		{
 			return DocumentHelper::getDocumentInstance($this->attributes['documentid']);
