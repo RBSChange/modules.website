@@ -1303,7 +1303,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	public function getSkinId($page)
 	{
 		$pageSkin = $page->getSkin();
-		if ($pageSkin !== null)
+		if ($pageSkin !== null && $pageSkin->isPublished())
 		{
 			return $pageSkin->getId();
 		}
@@ -1313,7 +1313,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			if (($ancestor instanceof website_persistentdocument_website) || ($ancestor instanceof website_persistentdocument_topic))
 			{
 				$skin = $ancestor->getSkin();
-				if ($skin !== null)
+				if ($skin !== null && $skin->isPublished())
 				{
 					return $skin->getId();
 				}

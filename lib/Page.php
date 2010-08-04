@@ -520,28 +520,21 @@ class website_Page implements f_mvc_Context
 	/**
 	 * @return skin_persistentdocument_skin
 	 */
-	protected function getSkin()
+	public final function getSkin()
 	{
 		if ($this->skin === false)
 		{
-			$skin = $this->page->getSkin();
-			if ($skin === null)
+			$skinId = website_PageService::getInstance()->getSkinId($this->getPersistentPage());
+			if ($skinId !== null)
 			{
-				$ancestors = array_reverse($this->getAncestorIds());
-				foreach ($ancestors as $ancestorId)
-				{
-					$doc = DocumentHelper::getDocumentInstance($ancestorId);
-					if (f_util_ClassUtils::methodExists($doc, 'getSkin'))
-					{
-						$skin = $doc->getSkin();
-					}
-					if ($skin !== null) {break;}
-				}
+				$this->skin = DocumentHelper::getDocumentInstance($skinId, 'modules_skin/skin');
 			}
-			$this->skin = $skin;
+			else 
+			{
+				$this->skin = null;
+			}
 		}
 		return $this->skin;
-
 	}
 
 
