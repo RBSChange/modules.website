@@ -20,26 +20,13 @@ class website_EditContentSuccessView extends f_view_BaseView
 		$this->setAttribute('pageContent', $pageContent);
 		
 		$link = LinkHelper::getUIChromeActionLink('website', 'GetEditContentStylesheets')
-			->setQueryParameter('cmpref', $document->getId())
 			->setArgSeparator(f_web_HttpLink::ESCAPE_SEPARATOR);
 		$this->setAttribute('allStyleUrl', '<?xml-stylesheet href="' . $link->getUrl() . '" type="text/css"?>');
-		
-		$wprs = website_PageRessourceService::getInstance();
-		$template = $wprs->getPageTemplate($document);
-		
-		foreach ($template->getScreenStyleIds() as $styleId) 
-		{
-			$this->getStyleService()->registerStyle($styleId);
-		}
 
-		$containerStyleId = $wprs->getContainerStyleIdByAncestors($ps->getAncestorsOf($document));
-		if ($containerStyleId)
-		{
-			$this->getStyleService()->registerStyle($containerStyleId);
-		}
-
-		$skinId = $document->getSkinId();
-		$this->setAttribute('cssInclusion', $this->getStyleService()->execute(K::XUL, $skinId));
+		$link = LinkHelper::getUIChromeActionLink('website', 'GetEditContentStylesheets')
+			->setQueryParameter('cmpref', $document->getId())
+			->setArgSeparator(f_web_HttpLink::ESCAPE_SEPARATOR);
+		$this->setAttribute('cssInclusion', '<?xml-stylesheet href="' . $link->getUrl() . '" type="text/css"?>');
 		
 		// include JavaScript
 		$this->getJsService()->registerScript('modules.website.lib.editcontent');

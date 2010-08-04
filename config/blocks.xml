@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <blocks>
-	<block type="empty" icon="selection" label="&amp;modules.uixul.bo.layout.EmptyBlock;" />
 	<block type="richtext" icon="richtext" label="&amp;modules.uixul.bo.layout.RichTextBlock;" />
 	<block type="modules_website_bookmarks" icon="bookmark" label="&amp;modules.uixul.bo.layout.BookmarksBlock;" />
 	<block type="layout" columns="2" requiresNewEditor="true" icon="layout-2-columns" label="&amp;modules.website.bo.blocks.Two-col;" />
@@ -71,7 +70,11 @@
 		</parameters>
 	</block>
 	<block type="modules_website_DashboardLastModifiedPages" display="" icon="page" dashboard="true" label="&amp;modules.website.bo.blocks.DashboardLastModifiedPages.Title;" />
+	
 	<!-- Deprecated blocks -->
+	
+	<block type="empty" icon="selection" hidden="true"  label="&amp;modules.uixul.bo.layout.EmptyBlock;" />
+	
 	<block type="modules_website_copyright" hidden="true" label="&amp;modules.website.bo.blocks.Copyright;" />
 	<block type="modules_website_footer" hidden="true" label="&amp;modules.website.bo.blocks.Footer;" />
 	<block type="modules_website_header" hidden="true" label="&amp;modules.website.bo.blocks.Header;" />

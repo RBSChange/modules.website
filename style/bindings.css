@@ -13,9 +13,6 @@ wdialog[template="ValidPage"]{
 wdialog[template="ValidPage"] rows.cPageData{
 	-moz-binding: url(binding:modules.website.cValidPageDialog#cPageData);
 }
-wdialog[template="savetemplate"]{
-	-moz-binding: url(binding:modules.website.cSaveTemplateDialog#cSaveTemplate);
-}
 wdialog[template="InitializeStructure"]{
 	-moz-binding: url(binding:modules.website.cInitializeStructure#cInitializeStructureDialog);
 }

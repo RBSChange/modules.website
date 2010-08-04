@@ -24,10 +24,6 @@
 			<iframe anonid="designFrame" src="about:blank" flex="1" />
 			<splitter anonid="propertyGridContainerSplitter" hidden="true" />
 			<wpropertygridcontainer id="propertyGridContainer" anonid="propertyGridContainer" style="max-width:280px" collapsed="true" />
-			<splitter collapse="after">
-				<wsplitterbutton />
-			</splitter>
-			<cressourcesselector width="210" id="ressourcesSelector" collapsed="true" />
 		</hbox>
 		<hbox flex="1">
 			<vbox flex="1">

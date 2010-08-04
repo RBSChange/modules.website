@@ -16,7 +16,7 @@ class website_SaveContentAction extends f_action_BaseJSONAction
 			$document = $ds->createDocumentCorrection($document);
 		}
 		$document->setDocumentversion($request->getParameter('documentversion'));
-		website_PageService::getInstance()->updatePageContent($document, $request->getParameter(self::PAGE_CONTENT_ACCESSOR));
+		website_PageService::getInstance()->updatePageContent($document, $request->getParameter('content'));
 		$ds->save($document);
 		$this->logAction($document);
 			

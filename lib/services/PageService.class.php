@@ -1374,6 +1374,53 @@ class website_PageService extends f_persistentdocument_DocumentService
 	}
 
 	/**
+	 * Remove spacer
+	 * @param DOMDocument $pageContent
+	 */
+	private function patchOldPageContent($pageContent)
+	{
+		$spacers = array();	
+		foreach ($pageContent->getElementsByTagName('cblock') as $spacer)
+		{
+			$spacers[] = $spacer;
+		}
+		
+		foreach ($spacers as $spacer) 
+		{
+			$rowNode = $spacer->parentNode;
+			
+			$width = intval($spacer->getAttribute('width'));
+			$width = $width < 12 ? 12 : $width;
+			
+			$height = intval($spacer->getAttribute('height'));
+			$height = $height < 12 ? 12 : $height;
+			
+			$removeDrop = $spacer->previousSibling;
+			$previousBlock = $removeDrop->previousSibling;
+			if ($previousBlock)
+			{
+				$previousBlock->setAttribute('marginRight', $width);
+			}
+			$rowNode->removeChild($spacer);
+			$rowNode->removeChild($removeDrop);
+			
+			if ($rowNode->childNodes->length < 3)
+			{
+				
+				$column = $rowNode->parentNode;
+				$removeDrop = $rowNode->previousSibling;
+				$previousRow = $removeDrop->previousSibling;
+				if ($previousRow)
+				{
+					$previousRow->setAttribute('marginBottom', $height);
+				}
+				$column->removeChild($rowNode);
+				$column->removeChild($removeDrop);
+			}
+		}
+	}
+	
+	/**
 	 * Returns the content of the page ready to be use by the backoffice editor.
 	 *
 	 * @param website_persistentdocument_page $page
@@ -1401,11 +1448,17 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			$domTemplate->documentElement->setAttribute('id', $page->getTemplate());
 		}
+		
 		$xslt = new XSLTProcessor();
 		$xslt->importStylesheet($xsl);
 		$pageContent = $xslt->transformToDoc($domTemplate);
+		$this->patchOldPageContent($pageContent);
+
+		
+		
 		$blocks = $this->generateBlocks($pageContent);
 		$this->buildBlockContainerForBackOffice($pageContent, $blocks);
+		
 		$pageContent->preserveWhiteSpace = false;
 		$xulContent = $pageContent->saveXML($pageContent->documentElement);
 
@@ -1418,6 +1471,8 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			$html = $block['html'];
 			$tmpDoc = new DOMDocument('1.0', 'UTF-8');
+			
+			$baseStyle = $block['editable'] ? 'display:none;' : '';
 			if ($block['name'] === 'staticrichtext')
 			{
 				$tmpDoc->loadXML($html);
@@ -1432,7 +1487,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 				{
 					$html = f_util_HtmlUtils::cleanHtmlForBackofficeEdition($html);
 				}				
-				$tmpDoc->loadXML('<div xmlns="http://www.w3.org/1999/xhtml" anonid="contentBlock"><div style="'.$this->buildInlineStyle($block['blockwidth']).'"><div class="'.$block['class'].'">' . $html . '</div></div></div>');
+				$tmpDoc->loadXML('<div xmlns="http://www.w3.org/1999/xhtml" style="' . $baseStyle . '" class="'.$block['class'].'">' . $html . '</div>');
 			}
 			if ($tmpDoc->documentElement)
 			{
@@ -1441,7 +1496,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			else
 			{
 				$class = str_replace('_', '-', $block['type'] . ' ' . $block['package']);
-				$xmlContent = '<div xmlns="http://www.w3.org/1999/xhtml" anonid="contentBlock"><div style="'.$this->buildInlineStyle($block['blockwidth']).'"><div class="'.$class.'"><strong style="color:red;">' . $this->getBlockLabelFromBlockType($block['type'])  . ' : Invalid XML</strong></div></div></div>';
+				$xmlContent = '<div xmlns="http://www.w3.org/1999/xhtml" style="' . $baseStyle . '" class="'.$class.'"><strong style="color:red;">' . $this->getBlockLabelFromBlockType($block['type'])  . ' : Invalid XML</strong></div>';
 			}
 			$xulContent = str_replace('<htmlblock_'.$blockId.'/>', $xmlContent , $xulContent);
 		}
@@ -1634,7 +1689,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 			}
 
 			$this->addBenchTime('templateLoading');
-
 			$xsl = new DOMDocument('1.0', 'UTF-8');
 			$xsl->load(FileResolver::getInstance()->setPackageName('modules_website')
 			->setDirectory('lib')->getPath('pageRenderContentTransform.xsl'));
@@ -1762,9 +1816,21 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$blockInfos['class'] = $class . ' ' . str_replace('_', '-', $packageName);
 
 		$blockInfos['DomNode'] = $DomNode;
-		if ($DomNode !== null && $DomNode->hasAttribute("id"))
+		
+		if ($DomNode !== null)
 		{
-			$blockInfos["id"] = $DomNode->getAttribute("id");
+			if ($DomNode->hasAttribute("id"))
+			{
+				$blockInfos["id"] = $DomNode->getAttribute("id");
+			}
+			if ($DomNode->hasAttribute("marginRight"))
+			{
+				$blockInfos["marginRight"] = $DomNode->getAttribute("marginRight");
+			}
+			if ($DomNode->hasAttribute("flex"))
+			{
+				$blockInfos["flex"] = $DomNode->getAttribute("flex");
+			}
 		}
 
 		return $blockInfos;
@@ -1901,10 +1967,20 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			$node = $blockData['DomNode'];
 			$div = $pageContent->createElement('div');
+			if ($node->hasAttribute('marginRight'))
+			{
+				$style = 'margin-right: ' . $node->getAttribute('marginRight') .'px;';	
+			}
+			else
+			{
+				$style = '';
+			}
+			
 			if (isset($blockData['parameters']['style']))
 			{
-				$div->setAttribute('style', $blocks[$blockId]['parameters']['style']);
+				$style = $blocks[$blockId]['parameters']['style'];
 			}
+			
 			$div->setAttribute('class', $blockData['class']);
 			if (isset($blockData['id']))
 			{
@@ -1914,6 +1990,12 @@ class website_PageService extends f_persistentdocument_DocumentService
 			{
 				$div->setAttribute('id', 'b_'. $blockId);
 			}
+
+			if ($style !== '')
+			{
+				$div->setAttribute('style', $style);
+			}
+			
 			$div->appendChild($pageContent->createElement('htmlblock_' . $blockId));
 			$node->parentNode->replaceChild($div, $node);
 			unset($blocks[$blockId]['DomNode']);
@@ -1933,26 +2015,31 @@ class website_PageService extends f_persistentdocument_DocumentService
 
 			if (!$blockData['editable'])
 			{
-				$element = $pageContent->createElement('cfixedblock');
-				$element->setAttribute('editable', 'false');
-				$element->setAttribute('type', $blockData['type']);
+				$element = $pageContent->createElement('hbox');
+				$element->setAttribute('flex', '1');
 			}
 			else if ($static)
 			{
-				$element = $pageContent->createElement('crichtextblock');
+				$element = $pageContent->createElement('cblock');
 				$element->setAttribute('type', 'richtext');
+				$element->setAttribute('bind', 'richtext');
 			}
 			else
 			{
 				$element = $pageContent->createElement('cblock');
 				$element->setAttribute('type', $blockData['type']);
+				$element->setAttribute('bind', 'action');
 			}
-
-			if ($blockData['blockwidth'])
+			
+			if (isset($blockData['marginRight']))
 			{
-				$element->setAttribute('blockwidth', $blockData['blockwidth']);
+				$element->setAttribute('marginRight', $blockData['marginRight']);
 			}
-
+			if (isset($blockData['flex']))
+			{
+				$element->setAttribute('flex', $blockData['flex']);
+			}		
+				
 			foreach ($blockData['parameters'] as $name => $value)
 			{
 				if ($static && $name === 'content') {continue;}
@@ -1961,7 +2048,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 
 			$element->appendChild($pageContent->createElement('htmlblock_' . $blockId));
 			$node->parentNode->replaceChild($element, $node);
-
 			unset($blocks[$blockId]['DomNode']);
 		}
 	}
@@ -1974,19 +2060,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 	private function getBlockClassNameForSpecs($specs)
 	{
 		return substr($specs['package'], 8) . '_Block'.ucfirst($specs['name']).'Action';
-	}
-
-	/**
-	 * @param String $widthInPx
-	 * @return String
-	 */
-	private function buildInlineStyle($widthInPx)
-	{
-		if (f_util_StringUtils::isEmpty($widthInPx))
-		{
-			return "";
-		}
-		return "min-width:$widthInPx;max-width:$widthInPx;width:$widthInPx";
 	}
 	
 	/**

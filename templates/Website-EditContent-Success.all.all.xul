@@ -4,7 +4,7 @@
 <style tal:replace="cssInclusion" />
 <window orient="vertical"
 	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-	onload="setPageLabel();">
+	onload="onWindowLoaded();">
 
 <tal:block tal:content="scriptlibrary" />
 <tal:block tal:content="scriptInclusion" />
@@ -16,5 +16,5 @@
       documentversion: ${PAGEVERSION}
     };
 ]]></script>
-<clayouteditor id="mainEditor" tal:content="pageContent" />
+<cpageditor id="mainEditor" tal:content="pageContent" />
 </window>

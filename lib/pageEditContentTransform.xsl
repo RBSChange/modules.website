@@ -9,72 +9,87 @@
 		</xsl:copy>
 	</xsl:template>
 
-	<xsl:template match="change:template">
-		<hbox pack="center" flex="1"><vbox id="pageEditorContainer">
-			<div>
-				<xsl:copy-of select="@id" />
-				<div>
-					<xsl:apply-templates />
-				</div>
-			</div>
-		</vbox></hbox>
-	</xsl:template>
+	<!-- HTML TO XUL TEMPLATE CONVERSION -->
+	<xsl:template match="div[@orient='horizontal']">
+		<hbox>
+			<xsl:copy-of select="@*" />
+			<xsl:apply-templates />
+		</hbox>
+	</xsl:template>	
 
-	<xsl:template match="change:content">
+	<xsl:template match="div">
 		<vbox>
 			<xsl:copy-of select="@*" />
-			<clayoutdropzone flex="1" type="bottom" />
 			<xsl:apply-templates />
 		</vbox>
+	</xsl:template>	
+	
+	<xsl:template match="a">
+	</xsl:template>
+		
+	<xsl:template match="change:template">
+		<hbox pack="center" flex="1"><vbox id="pageEditorContainer">
+			<vbox>
+				<xsl:copy-of select="@id" />
+				<xsl:apply-templates />
+			</vbox>
+		</vbox></hbox>
+	</xsl:template>
+	
+	<xsl:template match="change:content">
+		<ccontent flex="1">
+			<xsl:copy-of select="@*" />
+			<cdroplayout flex="1" />
+			<xsl:apply-templates />
+		</ccontent>
 	</xsl:template>
 
 	<xsl:template match="change:layout">
-		<clayout flex="1">
+		<cblocklayout flex="1">
 			<xsl:attribute name="columnCount">
     			<xsl:value-of select="count(change:col)" />
  			</xsl:attribute>
 			<xsl:copy-of select="@*" />
-			<xsl:apply-templates />
-		</clayout>
-		<clayoutdropzone flex="1" type="bottom" />
+			<xsl:apply-templates select="change:col"/>
+		</cblocklayout>
+		<cdroplayout flex="1" />
 	</xsl:template>
-
+	
 	<xsl:template match="change:col">
-		<clayoutelement collapsed="true">
+		<clayoutcolumn flex="1">
 			<xsl:attribute name="anonid">
     			<xsl:value-of select="concat('col_',string(position()))" />
  			</xsl:attribute>
 			<xsl:choose>
 				<xsl:when test="position() mod 2 = 0">
-					<xsl:attribute name="class">
-    					<xsl:value-of select="'odd'" />
- 					</xsl:attribute>
+					<xsl:attribute name="odd">true</xsl:attribute>
 				</xsl:when>
 			</xsl:choose>
 			<xsl:copy-of select="@*" />
 			<xsl:choose>
 				<xsl:when test="node()">
-					<cdropzone type="bottom" />
+					<cdropblockrow />
 				</xsl:when>
 				<xsl:otherwise>
-					<cdropzone type="bottom" flex="1" />
+					<cdropblockrow flex="1" />
 				</xsl:otherwise>
 			</xsl:choose>
 			<xsl:apply-templates />
-		</clayoutelement>
+		</clayoutcolumn>
 	</xsl:template>
 
 	<xsl:template match="change:row">
-		<hbox>
+		<clayoutrow>
 			<xsl:copy-of select="@*" />
+			<cdropblockcell />		
 			<xsl:apply-templates />
-		</hbox>
+		</clayoutrow>
 		<xsl:choose>
 			<xsl:when test="position()=last()">
-				<cdropzone type="bottom" flex="1" />
+				<cdropblockrow flex="1" />
 			</xsl:when>
 			<xsl:otherwise>
-				<cdropzone type="bottom" />
+				<cdropblockrow />
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
@@ -97,22 +112,23 @@
 				</changeblock>
 			</xsl:otherwise>
 		</xsl:choose>
-	</xsl:template>
-
-	<xsl:template match="change:templateblock">
-		<hbox>
-			<changeblock editable="false">
-				<xsl:copy-of select="@*" />
-				<xsl:apply-templates />
-			</changeblock>
-		</hbox>
+		<cdropblockcell />
 	</xsl:template>
 
 	<xsl:template match="change:spacer">
-		<cemptyblock type="empty">
-			<xsl:copy-of select="@*" />
-			<xsl:apply-templates />
-		</cemptyblock>
+		<cblock>
+			<xsl:copy-of select="@width" />
+			<xsl:copy-of select="@height" />
+			<xsl:attribute name="type"><xsl:text>empty</xsl:text></xsl:attribute>
+			<xsl:attribute name="bind"><xsl:text>empty</xsl:text></xsl:attribute>
+		</cblock>
+		<cdropblockcell />
 	</xsl:template>
 
+	<xsl:template match="change:templateblock">
+		<changeblock editable="false">
+			<xsl:copy-of select="@*" />
+			<xsl:apply-templates />
+		</changeblock>
+	</xsl:template>
 </xsl:stylesheet>
