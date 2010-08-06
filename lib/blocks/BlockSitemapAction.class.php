@@ -15,6 +15,7 @@ class website_BlockSitemapAction extends website_BlockAction
 		 "modules_website/pagereference",
 		 "modules_website/pageversion",
 		 "modules_website/topic",
+		 "modules_website/systemtopic",
 		 "modules_website/website");
 	}
 
