@@ -68,9 +68,25 @@ class website_ChangeBlockRenderer
 		{
 			$this->moduleName = $params['module'];
 		}
-		echo '<div class="modules-'. $this->moduleName .'-'.  $this->actionName  .' modules-' . $this->moduleName . '">';
-		$this->executeBlockAction($this->getRequestParameters($params, $this->moduleName));
-		echo '</div>';
+		if (isset($params['container']))
+		{
+			if (f_util_StringUtils::isEmpty($params['container']))
+			{
+				$this->executeBlockAction($this->getRequestParameters($params, $this->moduleName));
+			}
+			else
+			{
+				echo '<' . $params['container'] .' class="modules-'. $this->moduleName .'-'.  $this->actionName  .' modules-' . $this->moduleName . '">';
+				$this->executeBlockAction($this->getRequestParameters($params, $this->moduleName));
+				echo '</' . $params['container'] .'>';
+			}
+		}
+		else
+		{
+			echo '<div class="modules-'. $this->moduleName .'-'.  $this->actionName  .' modules-' . $this->moduleName . '">';
+			$this->executeBlockAction($this->getRequestParameters($params, $this->moduleName));
+			echo '</div>';
+		}
 	}
 	
 	/**
