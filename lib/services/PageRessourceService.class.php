@@ -336,7 +336,7 @@ class website_PageRessourceService extends BaseService
 		$template = $this->getPageTemplate($page, false);
 		if ($template === null) {return array();}
 		
-		$frontOfficeScriptsCache = f_util_FileUtils::buildCachePath("frontofficeScripts.". str_replace('/', '.', $template->getCodename()));
+		$frontOfficeScriptsCache = f_util_FileUtils::buildCachePath("frontofficeScripts", str_replace('/', '.', $template->getCodename()));
 		if (Framework::inDevelopmentMode())
 		{
 			if (file_exists($frontOfficeScriptsCache))
