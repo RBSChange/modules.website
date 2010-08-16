@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document xmlns="http://www.rbs.fr/schema/change-document/1.0" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/static/schema/change-document/1.0.xsd" 
-	model-version="3.0" icon="copy"	extend="modules_website/page" backoffice-indexable="false">
+<document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/static/schema/change-document/1.0.xsd"
+	model-version="3.0" icon="page-group" extend="modules_website/page" backoffice-indexable="false">
 	<properties>
 		<add name="currentversionid" type="Integer" default-value="0" localized="true" />
 	</properties>
-
 	<children>
 		<child name="versions" type="modules_website/pageversion" />
 	</children>
-	
 	<workflow start-task="" />
 </document>
