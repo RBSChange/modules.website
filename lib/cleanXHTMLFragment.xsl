@@ -190,7 +190,7 @@
 			<xsl:attribute name="class">
 				<xsl:value-of select="php:function('website_XHTMLCleanerHelper::safeImgClass', .)" />
 			</xsl:attribute> 
-			<xsl:copy-of select="@*[name() = 'lang' or name() = 'alt' or name() = 'cmpref' or name() = 'zoom' or name() = 'format' or name() = 'height' or name() = 'width']"/>
+			<xsl:copy-of select="@*[name() = 'lang' or name() = 'alt' or name() = 'cmpref' or name() = 'usemediaalt' or name() = 'zoom' or name() = 'format' or name() = 'height' or name() = 'width']"/>
 			<xsl:apply-templates />
 		</img>
 	</xsl:template>
