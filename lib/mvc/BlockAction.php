@@ -27,6 +27,14 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 	
 	/**
+	 * @return array
+	 */
+	public function getRequestModuleNames()
+	{
+		return array($this->getModuleName());
+	}
+	
+	/**
 	 * @return Boolean
 	 */
 	public function isCacheEnabled()

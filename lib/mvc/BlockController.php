@@ -96,27 +96,25 @@ class website_BlockController implements f_mvc_Controller
 	 */
 	function forward($moduleName, $actionName)
 	{
-		$this->pushAction($this->getActionInstanceByModuleAndName($moduleName, $actionName));
+		$action = $this->getActionInstanceByModuleAndName($moduleName, $actionName);
+		$this->pushAction($action);
 		try
 		{
 			$currentRequest = f_util_ArrayUtils::lastElement($this->actionRequestStack);
 			// TODO : take care of website_BlockAction::SUBMIT_PARAMETER_NAME value ! (must reinitialize to the proper value)
 			if ($currentRequest === null)
 			{
-				$request = new website_BlockActionRequest(array(), $moduleName, $actionName);
+				$parameters = $this->buildActionRequestParameters($action->getRequestModuleNames(), $this->getGlobalRequest());
 			}
 			else
 			{
-				$parameters = $currentRequest->getParameters();
-				if ($currentRequest->getModuleName() != $moduleName)
-				{
-					$moduleParam = $this->getGlobalRequest()->getModuleParameters($moduleName);
-					if (f_util_ArrayUtils::isNotEmpty($moduleParam))
-					{
-						$parameters = array_merge($parameters, $moduleParam);
-					}
-				}
-				$request = new website_BlockActionRequest($parameters, $moduleName, $actionName);
+				$parameters = array_merge($currentRequest->getParameters(), 
+					$this->buildActionRequestParameters($action->getRequestModuleNames(), $this->getGlobalRequest()));
+			}
+			
+			$request = new website_BlockActionRequest($parameters, $moduleName, $actionName);
+			if ($currentRequest !== null)
+			{
 				$request->setAttributes($currentRequest->getAttributes());
 			}
 			$this->pushRequest($request);
@@ -234,7 +232,8 @@ class website_BlockController implements f_mvc_Controller
 		{
 			$moduleName = $action->getModuleName();
 			$this->pushAction($action);
-			$this->pushRequest(new website_BlockActionRequest($request->getModuleParameters($moduleName), $moduleName, $action->getName()));
+			$parameters = $this->buildActionRequestParameters($action->getRequestModuleNames(), $request);
+			$this->pushRequest(new website_BlockActionRequest($parameters, $moduleName, $action->getName()));
 			$this->processInternal();
 			$this->popAction();
 			$this->popRequest();
@@ -245,6 +244,25 @@ class website_BlockController implements f_mvc_Controller
 			$this->popRequest();
 			throw $e;
 		}
+	}
+	
+	/**
+	 * @param array $requestModuleNames
+	 * @param f_mvc_HTTPRequest $request
+	 * @return array
+	 */
+	private function buildActionRequestParameters($requestModuleNames, $request)
+	{
+		$parameters = array();
+		foreach ($requestModuleNames as $reqModuleName) 
+		{
+			$p = $request->getModuleParameters($reqModuleName);
+			if (is_array($p))
+			{
+				$parameters = array_merge($p, $parameters);
+			}
+		}
+		return $parameters;
 	}
 
 	/**
