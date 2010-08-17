@@ -317,11 +317,10 @@
 		]]></body>
 	</action>
   
-	<action name="openOrderChildren">
+	<action name="openTreeNodeOrder">
 		<parameter name="listWidget" />
 		<body><![CDATA[
-			this.openOrderChildrenPanel(listWidget, null, ['modules_website/topic', 'modules_website/page', 
-				'modules_website/pagegroup', 'modules_website/pagereference', 'modules_website/pageexternal']);
+			this.openOrderChildrenPanel(listWidget, null, ['modules_generic/folder', 'modules_website/website', 'modules_website/topic', 'modules_website/page', 'modules_website/pageexternal']);
 		]]></body>
 	</action>
 	
