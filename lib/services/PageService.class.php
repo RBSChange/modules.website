@@ -1636,23 +1636,27 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	public function render($page)
 	{
+		$dcs = f_DataCacheService::getInstance();
+		$cacheItem = null;
+		$putInCache = false;
+		
 		if (Framework::inDevelopmentMode() || $page->isNew() || $page->isPropertyModified('content'))
 		{
-			$cache = null;
 			if (Framework::isDebugEnabled())
 			{
 				$current = microtime(true);
 				$this->benchTimes = array('renderStart' => $current, 'c' => $current);
 			}
 		}
-		else
+		else if ($dcs->isEnabled())
 		{
-			$cache = new f_SimpleCache(__METHOD__, array($page->getId(), RequestContext::getInstance()->getLang()), array($page->getId()));
+			$cacheItem = $dcs->readFromCache(__METHOD__, array($page->getId()));
+			$putInCache = true;
 		}
 
-		if ($cache !== null && $cache->exists('blocksAndHtmlBody'))
+		if ($cacheItem !== null && $dcs->exists($cacheItem))
 		{
-			$cachedData = $cache->readFromCache('blocksAndHtmlBody');
+			$cachedData = $cacheItem->getValue('blocksAndHtmlBody');
 			$pageRenderInfo = unserialize($cachedData);
 			$blocks = $pageRenderInfo['blocks'];
 			$htmlBody = $pageRenderInfo['htmlBody'];
@@ -1713,9 +1717,11 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$pageContext->addContainerStylesheet();
 
 			$this->addBenchTime('pageContextInitialize');
-			if ($cache !== null)
+			if ($putInCache)
 			{
-				$cache->writeToCache("blocksAndHtmlBody", serialize(array("blocks" => $blocks, "htmlBody" => $htmlBody, "docType" => $docType)));
+				$cacheItem = $dcs->getNewCacheItem(__METHOD__, array($page->getId()), array($page->getId(), RequestContext::getInstance()->getLang()));
+				$cacheItem->setValue("blocksAndHtmlBody", serialize(array("blocks" => $blocks, "htmlBody" => $htmlBody, "docType" => $docType)));
+				$dcs->writeToCache($cacheItem);
 			}
 		}
 
