@@ -466,7 +466,8 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 				throw new Exception("$name does not have exactly two arguments");
 			}
 			$executePart = $matches[1];
-			return $this->processValidation($executePart, $arguments[0], $arguments[1]);
+			$request = $arguments[0];
+			return $this->processValidation($executePart, $request, $arguments[1], $request->getParameter("website_FormHelper_relkey"));
 		} 
 		else
 		{
@@ -478,14 +479,15 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	 * @param website_BlockActionRequest $request
 	 * @param Mixed $bean
 	 * @param String $executePart
+	 * @param String $relKey
 	 * @return Boolean
 	 */
-	protected final function processValidation($executePart, $request, $bean = null)
+	protected final function processValidation($executePart, $request, $bean = null, $relKey = null)
 	{
 		$getRulesMethodName = 'get' . $executePart . 'InputValidationRules';
 		if (method_exists($this, $getRulesMethodName))
 		{
-			return $this->processValidationRules($this->$getRulesMethodName($request, $bean), $request, $bean);
+			return $this->processValidationRules($this->$getRulesMethodName($request, $bean), $request, $bean, $relKey);
 		}
 		return true;
 	}
@@ -557,7 +559,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 		{
 			$bean = BeanUtils::getBean($bean);
 		}
-			
+		
 		$validationResult = true;
 		foreach ($validationRules as $validationRuleDeclaration)
 		{
@@ -589,7 +591,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 					{
 						$this->addError($validationError, $relKey);
 					}
-					$this->addErrorsForProperty($propertyName, $validationErrors);
+					$this->addErrorsForProperty($propertyName, $validationErrors, $relKey);
 				}
 			}
 			elseif ($this->isBeanRule($validationRuleDeclaration))
@@ -617,7 +619,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 						}
 						else
 						{
-							$this->addErrorsForProperty($propName, $propertyErrors);
+							$this->addErrorsForProperty($propName, $propertyErrors, $relKey);
 						}
 					}
 				}
@@ -782,12 +784,14 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	/**
 	 * @param String $propertyName
 	 * @param String $error
+	 * @param String $relKey
 	 */
-	protected final function addErrorForProperty($propertyName, $error)
+	protected final function addErrorForProperty($propertyName, $error, $relKey = null)
 	{
-		if ($this->hasAttributeForKey(self::BLOCK_PER_PROPERTY_ERRORS_ATTRIBUTE_KEY))
+		$key = self::BLOCK_PER_PROPERTY_ERRORS_ATTRIBUTE_KEY;
+		if ($this->hasAttributeForKey($key))
 		{
-			$errorsPerProperty = $this->getAttributeByKey(self::BLOCK_PER_PROPERTY_ERRORS_ATTRIBUTE_KEY);
+			$errorsPerProperty = $this->getAttributeByKey($key);
 		}
 		else
 		{
@@ -798,18 +802,42 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 			$errorsPerProperty[$propertyName] = array();
 		}
 		$errorsPerProperty[$propertyName][] = $error;
-		$this->setAttributeWithKey($errorsPerProperty, self::BLOCK_PER_PROPERTY_ERRORS_ATTRIBUTE_KEY);
+		$this->setAttributeWithKey($errorsPerProperty, $key);
+		
+		if ($relKey === null)
+		{
+			$relKey = website_BlockController::getInstance()->getRequest()->getParameter("website_FormHelper_relkey");
+		}
+		if ($relKey !== null)
+		{
+			$key = self::BLOCK_PER_PROPERTY_ERRORS_ATTRIBUTE_KEY."_relative";
+			if ($this->hasAttributeForKey($key))
+			{
+				$errorsPerProperty = $this->getAttributeByKey($key);
+			}
+			else
+			{
+				$errorsPerProperty = array();
+			}
+			if (!isset($errorsPerProperty[$propertyName]))
+			{
+				$errorsPerProperty[$propertyName] = array();
+			}
+			$errorsPerProperty[$propertyName][] = $error;
+			$this->setAttributeWithKey($errorsPerProperty, $key, $this->getBlockId()."_".$relKey);
+		}
 	}
 	
 	/**
 	 * @param String $propertyName
 	 * @param String[] $errors
+	 * @param String[] $relKey
 	 */
-	protected final function addErrorsForProperty($propertyName, $errors)
+	protected final function addErrorsForProperty($propertyName, $errors, $relKey = null)
 	{
 		foreach ($errors as $error)
 		{
-			$this->addErrorForProperty($propertyName, $error);
+			$this->addErrorForProperty($propertyName, $error, $relKey);
 		}	
 	}
 
@@ -822,6 +850,10 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	private function addAttributeWithKey($msg, $key, $relKey = null)
 	{
 		$this->addAttributeWithKeyForBlock($msg, $key, $this->getBlockId());
+		if ($relKey === null)
+		{
+			$relKey = website_BlockController::getInstance()->getRequest()->getParameter("website_FormHelper_relkey");
+		}
 		if ($relKey !== null)
 		{
 			$this->addAttributeWithKeyForBlock($msg, $key."_relative", $this->getBlockId()."_".$relKey);
@@ -860,11 +892,14 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 		return isset($blockAttributes[$blockId]);
 	}
 
-	private function setAttributeWithKey($value, $key)
+	private function setAttributeWithKey($value, $key, $blockId = null)
 	{
 		$context = $this->getContext();
 		$blockAttributes = $context->getAttribute($key, array());
-		$blockId = $this->getBlockId();
+		if ($blockId === null)
+		{
+			$blockId = $this->getBlockId();
+		}
 		$blockAttributes[$blockId] = $value;
 		$context->setAttribute($key, $blockAttributes);
 	}

@@ -9,6 +9,10 @@ class website_FormHelper
 	 * @var String
 	 */
 	private static $formId;
+	/**
+	 * @var String
+	 */
+	private static $relKey;
 
 	private static $wasCalled = false;
 
@@ -136,8 +140,10 @@ class website_FormHelper
 		$formAttributes["class"] = self::getValue($params, "class", "cmxform");
 
 		$html .= "<form" . f_util_HtmlUtils::buildAttributes($formAttributes).">";
-		//$html .= "<div><a ".f_util_HtmlUtils::buildAttribute("name", self::$formId)."></a></div>";
-
+		if (self::$relKey !== null)
+		{
+			$html .= "<div style=\"display: none;\"><input name=\"".self::$moduleName."Param[website_FormHelper_relkey]\" type=\"hidden\" ".f_util_HtmlUtils::buildAttribute("value", self::$relKey)."></a></div>";
+		}
 		return $html;
 	}
 
@@ -198,7 +204,12 @@ class website_FormHelper
 		$formId = self::$moduleName . '_' . self::$currentBlockId;
 		if (!f_util_StringUtils::isEmpty($idParam))
 		{
+			self::$relKey = $idParam;
 			$formId .= '_'.$idParam;
+		}
+		else
+		{
+			self::$relKey = null;
 		}
 		return $formId;
 	}
@@ -2283,8 +2294,18 @@ jQuery(document).ready(function() {
 	 */
 	private static function hasErrorsForProperty($propertyName)
 	{
-		$propertyErrors = self::$context->getAttribute(website_BlockAction::BLOCK_PER_PROPERTY_ERRORS_ATTRIBUTE_KEY, array());
-		return isset($propertyErrors[self::$currentBlockId]) && isset($propertyErrors[self::$currentBlockId][$propertyName]);
+		$ctxKey = website_BlockAction::BLOCK_PER_PROPERTY_ERRORS_ATTRIBUTE_KEY;
+		if (self::$relKey !== null)
+		{
+			$ctxKey .= "_relative";
+			$blockKey = self::$currentBlockId."_".self::$relKey;
+		}
+		else
+		{
+			$blockKey = self::$currentBlockId;
+		}
+		$propertyErrors = self::$context->getAttribute($ctxKey, array());
+		return isset($propertyErrors[$blockKey]) && isset($propertyErrors[$blockKey][$propertyName]);
 	}
 
 	/**
