@@ -35,7 +35,7 @@ class website_FormHelper
 			$useQTipHelp = f_util_Convert::toBoolean(Framework::getConfigurationValue("modules/website/forms-use-qtip-help"));
 			$useQTipError = f_util_Convert::toBoolean(Framework::getConfigurationValue("modules/website/forms-use-qtip-error"));
 			
-			if ($useQTipError || $useQTipHelp)
+			if (true && ($useQTipError || $useQTipHelp))
 			{
 				self::$context->addScript('modules.website.lib.js.jquery-qtip');
 
@@ -1591,11 +1591,6 @@ jQuery(document).ready(function() {
 		if (!self::$datePickerScriptAdded)
 		{
 			$page = self::$context;
-			$page->addScript('modules.form.lib.js.date-picker.date');
-			$page->addScript('modules.form.lib.js.date-picker.date_' . RequestContext::getInstance()->getLang());
-			$page->addScript('modules.form.lib.js.date-picker.jquery-bgiframe');
-			$page->addScript('modules.form.lib.js.date-picker.jquery-dimensions');
-			$page->addScript('modules.form.lib.js.date-picker.jquery-datePicker');
 			$page->addScript('modules.form.lib.js.form');
 			self::$datePickerScriptAdded = true;
 		}
