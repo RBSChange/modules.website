@@ -134,7 +134,7 @@ class block_BlockCache
 	private $cachePath;
 	private $isCacheEnabled, $isRequestCacheEnabled;
 	/**
-	 * @var f_SimpleCache
+	 * @var f_DataCacheItemImpl
 	 */
 	private $simpleCache;
 
@@ -154,13 +154,13 @@ class block_BlockCache
 		  	$this->isRequestCacheEnabled = $blockAction->isGlobalRequestCacheEnabled();
 		  	$keyParameters = $blockAction->getCacheKeyParameters();
 			$keyParameters["https"] = RequestContext::getInstance()->inHTTPS();
-		  	$this->simpleCache = new f_SimpleCache(get_class($blockAction), $keyParameters, $blockAction->getCacheSpecifications());
+		  	$this->simpleCache = f_DataCacheService::getInstance()->readFromCache(get_class($blockAction), $keyParameters, $blockAction->getCacheSpecifications());
 		}
 	}
 	
 	private static function isCacheEnabled()
 	{
-		return f_SimpleCache::isEnabled() && (!defined("AG_DISABLE_BLOCK_CACHE") || !AG_DISABLE_BLOCK_CACHE);
+		return f_DataCacheService::getInstance()->isEnabled() && (!defined("AG_DISABLE_BLOCK_CACHE") || !AG_DISABLE_BLOCK_CACHE);
 	}
 
 	public function doAction()
@@ -174,7 +174,7 @@ class block_BlockCache
 			$controller = $this->blockHandler->getController();
 			$blockContext = $controller->getContext();
 			$request = $controller->getGlobalRequest();
-			if (!$this->simpleCache->exists('context') || ($this->isRequestCacheEnabled && !$this->simpleCache->exists('request')))
+			if (!f_DataCacheService::getInstance()->exists($this->simpleCache, 'context') || ($this->isRequestCacheEnabled && !f_DataCacheService::getInstance()->exists($this->simpleCache, 'request')))
 			{
 				try
 				{
@@ -203,9 +203,10 @@ class block_BlockCache
 
 					if ($this->isRequestCacheEnabled)
 					{
-						$this->simpleCache->writeToCache('request', "<?php ".join(null, $requestRecorder->getRecords()));
+						$this->simpleCache->setValue('request', "<?php ".join(null, $requestRecorder->getRecords()));
 					}
-					$this->simpleCache->writeToCache('context', "<?php ".join(null, $contextRecorder->getRecords()));
+					$this->simpleCache->setValue('context', "<?php ".join(null, $contextRecorder->getRecords()));
+					f_DataCacheService::getInstance()->writeToCache($this->simpleCache);
 				}
 				catch(Exception $e)
 				{
@@ -223,10 +224,12 @@ class block_BlockCache
 			{
 				if ($this->isRequestCacheEnabled)
 				{
-					@include($this->getRequestCachePath());
+					$code = trim($this->simpleCache->getValue('request'), "<?php");
+					eval($code);
 				}
 
-				@include($this->getContextCachePath());
+				$context = trim($this->simpleCache->getValue('context'), "<?php");
+				eval($context);
 			}
 		}
 	}
@@ -236,24 +239,25 @@ class block_BlockCache
 	 */
 	public function doView()
 	{
-		if ($this->isCacheEnabled && $this->simpleCache->exists('html') && !$this->regenerateCache)
+		if ($this->isCacheEnabled && f_DataCacheService::getInstance()->exists($this->simpleCache, 'html') && !$this->regenerateCache)
 		{
-			return $this->simpleCache->readFromCache('html');
+			return $this->simpleCache->getValue('html');
 		}
 		else
 		{
 			$view = $this->blockHandler->getBlockView();
 			if (!is_null($view) && $view->isCacheEnabled())
 			{
-				$simpleViewCache = new f_SimpleCache(get_class($view), $view->getCacheKeyParameters(), $view->getCacheSpecifications());
-				if ($simpleViewCache->exists('html'))
+				$simpleViewCache = f_DataCacheService::getInstance()->readFromCache(get_class($view), $view->getCacheKeyParameters(), $view->getCacheSpecifications());
+				if (f_DataCacheService::getInstance()->exists($simpleViewCache, 'html'))
 				{
-					return $simpleViewCache->readFromCache('html');
+					return $simpleViewCache->getValue('html');
 				}
 				else
 				{
 					$viewResult = $this->blockHandler->doView();
-					$simpleViewCache->writeToCache('html', $viewResult);
+					$simpleViewCache->setValue('html', $viewResult);
+					f_DataCacheService::getInstance()->writeToCache($simpleViewCache);
 					return $viewResult;
 				}
 			}
@@ -262,26 +266,12 @@ class block_BlockCache
 				$viewResult = $this->blockHandler->doView();
 				if ($this->isCacheEnabled)
 				{
-					$this->simpleCache->writeToCache('html',  $viewResult);
+					$this->simpleCache->setValue('html', $viewResult);
+					f_DataCacheService::getInstance()->writeToCache($this->simpleCache);
 				}
 			}
 			return $viewResult;
 		}
-	}
-
-	private function getHTMLCachePath()
-	{
-		return $this->simpleCache->getCachePath('html');
-	}
-
-	private function getRequestCachePath()
-	{
-		return $this->simpleCache->getCachePath('request');
-	}
-
-	private function getContextCachePath()
-	{
-		return $this->simpleCache->getCachePath('context');
 	}
 
 	/**
@@ -289,6 +279,6 @@ class block_BlockCache
 	 */
 	public static function clear($blockName = null)
 	{
-		f_SimpleCache::clear($blockName);
+		f_DataCacheService::getInstance()->clearCacheByNamespace($blockName);
 	}
 }
