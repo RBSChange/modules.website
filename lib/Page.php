@@ -578,22 +578,19 @@ class website_Page implements f_mvc_Context
 
 	protected function getScripts()
 	{
-		$js = JsService::getInstance();
-		$frontofficeScripts = website_PageRessourceService::getInstance()->getAvailableScripts();
-		foreach ($frontofficeScripts as $script)
-		{
-			$js->registerScript($script);
-		}
-		$html = $js->execute();
-
+		$javascriptInclusions = array();
+		$prs = website_PageRessourceService::getInstance();
+		$html = $prs->getPageJavascriptInclusion();
 		if (isset($this->attributes['scripts']))
 		{
-			$frontofficeScriptsComputed = $js->getComputedRegisteredScripts();
-			foreach (array_keys($this->attributes['scripts']) as $script)
+			if ($html === null)
 			{
-				$js->registerScript($script);
+			 	$html = $prs->getPageJavascriptInlineInclusion(array_keys($this->attributes['scripts']));
 			}
-			$html .= $js->execute(null, false, $frontofficeScriptsComputed);
+			else
+			{
+				$html .= "\n" . $prs->getPageJavascriptInlineInclusion(array_keys($this->attributes['scripts']));
+			}
 		}
 		return $html;
 	}

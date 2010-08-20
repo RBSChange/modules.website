@@ -207,6 +207,43 @@ class website_PageRessourceService extends BaseService
 		return $this->buildStylesheetInline($css);
 	}
 	
+	public function getPageJavascriptInclusion()
+	{
+		$page = $this->getPage();
+		if ($page === null)
+		{
+			return null;
+		}
+		$template = $this->getPageTemplate($page, false);
+		if ($template === null)
+		{
+			return null;
+		}
+		$relativePath = $this->getJavascriptRelativePath('template', $template->getId());
+		return $this->buildJavascriptInclusion($relativePath);
+	}
+	
+	public function getPageJavascriptInlineInclusion($scriptNames)
+	{
+		
+		$page = $this->getPage();
+		if ($page === null)
+		{
+			return null;
+		}
+		$template = $this->getPageTemplate($page, false);
+		if ($template === null)
+		{
+			return null;
+		}
+		sort($scriptNames, SORT_STRING);
+		
+		$scriptNames[] = 'page';
+		$fullNames = implode('/', $scriptNames);
+		$relativePath = $this->getJavascriptRelativePath($fullNames, $template->getId());
+		return $this->buildJavascriptInclusion($relativePath);
+	}
+	
 	/**
 	 * @param theme_persistentdocument_pagetemplate $template
 	 * @param string $engine
@@ -374,6 +411,24 @@ class website_PageRessourceService extends BaseService
 		if ($websiteId < 0) {$websiteId = 0;}
 		return f_util_FileUtils::buildPath('cache', 'www', 'css', $protocol , $websiteId, $lang, $engine, $version, $fullName);
 	}
+	
+	/**
+	 * @param String $name
+	 * @return String
+	 */
+	private function getJavascriptRelativePath($name, $templateId)
+	{
+		$fullName = $name;
+		if ($this->skin)
+		{
+			$fullName .= '-' . $this->skin->getIdentifier();
+		}
+		$fullName .= '.js';
+		$lang = RequestContext::getInstance()->getLang();
+		$websiteId = website_WebsiteModuleService::getInstance()->getCurrentWebsite()->getId();
+		if ($websiteId < 0) {$websiteId = 0;}
+		return f_util_FileUtils::buildPath('cache', 'www', 'js', $websiteId, $lang, $templateId, $fullName);
+	}
 
 	/**
 	 * @param String $styleSheetRelativePath
@@ -384,6 +439,16 @@ class website_PageRessourceService extends BaseService
 	{
 		$inclusionSrc = LinkHelper::getRessourceLink('/' . $styleSheetRelativePath)->getUrl();
 		return '<link rel="stylesheet" href="' . $inclusionSrc . '" type="text/css" media="' . $mediaType . '" />';
+	}
+	
+	/**
+	 * @param String $styleSheetRelativePath
+	 * @return String
+	 */
+	private function buildJavascriptInclusion($javascriptRelativePath)
+	{
+		$inclusionSrc = LinkHelper::getRessourceLink('/' . $javascriptRelativePath)->getUrl();
+		return '<script src="' . $inclusionSrc . '" type="text/javascript"></script>';
 	}
 	
 	/**

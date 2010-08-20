@@ -30,7 +30,6 @@ class website_GenerateStyleSheetAction extends website_Action
 		$prs = website_PageRessourceService::getInstance();
 		$parameters = explode("/", $request->getParameter("param"));
 		$nbParameters = count($parameters); 
-
 		try 
 		{
 			ob_start();
@@ -81,7 +80,24 @@ class website_GenerateStyleSheetAction extends website_Action
 			
 			if (!$template)
 			{
-				echo $prs->getStylesheet($stylesheetBaseName, $engine, $version, $protocol);
+				if (strpos($stylesheetBaseName, ','))
+				{
+					$fullEngine = $engine .'.' .$version;
+					$names = explode(',', $stylesheetBaseName);
+					$mediaType = array_pop($names);
+					foreach ($names as $stylesheetName) 
+					{
+						if (Framework::inDevelopmentMode())
+						{
+							echo "/* $stylesheetName $mediaType $fullEngine */\n";
+						}
+						echo StyleService::getInstance()->getCSS($stylesheetName, $fullEngine);
+					}
+				}
+				else
+				{
+					echo $prs->getStylesheet($stylesheetBaseName, $engine, $version, $protocol);
+				}
 			}
 			else if ($stylesheetBaseName == website_PageRessourceService::GLOBAL_SCREEN_NAME)
 			{
@@ -94,7 +110,7 @@ class website_GenerateStyleSheetAction extends website_Action
 			else
 			{
 				throw new Exception('Invalid styleSheet name:' . $stylesheetBaseName);
-			}
+			}			
 			ob_end_flush();			
 		}
 		catch (Exception $e)
