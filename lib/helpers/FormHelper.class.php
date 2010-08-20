@@ -92,7 +92,7 @@ class website_FormHelper
 				if ($useQTipHelp && $useQTipError)
 				{
 				$html .= "
-   jQuery('input[title], textarea[title], label[title]').each(function(i) {
+   jQuery('form.change-form input[title], form.change-form textarea[title], form.change-form label[title]').each(function(i) {
    		var elem = jQuery(this);
    		elem.qtip(elem.hasClass('error') ? qTipErrorOptions : qTipOptions);
    });";
@@ -100,7 +100,7 @@ class website_FormHelper
 				elseif ($useQTipError)
 				{
 					$html .= "
-   jQuery('label[title].error').each(function(i) {
+   jQuery('form.change-form label[title].error').each(function(i) {
    		var elem = jQuery(this);
    		elem.qtip(qTipErrorOptions);
    });";
@@ -108,7 +108,7 @@ class website_FormHelper
 				elseif ($useQTipHelp)
 				{
 					$html .= "
-   jQuery('input[title], textarea[title]').each(function(i) {
+   jQuery('form.change-form input[title], form.change-form textarea[title]').each(function(i) {
    		var elem = jQuery(this);
    		elem.qtip(qTipOptions);
    });";
@@ -137,7 +137,8 @@ class website_FormHelper
 		$formAttributes["id"] = self::$formId;
 		$formAttributes["name"] = self::$formId;
 		$formAttributes["enctype"] = self::getValue($params, "enctype", "multipart/form-data");
-		$formAttributes["class"] = self::getValue($params, "class", "cmxform");
+		$formAttributes["class"] = self::getValue($params, "class", "cmxform change-form");
+		self::addClassParam($formAttributes, "change-form");
 
 		$html .= "<form" . f_util_HtmlUtils::buildAttributes($formAttributes).">";
 		if (self::$relKey !== null)
