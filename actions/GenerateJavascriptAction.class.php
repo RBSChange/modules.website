@@ -106,7 +106,7 @@ class website_GenerateJavascriptAction extends f_action_BaseAction
 			}
 			$content = ob_get_contents();		
 			$jsFileScript = f_util_FileUtils::buildWebCachePath('js', implode(DIRECTORY_SEPARATOR, $parameters)) . '.js';
-			f_util_FileUtils::writeAndCreateContainer($jsFileScript, $content);
+			f_util_FileUtils::writeAndCreateContainer($jsFileScript, $content, f_util_FileUtils::OVERRIDE);
 			if (file_exists($jsFileScript . '.deleted'))
 			{
 				@unlink($jsFileScript . '.deleted');
