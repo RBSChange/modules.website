@@ -427,7 +427,8 @@ class website_PageRessourceService extends BaseService
 		$lang = RequestContext::getInstance()->getLang();
 		$websiteId = website_WebsiteModuleService::getInstance()->getCurrentWebsite()->getId();
 		if ($websiteId < 0) {$websiteId = 0;}
-		return f_util_FileUtils::buildPath('cache', 'www', 'js', $websiteId, $lang, $templateId, $fullName);
+		$protocol = website_WebsiteModuleService::getInstance()->getCurrentWebsite()->getProtocol();
+		return f_util_FileUtils::buildPath('cache', 'www', 'js', $protocol, $websiteId, $lang, $templateId, $fullName);
 	}
 
 	/**

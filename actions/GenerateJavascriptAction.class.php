@@ -32,12 +32,14 @@ class website_GenerateJavascriptAction extends f_action_BaseAction
 		try 
 		{
 			ob_start();
-			if ($nbParameters < 4)
+			if ($nbParameters < 5)
 			{
 				Framework::info(__METHOD__ . var_export($parameters, true));
 				throw new Exception('Invalid number of parameter: ' . $nbParameters);
 			}
-			$websiteId = intval($parameters[0]);
+			$protocol = $parameters[0];
+			
+			$websiteId = intval($parameters[1]);
 			if ($websiteId <= 0)
 			{
 				$website =  website_WebsiteModuleService::getInstance()->getDefaultWebsite();
@@ -47,12 +49,12 @@ class website_GenerateJavascriptAction extends f_action_BaseAction
 				$website = DocumentHelper::getDocumentInstance($websiteId, "modules_website/website");
 			}
 			
-			RequestContext::getInstance()->setLang($parameters[1]);		
+			RequestContext::getInstance()->setLang($parameters[2]);		
 			website_WebsiteModuleService::getInstance()->setCurrentWebsite($website);
 			
-			if (intval($parameters[2]) > 0)
+			if (intval($parameters[3]) > 0)
 			{
-				$template = DocumentHelper::getDocumentInstance(intval($parameters[2]), "modules_theme/pagetemplate");
+				$template = DocumentHelper::getDocumentInstance(intval($parameters[3]), "modules_theme/pagetemplate");
 				$frontofficeScripts = $template->getScriptIds();
 			}
 			else
@@ -68,7 +70,7 @@ class website_GenerateJavascriptAction extends f_action_BaseAction
 			
 			$scriptRegistryOrdered = array_keys($js->getComputedRegisteredScripts());
 			
-			$names = array_slice($parameters, 3);
+			$names = array_slice($parameters, 4);
 			if (count($names) === 1 &&  $names[0] === 'template')
 			{
 				echo "// **** Context vars ****\n";
