@@ -17,6 +17,8 @@ class website_GetFaviconAction extends f_action_BaseAction
 		}
 		$wsms = website_WebsiteModuleService::getInstance();
 		$websiteInfo  = $wsms->getWebsiteInfos($_SERVER['HTTP_HOST']);
+		$website = null;
+		
 		if ($websiteInfo !== null)
 		{
 			$lang = $websiteInfo['langs'][0];
@@ -32,7 +34,9 @@ class website_GetFaviconAction extends f_action_BaseAction
 				return View::NONE;
 			}
 		}	
-		$this->setContentType($website->getFaviconMimeType());
+		$mimeType = ($website) ? $website->getFaviconMimeType() : 'image/x-icon';
+		
+		$this->setContentType($mimeType);
 		$path = f_util_FileUtils::buildWebeditPath('media', 'frontoffice', $_SERVER['HTTP_HOST'] . '.ico');
 		if (file_exists($path))
 		{
