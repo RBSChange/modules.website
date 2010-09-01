@@ -17,7 +17,7 @@
 			
 			<method name="onInitialize">
 				<body><![CDATA[
-					this.resizeTo(500, 200);					
+					this.autoResize(500, 200);					
 					var me = this;
 					var callBack = function(result) { me.onLoadRessources(result); };
 					var containerId = ('pageContainerId' in this.parameters) ? this.parameters.pageContainerId : this.parameters.documentId;
