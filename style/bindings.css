@@ -1,6 +1,3 @@
-wblocktoolbar[type="modules_website_bookmarks"]{
-	-moz-binding: url(binding:modules.website.wBookmarksToolbar#wBookmarksToolbar);
-}
 cproperty[propertyname="editpagecontent"]{
 	-moz-binding: url(binding:modules.website.cEditorsProperties#cEditPageContent);
 }
@@ -41,4 +38,7 @@ cfield[fieldtype="markerslist"]{
 #edt_website_marker cfieldsgroup.marker-specific-properties
 {
 	-moz-binding: url(binding:modules.website.cMarkerEditor#cMarkerSpecificPropertiesSection);
+}
+#pg_website_bookmarks_cmpref{
+	-moz-binding: url(binding:modules.website.cBookmarksField#cBookmarksField);
 }

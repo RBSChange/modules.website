@@ -5,6 +5,11 @@
     <locale lang="en">sitemap</locale>
     <locale lang="de">Sitemap</locale>
   </entity>
+  <entity id="bookmarksBlock">
+    <locale lang="fr">signets</locale>
+    <locale lang="en">bookmarks</locale>
+    <locale lang="de">Bookmark</locale>
+  </entity>
   <entity id="emptyBookmarksMessage">
     <locale lang="fr">Le bloc ne contient aucun signet.</locale>
     <locale lang="en">Block contains no bookmark.</locale>

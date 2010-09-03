@@ -1,7 +1,11 @@
 <?xml version="1.0"?>
 <blocks>
 	<block type="richtext" icon="richtext" label="&amp;modules.uixul.bo.layout.RichTextBlock;" />
-	<block type="modules_website_bookmarks" icon="bookmark" label="&amp;modules.uixul.bo.layout.BookmarksBlock;" />
+	<block type="modules_website_bookmarks" icon="bookmark" label="&amp;modules.website.bo.blocks.BookmarksBlock;">
+		<parameters>
+			<parameter name="cmpref" type="String"/>
+		</parameters>
+	</block>
 	<block type="layout" columns="2" requiresNewEditor="true" icon="layout-2-columns" label="&amp;modules.website.bo.blocks.Two-col;" />
 	<block type="modules_website_sitemap" icon="sitemap" label="&amp;modules.website.bo.blocks.Sitemap;">
 		<parameters>
@@ -51,11 +55,12 @@
 			<parameter name="text" type="LongString" default-value="" cols="46" rows="4" />
 		</parameters>
 	</block>
-	<block type="modules_website_Simplecontent" display="view" icon="" label="&amp;modules.website.bo.blocks.Simplecontent;" hidden="true">
+	<block type="modules_website_Simplecontent" display="view" hidden="true" icon="" label="&amp;modules.website.bo.blocks.Simplecontent;">
 		<parameters>
 			<parameter name="view" type="String" />
 		</parameters>
 	</block>
+	
 	<block type="modules_website_edit" display="" icon="edit" label="&amp;modules.website.bo.blocks.Edit;" />
 	<block type="modules_website_Missing" display="" hidden="true" label="&amp;modules.website.bo.blocks.Missing.Title;" />
 	<!--
