@@ -194,7 +194,11 @@ class <{$className}> extends block_BlockConfiguration
 	
 	public function <{$property->getPhpGetter()}>AsHtml()
 	{
+<{if $property->getType() == "XHTMLFragment"}>
+		return f_util_HtmlUtils::renderHtmlFragment($this-><{$property->getPhpGetter()}>());
+<{else}>
 		return f_util_HtmlUtils::textToHtml($this-><{$property->getPhpGetter()}>());
+<{/if}>	
 	}
 	
 	public function <{$property->getPhpGetter()}>DefaultValue()
