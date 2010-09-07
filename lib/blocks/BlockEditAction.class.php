@@ -1,7 +1,7 @@
 <?php
 /**
  * website_BlockEditAction
- * @package modules.generic.lib.blocks
+ * @package modules.website.lib.blocks
  */
 class website_BlockEditAction extends website_TaggerBlockAction
 {
@@ -252,7 +252,7 @@ class website_BlockEditAction extends website_TaggerBlockAction
 		
 		if ($fromDetailPage)
 		{
-			$this->redirect("generic", "edit", array("website_BlockAction_submit" => array("edit" => array("message" => "true")), "message" => $message));	
+			$this->redirect("website", "edit", array("website_BlockAction_submit" => array("edit" => array("message" => "true")), "message" => $message));	
 		}
 		else
 		{
