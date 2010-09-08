@@ -12,8 +12,7 @@ class website_BlankAction extends website_Action
 	public function _execute($context, $request)
 	{
 		header("Expires: " . gmdate("D, d M Y H:i:s", time()+60) . " GMT");
-		$skinId = null;
-		$styles = array('modules.generic.frontoffice', 'modules.generic.richtextbo');	
+		$ss = StyleService::getInstance();
 		try
 		{
 			$documentId = $this->getDocumentIdFromRequest($request);
@@ -22,34 +21,29 @@ class website_BlankAction extends website_Action
 				$document = DocumentHelper::getDocumentInstance($documentId);
 				if ($document instanceof website_persistentdocument_page)
 				{
-					$ps = website_PageService::getInstance();
+					$ss->registerStyle('modules.generic.richtextbo');
+					
+					website_WebsiteModuleService::getInstance()->setCurrentPageId($document->getId());
+					$prs = website_PageRessourceService::getInstance();
+					$prs->setPage($document);
+					
 					$skinId = $document->getSkinId();	
-		
-					$template = website_PageRessourceService::getInstance()->getPageTemplate($document, false);
-					if ($template)
+					if ($skinId)
 					{
-						$styles = array_merge(array('modules.generic.richtextbo'), $template->getScreenStyleIds()); 
+						$prs->setSkin(DocumentHelper::getDocumentInstance($skinId));
 					}
-						
-					$ancestors = $ps->getAncestorsOf($document);
-					$ancestors = array_reverse($ancestors);
-					foreach ($ancestors as $ancestor)
-					{
-						if ($ancestor instanceof website_persistentdocument_website || $ancestor instanceof website_persistentdocument_topic)
-						{
-							if ($ancestor->getStylesheet())
-							{
-								$styleName = 'modules.website.'.$ancestor->getStylesheet();
-								$path = StyleService::getInstance()->getSourceLocation($styleName);
-								if ($path)
-								{
-									$styles[] = $styleName;
-									break;
-								}
-							}
-						}
-					}
+					$request->setAttribute('cssPageInclusion', $prs->getPageStylesheetInclusion());
 				}
+				else
+				{
+					$ss->registerStyle('modules.generic.frontoffice');
+					$ss->registerStyle('modules.generic.richtextbo');
+				}
+			}
+			else
+			{
+				$ss->registerStyle('modules.generic.frontoffice');
+				$ss->registerStyle('modules.generic.richtextbo');
 			}
 		}
 		catch (Exception $e)
@@ -59,11 +53,9 @@ class website_BlankAction extends website_Action
 		
 		if ($request->hasParameter('specificstylesheet'))
 		{
-			$styles[] = $request->getParameter('specificstylesheet');
+			$ss->registerStyle($request->getParameter('specificstylesheet'));
 		}
-
-		$request->setAttribute('stylesheetPath', StyleService::getInstance()->getStylePath($styles, K::XUL, $skinId));
-		
+		$request->setAttribute('cssInclusion', StyleService::getInstance()->execute(K::HTML));
 		return View::SUCCESS;
 	}
 }

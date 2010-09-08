@@ -18,7 +18,8 @@ class website_BlankSuccessView extends f_view_BaseView
             $this->setAttribute('content', $request->getParameter('content'));
         }
 
-        $this->setAttribute('cssInclusion', file_get_contents($request->getAttribute('stylesheetPath')));
+        $this->setAttribute('cssInclusion', $request->getAttribute('cssInclusion'));
+        $this->setAttribute('cssPageInclusion', $request->getAttribute('cssPageInclusion'));
     }
     
 	protected function sendHttpHeaders()

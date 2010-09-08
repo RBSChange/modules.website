@@ -27,6 +27,10 @@ class website_GenerateStyleSheetAction extends website_Action
 		{
 			controller_ChangeController::setNoCache();
 		}
+		if (Framework::isInfoEnabled())
+		{
+			Framework::info(__METHOD__ . ' ' . $request->getParameter("param"));
+		}
 		$prs = website_PageRessourceService::getInstance();
 		$parameters = explode("/", $request->getParameter("param"));
 		$nbParameters = count($parameters); 
@@ -93,6 +97,14 @@ class website_GenerateStyleSheetAction extends website_Action
 						}
 						echo StyleService::getInstance()->getCSS($stylesheetName, $fullEngine);
 					}
+					$cssContent = ob_get_contents();		
+					$cssFilePath = f_util_FileUtils::buildWebCachePath('css', $request->getParameter("param"));
+					Framework::info(__METHOD__ . ' ' . $cssFilePath);
+					f_util_FileUtils::writeAndCreateContainer($cssFilePath, $cssContent, f_util_FileUtils::OVERRIDE);
+					if (file_exists($cssFilePath . '.deleted'))
+					{
+						@unlink($cssFilePath . '.deleted');
+					}						
 				}
 				else
 				{
