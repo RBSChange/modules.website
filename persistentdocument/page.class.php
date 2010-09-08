@@ -224,5 +224,25 @@ class website_persistentdocument_page extends website_persistentdocument_pagebas
 	{
 		return LinkHelper::getDocumentUrl($this);
 	}
-
+	
+	/**
+	 * @var string
+	 */
+	private $fromlang = null;
+		
+	/**
+	 * @param string $fromlang
+	 */
+	public function setFromlang($fromlang)
+	{
+		$this->fromlang = $fromlang;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getFromlang()
+	{
+		return $this->fromlang;
+	}
 }

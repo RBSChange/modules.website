@@ -128,7 +128,15 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		if ($document->getContent() === null)
 		{
-			$document->setContent($document->getVoContent());
+			$fromLang = $document->getFromlang();
+			if ($fromLang !== null && $document->isLangAvailable($fromLang))
+			{
+				$document->setContent($document->getContentForLang($fromLang));
+			}
+			else
+			{
+				$document->setContent($document->getVoContent());
+			}
 		}
 	}
 
