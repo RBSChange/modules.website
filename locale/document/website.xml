@@ -184,16 +184,16 @@
 	</entity>
 
 	<entity id="section-msn">
-		<locale lang="fr">Identification MSN</locale>
-		<locale lang="en">MSN Identification</locale>
+		<locale lang="fr">Identification Bing</locale>
+		<locale lang="en">Bing Identification</locale>
 	</entity>
 	<entity id="msnfilecontent">
 		<locale lang="fr">contenu du fichier</locale>
 		<locale lang="en">file content</locale>
 	</entity>
 	<entity id="msnfilecontent-help">
-		<locale lang="fr">contenu XML du fichier MSN (/LiveSearchSiteAuth.xml)</locale>
-		<locale lang="en">XML content of the MSN identification file (/LiveSearchSiteAuth.xml)</locale>
+		<locale lang="fr">contenu XML du fichier Bing (/BingSiteAuth.xml)</locale>
+		<locale lang="en">XML content of the Bing identification file (/BingSiteAuth.xml)</locale>
 	</entity>
 	
 	
