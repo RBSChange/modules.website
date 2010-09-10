@@ -226,6 +226,7 @@ class website_XHTMLCleanerHelper
 	{
 		$element = $elementArray[0];
 		$class = 'link';
+		$classArray = array();
 		if ($element->hasAttribute('class'))
 		{
 			$classArray = explode(' ', $element->getAttribute('class'));
