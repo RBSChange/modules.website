@@ -1,5 +1,4 @@
 <?php
-
 class website_XHTMLCleanerHelper
 {
 	private static $xsltCleanerCachePath;
@@ -21,7 +20,7 @@ class website_XHTMLCleanerHelper
 		else
 		{
 			$dtdPath = 'file://' . str_replace(' ', '%20', realpath(WEBEDIT_HOME .'/framework/f_web/dtd/xhtml1-transitional.dtd'));
-		}
+		}	
 		
 		$xml = '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "'.$dtdPath.'"><body>' . $XHTMLFragment . '</body>';
 		$domTemplate->loadXML($xml);
@@ -234,10 +233,73 @@ class website_XHTMLCleanerHelper
 			{
 				$class .= ' tooltip';
 			}
+			if (in_array('popup', $classArray))
+			{
+				$class .= ' popup';
+			}
+		}
+	
+		//Deprecated attribute
+		if ($element->hasAttribute('popup'))
+		{
+			if (!in_array('popup', $classArray))
+			{
+				$class .= ' popup';
+			}
+			$element->removeAttribute('popup');
 		}
 		return $class;
 	}
 
+	
+	public static function safeAHref($elementArray)
+	{
+		$element = $elementArray[0];
+		$href = $element->hasAttribute('href') ? $element->getAttribute('href')  : '#';
+		if (strpos($href, '/') === 0) {$href = '#';}
+				
+		//Deprecated attribute
+		if ($element->hasAttribute('cmpref'))
+		{
+			$cmpref = intval($element->getAttribute('cmpref'));
+			if ($cmpref > 0)
+			{
+				if (!$element->hasAttribute('rel'))
+				{
+					$element->setAttribute('rel', 'cmpref:' . $element->getAttribute('cmpref'));
+				}
+				else
+				{
+					$ok = false;
+					foreach (explode(',', $element->getAttribute('class')) as $rel) 
+					{
+						if (strpos($rel, 'cmpref:') === 0) {$ok = true;}
+						break;
+					}
+					if (!$ok)
+					{
+						$element->setAttribute('rel', 'cmpref:' . $cmpref . ',' . $element->getAttribute('rel'));
+					}
+				}
+				$href = '#';
+			}
+			$element->removeAttribute('cmpref');
+		}
+		else if ($element->hasAttribute('rel') && strpos($element->getAttribute('rel'), 'cmpref:') !== false)
+		{
+			$href = '#';
+		}
+		
+		if ('media-flash-dummy' == $element->getAttribute('class'))
+		{
+			$href = '#';
+		}
+		else if ($element->hasAttribute('style'))
+		{
+			$element->removeAttribute('style');
+		}
+		return $href;		
+	}
 
 	static private $defaultHClasses;
 
