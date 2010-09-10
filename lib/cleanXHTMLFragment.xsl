@@ -208,33 +208,19 @@
 		</a>
 	</xsl:template>
 	
-	<xsl:template match="a[@cmpref]">
-		<a href="javascript:;" class="link">
+	<xsl:template match="a[not(@name)]">
+		<a>
 			<xsl:attribute name="class">
 				<xsl:value-of select="php:function('website_XHTMLCleanerHelper::safeAClass', .)" />
-			</xsl:attribute> 
-			<xsl:copy-of select="@*[name() = 'cmpref' or name() = 'lang' or name() = 'popup' or name() = 'title' or name() = 'rel']"/>
+			</xsl:attribute>
+			<xsl:attribute name="href">
+				<xsl:value-of select="php:function('website_XHTMLCleanerHelper::safeAHref', .)" />
+			</xsl:attribute>			 
+			<xsl:copy-of select="@*[name() = 'rel' or name() = 'lang' or name() = 'title' or name() = 'style']"/>
 			<xsl:apply-templates />
 		</a>
 	</xsl:template>
-	
-	<xsl:template match="a[@class='media-flash-dummy']">
-		<a href="javascript:;" class="media-flash-dummy">
-			<xsl:copy-of select="@*[name() = 'cmpref' or name() = 'lang' or name() = 'title' or name() = 'style']"/>
-			<xsl:apply-templates />
-		</a>
-	</xsl:template>
-	
-	<xsl:template match="a[not(@cmpref)]">
-		<a class="link">
-			<xsl:attribute name="class">
-				<xsl:value-of select="php:function('website_XHTMLCleanerHelper::safeAClass', .)" />
-			</xsl:attribute> 
-			<xsl:copy-of select="@*[name() = 'lang' or name() = 'popup' or name() = 'title' or name() = 'href' or name() = 'rel']"/>
-			<xsl:apply-templates />
-		</a>
-	</xsl:template>
-	
+
 	<!-- Support for japanase ruby text -->
 	<xsl:template match="ruby[parent::ruby]"><xsl:apply-templates /></xsl:template>
 	<xsl:template match="ruby[normalize-space(.) ='']" priority="5"></xsl:template>
