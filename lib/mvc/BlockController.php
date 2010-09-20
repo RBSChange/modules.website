@@ -804,8 +804,8 @@ class website_BlockController implements f_mvc_Controller
 	 */
 	private function processActionFromCache($cacheItem)
 	{
+		$code = trim($cacheItem->getValue(self::PAGE_CACHE_PATH), "<?php");
 		$htmlContent = $cacheItem->getValue(self::HTML_CACHE_PATH);
-		$code = trim($cacheItem->getValue(self::CONTEXT_CACHE_PATH), "<?php");
 		eval($code);
 		$this->getResponse()->getWriter()->write($htmlContent);
 	}
