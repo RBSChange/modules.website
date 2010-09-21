@@ -921,7 +921,7 @@ class website_BlockController implements f_mvc_Controller
 
 class website_PageContextRecorder extends framework_FunctionCallRecorder
 {
-	private static $recordedMethodNames = array("setAttribute", "removeAttribute", "setMetatitle", "addScript", "setKeywords", "setDescription", "setTitle", "getTitle", "appendToDescription", "addStyle", "addKeyword", "addMeta", "addRssFeed", "addLink", "addBlockMeta");
+	private static $recordedMethodNames = array("setAttribute", "removeAttribute", "setMetatitle", "addScript", "setKeywords", "setDescription", "setTitle", "appendToDescription", "addStyle", "addKeyword", "addMeta", "addRssFeed", "addLink", "addBlockMeta");
 
 	/**
 	 * @param website_Page $page
