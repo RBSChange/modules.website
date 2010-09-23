@@ -124,6 +124,9 @@ h6.title,.heading-six{
 p.normal{
 	margin-bottom: 16px;
 }
+span.underline{
+	text-decoration: underline;
+}
 dl.normal dt{
 	font-weight: bold;
 }
