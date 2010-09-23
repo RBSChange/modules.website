@@ -230,6 +230,10 @@ class website_XHTMLCleanerHelper
 		if ($element->hasAttribute('class'))
 		{
 			$classArray = explode(' ', $element->getAttribute('class'));
+			if (in_array('media-flash-dummy', $classArray))
+			{
+				return 'media-flash-dummy';
+			}
 			if (in_array('tooltip', $classArray))
 			{
 				$class .= ' tooltip';
