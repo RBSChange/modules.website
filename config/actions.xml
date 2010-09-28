@@ -93,7 +93,7 @@
 		<body><![CDATA[
 			var id = listWidget.getSelectedIds()[0];
 			var lang = this.getContextLang();
-			this.execute("SetTopicIndexPage", "SetTopicIndexPage", {cmpref: id, lang: lang });
+			this.executeJSON("SetTopicIndexPage", {cmpref: id, lang: lang });
 		]]></body>
 	</action>
 	<action name="setAsIndexPageIsActive">
@@ -102,13 +102,29 @@
 			return itemData.isIndexPage !== 'isIndexPage' && itemData.isHomePage !== 'isHomePage';
 		]]></body>
 	</action>
+	
+	<action name="setAsIndexPageRef">
+		<parameter name="listWidget"/>
+		<body><![CDATA[
+			var id = listWidget.getSelectedIds()[0];
+			var lang = this.getContextLang();
+			this.executeJSON("SetTopicIndexPage", {cmpref: id, lang: lang, PageRef: 'true' });
+		]]></body>
+	</action>
+	<action name="setAsIndexPageRefIsActive">
+		<parameter name="itemData"/>
+		<body><![CDATA[
+			return itemData.hasPageRef;
+		]]></body>
+	</action>	
+	
    
 	<action name="removeIndexPage">
 		<parameter name="listWidget"/>
 		<body><![CDATA[
 			var id = listWidget.getSelectedIds()[0];
 			var lang = this.getContextLang();
-			this.execute("RemoveIndexPage", "RemoveIndexPage", {cmpref: id, lang: lang});
+			this.executeJSON("RemoveIndexPage", {cmpref: id, lang: lang});
 		]]></body>
 	</action>
 	<action name="removeIndexPageIsActive">
@@ -125,7 +141,7 @@
 			var lang = this.getContextLang();
 			if (confirm("&amp;modules.website.bo.actions.Set-as-home-page-confirm;"))
 			{
-				this.execute("SetHomePage", "SetHomePage", {cmpref: id, lang: lang});
+				this.executeJSON("SetHomePage", {cmpref: id, lang: lang});
 			}
 		]]></body>
 	</action>

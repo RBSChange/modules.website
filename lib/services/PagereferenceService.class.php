@@ -53,9 +53,15 @@ class website_PagereferenceService extends website_PageService
 		try
 		{
 			$this->tm->beginTransaction();
+			
+			$isIndexPage = $pageReference->getIsIndexPage();
+			$isHomePage = $pageReference->getIsHomePage();
+			
 			//Update VO
 			try
 			{
+				
+	
 				$requestContext->beginI18nWork($vo);
 				if ($pageReference->hasMeta('f_tags'))
 				{
@@ -66,6 +72,7 @@ class website_PagereferenceService extends website_PageService
 					$existingTags = null;
 				}
 				$page->copyPropertiesTo($pageReference, true);
+				
 				// TODO: use TagService::clearTagsMeta()
 				$pageReference->setMeta("f_tags", $existingTags);
 				$requestContext->endI18nWork();
@@ -98,23 +105,9 @@ class website_PagereferenceService extends website_PageService
 				}
 			}
 
-			if ($pageReference->getIsIndexPage())
-			{
-				$rubrique = DocumentHelper::getDocumentInstance($topicId);
-				if ($rubrique instanceof website_persistentdocument_topic)
-				{
-					$oldIndexPage = $rubrique->getIndexPage();
-					if ($oldIndexPage != null && !($oldIndexPage instanceof website_persistentdocument_pagereference))
-					{
-						if (Framework::isDebugEnabled())
-						{
-							Framework::debug(__METHOD__ . ' page  ' . $oldIndexPage->__toString() . ' is index page of ' . $rubrique->__toString() . ' -> Index not overrided by ' . $pageReference->__toString());
-						}
-						$pageReference->setIsIndexPage(false);
-					}
-				}
-			}
-
+			$pageReference->setIsIndexPage($isIndexPage);
+			$pageReference->setIsHomePage($isHomePage);
+				
 			try 
 			{
 				$requestContext->beginI18nWork($vo);
@@ -126,13 +119,6 @@ class website_PagereferenceService extends website_PageService
 				$requestContext->endI18nWork($e);
 			}
 			
-			//Update TopicIndex
-			if ($pageReference->getIsIndexPage())
-			{
-				$topic = DocumentHelper::getDocumentInstance($topicId);
-				website_TopicService::getInstance()->setIndexPage($topic, $pageReference);
-			}
-
 			//Update tag
 			$this->updateTags($pageReference, $page);
 			$this->tm->commit();
@@ -299,30 +285,17 @@ class website_PagereferenceService extends website_PageService
 	}
 	
 	/**
-	 * @param website_persistentdocument_pagereference $pageReference
-	 * @param Boolean $isIndexPage
-	 * @param Boolean $userSetting
-	 */
-	public function setIsIndexPage($pageReference, $isIndexPage, $userSetting = false)
+	 * @param website_persistentdocument_page $page
+	 * @return integer
+	 */	
+	public function getCountPagesReferenceByPage($page)
 	{
-		try
-		{
-			$this->tm->beginTransaction();
-			$pageReference->setIsIndexPage($isIndexPage); 
-			$pageReference->setIndexpagedefined($userSetting && $isIndexPage);			    
-						
-	    	if ($pageReference->isModified())
-			{
-				$this->pp->updateDocument($pageReference);
-			}
-			$this->tm->commit();
-		}
-		catch (Exception $e)
-		{
-			$this->tm->rollBack($e);
-		}
-	}	
-	
+		$results = $this->createQuery()->add(Restrictions::eq('referenceofid', $page->getId()))
+			->setProjection(Projections::rowCount('count'))
+			->findColumn('count');
+		return (count($results) == 1) ? $results[0] : 0;
+	}
+		
 	/**
 	 * @param website_persistentdocument_pagereference $document
 	 * @param String $oldPublicationStatus

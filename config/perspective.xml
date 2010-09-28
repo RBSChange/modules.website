@@ -126,6 +126,7 @@
 				<contextaction name="openPage"/>
 				<contextaction name="editPageContent"/>
 				<contextaction name="setAsIndexPage"/>
+				<contextaction name="setAsIndexPageRef"/>
 				<contextaction name="removeIndexPage"/>
 				<contextaction name="setAsHomePage"/>
 				<contextaction name="openTags"/>
@@ -155,6 +156,7 @@
 				<contextaction name="edit"/>
 				<contextaction name="delete"/>
 				<contextaction name="setAsIndexPage"/>
+				<contextaction name="setAsIndexPageRef"/>
 				<contextaction name="removeIndexPage"/>
 				<contextaction name="setAsHomePage"/>
 				<contextaction name="openTags"/>
@@ -305,6 +307,7 @@
 		<action name="openPage" single="true" icon="preview" label="&amp;modules.website.bo.actions.OpenPage;"/>
 		<action name="editPageContent" single="true" permission="EditContent" icon="edit-page-content" label="&amp;modules.website.bo.actions.EditContent;"/>
 		<action name="setAsIndexPage" single="true" permission="SetTopicIndexPage" icon="page-index" label="&amp;modules.website.bo.actions.Set-as-index-page;"/>
+		<action name="setAsIndexPageRef" single="true" permission="SetTopicIndexPage" icon="page-index" label="&amp;modules.website.bo.actions.Set-as-index-page-ref;"/>
 		<action name="removeIndexPage" single="true" permission="RemoveIndexPage" icon="document" label="&amp;modules.website.bo.actions.Remove-index-page;"/>
 		<action name="setAsHomePage" single="true" permission="SetHomePage" icon="page-home" label="&amp;modules.website.bo.actions.Set-as-home-page;"/>
 		<action name="activate" single="true" permission="Activate" icon="activate" label="&amp;modules.uixul.bo.actions.Activate;"/>

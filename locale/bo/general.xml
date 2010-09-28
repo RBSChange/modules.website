@@ -265,6 +265,9 @@
 		<locale lang="fr">Erreur lors de l'affectation de la page d'index d'une rubrique</locale>
 		<locale lang="de">Fehler bei der Zuordnung der Indexseite einer Rubrik</locale>
 	</entity>
+	<entity id="set-index-page-ref-error">
+		<locale lang="fr">Erreur lors de l'affectation de la référence de page n°{id} en tant que page d'index d'une rubrique</locale>
+	</entity>
 	<entity id="remove-index-page-error">
 		<locale lang="fr">Erreur lors de la suppression de la page d'index d'une rubrique</locale>
 		<locale lang="de">Fehler beim Löschvorgang der Indexseite einer Rubrik</locale>

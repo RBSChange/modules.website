@@ -2,4 +2,5 @@
 <panels>
 	<panel name="resume" />
 	<panel name="redirect" />
+	<panel name="history" />
 </panels>

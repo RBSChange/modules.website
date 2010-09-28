@@ -1,0 +1,4 @@
+Version: 3.0.4
+
+Ajout de la l'action back office "définir les références comme page d'index"
+Sur le document pagereference suppression du champ "indexpagedefined"

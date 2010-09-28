@@ -319,7 +319,7 @@ class website_TopicService extends f_persistentdocument_DocumentService
 		{
 			$this->tm->beginTransaction();
 			$oldPage = $topic->getIndexPage();
-			if (!DocumentHelper::equals($oldPage, $newIndexPage) && $this->validIndexPageSetting($oldPage, $newIndexPage, $userSetting))
+			if (!DocumentHelper::equals($oldPage, $newIndexPage))
 			{
 				if ($oldPage !== null)
 				{
@@ -351,36 +351,6 @@ class website_TopicService extends f_persistentdocument_DocumentService
 			$this->tm->rollBack($e);
 		}
 	}
-
-	/**
-	 * @param website_persistentdocument_page $oldPage
-	 * @param website_persistentdocument_page $newIndexPage
-	 * @param Boolean $userSetting
-	 * @return Boolean
-	 */
-	private function validIndexPageSetting($oldPage, $newIndexPage, $userSetting)
-	{
-
-		if (!$userSetting && $oldPage !== null)
-		{
-			if ($newIndexPage === null || $newIndexPage instanceof website_persistentdocument_pagereference)
-			{
-				if ($oldPage instanceof website_persistentdocument_pagereference)
-				{
-					if ($oldPage->getIndexpagedefined())
-					{
-						return false;
-					}
-				}
-				else
-				{
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-
 	
 	/**
 	 * Add custom log informations

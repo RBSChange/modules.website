@@ -104,9 +104,20 @@ class website_persistentdocument_page extends website_persistentdocument_pagebas
 		if ($this->getIsHomePage())
 		{
 			$nodeAttributes['isHomePage'] = 'isHomePage';
-		} else if ($this->getIsIndexPage())
+		} 
+		else if ($this->getIsIndexPage())
 		{
 			$nodeAttributes['isIndexPage'] = 'isIndexPage';
+		}
+		
+		if (!($this instanceof website_persistentdocument_pagereference) && 
+			!($this instanceof website_persistentdocument_pageversion))
+		{
+			$countRef = website_PagereferenceService::getInstance()->getCountPagesReferenceByPage($this);
+			if ($countRef > 0)
+			{
+				$nodeAttributes['hasPageRef'] = true;
+			}
 		}
 	}
 	

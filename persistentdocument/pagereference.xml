@@ -6,7 +6,6 @@
 	 backoffice-indexable="false">
   <properties>
     <add name="referenceofid" type="Integer" min-occurs="0" max-occurs="1" default-value="0" />
-    <add name="indexpagedefined" type="Boolean" min-occurs="1" max-occurs="1" default-value="0" />
   </properties>
   <statuses default="PUBLICATED"/>
   <workflow start-task="" />

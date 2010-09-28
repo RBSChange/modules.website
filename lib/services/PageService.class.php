@@ -50,6 +50,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	protected function synchronizeReferences($page)
 	{
+		
 		if ($page instanceof website_persistentdocument_page)
 		{
 			$query = $this->pp->createQuery('modules_website/pagereference')->add(Restrictions::eq('referenceofid', $page->getId()));
@@ -60,8 +61,13 @@ class website_PageService extends f_persistentdocument_DocumentService
 			foreach ($pagesReference as $pageReference)
 			{
 				$isIndex = $pageReference->getIsIndexPage();
+				$isHome = $pageReference->getIsHomePage();
+				
 				$page->copyPropertiesTo($pageReference, $copyToVo);
+				
 				$pageReference->setIsIndexPage($isIndex);
+				$pageReference->setIsHomePage($isHome);
+				
 				$pageReference->save();
 			}
 		}
@@ -397,25 +403,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 					foreach ($versions as $version)
 					{
 						$pvs->setIsIndexPage($version, $isIndexPage, false);
-					}
-				}
-
-				$prs = website_PagereferenceService::getInstance();
-
-				$pagesReference = $prs->getPagesReferenceByPage($page);
-				if (count($pagesReference) > 0)
-				{
-					$ts = website_TopicService::getInstance();
-					foreach ($pagesReference as $pageReference)
-					{
-						$topic = $prs->getParentOf($pageReference);
-						if ($isIndexPage)
-						{
-							$ts->setIndexPage($topic, $pageReference, false);
-						} else if (DocumentHelper::equals($pageReference, $topic->getIndexPage()))
-						{
-							$ts->setIndexPage($topic, null, false);
-						}
 					}
 				}
 			}

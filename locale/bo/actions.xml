@@ -195,6 +195,10 @@
     <locale lang="en">set as index page</locale>
     <locale lang="de">als Indexseite definieren</locale>
   </entity>
+  <entity id="set-as-index-page-ref">
+    <locale lang="fr">définir les références comme page d'index</locale>
+    <locale lang="en">set references as index page</locale>
+  </entity>
   <entity id="remove-index-page">
     <locale lang="fr">supprimer la page d'index</locale>
     <locale lang="en">remove index page</locale>

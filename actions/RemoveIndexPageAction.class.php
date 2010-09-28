@@ -1,5 +1,5 @@
 <?php
-class website_RemoveIndexPageAction extends website_Action
+class website_RemoveIndexPageAction extends f_action_BaseJSONAction
 {
 	/**
 	 * @param Context $context
@@ -15,10 +15,9 @@ class website_RemoveIndexPageAction extends website_Action
 		}
 		catch (Exception $e)
 		{
-		    Framework::exception($e);
-			$request->setAttribute('message', f_Locale::translate('&modules.website.bo.general.remove-index-page-error;'));
-			return self::getErrorView();
+			Framework::exception($e);
+			return $this->sendJSONError(f_Locale::translateUI('&modules.website.bo.general.remove-index-page-error;'));
 		}
-		return self::getSuccessView();
+		return $this->sendJSON(array('cmpref' => $topic->getId(), 'documentversion' => $topic->getDocumentversion()));
 	}
 }

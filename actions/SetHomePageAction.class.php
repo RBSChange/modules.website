@@ -1,9 +1,5 @@
 <?php
-/**
- * @date Thu Feb 08 09:49:22 CET 2007
- * @author INTbonjF
- */
-class website_SetHomePageAction extends website_Action
+class website_SetHomePageAction extends f_action_BaseJSONAction
 {
 	/**
 	 * @param Context $context
@@ -19,11 +15,11 @@ class website_SetHomePageAction extends website_Action
 		}
 		catch (Exception  $e)
 		{
-		    Framework::exception($e);
-			$request->setAttribute('message', f_Locale::translate('&modules.website.bo.general.set-home-page-error;'));
-			return self::getErrorView();
+			Framework::exception($e);
+			return $this->sendJSONError(f_Locale::translateUI('&modules.website.bo.general.set-home-page-error;'));
 		}
-		return self::getSuccessView();
+		
+		return $this->sendJSON(array('cmpref' => $page->getId(), 'documentversion' => $page->getDocumentversion()));
 	}
 
 	protected function getSecureNodeIds()
