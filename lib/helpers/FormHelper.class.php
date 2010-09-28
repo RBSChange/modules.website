@@ -1315,10 +1315,12 @@ jQuery(document).ready(function() {
 	 */
 	private static function _renderMessages($params, $ctxKey, $className)
 	{
+		$controller = website_BlockController::getInstance();
 		if (self::$context === null)
 		{
-			$context = website_BlockController::getInstance()->getContext();
-		} else
+			$context = $controller->getContext();
+		} 
+		else
 		{
 			$context = self::$context;
 		}
@@ -1337,9 +1339,11 @@ jQuery(document).ready(function() {
 		$blockErrors = $context->getAttribute($ctxKey, array());
 		ob_start();
 		echo '<ul class="'.$className.'">';
-		if (self::$currentActionRequest != null && $params['mode'] == 'block')
+		
+		// Do not use the local variables to be able to work outside from a change:form.
+		if ($controller->getRequest() != null && $params['mode'] == 'block')
 		{
-			$currentBlockId = self::$currentBlockId;
+			$currentBlockId = $controller->getProcessedAction()->getBlockId();
 			if (isset($params['relKey']))
 			{
 				$currentBlockId .= "_".$params['relKey'];
