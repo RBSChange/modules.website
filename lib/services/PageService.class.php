@@ -1905,6 +1905,9 @@ class website_PageService extends f_persistentdocument_DocumentService
 				{
 					$classInstance->setConfigurationParameter($name, $value);
 				}
+				
+				// This parameter can be used to identify this block inside the page.
+				$classInstance->setConfigurationParameter(website_BlockAction::BLOCK_ID_PARAMETER_NAME, $blockId);
 
 				$blocks[$blockId]['blockaction'] = $classInstance;
 				$blockPriorities[$blockId] = $classInstance->getOrder();
