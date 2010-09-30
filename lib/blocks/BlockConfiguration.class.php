@@ -70,4 +70,12 @@ class block_BlockConfiguration
 		}
 		return false;
 	}
+	
+	/**
+	 * @return string
+	 */
+	public function getBlockId()
+	{
+		return $this->getConfigurationParameter('blockId', '');
+	}
 }
