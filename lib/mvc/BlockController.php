@@ -398,6 +398,11 @@ class website_BlockController implements f_mvc_Controller
 
 			return ucfirst(key($submitArray[$this->currentBlockId]));
 		}
+		$actionName = $this->action->getName();
+		if (isset($submitArray[$actionName]) && is_array($submitArray[$actionName]))
+		{
+			return ucfirst(key($submitArray[$actionName]));
+		}
 		return self::INPUT_ACTION_SUFFIX;
 	}
 
