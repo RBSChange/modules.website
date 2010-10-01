@@ -1069,11 +1069,11 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
 		$label = null;
 		if ($document instanceof website_PublishableElement)
 		{
-			$label = $document->getNavigationtitle();
+			$label = f_util_HtmlUtils::textToHtml($document->getNavigationtitle());
 		}
 		if (empty($label))
 		{
-			$label = $document->getLabel();
+			$label = $document->getLabelAsHtml();
 		}
 		if (f_Locale::isLocaleKey($label))
 		{

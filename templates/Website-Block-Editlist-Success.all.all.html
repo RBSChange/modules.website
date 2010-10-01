@@ -9,9 +9,9 @@
 		</thead>
 		<tbody>
 			<tr tal:repeat="action actions">
-				<td>${action/document/getLabel}</td>
+				<td>${action/document/getLabelAsHtml}</td>
 				<td>${action/name} à ${action/time}</td>
-				<td><a change:edit="document action/document" /></td>
+				<td><a change:edit="document action/document"></a></td>
 			</tr>
 		</tbody>
 		<caption>Documents modifiés dans cette page</caption>

@@ -58,12 +58,19 @@ class website_persistentdocument_topic extends website_persistentdocument_topicb
 	
 	/**
 	 * @see website_PublishableElement::getNavigationtitle()
-	 *
 	 * @return string
 	 */
 	public function getNavigationtitle()
 	{
 		return $this->getLabel();
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getNavigationtitleAsHtml()
+	{
+		return $this->getLabelAsHtml();
 	}
 	
 	/**

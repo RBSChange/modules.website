@@ -31,11 +31,11 @@ class website_BlockDashboardpagevalidationAction extends dashboard_BlockDashboar
 				}
 				$attr = array(
 					'id' => $task->getId(),
-					'taskLabel' => f_Locale::translateUI('&modules.website.bo.dashboard.Task-label-validate;', array('author' => $task->getDescription())),
-					'label' => $document->getPersistentModel()->isLocalized() ? $document->getLabelForLang($task->getLang()) : $document->getLabel(),
-					'thread' => $document->getDocumentService()->getPathOf($document),
-					'comment' => $task->getCommentary(),
-					'author' => ucfirst($task->getDescription()),
+					'taskLabel' => f_Locale::translateUI('&modules.website.bo.dashboard.Task-label-validate;', array('author' => $task->getDescriptionAsHtml())),
+					'label' => f_util_HtmlUtils::textToHtml($document->getPersistentModel()->isLocalized() ? $document->getLabelForLang($task->getLang()) : $document->getLabel()),
+					'thread' => f_util_HtmlUtils::textToHtml($document->getDocumentService()->getPathOf($document)),
+					'comment' => $task->getCommentaryAsHtml(),
+					'author' => ucfirst($task->getDescriptionAsHtml()),
 					'status' => ucfirst($status),
 				    'locate' => "locateDocumentInModule(". $document->getId() . ", 'website');"
 					);

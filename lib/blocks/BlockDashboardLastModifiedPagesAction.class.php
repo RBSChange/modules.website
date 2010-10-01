@@ -79,8 +79,8 @@ class website_BlockDashboardLastModifiedPagesAction extends  dashboard_BlockDash
 			$widget[] = array(
 				'locate' => $locate,
 				'edit' => $edit,
-				'label' => $page->getLabel(),
-				'thread' => $pageService->getPathOf($page),
+				'label' => $page->getLabelAsHtml(),
+				'thread' => f_util_HtmlUtils::textToHtml($page->getDocumentService()->getPathOf($page)),
 				'status' => ucfirst($status),
 				'style' => $style,
 				'icon' => $icon,

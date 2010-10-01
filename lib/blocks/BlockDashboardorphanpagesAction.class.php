@@ -56,7 +56,14 @@ class website_BlockDashboardorphanpagesAction extends  dashboard_BlockDashboardA
 						->setQueryParameter('lang', $page->getlang())
 						->getUrl();
 				
-				$attr = array("modificationDate" => ucfirst($modificationDate), 'id' => $page->getId(), 'label' => $page->getLabel(), 'thread' => $this->getPageService()->getPathOf($page), 'locate' => "locateDocumentInModule(" . $page->getId() . ", 'website');", 'link' => "window.open('$link', 'PreviewWindow', 'menubar=yes, location=yes, toolbar=yes, resizable=yes, scrollbars=yes, status=yes');");
+				$attr = array(
+					'modificationDate' => ucfirst($modificationDate), 
+					'id' => $page->getId(), 
+					'label' => $page->getLabelAsHtml(), 
+					'thread' => f_util_HtmlUtils::textToHtml($page->getDocumentService()->getPathOf($page)), 
+					'locate' => "locateDocumentInModule(" . $page->getId() . ", 'website');", 
+					'link' => "window.open('$link', 'PreviewWindow', 'menubar=yes, location=yes, toolbar=yes, resizable=yes, scrollbars=yes, status=yes');"
+				);
 				$orphanAttr[] = $attr;
 			
 			}
