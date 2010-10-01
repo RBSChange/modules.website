@@ -1,85 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <localization>
-  <entity id="sitemap">
-    <locale lang="fr">plan du site</locale>
-    <locale lang="en">sitemap</locale>
-    <locale lang="de">Sitemap</locale>
-  </entity>
-  <entity id="bookmarksBlock">
-    <locale lang="fr">signets</locale>
-    <locale lang="en">bookmarks</locale>
-    <locale lang="de">Bookmark</locale>
-  </entity>
-  <entity id="emptyBookmarksMessage">
-    <locale lang="fr">Le bloc ne contient aucun signet.</locale>
-    <locale lang="en">Block contains no bookmark.</locale>
-    <locale lang="de">Block enthält kein Bookmark.</locale>
-  </entity>
-  <entity id="one-col">
-    <locale lang="fr">Mise en page une colonne</locale>
-    <locale lang="en">One column layout</locale>
-    <locale lang="de">Seitenlayout einer Spalte</locale>
-  </entity>
-  <entity id="two-col">
-    <locale lang="fr">Mise en page deux colonnes</locale>
-    <locale lang="en">Two columns layout</locale>
-    <locale lang="de">Seitenlayout zweier Spalten</locale>
-  </entity>
-  <entity id="exception">
-    <locale lang="fr">exception</locale>
-    <locale lang="en">exception</locale>
-    <locale lang="de">Ausnahme</locale>
-  </entity>
-  <entity id="dashboardorphanpages.website">
-    <locale lang="fr">site</locale>
-    <locale lang="en">website</locale>
-    <locale lang="de">Webseite</locale>
-  </entity>
-  <entity id="Iframe">
-    <locale lang="fr">Iframe</locale>
-    <locale lang="en">Iframe</locale>
-    <locale lang="de">Iframe</locale>
-  </entity>
-  <entity id="Edit">
-    <locale lang="fr">Edition front-office</locale>
-    <locale lang="en">Front-office edition</locale>
-  </entity>
-  <entity id="enablemetas">
-    <locale lang="fr">Exposer les méta-données du bloc</locale>
-    <locale lang="en">Expose block's metadata</locale>
-  </entity>
-  <entity id="enablemetas-help">
-    <locale lang="fr">Ce bloc expose des méta-données utilisable pour renseignement des méta-données de la page (titre, description, mots clefs). Choisissez "oui" pour les rendre disponibles à la page.</locale>
-  </entity>
-  <entity id="dashboardlastmodifiedpages.title">
-    <locale lang="fr">dernières pages modifiées</locale>
-    <locale lang="en">last modified pages</locale>
-    <locale lang="de">am spätesten geänderte Seiten</locale>
-  </entity>
-  <entity id="missing.title">
-    <locale lang="fr">bloc introuvable</locale>
-    <locale lang="en">missing block</locale>
-  </entity>
-  <entity id="missing.description">
-    <locale lang="fr">bloc recherché : {originalClassName}</locale>
-    <locale lang="en">missing block: {originalClassName}</locale>
-  </entity>
-  <entity id="contextualmenu">
-    <locale lang="fr">Menu contextuel</locale>
-    <locale lang="en">Contextual menu</locale>
-  </entity>
-  <entity id="sitemap.column">
-    <locale lang="fr">Afficher en colonnes</locale>
-    <locale lang="en">Display in columns</locale>
-    <locale lang="de">In Spalten anzeigen</locale>
-  </entity>
-  <entity id="sitemap.column-help">
-    <locale lang="fr">Afficher en colonnes</locale>
-    <locale lang="en">Display in columns</locale>
-    <locale lang="de">In Spalten anzeigen</locale>
-  </entity>
-  <entity id="xhtmltemplate.title">
-    <locale lang="fr">Gabarit XHTML</locale>
-    <locale lang="en">Template XHTML</locale>
-  </entity>
+	<entity id="sitemap">
+		<locale lang="fr">plan du site</locale>
+		<locale lang="en">sitemap</locale>
+		<locale lang="de">Sitemap</locale>
+	</entity>
+	<entity id="bookmarksBlock">
+		<locale lang="fr">signets</locale>
+		<locale lang="en">bookmarks</locale>
+		<locale lang="de">Bookmark</locale>
+	</entity>
+	<entity id="emptyBookmarksMessage">
+		<locale lang="fr">Le bloc ne contient aucun signet.</locale>
+		<locale lang="en">Block contains no bookmark.</locale>
+		<locale lang="de">Block enthält kein Bookmark.</locale>
+	</entity>
+	<entity id="one-col">
+		<locale lang="fr">Mise en page une colonne</locale>
+		<locale lang="en">One column layout</locale>
+		<locale lang="de">Seitenlayout einer Spalte</locale>
+	</entity>
+	<entity id="two-col">
+		<locale lang="fr">Mise en page deux colonnes</locale>
+		<locale lang="en">Two columns layout</locale>
+		<locale lang="de">Seitenlayout zweier Spalten</locale>
+	</entity>
+	<entity id="exception">
+		<locale lang="fr">exception</locale>
+		<locale lang="en">exception</locale>
+		<locale lang="de">Ausnahme</locale>
+	</entity>
+	<entity id="dashboardorphanpages.website">
+		<locale lang="fr">site</locale>
+		<locale lang="en">website</locale>
+		<locale lang="de">Webseite</locale>
+	</entity>
+	<entity id="Iframe">
+		<locale lang="fr">Iframe</locale>
+		<locale lang="en">Iframe</locale>
+		<locale lang="de">Iframe</locale>
+	</entity>
+	<entity id="Edit">
+		<locale lang="fr">Edition front-office</locale>
+		<locale lang="en">Front-office edition</locale>
+	</entity>
+	<entity id="enablemetas">
+		<locale lang="fr">Exposer les méta-données du bloc</locale>
+		<locale lang="en">Expose block's metadata</locale>
+	</entity>
+	<entity id="enablemetas-help">
+		<locale lang="fr">Ce bloc expose des méta-données utilisable pour renseignement des méta-données de la page (titre, description, mots clefs). Choisissez "oui" pour les rendre disponibles à la page.</locale>
+	</entity>
+	<entity id="dashboardlastmodifiedpages.title">
+		<locale lang="fr">dernières pages modifiées</locale>
+		<locale lang="en">last modified pages</locale>
+		<locale lang="de">am spätesten geänderte Seiten</locale>
+	</entity>
+	<entity id="missing.title">
+		<locale lang="fr">bloc introuvable</locale>
+		<locale lang="en">missing block</locale>
+	</entity>
+	<entity id="missing.description">
+		<locale lang="fr">bloc recherché : {originalClassName}</locale>
+		<locale lang="en">missing block: {originalClassName}</locale>
+	</entity>
+	<entity id="contextualmenu">
+		<locale lang="fr">Menu contextuel</locale>
+		<locale lang="en">Contextual menu</locale>
+	</entity>
+	<entity id="sitemap.column">
+		<locale lang="fr">Afficher en colonnes</locale>
+		<locale lang="en">Display in columns</locale>
+		<locale lang="de">In Spalten anzeigen</locale>
+	</entity>
+	<entity id="sitemap.column-help">
+		<locale lang="fr">Afficher en colonnes</locale>
+		<locale lang="en">Display in columns</locale>
+		<locale lang="de">In Spalten anzeigen</locale>
+	</entity>
+	<entity id="xhtmltemplate.title">
+		<locale lang="fr">Gabarit XHTML</locale>
+		<locale lang="en">Template XHTML</locale>
+	</entity>
+	<entity id="dashboardpagevalidation.showcomments">
+		<locale lang="fr">afficher les commentaires</locale>
+	</entity>
+	<entity id="dashboardpagevalidation.showcomments-help">
+		<locale lang="fr">Afficher les commentaires ou non les commentaires des demandeurs.</locale>
+	</entity>
 </localization>

@@ -21,7 +21,7 @@
 			<parameter name="deployonlycurrentpath" type="Boolean" default-value="false" />
 		</parameters>
 	</block>
-	<block type="modules_website_taggedmenu" display="tag: ; template: default; depth: 1; deployonlycurrentpath: false" hidden="true" label="&amp;modules.website.bo.blocks.TaggedMenu;">
+	<block type="modules_website_taggedmenu" hidden="true" label="&amp;modules.website.bo.blocks.TaggedMenu;">
 		<parameters>
 			<parameter name="tag" type="String" />
 			<parameter name="package" type="String" default-value="" />
@@ -30,7 +30,7 @@
 			<parameter name="deployonlycurrentpath" type="Boolean" default-value="false" />
 		</parameters>
 	</block>
-	<block type="modules_website_contextualmenu" display="template: default; depth: 2; startwebsitelevel: 1; deployall: false" hidden="true" label="&amp;modules.website.bo.blocks.ContextualMenu;">
+	<block type="modules_website_contextualmenu" hidden="true" label="&amp;modules.website.bo.blocks.ContextualMenu;">
 		<parameters>
 			<parameter name="template" type="String" default-value="default" />
 			<parameter name="package" type="String" default-value="" />
@@ -39,7 +39,7 @@
 			<parameter name="deployall" type="Boolean" default="false" />
 		</parameters>
 	</block>
-	<block type="modules_website_switchlanguage" display="viewall: true;showflag: small;" hidden="true" label="&amp;modules.website.bo.blocks.SwitchLanguage;">
+	<block type="modules_website_switchlanguage" hidden="true" label="&amp;modules.website.bo.blocks.SwitchLanguage;">
 		<parameters>
 			<parameter name="viewall" type="Boolean" default-value="true" />
 			<parameter name="showflag" type="String" default-value="small" />
@@ -61,25 +61,27 @@
 		</parameters>
 	</block>
 	
-	<block type="modules_website_edit" display="" icon="edit" label="&amp;modules.website.bo.blocks.Edit;" />
-	<block type="modules_website_Missing" display="" hidden="true" label="&amp;modules.website.bo.blocks.Missing.Title;" />
+	<block type="modules_website_edit" icon="edit" label="&amp;modules.website.bo.blocks.Edit;" />
+	<block type="modules_website_Missing" hidden="true" label="&amp;modules.website.bo.blocks.Missing.Title;" />
 	<!--
-		For now modules_website_editlist is not mature <block type="modules_website_editlist" display="" icon=""
+		For now modules_website_editlist is not mature <block type="modules_website_editlist" icon=""
 		label="&amp;modules.website.bo.blocks.EditList;" />
 	-->
 	<!-- Dashboard blocks -->
-	<block type="modules_website_dashboardpagevalidation" icon="task" dashboard="true" label="&amp;modules.website.bo.dashboard.Page-validation;" />
+	<block type="modules_website_dashboardpagevalidation" icon="task" dashboard="true" label="&amp;modules.website.bo.dashboard.Page-validation;">
+		<parameters>
+			<parameter name="showComments" type="Boolean" default-value="true" />
+		</parameters>
+	</block>
 	<block type="modules_website_dashboardorphanpages" icon="orphan-pages" dashboard="true" label="&amp;modules.website.bo.dashboard.Orphanpages;">
 		<parameters>
 			<parameter name="website" type="modules_website/website" max-occurs="1" />
 		</parameters>
 	</block>
-	<block type="modules_website_DashboardLastModifiedPages" display="" icon="page" dashboard="true" label="&amp;modules.website.bo.blocks.DashboardLastModifiedPages.Title;" />
+	<block type="modules_website_DashboardLastModifiedPages" icon="page" dashboard="true" label="&amp;modules.website.bo.blocks.DashboardLastModifiedPages.Title;" />
 	
 	<!-- Deprecated blocks -->
-	
 	<block type="empty" icon="selection" hidden="true"  label="&amp;modules.uixul.bo.layout.EmptyBlock;" />
-	
 	<block type="modules_website_copyright" hidden="true" label="&amp;modules.website.bo.blocks.Copyright;" />
 	<block type="modules_website_footer" hidden="true" label="&amp;modules.website.bo.blocks.Footer;" />
 	<block type="modules_website_header" hidden="true" label="&amp;modules.website.bo.blocks.Header;" />

@@ -7,19 +7,20 @@
 		<div style="max-height: 200px; overflow: auto;">
 			<ul tal:condition="tasks" class="no-bullet">
 				<li tal:repeat="task tasks">
-					<img change:icon="task/small"/>
-					<a href="#" change:i18nattr="title &amp;modules.task.bo.actions.Perform-UsertaskEllipsis;" onclick="window.Dashboard.openDetail('task', 'ViewUserTask', { cmpref: ${task/id} }, true);">
-					<strong>${task/taskLabel}</strong>${task/label}</a> <small>(${task/thread})</small> - <small>${task/status}</small> 
+					<img change:icon="task/small" />
+					<a href="#" change:i18nattr="title &amp;modules.task.bo.actions.Perform-UsertaskEllipsis;" onclick="window.Dashboard.openTaskWithParameters(${task/id}, '${task/dialog}', '${task/module}', {documentId: ${task/documentId}});">
+						<strong>${task/taskLabel}</strong> ${task/documentLabel}
+					</a>
+					<small>(${task/documentThread})</small>&nbsp;-&nbsp;<small>${task/status}</small> 
 					<a class="contextual-action" href="#" tal:attributes="onclick task/locate" change:i18nattr="title &amp;modules.uixul.bo.general.LocateInModuleEllipsis;"><img change:icon="view/small"/></a>
-					<tal:block tal:condition="task/comment">
-						<br /><small>${task/comment}</small>
+					<tal:block tal:condition="configuration/getShowComments">
+						<tal:block tal:condition="task/comment">
+							<br /><small><strong change:translate="modules.task.bo.general.Author-commentLabel; author task/author"></strong> ${task/comment}</small>
+						</tal:block>
 					</tal:block>
 				</li>
 			</ul>
-			<ul tal:condition="not: tasks" class="no-bullet">
-				<li><strong change:translate="&amp;modules.website.bo.dashboard.No-page-to-validate;"></strong>
-				</li>
-			</ul>
+			<p tal:condition="not:tasks" change:translate="modules.dashboard.dashboard.No-information-to-display"></p>
 		</div>
 	</tal:block>
 </div>
