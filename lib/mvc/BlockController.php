@@ -268,11 +268,20 @@ class website_BlockController implements f_mvc_Controller
 	/**
 	 * @param String $moduleName
 	 * @param String $actionName
+	 * @param array $configurationParameters
 	 * @param f_mvc_HTTPRequest $request
 	 */
-	function processByName($moduleName, $actionName, $request)
+	function processByName($moduleName, $actionName, $request, $configurationParameters = null)
 	{
-		$this->process($this->getActionInstanceByModuleAndName($moduleName, $actionName), $request);
+		$blockAction = $this->getActionInstanceByModuleAndName($moduleName, $actionName);
+		if ($configurationParameters !== null)
+		{
+			foreach ($configurationParameters as $key => $value)
+			{
+				$blockAction->setConfigurationParameter($key, $value);
+			}
+		}
+		$this->process($blockAction, $request);
 	}
 
 	/**

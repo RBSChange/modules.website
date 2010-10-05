@@ -68,11 +68,14 @@ class website_ChangeBlockRenderer
 		{
 			$this->moduleName = $params['module'];
 		}
+		
+		// getConfigParameters() has to be called before getRequestParameters()
+		$configParameters = $this->getConfigParameters($params);
 		if (isset($params['container']))
 		{
 			if (f_util_StringUtils::isEmpty($params['container']))
 			{
-				$this->executeBlockAction($this->getRequestParameters($params, $this->moduleName));
+				$this->executeBlockAction($this->getRequestParameters($params, $this->moduleName), $configParameters);
 			}
 			else
 			{
@@ -84,9 +87,24 @@ class website_ChangeBlockRenderer
 		else
 		{
 			echo '<div class="modules-'. $this->moduleName .'-'.  $this->actionName  .' modules-' . $this->moduleName . '">';
-			$this->executeBlockAction($this->getRequestParameters($params, $this->moduleName));
+			$this->executeBlockAction($this->getRequestParameters($params, $this->moduleName), $configParameters);
 			echo '</div>';
 		}
+	}
+	
+	private function getConfigParameters(&$extensionParams)
+	{
+		$configParameters = array();
+		foreach ($extensionParams as $parameterName => $parameterValue)
+		{
+			if (f_util_StringUtils::beginsWith($parameterName, "__"))
+			{
+				$configParameters[substr($parameterName, 2)] = strval($parameterValue);
+				// PHPTal does not like attributes starting with "__"
+				unset($extensionParams[$parameterName]);
+			}
+		}
+		return $configParameters;
 	}
 	
 	/**
@@ -124,12 +142,12 @@ class website_ChangeBlockRenderer
 		return array($this->moduleName.'Param' => $parameters);
 	}
 	
-	private function executeBlockAction($parameters)
+	private function executeBlockAction($parameters, $configParameters)
 	{
 		$controller = website_BlockController::getInstance();
 		try
 		{
-			$controller->processByName($this->moduleName, $this->actionName, new f_mvc_FakeHttpRequest($parameters));
+			$controller->processByName($this->moduleName, $this->actionName, new f_mvc_FakeHttpRequest($parameters), $configParameters);
 		}
 		catch (Exception $e)
 		{
