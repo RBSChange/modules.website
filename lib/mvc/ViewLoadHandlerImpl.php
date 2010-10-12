@@ -20,7 +20,7 @@ abstract class website_ViewLoadHandlerImpl implements website_ViewLoadHandler
 	/**
 	 * @return f_persistentdocument_PersistentDocument
 	 */
-	protected final function getDocumentParameter($paramName = K::COMPONENT_ID_ACCESSOR)
+	protected final function getDocumentParameter($paramName = K::COMPONENT_ID_ACCESSOR, $expectedClassName = null)
 	{
 		$value = $this->findLocalParameterValue($paramName);
 		if (is_array($value))
@@ -29,7 +29,12 @@ abstract class website_ViewLoadHandlerImpl implements website_ViewLoadHandler
 		}
 		if (is_numeric($value) && $value > 0)
 		{
-			return DocumentHelper::getDocumentInstance($value);
+			$doc = DocumentHelper::getDocumentInstance($value);
+			if ($expectedClassName !== null && !($doc instanceof $expectedClassName))
+			{
+				throw new Exception("$paramName parameter does not correspond to any $expectedClassName instance but is a ".get_class($doc));
+			}
+			return $doc;
 		}
 		return null;
 	}
