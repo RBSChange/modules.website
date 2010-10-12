@@ -1452,7 +1452,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		
 		
 		$blocks = $this->generateBlocks($pageContent);
-		$this->buildBlockContainerForBackOffice($pageContent, $blocks);
+		$this->buildBlockContainerForBackOffice($pageContent, $blocks, $page);
 		
 		$pageContent->preserveWhiteSpace = false;
 		$xulContent = $pageContent->saveXML($pageContent->documentElement);
@@ -2009,8 +2009,9 @@ class website_PageService extends f_persistentdocument_DocumentService
 	/**
 	 * @param DOMDocument $pageContent
 	 * @param array $blocks
+	 * @param website_persistentdocument_page $page
 	 */
-	private function buildBlockContainerForBackOffice($pageContent, &$blocks)
+	private function buildBlockContainerForBackOffice($pageContent, &$blocks, $page)
 	{
 		foreach ($blocks as $blockId => $blockData)
 		{
@@ -2026,7 +2027,9 @@ class website_PageService extends f_persistentdocument_DocumentService
 			{
 				$element = $pageContent->createElement('cblock');
 				$element->setAttribute('type', 'richtext');
-				$element->setAttribute('bind', 'richtext');
+				$element->setAttribute('bind', 'richtext');			
+				$blankUrlParams = "cmpref=" . $page->getId() . "&lang=" . RequestContext::getInstance()->getLang();
+				$element->setAttribute('blankUrlParams', $blankUrlParams);
 			}
 			else
 			{
