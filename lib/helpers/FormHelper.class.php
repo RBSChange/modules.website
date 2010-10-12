@@ -285,15 +285,19 @@ class website_FormHelper
 					// TODO: deprecate values & default-values: unique entry point !
 					if (isset($params["values"]))
 					{
-						$value = explode(",", $params["values"]);
+						$value = $params["values"];
 					}
 					elseif (isset($params["default-values"]))
 					{
-						$value = explode(",", $params["default-values"]);
+						$value = $params["default-values"];
 					}
 					elseif (isset($params["default-value"]))
 					{
-						$value = explode(",", $params["default-value"]);
+						$value = $params["default-value"];
+					}
+					if ($value !== null && is_string($value))
+					{
+						$value = explode(",", $value);
 					}
 				}
 				elseif (isset($params["default-value"]))
