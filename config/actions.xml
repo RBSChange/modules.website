@@ -320,9 +320,8 @@
 	<action name="onRemoveFromMenuSuccess">
 		<parameter name="result"/>
 		<body><![CDATA[
-			wToolkit.setNotificationMessage('&modules.website.bo.actions.Remove-from-menu-Success; : ' + result.contents.deleteCount, wToolkit.OK);
-			// TODO: uncomment when refresh handles ressourceTrees refresh
-			// this.refresh();
+			alert('&modules.website.bo.actions.Remove-from-menu-Success; : ' + result.contents.deleteCount);
+			this.refresh();
 		]]></body>
 	</action>
      

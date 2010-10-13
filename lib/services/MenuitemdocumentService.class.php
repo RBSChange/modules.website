@@ -45,7 +45,28 @@ class website_MenuitemdocumentService extends website_MenuitemService
 	 */
 	function deleteByDocument($document)
 	{
-		return $this->createQuery()->add(Restrictions::eq("document", $document))->delete();
+		$rq = RequestContext::getInstance();
+		$items = $this->createQuery()->add(Restrictions::eq("document", $document))->find();
+		foreach ($document->getI18nInfo()->getLangs() as $lang)
+		{
+			try 
+			{
+				$rq->beginI18nWork($lang);
+				foreach ($items as $item)
+				{
+					if ($item->isContextLangAvailable())
+					{
+						$item->delete();
+					}
+				}
+				$rq->endI18nWork();
+			}
+			catch (Exception $e)
+			{
+				$rq->endI18nWork($e);
+			}
+		}
+		return count($items);
 	}
 	
 	/**
