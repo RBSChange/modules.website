@@ -842,8 +842,6 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * Enter description here...
-	 *
 	 * @param String $msg
 	 * @param String $key
 	 */

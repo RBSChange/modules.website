@@ -3,12 +3,9 @@
  * website_persistentdocument_topic
  * @package website
  */
-class website_persistentdocument_topic extends website_persistentdocument_topicbase 
-	implements website_PublishableElement
+class website_persistentdocument_topic extends website_persistentdocument_topicbase implements website_PublishableElement
 {
 	/**
-	 * Enter description here...
-	 *
 	 * @return integer or null
 	 */
 	public function getIndexPageId()
@@ -51,6 +48,9 @@ class website_persistentdocument_topic extends website_persistentdocument_topicb
 		}
 	}
 	
+	/**
+	 * @return string
+	 */
 	public function getPathOf()
 	{
 		return $this->getDocumentService()->getPathOf($this);

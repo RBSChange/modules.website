@@ -803,8 +803,6 @@ class website_BlockController implements f_mvc_Controller
 	}
 
 	/**
-	 * Enter description here...
-	 *
 	 * @param f_DataCacheItem $cacheItem
 	 * @return Boolean
 	 */

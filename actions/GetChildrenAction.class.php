@@ -66,8 +66,6 @@ class website_GetChildrenAction extends f_action_BaseJSONAction
 	}
 		
 	/**
-	 * Enter description here...
-	 *
 	 * @return boolean
 	 */
 	public function isSecure()
