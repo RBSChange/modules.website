@@ -185,4 +185,13 @@
     <locale lang="fr">copyright ©</locale>
     <locale lang="en">copyright ©</locale>
   </entity>
+  <entity id="exception-thrown">
+    <locale lang="fr">une exception a été lancée : {message}</locale>
+  </entity>
+  <entity id="for-more-information-view-logs">
+    <locale lang="fr">Pour plus d'information, veuillez consulter les logs de l'application.</locale>
+  </entity>
+  <entity id="no-exception">
+    <locale lang="fr">Aucune exception n'a été transmise.</locale>
+  </entity>
 </localization>

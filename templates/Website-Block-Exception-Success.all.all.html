@@ -1,12 +1,9 @@
-<!-- TODO: translate -->
-<div tal:condition="exception">
-	<h3 tal:condition="not: exception/getLocalMessage">Une exception a été lancée : ${exception/getMessage}</h3>
-	<h3 tal:condition="exception/getLocalMessage">Une exception a été lancée : ${exception/getLocaleMessage}</h3>
+<tal:block tal:condition="exception">
+	<h3 change:h="" tal:condition="not: exception/getLocaleMessage" change:translate="modules.website.frontoffice.Exception-thrown; message exception/getMessage"></h3>
+	<h3 change:h="" tal:condition="exception/getLocaleMessage" change:translate="modules.website.frontoffice.Exception-thrown; message exception/getLocaleMessage"></h3>
 	<tal:block tal:condition="devMode">
-		<pre style="overflow: auto;">${exception/getTraceAsString}</pre>
-		<p>Pour plus d'information, veuillez <strong>consulter les logs de l'application</strong>.</p>
+		<pre style="overflow: auto">${exception/getTraceAsString}</pre>
+		<p class="normal" change:translate="modules.website.frontoffice.For-more-information-view-logs"></p>
 	</tal:block>
-</div>
-<p tal:condition="not: exception">
-  Aucune exception n'a été transmise.
-</p>
+</tal:block>
+<p tal:condition="not: exception" class="normal" change:translate="modules.website.frontoffice.No-exception"></p>
