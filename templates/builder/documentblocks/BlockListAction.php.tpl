@@ -13,30 +13,26 @@ class <{$module}>_Block<{$blockName}>Action extends <{if $genTag }>website_Tagge
 	 * @param f_mvc_Response $response
 	 * @return String
 	 */
-	function execute($request, $response)
+	public function execute($request, $response)
 	{
 		if ($this->isInBackoffice())
 		{
-			// We choose to do nothing in back-office
-			return null;
+			return website_BlockView::NULL;
 		}
 		
 		// Get published documents.
-		$orderProperty = $request->getParameter("orderBy", "label");
-		$orderDirection = $request->getParameter("orderByDirection", "asc");
+		$orderProperty = $request->getParameter('orderBy', 'label');
+		$request->setAttribute('orderBy', $orderProperty);
+		$orderDirection = $request->getParameter('orderByDirection', 'asc');
+		$request->setAttribute('orderByDirection', $orderDirection);
 		$order = Order::byString($orderProperty, $orderDirection);
-		$request->setAttribute("orderBy", $orderProperty);
-		$request->setAttribute("orderByDirection", $orderDirection);
-		
 		$<{$documentModel->getDocumentName()}>s = <{$module}>_<{$documentModel->getDocumentName()|ucfirst}>Service::getInstance()->getPublished($order);
 		
 		// <{$documentModel->getDocumentName()}>s pagination.
-		$pageIndex = $request->getParameter("page", 1);
-		$itemPerPage = $this->getConfigurationParameter("itemPerPage", 10);
-		$paginator = new paginator_Paginator("<{$module}>", $pageIndex, $<{$documentModel->getDocumentName()}>s, $itemPerPage);
-		
-		// Transmit to the view.
-		$request->setAttribute("<{$documentModel->getDocumentName()}>s", $paginator);
+		$pageIndex = $request->getParameter('page', 1);
+		$itemPerPage = $this->getConfigurationParameter('itemPerPage', 10);
+		$paginator = new paginator_Paginator('<{$module}>', $pageIndex, $<{$documentModel->getDocumentName()}>s, $itemPerPage);
+		$request->setAttribute('<{$documentModel->getDocumentName()}>s', $paginator);
 
 		return website_BlockView::SUCCESS;
 	}
