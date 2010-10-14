@@ -2,6 +2,8 @@
 
 class website_BlockSwitchlanguageAction extends website_BlockAction
 {
+	private $detailId = null;
+	
 	/**
 	 * @see f_mvc_Action::getCacheDependencies()
 	 *
@@ -10,7 +12,32 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 	 
 	public function getCacheDependencies()
 	{
-		return array("modules_website/page",  "modules_website/pagegroup", "modules_website/website");
+		$dep = array("modules_website/page",  "modules_website/pagegroup", "modules_website/website");
+		if ($this->getDetailId())
+		{
+			$dep[] = $this->getDetailId();
+		}
+		return $dep;
+	}
+	
+	private function getDetailId()
+	{
+		if ($this->detailId === null)
+		{
+			$params = HttpController::getInstance()->getContext()->getRequest()->getParameters();
+			if (isset($params['wemod']) 
+				&& isset($params[$params['wemod'].'Param']) 
+				&& is_array($params[$params['wemod'].'Param']) 
+				&& isset($params[$params['wemod'].'Param']['cmpref']))
+			{
+				$this->detailId = $params[$params['wemod'].'Param']['cmpref'];
+			}
+			else 
+			{
+				$this->detailId = 0;
+			}
+		}
+		return $this->detailId;
 	}
 	
 
@@ -24,7 +51,8 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 		return array("context->id" => $this->getPage()->getId(),
 			"lang->id" => RequestContext::getInstance()->getLang(),
 			"viewall" =>  $this->getConfigurationParameter('viewall'),
-			"showflag" => $this->getConfigurationParameter('showflag')
+			"showflag" => $this->getConfigurationParameter('showflag'),
+			"detailId" => $this->getDetailId()
 		);
 	}
 	/**
@@ -35,7 +63,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 	 * @return String
 	 */
 	function execute($request, $response)
-	{	
+	{
 		$viewall = $this->getConfiguration()->getViewall();
 		$request->setAttribute('viewall', $viewall);
 		$showflag = $this->getConfiguration()->getShowflag();
@@ -44,16 +72,36 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 		$currentLang = $rc->getLang();
 		$page = $this->getPage()->getPersistentPage();
 		
-		$parameters = $this->getCleanGlobalParameters(Controller::getInstance()->getContext()->getRequest()->getParameters());
-		$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
-		$homePage = $website->getIndexPage();
 		
 		$switchArray = array();
 		$hasLink = false;
+		$detailId = $this->getDetailId($request);
+		$detailDoc = null;
+		if (intval($detailId) > 0)
+		{
+			try 
+			{
+				$detailDoc = DocumentHelper::getDocumentInstance($detailId);
+			}
+			catch (Exception $e)
+			{
+				Framework::warn($e->getMessage());
+			}
+		}
+		
+		$parameters = $this->getCleanGlobalParameters(Controller::getInstance()->getContext()->getRequest()->getParameters(), $detailDoc);
+		$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+		$homePage = $website->getIndexPage();
+		
 		foreach ($rc->getSupportedLanguages() as $lang)
 		{
 			$rc->beginI18nWork($lang);
 			$isPageLink = ($page->isContextLangAvailable() && $page->isPublished());
+			if ($detailDoc && $isPageLink)
+			{
+				$isPageLink = $detailDoc->isContextLangAvailable() && $detailDoc->isPublished();
+			}
+			
 			if ($website->isPublished() && ($isPageLink || ($viewall && $homePage->isPublished())))
 			{
 				$switchArray[$lang] = array();
@@ -70,7 +118,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 					$hasLink = true;
 					if ($isPageLink)
 					{
-						$pageUrl = LinkHelper::getDocumentUrl($page, $lang, $parameters);
+						$pageUrl = LinkHelper::getDocumentUrl($detailDoc ? $detailDoc : $page, $lang, $parameters);
 						$switchArray[$lang]['url'] = $pageUrl;
 						$this->getPage()->addLink("alternate", "text/html", $pageUrl, f_Locale::translate("&modules.website.frontoffice.this-page-in-mylang;", null, $lang), $lang);
 					}
@@ -101,13 +149,13 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 		
 		switch ($lang)
 		{
-			case 'fr' : return 'Version franÃ§aise';
+			case 'fr' : return 'Version française';
 			case 'en' : return 'English version';
 			case 'de' : return 'Deutsche Version';
 			case 'it' : return 'Versione italiana';
-			case 'pt' : return 'VersÃ£o PortuguÃªs';
+			case 'pt' : return 'Versão Português';
 			case 'nl' : return 'Dutsch versie';
-			case 'es' : return 'VersiÃ³n en espaÃ±ol';
+			case 'es' : return 'Versión en español';
 		}
 		return strtoupper($lang);
 	}
@@ -131,7 +179,11 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 		return 'flag_generic';
 	}
 	
-	private function getCleanGlobalParameters($parameters)
+	/**
+	 * @param array $parameters
+	 * @param f_persistentdocument_PersistentDocument $detailDoc
+	 */
+	private function getCleanGlobalParameters($parameters, $detailDoc)
 	{
 		unset($parameters[K::LANG_ACCESSOR]);
 		unset($parameters[K::PAGE_REF_ACCESSOR]);
@@ -140,6 +192,11 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 		unset($parameters['websiteParam']);
 		unset($parameters['module']);
 		unset($parameters['action']);
+		if ($detailDoc)
+		{
+			unset($parameters[$parameters['wemod'].'Param']);
+			unset($parameters['wemod']);
+		}
 		return $parameters;
 	}
 }
