@@ -1541,21 +1541,20 @@ class website_PageService extends f_persistentdocument_DocumentService
 				}
 				else if ($ancestor instanceof website_persistentdocument_topic)
 				{
-					if ($ancestor->getNavigationVisibility() != 1)
+					if ($ancestor->getNavigationVisibility() == WebsiteConstants::VISIBILITY_VISIBLE || $ancestor->getNavigationVisibility() == WebsiteConstants::VISIBILITY_HIDDEN_IN_SITEMAP_ONLY)
 					{
-						continue;
+						$breadcrumb->addElement($ancestor->getLabel(), LinkHelper::getDocumentUrl($ancestor));
 					}
-					$breadcrumb->addElement($ancestor->getLabel(), LinkHelper::getDocumentUrl($ancestor));
 				}
 			}
 		}
 
-		if ($pageDocument->getNavigationVisibility() == 1)
+		if ($pageDocument->getNavigationVisibility() == WebsiteConstants::VISIBILITY_VISIBLE || $pageDocument->getNavigationVisibility() == WebsiteConstants::VISIBILITY_HIDDEN_IN_SITEMAP_ONLY)
 		{
 			// current page is visible and then the last element of breadcrumb
 			$breadcrumb->addElement($pageContext->getNavigationtitle());
 		}
-		else
+		else if ($pageDocument->getIsIndexPage())
 		{
 			$lastElem = $breadcrumb->getLastElement();
 			$lastElem->href = null;
