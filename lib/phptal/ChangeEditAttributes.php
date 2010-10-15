@@ -350,13 +350,13 @@ echo PHPTAL_Php_Attribute_CHANGE_create::renderPendingDocumentList('.$this->para
 		if (f_util_ArrayUtils::isNotEmpty($documents))
 		{
 			$html .= "<table class=\"normal\">";
-			$html .= "<caption>".f_Locale::translate("&modules.website.frontoffice.pending-document-list;")."</caption>";
-			$html .= "<tr><th>".f_Locale::translate("&modules.website.frontoffice.pending-document-list-label;")."</th><th>".f_Locale::translate("&modules.website.frontoffice.pending-document-list-creationdate;")."</th></tr>";
+			$html .= "<caption>".f_Locale::translate("&modules.website.frontoffice.Pending-document-list;")."</caption>";
+			$html .= "<tr><th>".f_Locale::translate("&modules.website.frontoffice.Pending-document-list-label;")."</th><th>".f_Locale::translate("&modules.website.frontoffice.Pending-document-list-creationdate;")."</th><th>".f_Locale::translate("&modules.website.frontoffice.Pending-document-list-actions;")."</th></tr>";
 
 			foreach ($documents as $document)
 			{
 				$html .= "<tr>";
-				$html .= "<td><a href=\"".LinkHelper::getDocumentUrl($document)."\" class=\"link\">".$document->getLabel()."</a></td>";
+				$html .= "<td>".$document->getLabelAsHtml()."</td>";
 				$html .= "<td>".date_DateFormat::format($document->getUICreationdate())."</td>";
 				$html .= "<td>".PHPTAL_Php_Attribute_CHANGE_edit::renderEdit(array("document" => $document))."</td>";
 				$html .= "</tr>";

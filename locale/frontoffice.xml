@@ -24,13 +24,16 @@
     <locale lang="fr">Ré-activer le document</locale>
   </entity>
   <entity id="pending-document-list">
-    <locale lang="fr">Liste des documents en attente</locale>
+    <locale lang="fr">liste des documents en attente</locale>
   </entity>
   <entity id="pending-document-list-label">
-    <locale lang="fr">Libellé</locale>
+    <locale lang="fr">libellé</locale>
   </entity>
   <entity id="pending-document-list-creationdate">
-    <locale lang="fr">Date de création</locale>
+    <locale lang="fr">date de création</locale>
+  </entity>
+  <entity id="pending-document-list-actions">
+    <locale lang="fr">actions</locale>
   </entity>
   <entity id="addToFavorite">
     <locale lang="fr">ajouter aux favoris</locale>
