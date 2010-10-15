@@ -30,7 +30,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 				&& is_array($params[$params['wemod'].'Param']) 
 				&& isset($params[$params['wemod'].'Param']['cmpref']))
 			{
-				$this->detailId = $params[$params['wemod'].'Param']['cmpref'];
+				$this->detailId = intval($params[$params['wemod'].'Param']['cmpref']);
 			}
 			else 
 			{
