@@ -15,7 +15,11 @@ class website_PageScriptDocumentElement extends import_ScriptDocumentElement
 	protected function getDocumentProperties()
 	{
 		$properties = parent::getDocumentProperties();
-		$properties['template'] = $this->getAncestorAttribute('template');
+		$template = $this->getAncestorAttribute('template');
+		if ($template !== null)
+		{
+			$properties['template'] = $template;
+		}
 		$page = $this->getPersistentDocument();
 		if (isset($properties['url']))
 		{
@@ -169,6 +173,23 @@ class website_PageScriptDocumentElement extends import_ScriptDocumentElement
 			catch (Exception $e)
 			{
 				$rc->endI18nWork($e);
+			}
+		}
+	}
+	
+	/**
+	 * @param import_ScriptExecuteElement $scriptExecute
+	 */
+	public function setPageRefAsIndex($scriptExecute)
+	{
+		$page = $this->getPersistentDocument();
+		$refs = website_PagereferenceService::getInstance()->getPagesReferenceByPage($page);
+		foreach ($refs as $pageRef) 
+		{
+			if (!$pageRef->getIsIndexPage())
+			{
+				Framework::info(__METHOD__ . ': ' . $pageRef->__toString());
+				website_WebsiteModuleService::getInstance()->setIndexPage($pageRef, true);
 			}
 		}
 	}
