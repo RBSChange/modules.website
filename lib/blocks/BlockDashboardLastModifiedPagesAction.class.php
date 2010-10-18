@@ -84,7 +84,7 @@ class website_BlockDashboardLastModifiedPagesAction extends  dashboard_BlockDash
 				'status' => ucfirst($status),
 				'style' => $style,
 				'icon' => $icon,
-				'link' => "window.open('$link', 'PreviewWindow', 'menubar=yes, location=yes, toolbar=yes, resizable=yes, scrollbars=yes, status=yes');"
+				'link' => $link
 			);
 		}
 		$request->setAttribute('pages', $widget);
