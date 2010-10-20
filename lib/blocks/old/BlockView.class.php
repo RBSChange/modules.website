@@ -489,9 +489,10 @@ abstract class block_BlockView
         {
         	// import all the parameters
         	$this->setAttributes($this->getParameters());
-        	
-            $this->getTemplate()->importAttributes($this->getAttributes());
-
+        	$attr = $this->getAttributes();
+        	$attr['context'] = $this->getController()->getContext();
+        	$attr['website_page'] = $this->getController()->getContext()->getAttribute("website_page");
+            $this->getTemplate()->importAttributes($attr);
     		return $this->getTemplate()->execute();
         }
         else
