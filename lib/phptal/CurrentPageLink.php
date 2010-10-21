@@ -1,8 +1,9 @@
 <?php
 /**
  * @package phptal.php.attribute
- * @example <a change:currentpagelink="extraparam">...</a>
- * @example <form change:currentpagelink="extraparam">...</form>
+ * @example <a change:currentpagelink="extraParamArray">...</a>
+ * @example <form change:currentpagelink="extraParamArray">...</form>
+ * @example <a change:currentpagelink="extraParamName 'extraParamValue'">...</a>
  */
 class PHPTAL_Php_Attribute_CHANGE_currentpagelink extends ChangeTalAttribute
 {
@@ -39,7 +40,7 @@ class PHPTAL_Php_Attribute_CHANGE_currentpagelink extends ChangeTalAttribute
 		
 		foreach ($params as $name => $value)
 		{
-			if ($name == "tagname" || $name == "class" || $name == "extraparams" || $name == "module")
+			if ($name == "tagname" || $name == "class" || $name == "extraparams" || $name == "module" || $name == "title")
 			{
 				continue;
 			}
@@ -80,7 +81,7 @@ class PHPTAL_Php_Attribute_CHANGE_currentpagelink extends ChangeTalAttribute
 		$parametersString = $this->initParams();
 		foreach (array_keys($this->tag->attributes) as $name)
 		{
-			if ($name == "class")
+			if ($name == "class" || $name == "title")
 			{
 				continue;
 			}
