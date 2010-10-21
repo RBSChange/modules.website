@@ -31,13 +31,15 @@
 					this.mConfig = {};
 					this.mInitialized = true;
 					var field = this.getElementByAnonId('template');
+					var fieldHome = this.getElementByAnonId('templateHome');
 					if (result.contents.length > 0)
 					{
 						for (var i in result.contents)
 						{
 							var itemInfos = result.contents[i];
 							this.mConfig[itemInfos.codename] = itemInfos;
-							var item = field.appendItem(itemInfos.label, itemInfos.codename);
+							field.appendItem(itemInfos.label, itemInfos.codename);
+							fieldHome.appendItem(itemInfos.label, itemInfos.codename);
 						}
 					}
 					else
@@ -61,17 +63,22 @@
 				<parameter name="list" />
 				<body><![CDATA[
 					var templateName = this.getElementByAnonId('template').value;
+					var templateHomeName = this.getElementByAnonId('templateHome').value;
+					if (templateHomeName == '')
+					{
+						templateHomeName = templateName
+					}
 					try
 					{
 						this.getElementByAnonId('form-panel').setAttribute('hidden', 'true');
 						this.getElementByAnonId('importing-panel').removeAttribute('hidden');
 						this.getElementByAnonId('message-panel').setAttribute('hidden', 'true');
-						var result = this.parameters.callback(templateName);
+						var result = this.parameters.callback({template: templateName, templateHome: templateHomeName});
 						this.onStructureInitialized(result);
 					}
 					catch (e)
 					{
-						wCore.error("onOk", [template], e);
+						wCore.error("onOk", [templateName, templateHomeName], e);
 						this.getElementByAnonId('form-panel').removeAttribute('hidden');
 						this.getElementByAnonId('importing-panel').setAttribute('hidden', 'true');
 						this.getElementByAnonId('message-panel').setAttribute('hidden', 'true');
@@ -113,23 +120,19 @@
 		</implementation>
 		<handlers>
 			<handler event="fieldChanged"><![CDATA[
-				var templateName = this.getElementByAnonId('template').value;
+				var templateName = event.originalTarget.value;
 				var item = this.mConfig[templateName];
-				if (item)
+				var previewImageAnonId = (event.originalTarget.getAttribute('name') == 'template') ? 'previewimage' : 'previewimageHome';
+				if (item && item.hasPreviewImage)
 				{
-					this.getElementByAnonId('submitButton').removeAttribute('disabled');
-					if (item.hasPreviewImage)
-					{
-						var url = wCore.buildServerUrl('theme', 'PreviewImage', {cmpref: item.id, lang:Context.W_LANG, 'max-height':100, 'max-width':150});
-						this.getElementById('previewimage').setAttribute('src', url);
-						return;
-					}
+					var url = wCore.buildServerUrl('theme', 'PreviewImage', {cmpref: item.id, lang:Context.W_LANG, 'max-height':100, 'max-width':150});
+					this.getElementByAnonId(previewImageAnonId).setAttribute('src', url);
 				}
 				else
 				{
-					this.getElementByAnonId('submitButton').setAttribute('disabled', 'true');
+					this.getElementByAnonId(previewImageAnonId).setAttribute('src', 'about:blank');
 				}
-				this.getElementById('previewimage').setAttribute('src', 'about:blank');
+				this.getElementByAnonId('submitButton').disabled = !this.getElementByAnonId('template').valid;
 			]]></handler>
 		</handlers>
 		<xbl:content>
@@ -149,11 +152,22 @@
 									<xul:vbox flex="1" pack="center">
 										<xul:description>&amp;modules.website.bo.dialog.Select-page-template;</xul:description>
 										<xul:spacer height="5px"/>
-										<xul:cfield anonid="template" name="template" fieldtype="dropdownlist" hidehelp="true" />
+										<xul:cfield anonid="template" name="template" fieldtype="dropdownlist" hidehelp="true" required="true" />
 									</xul:vbox>
 									<xul:spacer width="5"/>
 									<xul:vbox width="150" height="100" align="center" pack="center">
 										<xul:image anonid="previewimage" src="{IconsBase}/small/document.png" />
+									</xul:vbox>
+								</xul:hbox>
+								<xul:hbox>
+									<xul:vbox flex="1" pack="center">
+										<xul:description>&amp;modules.website.bo.dialog.Select-home-page-template;</xul:description>
+										<xul:spacer height="5px"/>
+										<xul:cfield anonid="templateHome" name="templateHome" fieldtype="dropdownlist" hidehelp="true" />
+									</xul:vbox>
+									<xul:spacer width="5"/>
+									<xul:vbox width="150" height="100" align="center" pack="center">
+										<xul:image anonid="previewimageHome" src="{IconsBase}/small/document.png" />
 									</xul:vbox>
 								</xul:hbox>
 								<xul:spacer height="10px" />

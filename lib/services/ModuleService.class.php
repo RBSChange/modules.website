@@ -77,54 +77,46 @@ class website_ModuleService extends ModuleBaseService
 	/**
 	 * @param f_peristentdocument_PersistentDocument $container
 	 * @param string $module
-	 * @param string $pageTemplate
+	 * @param array $attributes
 	 * @param string $script
 	 */
-	public function inititalizeStructure($container, $module, $pageTemplate, $script)
+	public function inititalizeStructure($container, $module, $attributes, $script)
 	{
-		$scriptPath = FileResolver::getInstance()->setPackageName('modules_'.$module)->setDirectory('setup')->getPath($script.'.xml');
+		$scriptFile = $script . (!f_util_StringUtils::endsWith($script, '.xml') ? '.xml' : '');
+		$scriptPath = FileResolver::getInstance()->setPackageName('modules_'.$module)->setDirectory('setup')->getPath($scriptFile);
 		if ($scriptPath === null)
 		{
 			throw new BaseException('Import script not found!', 'modules.website.bo.general.Import-script-not-found');
 		}
 		
-		$scriptContent = f_util_FileUtils::read($scriptPath);
-		$scriptContent = str_replace('"webfactory/tplTwo"', '"'.$pageTemplate.'"', $scriptContent);
-		
-		$scriptDom = new DOMDocument('1.0', 'UTF-8');
-		$scriptDom->loadXML($scriptContent);
-				
 		$ms = ModuleBaseService::getInstanceByModuleName($module);
-		$ms->updateStructureInitializationScript($container, $pageTemplate, $script, $scriptDom);
+		if (f_util_ClassUtils::methodExists($ms, 'getStructureInitializationAttributes'))
+		{
+			$attributes = $ms->getStructureInitializationAttributes($container, $attributes, $script);
+		}
 		
-		$tmpFile = f_util_FileUtils::getTmpFile('Script_');
-		$scriptDom->save($tmpFile);
-	
 		$tm = $this->getTransactionManager();
 		try 
 		{
 			$tm->beginTransaction();			
 			$scriptReader = import_ScriptReader::getInstance();
-			Framework::info('Import Default Struct : ' . $tmpFile);
-			$scriptReader->execute($tmpFile);
-			@unlink($tmpFile);
+			$scriptReader->execute($scriptPath, $attributes);
 			$tm->commit();
 		}
 		catch (Exception $e)
 		{
 			$tm->rollBack($e);
-			@unlink($tmpFile);
 			throw $e;
 		}
 	}
 	
 	/**
 	 * @param f_peristentdocument_PersistentDocument $container
-	 * @param string $pageTemplate
+	 * @param array $attributes
 	 * @param string $script
-	 * @param DOMDocument $scriptPath
+	 * @return array
 	 */
-	public function updateStructureInitializationScript($container, $pageTemplate, $script, $scriptDom)
+	public function getStructureInitializationAttributes($container, $attributes, $script)
 	{
 		// Check container.
 		if (!$container instanceof website_persistentdocument_website)
@@ -138,18 +130,14 @@ class website_ModuleService extends ModuleBaseService
 			{
 				throw new BaseException('Website is not empty', 'modules.website.bo.actions.Website-is-not-empty');
 			}
-		}
+		}		
+		website_WebsiteModuleService::getInstance()->setCurrentWebsite($container);
 		
-		// Fix script content.
-		$xmlWebsite = $scriptDom->getElementsByTagName('website')->item(0);
-		$xmlWebsite->setAttribute('documentid', $container->getId());
-		$xmlWebsite->setAttribute('domain', $container->getDomain());
-		$xmlWebsite->setAttribute('url', $container->getUrl());
-		
-		$xmlWebsite->removeAttribute('label');
-		$xmlWebsite->removeAttribute('label-en');
-		$xmlWebsite->removeAttribute('protocol');
-		$xmlWebsite->removeAttribute('localizebypath');
-		$xmlWebsite->removeAttribute('byTag');
+		// Set atrtibutes.
+		$attributes['byDocumentId'] = $container->getId();
+		$attributes['label'] = $container->getLabel();
+		$attributes['protocol'] = $container->getProtocol();
+		$attributes['localizebypath'] = $container->getLocalizebypath();
+		return $attributes;
 	}
 }

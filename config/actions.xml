@@ -346,8 +346,8 @@
 			{
 				var documentId = listWidget.getSelectedItems()[0].id;
 				var lang = this.getContextLang();
-				var callback = function (pageTemplateName) {
-					return wCore.executeJSON('website', 'InitializeStructure', { cmpref: documentId, moduleName: 'website', scriptName: 'sample', pageTemplateName: pageTemplateName, lang: lang}, null, true);
+				var callback = function (attributes) {
+					return wCore.executeJSON('website', 'InitializeStructure', { cmpref: documentId, moduleName: 'website', scriptName: 'defaultsite', attributes: attributes, lang: lang}, null, true);
 				};
 				getController().openModalDialog(this, 'InitializeStructure', {documentId: documentId, module: this, callback: callback });
 			}

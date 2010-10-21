@@ -15,11 +15,19 @@ class website_PageScriptDocumentElement extends import_ScriptDocumentElement
 	protected function getDocumentProperties()
 	{
 		$properties = parent::getDocumentProperties();
-		$template = $this->getAncestorAttribute('template');
+		if (isset($properties['template-attr']) && $properties['template-attr'] != '')
+		{
+			$template = $this->getAncestorAttribute($properties['template-attr']);
+		}
+		else
+		{
+			$template = $this->getAncestorAttribute('template');
+		}
 		if ($template !== null)
 		{
 			$properties['template'] = $template;
 		}
+		
 		$page = $this->getPersistentDocument();
 		if (isset($properties['url']))
 		{

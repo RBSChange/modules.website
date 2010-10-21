@@ -20,7 +20,9 @@ class website_WebsiteScriptDocumentElement extends import_ScriptDocumentElement
 		{
 			return DocumentHelper::getDocumentInstance($this->attributes['documentid']);
 		}
-		return website_WebsiteService::getInstance()->getNewDocumentInstance();
+		$website = website_WebsiteService::getInstance()->getNewDocumentInstance();
+		$website->setDomain(Framework::getUIDefaultHost());
+		return $website;
 	}
 	
 	protected function getDocumentProperties()
@@ -38,15 +40,6 @@ class website_WebsiteScriptDocumentElement extends import_ScriptDocumentElement
 		if (isset($properties['documentid']))
 		{
 			unset($properties['documentid']);
-		}
-		
-		if (!isset($properties['url']))
-		{
-			$properties['url'] = Framework::getUIBaseUrl();
-		}
-		if (!isset($properties['domain']))
-		{
-			$properties['domain'] = Framework::getUIDefaultHost();
 		}
 		return $properties;
 	}

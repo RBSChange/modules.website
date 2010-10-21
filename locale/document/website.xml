@@ -195,13 +195,24 @@
 		<locale lang="fr">contenu XML du fichier Bing (/BingSiteAuth.xml)</locale>
 		<locale lang="en">XML content of the Bing identification file (/BingSiteAuth.xml)</locale>
 	</entity>
-	
-	
+		
 	<entity id="structureinit">
 		<locale lang="fr">structure par défaut</locale>
 		<locale lang="en">default Structur</locale>
 	</entity>
 	<entity id="structureinit-help">
-		<locale lang="fr">Scripte à utiliser pour initialiser la structure du site.</locale>
+		<locale lang="fr">Script à utiliser pour initialiser la structure du site.</locale>
+	</entity>
+	<entity id="template">
+		<locale lang="fr">template des pages</locale>
+	</entity>
+	<entity id="template-help">
+		<locale lang="fr">Template à appliquer aux pages de contenu.</locale>
+	</entity>
+	<entity id="templatehome">
+		<locale lang="fr">template d'accueil</locale>
+	</entity>
+	<entity id="templatehome-help">
+		<locale lang="fr">Template à appliquer à la page d'accueil. Laisser vide pour prendre le même template que les pages de contenu.</locale>
 	</entity>
 </localization>

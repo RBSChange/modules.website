@@ -103,6 +103,15 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 			$default = f_util_FileUtils::read(f_util_FileUtils::buildWebeditPath('media', 'frontoffice', 'robots.txt'));
 			$document->setRobottxt($default);
 		}
+		
+		if ($document->getTemplate())
+		{
+			$document->addAllowedpagetemplate(DocumentHelper::getDocumentInstance($document->getTemplate(), 'modules_theme/pagetemplate'));
+		}
+		if ($document->getTemplateHome())
+		{
+			$document->addAllowedpagetemplate(DocumentHelper::getDocumentInstance($document->getTemplateHome(), 'modules_theme/pagetemplate'));
+		}
 	}
 
 
@@ -118,7 +127,7 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 		// If we are creating the first website document, set it as the default
 		// website.
 		if (is_null($query->findUnique()) )
-		{
+		{	
 			website_WebsiteModuleService::getInstance()->setDefaultWebsite($document);
 		}
 
@@ -133,13 +142,9 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 		$markerFolder->save($document->getId());
 		
 		$initScript = $document->getStructureinit();
-		if (f_util_StringUtils::isNotEmpty($initScript))
+		if (f_util_StringUtils::isNotEmpty($initScript) && $document->getTemplate())
 		{
-			$scriptPath = f_util_FileUtils::buildWebeditPath('modules', 'website', 'setup', $initScript);
-			if (is_readable($scriptPath))
-			{
-				$this->generateDefaultStructure($document, $scriptPath);
-			}
+			$this->generateDefaultStructure($document, $initScript);
 		}
 	}
 		
@@ -147,29 +152,19 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	 * @param website_persistentdocument_website $website
 	 * @param string $scriptPath
 	 */
-	private function generateDefaultStructure($website, $scriptPath)
+	private function generateDefaultStructure($website, $initScript)
 	{
-		$script = new DOMDocument('1.0', 'UTF-8');
-		$script->load($scriptPath);
-		
-		$xmlWebsite = $script->getElementsByTagName('website')->item(0);
-		$xmlWebsite->setAttribute('documentid', $website->getId());
-		$xmlWebsite->setAttribute('domain', $website->getDomain());
-		$xmlWebsite->setAttribute('url', $website->getUrl());
-		
-		$xmlWebsite->removeAttribute('label');
-		$xmlWebsite->removeAttribute('label-en');
-		$xmlWebsite->removeAttribute('protocol');
-		$xmlWebsite->removeAttribute('localizebypath');
-		$xmlWebsite->removeAttribute('byTag');
-		
-		$tmpFile = f_util_FileUtils::getTmpFile('Script_');
-		$script->save($tmpFile);
-
-		$scriptReader = import_ScriptReader::getInstance();
-		Framework::info('Import Default Struct : ' . $tmpFile);
-		$scriptReader->execute($tmpFile);
-		@unlink($tmpFile);
+		$template = DocumentHelper::getDocumentInstance($website->getTemplate(), 'modules_theme/pagetemplate')->getCodename();
+		$attributes['template'] = $template;
+		if ($website->getTemplateHome())
+		{
+			$attributes['templateHome'] = DocumentHelper::getDocumentInstance($website->getTemplateHome(), 'modules_theme/pagetemplate')->getCodename();
+		}
+		else 
+		{
+			$attributes['templateHome'] = $template;
+		}
+		website_ModuleService::getInstance()->inititalizeStructure($website, 'website', $attributes, $initScript);
 	}
 
 	/**

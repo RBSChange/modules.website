@@ -6,13 +6,18 @@
 	<binding fileName="modules/website/persistentdocument/import/website_binding.xml" />
 	<binding fileName="modules/theme/persistentdocument/import/theme_binding.xml" />
 
-	<pagetemplate byCodename="webfactory/tplOne" id="tplOne" />
-	<pagetemplate byCodename="webfactory/tplTwo" id="tplTwo" />
+	<attribute name="template" default="true">webfactory/tplTwo</attribute>
+	<attribute name="templateHome" default="true">webfactory/tplOne</attribute>
+	
+	<attribute name="label" default="true">Site web par défaut</attribute>
+	<attribute name="protocol" default="true">http</attribute>
+	<attribute name="localizebypath" default="true">true</attribute>
 
-	<website label="Site web par défaut" label-en="Default website"	protocol="http" localizebypath="true"
-		allowedpagetemplate-refids="tplOne,tplTwo" template="webfactory/tplTwo" byTag="default_modules_website_default-website">
-		<page label="Page d'accueil" label-en="Homepage" isHomePage="true"
-			template="webfactory/tplOne" id="homepage">
+	<pagetemplate byCodename-attr="templateHome" id="tplOne" />
+	<pagetemplate byCodename-attr="template" id="tplTwo" />
+	
+	<website byDocumentId-attr="" label-attr="" protocol-attr="" localizebypath-attr="" allowedpagetemplate-refids="tplOne,tplTwo">
+		<page label="Page d'accueil" label-en="Homepage" isHomePage="true" template-attr="templateHome" id="homepage">
 			<changecontent for="content-block">
 				<changeblock type="richtext">
 					<![CDATA[<h2>Bienvenue</h2><p>...</p>]]>
@@ -156,7 +161,7 @@
 				</changecontent>
 			</page>
 			<page label="Edition front-office" label-en="Frontoffice edition" indexingstatus="false" navigationVisibility="hidden" navigationVisibility-en="hidden"
-				byTag="contextual_website_website_modules_website_edit" template="webfactory/tplOne">
+				byTag="contextual_website_website_modules_website_edit" template-attr="templateHome">
 				<changecontent for="content-block">
 				   <changeblock type="modules_website_edit" />
 				</changecontent>

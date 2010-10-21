@@ -6,6 +6,9 @@
 	<entity id="select-page-template">
 		<locale lang="fr">Sélectionnez le template à associer aux pages.</locale>
 	</entity>
+	<entity id="select-home-page-template">
+		<locale lang="fr">Sélectionnez le template de page d'accueil.</locale>
+	</entity>
 	<entity id="importing-structure">
 		<locale lang="fr">Initialisation de la structure...</locale>
 	</entity>

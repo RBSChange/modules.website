@@ -13,17 +13,9 @@ class website_InitializeStructureAction extends f_action_BaseJSONAction
 	{
 		$module = $request->getParameter('moduleName');
 		$script = $request->getParameter('scriptName');
-		if ($request->hasParameter('pageTemplateName'))
-		{
-			$pageTemplate = $request->getParameter('pageTemplateName');
-		}
-		if ($request->getParameter('pageTemplateId'))
-		{
-			$template = DocumentHelper::getDocumentInstance($request->getParameter('pageTemplateId'));
-			$pageTemplate = $template->getCodename();
-		}		
+		$attributes = $request->getParameter('attributes');
 		$container = $this->getDocumentInstanceFromRequest($request);
-		website_ModuleService::getInstance()->inititalizeStructure($container, $module, $pageTemplate, $script);
+		website_ModuleService::getInstance()->inititalizeStructure($container, $module, $attributes, $script);
 		return $this->sendJSON(array('id' => $container->getId()));
 	}
 }
