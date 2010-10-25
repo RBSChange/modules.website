@@ -4,7 +4,6 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<title><?php echo htmlspecialchars($this->getTitle(), ENT_COMPAT, "utf-8"); ?></title>
-		<meta name="viewport" content="width=device-width;" />
 		<meta http-equiv="content-language" content="<?php echo $this->getLang(); ?>" />
 		<meta name="language" content="<?php echo $this->getLang(); ?>" />
 		<meta name="description" <?php echo f_util_HtmlUtils::buildAttribute("content", $this->getDescription()); ?> />
