@@ -164,7 +164,7 @@ class website_BBCodeService extends BaseService
 	 */
 	protected function extractCodeContent($bbcode)
 	{
-		return preg_replace_callback('(\[code\](.+?)\[\/code\])is', array($this, 'parseCode'), $bbcode);
+		return preg_replace_callback('(\[code\]((?:[^[]|\[(?!/?code])|(?R))+)\[\/code\])is', array($this, 'parseCode'), $bbcode);
 	}
 	
 	/**
@@ -173,6 +173,8 @@ class website_BBCodeService extends BaseService
 	 */
 	protected function convertDefaultCodes($html)
 	{
+		$html = $this->parseQuote($html);
+		
 		$pattern = array();
 		$replacement = array();
 				
@@ -191,15 +193,7 @@ class website_BBCodeService extends BaseService
 		// Check for strike-through text
 		$pattern[] = '/\[s\](.+?)\[\/s\]/is';
 		$replacement[] = '<del>$1</del>';
-		
-		// [quote]quoted text[/quote]
-		$pattern[] = '/\[quote\](.+?)\[\/quote\]/is';
-		$replacement[] = '<blockquote>$1</blockquote>';	
 
-		$pattern[] = '/\[quote\=([^\]]*)\](.+?)\[\/quote\]/is';
-		$quoteLabel = f_Locale::translate('&modules.website.bbeditor.someone-saidLabel;');
-		$replacement[] = '<blockquote cite="$1"><strong>$1 '.$quoteLabel.'</strong><br />$2</blockquote>';	
-		
 		// Images
 		$pattern[] = '/\[img=\&quot\;('.self::URL_STRING_REGEXP.')\&quot\;\](.*?)\[\/img\]/is';
 		$replacement[] = '<img src="$1" alt="$2" title="$2" />';
@@ -208,7 +202,38 @@ class website_BBCodeService extends BaseService
 		$pattern[] = '/\[url=\&quot\;('.self::URL_STRING_REGEXP.')\&quot\;\](.+?)\[\/url\]/is';
 		$replacement[] = '<a class="link" href="$1" target="_blank">$2</a>';
 		
+		// Alignments.
+		$pattern[] = '/\[align=(left|right|center|justify)\](.+?)\[\/align\]/si';
+		$replacement[] = '<div class="align-$1">$2</div>';
+		
 		return preg_replace($pattern, $replacement, $html);
+	}
+	
+	/**
+	 * @param String $text
+	 * @return String
+	 */
+	public function parseQuote($html)
+	{
+		$pattern = '/\[quote(?:\=([^\]]*))?]((?:[^[]|\[(?!\/?quote(?:\=[^\]]*)?])|(?R))+)\[\/quote\]/is';
+		return preg_replace_callback($pattern, array($this, 'parseQuoteCallback'), $html);
+	}
+	
+	/**
+	 * @param Array $matches
+	 * @return String
+	 */
+	public function parseQuoteCallback($matches)
+	{
+		if (!$matches[1])
+		{
+			return '<blockquote>' . $this->parseQuote($matches[2]) . '</blockquote>';
+		}
+		else 
+		{
+			$quoteLabel = f_Locale::translate('&modules.website.bbeditor.someone-saidLabel;');
+			return '<blockquote cite="' . $matches[1] . '"><strong class="author">' . $matches[1] . ' '.$quoteLabel.'</strong><br />' . $this->parseQuote($matches[2]) . '</blockquote>';
+		}	
 	}
 	
 	/**
@@ -237,17 +262,7 @@ class website_BBCodeService extends BaseService
 		// Overload this method to handle specific bbcodes conversion.		
 		return $html;
 	}
-	
-	/**
-	 * @param String $bbcode
-	 * @return String
-	 * @deprecated use toText
-	 */
-	public function removeBBCode($bbcode)
-	{
-		return $this->toText($bbcode);
-	}
-	
+		
 	/**
 	 * @param String $bbcode
 	 * @return String
@@ -316,6 +331,10 @@ class website_BBCodeService extends BaseService
 		$pattern[] = '/\[code\](.+?)\[\/code\]/is';
 		$replacement[] = '$1';	
 		
+		// Alignments.
+		$pattern[] = '/\[align=(left|right|center|justify)\](.+?)\[\/align\]/si';
+		$replacement[] = '$2';
+		
 		return preg_replace($pattern, $replacement, $text);
 	}
 	
@@ -377,5 +396,55 @@ class website_BBCodeService extends BaseService
 			$fixedString .= $char;
 		}
 		return '['.$matches[1].'="' . $fixedString . '[/'.$matches[4].']';
+	}
+	
+	/**
+	 * @param website_Page $page
+	 */
+	public function addJs($page)
+	{
+		foreach ($this->getDefaultJs() as $script)
+		{
+			$page->addScript($script);
+		}
+		foreach ($this->getSpecificJs() as $script)
+		{
+			$page->addScript($script);
+		}
+	}
+	
+	/**
+	 * @return strin[]
+	 */
+	public function getJs()
+	{
+		return array_merge($this->getDefaultJs(), $this->getSpecificJs());
+	}
+	
+	/**
+	 * @return string[]
+	 */
+	protected function getDefaultJs()
+	{
+		return array();
+	}
+	
+	/**
+	 * @return string[]
+	 */
+	protected function getSpecificJs()
+	{
+		// Overload this method to handle specific bbcodes removal.
+		return array();
+	}
+	
+	// Deprecated.
+
+	/**
+	 * @deprecated use toText
+	 */
+	public function removeBBCode($bbcode)
+	{
+		return $this->toText($bbcode);
 	}
 }
