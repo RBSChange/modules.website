@@ -10,9 +10,13 @@ class website_persistentdocument_websitetopicsfolder extends website_persistentd
 	 * @param string $treeType
 	 * @param array<string, string> $nodeAttributes
 	 */
-//	protected function addTreeAttributes($moduleName, $treeType, &$nodeAttributes)
-//	{
-//	}
+	protected function addTreeAttributes($moduleName, $treeType, &$nodeAttributes)
+	{
+		if ($this->getWebsite() !== null)
+		{
+			$nodeAttributes['websiteId'] = $this->getWebsite()->getId();
+		}
+	}
 	
 	/**
 	 * @param string $actionType

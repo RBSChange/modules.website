@@ -196,3 +196,20 @@ blockquote{
 	font-weight: normal/*@var blockquotefontweight*/;
 	font-family: "Trebuchet MS", verdana, arial, helvetica, sans-serif/*@var blockquotefontfamily*/;
 }
+
+/** BBCodes */
+.align-left{
+        text-align: left;
+}
+.align-justify{
+        text-align: justify;
+}
+.align-center{
+        text-align: center;
+}
+.align-right{
+        text-align: right;
+}
+pre.code {
+	overflow: auto;
+}
