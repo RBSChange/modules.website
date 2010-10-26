@@ -418,12 +418,7 @@ class website_PageRessourceService extends BaseService
 	 */
 	private function getJavascriptRelativePath($name, $templateId)
 	{
-		$fullName = $name;
-		if ($this->skin)
-		{
-			$fullName .= '-' . $this->skin->getIdentifier();
-		}
-		$fullName .= '.js';
+		$fullName = $name . '.js';
 		$lang = RequestContext::getInstance()->getLang();
 		$websiteId = website_WebsiteModuleService::getInstance()->getCurrentWebsite()->getId();
 		if ($websiteId < 0) {$websiteId = 0;}
