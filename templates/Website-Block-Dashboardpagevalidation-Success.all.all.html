@@ -7,12 +7,12 @@
 		<div style="max-height: 200px; overflow: auto;">
 			<ul tal:condition="tasks" class="no-bullet">
 				<li tal:repeat="task tasks">
-					<img change:icon="task/small" />
+					<img change:img="icon/small/task.png" />
 					<a href="#" change:i18nattr="title &amp;modules.task.bo.actions.Perform-UsertaskEllipsis;" onclick="window.Dashboard.openTaskWithParameters(${task/id}, '${task/dialog}', '${task/module}', {documentId: ${task/documentId}});">
 						<strong>${task/taskLabel}</strong> ${task/documentLabel}
 					</a>
 					<small>(${task/documentThread})</small>&nbsp;-&nbsp;<small>${task/status}</small> 
-					<a class="contextual-action" href="#" tal:attributes="onclick task/locate" change:i18nattr="title &amp;modules.uixul.bo.general.LocateInModuleEllipsis;"><img change:icon="view/small"/></a>
+					<a class="contextual-action" href="#" tal:attributes="onclick task/locate" change:i18nattr="title &amp;modules.uixul.bo.general.LocateInModuleEllipsis;"><img change:img="icon/small/search.png"/></a>
 					<tal:block tal:condition="configuration/getShowComments">
 						<tal:block tal:condition="task/comment">
 							<br /><small><strong change:translate="modules.task.bo.general.Author-commentLabel; author task/author"></strong> ${task/comment}</small>

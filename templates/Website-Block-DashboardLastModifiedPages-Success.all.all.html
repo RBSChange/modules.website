@@ -8,8 +8,8 @@
 			<li tal:repeat="page pages"> 
 				<img tal:attributes="src page/icon"/>
 				<a class="link" tal:attributes="href page/link; style page/style" target="_blank" change:i18nattr="title &amp;modules.website.bo.actions.OpenPageEllipsis;"><strong>${page/label}</strong></a><small tal:condition="page/thread">&nbsp;(${page/thread})</small>&nbsp;-&nbsp;<small>${page/status}</small>
-				<a class="contextual-action" tal:condition="page/locate" href="#" tal:attributes="onclick page/locate" change:i18nattr="title &amp;modules.uixul.bo.general.LocateInModuleEllipsis;"><img change:icon="search/small"/></a>
-				<a class="contextual-action" tal:condition="page/edit" href="#" tal:attributes="onclick page/edit" change:i18nattr="title &amp;modules.uixul.bo.actions.EditEllipsis;"><img change:icon="edit/small"/></a>
+				<a class="contextual-action" tal:condition="page/locate" href="#" tal:attributes="onclick page/locate" change:i18nattr="title &amp;modules.uixul.bo.general.LocateInModuleEllipsis;"><img change:img="icon/small/search.png"/></a>
+				<a class="contextual-action" tal:condition="page/edit" href="#" tal:attributes="onclick page/edit" change:i18nattr="title &amp;modules.uixul.bo.actions.EditEllipsis;"><img change:img="icon/small/edit.png"/></a>
 			</li>
 		</ul>
 	</tal:block>

@@ -4,11 +4,7 @@ require_once WEBEDIT_HOME . "/framework/Framework.php";
 
 ini_set("memory_limit", "256M");
 
-if (!Controller::hasInstance())
-{
-	// TODO: remove if possible
-	Controller::newInstance("controller_ChangeController");
-}
+Controller::newInstance("controller_ChangeController");
 
 $rc = RequestContext::getInstance();
 $ps = website_PageService::getInstance();
