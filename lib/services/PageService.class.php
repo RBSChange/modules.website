@@ -364,7 +364,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	public function getWebsiteId($document)
 	{
-		return $document->getMeta("websiteId");
+		return intval($document->getMeta("websiteId"));
 	}
 
 
