@@ -76,4 +76,5 @@
   <actiondef modulename="website" actionname="update.systemtopic" label="modules.website.bo.useractionlogger.update-systemtopic"/>
   <actiondef modulename="website" actionname="update.systemtopic" label="modules.website.bo.useractionlogger.update-systemtopic"/>
   <actiondef modulename="website" actionname="savetemplate.template" label="modules.website.bo.useractionlogger.savetemplate-template"/>
+  <actiondef modulename="website" actionname="savepermissions.systemtopic" label="modules.website.bo.useractionlogger.savepermissions-systemtopic"/>
 </script>
