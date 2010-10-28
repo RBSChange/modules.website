@@ -115,6 +115,10 @@ class website_PageScriptDocumentElement extends import_ScriptDocumentElement
 			if ($document->isLangAvailable($lang))
 			{
 				$rc->beginI18nWork($lang);
+				if (!$document->getContent())
+				{
+					$document->getDocumentService()->setDefaultContent($document);
+				}
 				if ($document->getPublicationstatus() == 'DRAFT')
 				{
 					$document->getDocumentService()->activate($document->getId());

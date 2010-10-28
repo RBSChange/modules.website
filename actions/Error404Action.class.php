@@ -11,6 +11,7 @@ class website_Error404Action extends website_ErrorAction
 	 */
 	protected function getPage()
 	{
-		return TagService::getInstance()->getDocumentByContextualTag(WebsiteConstants::TAG_ERROR_404_PAGE, website_WebsiteModuleService::getInstance()->getCurrentWebsite());
+		$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+		return TagService::getInstance()->getDocumentByContextualTag(WebsiteConstants::TAG_ERROR_404_PAGE, $website);
 	}
 }

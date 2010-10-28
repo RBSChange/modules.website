@@ -57,6 +57,10 @@ class website_DisplayAction extends website_Action
 			{
 				throw new PageException($pageId, PageException::PAGE_NOT_AVAILABLE);
 			}
+			else if ($page->getDocumentService()->getWebsiteId($page) != $website->getId())
+			{
+				throw new PageException($pageId, PageException::PAGE_NOT_AVAILABLE);
+			}
 			else
 			{
 				if ($page->getUsehttps() != RequestContext::getInstance()->inHTTPS())
@@ -73,7 +77,6 @@ class website_DisplayAction extends website_Action
 					return View::NONE;
 				}
 			}
-			
 			website_PageService::getInstance()->render($page);
 			return View::NONE;
 		}
@@ -93,7 +96,6 @@ class website_DisplayAction extends website_Action
 	{
 		Framework::exception($e);
 		$controller = $context->getController();
-		// FIXME - INTCOURS - Better PageException mechanism :
 		$request->setParameter('message', f_Locale::translate('&modules.website.exception.page-' . $e->getCode() . ';', array('param' => $e->getMessage())));
 		if (Framework::isWarnEnabled())
 		{
