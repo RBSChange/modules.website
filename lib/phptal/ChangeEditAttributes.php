@@ -174,6 +174,7 @@ class PHPTAL_Php_Attribute_CHANGE_edit extends ChangeTalAttribute
 				return "";
 			}
 		}
+		return null;
 	}
 
 	private static function buildActionLink($user, $actionName, $document, $icon, $currentURL, $confirm = false)
@@ -267,7 +268,7 @@ echo PHPTAL_Php_Attribute_CHANGE_create::renderPendingDocumentList('.$this->para
 		$user = users_UserService::getInstance()->getCurrentBackEndUser();
 		if ($user === null)
 		{
-			return;
+			return false;
 		}
 		if (isset($params["parentId"]))
 		{
@@ -304,7 +305,7 @@ echo PHPTAL_Php_Attribute_CHANGE_create::renderPendingDocumentList('.$this->para
 	{
 		if (!website_phptal_EditAttribute::isActive())
 		{
-			return;
+			return null;
 		}
 		if (isset($params["parentId"]))
 		{

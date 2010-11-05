@@ -50,6 +50,7 @@ where options in:
 			}
 			return $components;
 		}
+		return null;
 	}
 
 	/**

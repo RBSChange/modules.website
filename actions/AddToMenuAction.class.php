@@ -3,7 +3,7 @@
  * @date Wed Jan 31 17:52:45 CET 2007
  * @author INTbonjF
  */
-class website_AddToMenuAction extends website_Action
+class website_AddToMenuAction extends f_action_BaseAction
 {
 	/**
 	 * @param Context $context

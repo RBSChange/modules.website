@@ -115,6 +115,7 @@ class PHPTAL_Php_Attribute_CHANGE_menu extends PHPTAL_Php_Attribute_TAL_Repeat
             		$onlyTopics = f_util_Convert::toBoolean($value);
             		break;
             	default :
+            		$matches = array();
             		if (preg_match('/^liclass\[([\d+])\]$/', $attribute, $matches))
             		{
             			$liClassByLevel[intval($matches[1])] = $value;

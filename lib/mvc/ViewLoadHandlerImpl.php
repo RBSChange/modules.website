@@ -41,15 +41,6 @@ abstract class website_ViewLoadHandlerImpl implements website_ViewLoadHandler
 
 	/**
 	 * @return website_Page
-	 * @deprecated use getContext
-	 */
-	protected final function getPage()
-	{
-		return $this->getContext();
-	}
-
-	/**
-	 * @return website_Page
 	 */
 	protected final function getContext()
 	{
@@ -112,5 +103,15 @@ abstract class website_ViewLoadHandlerImpl implements website_ViewLoadHandler
 	protected function getHTTPRequest()
 	{
 		return f_mvc_HTTPRequest::getInstance();
+	}
+	
+	// Deprecated
+	
+	/**
+	 * @deprecated (will be removed in 4.0) use getContext
+	 */
+	protected final function getPage()
+	{
+		return $this->getContext();
 	}
 }

@@ -23,7 +23,6 @@ class website_BlockDashboardLastModifiedPagesAction extends  dashboard_BlockDash
 		$moduleName = $this->getModuleName();
 		$ps = f_permission_PermissionService::getInstance();
 		$ms = ModuleService::getInstance();
-		$pageService = website_PageService::getInstance();
 		
 		foreach ($lastModifiedPages as $page)
 		{		

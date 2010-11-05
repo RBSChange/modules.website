@@ -279,6 +279,7 @@ class website_BlockEditAction extends website_TaggerBlockAction
 			return $this->redirectToUrl(LinkHelper::getDocumentUrl($document));
 		}
 		$this->goBack($request);
+		return null;
 	}
 
 	// private methods

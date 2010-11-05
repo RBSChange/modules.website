@@ -8,9 +8,4 @@ class PageException extends Exception
     const BLOCK_INVALID_HANDLER = 5;
     const CONTENT_INVALID_HANDLER = 6;
     const PAGE_IS_NOT_INDEX = 7;
-    /**
-     * @deprecated
-     */
-    const PAGE_IS_EXTERNAL = 8;
-    const PAGE_BAD_WEBSITE = 9;
 }

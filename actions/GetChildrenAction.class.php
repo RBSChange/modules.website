@@ -1,10 +1,8 @@
 <?php
 class website_GetChildrenAction extends f_action_BaseJSONAction
 {
-	
 	/**
 	 * @see f_action_BaseAction::_execute()
-	 *
 	 * @param Context $context
 	 * @param Request $request
 	 */
@@ -50,6 +48,7 @@ class website_GetChildrenAction extends f_action_BaseJSONAction
 		{
 			return array("modules_website/menu");		
 		}
+		return array();
 	}
 	
 	/**

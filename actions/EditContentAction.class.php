@@ -1,5 +1,5 @@
 <?php
-class website_EditContentAction extends website_Action
+class website_EditContentAction extends f_action_BaseAction
 {
     const FORCE_PAGE_RESET = "force_page_reset";
     

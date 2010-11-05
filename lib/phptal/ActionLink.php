@@ -131,6 +131,7 @@ class PHPTAL_Php_Attribute_CHANGE_actionlink extends ChangeTalAttribute
 			Framework::exception($e);
 			return self::renderError($e->getMessage());
 		}
+		return '';
 	}
 	
 	private static function renderError($msg)

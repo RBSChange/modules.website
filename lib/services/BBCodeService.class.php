@@ -438,10 +438,10 @@ class website_BBCodeService extends BaseService
 		return array();
 	}
 	
-	// Deprecated.
-
+	// Deprecated
+	
 	/**
-	 * @deprecated use toText
+	 * @deprecated (will be removed in 4.0) use toText
 	 */
 	public function removeBBCode($bbcode)
 	{

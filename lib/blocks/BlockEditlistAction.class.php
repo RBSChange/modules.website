@@ -7,7 +7,6 @@ class website_BlockEditlistAction extends website_TaggerBlockAction
 {
 	/**
 	 * @see website_BlockAction::execute()
-	 *
 	 * @param f_mvc_Request $request
 	 * @param f_mvc_Response $response
 	 * @return String
@@ -17,7 +16,7 @@ class website_BlockEditlistAction extends website_TaggerBlockAction
 		//$this->getHttpRequest()->removeCookie("website_EditListIds");
 		if (!$this->isLogged())
 		{
-			return;
+			return website_BlockView::NONE;
 		}
 		$actions = $this->getStoredDocumentIds();
 		if (f_util_ArrayUtils::isNotEmpty($actions))
@@ -27,8 +26,7 @@ class website_BlockEditlistAction extends website_TaggerBlockAction
 			{
 				$ids[] = $action["i"];
 			}
-			$query = f_persistentdocument_PersistentProvider::getInstance()->createQuery()
-			->add(Restrictions::in("document_id", $ids));
+			$query = f_persistentdocument_PersistentProvider::getInstance()->createQuery()->add(Restrictions::in("document_id", $ids));
 			$documents = $query->find();
 			$usableActions = array();
 			foreach (array_reverse($actions) as $action)
@@ -49,16 +47,23 @@ class website_BlockEditlistAction extends website_TaggerBlockAction
 			}
 			$request->setAttribute("actions", $usableActions);
 		}
-		return "Success";
+		return website_BlockView::SUCCESS;
 	}
 	
 	// private methods
 	
+	/**
+	 * @return boolean
+	 */
 	private function isLogged()
 	{
 		return users_UserService::getInstance()->getCurrentBackEndUser() !== null;
 	}
 
+	/**
+	 * @param boolean $create
+	 * @return array or null
+	 */
 	static function getStoredDocumentIds($create = false)
 	{
 		$httpRequest = f_mvc_HTTPRequest::getInstance();
@@ -78,8 +83,11 @@ class website_BlockEditlistAction extends website_TaggerBlockAction
 		return (($create) ? array() : null);
 	}
 	
+	/**
+	 * @param integer[] $ids
+	 */
 	static function storeDocumentIds($ids)
 	{
-		$httpRequest = f_mvc_HTTPRequest::getInstance()->setCookie("website_EditListIds", JsonService::getInstance()->encode($ids));
+		f_mvc_HTTPRequest::getInstance()->setCookie("website_EditListIds", JsonService::getInstance()->encode($ids));
 	}
 }

@@ -216,7 +216,7 @@ class website_PagereferenceService extends website_PageService
 	 * @param website_persistentdocument_page $document
 	 * @param integer $parentNodeId
 	 */
-	protected function postInsert($document, $parentNodeId = null)
+	protected function postInsert($document, $parentNodeId)
 	{
 		// THIS HAS TO BE EMPTY!
 	}

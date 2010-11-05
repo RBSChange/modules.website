@@ -254,53 +254,6 @@ class LinkHelper
 		return '';
 	}
 
-		
-	/**
-	 * Returns the URL of "what has been given as argument(s)". Well, this is a
-	 * Helper method... There are three possible cases as you can see in the
-	 * provided examples.
-	 * @deprecated use LinkHelper::getDocumentUrl or LinkHelper::getActionUrl
-	 * @example LinkHelper::getUrl($myPageDocument)
-	 * @example LinkHelper::getUrl($myPageDocument, $lang)
-	 * @example LinkHelper::getUrl($myPageDocument, $lang, array('param1'=>'value1', 'param2'=>'value2'))
-	 * @example LinkHelper::getUrl('mymodule', 'myaction')
-	 * @example LinkHelper::getUrl('mymodule', 'myaction', array('param1'=>'value1', 'param2'=>'value2'))
-	 *
-	 * @return string
-	 */
-	public static function getUrl()
-	{
-		$args = func_get_args();
-		$argsCount = count($args);		
-		if ($argsCount >= 1 && $args[0] instanceof f_persistentdocument_PersistentDocument)
-		{
-			if (!isset($args[1]))
-			{
-				$args[1] = RequestContext::getInstance()->getLang(); // lang
-			}
-			if (!isset($args[2]))
-			{
-				$args[2] = array(); // additional parameters
-			}
-			return self::getDocumentUrl($args[0], $args[1], $args[2]);
-		}
-		else if (($argsCount == 2 || $argsCount == 3) && is_string($args[0]) && is_string($args[1]))
-		{
-			if (!isset($args[2]))
-			{
-				$args[2] = array(); // additional parameters
-			}
-			if (!isset($args[2]['lang']))
-			{
-				$args[2]['lang'] = RequestContext::getInstance()->getLang(); // lang
-			}
-			return self::getActionUrl($args[0], $args[1], $args[2]);
-		}
-		
-		return '';
-	}
-
-
 	/**
 	 * Return the URL of the home page of the current website
 	 *
@@ -316,7 +269,7 @@ class LinkHelper
             if ($website instanceof website_persistentdocument_website
             && ! is_null($page = $ws->getIndexPage($website)))
             {
-                $url = LinkHelper::getUrl($page);
+                $url = LinkHelper::getDocumentUrl($page);
             }
 		}
 		catch (Exception $e)
@@ -342,7 +295,7 @@ class LinkHelper
             if ($website instanceof website_persistentdocument_website
             && ! is_null($page = $ws->getDocumentByContextualTag(WebsiteConstants::TAG_HELP_PAGE, $ws->getCurrentWebsite())))
             {
-    			$url = LinkHelper::getUrl($page);
+    			$url = LinkHelper::getDocumentUrl($page);
             }
 		}
 		catch (Exception $e)
@@ -685,7 +638,6 @@ class LinkHelper
 		return sprintf('<a href="%s" title="%s"%s>%s</a>', $url, $title, $class, $label);
 	}
 
-
 	/**
 	 * Returns the current URL with all the parameters.
 	 * If $extraAttributes is an array, the parameters it contains will override
@@ -708,5 +660,41 @@ class LinkHelper
 	{
 		$relativeURL = self::getCurrentUrl($extraAttributes);
 		return "http".(isset($_SERVER["HTTPS"]) ? "s" : null)."://".$_SERVER["HTTP_HOST"].$relativeURL;		
+	}
+	
+	// Deprecated.
+	
+	/**
+	 * @deprecated (will be removed in 4.0) use LinkHelper::getDocumentUrl or LinkHelper::getActionUrl
+	 */
+	public static function getUrl()
+	{
+		$args = func_get_args();
+		$argsCount = count($args);		
+		if ($argsCount >= 1 && $args[0] instanceof f_persistentdocument_PersistentDocument)
+		{
+			if (!isset($args[1]))
+			{
+				$args[1] = RequestContext::getInstance()->getLang(); // lang
+			}
+			if (!isset($args[2]))
+			{
+				$args[2] = array(); // additional parameters
+			}
+			return self::getDocumentUrl($args[0], $args[1], $args[2]);
+		}
+		else if (($argsCount == 2 || $argsCount == 3) && is_string($args[0]) && is_string($args[1]))
+		{
+			if (!isset($args[2]))
+			{
+				$args[2] = array(); // additional parameters
+			}
+			if (!isset($args[2]['lang']))
+			{
+				$args[2]['lang'] = RequestContext::getInstance()->getLang(); // lang
+			}
+			return self::getActionUrl($args[0], $args[1], $args[2]);
+		}
+		return '';
 	}
 }

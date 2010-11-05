@@ -62,7 +62,7 @@ class PHPTAL_Php_Attribute_CHANGE_h extends ChangeTalAttribute
 	private static function getLevelFromTagName($tagName)
 	{
 		$matches = array();
-		if (preg_match("/^h(\d)$/i", $tagName, $matches))
+		if (preg_match('/^h(\d)$/i', $tagName, $matches))
 		{
 			return $matches[1];
 		}

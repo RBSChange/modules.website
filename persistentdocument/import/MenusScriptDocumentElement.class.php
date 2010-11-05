@@ -17,9 +17,9 @@ class website_MenusScriptDocumentElement extends import_ScriptDocumentElement
     
     public function process()
     {
-        //Init default menus folder
-        $document = $this->getPersistentDocument();
+        // Init default menus folder.
+        $this->getPersistentDocument();
         
-        //Ignore parent process
+        // Ignore parent process.
     }
 }

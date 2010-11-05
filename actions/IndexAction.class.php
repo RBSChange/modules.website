@@ -1,5 +1,5 @@
 <?php
-class website_IndexAction extends website_Action
+class website_IndexAction extends f_action_BaseAction
 {
 	/**
 	 * @param Context $context
@@ -35,15 +35,17 @@ class website_IndexAction extends website_Action
 		return View::NONE ;
 	}
 
-
-	/* Frontoffice homepage: only responds to GET requests! */
+	/**
+	 * @return string
+	 */
 	public function getRequestMethods()
 	{
 		return Request::GET | Request::POST;
 	}
 
-
-	/* Frontoffice homepage: not secure! */
+	/**
+	 * @return boolean
+	 */
 	public function isSecure()
 	{
 		return false;

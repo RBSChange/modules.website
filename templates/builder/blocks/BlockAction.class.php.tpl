@@ -1,9 +1,9 @@
 <?php
 /**
- * <{$module}>_Block<{$name}>Action
+ * <{$module}>_Block<{$blockName}>Action
  * @package modules.<{$module}>.lib.blocks
  */
-class <{$module}>_Block<{$name}>Action extends website_BlockAction
+class <{$module}>_Block<{$blockName}>Action extends website_BlockAction
 {
 	/**
 	 * @see website_BlockAction::execute()

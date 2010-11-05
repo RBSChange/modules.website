@@ -57,11 +57,15 @@ class website_BlockTaggedmenuAction extends website_BlockAction
 			return null;
 		}
 
-		try
-		{
 			$wsModuleService = website_WebsiteModuleService::getInstance();
 			$website = $wsModuleService->getCurrentWebsite();
-			$menu = TagService::getInstance()->getDocumentByContextualTag($tag, $website);
+		$menu = TagService::getInstance()->getDocumentByContextualTag($tag, $website, false);
+		if ($menu === null)
+		{
+			$request->setAttribute('menuObject', false);
+		}
+		else 
+		{
 			$depth = $this->getConfigurationParameter('depth');
 			if ($depth === null)
 			{
@@ -91,10 +95,6 @@ class website_BlockTaggedmenuAction extends website_BlockAction
 			$request->setAttribute("masterUlClass", $this->getConfigurationParameter('class'));
 			$request->setAttribute("masterUlId", $this->getConfigurationParameter('id'));
 			$request->setAttribute('separator', $this->getConfigurationParameter('separator'));
-		}
-		catch (TagException $e)
-		{
-			$request->setAttribute('menuObject', false);
 		}
 
 		$template = $this->getConfigurationParameter('template');

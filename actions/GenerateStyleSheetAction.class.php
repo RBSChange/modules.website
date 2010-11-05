@@ -3,12 +3,10 @@
  * website_GenerateStyleSheetAction
  * @package modules.website.actions
  */
-class website_GenerateStyleSheetAction extends website_Action
+class website_GenerateStyleSheetAction extends f_action_BaseAction
 {
-	
 	/**
 	 * @see f_action_BaseAction::isSecure()
-	 *
 	 * @return boolean
 	 */
 	public function isSecure()

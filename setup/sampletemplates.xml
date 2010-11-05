@@ -7,7 +7,7 @@
 	
 	<rootfolder module="media">
 		<folder byLabel="Exemple de media">
-			<media byLabel="RBS Change 4" path="modules/website/setup/samples/logo_change_only.png" id="logo1" title="RBS Change 4"/>
+			<media byLabel="RBS Change 4" path="modules/media/setup/logo_CHANGE.png" id="logo1" title="RBS Change 4"/>
 		</folder>
 	</rootfolder>
 	

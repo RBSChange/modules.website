@@ -53,6 +53,8 @@ class builder_DocumentBlockGenerator extends builder_BlockGenerator
 			throw new Exception("$infoPath does not exists");
 		}
 		// Info Template can define $blockName && $genTag
+		$blockName = null;
+		$genTag = null;
 		require($infoPath);
 		if (!isset($blockName))
 		{

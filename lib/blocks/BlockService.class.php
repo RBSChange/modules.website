@@ -91,6 +91,7 @@ class block_BlockService extends BaseService
 			$filePath = $this->getBlockListPhpFilepath($moduleName);
 			if (is_readable($filePath))
 			{
+				$blockIdArray = null;
 				include $filePath;
 				$this->moduleBlockArray[$moduleName] = $blockIdArray; // declared in the included file.
 			}
@@ -517,8 +518,11 @@ class block_BlockService extends BaseService
 	private function completeBlockInfo($blockInfo, $blockElm)
 	{
 		// Parse <block/> element's attributes.
-		foreach ($blockElm->attributes as $attribute => $node)
+		$attributes = $blockElm->attributes;
+		$length = $attributes->length;
+		for ($i = 0; $i < $length; ++$i)
 		{
+			$attribute = $attributes->item($i)->name;
 			$methodName = $this->getSetterForAttribute($attribute);
 			if (f_util_ClassUtils::methodExists($blockInfo, $methodName))
 			{
@@ -534,7 +538,7 @@ class block_BlockService extends BaseService
 			}
 		}
 
-		//Explode deprecated display attribute
+		// Explode deprecated display attribute.
 		if ($blockInfo->hasAttribute('display'))
 		{
 			$parameters = f_util_HtmlUtils::parseStyleAttributes($blockInfo->getAttribute('display'));
@@ -631,8 +635,12 @@ class block_BlockService extends BaseService
 				$parameterInfo->setDefaultValue($blockInfo->getAttribute('__' . $name));
 			}
 
-			foreach ($paramElm->attributes as $attribute => $node)
+			$attributes = $paramElm->attributes;
+			$length = $attributes->length;
+			for ($j = 0; $j < $length; ++$j)
 			{
+				$attribute = $attributes->item($j)->name;
+
 				// Accept 'from-list' attribute just like in document model properties.
 				$attributeForSetter = ($attribute == 'from-list') ? 'list-id' : $attribute;
 				$methodName = $this->getSetterForAttribute($attributeForSetter);

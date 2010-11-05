@@ -130,7 +130,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 * @param website_persistentdocument_page $document
 	 * @param integer $parentNodeId
 	 */
-	protected function preUpdate($document, $parentNodeId = null)
+	protected function preUpdate($document, $parentNodeId)
 	{
 		if ($document->getContent() === null)
 		{
@@ -150,7 +150,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 * @param website_persistentdocument_page $document
 	 * @param Integer $parentNodeId
 	 */
-	protected function preSave($document, $parentNodeId = null)
+	protected function preSave($document, $parentNodeId)
 	{
 		$this->buildBlockMetaInfo($document);
 	}
@@ -312,7 +312,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 * @param website_persistentdocument_page $document
 	 * @param Integer $parentNodeId
 	 */
-	protected function postSave($document, $parentNodeId = null)
+	protected function postSave($document, $parentNodeId)
 	{
 		$this->synchronizeReferences($document);
 		if ($document->isPropertyModified('navigationtitle'))

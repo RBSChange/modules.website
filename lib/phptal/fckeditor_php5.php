@@ -47,6 +47,7 @@ function FCKeditor_IsCompatibleBrowser()
 		}
 	}
 
+	$matches = array();
 	if ( strpos($sAgent, 'MSIE') !== false && strpos($sAgent, 'mac') === false && strpos($sAgent, 'Opera') === false )
 	{
 		$iVersion = (float)substr($sAgent, strpos($sAgent, 'MSIE') + 5, 3) ;
@@ -62,7 +63,7 @@ function FCKeditor_IsCompatibleBrowser()
 		$fVersion = (float)substr($sAgent, strpos($sAgent, 'Opera/') + 6, 4) ;
 		return ($fVersion >= 9.5) ;
 	}
-	else if ( preg_match( "|AppleWebKit/(\d+)|i", $sAgent, $matches ) )
+	else if ( preg_match( '|AppleWebKit/(\d+)|i', $sAgent, $matches ) )
 	{
 		$iVersion = $matches[1] ;
 		return ( $matches[1] >= 522 ) ;
@@ -219,16 +220,26 @@ class FCKeditor
 		foreach ( $this->Config as $sKey => $sValue )
 		{
 			if ( $bFirst == false )
+			{
 				$sParams .= '&amp;' ;
+			}
 			else
+			{
 				$bFirst = false ;
+			}
 
 			if ( $sValue === true )
+			{
 				$sParams .= $this->EncodeConfig( $sKey ) . '=true' ;
+			}
 			else if ( $sValue === false )
+			{
 				$sParams .= $this->EncodeConfig( $sKey ) . '=false' ;
+			}
 			else
+			{
 				$sParams .= $this->EncodeConfig( $sKey ) . '=' . $this->EncodeConfig( $sValue ) ;
+			}
 		}
 
 		return $sParams ;

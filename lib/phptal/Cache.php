@@ -4,7 +4,6 @@ class PHPTAL_Php_Attribute_CHANGE_cache extends ChangeTalAttribute
 {
 	private static $instance;
 	
-	
 	/**
 	 * @see ChangeTalAttribute::evaluateAll()
 	 *
@@ -36,7 +35,6 @@ class PHPTAL_Php_Attribute_CHANGE_cache extends ChangeTalAttribute
 		$this->tag->generator->pushCode('}');
 		$this->tag->generator->doEcho($this->getRenderClassName() . "::endProcessing()");
 	}
-	
 
 	/**
 	 * @see ChangeTalAttribute::getRenderClassName()
@@ -89,7 +87,6 @@ class website_ChangeCacheRenderer
 			throw new Exception("change:cache must have explicit dependencies");
 		}
 		
-		$actionRequest = website_BlockController::getInstance()->getRequest();
 		foreach (explode(",", $params['deps']) as $dependency)
 		{
 			$deps[] = trim($dependency);

@@ -28,6 +28,12 @@ class commands_GenerateBeanFrontofficeForm extends commands_AbstractChangedevCom
 		return array("--force --stdout");
 	}
 	
+	/**
+	 * @param Integer $completeParamCount the parameters that are already complete in the command line
+	 * @param String[] $params
+	 * @param array<String, String> $options where the option array key is the option name, the potential option value or true
+	 * @return String[] or null
+	 */
 	function getParameters($completeParamCount, $params, $options, $current)
 	{
 		if ($completeParamCount == 0)
@@ -35,6 +41,7 @@ class commands_GenerateBeanFrontofficeForm extends commands_AbstractChangedevCom
 			$this->loadFramework();
 			return ClassResolver::getClassNames($current);
 		}
+		return null;
 	}
 	
 	/**
@@ -89,5 +96,6 @@ class commands_GenerateBeanFrontofficeForm extends commands_AbstractChangedevCom
 			f_util_FileUtils::write($destFile, $result);
 			$this->quitOk($destFile." generated successfully");
 		}
+		return true;
 	}
 }

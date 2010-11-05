@@ -4,6 +4,9 @@
  */
 class website_Error401Action extends website_ErrorAction
 {
+	/**
+	 * @return string
+	 */
 	protected function getStatus()
 	{
 		return 401;

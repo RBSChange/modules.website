@@ -1,7 +1,6 @@
 <?php
 class website_Page implements f_mvc_Context
 {
-
 	private $attributes = array();
 
 	/**
@@ -140,24 +139,6 @@ class website_Page implements f_mvc_Context
 	}
 
 	/**
-	 * @deprecated in favor to setTitle()
-	 * @see block_Context::setMetatitle($string)
-	 */
-	public function setMetatitle($string)
-	{
-		$this->setTitle($string);
-	}
-
-	/**
-	 * @deprecated: use block meta mechanism instead and implement getMeta() on your block
-	 * @var String $string
-	 */
-	public function setTitle($string)
-	{
-		$this->attributes['title'] = $string;
-	}
-
-	/**
 	 * @return String
 	 */
 	public function getTitle()
@@ -179,54 +160,11 @@ class website_Page implements f_mvc_Context
 	}
 
 	/**
-	 * @deprecated: use block meta mechanism instead and implement getMeta() on your block
-	 * @see block_Context::setKeywords($string)
-	 */
-	public function setKeywords($string)
-	{
-		$this->attributes['keywords'] = $string;
-	}
-
-	/**
-	 * @deprecated: use block meta mechanism instead and implement getMeta() on your block
-	 * @see block_Context::setDescription($string)
-	 */
-	public function setDescription($string)
-	{
-		$this->attributes['description'] = $string;
-	}
-
-	/**
-	 * @deprecated: use block meta mechanism instead and implement getMeta() on your block
-	 * @see block_Context::setNavigationtitle($string)
-	 */
-	public function setNavigationtitle($string)
-	{
-		$this->page->setNavigationtitle($string);
-	}
-
-	/**
 	 * @see block_Context::getNavigationtitle()
 	 */
 	public function getNavigationtitle()
 	{
 		return $this->page->getNavigationtitle();
-	}
-
-	/**
-	 * @deprecated: use block meta mechanism instead and implement getMeta() on your block
-	 * @see block_Context::appendToDescription($string)
-	 */
-	public function appendToDescription($string)
-	{
-		if (isset($this->attributes['description']))
-		{
-			$this->attributes['description'] .= ' ' . $string;
-		}
-		else
-		{
-			$this->attributes['description'] = $string;
-		}
 	}
 
 	/**
@@ -243,22 +181,6 @@ class website_Page implements f_mvc_Context
 			$this->attributes['styles'][$media] = array();
 		}
 		$this->attributes['styles'][$media][$style] = true;
-	}
-
-	/**
-	 * @deprecated: use block meta mechanism instead and implement getMeta() on your block
-	 * @see block_Context::addKeyword($string)
-	 */
-	public function addKeyword($string)
-	{
-		if (isset($this->attributes['keywords']))
-		{
-			$this->attributes['keywords'] .= ', ' . $string;
-		}
-		else
-		{
-			$this->attributes['keywords'] = $string;
-		}
 	}
 
 	/**
@@ -308,7 +230,7 @@ class website_Page implements f_mvc_Context
 	 */
 	public function addMeta($name, $content, $scheme = null, $isHttpEquiv = false)
 	{
-		$this->metas[] = func_get_args();
+		$this->metas[] = array($name, $content, $scheme, $isHttpEquiv);
 	}
 
 	/**
@@ -578,7 +500,6 @@ class website_Page implements f_mvc_Context
 
 	protected function getScripts()
 	{
-		$javascriptInclusions = array();
 		$prs = website_PageRessourceService::getInstance();
 		$html = $prs->getPageJavascriptInclusion();
 		if (isset($this->attributes['scripts']))
@@ -636,83 +557,6 @@ class website_Page implements f_mvc_Context
 		return HttpController::getInstance()->getContext()->getUser();
 	}
 
-	/**
-	 * DEPRECATED BLOCK CONTEXT METHOD
-	 */
-
-	/**
-	 * @deprecated
-	 * @return website_persistentdocument_page
-	 */
-	public function getPageDocument()
-	{
-		return $this->page;
-	}
-
-	/**
-	 * @deprecated
-	 * @return boolean
-	 */
-	public function inBackofficeMode()
-	{
-		return $this->getAttribute(website_BlockAction::BLOCK_BO_MODE_ATTRIBUTE, false);
-	}
-
-	/**
-	 * @deprecated use getAncestorIds
-	 * @return array<integer>
-	 */
-	public function getAncestors()
-	{
-		return $this->getAncestorIds();
-	}
-
-	/**
-	 * @deprecated
-	 * @return Integer
-	 */
-	public function getNearestContainerId()
-	{
-		// if ancestors size is 2 then you retrieve the website !
-		return f_util_ArrayUtils::lastElement($this->getAncestorIds());
-	}
-
-	/**
-	 * @deprecated
-	 * @return Request
-	 */
-	public function getGlobalRequest()
-	{
-		return HttpController::getInstance()->getContext()->getRequest();
-	}
-
-	/**
-	 * @deprecated
-	 * @return Context
-	 */
-	public function getGlobalContext()
-	{
-		return HttpController::getInstance()->getContext();
-	}
-
-	/**
-	 * @deprecated
-	 * @return boolean
-	 */
-	public function inIndexingMode()
-	{
-		return false;
-	}
-
-	/**
-	 * @deprecated use getSessionUser
-	 * @return FrameworkSecurityUser
-	 */
-	public function getUser()
-	{
-		return $this->getSessionUser();
-	}
-	
 	public function addContainerStylesheet()
 	{	
 		$stylesheet = website_PageRessourceService::getInstance()->getContainerStyleIdByAncestorIds($this->getAncestorIds());
@@ -736,5 +580,142 @@ class website_Page implements f_mvc_Context
 			return $this->docType;
 		}
 		return '';
+	}
+	
+	// Deprecated
+	
+	/**
+	 * @deprecated (will be removed in 4.0) use block meta mechanism instead and implement getMeta() on your block
+	 */
+	public function setKeywords($string)
+	{
+		$this->setAttribute('keywords', $string);
+	}
+
+	/**
+	 * @deprecated (will be removed in 4.0) use block meta mechanism instead and implement getMeta() on your block
+	 */
+	public function setDescription($string)
+	{
+		$this->setAttribute('description', $string);
+	}
+
+	/**
+	 * @deprecated (will be removed in 4.0) use block meta mechanism instead and implement getMeta() on your block
+	 */
+	public function setNavigationtitle($string)
+	{
+		$this->page->setNavigationtitle($string);
+	}
+	
+	/**
+	 * @deprecated (will be removed in 4.0) use block meta mechanism instead and implement getMeta() on your block
+	 */
+	public function appendToDescription($string)
+	{
+		if ($this->hasAttribute('description'))
+		{
+			$this->setAttribute('description', $this->getAttribute('description') . ' ' . $string);;
+		}
+		else
+		{
+			$this->setAttribute('description', $string);
+		}
+	}
+	
+	/**
+	 * @deprecated (will be removed in 4.0) in favor to setTitle()
+	 */
+	public function setMetatitle($string)
+	{
+		$this->setTitle($string);
+	}
+
+	/**
+	 * @deprecated (will be removed in 4.0) use block meta mechanism instead and implement getMeta() on your block
+	 */
+	public function setTitle($string)
+	{
+		$this->setAttribute('title', $string);
+	}
+	
+	/**
+	 * @deprecated (will be removed in 4.0) use block meta mechanism instead and implement getMeta() on your block
+	 */
+	public function addKeyword($string)
+	{
+		if ($this->hasAttribute('keywords'))
+		{
+			$this->setAttribute('keywords', $this->getAttribute('keywords') . ', ' . $string);
+		}
+		else
+		{
+			$this->setAttribute('keywords', $string);
+		}
+	}
+
+	/**
+	 * @deprecated (will be removed in 4.0) use getPersistentPage
+	 */
+	public function getPageDocument()
+	{
+		return $this->getPersistentPage();
+	}
+
+	/**
+	 * @deprecated (will be removed in 4.0)
+	 */
+	public function inBackofficeMode()
+	{
+		return $this->getAttribute(website_BlockAction::BLOCK_BO_MODE_ATTRIBUTE, false);
+	}
+
+	/**
+	 * @deprecated (will be removed in 4.0) use getAncestorIds
+	 */
+	public function getAncestors()
+	{
+		return $this->getAncestorIds();
+	}
+
+	/**
+	 * @deprecated (will be removed in 4.0)
+	 */
+	public function getNearestContainerId()
+	{
+		// if ancestors size is 2 then you retrieve the website !
+		return f_util_ArrayUtils::lastElement($this->getAncestorIds());
+	}
+
+	/**
+	 * @deprecated (will be removed in 4.0)
+	 */
+	public function getGlobalRequest()
+	{
+		return HttpController::getInstance()->getContext()->getRequest();
+	}
+
+	/**
+	 * @deprecated (will be removed in 4.0)
+	 */
+	public function getGlobalContext()
+	{
+		return HttpController::getInstance()->getContext();
+	}
+
+	/**
+	 * @deprecated (will be removed in 4.0)
+	 */
+	public function inIndexingMode()
+	{
+		return false;
+	}
+
+	/**
+	 * @deprecated (will be removed in 4.0) use getSessionUser
+	 */
+	public function getUser()
+	{
+		return $this->getSessionUser();
 	}
 }

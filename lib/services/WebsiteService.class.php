@@ -303,10 +303,10 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 		return $document->getId();
 	}
 	
-	// Deprecated methods.
+	// Deprecated
 	
 	/**
-	 * @deprecated use website_ModuleService::inititalizeStructure()
+	 * @deprecated (will be removed in 4.0) use website_ModuleService::inititalizeStructure()
 	 */	
 	public function initDefaultStruct($website, $scriptPath)
 	{

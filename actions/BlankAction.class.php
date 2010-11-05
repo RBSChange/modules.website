@@ -3,7 +3,7 @@
  * website_BlankAction
  * @package modules.website
  */
-class website_BlankAction extends website_Action
+class website_BlankAction extends f_action_BaseAction
 {
 	/**
 	 * @param Context $context

@@ -30,7 +30,6 @@ class PHPTAL_Php_Attribute_CHANGE_code extends ChangeTalAttribute
 	{
 		if (isset($params["lang"]))
 		{
-			$language = $params["lang"];
 			$tranlationTable = get_html_translation_table();
 			$tranlationTable["$"] = "&#36;";
 			$innerContent = trim($innerContent);
@@ -54,6 +53,7 @@ class PHPTAL_Php_Attribute_CHANGE_code extends ChangeTalAttribute
 			}
 			return self::getHighlighter($params)->highlight($code);
 		}
+		return null;
 	}
 
 	// protected methods
@@ -107,10 +107,7 @@ class website_MinimalHighlighter
 	{
 		if (isset($this->params["lang"]) && $this->params["lang"] == "php")
 		{
-			if (!$hasPhpTag)
-			{
 				$code = "<?php\n".$code;
-			}
 			$highlighted = highlight_string($code, true);
 			$highlighted = substr($highlighted, 6, -7); // remove <code> and </code>
 			return "<pre class=\"code\">".$highlighted."</pre>";

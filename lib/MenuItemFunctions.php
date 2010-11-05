@@ -6,13 +6,14 @@ class website_MenuItemPrintFunction
 	 */
 	static function execute($menuItem)
 	{
-		try
-		{
 			$currentWebsite = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
-			$menuItem->setUrl(LinkHelper::getUrl(TagService::getInstance()->getDocumentByContextualTag('contextual_website_website_print', $currentWebsite)));
+		$page = TagService::getInstance()->getDocumentByContextualTag('contextual_website_website_print', $currentWebsite, false);
+		if ($page !== null)
+		{
+			$menuItem->setUrl(LinkHelper::getDocumentUrl($page));
 			$menuItem->setOnClick('return accessiblePrint(this)');
 		}
-		catch (TagException $e)
+		else 
 		{
 			$menuItem->setUrl('javascript:accessiblePrint()');
 		}
@@ -26,13 +27,14 @@ class website_MenuItemAddToFavoriteFunction
 	 */
 	static function execute($menuItem)
 	{
-		try
-		{
 			$currentWebsite = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
-			$menuItem->setUrl(LinkHelper::getUrl(TagService::getInstance()->getDocumentByContextualTag('contextual_website_website_favorite', $currentWebsite)));
+		$page = TagService::getInstance()->getDocumentByContextualTag('contextual_website_website_favorite', $currentWebsite, false);
+		if ($page !== null)
+		{
+			$menuItem->setUrl(LinkHelper::getDocumentUrl($page));
 			$menuItem->setOnClick('return accessibleAddToFavorite(this)');
 		}
-		catch (TagException $e)
+		else
 		{
 			$menuItem->setUrl('javascript: accessibleAddToFavorite()');
 		}

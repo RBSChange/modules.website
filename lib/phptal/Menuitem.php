@@ -49,9 +49,10 @@ class PHPTAL_Php_Attribute_CHANGE_menuitem extends PHPTAL_Php_Attribute_TAL_Repe
     	{
     		$html = "<strong class=\"current\">".$menuItem->getLabel()."</strong>";
     	}
-    	elseif ($menuItem->hasUrl())
+    	else if ($menuItem->hasUrl())
     	{
-	    	if ($onClick = $menuItem->getOnClick())
+    		$onClick = $menuItem->getOnClick();
+	    	if ($onClick)
 	    	{
 				$attributes['onclick'] = $onClick;
 	    	}

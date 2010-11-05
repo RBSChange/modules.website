@@ -4,8 +4,6 @@ class PHPTAL_Php_Attribute_CHANGE_loadhandler extends PHPTAL_Php_Attribute
 
 	public function start()
 	{
-		$parameters = array();
-
 		// Block parameter
 		if (f_util_StringUtils::isEmpty($this->expression))
 		{
@@ -36,6 +34,7 @@ $loadHandler = new '.$handlerClassName.'();';
 		$code .= '$loadHandler->execute($fakeRequest, $response);
 /* PHPTAL_Php_Attribute_CHANGE_loadhandler end */ ';
 		$this->tag->generator->pushCode($code);
+		return null;
 	}
 
 	public function end()

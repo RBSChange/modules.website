@@ -109,7 +109,7 @@ class website_InsertJSONAction extends generic_InsertJSONAction
 		//For correction get master document
 		if ($parent->getCorrectionofid())
 		{
-			$parent = DocumentHelper::getDocumentInstance($document->getCorrectionofid());
+			$parent = DocumentHelper::getDocumentInstance($parent->getCorrectionofid());
 		}
 		
 		$propertiesNames = explode(',', $request->getParameter('documentproperties', ''));

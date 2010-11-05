@@ -1,8 +1,6 @@
 <?php
-
-class website_CheckLinksAction extends website_Action
+class website_CheckLinksAction extends f_action_BaseAction
 {
-	
 	/**
 	 * @param Context $context
 	 * @param Request $request
@@ -158,13 +156,16 @@ class website_CheckLinksAction extends website_Action
 		{
 			$string = $document->getContent();
 			
+			$linkMatches = array();
 			preg_match_all('/<a([^>]+)>/i', $string, $linkMatches, PREG_SET_ORDER);
 			
 			foreach ($linkMatches as $linkMatch)
 			{
 				$parsedLink = $linkMatch[0];
+				$hrefMatch = array();
 				if (preg_match('/cmpref="([^"]+)"/i', $parsedLink, $hrefMatch))
 				{
+					$langMatch = array();
 					if (preg_match('/lang="([^"]+)"/i', $parsedLink, $langMatch))
 					{
 						$language = strtolower(trim($langMatch[1]));
@@ -249,7 +250,7 @@ class website_CheckLinksAction extends website_Action
 	
 	public function getPagePath($document)
 	{
-		$path = sprintf('<a href="%s"><strong>%s</strong></a>', LinkHelper::getUrl($document), $document->getLabel());
+		$path = sprintf('<a href="%s"><strong>%s</strong></a>', LinkHelper::getDocumentUrl($document), $document->getLabel());
 		
 		$ps = website_PageService::getInstance();
 		$ancestors = $ps->getAncestorsOf($document);

@@ -149,13 +149,13 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 		
 		switch ($lang)
 		{
-			case 'fr' : return 'Version française';
+			case 'fr' : return 'Version franÃ§aise';
 			case 'en' : return 'English version';
 			case 'de' : return 'Deutsche Version';
 			case 'it' : return 'Versione italiana';
-			case 'pt' : return 'Versão Português';
+			case 'pt' : return 'VersÃ£o PortuguÃªs';
 			case 'nl' : return 'Dutsch versie';
-			case 'es' : return 'Versión en español';
+			case 'es' : return 'VersiÃ³n en espaÃ±ol';
 		}
 		return strtoupper($lang);
 	}

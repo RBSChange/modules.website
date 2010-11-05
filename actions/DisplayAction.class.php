@@ -1,5 +1,5 @@
 <?php
-class website_DisplayAction extends website_Action
+class website_DisplayAction extends f_action_BaseAction
 {
 	protected function getDocumentIdArrayFromRequest($request)
 	{

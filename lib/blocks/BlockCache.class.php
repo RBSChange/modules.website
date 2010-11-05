@@ -55,7 +55,7 @@ class framework_FunctionCallRecorder
 					$varName = '$obj'.$this->varCount;
 					$this->records[] = $varName.' = unserialize('.var_export(serialize($arg), true).');';
 					$record .= $varName;
-					$this->varCount++;
+					$this->varCount += 1;
 				}
 				elseif (is_array($arg))
 				{
@@ -69,7 +69,7 @@ class framework_FunctionCallRecorder
 							$varName = '$obj'.$this->varCount;
 							$this->records[] = $varName.' = unserialize('.var_export(serialize($value), true).');';
 							$record .= $varName;
-							$this->varCount++;
+							$this->varCount += 1;
 						}
 						else
 						{

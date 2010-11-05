@@ -1049,13 +1049,10 @@ class website_UrlRewritingService extends BaseService
 		return preg_replace('/\.([a-z0-9]{2,})$/', '', $url);
 	}
 	
+	// Deprecated
 	
 	/**
-	 * Indicates whether a rule has already been registered.
-	 *
-	 * @param website_lib_urlrewriting_Rule $rule
-	 * @deprecated (with no replacement)
-	 * @return boolean
+	 * @deprecated (will be removed in 4.0) with no replacement
 	 */
 	public function ruleExists($rule)
 	{
@@ -1067,10 +1064,7 @@ class website_UrlRewritingService extends BaseService
 	}
 	
 	/**
-	 * Adds a rule to the service.
-	 *
-	 * @param website_lib_urlrewriting_Rule $rule The rule to add.
-	 * @deprecated (with no replacement)
+	 * @deprecated (will be removed in 4.0) with no replacement
 	 */
 	public function addRule($rule)
 	{

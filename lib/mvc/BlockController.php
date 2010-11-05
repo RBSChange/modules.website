@@ -102,14 +102,11 @@ class website_BlockController implements f_mvc_Controller
 		{
 			$currentRequest = f_util_ArrayUtils::lastElement($this->actionRequestStack);
 			// TODO : take care of website_BlockAction::SUBMIT_PARAMETER_NAME value ! (must reinitialize to the proper value)
-			if ($currentRequest === null)
+			$globalRequest = HttpController::getInstance()->getContext()->getRequest();
+			$parameters = $this->buildActionRequestParameters($action->getRequestModuleNames(), $globalRequest);
+			if ($currentRequest !== null)
 			{
-				$parameters = $this->buildActionRequestParameters($action->getRequestModuleNames(), $this->getGlobalRequest());
-			}
-			else
-			{
-				$parameters = array_merge($currentRequest->getParameters(), 
-					$this->buildActionRequestParameters($action->getRequestModuleNames(), $this->getGlobalRequest()));
+				$parameters = array_merge($currentRequest->getParameters(), $parameters);
 			}
 			
 			$request = new website_BlockActionRequest($parameters, $moduleName, $actionName);
@@ -493,7 +490,6 @@ class website_BlockController implements f_mvc_Controller
 	private function executeAction()
 	{
 		$methodSuffix = $this->getActionExecuteMethodSuffix();
-		$viewName = null;
 		$className = get_class($this->action);
 		$reflectionClass = new ReflectionClass($className);
 		$executeMethodName = 'execute' . $methodSuffix;
@@ -547,17 +543,17 @@ class website_BlockController implements f_mvc_Controller
 			}
 			else
 			{
-				if ($bean === null)
-				{
-					$relativeNameOrTemplate = $this->action->$executeMethodName($this->actionRequest, $response);
-				}
-				else
+				if ($bean !== null)
 				{
 					if ($bean instanceof f_mvc_DynBean)
 					{
 						$bean = $bean->getWrappedObject();
 					}
 					$relativeNameOrTemplate = $this->action->$executeMethodName($this->actionRequest, $response, $bean);
+				}
+				else
+				{
+					$relativeNameOrTemplate = $this->action->$executeMethodName($this->actionRequest, $response);
 				}
 
 				// Blocks meta retrieval
@@ -608,8 +604,7 @@ class website_BlockController implements f_mvc_Controller
 		}
 
 		// Render the view
-		if (!$this->shouldRedirect &&
-		($relativeNameOrTemplate instanceof TemplateObject || !f_util_StringUtils::isEmpty($relativeNameOrTemplate)))
+		if (!$this->shouldRedirect && ($relativeNameOrTemplate instanceof TemplateObject || !f_util_StringUtils::isEmpty($relativeNameOrTemplate)))
 		{
 			$this->actionRequest->setAttribute('configuration', $this->action->getConfiguration());
 			$view = new website_BlockView($relativeNameOrTemplate);
@@ -816,7 +811,6 @@ class website_BlockController implements f_mvc_Controller
 	 */
 	private function processActionFromCache($cacheItem)
 	{
-		$page = $this->getContext();
 		$code = trim($cacheItem->getValue(self::PAGE_CACHE_PATH), "<?php");
 		$htmlContent = $cacheItem->getValue(self::HTML_CACHE_PATH);
 		eval($code);
@@ -858,7 +852,8 @@ class website_BlockController implements f_mvc_Controller
 
 	private function popSimpleCache()
 	{
-		$cacheItem = array_pop($this->simpleCacheStack);
+		array_pop($this->simpleCacheStack);
+	//	$cacheItem = array_pop($this->simpleCacheStack);
 	//	f_DataCacheService::getInstance()->writeToCache($cacheItem);
 	}
 
@@ -893,16 +888,21 @@ class website_BlockController implements f_mvc_Controller
 			$this->actionRequest = null;
 		}
 	}
-
+	
+	// Deprecated
+	
 	/**
-	 * DEPRECATED METHOD FOR OLD BLOCKS
+	 * @deprecated (will be removed in 4.0)
 	 */
 	private $globalRequest;
+	
+	/**
+	 * @deprecated (will be removed in 4.0)
+	 */
 	private $globalContext;
 
 	/**
-	 * @deprecated
-	 * @return Request
+	 * @deprecated (will be removed in 4.0)
 	 */
 	public function getGlobalRequest()
 	{
@@ -910,14 +910,16 @@ class website_BlockController implements f_mvc_Controller
 		return HttpController::getInstance()->getContext()->getRequest();
 	}
 
+	/**
+	 * @deprecated (will be removed in 4.0)
+	 */
 	public function setGlobalRequest($globalRequest)
 	{
 		$this->globalRequest = $globalRequest;
 	}
 
 	/**
-	 * @deprecated
-	 * @return Context
+	 * @deprecated (will be removed in 4.0)
 	 */
 	public function getGlobalContext()
 	{
@@ -925,6 +927,9 @@ class website_BlockController implements f_mvc_Controller
 		return HttpController::getInstance()->getContext();
 	}
 
+	/**
+	 * @deprecated (will be removed in 4.0)
+	 */
 	public function setContext($globalContext)
 	{
 		$this->globalContext = $globalContext;

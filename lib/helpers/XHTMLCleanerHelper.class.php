@@ -102,7 +102,6 @@ class website_XHTMLCleanerHelper
 	public static function safeSrc($elementArray)
 	{
 		$element = $elementArray[0];
-		$src = $element->getAttribute('src');
 		if ($element->hasAttribute('cmpref'))
 		{
 			$elementId = intval($element->getAttribute('cmpref'));
@@ -113,7 +112,6 @@ class website_XHTMLCleanerHelper
 				{
 					$format = null;
 					$lang = $element->hasAttribute('lang') ? $element->getAttribute('lang') : null;
-					$urlLang = ($document->getFilenameForLang($lang)) ?  $lang : $document->getLang();
 					if ($element->hasAttribute('format'))
 					{
 						$format = MediaHelper::getFormatPropertiesByName($element->getAttribute('format'));
@@ -123,7 +121,7 @@ class website_XHTMLCleanerHelper
 						$format = array("width" => $element->getAttribute("width"),
 										"height" => $element->getAttribute("height"));
 					}
-					$src = $document->getDocumentService()->generateAbsoluteUrl($document, $urlLang, $format);
+					$src = $document->getDocumentService()->generateAbsoluteUrl($document, $lang, $format);
 				}
 				else
 				{
@@ -139,12 +137,16 @@ class website_XHTMLCleanerHelper
 				$element->setAttribute('alt', $alt . ' (Invalid media document # '. $elementId . ')');
 			}
 		}
-		else if (f_util_StringUtils::beginsWith($src, 'file:'))
+		else
+		{
+			$src = $element->getAttribute('src');
+			if (f_util_StringUtils::beginsWith($src, 'file:'))
 		{
 			$element->setAttribute('alt', $src);
 			$src = "/changeicons/normal/environment_error.png";
 			$element->removeAttribute('height');
 			$element->removeAttribute('width');
+			}
 		}
 		return $src;
 	}

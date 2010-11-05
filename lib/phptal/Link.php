@@ -248,8 +248,8 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 		catch (Exception  $e)
 		{
 			Framework::exception($e);
-			return '#';
 		}
+		return '#';
 	}
 
 	public static function getRedirectionUrl($module, $action, $lang, $parameters, $anchor)
@@ -272,7 +272,6 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 
 	public static function getTaggedPage($tag, $lang, $parameters, $anchor)
 	{
-		$url = null;
 		if (strpos($tag, 'ctx_') === 0)
 		{
 			$tag = 'contextual_website_website_modules_' . substr($tag, 4);
@@ -295,8 +294,8 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 		catch (Exception $e)
 		{
 			Framework::exception($e);
-			return '#';
 		}
+		return '#';
 	}
 
 	private function generateParameters($parameters)
@@ -317,9 +316,10 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 	{
 		$exp = trim($exp);
 		// (dest) (value)
-		if (preg_match('/^([a-z0-9:\-_\[\]]+)\s+(.*?)$/i', $exp, $m)){
-			array_shift($m);
-			return $m;
+		$matches = array();
+		if (preg_match('/^([a-z0-9:\-_\[\]]+)\s+(.*?)$/i', $exp, $matches)){
+			array_shift($matches);
+			return $matches;
 		}
 		// (dest)
 		return array($exp, null);

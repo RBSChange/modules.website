@@ -1,5 +1,5 @@
 <?php
-class website_SetNavigationVisibilityAction extends website_Action
+class website_SetNavigationVisibilityAction extends f_action_BaseAction
 {
 	/**
 	 * @param Context $context

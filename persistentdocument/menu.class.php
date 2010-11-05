@@ -26,9 +26,6 @@ class website_persistentdocument_menu extends website_persistentdocument_menubas
 		}
 	}
 
-
-	
-	
     /**
 	 * @param string $moduleName
 	 * @param string $treeType
@@ -59,5 +56,4 @@ class website_persistentdocument_menu extends website_persistentdocument_menubas
 	        $nodeAttributes[tree_parser_XmlTreeParser::SKIP_CHILDREN] = true;  
 	    }
 	}	
-	
 }

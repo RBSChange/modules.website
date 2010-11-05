@@ -25,7 +25,7 @@ class website_ChangeBlockRenderer
 	private $moduleName;
 	private $actionName;
 	/**
-	 * @return website_Action
+	 * @return f_action_BaseAction
 	 */
 	function getCallingAction()
 	{
@@ -33,7 +33,7 @@ class website_ChangeBlockRenderer
 	}
 	
 	/**
-	 * @return website_Action
+	 * @return f_action_BaseAction
 	 */
 	function getCallingActionRequest()
 	{

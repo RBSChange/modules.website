@@ -60,6 +60,12 @@
 			<parameter name="view" type="String" />
 		</parameters>
 	</block>
+	<block type="modules_website_xhtmltemplate" hidden="true" label="&amp;modules.website.bo.blocks.Xhtmltemplate.Title;">
+		<parameters>
+			<parameter name="template" type="String" default-value="" />
+			<parameter name="usecache"  type="Boolean" default-value="false" />
+		</parameters>
+	</block>
 	
 	<block type="modules_website_edit" icon="edit" label="&amp;modules.website.bo.blocks.Edit;" />
 	<block type="modules_website_Missing" hidden="true" label="&amp;modules.website.bo.blocks.Missing.Title;" />
@@ -79,20 +85,4 @@
 		</parameters>
 	</block>
 	<block type="modules_website_DashboardLastModifiedPages" icon="page" dashboard="true" label="&amp;modules.website.bo.blocks.DashboardLastModifiedPages.Title;" />
-	
-	<!-- Deprecated blocks -->
-	<block type="empty" icon="selection" hidden="true"  label="&amp;modules.uixul.bo.layout.EmptyBlock;" />
-	<block type="modules_website_copyright" hidden="true" label="&amp;modules.website.bo.blocks.Copyright;" />
-	<block type="modules_website_footer" hidden="true" label="&amp;modules.website.bo.blocks.Footer;" />
-	<block type="modules_website_header" hidden="true" label="&amp;modules.website.bo.blocks.Header;" />
-	<block type="modules_website_main" hidden="true" label="&amp;modules.website.bo.blocks.Main;" />
-	<block type="modules_website_quicklinks" hidden="true" label="&amp;modules.website.bo.blocks.Quicklinks;" />
-	<block type="modules_website_sidebar" hidden="true" label="&amp;modules.website.bo.blocks.Sidebar;" />
-	<block type="modules_website_threadOld" hidden="true" afterAll="true" />
-	<block type="modules_website_xhtmltemplate" hidden="true" label="&amp;modules.website.bo.blocks.Xhtmltemplate.Title;">
-		<parameters>
-			<parameter name="template" type="String" default-value="" />
-			<parameter name="usecache"  type="Boolean" default-value="false" />
-		</parameters>
-	</block>
 </blocks>

@@ -250,10 +250,14 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 		}
 		catch (TemplateNotFoundException $e)
 		{
+			if (Framework::isDebugEnabled())
+			{
+				Framework::debug(__METHOD__ . ' EXCEPTION: ' . $e->getMessage());
+			}
+		}
 			$templateName = 'Generic-Block-'.$shortViewName;
 			return $this->getTemplateByFullName('modules_website', $templateName);
 		}
-	}
 
 	/**
 	 * @return String[]
@@ -526,7 +530,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 		// empty
 		if (Framework::isDebugEnabled())
 		{
-			Framework::debug("Block ".get_class($this)." inserted in page ".$page->getId());
+			Framework::debug("Block ".get_class($this)." inserted in page ".$page->getId()." (absolute = " . ($absolute ? 'true' : 'false') . ")");
 		}
 	}
 
@@ -540,7 +544,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 		// empty
 		if (Framework::isDebugEnabled())
 		{
-			Framework::debug("Block ".get_class($this)." removed from page ".$page->getId());
+			Framework::debug("Block ".get_class($this)." removed from page ".$page->getId()." (absolute = " . ($absolute ? 'true' : 'false') . ")");
 		}
 	}
 
@@ -630,15 +634,6 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 			}
 		}
 		return $validationResult;
-	}
-
-	/**
-	 * @deprecated in favor to getContext()
-	 * @return website_Page
-	 */
-	protected final function getPage()
-	{
-		return $this->getContext();
 	}
 
 	/**
@@ -901,5 +896,14 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 		$blockAttributes[$blockId] = $value;
 		$context->setAttribute($key, $blockAttributes);
 	}
-
+	
+	// Deprecated
+	
+	/**
+	 * @deprecated (will be removed in 4.0) in favor to getContext()
+	 */
+	protected final function getPage()
+	{
+		return $this->getContext();
+	}
 }

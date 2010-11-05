@@ -1,6 +1,12 @@
 <?php
+/**
+ * @package modules.website
+ */
 class website_Error500Action extends website_ErrorAction
 {
+	/**
+	 * @return string
+	 */
 	protected function getStatus()
 	{
 		return 500;

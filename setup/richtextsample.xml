@@ -5,7 +5,7 @@
 
 	<rootfolder module="media">
 		<folder byLabel="Exemple de media Sites et page">
-			<media path="framework/builder/home/media/backoffice/logo_change_only.png" byLabel="RBS Change" id="logo1" />
+			<media path="modules/media/setup/logo_CHANGE.png" byLabel="RBS Change" id="logo1" />
 		</folder>
 	</rootfolder>
 

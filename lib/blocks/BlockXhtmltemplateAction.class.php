@@ -5,7 +5,6 @@
  */
 class website_BlockXhtmltemplateAction extends website_BlockAction
 {
-	
 	/**
 	 * @see f_mvc_Action::getCacheDependencies()
 	 *
@@ -38,7 +37,7 @@ class website_BlockXhtmltemplateAction extends website_BlockAction
 	 * @param f_mvc_Response $response
 	 * @return String
 	 */
-	function execute($request, $response)
+	public function execute($request, $response)
 	{
 		$templateName = $this->getConfiguration()->getTemplate();
 		if (f_util_StringUtils::isEmpty($templateName))

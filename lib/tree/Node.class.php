@@ -42,7 +42,6 @@ class website_tree_Node implements website_tree_INode
 	function __call($name, $arguments)
 	{
 		$matches = array();
-		
 		if (preg_match('/^(has|get|set)(\w*)Attribute$/', $name, $matches))
 		{
 			$attributeName = strtolower($matches[2]);
@@ -61,5 +60,6 @@ class website_tree_Node implements website_tree_INode
 					break;
 			}
 		}
+		return null;
 	}
 }

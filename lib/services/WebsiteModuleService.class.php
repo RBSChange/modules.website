@@ -337,15 +337,6 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
 	}
 
 	/**
-	 * @return website_persistentdocument_website
-	 * @deprecated
-	 */
-	public final function getCurrentWebsiteAndSetLang()
-	{
-		return $this->getCurrentWebsite(true);
-	}
-
-	/**
 	 * @param boolean $setLang try to set the context language
 	 * @return website_persistentdocument_website
 	 */
@@ -526,70 +517,6 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
 	}
 
 	/**
-	 * Returns the <a/> element for the link "Add to favorites".
-	 *
-	 * @param string $label Text in the link.
-	 * @param string $title Title of the link (tooltip).
-	 * @param string $class CSS class name.
-	 * @return string
-	 *
-	 * @deprecated Use LinkHelper::getAddToFavoriteLink()
-	 */
-	public function getAddToFavoriteLink($label = null, $title = null, $class = null)
-	{
-		return LinkHelper::getAddToFavoriteLink($label, $title, $class);
-	}
-
-
-	/**
-	 * Returns the <a/> element for the link "Print this page".
-	 *
-	 * @param string $label Text in the link.
-	 * @param string $title Title of the link (tooltip).
-	 * @param string $class CSS class name.
-	 * @return string
-	 *
-	 * @deprecated Use LinkHelper::getPrintLink()
-	 */
-	public function getPrintLink($label = null, $title = null, $class = null)
-	{
-		return LinkHelper::getPrintLink($label, $title, $class);
-	}
-
-
-	/**
-	 * Returns the <a/> element for the link to the help page.
-	 *
-	 * @param string $label Text in the link.
-	 * @param string $title Title of the link (tooltip).
-	 * @param string $class CSS class name.
-	 * @return string
-	 *
-	 * @deprecated Use LinkHelper::getHelpLink()
-	 */
-	public function getHelpLink($label = null, $title = null, $class = null)
-	{
-		return LinkHelper::getHelpLink($label, $title, $class);
-	}
-
-
-	/**
-	 * Returns the <a/> element for the link to the legal notice page.
-	 *
-	 * @param string $label Text in the link.
-	 * @param string $title Title of the link (tooltip).
-	 * @param string $class CSS class name.
-	 * @return string
-	 *
-	 * @deprecated Use LinkHelper::getLegalNoticeLink()
-	 */
-	public function getLegalNoticeLink($label = null, $title = null, $class = null)
-	{
-		return LinkHelper::getLegalNoticeLink($label, $title, $class);
-	}
-
-
-	/**
 	 * @return String
 	 */
 	public function getEmptyUrl()
@@ -692,11 +619,8 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
     private function getMenuDocumentByTag($shortTagName)
     {
         $tagName = 'contextual_website_website_' . $shortTagName;
-        try
-        {
-            $menuDoc = TagService::getInstance()->getDocumentByContextualTag($tagName, $this->getCurrentWebsite());
-        }
-        catch (TagException $e)
+        $menuDoc = TagService::getInstance()->getDocumentByContextualTag($tagName, $this->getCurrentWebsite(), false);
+        if ($menuDoc === null)
         {
             throw new TopicException('No menu has the tag "'.$tagName.'".');
         }
@@ -875,17 +799,6 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
 		return $parentNode;
 	}
 
-
-	/**
-	 * @deprecated use website_UrlRewritingService::getInstance()
-	 * @return website_UrlRewritingService
-	 */
-	public final function getUrlRewritingService()
-	{
-		return website_UrlRewritingService::getInstance();
-	}
-
-
 	/**
 	 * Indicates whether the given $website has a unique URL for its version in
 	 * language $lang.
@@ -962,7 +875,6 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
 	 * @param f_persistentdocument_PersistentTreeNode $parentNode
 	 * @param integer $level
 	 * @param integer $maxLevel
-	 *
 	 * @return integer
 	 */
 	private function populateNavigationElementFromDescendants(NavigationElementImpl $navigationElement, f_persistentdocument_PersistentTreeNode $parentNode, $level, $maxLevel)
@@ -990,7 +902,6 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
 	 * @param f_persistentdocument_PersistentTreeNode $parentNode
 	 * @param integer $level
 	 * @param integer $maxLevel
-	 *
 	 * @return integer
 	 */
 	private function populateNavigationElementFromCurrentDescendants(NavigationElementImpl $navigationElement, f_persistentdocument_PersistentTreeNode $parentNode, $level, $maxLevel)
@@ -1146,7 +1057,6 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
 	 */
 	protected function buildMenuItemUrlFromDocument($entry, $document)
 	{
-		$url = null;
 		if (!$document instanceof website_persistentdocument_menuitemtext)
 		{
 			if ($document instanceof website_persistentdocument_menuitemfunction)
@@ -1203,10 +1113,12 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
         {
             if (is_dir($availablePath))
             {
-                if ($dh = opendir($availablePath))
+            	$dh = opendir($availablePath);
+                if ($dh)
                 {
                     while (($file = readdir($dh)) !== false)
                     {
+                    	$fileMatch = array();
                         if (preg_match('/^((?:website|topic)[a-zA-Z0-9_-]+)\.css$/', $file, $fileMatch))
             			{
             			    $fileName = $fileMatch[1];
@@ -1221,5 +1133,55 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
             }
         }
 		return $styles;
+	}
+	
+	// Deprecated
+	
+	/**
+	 * @deprecated (will be removed in 4.0)
+	 */
+	public final function getCurrentWebsiteAndSetLang()
+	{
+		return $this->getCurrentWebsite(true);
+	}
+	
+	/**
+	 * @deprecated (will be removed in 4.0) Use LinkHelper::getAddToFavoriteLink()
+	 */
+	public function getAddToFavoriteLink($label = null, $title = null, $class = null)
+	{
+		return LinkHelper::getAddToFavoriteLink($label, $title, $class);
+	}
+
+	/**
+	 * @deprecated (will be removed in 4.0) Use LinkHelper::getPrintLink()
+	 */
+	public function getPrintLink($label = null, $title = null, $class = null)
+	{
+		return LinkHelper::getPrintLink($label, $title, $class);
+	}
+
+	/**
+	 * @deprecated (will be removed in 4.0) Use LinkHelper::getHelpLink()
+	 */
+	public function getHelpLink($label = null, $title = null, $class = null)
+	{
+		return LinkHelper::getHelpLink($label, $title, $class);
+	}
+
+	/**
+	 * @deprecated (will be removed in 4.0) Use LinkHelper::getLegalNoticeLink()
+	 */
+	public function getLegalNoticeLink($label = null, $title = null, $class = null)
+	{
+		return LinkHelper::getLegalNoticeLink($label, $title, $class);
+	}
+
+	/**
+	 * @deprecated (will be removed in 4.0) use website_UrlRewritingService::getInstance()
+	 */
+	public final function getUrlRewritingService()
+	{
+		return website_UrlRewritingService::getInstance();
 	}
 }

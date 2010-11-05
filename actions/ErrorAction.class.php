@@ -1,5 +1,5 @@
 <?php
-abstract class website_ErrorAction extends website_Action
+abstract class website_ErrorAction extends f_action_BaseAction
 {
 	/**
 	 * @param Context $context
@@ -21,13 +21,12 @@ abstract class website_ErrorAction extends website_Action
 			}
 			$request->setParameter(K::PAGE_REF_ACCESSOR, $page->getId());
 			$context->getController()->forward('website', 'Display');
-			return View::NONE;
 		}
 		catch (Exception $e)
 		{
 			Framework::exception($e);
-			return View::NONE;
 		}
+		return View::NONE;
 	}
 
 	/**
@@ -40,6 +39,9 @@ abstract class website_ErrorAction extends website_Action
 	 */
 	abstract protected function getPage();
 
+	/**
+	 * @return boolean
+	 */
 	public function isSecure()
 	{
 		return false;

@@ -1,5 +1,5 @@
 <?php
-class website_BoDisplayAction extends website_Action
+class website_BoDisplayAction extends f_action_BaseAction
 {
 
     /**
@@ -38,7 +38,6 @@ class website_BoDisplayAction extends website_Action
     	
 	/**
 	 * @see f_action_BaseAction::getActionName()
-	 *
 	 * @return String
 	 */
 	protected function getActionName()
@@ -48,7 +47,6 @@ class website_BoDisplayAction extends website_Action
 	
 	/**
 	 * @see f_action_BaseAction::isDocumentAction()
-	 *
 	 * @return Boolean
 	 */
 	protected function isDocumentAction()

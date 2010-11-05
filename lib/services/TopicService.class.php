@@ -181,7 +181,7 @@ class website_TopicService extends f_persistentdocument_DocumentService
 	 * @param website_persistentdocument_topic $document
 	 * @param Integer $parentNodeId
 	 */
-	protected function postSave($document, $parentNodeId = null)
+	protected function postSave($document, $parentNodeId)
 	{
 		if ($document->isPropertyModified('label'))
 		{
@@ -249,8 +249,8 @@ class website_TopicService extends f_persistentdocument_DocumentService
 
 		if (count($ids) > 0)
 		{
-			// We get all the references
-			$references = $this->getPersistentProvider()->createQuery('modules_website/pagereference')
+			// We delete all the references
+			$this->getPersistentProvider()->createQuery('modules_website/pagereference')
 			->add(Restrictions::descendentOf($document->getId()))
 			->add(Restrictions::in('referenceofid', $ids))->delete();
 		}

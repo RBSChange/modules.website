@@ -1,5 +1,5 @@
 <?php
-class website_RemoveUrlRewritingInfoAction extends website_Action
+class website_RemoveUrlRewritingInfoAction extends f_action_BaseAction
 {
 	/**
 	 * @param Context $context

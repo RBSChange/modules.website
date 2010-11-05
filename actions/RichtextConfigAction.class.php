@@ -1,5 +1,5 @@
 <?php
-class website_RichtextConfigAction extends website_Action
+class website_RichtextConfigAction extends f_action_BaseAction
 {
 	/**
 	 * @param Context $context
@@ -15,7 +15,9 @@ class website_RichtextConfigAction extends website_Action
 		return View::SUCCESS;
 	}
 
-
+	/**
+	 * @return boolean
+	 */
 	public function isSecure()
 	{
 		return false;

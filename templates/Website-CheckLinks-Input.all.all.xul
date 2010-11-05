@@ -1,13 +1,9 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
-<style tal:replace="cssInclusion" />
-<window title="Check Links"
-        orient="vertical"
-	    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-	    onload="checkInit();">
-
-	<script tal:replace="scriptInclusion" />
-
+<tal:block>
+	${cssInclusion}
+	<window title="Check Links" orient="vertical" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" onload="checkInit();">
+		${scriptInclusion}
 	<script type="text/javascript"><![CDATA[
 	    var ids = [${ids}];
 
@@ -263,37 +259,37 @@
        <hbox>
            <label value="Nombre de pages à vérifier" style="text-decoration: underline;" />
            <label value=":" />
-           <label id="count" value="0" tal:attributes="value count;"/>
+				<label id="count" value="0" tal:attributes="value count;" />
        </hbox>
 
        <hbox pack="center" style="font-weight: bold;">
-           <label id="message" value="Démarrer la vérification à l'aide du bouton ci-dessous."/>
+				<label id="message" value="Démarrer la vérification à l'aide du bouton ci-dessous." />
        </hbox>
 
        <listbox id="log" rows="5">
           <listhead>
-            <listheader label="Page"/>
-            <listheader label="Résultat"/>
+					<listheader label="Page" />
+					<listheader label="Résultat" />
           </listhead>
           <listcols>
-            <listcol flex="4"/>
-            <listcol flex="1"/>
+					<listcol flex="4" />
+					<listcol flex="1" />
           </listcols>
        </listbox>
 
        <hbox pack="center" style="font-weight: bold;">
-           <progressmeter id="progress" mode="determined" value="0%" flex="1"/>
-           <label id="counter" value="0/0"/>
+				<progressmeter id="progress" mode="determined" value="0%" flex="1" />
+				<label id="counter" value="0/0" />
        </hbox>
 
        <hbox pack="end">
            <button id="start" change:icon="media_play_green/small" label=" Démarrer" oncommand="start()" />
            <button id="stop" change:icon="media_stop_red/small" label=" Arrêter" oncommand="stop()" disabled="true" />
            <button id="view" change:icon="message/small" label=" Voir le rapport" oncommand="view()" disabled="true" />
-           <spacer flex="1"/>
+				<spacer flex="1" />
            <button id="close" change:icon="error/small" label=" Quitter" oncommand="self.close()" />
        </hbox>
 
 	</vbox>
-
-</window>
+	</window>
+</tal:block>

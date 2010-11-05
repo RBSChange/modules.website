@@ -174,6 +174,7 @@ class PHPTAL_Php_Attribute_CHANGE_datatable extends PHPTAL_Php_Attribute_CHANGE_
 			$table = new f_chart_Table($data, $params);
 			return $table->getHTML();
 		}
+		return null;
 	}
 
 	/**

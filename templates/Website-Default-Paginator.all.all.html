@@ -1,27 +1,31 @@
 <div class="pagination" tal:condition="paginator/shouldRender">
-	<span class="detail" change:translate="&amp;modules.website.paginator.Detail;; currentPage paginator/getCurrentPageNumber; pageCount paginator/getPageCount; listName paginator/getListName" />
+	<span class="detail" change:translate="modules.website.paginator.Detail; currentPage paginator/getCurrentPageNumber; pageCount paginator/getPageCount; listName paginator/getListName"></span>
 	<ul>
 		<li tal:condition="paginator/getFirstPageItem">
-			<a change:link="href paginator/getFirstPageItem/getUrl; class-add first-page" change:translate="&amp;modules.website.paginator.First;"
-			 change:i18nattr="title[listName] paginator/getListName; title &amp;modules.website.paginator.First-title;" />
+			<a change:link="href paginator/getFirstPageItem/getUrl; class-add first-page" change:translate="amp;modules.website.paginator.First"
+			 change:i18nattr="title[listName] paginator/getListName; title &amp;modules.website.paginator.First-title;"></a>
 		</li>
 		<li tal:condition="paginator/getPreviousPageItem">
-			<a change:link="href paginator/getPreviousPageItem/getUrl; class-add previous-page" change:translate="&amp;modules.website.paginator.Previous;"
-			 change:i18nattr="title[listName] paginator/getListName; title &amp;modules.website.paginator.Previous-title;" />
+			<a change:link="href paginator/getPreviousPageItem/getUrl; class-add previous-page" change:translate="modules.website.paginator.Previous"
+			 change:i18nattr="title[listName] paginator/getListName; title &amp;modules.website.paginator.Previous-title;"></a>
 		</li>
 		<li tal:repeat="item paginator/getItems">
-			<strong tal:condition="item/isCurrent" tal:content="item/getLabel" 
-			 change:i18nattr="title[listName] paginator/getListName; title[pageNumber] item/getLabel; title &amp;modules.website.paginator.Page-title;"/>
-			<a tal:condition="not: item/isCurrent" change:link="href item/getUrl" tal:content="item/getLabel"
-			 change:i18nattr="title[listName] paginator/getListName; title[pageNumber] item/getLabel; title &amp;modules.website.paginator.Page-title;" />
+			<strong tal:condition="item/isCurrent"
+				change:i18nattr="title[listName] paginator/getListName; title[pageNumber] item/getLabel; title &amp;modules.website.paginator.Page-title;">
+				${item/getLabel}
+			</strong>
+			<a tal:condition="not: item/isCurrent" change:link="href item/getUrl"
+				change:i18nattr="title[listName] paginator/getListName; title[pageNumber] item/getLabel; title &amp;modules.website.paginator.Page-title;">
+				${item/getLabel}
+			</a>
 		</li>
 		<li tal:condition="paginator/getNextPageItem">
-			<a change:link="href paginator/getNextPageItem/getUrl; class-add next-page link" change:translate="&amp;modules.website.paginator.Next;"
-			 change:i18nattr="title[listName] paginator/getListName; title &amp;modules.website.paginator.Next-title;" />
+			<a change:link="href paginator/getNextPageItem/getUrl; class-add next-page link" change:translate="modules.website.paginator.Next"
+			 change:i18nattr="title[listName] paginator/getListName; title &amp;modules.website.paginator.Next-title;"></a>
 		</li>
 		<li tal:condition="paginator/getLastPageItem">
-			<a change:link="href paginator/getLastPageItem/getUrl; class-add last-page" change:translate="&amp;modules.website.paginator.Last;" 
-			 change:i18nattr="title[listName] paginator/getListName; title &amp;modules.website.paginator.Last-title;"/>
+			<a change:link="href paginator/getLastPageItem/getUrl; class-add last-page" change:translate="modules.website.paginator.Last" 
+			 change:i18nattr="title[listName] paginator/getListName; title &amp;modules.website.paginator.Last-title;"></a>
 		</li>
 	</ul>
 </div>

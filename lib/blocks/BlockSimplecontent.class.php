@@ -11,7 +11,7 @@ class website_BlockSimplecontentAction extends website_BlockAction
 	function execute($request, $response)
 	{
 		$viewName = $this->getConfiguration()->getView();
-		if (StringUtils::isEmpty($viewName))
+		if (f_util_StringUtils::isEmpty($viewName))
 		{
 			throw new Exception("Block website_simplecontent: missing view parameter");
 		}
@@ -19,12 +19,11 @@ class website_BlockSimplecontentAction extends website_BlockAction
 		if (count($viewInfo) == 1)
 		{
 			$module = "website";
-			$templateName = $viewName;
 		}
 		else
 		{
-			$module = $templateInfo[0];
-			$viewName = $templateInfo[1];
+			$module = $viewInfo[0];
+			$viewName = $viewInfo[1];
 		}
 		$templateName = ucfirst($module) .'-Block-Simplecontent-' . $viewName;
 

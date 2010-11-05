@@ -1,5 +1,5 @@
 <?php
-class website_RichtextConnectorAction extends website_Action
+class website_RichtextConnectorAction extends f_action_BaseAction
 {
 	/**
 	 * @param Context $context

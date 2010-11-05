@@ -535,6 +535,7 @@ class website_FormHelper
 	public static function renderDocumentpicker($params, $ctx)
 	{
 		// TODO: refactor with renderField
+		$propertyName = $params['name'];
 		if (!self::$hasBean)
 		{
 			if (Framework::isDebugEnabled())
@@ -544,7 +545,6 @@ class website_FormHelper
 			return "";
 		}
 
-		$propertyName = $params['name'];
 		if (!BeanUtils::hasProperty(self::$bean, $propertyName))
 		{
 			if (Framework::isDebugEnabled())
@@ -1011,7 +1011,7 @@ jQuery(document).ready(function() {
 	  				{
 	  					current = current.nextSibling;
 	  					jQuery(current).find('input[type = hidden]').each(function (i) {
-	  						var matches = this.getAttribute('name').match(/^(.*)\[(.*)\]$/);
+	  						var matches = this.getAttribute('name').match(/^(.*)\\[(.*)\\]$/);
 	  						var newName = matches[1]+'['+(parseInt(matches[2])-1)+']';
 	  						this.setAttribute('name', newName);
 	  					});
@@ -1031,7 +1031,6 @@ jQuery(document).ready(function() {
 				$code .= '<ul class="uploads" id="'.($name."_uploads").'">';
 				$deleteLocale = f_Locale::translate("&modules.website.frontoffice.DeleteUpload;");
 				$deleteHelpLocale = f_Locale::translate("&modules.website.frontoffice.DeleteUpload-help;");
-				$toDelete = self::$currentActionRequest->getParameter($name."_delete");
 				$deleteName = $name."_delete";
 
 				$document = DocumentHelper::getDocumentInstance($value);
@@ -1051,7 +1050,6 @@ jQuery(document).ready(function() {
 			$code .= '<ul class="uploads">';
 			$deleteLocale = f_Locale::translate("&modules.website.frontoffice.DeleteUpload;");
 			$deleteHelpLocale = f_Locale::translate("&modules.website.frontoffice.DeleteUpload-help;");
-			$toDelete = self::$currentActionRequest->getParameter($name."_delete");
 			$index = 0;
 
 			$document = new media_persistentdocument_tmpfile();

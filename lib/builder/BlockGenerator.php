@@ -3,7 +3,6 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 {
 	/**
 	 * Generate a block : blocks.xml, blockAction, success template, tag, locales.
-	 *
 	 * @param String $blockName
 	 * @param Boolean $genTag
 	 * @param String $icon
@@ -21,7 +20,10 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 		return $blockPath;
 	}
 
-
+	/**
+	 * @param string $blockName
+	 * @param string $icon
+	 */
 	protected function _generateBlockTag($blockName, $icon)
 	{
 		$tagName = "contextual_website_website_modules_".$this->name."_".strtolower($blockName);
@@ -136,9 +138,8 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 	}
 
 	/**
-	 * @param unknown_type $blockName
-	 * @param unknown_type $icon
-	 * @return unknown_type
+	 * @param string $blockName
+	 * @param string $icon
 	 */
 	protected function _generateBlocksxml($blockName, $icon)
 	{
@@ -203,8 +204,6 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 		$generator = new builder_Generator();
 		$generator->setTemplateDir($templateDir);
 		$generator->assign('author', $this->author);
-		// Deprecated name entry. Use blockName instead
-		$generator->assign('name', $blockName);
 		$generator->assign('blockName', $blockName);
 		$generator->assign('module', $this->name);
 		$generator->assign('icon', $icon);
