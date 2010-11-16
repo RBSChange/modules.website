@@ -70,12 +70,10 @@ class PHPTAL_Php_Attribute_CHANGE_tabs extends ChangeTalAttribute
 		{
 			$pageContext = website_BlockController::getInstance()->getContext()->getPage();
 			$theme = Framework::getConfigurationValue("modules/website/jquery-ui-theme", "south-street");
-			$pageContext->addLink("stylesheet", "text/css", "/css/jquery-ui/".$theme."/jquery-ui.css");
+			$pageContext->addStyle("modules.website.jquery-ui.$theme");
 			$html .= '<script type="text/javascript">
-  jQuery(document).ready(function(){
-    jQuery(".tabs").tabs();
-  });
-  </script>';
+jQuery(document).ready(function(){ jQuery(".tabs").tabs(); });
+</script>';
 			$pageContext->addScript("modules.website.lib.js.jquery-ui-tabs");
 			self::$called = true;
 		}
