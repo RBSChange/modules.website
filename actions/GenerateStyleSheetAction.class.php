@@ -60,19 +60,18 @@ class website_GenerateStyleSheetAction extends f_action_BaseAction
 			{
 				$template = DocumentHelper::getDocumentInstance($parameters[5], "modules_theme/pagetemplate");
 				$stylesheet = substr($parameters[6], 0 , strrpos($parameters[6], '.'));
-				$skinSepIndex = strpos($stylesheet, '-');
 			}
 			else
 			{
 				$template = null;
 				$stylesheet = substr($parameters[5], 0 , strrpos($parameters[5], '.'));
-				$skinSepIndex = strpos($stylesheet, '-');
 			}
-				
-			if ($skinSepIndex !== false)
+			
+			$matches = null;
+			if (preg_match('/^(.*)-([0-9]*)$/', $stylesheet, $matches))
 			{
-				$stylesheetBaseName = substr($stylesheet, 0,  $skinSepIndex);
-				$skinId = substr($stylesheet, $skinSepIndex+1);			
+				$stylesheetBaseName = $matches[1];
+				$skinId = $matches[2];			
 				$prs->setSkin(DocumentHelper::getDocumentInstance(intval($skinId), "modules_skin/skin"));
 			}
 			else
