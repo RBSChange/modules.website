@@ -5,10 +5,12 @@ class website_FormHelper
 	 * @var PHPTAL_Context
 	 */
 	private static $talContext;
+	
 	/**
 	 * @var String
 	 */
 	private static $formId;
+	
 	/**
 	 * @var String
 	 */
@@ -896,7 +898,7 @@ jQuery(document).ready(function() {
 			throw new Exception("change:uploadfield: could not find property $name in bean ".BeanUtils::getClassName(self::$bean));
 		}
 
-		$beanPropertyInfo = BeanUtils::getBeanProperyInfo(self::$bean, $name);
+		$beanPropertyInfo = BeanUtils::getBeanPropertyInfo(self::$bean, $name);
 
 		$code = "";
 		$params["name"] = $name."_new";

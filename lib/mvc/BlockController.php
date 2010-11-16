@@ -32,11 +32,6 @@ class website_BlockController implements f_mvc_Controller
 	 */
 	private $action;
 
-	/**
-	 * @var f_SimpleCache;
-	 */
-	private $simpleCache;
-
 	private $shouldRedirect = false;
 
 	/**
@@ -701,7 +696,7 @@ class website_BlockController implements f_mvc_Controller
 		$this->actionRequest->setAttribute('invalidProperties', $invalidProperties);
 		foreach ($invalidProperties as $propertyName => $rawValue)
 		{
-			$array = array('field' => f_Locale::translate(BeanUtils::getBeanProperyInfo($bean, $propertyName)->getLabelKey()), 'value' => $rawValue);
+			$array = array('field' => f_Locale::translate(BeanUtils::getBeanPropertyInfo($bean, $propertyName)->getLabelKey()), 'value' => $rawValue);
 			$this->getProcessedAction()->addError(f_Locale::translate('&framework.validation.validator.InvalidValue;', $array));
 		}
 			

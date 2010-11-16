@@ -19,7 +19,7 @@ class LinkHelper
 	        $website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
 	    }
 	    $link = new f_web_ParametrizedLink($website->getProtocol(), $website->getDomain(), f_web_HttpLink::SITE_PATH);
-	    $link->setQueryParametres($queryParams);
+	    $link->setQueryParameters($queryParams);
 	    return $link;
 	}
 	
@@ -30,7 +30,7 @@ class LinkHelper
 	public static function getUIParametrizedLink($queryParams = array())
 	{
 	    $link = new f_web_ParametrizedLink(Framework::getUIProtocol(), Framework::getUIDefaultHost(), f_web_HttpLink::UI_PATH);
-	    $link->setQueryParametres($queryParams);
+	    $link->setQueryParameters($queryParams);
 	    return $link;
 	}
 	
@@ -47,7 +47,7 @@ class LinkHelper
 	        $website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
 	    }
 	    $link = new f_web_ParametrizedLink($website->getProtocol(), $website->getDomain(), f_web_HttpLink::SITE_PATH);
-	    $link->setQueryParametres(array('module' => $moduleName, 'action' => $actionName));
+	    $link->setQueryParameters(array('module' => $moduleName, 'action' => $actionName));
 	    return $link;
 	}
 		
@@ -59,7 +59,7 @@ class LinkHelper
 	public static function getUIActionLink($moduleName, $actionName)
 	{
 	    $link = new f_web_ParametrizedLink(Framework::getUIProtocol(), Framework::getUIDefaultHost(), f_web_HttpLink::UI_PATH);
-	    $link->setQueryParametres(array('module' => $moduleName, 'action' => $actionName));
+	    $link->setQueryParameters(array('module' => $moduleName, 'action' => $actionName));
 	    return $link;
 	}
 	
@@ -75,7 +75,7 @@ class LinkHelper
 			return self::getUIActionLink($moduleName, $actionName);
 		}
 	    $link = new f_web_ChromeParametrizedLink($_SESSION['ChromeBaseUri']);
-	    $link->setQueryParametres(array('module' => $moduleName, 'action' => $actionName));
+	    $link->setQueryParameters(array('module' => $moduleName, 'action' => $actionName));
 	    return $link;
 	}	
 	
@@ -121,7 +121,7 @@ class LinkHelper
 		
 	    $link = new f_web_ChromeParametrizedLink($_SESSION['ChromeBaseUri']);
 	    $link->setArgSeparator(f_web_HttpLink::ESCAPE_SEPARATOR);
-	    $link->setQueryParametres(array('module' => 'uixul', 'action' => 'GetChromeRessource', 'path' => $ressourceName));
+	    $link->setQueryParameters(array('module' => 'uixul', 'action' => 'GetChromeRessource', 'path' => $ressourceName));
 	    return $link;
 	}	
 
