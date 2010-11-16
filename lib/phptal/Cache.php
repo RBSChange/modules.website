@@ -64,7 +64,7 @@ class website_ChangeCacheRenderer
 	private static $cacheDependencies;
 	
 	/**
-	 * @var f_SimpleCache[]
+	 * @var f_DataCacheItem[]
 	 */
 	private static $simpleCacheStack = array();
 	

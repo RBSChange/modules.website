@@ -134,7 +134,7 @@ class website_DisplayAction extends f_action_BaseAction
 	/**
 	 * @return Boolean
 	 */
-	protected function suffixSecureActionByDocument()
+	protected function isDocumentAction()
 	{
 		$user = users_UserService::getInstance()->getCurrentUser();
 		return ($user instanceof users_persistentdocument_backenduser);

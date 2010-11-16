@@ -697,7 +697,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 			return $propertyName;
 		}
 
-		return f_Locale::translate(BeanUtils::getBeanProperyInfo($bean, $propertyName)->getLabelKey());
+		return f_Locale::translate(BeanUtils::getBeanPropertyInfo($bean, $propertyName)->getLabelKey());
 	}
 
 	/**
