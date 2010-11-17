@@ -27,7 +27,7 @@ class website_persistentdocument_pagegroup extends website_persistentdocument_pa
 	{
 		parent::addTreeAttributes($moduleName, $treeType, $nodeAttributes);
 		
-		$nodeAttributes[tree_parser_XmlTreeParser::FOLLOW_CHILDREN] = true;
+		$nodeAttributes['_follow_children'] = true;
 		$currentVersionId = intval($this->getCurrentversionid());
 		if ($currentVersionId != 0)
 		{

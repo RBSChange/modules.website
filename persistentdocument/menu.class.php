@@ -53,7 +53,7 @@ class website_persistentdocument_menu extends website_persistentdocument_menubas
 	    }
 	    else
 	    {
-	        $nodeAttributes[tree_parser_XmlTreeParser::SKIP_CHILDREN] = true;  
+	        $nodeAttributes['_skip_children'] = true;  
 	    }
 	}	
 }

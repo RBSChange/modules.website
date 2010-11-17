@@ -22,7 +22,6 @@ class website_ListTemplatesService extends BaseService implements list_ListItems
 
 	/**
 	 * Returns an array of available templates for the website module.
-	 * @deprecated 
 	 * @return array
 	 */
 	public function getItems()
@@ -58,7 +57,7 @@ class website_ListTemplatesService extends BaseService implements list_ListItems
 		$items = array();
 		foreach ($templates as $template)
 		{
-			if (DocumentHelper::isEquals($currentTemplate, $template))
+			if (DocumentHelper::equals($currentTemplate, $template))
 			{
 				$currentTemplate = null;
 			}

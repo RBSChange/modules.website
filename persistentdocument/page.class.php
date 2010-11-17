@@ -89,7 +89,7 @@ class website_persistentdocument_page extends website_persistentdocument_pagebas
 		{
 			try
 			{
-				$nodeAttributes[f_tree_parser_AttributesBuilder::PLAINLINK_ATTRIBUTE] = LinkHelper::getDocumentUrl($this);
+				$nodeAttributes['plainlink'] = LinkHelper::getDocumentUrl($this);
 			}
 			catch (Exception $e)
 			{

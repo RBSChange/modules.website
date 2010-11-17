@@ -755,7 +755,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	{
 		$result = array();
 		preg_match('/' . $this->getModuleName() . '_Block(\w+)Action/', get_class($this), $result);
-		return f_util_StringUtils::lowerCaseFirstLetter($result[1]);
+		return f_util_StringUtils::lcfirst($result[1]);
 	}
 
 	/**
