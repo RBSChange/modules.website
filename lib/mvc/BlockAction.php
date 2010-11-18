@@ -511,6 +511,15 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	{
 		return f_mvc_HTTPRequest::getInstance()->getSession();
 	}
+	
+	/**
+	 * Shortcut returning the current BlockActionRequest
+	 * @return website_BlockActionRequest
+	 */
+	protected function getRequest()
+	{
+		return website_BlockController::getInstance()->getRequest();
+	}
 
 	/**
 	 * @return f_mvc_HTTPRequest
