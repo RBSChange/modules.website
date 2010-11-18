@@ -410,7 +410,7 @@ class block_BlockService extends BaseService
 				$generator->assign('keywordsMetas', false);
 			}
 
-			f_util_FileUtils::saveFile($destFilePath, $generator->fetch('BlockInfo.class.php.tpl'), f_util_FileUtils::OVERRIDE);
+			f_util_FileUtils::write($destFilePath, $generator->fetch('BlockInfo.class.php.tpl'), f_util_FileUtils::OVERRIDE);
 			ClassResolver::getInstance()->appendToAutoloadFile($infoClassName, $destFilePath);
 
 			// Generation de BlockConfiguration
@@ -425,7 +425,7 @@ class block_BlockService extends BaseService
 			$generator->assign_by_ref('className', $infoClassName);
 			$generator->assign_by_ref('blockInfo', $blockInfo);
 
-			f_util_FileUtils::saveFile($destFilePath, $generator->fetch('BlockConfiguration.class.php.tpl'), f_util_FileUtils::OVERRIDE);
+			f_util_FileUtils::write($destFilePath, $generator->fetch('BlockConfiguration.class.php.tpl'), f_util_FileUtils::OVERRIDE);
 			ClassResolver::getInstance()->appendToAutoloadFile($infoClassName, $destFilePath);
 
 			$blockIdArray[] = $blockId;

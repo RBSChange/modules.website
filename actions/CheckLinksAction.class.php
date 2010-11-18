@@ -19,8 +19,7 @@ class website_CheckLinksAction extends f_action_BaseAction
 			
 			try
 			{
-				$preferencesDocumentId = ModuleService::getInstance()->getPreferencesDocumentId('website');
-				$document = $this->getDocumentService()->getDocumentInstance($preferencesDocumentId);
+				$document = ModuleService::getInstance()->getPreferencesDocument('website');
 				
 				$ms = MailService::getInstance();
 				foreach ($document->getCheckersrecipientArray() as $recipient)
@@ -309,7 +308,7 @@ class website_CheckLinksAction extends f_action_BaseAction
 		}
 		elseif (($document instanceof website_persistentdocument_website) || ($document instanceof website_persistentdocument_topic) || ($document instanceof website_persistentdocument_menufolder))
 		{
-			foreach (f_persistentdocument_PersistentTreeNode::getInstanceByDocument($document)->getChildren() as $subDocument)
+			foreach (TreeService::getInstance()->getInstanceByDocumentId($document->getId())->getChildren() as $subDocument)
 			{
 				$ids = array_merge($ids, $this->getPages($subDocument->getPersistentDocument()));
 			}

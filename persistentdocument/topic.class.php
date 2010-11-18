@@ -36,11 +36,11 @@ class website_persistentdocument_topic extends website_persistentdocument_topicb
 	    $blocClass = $moduleName .'_BlockTopicAction';
 	    if (f_util_ClassUtils::classExists($blocClass))
 	    {
-	        $nodeAttributes[f_tree_parser_AttributesBuilder::BLOCK_ATTRIBUTE] = 'modules_' . $moduleName . '_topic';
+	        $nodeAttributes['block'] = 'modules_' . $moduleName . '_topic';
 	    }
 	    else
 	    {
-	        $nodeAttributes[f_tree_parser_AttributesBuilder::BLOCK_ATTRIBUTE] = '';
+	        $nodeAttributes['block'] = '';
 	    }
 		if ($treeType == 'wlist')
 		{

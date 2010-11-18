@@ -17,7 +17,7 @@ class website_persistentdocument_pageversion extends website_persistentdocument_
         $versionOfPage = DocumentHelper::getDocumentInstance($this->getVersionofid());
         if ($this->getId() != $versionOfPage->getCurrentversionid())
         {
-            $nodeAttributes[tree_parser_XmlTreeParser::ATTRIBUTE_PUBLICATED] = 0;
+            $nodeAttributes['pu'] = 0;
         }	        
 	}
 	

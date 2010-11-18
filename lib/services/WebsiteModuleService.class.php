@@ -788,9 +788,9 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
 		{
 			$parentNode = TreeService::getInstance()->getInstanceByDocument($document)->getParent()->getParent();
 		}
-		else if (is_null($document))
+		else if ($document === null)
 		{
-			$parentNode = f_persistentdocument_PersistentTreeNode::getInstanceByDocument($this->getCurrentWebsite());
+			$parentNode = TreeService::getInstance()->getInstanceByDocument($this->getCurrentWebsite());
 		}
 		else
 		{

@@ -293,7 +293,7 @@ class LinkHelper
 		{
 		    $website = $ws->getCurrentWebsite();
             if ($website instanceof website_persistentdocument_website
-            && ! is_null($page = $ws->getDocumentByContextualTag(WebsiteConstants::TAG_HELP_PAGE, $ws->getCurrentWebsite())))
+            	&& ! is_null($page = TagService::getInstance()->getDocumentByContextualTag(WebsiteConstants::TAG_HELP_PAGE, $website)))
             {
     			$url = LinkHelper::getDocumentUrl($page);
             }
