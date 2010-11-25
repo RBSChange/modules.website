@@ -54,35 +54,10 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 			f_util_FileUtils::write($tagFile, $result);
 		}
 
-		$localeId = strtolower($blockName)."-block";
-		$localeFile = f_util_FileUtils::buildWebeditPath('modules', $this->name, 'locale', 'bo', 'tags.xml');
-		if (file_exists($localeFile))
-		{
-			$dom = f_util_DOMUtils::fromPath($localeFile);
-			if(!$dom->exists("//entity[@id = '$localeId']"))
-			{
-				$result = $this->_getTpl('modules', 'tagsLocaleBlock.tpl', $blockName, $icon);
-
-				$locale = f_util_DOMUtils::fromString($result);
-				$localeElement = $locale->getElementsByTagName('entity')->item(0);
-
-				$domElements = $dom->getElementsByTagName('localization')->item(0);
-				$domElements->appendChild($dom->importNode($localeElement, true));
-
-				echo "Add locale $localeId in $localeFile.\n";
-				f_util_DOMUtils::save($dom, $localeFile);
-			}
-			else
-			{
-				echo "Locale $localeId already in $localeFile.\n";
-			}
-		}
-		else
-		{
-			$result = $this->_getTpl('modules', 'tagsLocaleBlock.tpl', $blockName, $icon);
-			echo "Generating $localeFile, creating $localeId locale.\n";
-			f_util_FileUtils::write($localeFile, $result);
-		}
+		// Add locale.
+		$baseKey = 'm.' . $this->name . '.bo.tags';
+		$keysInfos = array('fr_FR' => array(strtolower($blockName) . '-block' => $blockName));
+		LocaleService::getInstance()->updatePackage($baseKey, $keysInfos, false, true, '');
 	}
 
 	/**
@@ -170,32 +145,10 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 			f_util_FileUtils::write($blocksFile, $result);
 		}
 
-		$localeFile = f_util_FileUtils::buildWebeditPath('modules', $this->name, 'locale', 'bo', 'blocks.xml');
-		$localeId = strtolower($blockName);
-		if (file_exists($localeFile))
-		{
-			$dom = f_util_DOMUtils::fromPath($localeFile);
-			if (!$dom->exists("//entity[@id = '$localeId']"))
-			{
-				$result = $this->_getTpl('modules', 'blocksLocale.tpl', $blockName);
-				$locale = f_util_DOMUtils::fromString($result);
-				$localeElement = $locale->getElementsByTagName('entity')->item(0);
-				$domElements = $dom->getElementsByTagName('localization')->item(0);
-				$domElements->appendChild($dom->importNode($localeElement, true));
-				echo "Add $localeId locale in $localeFile.\n";
-				f_util_DOMUtils::save($dom, $localeFile);
-			}
-			else
-			{
-				echo "Locale $localeId already in $localeFile.\n";
-			}
-		}
-		else
-		{
-			$result = $this->_getTpl('modules', 'blocksLocale.tpl', $blockName);
-			echo "Generating $localeFile, creating $localeId locale.\n";
-			f_util_FileUtils::write($localeFile, $result);
-		}
+		// Add locale.
+		$baseKey = 'm.' . $this->name . '.bo.blocks.' . strtolower($blockName);
+		$keysInfos = array('fr_FR' => array('title' => $blockName));
+		LocaleService::getInstance()->updatePackage($baseKey, $keysInfos, false, true, '');
 	}
 
 	protected function _getTpl($folder, $tpl, $blockName, $icon = null, $additionalParams = null)
