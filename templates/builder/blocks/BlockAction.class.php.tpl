@@ -12,8 +12,13 @@ class <{$module}>_Block<{$blockName}>Action extends website_BlockAction
 	 * @param f_mvc_Response $response
 	 * @return String
 	 */
-	function execute($request, $response)
+	public function execute($request, $response)
 	{
+		if ($this->isInBackoffice())
+		{
+			return website_BlockView::NONE;
+		}
+	
 		return website_BlockView::SUCCESS;
 	}
 }
