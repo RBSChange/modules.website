@@ -54,15 +54,11 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 			f_util_FileUtils::write($tagFile, $result);
 		}
 
-		$localeId = strtolower($blockName)."-block";
-		$baseKey = 'm.' . $this->name . 'bo.tags';
-		echo "Generating $baseKey, locale package .\n";
-		
-		$ls = LocaleService::getInstance();
-		$keysInfos = array();
-		$keysInfos[$ls->getLCID('fr')] = array($localeId => $blockName);
-		$keysInfos[$ls->getLCID('en')] = array($localeId => $blockName);
-		$ls->updatePackage($baseKey, $keysInfos, false, true);
+
+		// Add locale.
+		$baseKey = strtolower('m.' . $this->name . '.bo.tags');
+		$keysInfos = array('fr_FR' => array(strtolower($blockName) . '-block' => $blockName));
+		LocaleService::getInstance()->updatePackage($baseKey, $keysInfos, false, true, '');
 	}
 
 	/**
@@ -150,16 +146,10 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 			f_util_FileUtils::write($blocksFile, $result);
 		}
 
-		
-		$baseKey = 'm.' .$this->name . '.bo.blocks';
-		$localeId = strtolower($blockName);	
-		echo "Add $localeId locale in $baseKey package.\n";
-		
-		$keysInfos = array();
-		$ls = LocaleService::getInstance();		
-		$keysInfos[$ls->getLCID('fr')] = array($localeId => $blockName);
-		$keysInfos[$ls->getLCID('en')] = array($localeId => $blockName);
-		$ls->updatePackage($baseKey, $keysInfos, false, true);
+		// Add locale.
+		$baseKey = strtolower('m.' . $this->name . '.bo.blocks.' . $blockName);
+		$keysInfos = array('fr_FR' => array('title' => $blockName));
+		LocaleService::getInstance()->updatePackage($baseKey, $keysInfos, false, true, '');
 	}
 
 	protected function _getTpl($folder, $tpl, $blockName, $icon = null, $additionalParams = null)

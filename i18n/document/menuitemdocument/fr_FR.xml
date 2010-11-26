@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.document.menuitemdocument" lcid="fr_FR">
+  <key id="document-name">élément de menu (page ou rubrique)</key>
+  <key id="label">libellé</key>
+  <key id="label-help">libellé du lien qui apparaîtra dans les menus</key>
+  <key id="document">document</key>
+  <key id="document-help">document (page ou rubrique) vers lequel pointe l'élément de menu</key>
+  <key id="popup">ouvrir dans une nouvelle fenêtre</key>
+  <key id="popup-help">permet d'indiquer que le lien devra s'ouvrir dans une nouvelle fenêtre</key>
+  <key id="popupparameters">paramètres de la fenêtre</key>
+  <key id="popupparameters-help">permet de définir les paramètres d'ouverture de la fenêtre</key>
+</i18n>

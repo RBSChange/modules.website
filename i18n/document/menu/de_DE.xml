@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.document.menu" lcid="de_DE">
+  <key id="document-name">Menü</key>
+  <key id="edition-form-title">Menüeinstellungen</key>
+  <key id="label">Menüname</key>
+  <key id="label-help">Der Menüname muss einzigartig sein, so dass er für die automatische Erzeugung der Menüs identifiziert werden kann. Dieser Name wird nicht auf der Webseite angezeigt.</key>
+</i18n>

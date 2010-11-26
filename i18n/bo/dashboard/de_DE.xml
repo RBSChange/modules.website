@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.bo.dashboard" lcid="de_DE">
+  <key id="page-validation">freizugebende Seiten</key>
+  <key id="task-label-validate">{author} bittet Sie die Seite freizugeben:</key>
+  <key id="no-page-to-validate">Keine freizugebende Seite vorhanden.</key>
+  <key id="orphanpageswithcount">verwaiste Seiten {websiteLabel} ({count})</key>
+  <key id="orphanpages">verwaiste Seiten</key>
+  <key id="noorphanpages">keine verwaiste Seite vorhanden</key>
+</i18n>

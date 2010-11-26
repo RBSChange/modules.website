@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.document.menuitem.tab" lcid="en_GB">
+  <key id="popupparameters">popup</key>
+  <key id="generalities">general data</key>
+  <key id="width">width</key>
+  <key id="height">height</key>
+</i18n>

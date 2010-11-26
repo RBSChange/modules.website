@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.document.pageexternal" lcid="de_DE">
+  <key id="document-name">externe Seite</key>
+  <key id="edition-form-title">Einstellungen externe Seite</key>
+  <key id="label">Seitenname</key>
+  <key id="label-help">Dokumententitel ausschliesslich zur internen Nutzung, nur für Backoffice Dokumentenanzeigen.</key>
+  <key id="navigationtitle">Linktext</key>
+  <key id="navigationtitle-help">kurzer Titel für die Navigationselemente (Menüs, Leitfaden, usw. - max. 80 Zeichen)</key>
+  <key id="url">Seiten-URL</key>
+  <key id="url-help">komplette URL der externen Seite</key>
+  <key id="metatitle">Seitentitel</key>
+  <key id="metatitle-help">In der Browsertitelleiste angezeigter kompletter Titel (entspricht dem TITLE Tag für die Referenzierung). Empfohlene Grösse: 60 bis 80 Zeichen. Setzen Sie die wichtigsten Stichwörter an den Anfang.</key>
+  <key id="description">Beschreibung</key>
+  <key id="description-help">Seitenbeschreibung für die Referenzierung. Empfohlene Grösse: zwischen 160 und 180 Zeichen. Setzen Sie die wichtigsten Stichwörter an den Anfang.</key>
+  <key id="startpublicationdate">Anfang</key>
+  <key id="startpublicationdate-help">Das Anfangsdatum der Veröffentlichung zeigt das Datum an, ab dem die Benutzer die Seite sehen können. Vor diesem Datum wird die Seite nicht sichtbar sein.</key>
+  <key id="endpublicationdate">Ende</key>
+  <key id="endpublicationdate-help">Das Enddatum der Veröffentlichung zeigt das Datum an, bis zu dem die Benutzer die Seite sehen können. Nach diesem Datum wird die Seite nicht mehr sichtbar sein</key>
+  <key id="author">Autor</key>
+  <key id="author-help">Name des Seitenautors</key>
+  <key id="navigationvisibility">Sichtbarkeit</key>
+  <key id="navigationvisibility-help">Sichtbarkeit in den Navigationsmenüs</key>
+</i18n>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.paginator" lcid="fr_FR">
+  <key id="detail">page {currentPage} sur {pageCount} pages de la liste {listName}</key>
+  <key id="next">suivante ›</key>
+  <key id="next-title">page suivante de la liste {listName}</key>
+  <key id="previous">‹ Précédente</key>
+  <key id="previous-title">page précédente de la liste {listName}</key>
+  <key id="first">« Première</key>
+  <key id="first-title">première page de la liste {listName}</key>
+  <key id="last">dernière »</key>
+  <key id="last-title">dernière page de la liste {listName}</key>
+  <key id="page-title">page {pageNumber} de la liste {listName}</key>
+</i18n>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.bo.blocks" lcid="fr_FR">
+  <key id="sitemap">plan du site</key>
+  <key id="bookmarksblock">signets</key>
+  <key id="emptybookmarksmessage">Le bloc ne contient aucun signet.</key>
+  <key id="one-col">Mise en page une colonne</key>
+  <key id="two-col">Mise en page deux colonnes</key>
+  <key id="exception">exception</key>
+  <key id="iframe">Iframe</key>
+  <key id="edit">Edition front-office</key>
+  <key id="enablemetas">Exposer les méta-données du bloc</key>
+  <key id="enablemetas-help">Ce bloc expose des méta-données utilisable pour renseignement des méta-données de la page (titre, description, mots clefs). Choisissez ″oui″ pour les rendre disponibles à la page.</key>
+  <key id="contextualmenu">Menu contextuel</key>
+</i18n>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.bo.general.menuitemfunction" lcid="de_DE">
+  <key id="print">Link für Seitenausdruck</key>
+  <key id="add-to-favorites">Link um die Seite zu den Favoriten hinzuzufügen</key>
+  <key id="top-of-page">Link zum Seitenanfang</key>
+  <key id="to-content">Link zum Seiteninhalt</key>
+  <key id="to-main-menu">Link zur Startseite der Webseite</key>
+  <key id="to-search">Link zum Suchformular</key>
+</i18n>

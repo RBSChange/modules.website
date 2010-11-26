@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.frontoffice" lcid="en_GB">
+  <key id="edit-document">Edit</key>
+  <key id="addtofavorite">add to favorite</key>
+  <key id="addtofavoritetitle">add page to favorite</key>
+  <key id="print">print</key>
+  <key id="printtitle">print page</key>
+  <key id="help">help</key>
+  <key id="helptitle">help page</key>
+  <key id="legalnotice">legal notice</key>
+  <key id="page-not-found">page not found</key>
+  <key id="error404">error 404</key>
+  <key id="not-found-long-message">Sorry but the requested page was not found on this server.If you entered the URL manually in your browser, please check it.If you have followed a link that brought you here, please contact the original website to tell them that the page does not exist anymore.We apologize for the nuisance and thank you for your understanding.</key>
+  <key id="back-to-homepage">Back to the homepage</key>
+  <key id="back-to-previous-visited-page">Back to the last visited page</key>
+  <key id="selectoption">select an element</key>
+  <key id="this-field-is-mandatory">This field is mandatory</key>
+  <key id="append-title-separator"> - </key>
+  <key id="this-page-in-mylang">This page in English</key>
+  <key id="powered-by-change">powered by RBS | Change</key>
+  <key id="copyright">copyright ©</key>
+</i18n>

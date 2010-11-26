@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.document.pageexternal" lcid="en_GB">
+  <key id="document-name">external page</key>
+  <key id="edition-form-title">external page properties</key>
+  <key id="label">page name</key>
+  <key id="label-help">document title for strictly internal usage, used for document back-office display.</key>
+  <key id="navigationtitle">link text</key>
+  <key id="navigationtitle-help">short title for navigation's elements (menus, breadcrumb, etc. - 80 characters max.)</key>
+  <key id="url">page URL</key>
+  <key id="url-help">Full external page's URL</key>
+  <key id="metatitle">page title</key>
+  <key id="metatitle-help">full title displayed in your browser's title bar (corresponds to TITLE tag used for referencing).</key>
+  <key id="description">description</key>
+  <key id="description-help">description of the page for search engines</key>
+  <key id="startpublicationdate">start</key>
+  <key id="startpublicationdate-help">The start publication date indicates the date from which the users will be able to view the page. Before this date, the page will not be viewable.</key>
+  <key id="endpublicationdate">end</key>
+  <key id="endpublicationdate-help">The end publication date indicates the date to which the users will be able to view the page. After this date, the page will not be viewable anymore.</key>
+  <key id="author">author</key>
+  <key id="author-help">name of the page's author</key>
+  <key id="navigationvisibility">visibility</key>
+  <key id="navigationvisibility-help">visibility in navigation menus</key>
+  <key id="useurl">external URL as link</key>
+  <key id="useurl-help">When set to ″Non″, an internal URL redirecting to the external site will be generated.</key>
+</i18n>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.document.page.robotsmeta" lcid="fr_FR">
+  <key id="index-follow">Indexer, suivre les liens</key>
+  <key id="noindex-follow">Ne pas indexer, suivre les liens</key>
+  <key id="index-nofollow">Indexer, ne pas suivre les liens</key>
+  <key id="noindex-nofollow">Ne pas indexer, ne pas suivre les liens</key>
+</i18n>

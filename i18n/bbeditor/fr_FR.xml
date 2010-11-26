@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.bbeditor" lcid="fr_FR">
+  <key id="bold">gras</key>
+  <key id="italic">italique</key>
+  <key id="underline">souligner</key>
+  <key id="strike">barrer</key>
+  <key id="picture">image</key>
+  <key id="link">lien</key>
+  <key id="citation">citer</key>
+  <key id="code">code</key>
+  <key id="someone-said">a dit</key>
+</i18n>

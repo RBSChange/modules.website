@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.exception" lcid="de_DE">
+  <key id="not_a_valid_topic">Die spezifizierte Komponente (ID=%id%) ist keine gültige Rubrik, da es ein ″%type%″ Typ ist.</key>
+  <key id="not_a_valid_website">Die spezifizierte Komponente (ID=%id%) ist keine gültige ″Webseiten″ Rubrik, da es ein ″%type%″ Typ ist.</key>
+  <key id="invalid_page_reference">Ungültige Seitenreferenz (ID=%id%).</key>
+  <key id="invalid_tag">Spezifizierter Tag ″%tag%″ ist ungültig.</key>
+  <key id="invalid_lang">Spezifizierte Sprache ″%lang%″ ist ungültig.</key>
+  <key id="not_an_exclusive_tag">Spezifizierter Tag ″%tag%″ muss einmalig sein.</key>
+  <key id="page_reference_not_found">Keine Seitenreferenz scheint den geforderten Kriterien zu entsprechen: pageRef=″%pageRef%″, tags: primary=″%primaryTag%″, secondary=″%secondaryTag%″.</key>
+  <key id="index_page_not_found">Keine index-Seite für folgende Rubrik gefunden: ″%topicId%: %topicLabel%″.</key>
+  <key id="bad_topic_id">Spezifiziertes ID ist ungültig: ″%id%″.</key>
+  <key id="invalid-page-document">Referenziertes Dokument (ID=″{id}″) ist keine gültige Seite.</key>
+  <key id="bad-url">Spezifizierte URL (″{url}″) ist ungültig: %message%</key>
+  <key id="bad-referenced-component-id">Spezifizierte Komponente (ID=″{id}″) ist keine gültige Seitenreferenz.</key>
+  <key id="url-already-used">Die spezifizierte URL ″{url}″ kann der Seitenreferenz nicht angebracht werden ″{pageRef}″, da sie schon von einer anderen Seite verwendet zu sein scheint.</key>
+  <key id="unknown-page-name">Spezifizierter Seitenname (″{pageName}″) entspricht keiner Seite.</key>
+  <key id="page-1">Keine Seitenidentifikation ist spezifiziert.</key>
+  <key id="page-2">Die spezifizierte Seitenidentifikation (ID=″{param}″) entspricht keiner gültigen Seite.</key>
+  <key id="page-3">Die Seitendeklaration (″{param}″ file) ist ungültig.</key>
+  <key id="page-4">Die angefragte Seite (ID=″{param}″) ist nicht verfügbar.</key>
+  <key id="page-5">Die Blockdeklaration (″{param}″ file) ist ungültig.</key>
+  <key id="page-7">Die angefragte Seite ist nicht die Indexseite der Gruppe (ID=″{param}″).</key>
+</i18n>
