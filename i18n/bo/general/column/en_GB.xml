@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.bo.general.column" lcid="en_GB">
+  <key id="menu-tag">tag</key>
+  <key id="modificationdate">modification date</key>
+  <key id="menuitem-refers-to">points to</key>
+  <key id="menuitem-popup">popup</key>
+  <key id="website-url">website URL</key>
+</i18n>

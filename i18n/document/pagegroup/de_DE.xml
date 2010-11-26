@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.document.pagegroup" lcid="de_DE">
+  <key id="edition-form-title">Seiteeinstellungen</key>
+  <key id="generalities">allgemeine Dateien</key>
+  <key id="publication">Publikation</key>
+  <key id="referencing">Referencing</key>
+  <key id="titleinformations">Seitetitel</key>
+  <key id="layoutinformations">Seitenlayout</key>
+  <key id="dateinformations">Publikationsdatum</key>
+  <key id="label">Seitename</key>
+  <key id="label-help">title des Dokuments für interne Verwendung, nur für Backoffice Dokumentanzeigen.</key>
+  <key id="navigationtitle">Linktext</key>
+  <key id="navigationtitle-help">kürzer Titel für navigationselemente (Menüs, Brösel, usw.)</key>
+  <key id="metatitle">Seitetitel</key>
+  <key id="metatitle-help">Im Browsertitelleiste angezeigtes komplettes Titel (entspricht dem TITLE Tag für Referencing).</key>
+  <key id="template">Seitetemplate</key>
+  <key id="template-help">Wenn die ursprüngliche Template wurde geändert, bitte updaten Sie sie mit folgenden Button.</key>
+  <key id="updatetemplate">Template updaten</key>
+  <key id="updatetemplatequestion">sind Sie sicher, dass Sie die Template updaten möchten ? Eine schlechte Template könnte die existierende Inhalte korrumpieren.</key>
+  <key id="skin">Skin</key>
+  <key id="skin-help">legen Sie her einen Skin ab, um ihn an den Element anzuwenden.</key>
+  <key id="description">Beschreibung</key>
+  <key id="description-help">Beschreibung der Seite für Suchmaschinen</key>
+  <key id="startpublicationdate-help">die Publikations Anfangsdatum zeigt das Datum an, nach dessen die Benutzern die Seite sehen können. Vor diesem Datum wird die Seite nicht sichtbar sein.</key>
+  <key id="endpublicationdate">Ende</key>
+  <key id="endpublicationdate-help">die Publikations Endedatum zeigt das Datum an, vor dessen die Benutzern die Seite sehen können. Vor diesem Datum wird die Seite nicht sichtbar sein</key>
+  <key id="indexingstatus">indexierbare Seite</key>
+  <key id="indexingstatus-help">Seiteindexierung aktivieren/deaktivieren</key>
+  <key id="keywords">Stichwörter</key>
+  <key id="keywords-help">mit Kommas abgetrennte Stichwörter, die mit der Seite zu tun haben.</key>
+  <key id="author">Autor</key>
+  <key id="author-help">Name des Seitenautors</key>
+  <key id="navigationvisibility">Sichtbarkeit</key>
+  <key id="navigationvisibility-help">Sichtbarkeit in Navigationsmenüs</key>
+  <key id="ishomepage">Website Startseite</key>
+  <key id="isindexpage">Indexseite der Mutterrubrik</key>
+</i18n>

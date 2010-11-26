@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.document.marker" lcid="de_DE">
+  <key id="document-name">Markierer</key>
+  <key id="edition-form-title">Eigenschaften Markierer</key>
+  <key id="label">Name</key>
+  <key id="label-help">Name</key>
+  <key id="account">Konto</key>
+  <key id="account-help">Konto</key>
+</i18n>

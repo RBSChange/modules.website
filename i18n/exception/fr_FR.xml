@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.exception" lcid="fr_FR">
+  <key id="not_a_valid_topic">Le composant indiqué (ID=%id%) n'est pas une rubrique valide car il a le type ″%type%″.</key>
+  <key id="not_a_valid_website">Le composant indiqué (ID=%id%) n'est pas une rubrique ″site web″ valide car il a le type ″%type%″.</key>
+  <key id="invalid_page_reference">La référence de la page n'est pas valide (ID=%id%).</key>
+  <key id="invalid_tag">Le tag indiqué ″%tag%″ n'est pas valide.</key>
+  <key id="invalid_lang">La langue indiquée ″%lang%″ n'est pas valide.</key>
+  <key id="not_an_exclusive_tag">Le tag indiqué ″%tag%″ doit être un tag exclusif.</key>
+  <key id="page_reference_not_found">Aucune référence de page ne semble correspondre aux critères requis : pageRef=″%pageRef%″, tags: primary=″%primaryTag%″, secondary=″%secondaryTag%″.</key>
+  <key id="index_page_not_found">Aucune page d'index trouvée pour la rubrique ″%topicId% : %topicLabel%″.</key>
+  <key id="bad_topic_id">L'ID spécifié n'est pas valide : ″%id%″.</key>
+  <key id="invalid-page-document">Le document référencé (ID=″{id}″) n'est pas une page valide.</key>
+  <key id="bad-url">L'URL spécifiée (″{url}″) n'est pas valide : %message%</key>
+  <key id="bad-referenced-component-id">Le composant spécifié (ID=″{id}″) n'est pas une référence de page valide.</key>
+  <key id="url-already-used">L'URL indiquée ″{url}″ ne peut pas être appliquée à la page de référence ″{pageRef}″ car elle semble être déjà utilisée par une autre page.</key>
+  <key id="unknown-page-name">Le nom de page indiqué (″{pageName}″) ne correspond à aucune page.</key>
+  <key id="page-1">Aucun identifiant de page indiqué.</key>
+  <key id="page-2">L'identifiant de page indiqué (ID=″{param}″) ne correspond à aucune page valide.</key>
+  <key id="page-3">La déclaration de page (fichier ″{param}″) est invalide.</key>
+  <key id="page-4">La page demandée (ID=″{param}″) n'est pas disponible.</key>
+  <key id="page-5">La déclaration de blocs (fichier ″{param}″) est invalide.</key>
+  <key id="page-6">La déclaration de contenu (fichier ″{param}″) est invalide.</key>
+  <key id="page-7">La page demandée n'est pas l'index du groupe (ID=″{param}″).</key>
+</i18n>

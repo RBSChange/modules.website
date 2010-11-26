@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.document.menuitemtext" lcid="fr_FR">
+  <key id="document-name">item texte simple</key>
+  <key id="edition-form-title">propriétés de l'item texte simple</key>
+  <key id="label">libellé</key>
+  <key id="label-help">libellé</key>
+</i18n>

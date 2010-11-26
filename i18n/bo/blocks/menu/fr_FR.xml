@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.bo.blocks.menu" lcid="fr_FR">
+  <key id="depth">Profondeur</key>
+  <key id="depth-help">Profondeur maximal que le menu peut afficher</key>
+  <key id="template">Template</key>
+  <key id="template-help">Suffixe du nom du template à utiliser</key>
+  <key id="deployonlycurrentpath">Déployer seulement le chemin de navigation</key>
+  <key id="deployonlycurrentpath-help">Seul le chemin permettant d'acceder à cette page sera deployer</key>
+</i18n>

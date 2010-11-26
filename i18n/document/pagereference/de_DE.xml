@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.document.pagereference" lcid="de_DE">
+  <key id="document-name">Seite</key>
+  <key id="edition-form-title">Seiteneinstellungen</key>
+  <key id="visibility">Sichtbarkeit</key>
+  <key id="label">Seitenname</key>
+  <key id="label-help">Dokumententitel ausschliesslich zur internen Nutzung, nur für Backoffice Dokumentenanzeigen.</key>
+  <key id="author">Autor</key>
+  <key id="author-help">Name des Seitenautors</key>
+  <key id="startpublicationdate">Anfang</key>
+  <key id="startpublicationdate-help">Das Anfangsdatum der Veröffentlichung zeigt das Datum an, ab dem die Benutzer die Seite sehen können. Vor diesem Datum wird die Seite nicht sichtbar sein.</key>
+  <key id="endpublicationdate">Ende</key>
+  <key id="endpublicationdate-help">Das Enddatum der Veröffentlichung zeigt das Datum an, bis zu dem die Benutzer die Seite sehen können. Nach diesem Datum wird die Seite nicht mehr sichtbar sein.</key>
+  <key id="navigationtitle">Linktext</key>
+  <key id="navigationtitle-help">kurzer Titel für die Navigationselemente (Menüs, Leitfaden, usw. - max. 80 Zeichen)</key>
+  <key id="metatitle">Seitentitel</key>
+  <key id="metatitle-help">In der Browsertitelleiste angezeigter kompletter Titel (entspricht dem TITLE Tag für die Referenzierung). Empfohlene Grösse: 60 bis 80 Zeichen. Setzen Sie die wichtigsten Stichwörter an den Anfang.</key>
+  <key id="description">Beschreibung</key>
+  <key id="description-help">Seitenbeschreibung für die Referenzierung</key>
+  <key id="keywords">Stichwörter</key>
+  <key id="keywords-help">der Seite assoziierte Stichwörter, durch Kommata abgetrennt</key>
+  <key id="indexingstatus">indexierbare Seite</key>
+  <key id="indexingstatus-help">Seitenindexierung aktivieren/deaktivieren</key>
+  <key id="template">Seitentemplate</key>
+  <key id="template-help">Wird der ursprüngliche Template geändert, aktualisieren Sie bitte mit folgendem Button.</key>
+  <key id="skin">Skin</key>
+  <key id="skin-help">legen Sie hier einen Skin ab, der den Elementen angewendet wird</key>
+  <key id="navigationvisibility">Sichtbarkeit</key>
+  <key id="navigationvisibility-help">Sichtbarkeit in den Navigationsmenüs</key>
+  <key id="ishomepage">Startseite der Webseite</key>
+  <key id="isindexpage">Indexseite der Mutterrubrik</key>
+</i18n>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.document.website" lcid="en_GB">
+  <key id="document-name">website</key>
+  <key id="edition-form-title">website properties</key>
+  <key id="url">website main URL</key>
+  <key id="url-help">website main URL, including the protocol (″http://″) but without the end ″/″.</key>
+  <key id="label">website name</key>
+  <key id="label-help">full website name</key>
+  <key id="description">short website description</key>
+  <key id="description-help">short website description</key>
+  <key id="skin">skin</key>
+  <key id="skin-help">drop a Skin here in order to apply it to the element</key>
+  <key id="stylesheet">stylesheet</key>
+  <key id="stylesheet-help">select a sylesheet in order to apply it to the element</key>
+  <key id="localizebypath">Path localisation</key>
+  <key id="localizebypath-help">If set to no, the localized website needs to have a different domain than its original version, otherwise it will have an url like http://www.rbs.fr/fr/.</key>
+  <key id="protocol">Secured</key>
+  <key id="protocol-help">Secured</key>
+  <key id="domain">domain</key>
+  <key id="domain-help">Domain name of the website (eg: www.rbs.fr)</key>
+  <key id="alwaysappendtitle">append website name to page title</key>
+  <key id="alwaysappendtitle-help">select ″yes″ to always append the website name to page title (recommanded by accessiblity rules)</key>
+  <key id="section-advanced">Advanced settings</key>
+  <key id="favicon">favicon</key>
+  <key id="favicon-help">favicon</key>
+  <key id="robottxt">robot.txt content file</key>
+  <key id="robottxt-help">robot.txt content file</key>
+  <key id="section-searchengine">Search engine identification</key>
+  <key id="section-google">Google Identification</key>
+  <key id="googlefileid">File name ID</key>
+  <key id="googlefileid-help">ID in the Google identification file name (/google&lt;ID&gt;.html)</key>
+  <key id="googlefilecontent">file content</key>
+  <key id="googlefilecontent-help">content of the Google identification file (/google&lt;ID&gt;.html)</key>
+  <key id="section-yahoo">Yahoo Identification</key>
+  <key id="yahoofileid">File name ID</key>
+  <key id="yahoofileid-help">ID in the Yahoo identification file name (/y_key_&lt;ID&gt;.html)</key>
+  <key id="yahoofilecontent">file content</key>
+  <key id="yahoofilecontent-help">content of the Yahoo identification file (/y_key_&lt;ID&gt;.html)</key>
+  <key id="section-msn">Bing Identification</key>
+  <key id="msnfilecontent">file content</key>
+  <key id="msnfilecontent-help">XML content of the Bing identification file (/BingSiteAuth.xml)</key>
+  <key id="structureinit">default Structur</key>
+</i18n>

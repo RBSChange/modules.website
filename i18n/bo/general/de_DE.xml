@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.bo.general" lcid="de_DE">
+  <key id="module-name">Webseiten und Seiten</key>
+  <key id="tree-root-name">Webseitesn und Seiten</key>
+  <key id="system-folder-name">Webseiten und Seiten</key>
+  <key id="updatetemplatesuccess">Template wurde erfolgreich aktualisiert.</key>
+  <key id="updatetemplateerror">Fehler bei der Aktualisierung des Template.</key>
+  <key id="edit-confirm">geschaltete Elemente bearbeiten</key>
+  <key id="edit-confirm-link-or-image">Möchten Sie den Link oder das Bild bearbeiten?</key>
+  <key id="edit-link">Link bearbeiten</key>
+  <key id="edit-image">Bild bearbeiten</key>
+  <key id="defaulttemplate">Standardtemplate</key>
+  <key id="page-url">Seiten URL</key>
+  <key id="general">Haupteigenschaften</key>
+  <key id="advanced">erweiterte Eigenschaften</key>
+  <key id="apply-changes">Änderungen anbringenn</key>
+  <key id="remove-redirection">Überarbeitungsregel löschen</key>
+  <key id="saving-information">Information speichern</key>
+  <key id="template-list-static">statische Templates</key>
+  <key id="template-list-dynamic">dynamische Templates</key>
+  <key id="error-document-is-not-inside-a-menu">Das Dokument befindet sich nicht in einem Menü</key>
+  <key id="error-no-parent-topic">die Seite hat keinen Mutterordner</key>
+  <key id="set-visibility-error-some-selected-pages-are-in-page-group-and-will-be-skipped">Einige selektierte Seiten sind Teil einer Seitengruppe und werden ignoriert, da die Sichbarkeit im Seitegruppenniveau definiert werden muss. Möchten Sie fortfahren?</key>
+  <key id="set-visibility-error-all-selected-pages-are-in-page-group">Alle selektierten Seiten sind Teil einer oder mehrerer Seitengruppen. Die Sichbarkeit kann nicht auf die Seiten innerhalb einer Gruppe angebracht werden, sondern auf die Gruppe.</key>
+  <key id="menu-folder-label">Navigationsmenüs</key>
+  <key id="emptybreadcrumb">(leerer Leitfaden)</key>
+  <key id="last-modified-pages">zuletzt geänderte Seiten</key>
+  <key id="page-edition-error">Seiteninhalt kann nicht bearbeitet werden</key>
+  <key id="page-edition-error-content">Seiteninhalt</key>
+  <key id="page-edition-error-restore">Seite resetten</key>
+  <key id="page-edition-error-message-broken-page-content">Seiteninhalt ist korrupt (abgewerteter oder zu voluminöser Inhalt)</key>
+  <key id="page-edition-error-reset-confirm">Beim Resetten der Seite, wird der Inhalt vom Inhalt des Originaltemplates ersetzt. Möchten Sie die Seite wirklich resetten?</key>
+  <key id="sitemapcolumn">In Spalten anzeigen</key>
+  <key id="richtext-title">Titel</key>
+  <key id="richtext-subtitle">Untertitel</key>
+  <key id="richtext-subsubtitle">Untertitel Niveau 2</key>
+  <key id="richtext-code">Code</key>
+  <key id="set-home-page-error">Fehler bei der Zuordnung der Startseite</key>
+  <key id="set-index-page-error">Fehler bei der Zuordnung der Indexseite einer Rubrik</key>
+  <key id="remove-index-page-error">Fehler beim Löschvorgang der Indexseite einer Rubrik</key>
+  <key id="pageeditorloading">Seiteneditor wird geladen</key>
+</i18n>

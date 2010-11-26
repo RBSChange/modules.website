@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.bo.tags" lcid="en_GB">
+  <key id="page-not-found">error page 'not found' (404)</key>
+  <key id="unauthorized-access">Unauthorized access (401.1)</key>
+  <key id="server-error">general error page (500)</key>
+  <key id="sales-condition">sales conditions</key>
+  <key id="print">print usage</key>
+  <key id="help">help</key>
+  <key id="favorite">add to favorites usage</key>
+  <key id="legal-notice">legal notice</key>
+  <key id="default-website">default website</key>
+  <key id="footer-menu">footer menu</key>
+  <key id="header-menu">header menu</key>
+  <key id="contextual-menu">contextual menu</key>
+  <key id="main-menu">main menu</key>
+  <key id="quicklinks-menu">links menu</key>
+  <key id="copyright-menu">Copyright</key>
+  <key id="logo">logo</key>
+  <key id="edit">Front-office edition</key>
+</i18n>

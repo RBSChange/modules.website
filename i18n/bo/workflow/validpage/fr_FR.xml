@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.bo.workflow.validpage" lcid="fr_FR">
+  <key id="user-task-title">valider la publication d'une page</key>
+  <key id="accept">accepter</key>
+  <key id="refuse">refuser</key>
+  <key id="user-task-help">vous devez valider les paramètres et contenus présentés ci-dessous. L'onglet ″Paramètres de la page″ présente les informations générales relatives au nom, référencement, modèle de page et dates de publication. L'onglet ″Contenu de la page″ affiche le contenu tel que le verra un internaute, une fois la page publiée.
+Pour continuer, insérez un commentaire qui sera renvoyé au rédacteur de la page, et cliquez sur le bouton ″Accepter″ ou ″Refuser″ présent en haut à droite de cet écran.</key>
+  <key id="user-task-decision-commentary">commentaire (facultatif)</key>
+  <key id="indexing-status-activate">oui</key>
+  <key id="indexing-status-no-activate">non</key>
+  <key id="documentinformation">informations à valider</key>
+  <key id="originaldocumentinformation">informations de la version actuellement publiée</key>
+  <key id="contenttovalidate">contenu à valider</key>
+  <key id="contentinproduction">contenu de la version en production</key>
+  <key id="synchscrolldata">Synchroniser le déroulement des informations</key>
+  <key id="datavalidation">Paramètres de la page</key>
+  <key id="contentvalidation">Contenu de la page</key>
+</i18n>

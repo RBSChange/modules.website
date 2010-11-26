@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.document.marker" lcid="fr_FR">
+  <key id="document-name">marqueur</key>
+  <key id="edition-form-title">propriétés du marker</key>
+  <key id="label">libellé</key>
+  <key id="label-help">libellé</key>
+  <key id="account">account</key>
+  <key id="account-help">account</key>
+  <key id="langs">langues</key>
+  <key id="langs-help">langues</key>
+</i18n>

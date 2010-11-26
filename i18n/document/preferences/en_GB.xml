@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.document.preferences" lcid="en_GB">
+  <key id="document-name">preferences</key>
+  <key id="edition-form-title">websites and pages preferences</key>
+  <key id="checkersrecipient">checkings recipients</key>
+  <key id="checkersrecipient-help">list of users receiving notifications for checking processes (links, etc.)</key>
+</i18n>

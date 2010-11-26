@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.bo.general.template" lcid="en_GB">
+  <key id="tplone">N°1 - 1 column</key>
+  <key id="tplonetwocolumns">N°1 - 2 columns (left)</key>
+  <key id="tplonetwocolumnsright">N°1 - 2 columns (right)</key>
+  <key id="tplonethreecolumns">N°1 - 3 columns</key>
+  <key id="tpltwo">N°2 - 2 columns</key>
+  <key id="tpltwothreecolumns">N°2 - 3 columns</key>
+  <key id="tplthree">N°3 - 3 columns</key>
+  <key id="tplthreetwocolumns">N°3 - 2 columns</key>
+  <key id="tplfour">N°4 - 2 columns</key>
+  <key id="tplfourthreecolumns">N°4 - 3 columns</key>
+  <key id="tplfive">N°5 - 2 columns</key>
+  <key id="tplfivethreecolumns">N°5 - 3 columns</key>
+  <key id="tplsix">N°6 - 1 column</key>
+  <key id="tplsixtwocolumns">N°6 - 2 columns (left)</key>
+  <key id="tplsixtwocolumnsright">N°6 - 2 columns (right)</key>
+  <key id="tplsixthreecolumns">N°6 - 3 columns</key>
+  <key id="tplnewmailing">Mailing template</key>
+</i18n>

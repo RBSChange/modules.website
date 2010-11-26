@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.bo.doceditor.page-version-list" lcid="fr_FR">
+  <key id="label">libellé</key>
+  <key id="startpublicationdate">début de publication</key>
+  <key id="endpublicationdate">fin de publication</key>
+  <key id="status">etat</key>
+  <key id="current">en cours</key>
+  <key id="actions">actions</key>
+  <key id="confirm-delete-version">êtes-vous sûr de vouloir supprimer cette version ?</key>
+  <key id="confirm-duplicate-version">êtes-vous sûr de vouloir créer une nouvelle version à partir de celle-ci ?</key>
+</i18n>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.bo.doceditor" lcid="en_GB">
+  <key id="current-page-composition">{blockCount} dynamic block(s) and {richtextCount} text block(s)</key>
+  <key id="current-word-count-empty">empty</key>
+  <key id="current-word-count-singular">1 word</key>
+  <key id="current-word-count">{wordCount} words</key>
+  <key id="edit-content-link">edit page content</key>
+</i18n>

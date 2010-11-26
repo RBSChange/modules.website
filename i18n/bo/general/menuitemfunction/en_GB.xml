@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.bo.general.menuitemfunction" lcid="en_GB">
+  <key id="print">link to print the page</key>
+  <key id="add-to-favorites">link to add the page to favorites</key>
+  <key id="view-as-pdf">PDF version of this page</key>
+  <key id="top-of-page">link to the top of the page</key>
+  <key id="to-content">link to the content of the page</key>
+  <key id="to-main-menu">link to the main menu of the page</key>
+  <key id="to-search">link to search form</key>
+</i18n>

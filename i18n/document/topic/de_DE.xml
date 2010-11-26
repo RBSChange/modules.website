@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.document.topic" lcid="de_DE">
+  <key id="document-name">Rubrik</key>
+  <key id="label">Rubriktitel</key>
+  <key id="label-help">Name der Rubrik, wie er in den Menüs angezeigt wird</key>
+  <key id="description">Beschreibung der Rubrik</key>
+  <key id="stylesheet">Stylesheet</key>
+  <key id="stylesheet-help">Bitte wählen Sie einen Stylesheet um es dem Element anzuwenden</key>
+  <key id="url">Name in den URLs</key>
+  <key id="navigationvisibility">Sichtbarkeit</key>
+  <key id="navigationvisibility-help">Sichtbarkeit in den Navigationsmenüs</key>
+  <key id="skin">Skin</key>
+  <key id="skin-help">legen Sie hier einen Skin ab, der den Elementen angewendet wird</key>
+</i18n>

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<localization extend="modules.website.document.topic">
-	<entity id="publication.no-published-page-or-subtopic">
-		<locale lang="fr">ne contient aucune page ni aucune sous-rubrique publiée</locale>
-		<locale lang="en">does not contain any published page or sub-topic</locale>
-	</entity>
-</localization>

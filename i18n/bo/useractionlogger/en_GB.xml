@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.bo.useractionlogger" lcid="en_GB">
+  <key id="insert-website">Creation of website {documentlabel}</key>
+  <key id="log-insert-website">Create a website</key>
+  <key id="update-website">Update of website {documentlabel}</key>
+  <key id="log-update-website">Update a website</key>
+  <key id="updatetranslation-website">Translation of website {documentlabel} in [{lang}]</key>
+  <key id="log-updatetranslation-website">Translate a website</key>
+  <key id="delete-website">Deleting website {documentlabel}</key>
+  <key id="log-delete-website">Delete a website</key>
+  <key id="deletelocalization-website">Deleting [{lang}] translation of website {documentlabel}</key>
+  <key id="log-deletelocalization-website">Delete the translation of a website</key>
+  <key id="insert-topic">Creation of topic {path} / {documentlabel}</key>
+  <key id="log-insert-topic">Create a topic</key>
+  <key id="update-topic">Update of topic {path} / {documentlabel}</key>
+  <key id="log-update-topic">Update a topic</key>
+  <key id="updatetranslation-topic">Translation of topic {path} / {documentlabel} in [{lang}]</key>
+  <key id="log-updatetranslation-topic">Translate a topic</key>
+  <key id="delete-topic">Deletion of topic {documentlabel}</key>
+  <key id="log-delete-topic">Delete une rubrique</key>
+  <key id="deletelocalization-topic">Deleting [{lang}] translation de la rubrique {path} / {documentlabel}</key>
+  <key id="log-deletelocalization-topic">Delete a topic translation</key>
+  <key id="move-topic">Moving topic {documentlabel} to {path}</key>
+  <key id="log-move-topic">Move a topic</key>
+  <key id="insert-page">Creation of page {path} / {documentlabel}</key>
+  <key id="log-insert-page">Create a page</key>
+  <key id="update-page">Update of page {path} / {documentlabel}</key>
+  <key id="log-update-page">Update a page</key>
+  <key id="updatetranslation-page">Translating page {path} / {documentlabel} in [{lang}]</key>
+  <key id="log-updatetranslation-page">Translate a page</key>
+  <key id="savecontent-page">Content updated for page {path} / {documentlabel}</key>
+  <key id="log-savecontent-page">Page content update</key>
+</i18n>

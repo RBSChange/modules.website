@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.bo.blocks.iframe" lcid="fr_FR">
+  <key id="title">Titre</key>
+  <key id="url">adresse (URL)</key>
+  <key id="url-help">adresse URL complète (avec http://) de la page à afficher dans l'iframe</key>
+  <key id="text">texte alternatif</key>
+  <key id="text-help">texte alternatif s'affichant lorsque le navigateur ne peut pas afficher l'iframe</key>
+  <key id="height">hauteur</key>
+  <key id="height-help">hauteur en pixels de l'iframe</key>
+  <key id="width">largeur</key>
+  <key id="width-help">largeur en pixels de l'iframe</key>
+  <key id="scrolling">affichage des ascenseurs</key>
+  <key id="scrolling-help">les ascenseurs peuvent s'afficher lorsque le contenu de la page affichée dans l'iframe prend plus de place que la place accordée à l'iframe</key>
+</i18n>

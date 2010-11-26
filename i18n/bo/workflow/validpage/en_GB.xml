@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.bo.workflow.validpage" lcid="en_GB">
+  <key id="user-task-title">validate page publishing</key>
+  <key id="accept">accept</key>
+  <key id="refuse">refuse</key>
+  <key id="user-task-help">you have to validate parameters and contents presented below. The ″page parameters″ tab presents the main information related to the name, referencing, page template and publishing dates. ″Page content″ tab displays the content as the internaut will see it, once the page is published. 
+To continue, insert a commentary that will be sent to the page author, and click ″accept″ or ″refuse″ at the top right of this screen.</key>
+  <key id="user-task-decision-commentary">commentary</key>
+  <key id="indexing-status-activate">yes</key>
+  <key id="indexing-status-no-activate">no</key>
+  <key id="documentinformation">information to be validated</key>
+  <key id="originaldocumentinformation">information of the currently published version</key>
+  <key id="contenttovalidate">content to be validated</key>
+  <key id="contentinproduction">content of the version in production</key>
+  <key id="synchscrolldata">Synchonize information flow</key>
+  <key id="datavalidation">page parameters</key>
+  <key id="contentvalidation">page content</key>
+</i18n>
