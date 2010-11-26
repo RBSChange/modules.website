@@ -43,16 +43,4 @@ class website_WebsiteScriptDocumentElement extends import_ScriptDocumentElement
 		}
 		return $properties;
 	}
-	
-	public function endProcess()
-	{
-		$document = $this->getPersistentDocument();		
-		foreach ($this->script->getChildren($this) as $child)
-		{
-			if ($child instanceof users_PermissionsScriptDocumentElement)
-			{
-				$child->setPermissions($document);
-			}
-		}
-	}
 }
