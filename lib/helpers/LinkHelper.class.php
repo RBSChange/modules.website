@@ -142,8 +142,8 @@ class LinkHelper
 				return self::$urls[$key];
 			}
 		}
+		
 		$urs = website_UrlRewritingService::getInstance();
-
 		$url = $urs->getDocumentUrl($document, $lang, $parameters);
 		if ($url === null)
 		{
@@ -152,7 +152,8 @@ class LinkHelper
 				Framework::info(__METHOD__ . ' No url rewriting Found for document : ' . $document->__toString());
 			}
 			$url = $urs->getNonRewrittenDocumentUrl($document, $lang, $parameters);
-		}	
+		}
+		
 		if ($useCache)
 		{
 			self::$urls[$key] = $url;

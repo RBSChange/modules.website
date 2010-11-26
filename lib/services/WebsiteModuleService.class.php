@@ -849,7 +849,6 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
 		}
 	}
 
-
 	/**
 	 * @return Integer
 	 */
@@ -865,10 +864,6 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
 	{
 		return $this->getDocumentInstance($this->currentPageId, "modules_website/page");
 	}
-
-
-
-
 
 	/**
 	 * @param NavigationElementImpl $navigationElement

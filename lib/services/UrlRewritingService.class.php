@@ -346,13 +346,16 @@ class website_UrlRewritingService extends BaseService
 	 * @param array $parameters
 	 * @return string
 	 */
-	public function getDocumentUrl($document, $lang = null, $additionnalParameters = array())
+	public function getDocumentUrl($document, $lang = null, &$additionnalParameters = array())
 	{
 		if ($lang === null)
 		{
 			$lang = RequestContext::getInstance()->getLang();
 		}
-					
+		
+		// Filter parameters.
+		$additionnalParameters = $document->getDocumentService()->filterDocumentUrlParams($document, $lang, $additionnalParameters);
+				
 		//Get associated webSite;
 		if ($document instanceof website_persistentdocument_website)
 		{
