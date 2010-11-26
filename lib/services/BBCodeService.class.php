@@ -12,7 +12,7 @@ class website_BBCodeService extends BaseService
 	protected static $instance;
 	
 	/**
-	 * @return website_ListStylesheetsService
+	 * @return website_BBCodeService
 	 */
 	public static function getInstance()
 	{

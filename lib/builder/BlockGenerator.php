@@ -54,8 +54,9 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 			f_util_FileUtils::write($tagFile, $result);
 		}
 
+
 		// Add locale.
-		$baseKey = 'm.' . $this->name . '.bo.tags';
+		$baseKey = strtolower('m.' . $this->name . '.bo.tags');
 		$keysInfos = array('fr_FR' => array(strtolower($blockName) . '-block' => $blockName));
 		LocaleService::getInstance()->updatePackage($baseKey, $keysInfos, false, true, '');
 	}
@@ -146,7 +147,7 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 		}
 
 		// Add locale.
-		$baseKey = 'm.' . $this->name . '.bo.blocks.' . strtolower($blockName);
+		$baseKey = strtolower('m.' . $this->name . '.bo.blocks.' . $blockName);
 		$keysInfos = array('fr_FR' => array('title' => $blockName));
 		LocaleService::getInstance()->updatePackage($baseKey, $keysInfos, false, true, '');
 	}
