@@ -347,6 +347,13 @@ class website_PageRessourceService extends BaseService
 		return file_get_contents($absolutePath);
 	}
 	
+	private $globalTemplateName = 'PageDynamic-ContentBasis';
+	
+	public function setGlobalTemplateName($globalTemplateName)
+	{
+		$this->globalTemplateName = $globalTemplateName;
+	}
+	
 	/**
 	 * Returns the path of the "Global template" used to render the page
 	 *
@@ -356,7 +363,7 @@ class website_PageRessourceService extends BaseService
 	{
 		return TemplateResolver::getInstance()->setPackageName('modules_website')->setDirectory('templates')
 		->setMimeContentType('php')
-		->getPath('PageDynamic-ContentBasis');
+		->getPath($this->globalTemplateName);
 	}
 
 	/**
