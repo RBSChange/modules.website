@@ -29,6 +29,32 @@ class website_BBCodeService extends BaseService
 	protected $codeContents = array();
 	
 	/**
+	 * @var boolean
+	 */
+	protected $bbcodeScriptAdded = false;
+	
+	/**
+	 * @param array[] $params
+	 * @param website_Page $context
+	 * @return String
+	 */
+	public function buildEditor($params, $context)
+	{
+		// Add the jTagEditor class.
+		$params['class'] = 'jTagEditor' . ((isset($params['class'])) ? $params['class'] : '');
+		
+		// Include the jTagEditor script.
+		if (!$this->bbcodeScriptAdded)
+		{
+			$context->addScript('modules.website.lib.bbeditor.jtageditor');
+			$context->addStyle('modules.website.jtageditor');
+			$this->bbcodeScriptAdded = true;
+		}
+		return website_FormHelper::renderTextarea($params);		
+	}	
+	
+	
+	/**
 	 * @param Array $matches
 	 * @return String
 	 */

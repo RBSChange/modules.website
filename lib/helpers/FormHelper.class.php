@@ -513,18 +513,7 @@ class website_FormHelper
 	 */
 	private function buildBBeditorinput($params)
 	{
-		// Add the jTagEditor class.
-		$params['class'] = 'jTagEditor' . ((isset($params['class'])) ? $params['class'] : '');
-
-		// Include the jTagEditor script.
-		if (!self::$bbcodeScriptAdded)
-		{
-			self::$context->addScript('modules.website.lib.bbeditor.jtageditor');
-			self::$context->addStyle('modules.website.jtageditor');
-			self::$bbcodeScriptAdded = true;
-		}
-
-		return self::renderTextarea($params);
+		return website_BBCodeService::getInstance()->buildEditor($params, self::$context);
 	}
 
 	private static $documentPickerCalled = false;
@@ -2187,7 +2176,6 @@ jQuery(document).ready(function() {
 	 */
 	private static $context;
 	private static $datePickerScriptAdded = false;
-	private static $bbcodeScriptAdded = false;
 
 	/**
 	 * @var f_mvc_Bean
