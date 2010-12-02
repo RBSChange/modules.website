@@ -234,10 +234,16 @@
 			var lang = this.getContextLang();
 			wCore.debug('addToMenu' + wCore.dump(dropInfos));
 			// dropInfos = {action:'', cmpref:0, parentid:0, beforeid:0, afterid:0};
-			this.execute("AddToMenu", "AddToMenu", {cmpref: dropInfos.cmpref, lang: lang, destref: dropInfos.parentid});
+			this.executeJSON("AddToMenu", {cmpref: dropInfos.cmpref, lang: lang, destref: dropInfos.parentid});
 		]]></body>
 	</action>
-  
+	<action name="onAddToMenuSuccess">
+		<parameter name="result"/>
+		<body><![CDATA[
+			getController().alert(result.contents.message);
+		]]></body>
+	</action> 
+ 
 	<action name="openPage">
 		<parameter name="listWidget"/>
 		<body><![CDATA[
