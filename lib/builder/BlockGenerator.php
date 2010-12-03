@@ -143,7 +143,7 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 	protected function _generateBlocksxml($blockName, $icon)
 	{
 		$blocksFile = f_util_FileUtils::buildWebeditPath('modules', $this->name, 'config', 'blocks.xml');
-		$blockType = "modules_".$this->name."_".$blockName;
+		$blockType = "modules_".$this->name."_". f_util_StringUtils::lcfirst($blockName);
 		if (file_exists($blocksFile))
 		{
 			$dom = f_util_DOMUtils::fromPath($blocksFile);
