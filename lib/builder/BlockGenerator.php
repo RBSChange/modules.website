@@ -53,12 +53,6 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 			echo "Generating $tagFile, creating $tagName tag.\n";
 			f_util_FileUtils::write($tagFile, $result);
 		}
-
-
-		// Add locale.
-		$baseKey = strtolower('m.' . $this->name . '.bo.tags');
-		$keysInfos = array('fr_FR' => array(strtolower($blockName) . '-block' => $blockName));
-		LocaleService::getInstance()->updatePackage($baseKey, $keysInfos, false, true, '');
 	}
 
 	/**
