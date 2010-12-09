@@ -42,4 +42,12 @@
   <key id="exception-thrown">une exception a été lancée : {message}</key>
   <key id="for-more-information-view-logs">Pour plus d'information, veuillez consulter les logs de l'application.</key>
   <key id="no-exception">Aucune exception n'a été transmise.</key>
+  <key id="incompatibiltybrowser-text">Votre navigateur est incompatible, il y a potentiellement un risque que les pages ne soient pas correctement rendues et que vous ne bénéficiez pas de toute les fonctionnalités de ce site.</key>
+  <key id="incompatibiltybrowser-followlink">Vous pouvez suivre l'un de ces liens pour télécharger un navigateur récent</key>
+  <key id="incompatibiltybrowser-iemac">(incompatible avec Mac.)</key>
+  <key id="incompatibiltybrowser-titleff">Télécharger une version récente de Firefox</key>
+  <key id="incompatibiltybrowser-titleie">Télécharger une version récente d'Internet Explorer</key>
+  <key id="incompatibiltybrowser-titlesafari">Télécharger une version récente de Safari</key>
+  <key id="incompatibiltybrowser-titlegchrome">Télécharger une version récente de Chrome</key>
+  <key id="incompatibiltybrowser-titleopera">Télécharger une version récente d'Opera</key>
 </i18n>

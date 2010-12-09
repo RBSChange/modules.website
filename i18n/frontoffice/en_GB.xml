@@ -19,4 +19,12 @@
   <key id="this-page-in-mylang">This page in English</key>
   <key id="powered-by-change">powered by RBS | Change</key>
   <key id="copyright">copyright ©</key>
+  <key id="incompatibiltybrowser-text">Your browser is incompatible with this website. There is a risk that pages and some functionnalities doesn't work well.</key>
+  <key id="incompatibiltybrowser-followlink">You can follow one of this link to download a recent browser</key>
+  <key id="incompatibiltybrowser-iemac">(incompatible with Mac.)</key>
+  <key id="incompatibiltybrowser-titleff">Download a recent version of Firefox</key>
+  <key id="incompatibiltybrowser-titleie">Download a recent version of Internet Explorer</key>
+  <key id="incompatibiltybrowser-titlesafari">Download a recent version of Safari</key>
+  <key id="incompatibiltybrowser-titlegchrome">Download a recent version of Chrome</key>
+  <key id="incompatibiltybrowser-titleopera">Download a recent version of Opera</key>
 </i18n>
