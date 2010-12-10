@@ -819,10 +819,7 @@ jQuery(document).ready(function() {
 
 		if (!BeanUtils::hasProperty(self::$bean, $propertyName))
 		{
-			if (Framework::isDebugEnabled())
-			{
-				return "<strong>bean '".BeanUtils::getClassName(self::$bean)."' has no property $propertyName</strong>";
-			}
+			return "<strong>bean '".BeanUtils::getClassName(self::$bean)."' has no property $propertyName</strong>";
 		}
 
 		$beanPropertyInfo = BeanUtils::getPropertyInfo(self::$bean, $propertyName);
