@@ -551,7 +551,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 * @param website_persistentdocument_page $page
 	 */
 	public function createPageReference($topic, $page)
-	{
+	{		
 		if ($page instanceof website_persistentdocument_pagereference)
 		{
 			$basePage = $this->getDocumentInstance($page->getReferenceofid());
@@ -568,20 +568,44 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	private function setPageReferenceInTopics($topic, $page)
 	{
-		if (Framework::isDebugEnabled())
-		{
-			Framework::debug(__METHOD__ . '(' . $topic->__toString() . ', ' . $page->__toString() . ')');
-		}
-
-		$query = $this->pp->createQuery('modules_website/pagereference')->add(Restrictions::childOf($topic->getId()))->add(Restrictions::eq('referenceofid', $page->getId()));
+		$query = $this->pp->createQuery('modules_website/pagereference')
+			->add(Restrictions::childOf($topic->getId()))
+			->add(Restrictions::eq('referenceofid', $page->getId()));
 
 		$pageReference = $query->findUnique();
+		$setAsIndex = false;
+		
 		if (is_null($pageReference))
 		{
+			if (Framework::isInfoEnabled())
+			{
+				Framework::info(__METHOD__ . ' Add new page reference');
+			}
+			
 			$pageReference = website_PagereferenceService::getInstance()->getNewDocumentInstance();
+			$parentContainer = $topic->getDocumentService()->getParentOf($topic);	
+			$index = website_PagereferenceService::getInstance()->createQuery()
+				->setProjection(Projections::property('isIndexPage', 'isIndexPage'))
+				->add(Restrictions::childOf($parentContainer->getId()))
+				->add(Restrictions::eq('referenceofid', $page->getId()))
+				->findUnique();
+				
+			if ($index)
+			{
+				$setAsIndex = ($index['isIndexPage'] == true);
+			}
+			else
+			{
+				$setAsIndex = $page->getIsIndexPage();
+			}
 		}
+		
 		website_PagereferenceService::getInstance()->updatePageReference($pageReference, $page, $topic->getId());
 		$pageReference->save($topic->getId());
+		if ($setAsIndex)
+		{
+			website_WebsiteModuleService::getInstance()->setIndexPage($pageReference, false);
+		}
 	}
 
 	/**
@@ -589,11 +613,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	private function removeFunctionalPage($page)
 	{
-		if (Framework::isDebugEnabled())
-		{
-			Framework::debug(__METHOD__ . '(' . $page->__toString() . ')');
-		}
-
 		$tags = TagService::getInstance()->getTags($page);
 		if (count($tags) == 0)
 		{
@@ -613,22 +632,12 @@ class website_PageService extends f_persistentdocument_DocumentService
 				$pageId = $page->getId();
 				$deletePage = false;
 			}
-
-			if (Framework::isDebugEnabled())
-			{
-				Framework::debug(__METHOD__ . '(' . $page->__toString() . ') -> original page :' . $pageId);
-			}
-
 			$parentTreeNode = $pageTreeNode->getParent();
 			$query = $this->pp->createQuery('modules_website/pagereference')->add(Restrictions::eq('referenceofid', $pageId));
 
 			//Tag deplacer d'une page reference on ne prend que les descendants de rubrique
 			if ($deletePage)
 			{
-				if (Framework::isDebugEnabled())
-				{
-					Framework::debug(__METHOD__ . ' -> Delete descendent only.');
-				}
 				$query->add(Restrictions::descendentOf($parentTreeNode->getId()));
 			}
 
@@ -644,7 +653,8 @@ class website_PageService extends f_persistentdocument_DocumentService
 			{
 				$pgrefService->deleteAll($page);
 			}
-		} else
+		} 
+		else
 		{
 			if (Framework::isDebugEnabled())
 			{
@@ -660,11 +670,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	public function tagAdded($document, $tag)
 	{
-		if (Framework::isDebugEnabled())
-		{
-			Framework::debug(__METHOD__ . '(' . $document->__toString() . ',' . $tag . ')');
-		}
-
 		if (TagService::getInstance()->isFunctionalTag($tag))
 		{
 			$this->createFunctionalPage($document);
@@ -678,10 +683,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	public function tagRemoved($document, $tag)
 	{
-		if (Framework::isDebugEnabled())
-		{
-			Framework::debug(__METHOD__ . '(' . $document->__toString() . ',' . $tag . ')');
-		}
 		$tagService = TagService::getInstance();
 
 		if ($tagService->isFunctionalTag($tag))
