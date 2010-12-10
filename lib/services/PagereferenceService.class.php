@@ -211,16 +211,7 @@ class website_PagereferenceService extends website_PageService
 	{
 		throw new IllegalOperationException('This document cannot be duplicated.');
 	}
-	
-	/**
-	 * @param website_persistentdocument_page $document
-	 * @param integer $parentNodeId
-	 */
-	protected function postInsert($document, $parentNodeId)
-	{
-		// THIS HAS TO BE EMPTY!
-	}
-	
+
 	/**
 	 * @param website_persistentdocument_pagereference $document
 	 */
