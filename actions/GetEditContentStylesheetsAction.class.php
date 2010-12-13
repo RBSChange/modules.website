@@ -14,6 +14,7 @@ class website_GetEditContentStylesheetsAction extends f_action_BaseAction
         $pageId = $this->getDocumentIdFromRequest($request);
         if (intval($pageId) > 0)
         {
+        	controller_ChangeController::getInstance()->setNoCache();
 			$this->renderStylesheets(DocumentHelper::getDocumentInstance($pageId));
         }
         else
