@@ -112,8 +112,15 @@ class website_XHTMLCleanerHelper
 				if ($document instanceof media_persistentdocument_file)
 				{
 					$format = null;
-					$lang = $element->hasAttribute('lang') ? $element->getAttribute('lang') : null;
-					$urlLang = ($document->getFilenameForLang($lang)) ?  $lang : $document->getLang();
+					$lang = ($element->hasAttribute('lang') ? $element->getAttribute('lang') : RequestContext::getInstance()->getLang());
+					if (!$document->isLangAvailable($lang) || $document->getFilenameForLang($lang) === null)
+					{
+						$urlLang = $document->getLang();
+					}
+					else
+					{
+						$urlLang = $lang;
+					}
 					if ($element->hasAttribute('format'))
 					{
 						$format = MediaHelper::getFormatPropertiesByName($element->getAttribute('format'));
