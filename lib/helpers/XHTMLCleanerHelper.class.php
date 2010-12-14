@@ -112,7 +112,15 @@ class website_XHTMLCleanerHelper
 				if ($document instanceof media_persistentdocument_file)
 				{
 					$format = null;
-					$lang = $element->hasAttribute('lang') ? $element->getAttribute('lang') : null;
+					$lang = ($element->hasAttribute('lang') ? $element->getAttribute('lang') : RequestContext::getInstance()->getLang());
+					if (!$document->isLangAvailable($lang) || $document->getFilenameForLang($lang) === null)
+					{
+						$urlLang = $document->getLang();
+					}
+					else
+					{
+						$urlLang = $lang;
+					}
 					if ($element->hasAttribute('format'))
 					{
 						$format = MediaHelper::getFormatPropertiesByName($element->getAttribute('format'));
@@ -122,7 +130,7 @@ class website_XHTMLCleanerHelper
 						$format = array("width" => $element->getAttribute("width"),
 										"height" => $element->getAttribute("height"));
 					}
-					$src = $document->getDocumentService()->generateAbsoluteUrl($document, $lang, $format);
+					$src = $document->getDocumentService()->generateAbsoluteUrl($document, $urlLang, $format);
 				}
 				else
 				{
