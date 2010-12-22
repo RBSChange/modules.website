@@ -395,8 +395,7 @@ class website_FormHelper
 
 		if (!isset($params["nopreamble"]) && !isset($params["multiple"]) && !array_key_exists("", $listArray))
 		{
-			$tmpArray = array("" => f_Locale::translate("&modules.website.frontoffice.selectOption;"));
-			//$listArray = array_merge($listArray, $tmpArray);
+			$tmpArray = array("" => LocaleService::getInstance()->transFO("m.website.frontoffice.selectoption"));
 			foreach ($listArray as $key => $value)
 			{
 				$tmpArray[$key] = $value;
@@ -496,7 +495,7 @@ class website_FormHelper
 		$name = $params['name'];
 		if (self::$context !== null && self::$context->hasAttribute(website_BlockAction::BLOCK_BO_MODE_ATTRIBUTE, false))
 		{
-			return '<div style="background-color:#EEE;border:1px solid #CCC;width:' . $params['width'] . ';height:' . $params['height'] . '"><p>' . f_Locale::translate('&modules.website.frontoffice.form.richtext;') . '</p></div>';
+			return '<div style="background-color:#EEE;border:1px solid #CCC;width:' . $params['width'] . ';height:' . $params['height'] . '"><p>' . LocaleService::getInstance()->transFO('m.website.frontoffice.form.richtext') . '</p></div>';
 		}
 		$editor = new FCKeditor($name);
 		$editor->ToolbarSet = 'Change';
@@ -567,7 +566,7 @@ class website_FormHelper
 		{
 			$value = self::buildPropertyValue($propertyName);
 		}
-
+		
 		self::setDefaultValue('width', '640', $params);
 		self::setDefaultValue('height', '400', $params);
 
@@ -575,7 +574,7 @@ class website_FormHelper
 		self::setDefaultValue('previewHeight', '600', $params);
 
 		$html = "";
-
+		$ls = LocaleService::getInstance();
 		// Some javascript, only for the first call of change:documentPicker
 		// TODO: non javascript working version
 		if (!self::$documentPickerCalled)
@@ -593,7 +592,7 @@ function SetUrl(fileUrl, width, height, fileAlt, fileKey, fileLabel, property)
 	var removeLink = document.createElement('a');
 	removeLink.setAttribute('href', '#');
 	removeLink.className = 'button';
-	removeLink.appendChild(document.createTextNode('".f_locale::translate("&modules.website.frontoffice.picker.remove;")."'));
+	removeLink.appendChild(document.createTextNode('".$ls->transFO("m.website.frontoffice.picker.remove")."'));
 	
 	var newElem = document.createElement('li');
 	newElem.appendChild(previewLink);
@@ -656,7 +655,7 @@ function SetUrl(fileUrl, width, height, fileAlt, fileKey, fileLabel, property)
 
 function Documentpicker_removeFromPicker(property, id)
 {
-	if (!confirm('".f_locale::translate("&modules.website.frontoffice.picker.remove-confirm;")."'))
+	if (!confirm('".$ls->transFO("m.website.frontoffice.picker.remove-confirm")."'))
 	{
 		return;
 	}
@@ -742,7 +741,7 @@ jQuery(document).ready(function() {
 		// The "choose" button
 		$currentWebsite = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
 		$url = 'http://'.$currentWebsite->getDomain(). '/fckeditorbrowser/browser.html?Type='.$chooserType.'&Connector=%2Findex.php%3Fmodule%3Dwebsite%26action%3DRichtextConnector&property='.urlencode($params['id']);
-		$html .= "<a id=\"".$params["id"]."_choose\" class=\"iframe picker-choose button\" href=\"".$url."\">".f_locale::translate("&modules.website.frontoffice.picker.choose;")."</a>";
+		$html .= "<a id=\"".$params["id"]."_choose\" class=\"iframe picker-choose button\" href=\"".$url."\">".$ls->transFO("m.website.frontoffice.picker.choose")."</a>";
 
 		// Ul for currently associated document(s)
 		$multiple = $beanPropertyInfo->getCardinality() != 1;
@@ -774,9 +773,10 @@ jQuery(document).ready(function() {
 	 */
 	private static function getDocumentPickerElem($document, $propertyId)
 	{
+		$ls = LocaleService::getInstance();
 		$onclick = "Documentpicker_removeFromPicker('".$propertyId."', ".$document->getId()."); return false;";
 		return "<li><a href=\"".LinkHelper::getDocumentUrl($document)."\" ".f_util_HtmlUtils::buildAttribute("title", $document->getLabel())." class=\"iframe document-preview link\">".$document->getLabel()."</a> "
-		."<a href=\"#\" class=\"button\" ".f_util_HtmlUtils::buildAttribute("onclick", $onclick).">".f_locale::translate("&modules.website.frontoffice.picker.remove;")."</a></li>";
+		."<a href=\"#\" class=\"button\" ".f_util_HtmlUtils::buildAttribute("onclick", $onclick).">".$ls->transFO("m.website.frontoffice.picker.remove")."</a></li>";
 	}
 
 	/**
@@ -908,7 +908,8 @@ jQuery(document).ready(function() {
 		}
 		$code .= self::renderFileinput($params);
 		$params["name"] = $name;
-
+		$ls = LocaleService::getInstance();
+		
 		$monoValued = $beanPropertyInfo->getCardinality() == 1;
 		if (!$monoValued)
 		{
@@ -919,8 +920,11 @@ jQuery(document).ready(function() {
 				// validation error messages (or form without validation)
 				$params["action"] = null;
 			}
-
-			$addInputParams = array("name" => $params["action"], "value" => f_Locale::translate("&modules.website.frontoffice.AddUpload;"), "title" => f_Locale::translate("&modules.website.frontoffice.AddUpload-help;"), "id" => $name."_add");
+			
+			$addInputParams = array("name" => $params["action"], 
+				"value" => $ls->transFO("m.website.frontoffice.addupload", array('ucf')), 
+				"title" => $ls->transFO("m.website.frontoffice.addupload-help", array('ucf')), 
+				"id" => $name."_add");
 
 			// Class attribute
 			if (isset($params["class"]))
@@ -941,8 +945,9 @@ jQuery(document).ready(function() {
 
 			$code .= ' '.self::renderSubmit($addInputParams);
 		}
+		
 		$code .= '<input type="hidden" name="'.self::buildInputName("WEBSITE_POST_POPULATE_FILTERS[".$name."]").'" value="media_FileBeanPopulateFilter"/>';
-
+		
 		if (!self::$renderUploadfieldCalled)
 		{
 			self::setDefaultValue("previewWidth", "800", $params);
@@ -989,7 +994,7 @@ jQuery(document).ready(function() {
 	  			
 	  			function Change_UploadField_RemoveElem(checkboxInput)
 	  			{
-	  				if (!confirm('".f_locale::translate("&modules.website.frontoffice.upload.remove-confirm;")."'))
+	  				if (!confirm('".$ls->transFO("m.website.frontoffice.upload.remove-confirm")."'))
 	  				{
 	  					return;
 	  				}
@@ -1017,8 +1022,8 @@ jQuery(document).ready(function() {
 			{
 				$value = $values;
 				$code .= '<ul class="uploads" id="'.($name."_uploads").'">';
-				$deleteLocale = f_Locale::translate("&modules.website.frontoffice.DeleteUpload;");
-				$deleteHelpLocale = f_Locale::translate("&modules.website.frontoffice.DeleteUpload-help;");
+				$deleteLocale = $ls->transFO("m.website.frontoffice.deleteUpload", array('ucf'));
+				$deleteHelpLocale = $ls->transFO("m.website.frontoffice.deleteUpload-help", array('ucf'));
 				$deleteName = $name."_delete";
 
 				$document = DocumentHelper::getDocumentInstance($value);
@@ -1036,8 +1041,8 @@ jQuery(document).ready(function() {
 		elseif (f_util_ArrayUtils::isNotEmpty($values))
 		{
 			$code .= '<ul class="uploads">';
-			$deleteLocale = f_Locale::translate("&modules.website.frontoffice.DeleteUpload;");
-			$deleteHelpLocale = f_Locale::translate("&modules.website.frontoffice.DeleteUpload-help;");
+			$deleteLocale = $ls->transFO("m.website.frontoffice.deleteUpload", array('ucf'));
+			$deleteHelpLocale = $ls->transFO("m.modules.website.frontoffice.deleteUpload-help", array('ucf'));
 			$index = 0;
 
 			$document = new media_persistentdocument_tmpfile();
@@ -1181,7 +1186,8 @@ jQuery(document).ready(function() {
 		$params['maxlength'] = 10;
 		$params['class'] = 'textfield date-picker';
 		// TODO: unifiy
-		$format = f_Locale::translate("&modules.form.frontoffice.datepicker.format;");
+		$ls = LocaleService::getInstance();
+		$format = $ls->transFO("m.form.frontoffice.datepicker.format");
 		$dateFormat = date_DateFormat::getDateFormatForLang(RequestContext::getInstance()->getLang());
 		if (!isset($params['startdate']))
 		{
@@ -1426,9 +1432,14 @@ jQuery(document).ready(function() {
 		$params['required'] = false;
 		$oldLabeledValue = (isset($params['labeled'])) ? $params['labeled'] : null;
 		$params['labeled'] = true;
+		$ls = LocaleService::getInstance();
+		$cKey = $ls->cleanOldKey($trueLabel);
+		if ($cKey !== false) {$trueLabel = $ls->transFO($cKey);}
+		$cKey = $ls->cleanOldKey($falseLabel);
+		if ($cKey !== false) {$falseLabel = $ls->transFO($cKey);}
 		
-		$result .= self::buildRadio("true", f_Locale::translate($trueLabel), $params, true);
-		$result .= self::buildRadio("false", f_Locale::translate($falseLabel), $params, true);
+		$result .= self::buildRadio("true", $trueLabel, $params, true);
+		$result .= self::buildRadio("false", $falseLabel, $params, true);
 		if (isset($params["unknownValue"]))
 		{
 			if (isset($params['unknownLabelKey']))
@@ -1441,7 +1452,7 @@ jQuery(document).ready(function() {
 			}
 			else
 			{
-				$unknownLabel = f_Locale::translate('&modules.uixul.bo.general.Unknown;');
+				$unknownLabel = $ls->transFO("m.uixul.bo.general.unknown", array('ucf'));
 			}
 			$result .= self::buildRadio('', $unknownLabel, $params);
 		}
@@ -1582,11 +1593,13 @@ jQuery(document).ready(function() {
 	 */
 	private function getLabelizedLocale($localeKey)
 	{
-		if (!f_Locale::isLocaleKey($localeKey))
+		$ls = LocaleService::getInstance();
+		$cleanKey = $ls->cleanOldKey($localeKey);
+		if ($cleanKey !== false)
 		{
-			return $localeKey;
+			return $ls->transFO($cleanKey, array('ucf','lab','html'));
 		}
-		return f_Locale::translate(substr($localeKey, 0, strlen($localeKey) - 1) . 'Label' . ';');
+		return $localeKey;
 	}
 
 	/**
@@ -1671,7 +1684,9 @@ jQuery(document).ready(function() {
 		}
 		elseif (isset($params['label']))
 		{
-			$result = f_Locale::translate($params['label']);
+			$ls = LocaleService::getInstance();
+			$cKey = $ls->cleanOldKey($params['label']);
+			$result = ($cKey === false) ? $params['label'] : $ls->transFO($cKey);
 			if ($unsetWhenDone)
 			{
 				unset($params['label']);
@@ -1684,9 +1699,13 @@ jQuery(document).ready(function() {
 			$key = $propertyInfo->getLabelKey();
 			if ($key !== null)
 			{
-				$key = substr($key, 0, -1)."Label;";
+				$ls = LocaleService::getInstance();
+				$ckey = $ls->cleanOldKey($key);
+				if ($ckey !== false)
+				{
+					return $ls->transFO($ckey, array('ucf', 'lab', 'html'));
+				}
 			}
-			return f_Locale::translate($key);
 		}
 		return "";
 	}
@@ -1723,12 +1742,22 @@ jQuery(document).ready(function() {
 		}
 		if (isset($params['help']))
 		{
-			$title = f_Locale::translate($params['help'], null, null, false);
-			if ($title !== null)
-			{
-				$params['title'] = $title;
-			}
+			$ls = LocaleService::getInstance();
+			$key = $params['help'];
 			unset($params['help']);
+			$ckey = $ls->cleanOldKey($key);
+			if ($ckey !== false)
+			{
+				$title = $ls->transFO($ckey);
+				if ($title !== $ckey)
+				{
+					$params['title'] = $title;
+				}
+			}
+			else
+			{
+				$params['title'] = $key;
+			}
 		}
 		$result = "";
 		if ($params['type'] == 'textarea')
@@ -1837,7 +1866,8 @@ jQuery(document).ready(function() {
 		if (isset($params['required']) && $params['required'] == true)
 		{
 			$classes[] = "required";
-			return $result . ' class="' . join(" ", $classes) . '">' . $label . ' <span class="requiredsymbol" '.f_util_HtmlUtils::buildAttribute("title", f_Locale::translate("&modules.website.frontoffice.this-field-is-mandatory;")).'>*</span></label>';
+			$title = LocaleService::getInstance()->transFO('m.website.frontoffice.this-field-is-mandatory');
+			return $result . ' class="' . join(" ", $classes) . '">' . $label . ' <span class="requiredsymbol" '.f_util_HtmlUtils::buildAttribute("title", $title).'>*</span></label>';
 		}
 		if (count($classes) > 0)
 		{
