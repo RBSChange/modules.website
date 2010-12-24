@@ -152,7 +152,7 @@ class website_UrlRewritingService extends BaseService
 		{
 			// find rule for URL
 			$rule = $this->findMatchingRule($url);
-			if ($rule instanceof website_lib_urlrewriting_DocumentModelRule) 
+			if ($rule instanceof website_lib_urlrewriting_DocumentModelRule &&  $rule->getViewMode() === 'detail')
 			{
 				$rule->checkMatchRedirection($url);
 			}

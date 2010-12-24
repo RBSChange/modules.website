@@ -732,13 +732,18 @@ class website_lib_urlrewriting_DocumentModelRule extends website_lib_urlrewritin
 		return $this->viewMode;
 	}
 	
+	public function getDocumentId()
+	{
+		return isset($this->m_lastMatches['id']) ? $this->m_lastMatches['id'] : null;
+	}	
+	
 	public function checkMatchRedirection($url)
 	{
 		if (isset ( $this->m_lastMatches ['id'] ) && $this->viewMode == 'detail')
 		{
 			try
 			{
-				$document = DocumentHelper::getDocumentInstance ( $this->m_lastMatches ['id'], $this->documentModel );
+				$document = DocumentHelper::getDocumentInstance($this->getDocumentId());
 				$lang = RequestContext::getInstance ()->getLang ();
 				$currentURL = LinkHelper::getDocumentUrl ( $document, $lang );
 				if (strpos ( $currentURL, $url ) === false)
@@ -758,6 +763,7 @@ class website_lib_urlrewriting_DocumentModelRule extends website_lib_urlrewritin
 			}
 			catch ( Exception $e )
 			{
+				Framework::warn(var_export($this, true));
 				Framework::exception ( $e );
 			}
 		}
