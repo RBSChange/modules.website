@@ -2112,7 +2112,87 @@ jQuery(document).ready(function() {
 
 		return $result;
 	}
+	
+	
+	public static function renderDateCombo($params, $ctx)
+	{
+		self::addDatePickerScript();
+		$ls = LocaleService::getInstance();
 
+		$months = array("1 (".$ls->transFO("f.date.date.abbr.january").")",
+						"2 (".$ls->transFO("f.date.date.abbr.february").")",
+						"3 (".$ls->transFO("f.date.date.abbr.march").")",
+						"4 (".$ls->transFO("f.date.date.abbr.april").")",
+						"5 (".$ls->transFO("f.date.date.abbr.may").")",
+						"6 (".$ls->transFO("f.date.date.abbr.june").")",
+						"7 (".$ls->transFO("f.date.date.abbr.july").")",
+						"8 (".$ls->transFO("f.date.date.abbr.august").")",
+						"9 (".$ls->transFO("f.date.date.abbr.september").")",
+						"10 (".$ls->transFO("f.date.date.abbr.october").")",
+						"11 (".$ls->transFO("f.date.date.abbr.november").")",
+						"12 (".$ls->transFO("f.date.date.abbr.december").")"
+						);
+
+		$thisYear = date_Calendar::now()->getYear();
+		$years = array();
+		for ($i = 1901;$i <= $thisYear; $i++ )
+		{
+			$years[$i] = $i;
+		}
+		
+		$days = array();
+		for ($i = 1; $i <= 31; $i++ )
+		{
+			$days[$i] = $i;
+		}
+		
+		self::buildNameAndId($params);
+		$params['id'] = str_replace('.', '', $params['id']);
+		$html = array(
+			self::renderInputByType("text", $params),
+			self::buildSelectInputForDateCombo('day', $days, $params['id']),
+			self::buildSelectInputForDateCombo('month',$months, $params['id']),
+			self::buildSelectInputForDateCombo('year', $years, $params['id']),
+			'<script type="text/javascript">
+     			 jQuery(document).ready(function() {
+     			 
+     			 		var dateStr = jQuery("#'.  $params['id'] . '").val();
+     			 		if (dateStr.length > 0)
+     			 		{
+	         				var date = Date.fromString(dateStr);
+	         				jQuery("#'.  $params['id'] . '_year").val(date.getFullYear());
+	         				jQuery("#'.  $params['id'] . '_month").val(date.getMonth());
+	         				jQuery("#'.  $params['id'] . '_day").val(date.getDate());
+	         			}
+	         			jQuery("#'.  $params['id'] . '_year").show();
+	         			jQuery("#'.  $params['id'] . '_month").show();
+	         			jQuery("#'.  $params['id'] . '_day").show();
+	         			jQuery("#'.  $params['id'] . '").hide();
+      			});
+			</script>'
+			);
+			
+		return implode("", $html);
+	}
+	
+	private static function buildSelectInputForDateCombo($name, $optionsArray, $baseId)
+	{
+		$selectId = $baseId . "_" .$name;
+		$result = array();
+		$result[] = '<select name="'.$name.'" id="' . $selectId.'" style="display:none"><option value=""></option>';
+			
+			foreach ($optionsArray as $key => $option)
+			{
+				$result[] = '<option value="'.$key.'">'.$option.'</option>';
+			}
+		$result[] = '</select><script type="text/javascript">//<![CDATA[ 
+			jQuery("#' . $selectId . '").change(function() {
+				var date = new Date(jQuery("#'.  $baseId . '_year").val(), jQuery("#'.  $baseId . '_month").val(), jQuery("#'.  $baseId . '_day").val());
+				jQuery("#'.  $baseId . '").val(date.asString());
+			});
+		//]]></script>';
+		return implode('', $result);
+	}
 
 	/**
 	 * @param PropertyInfo $property
@@ -2121,6 +2201,11 @@ jQuery(document).ready(function() {
 	 */
 	private static function buildInputProperty($propertyName, &$params, $ctx)
 	{
+		if (isset($params['renderer']))
+		{
+			list($className, $methodName) = explode('::', $params['renderer']);
+			return f_util_ClassUtils::callMethodArgs($className, $methodName, array($params, $ctx));
+		}
 		$property = BeanUtils::getPropertyInfo(self::$bean, $propertyName);
 		switch ($property->getType())
 		{
