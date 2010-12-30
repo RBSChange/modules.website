@@ -30,6 +30,9 @@
 		<add name="isorphan" type="Boolean" default-value="false" />
     	<add name="usehttps" type="Boolean" default-value="false" />
 	</properties>
+	<serializedproperties>
+		<add name="isIndexPageForSubTopics" type="Boolean"  default-value="false"/>
+	</serializedproperties>
 
 	<statuses default="DRAFT"/>
 
