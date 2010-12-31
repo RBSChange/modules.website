@@ -62,6 +62,6 @@
   <key id="invalid-website">Site web non valide.</key>
   <key id="addnewemptyversionbutton">créer une nouvelle version vide</key>
   <key id="editreferencebutton">éditer le document associé</key>
-  
   <key id="addtomenuactionsuccess">Document ajouté au menu "{menulabel}" : {label}</key>
+  <key id="add-to-menu">ajout au menu</key>
 </i18n>

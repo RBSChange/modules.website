@@ -2,12 +2,12 @@
 class website_ListAvailablelangsforwebsiteService extends BaseService implements list_ListItemsService
 {
 	/**
-	 * @var website_ListStylesheetsService
+	 * @var website_ListAvailablelangsforwebsiteService
 	 */
 	private static $instance;
 
 	/**
-	 * @return website_ListStylesheetsService
+	 * @return website_ListAvailablelangsforwebsiteService
 	 */
 	public static function getInstance()
 	{
