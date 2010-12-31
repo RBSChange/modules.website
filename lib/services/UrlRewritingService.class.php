@@ -699,8 +699,8 @@ class website_UrlRewritingService extends BaseService
 		{
 			// If $rule is null here, this means that no rule has been found.
 			// So we must include the module/action information to the URL parameters.
-			$parameters[AG_MODULE_ACCESSOR] = $module;
-			$parameters[AG_ACTION_ACCESSOR] = $action;
+			$parameters['module'] = $module;
+			$parameters['action'] = $action;
 			
 			return LinkHelper::getParametrizedLink($parameters)->getUrl();
 		}
