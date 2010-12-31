@@ -6,6 +6,7 @@
 		<field name="navigationVisibility" />
 		<field name="indexingstatus" />
 		<field name="usehttps" />
+		<field name="isIndexPageForSubTopics" />
 	</section>
 	<section labeli18n="modules.website.document.page.LayoutInformations">
 		<field name="template" type="dropdownlist" nocache="true"/>

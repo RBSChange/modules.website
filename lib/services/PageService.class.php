@@ -549,6 +549,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	/**
 	 * @param website_persistentdocument_topic $topic
 	 * @param website_persistentdocument_page $page
+	 * @return website_persistentdocument_page
 	 */
 	public function createPageReference($topic, $page)
 	{		
@@ -559,12 +560,13 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			$basePage = $page;
 		}
-		$this->setPageReferenceInTopics($topic, $basePage);
+		return $this->setPageReferenceInTopics($topic, $basePage);
 	}
 
 	/**
 	 * @param website_persistentdocument_topic $topic
 	 * @param website_persistentdocument_page $page
+	 * @return website_persistentdocument_page
 	 */
 	private function setPageReferenceInTopics($topic, $page)
 	{
@@ -606,6 +608,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			website_WebsiteModuleService::getInstance()->setIndexPage($pageReference, false);
 		}
+		return $pageReference;
 	}
 
 	/**

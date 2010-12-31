@@ -222,7 +222,15 @@ class website_TopicService extends f_persistentdocument_DocumentService
 			{
 				if ($tagService->isFunctionalTag($tag))
 				{
-					$pageService->createPageReference($topic, $page);
+					$pageRef = $pageService->createPageReference($topic, $page);
+					if ($topic->getIndexPage() === null)
+					{
+						$basePage = $this->getDocumentInstance($pageRef->getReferenceofid());
+						if ($basePage->getIsIndexPageForSubTopics())
+						{
+							$this->setIndexPage($topic, $pageRef);
+						}
+					}
 					break;
 				}
 			}
