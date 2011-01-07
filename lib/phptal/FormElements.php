@@ -175,6 +175,21 @@ class PHPTAL_Php_Attribute_CHANGE_fieldlabel extends FormElement
 
 }
 
+class PHPTAL_Php_Attribute_CHANGE_label extends FormElement
+{
+	public function start()
+	{
+		// We rewrite element
+		$this->tag->headFootDisabled = true;	
+		parent::start();
+	}
+	
+	public function end()
+	{
+		$this->tag->generator->doEchoRaw('website_FormHelper::endLabel()');
+	}
+}
+
 /**
  * @example <anytag change:form="method get">[...]</anytag>
  */

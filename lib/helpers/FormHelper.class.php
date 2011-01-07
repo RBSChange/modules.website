@@ -249,6 +249,34 @@ class website_FormHelper
 		self::setDefaultValue("id", self::buildFieldId($params['name']), $params);
 		return self::buildLabel($params);
 	}
+	
+	private static $labelParams;
+	
+	/**
+	 * Warning: change:label is a surrounder => renderLabel does close label element
+	 * @param array $params
+	 * @return String
+	 */
+	public static function renderLabel($params)
+	{
+		self::setDefaultValue("id", self::buildFieldId($params['name']), $params);
+		$labelCode = self::buildLabel($params, false);
+		self::$labelParams = $params; 
+		return $labelCode;
+	}
+	
+	public static function endLabel($params)
+	{
+		$result = "";
+		if (isset(self::$labelParams['required']) && self::$labelParams['required'] == true)
+		{
+			$title = LocaleService::getInstance()->transFo("&modules.website.frontoffice.this-field-is-mandatory;");
+			$result .= ' <span class="requiredsymbol" '.f_util_HtmlUtils::buildAttribute("title", $title).'>*</span>';
+		}
+		self::$labelParams = null;
+		
+		return $result."</label>";
+	}
 
 	private static function getParameterName($fieldName)
 	{
@@ -820,7 +848,12 @@ jQuery(document).ready(function() {
 
 		if ($beanPropertyInfo->hasList())
 		{
-			$listItems = $beanPropertyInfo->getList()->getItems();
+			$list = $beanPropertyInfo->getList();
+			if ($list === null)
+			{
+				return "<strong>could not find required list for property ".$propertyName."</strong>";
+			}
+			$listItems = $list->getItems();
 			if (isset($params['display']) && $params['display'] == 'checkbox')
 			{
 				$hiddenParams = $params;
@@ -1821,9 +1854,10 @@ jQuery(document).ready(function() {
 
 	/**
 	 * @param Array $params
+	 * @param Boolean $close
 	 * @return String
 	 */
-	private function buildLabel($params)
+	private function buildLabel($params, $close = true)
 	{
 		self::setDefaultValue('useFor', true, $params);
 		$label = self::getLabelFromParameters($params);
@@ -1866,14 +1900,27 @@ jQuery(document).ready(function() {
 		if (isset($params['required']) && $params['required'] == true)
 		{
 			$classes[] = "required";
-			$title = LocaleService::getInstance()->transFO('m.website.frontoffice.this-field-is-mandatory');
-			return $result . ' class="' . join(" ", $classes) . '">' . $label . ' <span class="requiredsymbol" '.f_util_HtmlUtils::buildAttribute("title", $title).'>*</span></label>';
+			$result .= ' class="' . join(" ", $classes) . '">' . $label;
+			if ($close)
+			{
+				$title = LocaleService::getInstance()->transFO('m.website.frontoffice.this-field-is-mandatory');
+				$result .= ' <span class="requiredsymbol" '.f_util_HtmlUtils::buildAttribute("title", $title).'>*</span>';
+			}
 		}
-		if (count($classes) > 0)
+		else
 		{
-			$result .= ' class="' . join(" ", $classes) . '"';
+			if (count($classes) > 0)
+			{
+				$result .= ' class="' . join(" ", $classes) . '"';
+			}
+			$result .= '>' . $label;
 		}
-		return $result . '>' . $label . '</label> ';
+		
+		if ($close)
+		{
+			$result .= '</label>';
+		}
+		return $result;
 	}
 
 	/**

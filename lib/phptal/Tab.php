@@ -14,7 +14,7 @@ class PHPTAL_Php_Attribute_CHANGE_tab extends ChangeTalAttribute
 	
 	protected function getDefaultValues()
 	{
-		return array("doTitle" => "true");
+		return array("doTitle" => "true", "titleLevel" => "3", "genTitleClass" => "true");
 	}
 
 	/**
@@ -35,11 +35,25 @@ class PHPTAL_Php_Attribute_CHANGE_tab extends ChangeTalAttribute
 		$id = $currentTabsId."_".$params["name"];
 		$label = f_Locale::translate($params["label"]);
 		PHPTAL_Php_Attribute_CHANGE_tabs::addTab($id, $label);
-		$html = "<div class=\"tab\" id=\"".$id."\">";
+		$html = "<div class=\"tab\" id=\"$id\">";
 		
 		if ($params["doTitle"])
 		{
-			$html .= "<h3 class=\"heading-three\">".$label."</h3>";	
+			$titleLevel = intval($params["titleLevel"]);
+			$html .= "<h".$titleLevel;
+			if ($params["genTitleClass"])
+			{
+				$class = PHPTAL_Php_Attribute_CHANGE_h::getClassByLevel($titleLevel);
+				if (f_util_StringUtils::isNotEmpty($class))
+				{
+					$html .= " class=\"$class\"";
+				}
+			}
+			else if ($params["titleClass"])
+			{
+				$html .= " class=\"".$params["titleClass"]."\"";
+			}
+			$html .= ">$label</h$titleLevel>";	
 		}
 		return $html;
 	}
