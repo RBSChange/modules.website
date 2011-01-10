@@ -2135,7 +2135,7 @@ jQuery(document).ready(function() {
 
 		$thisYear = date_Calendar::now()->getYear();
 		$years = array();
-		for ($i = 1901;$i <= $thisYear; $i++ )
+		for ($i = $thisYear;$i >= 1901; $i-- )
 		{
 			$years[$i] = $i;
 		}
