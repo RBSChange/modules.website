@@ -47,6 +47,11 @@ class PHPTAL_Php_Attribute_CHANGE_tabs extends ChangeTalAttribute
 	{
 		return self::$id;
 	}
+	
+	protected function getDefaultValues()
+	{
+		return array("collapsible" => "false");
+	}
 
 	/**
 	 * @see ChangeTalAttribute::end()
@@ -66,24 +71,35 @@ class PHPTAL_Php_Attribute_CHANGE_tabs extends ChangeTalAttribute
 	public static function renderTabs($params)
 	{
 		$html = "";
+		$options = array();
+		if ($params["collapsible"])
+		{
+			$options[] = "collapsible:true";
+		}
+		
+		$options[] = "select: function(e, ui) {
+		var url = ui.tab.toString();
+		var hashIndex = url.indexOf('#');
+		if (hashIndex != -1) {
+			var hash = url.substring(hashIndex);
+			window.location.hash = hash;
+		} return true;
+}";
+		
+		$optionsJson = "{".join(",", $options)."}";
+		
 		if (!self::$called)
 		{
 			$pageContext = website_BlockController::getInstance()->getContext()->getPage();
 			$theme = Framework::getConfigurationValue("modules/website/jquery-ui-theme", "south-street");
 			$pageContext->addStyle("modules.website.jquery-ui.$theme");
-			$html .= '<script type="text/javascript">
-jQuery(document).ready(function(){ jQuery(".tabs").tabs(); });
-</script>';
 			$pageContext->addScript("modules.website.lib.js.jquery-ui-tabs");
 			self::$called = true;
 		}
 		
-		$html .= "<div class=\"tabs\"";
-		if (self::$id !== null)
-		{
-		 	$html .= " id=\"".self::$id."\"";	
-		}
-		$html .= "><ul>";
+		$html .= '<script type="text/javascript">jQuery(document).ready(function(){ jQuery("#'.self::$id.'").tabs('.$optionsJson.'); });</script>';
+		$html .= "<div class=\"tabs\" id=\"".self::$id."\">";
+		$html .= "<ul>";
 		foreach (self::$tabs as $id => $label)
 		{
 			$html .= "<li><a href=\"#".$id."\">".$label."</a></li>";

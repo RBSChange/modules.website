@@ -696,14 +696,9 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	 */
 	private function getPropertyLabelFromBean($propertyName, $bean)
 	{
-		if ($bean === null)
+		if ($bean === null || !BeanUtils::hasProperty($bean, $propertyName))
 		{
-			return $propertyName;
-		}
-
-		if (!BeanUtils::hasProperty($bean, $propertyName))
-		{
-			return $propertyName;
+			return LocaleService::getInstance()->transFO("m.".$this->getModuleName().".fo.blocks.".$this->getName().".".$propertyName);
 		}
 
 		return f_Locale::translate(BeanUtils::getBeanPropertyInfo($bean, $propertyName)->getLabelKey());
