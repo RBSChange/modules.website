@@ -529,6 +529,7 @@ class website_BlockController implements f_mvc_Controller
 			if (!$this->action->$validationMethodName($this->actionRequest, ($bean instanceof f_mvc_DynBean) ? $bean->getWrappedObject() : $bean) || f_util_ArrayUtils::isNotEmpty($invalidProperties))
 			{
 				// Validation failed
+				$this->actionRequest->setAttribute("ACTION_VALIDATION_FAILED", true);
 				$this->action->onValidateInputFailed($this->actionRequest);
 				$relativeNameOrTemplate = $this->action->$inputViewMethodName($this->actionRequest);
 				if ($bean !== null)
