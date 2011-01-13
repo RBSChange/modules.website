@@ -26,6 +26,7 @@ class website_PHPTAL_CHANGE
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('field', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('textarea', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('fieldlabel', 30));
+		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeSurround('label', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('passwordinput', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('fileinput', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('selectinput', 30));

@@ -99,7 +99,7 @@ class website_ChangeBlockRenderer
 		{
 			if (f_util_StringUtils::beginsWith($parameterName, "__"))
 			{
-				$configParameters[substr($parameterName, 2)] = strval($parameterValue);
+				$configParameters[substr($parameterName, 2)] = f_util_Convert::toString($parameterValue);
 				// PHPTal does not like attributes starting with "__"
 				unset($extensionParams[$parameterName]);
 			}

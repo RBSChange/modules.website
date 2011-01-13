@@ -402,7 +402,7 @@ class website_Page implements f_mvc_Context
 
 	//Templateting Function
 
-	protected function getLang()
+	public function getLang()
 	{
 		return RequestContext::getInstance()->getLang();
 	}
