@@ -34,11 +34,11 @@
 						<toolbarseparator />
 
 						<toolbarbutton image="{IconsBase}/small/printer.png" label="Print page content" i18n:attributes="label &amp;modules.uixul.bo.layout.Print;"
-							oncommand="wToolkit.printFrame(document.getElementById('previewFrame'));" />
+							oncommand="wToolkit.printFrame(document.getElementById('website-previewFrame'));" />
 						<toolbarspacer flex="1" />
 					</toolbar>
 				</toolbox>
-				<iframe anonid="previewFrame" src="about:blank" flex="1" />
+				<iframe anonid="previewFrame" id="website-previewFrame" src="about:blank" flex="1" />
 			</vbox>
 		</hbox>
 		<hbox flex="1">
