@@ -97,37 +97,32 @@ class PHPTAL_Php_Attribute_CHANGE_h extends ChangeTalAttribute
 		$class = $params['class'];
 		if ($class === 'auto')
 		{
-			switch ($level) 
-			{
-				case 1:
-					$class = 'heading-one';
-					break;
-				case 2:
-					$class = 'heading-two';
-					break;	
-				case 3:
-					$class = 'heading-three';
-					break;
-				case 4:
-					$class = 'heading-four';
-					break;
-				case 5:
-					$class = 'heading-five';
-					break;
-				case 6:
-					$class = 'heading-six';
-					break;				
-				default:
-					$class = '';
-					break;
-			}
+			$class = self::getClassByLevel($level);
 		}
 		
 		if (!empty($class))
 		{
 			$result .= ' class="'. $class . '"'; 
-		}		
+		}
 		return $result . '>';
+	}
+	
+	private static $classByLevel = array(1 => "heading-one",
+		2 => "heading-two", 3 => "heading-three",
+		4 => "heading-four", 5 => "heading-five",
+		6 => "heading-six");
+	
+	/**
+	 * @param Integer $level
+	 * @return String
+	 */
+	public static function getClassByLevel($level)
+	{
+		if (isset(self::$classByLevel[$level]))
+		{
+			return self::$classByLevel[$level];
+		}
+		return "";
 	}
 	
 	public static function renderEndTag($params)

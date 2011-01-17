@@ -180,6 +180,7 @@
 		<model name="modules_website/pageexternal">
 			<contextactions>
 				<contextaction name="edit"/>
+				<contextaction name="delete" />
 				<contextaction name="openTags"/>
 				<contextaction name="openPage"/>
 				<contextaction name="removeFromMenu"/>
