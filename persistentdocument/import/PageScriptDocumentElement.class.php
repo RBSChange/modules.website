@@ -33,7 +33,7 @@ class website_PageScriptDocumentElement extends import_ScriptDocumentElement
 		{
 			$page->url = $properties['url'];
 		}
-		if ($page->isNew())
+		if (isset($properties['label']))
 		{
 			if (!isset($properties['navigationtitle']))
 			{
@@ -44,18 +44,13 @@ class website_PageScriptDocumentElement extends import_ScriptDocumentElement
 				$properties['metatitle'] = $properties['label'];
 			}
 		}
-		// This must be done if the document is not new to be able to update an ACTIVE/PUBLISHED/DEACTIVATED page.
-		else if (in_array($page->getPublicationstatus(), array('DRAFT', 'ACTIVE', 'PUBLICATED', 'DEACTIVATED')))
+		
+		if (in_array($page->getPublicationstatus(), array('ACTIVE', 'PUBLICATED', 'DEACTIVATED')))
 		{
 			if (!isset($properties['publicationstatus']))
 			{
 				$properties['publicationstatus'] = 'DRAFT';
 			}
-		}
-		// In case of invalid status, throw an exception.
-		else
-		{
-			throw new Exception('Invalid page status! (id = ' . $page->getId() . ', status = ' . $page->getPublicationstatus() . ')');
 		}
 		
 		// Handle xxx-<lang> attributes.
@@ -144,6 +139,7 @@ class website_PageScriptDocumentElement extends import_ScriptDocumentElement
 	/**
 	 * @param Array<String, Mixed> $properties
 	 * @param website_persistentdocument_page $page
+	 * @deprecated
 	 */
 	private function getDocumentLocalizedProperties(&$properties, $page)
 	{

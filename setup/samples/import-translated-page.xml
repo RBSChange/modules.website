@@ -3,13 +3,16 @@
 	<binding fileName="modules/website/persistentdocument/import/website_binding.xml" />
 	<binding fileName="modules/media/persistentdocument/import/media_binding.xml" />
 
-	<website byTag="default_modules_website_default-website" label-en="Default website en" template="webfactory/tplOneTwoColumns">
+	<attribute name="template" default="true">webfactory/tplOneTwoColumns</attribute>
+	
+	<website byTag="default_modules_website_default-website" template-attr="template">
 		<documentRef type="modules_website/topic" byLabel="Outils">
 			<documentRef type="modules_website/page" id="unePage" byLabel="Ajouter aux favoris" />
 			<documentRef type="modules_website/page" id="uneAutrePage" byTag="contextual_website_website_legal" />
 		</documentRef>
-		<topic byLabel="Multilingue" label-en="Multilingue en">
-			<page byLabel="page test" label-en="page test en" template="webfactory/tplOneTwoColumns">
+		
+		<topic id="top1" byLabel="Multilingue">
+			<page id="pg1" byLabel="page test" template-attr="template">
 				<changecontent for="content-block">
 					<changeblock type="richtext">
 						<![CDATA[
@@ -19,16 +22,24 @@
 						]]>
 					</changeblock>
 				</changecontent>
-				<changecontent for="content-block" lang="en">
+			</page>
+		</topic>
+		
+	</website>
+	
+	<i18n lang="en">
+		<topic byRefid="top1" label="Multilingue en">
+			<page byRefid="pg1" label="page test en">
+				<changecontent for="content-block">
 					<changeblock type="richtext">
 						<![CDATA[
 							<h2>Block in an implicit layout</h2>
 							<p>Some contents...</p>
-							<p>Link to a page : <a lang="en" cmpref="{ref-id:uneAutrePage}">Mention légales</a></p>
+							<p>Link to a page : <a lang="en" cmpref="{ref-id:uneAutrePage}">Legal notice</a></p>
 						]]>
 					</changeblock>
 				</changecontent>
 			</page>
 		</topic>
-	</website>
+	</i18n>
 </script>
