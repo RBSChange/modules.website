@@ -1556,7 +1556,10 @@ jQuery(document).ready(function() {
 		$params['label'] = $radioLabel;
 		$params['id'] .= "_".$radioValue;
 		$params['value'] = $radioValue;
-		$params['class'] = "option-label";
+		if (!isset($params['class']))
+		{
+			$params['class'] = "option-label";
+		}
 		return self::renderInputByType('radio', $params);
 	}
 	
@@ -1586,7 +1589,10 @@ jQuery(document).ready(function() {
 		$params['label'] = $radioLabel;
 		$params['id'] .= "_".$radioValue;
 		$params['value'] = $radioValue;
-		$params['class'] = "option-label";
+		if (!isset($params['class']))
+		{
+			$params['class'] = "option-label";
+		}
 		return self::renderInputByType('checkbox', $params);
 	}
 
