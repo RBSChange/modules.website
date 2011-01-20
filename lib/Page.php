@@ -289,6 +289,19 @@ class website_Page implements f_mvc_Context
 		{
 			$this->attributes['links'] = array();
 		}
+		
+		// Add the link only if it is not already added.
+		if (isset($this->attributes['links']))
+		{
+			foreach ($this->attributes['links'] as $link)
+			{
+				if ($href == $link['href'] && $relation == $link['rel'] && $type == $link['type'])
+				{
+					return;
+				}
+			}
+		}
+
 		$linkParams = array();
 		if ($href !== null)
 		{
