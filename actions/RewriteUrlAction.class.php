@@ -12,7 +12,7 @@ class website_RewriteUrlAction extends f_action_BaseAction
 	public function _execute($context, $request)
     {
     	$requestedUrl = $request->getParameter(K::URL_REWRITE_PAGE_NAME_ACCESSOR);
-    	
+
     	// TODO: enhance. Remove parameters from get for future URL (re)generation "from scratch"
     	$request->removeParameter(K::URL_REWRITE_PAGE_NAME_ACCESSOR);
     	$request->removeParameter('module');
@@ -47,9 +47,8 @@ class website_RewriteUrlAction extends f_action_BaseAction
 			}
 			elseif (preg_match($pattern, $requestedUrl, $matches))
 			{
-			    $lang = $matches[1];
-			    $requestedUrl = str_replace($matches[0], '/', $requestedUrl);
-			    $websiteInfo['langs'][0];
+				$lang = $matches[1];
+			    $requestedUrl = substr($requestedUrl, 3);
 			}
 			elseif (preg_match('/^\/('. implode('|', $websiteInfo['langs']) .')$/', $requestedUrl, $matches))
 			{
