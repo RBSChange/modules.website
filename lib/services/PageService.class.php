@@ -1325,7 +1325,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 				$skin = $ancestor->getSkin();
 				if ($skin !== null && $skin->isPublished())
 				{
-					return return $skin;
+					return $skin;
 				}
 			}
 		}
