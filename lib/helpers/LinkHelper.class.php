@@ -214,20 +214,10 @@ class LinkHelper
 			}
 			else if ($ts->isContextualTag($tag) && $ts->getTagContext($tag) == 'modules_website/website')
 			{
-				$currentPageId = website_WebsiteModuleService::getInstance()->getCurrentPageId();
-				if ($currentPageId)
+				$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+				if (!$website->isNew())
 				{
-					$currentPage = DocumentHelper::getDocumentInstance($currentPageId);
-					$website = website_WebsiteModuleService::getInstance()->getParentWebsite($currentPage);
 					$document = $ts->getDocumentByContextualTag($tag, $website);
-				}
-				else
-				{
-					$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
-					if (!$website->isNew())
-					{
-						$document = $ts->getDocumentByContextualTag($tag, $website);
-					}
 				}
 			}
 			else
