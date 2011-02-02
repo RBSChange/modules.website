@@ -1301,10 +1301,21 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	public function getSkinId($page)
 	{
-		$pageSkin = $page->getSkin();
-		if ($pageSkin !== null && $pageSkin->isPublished())
+		$skin = $this->getSkin($page);
+		return ($skin !== null) ? $skin->getId() : null;
+	}
+	
+	
+	/**
+	 * @param website_persistentdocument_page $page
+	 * @return skin_persistentdocument_skin
+	 */
+	public function getSkin($page)
+	{		
+		$skin = $page->getSkin();
+		if ($skin !== null && $skin->isPublished())
 		{
-			return $pageSkin->getId();
+			return $skin;
 		}
 		$ancestors = array_reverse($this->getAncestorsOf($page));
 		foreach ($ancestors as $ancestor)
@@ -1314,7 +1325,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 				$skin = $ancestor->getSkin();
 				if ($skin !== null && $skin->isPublished())
 				{
-					return $skin->getId();
+					return return $skin;
 				}
 			}
 		}
