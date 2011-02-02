@@ -210,6 +210,16 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 		}
 		return null;
 	}
+	
+	/**
+	 * @example 'All' for all content
+	 * @return string | null
+	 */
+	protected function getRefreshSectionName()
+	{
+		$paramName = $this->getConfiguration()->getBlockId() . '_section';
+		return $this->getRequest()->getParameter($paramName);
+	}
 
 	/**
 	 * @param String $paramName

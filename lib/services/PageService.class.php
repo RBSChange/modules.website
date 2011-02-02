@@ -1742,6 +1742,54 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$pageContext->benchTimes = $this->benchTimes;
 		$pageContext->renderHTMLBody($htmlBody, website_PageRessourceService::getInstance()->getGlobalTemplate());
 	}
+	
+	/**
+	 * @param website_persistentdocument_page $page
+	 */	
+	public function getRenderedBlock($page)
+	{
+		$wsprs = website_PageRessourceService::getInstance();
+		
+		$templateDOM = $wsprs->getPagetemplateAsDOMDocument($page);
+		$templateXpath = $this->getXPathInstance($templateDOM);
+		$htmlTemplate = $this->getChangeTemplateByContentType(self::CHANGE_TEMPLATE_TYPE_HTML, $templateXpath);
+
+		$contentDOM = new DOMDocument('1.0', 'UTF-8');
+		$contentDOM->loadXML($page->getContent());
+		$contentXpath = $this->getXPathInstance($contentDOM);
+		$this->mergeTemplateAndContent($templateXpath, $contentXpath, $htmlTemplate);
+
+		$domTemplate = new DOMDocument('1.0', 'UTF-8');
+		$domTemplate->preserveWhiteSpace = false;
+		$domTemplate->appendChild($domTemplate->importNode($htmlTemplate, true));
+		$htmlTemplate = null; 
+		$templateDOM = null;
+
+		if (!$domTemplate->documentElement->hasAttribute('id'))
+		{
+			$domTemplate->documentElement->setAttribute('id', $page->getTemplate());
+		}
+		$xsl = new DOMDocument('1.0', 'UTF-8');
+		$xsl->load(FileResolver::getInstance()->setPackageName('modules_website')
+			->setDirectory('lib')->getPath('pageRenderContentTransform.xsl'));
+		$xslt = new XSLTProcessor();
+		$xslt->importStylesheet($xsl);
+		$pageContent = $xslt->transformToDoc($domTemplate);
+		$blocks = $this->generateBlocks($pageContent);
+		
+		
+		$controller = website_BlockController::getInstance();
+		$controller->setPage($page);
+		$pageContext = $controller->getContext();
+		$this->populateHTMLBlocks($controller, $blocks);
+		$results = array();
+		foreach ($blocks as $blockId => $block)
+		{
+			$key = isset($block['id']) ? $block['id'] : 'b_' . $blockId;
+			$results[$key] = $block['html'];
+		}
+		return 	$results;
+	}
 
 	private static $htmlBodyFrom = array('/<a([^>]+)\/>/i', '/\s*<div([^>]+)\/>\s*/i');
 	private static $htmlBodyTo = array('<a$1></a>', '<div$1>&#160;</div>');
@@ -1908,9 +1956,10 @@ class website_PageService extends f_persistentdocument_DocumentService
 				{
 					$classInstance->setConfigurationParameter($name, $value);
 				}
+				$idPName = isset($block['id']) ? $block['id'] : 'b_'.$blockId;
 				
 				// This parameter can be used to identify this block inside the page.
-				$classInstance->setConfigurationParameter(website_BlockAction::BLOCK_ID_PARAMETER_NAME, $blockId);
+				$classInstance->setConfigurationParameter(website_BlockAction::BLOCK_ID_PARAMETER_NAME, $idPName);
 
 				$blocks[$blockId]['blockaction'] = $classInstance;
 				$blockPriorities[$blockId] = $classInstance->getOrder();
