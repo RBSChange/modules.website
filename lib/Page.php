@@ -524,15 +524,7 @@ class website_Page implements f_mvc_Context
 	{
 		if ($this->skin === false)
 		{
-			$skinId = website_PageService::getInstance()->getSkinId($this->getPersistentPage());
-			if ($skinId !== null)
-			{
-				$this->skin = DocumentHelper::getDocumentInstance($skinId, 'modules_skin/skin');
-			}
-			else 
-			{
-				$this->skin = null;
-			}
+			$this->skin = website_PageService::getInstance()->getSkin($this->getPersistentPage());
 		}
 		return $this->skin;
 	}
