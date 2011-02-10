@@ -683,17 +683,25 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	 */
 	protected function getTemplateByFullName($packageName, $templateName, $subDirectory = null)
 	{
-		$directory = 'templates';
-		if ($subDirectory !== null)
+		try 
 		{
-			$directory .= DIRECTORY_SEPARATOR . $subDirectory;
+			$directory = 'templates';
+			if ($subDirectory !== null)
+			{
+				$directory .= DIRECTORY_SEPARATOR . $subDirectory;
+			}
+			$templateLoader = TemplateLoader::getInstance()
+			->setMimeContentType(K::HTML)
+			->setDirectory($directory)
+			->setPackageName($packageName);
+	
+			return $templateLoader->load($templateName);
 		}
-		$templateLoader = TemplateLoader::getInstance()
-		->setMimeContentType(K::HTML)
-		->setDirectory($directory)
-		->setPackageName($packageName);
-
-		return $templateLoader->load($templateName);
+		catch (Exception $e)
+		{
+			return null;	
+		}
+		
 	}
 
 	// private methods
