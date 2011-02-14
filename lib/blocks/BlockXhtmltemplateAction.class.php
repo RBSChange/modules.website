@@ -45,6 +45,7 @@ class website_BlockXhtmltemplateAction extends website_BlockAction
 			return website_BlockView::NONE;
 		}
 		$request->setAttribute('page', $this->getPage());
+		$tpl = null;
 		if ($this->isInBackoffice())
 		{
 			$tpl = $this->getTemplate(ucfirst($templateName . website_BlockView::BACKOFFICE));

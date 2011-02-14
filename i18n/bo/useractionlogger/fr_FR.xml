@@ -150,4 +150,6 @@
   <key id="log-savetemplate-template">log-savetemplate-template</key>
   <key id="savepermissions-systemtopic">savepermissions.systemtopic {lang} {documentlabel} {path}</key>
   <key id="log-savepermissions-systemtopic">log-savepermissions-systemtopic</key>
+  <key id="savepermissions-privateshop">savepermissions.privateshop {lang} {documentlabel}</key>
+  <key id="log-savepermissions-privateshop">log savepermissions privateshop</key>
 </i18n>

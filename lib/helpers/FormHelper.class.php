@@ -265,7 +265,7 @@ class website_FormHelper
 		return $labelCode;
 	}
 	
-	public static function endLabel($params)
+	public static function endLabel()
 	{
 		$result = "";
 		if (isset(self::$labelParams['required']) && self::$labelParams['required'] == true)
