@@ -11,6 +11,10 @@ class website_ScriptChangeBlockElement extends import_ScriptBaseElement
 		$bloc = $document->createElementNS(website_PageService::CHANGE_PAGE_EDITOR_NS, 'block');
 		$bloc->setAttribute('type', $type);
 		$bloc->setAttribute('relativeFrontofficeWidth', $width);
+		if (isset($this->attributes['marginRight']))
+		{
+			$bloc->setAttribute("marginRight", $this->attributes['marginRight']);
+		}
 		$bloc->setAttribute('__class', str_replace('_', '-', $type));
 		
 		// Get default parameters.

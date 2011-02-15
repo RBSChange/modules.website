@@ -33,16 +33,16 @@
 				</changeblock>
 				<changelayout>
 					<changecolumn>
-						<changerow>
+						<changerow marginBottom="75">
 							<changeblock type="richtext">
 								<![CDATA[
-									<h2>Page d'accueil</h2>
+									<h2>Block dans une row avec une marge en bas de 75</h2>
 									<p>Un peu de contenu...</p>
 								]]>
 							</changeblock>
 							<changeblock type="richtext">
 								<![CDATA[
-									<h2>Un autre bloc à côté</h2>
+									<h2>Un autre bloc à côté dans la même row</h2>
 									<p>Avec aussi un peu de contenu...</p>
 									<p>... et même un peu plus...</p>
 									<p>... et même un peu plus...</p>
@@ -59,9 +59,9 @@
 									<p>Avec aussi un peu de contenu...</p>
 								]]>
 							</changeblock>
-							<changeblock type="richtext">
+							<changeblock type="richtext" marginRight="25">
 								<![CDATA[
-									<h2>Un autre bloc à côté</h2>
+									<h2>Un autre bloc à côté ayant une marge à droite de 25</h2>
 									<p>Avec aussi un peu de contenu...</p>
 								]]>
 							</changeblock>
@@ -135,11 +135,11 @@
 					]]>
 				</changeblock>
 				<changelayout>
-					<changecolumn width="75">
+					<changecolumn width="75" marginRight="25">
 						<changerow>
 							<changeblock type="richtext">
 								<![CDATA[
-									<h2>Bloc dans une colonne de largeur 75%</h2>
+									<h2>Bloc dans une colonne de largeur 75% et une marge à droite de 25</h2>
 									<p>Un peu de contenu...</p>
 								]]>
 							</changeblock>
@@ -147,13 +147,13 @@
 						<changerow>
 							<changeblock type="richtext">
 								<![CDATA[
-									<h2>Bloc dans une colonne de largeur 75%</h2>
+									<h2>Bloc dans une colonne de largeur 75% et une marge à droite de 25</h2>
 									<p>Un peu de contenu...</p>
 								]]>
 							</changeblock>
 							<changeblock type="richtext">
 								<![CDATA[
-									<h2>Bloc dans une colonne de largeur 75%</h2>
+									<h2>Bloc dans une colonne de largeur 75% et une marge à droite de 25</h2>
 									<p>Un peu de contenu...</p>
 								]]>
 							</changeblock>

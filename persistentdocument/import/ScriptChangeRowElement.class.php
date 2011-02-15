@@ -7,6 +7,10 @@ class website_ScriptChangeRowElement extends import_ScriptBaseElement
 	public function generateRow($document)
 	{
 		$newRow = $document->createElementNS(website_PageService::CHANGE_PAGE_EDITOR_NS, "row");
+		if (isset($this->attributes['marginBottom']))
+		{
+			$newRow->setAttribute("marginBottom", $this->attributes['marginBottom']);
+		}
 		$blockChildren = array();
 		$freeWidth = 100;
 		$blockWithoutWidthCount = 0;
