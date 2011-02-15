@@ -109,7 +109,17 @@ class website_SystemtopicService extends website_TopicService
 	 */
 	public function generateUrl($document, $lang, $parameters)
 	{
-		return LinkHelper::getDocumentUrl($document->getReference(), $lang, $parameters);
+		$reference = $document->getReference();
+		if ($reference === null)
+		{
+			return '';
+		}
+		$ds = $reference->getDocumentService();
+		if (f_util_ClassUtils::methodExists($ds, 'generateSystemtopicUrl'))
+		{
+			return $ds->generateSystemtopicUrl($reference, $document, $lang, $parameters);
+		}
+		return LinkHelper::getDocumentUrl($reference, $lang, $parameters);
 	}
 	
 	/**
