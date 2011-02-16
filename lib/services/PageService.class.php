@@ -2013,4 +2013,27 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		return array($label, $shortUrl);
 	}
+	
+	/**
+	 * @return boolean
+	 */
+	public function hasIdsForSitemap()
+	{
+		return true;
+	}
+	
+	/**
+	 * @param website_persistentdocument_website $website
+	 * @param Integer $maxUrl
+	 * @return array
+	 */
+	public function getIdsForSitemap($website, $maxUrl)
+	{
+		$query = $this->createQuery()
+			->add(Restrictions::published())
+			->add(Restrictions::descendentOf($website->getId()))
+			->add(Restrictions::ne('navigationVisibility',  WebsiteConstants::VISIBILITY_HIDDEN))
+			->setProjection(Projections::groupProperty('id', 'id'));
+		return $query->setMaxResults($maxUrl)->findColumn('id');
+	}
 }
