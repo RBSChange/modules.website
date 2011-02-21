@@ -38,6 +38,14 @@ class PHPTAL_Php_Attribute_CHANGE_currentpagelink extends ChangeTalAttribute
 			$extraParams = array();
 		}
 		
+		$anchor = null;
+		
+		if (isset($params["anchor"]))
+		{
+			$anchor = $params["anchor"];
+			unset($params["anchor"]);
+		}
+		
 		foreach ($params as $name => $value)
 		{
 			if ($name == "tagname" || $name == "class" || $name == "extraparams" || $name == "module" || $name == "title")
@@ -51,7 +59,7 @@ class PHPTAL_Php_Attribute_CHANGE_currentpagelink extends ChangeTalAttribute
 		{
 			$extraParams = array($params['module'] . 'Param' => $extraParams);
 		}
-		return LinkHelper::getCurrentUrl($extraParams);
+		return LinkHelper::getCurrentUrl($extraParams).(($anchor !== null) ? "#".$anchor : "");
 	}
 	
 	public function start()
