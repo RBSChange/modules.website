@@ -1078,7 +1078,6 @@ jQuery(document).ready(function() {
 			$deleteHelpLocale = $ls->transFO("m.modules.website.frontoffice.deleteUpload-help", array('ucf'));
 			$index = 0;
 
-			$document = new media_persistentdocument_tmpfile();
 			foreach ($values as $value)
 			{
 				$deleteName = $name."_delete[$index]";
