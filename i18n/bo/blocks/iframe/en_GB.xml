@@ -11,4 +11,7 @@
   <key id="frameWidth-help">iframe width in pixels</key>
   <key id="scrolling">show scrollbars</key>
   <key id="scrolling-help">scrollbars can be show when content page showed in iframe is bigger than iframe place</key>
+  <key id="scroll-auto">Auto</key>
+  <key id="scroll-yes">Yes</key>
+  <key id="scroll-no">No</key>
 </i18n>

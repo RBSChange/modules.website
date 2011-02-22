@@ -48,6 +48,9 @@ class website_patch_0351 extends patch_BasePatch
 			
 			$rc->endI18nWork();
 		}
+		
+		$this->log("import-data website iframe.xml");
+		$this->execChangeCommand("import-data", array("website", "iframe.xml"));
 	}
 
 	/**

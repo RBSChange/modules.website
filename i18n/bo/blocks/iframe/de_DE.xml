@@ -10,4 +10,7 @@
   <key id="frameWidth-help">Breite des iframe in Pixel</key>
   <key id="scrolling">Scroll-Balken anzeigen</key>
   <key id="scrolling-help">die Scroll-Balken können angezeigt werden, wenn der Inhalt der im iframe angezeigten Seite mehr Platz in Anspruch nimmt als der iframe zulässt</key>
+  <key id="scroll-auto">Auto</key>
+  <key id="scroll-yes">Ja</key>
+  <key id="scroll-no">Nein</key>
 </i18n>

@@ -11,4 +11,7 @@
   <key id="frameWidth-help">largeur en pixels de l'iframe</key>
   <key id="scrolling">affichage des ascenseurs</key>
   <key id="scrolling-help">les ascenseurs peuvent s'afficher lorsque le contenu de la page affichée dans l'iframe prend plus de place que la place accordée à l'iframe</key>
+  <key id="scroll-auto">Auto</key>
+  <key id="scroll-yes">Oui</key>
+  <key id="scroll-no">Non</key>
 </i18n>
