@@ -304,4 +304,21 @@ class website_PageversionService extends website_PageService
 	{
 		throw new IllegalOperationException('This document cannot be duplicated.');
 	}
+
+	/**
+	 * @param website_persistentdocument_pageversion $document
+	 * @param string $moduleName
+	 * @param string $treeType
+	 * @param array<string, string> $nodeAttributes
+	 */
+	public function addTreeAttributes($document, $moduleName, $treeType, &$nodeAttributes)
+	{
+		parent::addTreeAttributes($document, $moduleName, $treeType, $nodeAttributes);
+		$nodeAttributes['inGroup'] = 'inGroup';
+		$versionOfPage = DocumentHelper::getDocumentInstance($document->getVersionofid());
+		if ($document->getId() != $versionOfPage->getCurrentversionid())
+		{
+			$nodeAttributes['pu'] = 0;
+		}
+	}
 }

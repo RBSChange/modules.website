@@ -5,22 +5,6 @@
  */
 class website_persistentdocument_pageversion extends website_persistentdocument_pageversionbase 
 {
-    /**
-	 * @param string $moduleName
-	 * @param string $treeType
-	 * @param array<string, string> $nodeAttributes
-	 */	
-	protected function addTreeAttributes($moduleName, $treeType, &$nodeAttributes)
-	{
-	    parent::addTreeAttributes($moduleName, $treeType, $nodeAttributes);
-	    $nodeAttributes['inGroup'] = 'inGroup';
-        $versionOfPage = DocumentHelper::getDocumentInstance($this->getVersionofid());
-        if ($this->getId() != $versionOfPage->getCurrentversionid())
-        {
-            $nodeAttributes['pu'] = 0;
-        }	        
-	}
-	
 	/**
 	 * @return array
 	 */

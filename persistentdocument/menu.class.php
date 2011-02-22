@@ -25,35 +25,4 @@ class website_persistentdocument_menu extends website_persistentdocument_menubas
 			throw new Exception('Invalid document type');
 		}
 	}
-
-    /**
-	 * @param string $moduleName
-	 * @param string $treeType
-	 * @param array<string, string> $nodeAttributes
-	 */	
-	protected function addTreeAttributes($moduleName, $treeType, &$nodeAttributes)
-	{
-	    if ($treeType == 'wlist')
-	    {
-            $ts = TagService::getInstance();
-            $tagObjectArray = $ts->getTagObjects($this);
-            $label = array();
-            foreach ($tagObjectArray as $tagObject)
-            {
-                if ($ts->isContextualTag($tagObject->getValue()))
-                {
-                    $label[] = f_Locale::translateUI($tagObject->getLabel());
-                }
-            }
-            if (f_util_ArrayUtils::isEmpty($label))
-            {
-            	$label[] = f_Locale::translateUI('&modules.website.bo.general.no-tag-available;');
-            }
-            $nodeAttributes['tagLabel'] = join(', ', $label);   
-	    }
-	    else
-	    {
-	        $nodeAttributes['_skip_children'] = true;  
-	    }
-	}	
 }

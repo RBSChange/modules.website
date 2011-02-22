@@ -125,4 +125,14 @@ class website_MarkerService extends f_persistentdocument_DocumentService
 	{
 		return website_WebsiteService::getInstance()->createQuery()->add(Restrictions::ancestorOf($marker->getId()))->findUnique();
 	}
+	
+	/**
+	 * @param website_persistentdocument_marker $document
+	 * @param string $actionType
+	 * @param array $formProperties
+	 */
+	public function addFormProperties($document, $propertiesNames, &$formProperties)
+	{
+		$formProperties['markerType'] = $document->getMarkerType();
+	}
 }

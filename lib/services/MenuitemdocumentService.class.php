@@ -158,4 +158,38 @@ class website_MenuitemdocumentService extends website_MenuitemService
 			}
 		}
 	}
+	
+	/**
+	 * @param website_persistentdocument_menuitemdocument $document
+	 * @param string $moduleName
+	 * @param string $treeType
+	 * @param array<string, string> $nodeAttributes
+	 */
+	public function addTreeAttributes($document, $moduleName, $treeType, &$nodeAttributes)
+	{
+		try 
+        {
+			$breadcrumb = website_WebsiteModuleService::getInstance()->getBreadcrumb($document->getDocument());
+			$nodeAttributes['refers-to'] = $breadcrumb->renderAsText();
+        }
+        catch (Exception $e)
+        {
+        	$nodeAttributes['refers-to'] = 'ERROR: '.$e->getMessage();
+        }
+		if ($document->getPopup())
+		{
+			$nodeAttributes['popup'] = LocaleService::getInstance()->transBO('m.generic.backoffice.yes');
+			$params = $document->getPopupParametersArray();
+			if ($params['width'] && $params['height'])
+			{
+				$nodeAttributes['popup'] .= ' (' . $params['width'] . ' x ' . $params['height'] . ')';
+			}
+		}
+		else
+		{
+			$nodeAttributes['popup'] = LocaleService::getInstance()->transBO('m.generic.backoffice.no');
+		}
+		// This tree attribute is used by wBaseModule to prevent a document from being translated
+		$nodeAttributes['isTranslatable'] = "false";
+	}
 }

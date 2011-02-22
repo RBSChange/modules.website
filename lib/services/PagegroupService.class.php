@@ -204,4 +204,27 @@ class website_PagegroupService extends website_PageService
 			}
 		}
 	}
+	
+	/**
+	 * @param website_persistentdocument_pagegroup $document
+	 * @param string $moduleName
+	 * @param string $treeType
+	 * @param array<string, string> $nodeAttributes
+	 */
+	public function addTreeAttributes($document, $moduleName, $treeType, &$nodeAttributes)
+	{
+		parent::addTreeAttributes($document, $moduleName, $treeType, $nodeAttributes);
+		
+		$nodeAttributes['_follow_children'] = true;
+		$currentVersionId = intval($document->getCurrentversionid());
+		if ($currentVersionId != 0)
+		{
+			$nodeAttributes['related-id'] = $currentVersionId;
+			$nodeAttributes['related-type'] = 'modules_website_pageversion';
+		}
+		else
+		{
+			$nodeAttributes['related-id'] = - 1;
+		}
+	}
 }

@@ -51,4 +51,18 @@ class website_WebsitetopicsfolderService extends generic_FolderService
 	{
 		return $this->pp->createQuery('modules_website/websitetopicsfolder', false);
 	}
+	
+	/**
+	 * @param website_persistentdocument_websitetopicsfolder $document
+	 * @param string $moduleName
+	 * @param string $treeType
+	 * @param array<string, string> $nodeAttributes
+	 */
+	public  function addTreeAttributes($document, $moduleName, $treeType, &$nodeAttributes)
+	{
+		if ($document->getWebsite() !== null)
+		{
+			$nodeAttributes['websiteId'] = $document->getWebsite()->getId();
+		}
+	}
 }

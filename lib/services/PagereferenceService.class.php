@@ -60,8 +60,6 @@ class website_PagereferenceService extends website_PageService
 			//Update VO
 			try
 			{
-				
-	
 				$requestContext->beginI18nWork($vo);
 				if ($pageReference->hasMeta('f_tags'))
 				{
@@ -260,8 +258,7 @@ class website_PagereferenceService extends website_PageService
 	 */
 	public function getPageByPageReference($pageReference)
 	{
-	   return DocumentHelper::getDocumentInstance($pageReference->getReferenceofid());
-	    
+		return DocumentHelper::getDocumentInstance($pageReference->getReferenceofid());
 	}
 	
 	/**
@@ -270,8 +267,7 @@ class website_PagereferenceService extends website_PageService
 	 */	
 	public function getPagesReferenceByPage($page)
 	{
-		$query = $this->createQuery()
-						->add(Restrictions::eq('referenceofid', $page->getId()));				
+		$query = $this->createQuery()->add(Restrictions::eq('referenceofid', $page->getId()));				
 		return $query->find();
 	}
 	
@@ -304,4 +300,17 @@ class website_PagereferenceService extends website_PageService
 			}
 		}
 	}
+	    
+	/**
+	 * @param website_persistentdocument_pagereference $document
+	 * @param string $moduleName
+	 * @param string $treeType
+	 * @param array<string, string> $nodeAttributes
+	 */	
+	public function addTreeAttributes($document, $moduleName, $treeType, &$nodeAttributes)
+	{
+		parent::addTreeAttributes($document, $moduleName, $treeType, $nodeAttributes);
+		$label = $document->isContextLangAvailable() ? $document->getLabel() : $document->getVoLabel();
+		$nodeAttributes['label'] = $this->getPathOf(DocumentHelper::getDocumentInstance($document->getReferenceofid()));
+	}	
 }

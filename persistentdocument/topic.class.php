@@ -27,28 +27,6 @@ class website_persistentdocument_topic extends website_persistentdocument_topicb
 	}
 	
 	/**
-	 * @param string $moduleName
-	 * @param string $treeType
-	 * @param array<string, string> $nodeAttributes
-	 */	
-	protected function addTreeAttributes($moduleName, $treeType, &$nodeAttributes)
-	{
-	    $blocClass = $moduleName .'_BlockTopicAction';
-	    if (f_util_ClassUtils::classExists($blocClass))
-	    {
-	        $nodeAttributes['block'] = 'modules_' . $moduleName . '_topic';
-	    }
-	    else
-	    {
-	        $nodeAttributes['block'] = '';
-	    }
-		if ($treeType == 'wlist')
-		{
-	    	$nodeAttributes['thumbnailsrc'] = MediaHelper::getIcon('topic');
-		}
-	}
-	
-	/**
 	 * @return string
 	 */
 	public function getPathOf()

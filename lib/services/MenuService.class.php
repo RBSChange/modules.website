@@ -52,4 +52,36 @@ class website_MenuService extends f_persistentdocument_DocumentService
 			throw new Exception('A "menu" can only be created inside a "menufolder".');
 		}
 	}
+
+    /**
+     * @param website_persistentdocument_menu $document
+	 * @param string $moduleName
+	 * @param string $treeType
+	 * @param array<string, string> $nodeAttributes
+	 */	
+	public function addTreeAttributes($document, $moduleName, $treeType, &$nodeAttributes)
+	{
+	    if ($treeType == 'wlist')
+	    {
+            $ts = TagService::getInstance();
+            $tagObjectArray = $ts->getTagObjects($document);
+            $label = array();
+            foreach ($tagObjectArray as $tagObject)
+            {
+                if ($ts->isContextualTag($tagObject->getValue()))
+                {
+                    $label[] = f_Locale::translateUI($tagObject->getLabel());
+                }
+            }
+            if (f_util_ArrayUtils::isEmpty($label))
+            {
+            	$label[] = LocaleService::getInstance()->transBO('m.website.bo.general.no-tag-available');
+            }
+            $nodeAttributes['tagLabel'] = join(', ', $label);   
+	    }
+	    else
+	    {
+	        $nodeAttributes['_skip_children'] = true;  
+	    }
+	}	
 }

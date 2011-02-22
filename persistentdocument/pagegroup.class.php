@@ -5,39 +5,13 @@
  */
 class website_persistentdocument_pagegroup extends website_persistentdocument_pagegroupbase 
 {
-
 	/**
 	 * @see website_persistentdocument_pagebase::getBackofficeIndexedDocument()
-	 *
 	 * @return indexer_IndexedDocument
 	 */
 	public function getBackofficeIndexedDocument()
 	{
 		return null;
-	}
-	
-	/**
-	 * @see website_persistentdocument_page::addTreeAttributes()
-	 *
-	 * @param string $moduleName
-	 * @param string $treeType
-	 * @param unknown_type $nodeAttributes
-	 */
-	protected function addTreeAttributes($moduleName, $treeType, &$nodeAttributes)
-	{
-		parent::addTreeAttributes($moduleName, $treeType, $nodeAttributes);
-		
-		$nodeAttributes['_follow_children'] = true;
-		$currentVersionId = intval($this->getCurrentversionid());
-		if ($currentVersionId != 0)
-		{
-			$nodeAttributes['related-id'] = $currentVersionId;
-			$nodeAttributes['related-type'] = 'modules_website_pageversion';
-		}
-		else
-		{
-			$nodeAttributes['related-id'] = - 1;
-		}
 	}
 
 	/**

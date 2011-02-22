@@ -2179,4 +2179,75 @@ class website_PageService extends f_persistentdocument_DocumentService
 			->setProjection(Projections::groupProperty('id', 'id'));
 		return $query->setMaxResults($maxUrl)->findColumn('id');
 	}
+	
+	/**
+	 * @param website_persistentdocument_page $document
+	 * @param string $moduleName
+	 * @param string $treeType
+	 * @param array<string, string> $nodeAttributes
+	 */
+	public function addTreeAttributes($document, $moduleName, $treeType, &$nodeAttributes)
+	{
+		if ($treeType === 'wmultilist')
+		{
+			try
+			{
+				$nodeAttributes['plainlink'] = LinkHelper::getDocumentUrl($document);
+			}
+			catch (Exception $e)
+			{
+				Framework::warn(__METHOD__ . ' ' . $e->getMessage());
+			}
+		}
+
+		if (!$document->getIndexingstatus())
+		{
+			$nodeAttributes['notindexable'] = 'notindexable';
+		}
+		if ($document->getIsHomePage())
+		{
+			$nodeAttributes['isHomePage'] = 'isHomePage';
+		} 
+		else if ($document->getIsIndexPage())
+		{
+			$nodeAttributes['isIndexPage'] = 'isIndexPage';
+		}
+		
+		if (!($document instanceof website_persistentdocument_pagereference) && 
+			!($document instanceof website_persistentdocument_pageversion))
+		{
+			$countRef = website_PagereferenceService::getInstance()->getCountPagesReferenceByPage($document);
+			if ($countRef > 0)
+			{
+				$nodeAttributes['hasPageRef'] = true;
+			}
+		}
+	}
+	
+	/**
+	 * @param website_persistentdocument_page $document
+	 * @param string $actionType
+	 * @param array $formProperties
+	 */
+	public function addFormProperties($document, $propertiesNames, &$formProperties)
+	{
+		$metainfos = $this->getBlockMetaInfos($document);
+		$jsonMeta = array();
+		foreach ($metainfos as $zone => $metas)
+		{
+			$jsonMeta[$zone] = array();
+			foreach ($metas as $meta)
+			{
+				$dummyInfo1 = explode(".", $meta);
+				$shortMetaName = $dummyInfo1[1];
+				$dummyInfo2 = explode("_", $dummyInfo1[0]);
+				$moduleName = $dummyInfo2[0];
+				$blockName = $dummyInfo2[1];
+				
+				$ls = LocaleService::getInstance();
+				$jsonMeta[$zone][] = array("value" => "{".$meta."}", "label" => $ls->transBO("m.$moduleName.bo.blocks.$blockName.metas.$shortMetaName"));
+			}
+		}
+		$formProperties["metainfo"] = $jsonMeta; 		
+	}
 }

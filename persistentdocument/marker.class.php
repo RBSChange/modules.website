@@ -4,16 +4,7 @@
  * @package website.persistentdocument
  */
 class website_persistentdocument_marker extends website_persistentdocument_markerbase
-{
-	/**
-	 * @param string $actionType
-	 * @param array $formProperties
-	 */
-	public function addFormProperties($propertiesNames, &$formProperties)
-	{
-		$formProperties['markerType'] = $this->getMarkerType();
-	}
-	
+{	
 	/**
 	 * @return String[]
 	 */

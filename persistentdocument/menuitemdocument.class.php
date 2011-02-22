@@ -39,39 +39,6 @@ class website_persistentdocument_menuitemdocument extends website_persistentdocu
 	}
 	
 	/**
-	 * @param string $moduleName
-	 * @param string $treeType
-	 * @param array<string, string> $nodeAttributes
-	 */
-	protected function addTreeAttributes($moduleName, $treeType, &$nodeAttributes)
-	{
-		try 
-        {
-			$breadcrumb = website_WebsiteModuleService::getInstance()->getBreadcrumb($this->getDocument());
-			$nodeAttributes['refers-to'] = $breadcrumb->renderAsText();
-        }
-        catch (Exception $e)
-        {
-        	$nodeAttributes['refers-to'] = 'ERROR: '.$e->getMessage();
-        }
-		if ($this->getPopup())
-		{
-			$nodeAttributes['popup'] = f_Locale::translateUI('&modules.generic.backoffice.Yes;');
-			$params = $this->getPopupParametersArray();
-			if ($params['width'] && $params['height'])
-			{
-				$nodeAttributes['popup'] .= ' (' . $params['width'] . ' x ' . $params['height'] . ')';
-			}
-		}
-		else
-		{
-			$nodeAttributes['popup'] = f_Locale::translateUI('&modules.generic.backoffice.No;');
-		}
-		// This tree attribute is used by wBaseModule to prevent a document from being translated
-		$nodeAttributes['isTranslatable'] = "false";
-	}
-	
-	/**
 	 * @return String
 	 */
 	public function getPublicationstatus()
