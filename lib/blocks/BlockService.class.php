@@ -611,11 +611,16 @@ class block_BlockService extends BaseService
 	{
 		$xpath = new DOMXPath($blockElm->ownerDocument);
 		$nodeList = $xpath->query('parameters/parameter', $blockElm);
+		$reservedParameterNames = array("type", "flex", "width");
 		for ($i=0 ; $i<$nodeList->length ; $i++)
 		{
 			$paramElm = $nodeList->item($i);
 			$name = $paramElm->getAttribute('name');
-
+			
+			if (in_array($name, $reservedParameterNames))
+			{
+				echo "** ERROR **: '$name'' is a reserved block parameter name (block ".$blockInfo->getId().")\n";  
+			}
 
 			if ($blockInfo->hasParameterInfo($name) )
 			{
