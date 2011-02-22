@@ -4,10 +4,10 @@
   <key id="url-help">komplette URL Adresse (mit http://) der im iframe anzuzeigenden Seite</key>
   <key id="text">Alternativtext</key>
   <key id="text-help">angezeigter Alternativtext, wenn der iframe im Browser nicht angezeigt werden kann</key>
-  <key id="height">Höhe</key>
-  <key id="height-help">Höhe des iframe in Pixel</key>
-  <key id="width">Breite</key>
-  <key id="width-help">Breite des iframe in Pixel</key>
+  <key id="frameHeight">Höhe</key>
+  <key id="frameHeight-help">Höhe des iframe in Pixel</key>
+  <key id="frameWidth">Breite</key>
+  <key id="frameWidth-help">Breite des iframe in Pixel</key>
   <key id="scrolling">Scroll-Balken anzeigen</key>
   <key id="scrolling-help">die Scroll-Balken können angezeigt werden, wenn der Inhalt der im iframe angezeigten Seite mehr Platz in Anspruch nimmt als der iframe zulässt</key>
 </i18n>

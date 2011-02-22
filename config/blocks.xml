@@ -49,8 +49,8 @@
     <parameters>
       <parameter name="title" type="String" min-occurs="1"/>
       <parameter name="url" type="String" min-occurs="1" default-value="about:blank"/>
-      <parameter name="width" type="Integer" default-value="640" min-occurs="1"/>
-      <parameter name="height" type="Integer" default-value="480" min-occurs="1"/>
+      <parameter name="frameWidth" type="Integer" default-value="640" min-occurs="1"/>
+      <parameter name="frameHeight" type="Integer" default-value="480" min-occurs="1"/>
       <parameter name="scrolling" type="String" from-list="modules_iframe/scrolling" min-occurs="1" default-value="auto"/>
       <parameter name="text" type="LongString" default-value="" cols="46" rows="4"/>
     </parameters>
