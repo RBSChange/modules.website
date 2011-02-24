@@ -475,6 +475,11 @@ class block_BlockService extends BaseService
 			{
 				$blockInfoArray[$blockId]->setLabel($blockElm->getAttribute('label'));
 			}
+			else 
+			{
+				list(, $moduleName, $blockName) = explode('_', strtolower($blockType));
+				$blockInfoArray[$blockId]->setLabel("&modules.$moduleName.bo.blocks.$blockName.Title;");
+			}
 			if ($blockElm->hasAttribute('editable'))
 			{
 				$blockInfoArray[$blockId]->setEditable($blockElm->getAttribute('editable') == "true");
@@ -484,7 +489,7 @@ class block_BlockService extends BaseService
 			// Retrieve block's parameters.
 			$this->completeBlockInfoWithParameters($blockInfoArray[$blockId], $blockElm);
 				
-			// Retrieve blocs's metas
+			// Retrieve blocs's metas.
 			$this->completeBlockInfoWithMetas($blockInfoArray[$blockId], $blockElm);
 		}
 	}
