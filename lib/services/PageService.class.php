@@ -1298,10 +1298,21 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	public function getSkinId($page)
 	{
-		$pageSkin = $page->getSkin();
-		if ($pageSkin !== null && $pageSkin->isPublished())
+		$skin = $this->getSkin($page);
+		return ($skin !== null) ? $skin->getId() : null;
+	}
+	
+	
+	/**
+	 * @param website_persistentdocument_page $page
+	 * @return skin_persistentdocument_skin
+	 */
+	public function getSkin($page)
+	{		
+		$skin = $page->getSkin();
+		if ($skin !== null && $skin->isPublished())
 		{
-			return $pageSkin->getId();
+			return $skin;
 		}
 		$ancestors = array_reverse($this->getAncestorsOf($page));
 		foreach ($ancestors as $ancestor)
@@ -1311,7 +1322,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 				$skin = $ancestor->getSkin();
 				if ($skin !== null && $skin->isPublished())
 				{
-					return $skin->getId();
+					return $skin;
 				}
 			}
 		}
@@ -2092,5 +2103,28 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$shortUrl['value'] = website_ShortenUrlService::getInstance()->shortenUrl(LinkHelper::getDocumentUrl($document));
 		}
 		return array($label, $shortUrl);
+	}
+	
+	/**
+	 * @return boolean
+	 */
+	public function hasIdsForSitemap()
+	{
+		return true;
+	}
+	
+	/**
+	 * @param website_persistentdocument_website $website
+	 * @param Integer $maxUrl
+	 * @return array
+	 */
+	public function getIdsForSitemap($website, $maxUrl)
+	{
+		$query = $this->createQuery()
+			->add(Restrictions::published())
+			->add(Restrictions::descendentOf($website->getId()))
+			->add(Restrictions::ne('navigationVisibility',  WebsiteConstants::VISIBILITY_HIDDEN))
+			->setProjection(Projections::groupProperty('id', 'id'));
+		return $query->setMaxResults($maxUrl)->findColumn('id');
 	}
 }
