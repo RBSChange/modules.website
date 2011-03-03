@@ -864,14 +864,13 @@ class website_BlockController implements f_mvc_Controller
 			$subResponse = $this->getResponse()->getWriter()->getContent();
 			array_pop($this->responseStack);
 			$this->getResponse()->getWriter()->write($subResponse);
-			$this->action = f_util_ArrayUtils::firstElement($this->actionStack);
+			$this->action = f_util_ArrayUtils::lastElement($this->actionStack);
 			$this->currentBlockId = $this->action->getBlockId();
 		}
 		else
 		{
 			$this->action = null;
 		}
-
 	}
 
 	private function popRequest()
@@ -879,7 +878,7 @@ class website_BlockController implements f_mvc_Controller
 		array_pop($this->actionRequestStack);
 		if (f_util_ArrayUtils::isNotEmpty($this->actionRequestStack))
 		{
-			$this->actionRequest = f_util_ArrayUtils::firstElement($this->actionRequestStack);
+			$this->actionRequest = f_util_ArrayUtils::lastElement($this->actionRequestStack);
 		}
 		else
 		{
