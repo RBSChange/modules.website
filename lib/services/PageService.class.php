@@ -1656,7 +1656,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		else if ($dcs->isEnabled())
 		{
-			$cacheItem = $dcs->readFromCache(__METHOD__, array($page->getId()));
+			$cacheItem = $dcs->readFromCache(__METHOD__, array($page->getId(), RequestContext::getInstance()->getLang()));
 			$putInCache = true;
 		}
 
@@ -1725,7 +1725,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$this->addBenchTime('pageContextInitialize');
 			if ($putInCache)
 			{
-				$cacheItem = $dcs->getNewCacheItem(__METHOD__, array($page->getId()), array($page->getId(), RequestContext::getInstance()->getLang()));
+				$cacheItem = $dcs->getNewCacheItem(__METHOD__, array($page->getId(), RequestContext::getInstance()->getLang()), array($page->getId()));
 				$cacheItem->setValue("blocksAndHtmlBody", serialize(array("blocks" => $blocks, "htmlBody" => $htmlBody, "docType" => $docType)));
 				$dcs->writeToCache($cacheItem);
 			}
