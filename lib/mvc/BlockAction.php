@@ -841,7 +841,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 				$errorsPerProperty[$propertyName] = array();
 			}
 			$errorsPerProperty[$propertyName][] = $error;
-			$this->setAttributeWithKey($errorsPerProperty, $key, $this->getBlockId()."_".$relKey);
+			$this->setAttributeWithKey($errorsPerProperty, $key, $this->getBlockId());
 		}
 	}
 	

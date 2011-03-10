@@ -1886,7 +1886,9 @@ jQuery(document).ready(function() {
 			$result .= ' '.f_util_HtmlUtils::buildAttribute("style", $params["style"]);
 		}
 		$classes = array();
-		if (!isset($params["ignoreErrors"]) && ($propErrors = self::getErrorsForProperty(self::buildNameAndId($params))) && f_util_ArrayUtils::isNotEmpty($propErrors))
+		
+		$name = self::buildNameAndId($params);
+		if (!isset($params["ignoreErrors"]) && ($propErrors = self::getErrorsForProperty($name)) && f_util_ArrayUtils::isNotEmpty($propErrors))
 		{
 			$classes[] = "error";
 			$propErrorMsg = "";
@@ -2463,12 +2465,8 @@ jQuery(document).ready(function() {
 		if (self::$relKey !== null)
 		{
 			$ctxKey .= "_relative";
-			$blockKey = self::$currentBlockId."_".self::$relKey;
 		}
-		else
-		{
-			$blockKey = self::$currentBlockId;
-		}
+		$blockKey = self::$currentBlockId;
 		$propertyErrors = self::$context->getAttribute($ctxKey, array());
 		return isset($propertyErrors[$blockKey]) && isset($propertyErrors[$blockKey][$propertyName]);
 	}
