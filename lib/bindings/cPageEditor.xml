@@ -73,6 +73,14 @@
 				]]></body>
 			</method>
 			
+			<method name="execute_preview">
+				<parameter name="rowNode" />
+				<parameter name="rowData" />
+				<body><![CDATA[
+					wToolkit.openurl(rowData.url);
+				]]></body>
+			</method>
+			
 			<method name="execute_newversion">
 				<parameter name="rowNode" />
 				<parameter name="rowData" />			
@@ -163,6 +171,8 @@
 				<xul:label value="" />
 				<xul:label value="" />
 				<xul:toolbar class="actions">
+					<xul:toolbarbutton action="preview" image="{IconsBase}/small/preview.png" 
+						tooltiptext="&amp;modules.website.bo.actions.OpenPage;" />
 					<xul:toolbarbutton action="edit" image="{IconsBase}/small/edit.png" 
 						tooltiptext="&amp;modules.uixul.bo.actions.Edit;" />
 					<xul:toolbarbutton action="newversion" image="{IconsBase}/small/add.png" 
