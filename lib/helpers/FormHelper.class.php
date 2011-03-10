@@ -138,6 +138,10 @@ class website_FormHelper
 		$formAttributes["name"] = self::$formId;
 		$formAttributes["enctype"] = self::getValue($params, "enctype", "multipart/form-data");
 		$formAttributes["class"] = self::getValue($params, "class", "cmxform change-form");
+		if (isset($params["onsubmit"]))
+                {
+                        $formAttributes["onsubmit"] = $params["onsubmit"];
+                }
 		self::addClassParam($formAttributes, "change-form");
 
 		$html .= "<form" . f_util_HtmlUtils::buildAttributes($formAttributes).">";
