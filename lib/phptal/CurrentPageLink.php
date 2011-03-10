@@ -4,11 +4,14 @@
  * @example <a change:currentpagelink="extraParamArray">...</a>
  * @example <form change:currentpagelink="extraParamArray">...</form>
  * @example <a change:currentpagelink="extraParamName 'extraParamValue'">...</a>
+ * @example <a change:currentpagelink="" extraParamName="extraParamValue">...</a>
  */
 class PHPTAL_Php_Attribute_CHANGE_currentpagelink extends ChangeTalAttribute
 {
-	
-	private $attrName = "href";
+	/**
+	 * @var string
+	 */
+	private $attrName = 'href';
 	
 	/**
 	 * @return String
@@ -18,7 +21,6 @@ class PHPTAL_Php_Attribute_CHANGE_currentpagelink extends ChangeTalAttribute
 		return 'extraparams';
 	}
 	
-
 	/**
 	 * @return Boolean
 	 */
@@ -27,39 +29,28 @@ class PHPTAL_Php_Attribute_CHANGE_currentpagelink extends ChangeTalAttribute
 		return true;
 	}
 	
+	/**
+	 * @param array $params
+	 * @return string
+	 */
 	public static function renderCurrentpagelink($params)
 	{
-		if (isset($params['extraparams']) && is_array($params['extraparams']))
+		$extraParams = (isset($params['extraparams']) && is_array($params['extraparams'])) ? $params['anchor'] : array();
+		if (isset($params['module']))
 		{
-			$extraParams = $params['extraparams'];
-		}
-		else
-		{
-			$extraParams = array();
+			$extraParams = array($params['module'] . 'Param' => $extraParams);
 		}
 		
-		$anchor = null;
-		
-		if (isset($params["anchor"]))
-		{
-			$anchor = $params["anchor"];
-			unset($params["anchor"]);
-		}
-		
+		$ignoredParams = array('tagname', 'extraparams', 'anchor', 'module', 'class', 'title', 'rel');
 		foreach ($params as $name => $value)
 		{
-			if ($name == "tagname" || $name == "class" || $name == "extraparams" || $name == "module" || $name == "title")
+			if (in_array($name, $ignoredParams))
 			{
 				continue;
 			}
 			$extraParams[$name] = $value;
 		}
-		
-		if (isset($params['module']))
-		{
-			$extraParams = array($params['module'] . 'Param' => $extraParams);
-		}
-		return LinkHelper::getCurrentUrl($extraParams).(($anchor !== null) ? "#".$anchor : "");
+		return LinkHelper::getCurrentUrl($extraParams) . (isset($params['anchor']) ? ('#' . $params['anchor']) : '');
 	}
 	
 	public function start()
@@ -87,9 +78,10 @@ class PHPTAL_Php_Attribute_CHANGE_currentpagelink extends ChangeTalAttribute
 		}
 		$this->tag->attributes['class'] = implode(' ', $classes);
 		$parametersString = $this->initParams();
+		$preservedAttributes = array('class', 'title', 'rel');
 		foreach (array_keys($this->tag->attributes) as $name)
 		{
-			if ($name == "class" || $name == "title")
+			if (in_array($name, $preservedAttributes))
 			{
 				continue;
 			}
