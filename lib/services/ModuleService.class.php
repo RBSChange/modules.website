@@ -75,7 +75,7 @@ class website_ModuleService extends ModuleBaseService
 	}
 	
 	/**
-	 * @param f_peristentdocument_PersistentDocument $container
+	 * @param f_persistentdocument_PersistentDocument $container
 	 * @param string $module
 	 * @param array $attributes
 	 * @param string $script
