@@ -64,6 +64,10 @@ class PHPTAL_Php_Attribute_CHANGE_currentpagelink extends ChangeTalAttribute
 		{
 			$this->attrName = 'src';
 		}
+		else if ($tagName == 'input')
+		{
+			$this->attrName = 'value';
+		}
 		if (isset($this->tag->attributes['class']))
 		{
 			$classes = explode(' ', $this->tag->attributes['class']);
@@ -78,7 +82,7 @@ class PHPTAL_Php_Attribute_CHANGE_currentpagelink extends ChangeTalAttribute
 		}
 		$this->tag->attributes['class'] = implode(' ', $classes);
 		$parametersString = $this->initParams();
-		$preservedAttributes = array('class', 'title', 'rel');
+		$preservedAttributes = array('class', 'title', 'rel', 'name',  'type');
 		foreach (array_keys($this->tag->attributes) as $name)
 		{
 			if (in_array($name, $preservedAttributes))
