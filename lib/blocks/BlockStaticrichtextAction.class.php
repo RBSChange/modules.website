@@ -61,7 +61,7 @@ class website_BlockStaticrichtextAction extends website_BlockAction
 			{
 				$imgStr .= " ".$key."=\"".$value."\"";	
 			}
-			return $imgStr;
+			return $imgStr . " />";
 		}
 		return "<img " . $matches[1] . "/>";
 	}
