@@ -15,6 +15,12 @@
 		<field name="startpublicationdate" />
 		<field name="endpublicationdate" />
 	</section>
+	<section labeli18n="modules.website.document.page.Referencing" class="toggle" hidden="true">
+		<field name="robotsmeta" />
+		<field name="metatitle" class="template" rows="3" />
+		<field name="description" class="template" rows="3" />
+		<field name="keywords" class="template" rows="3" />
+	</section>
 	<xul>
 		<javascript>		
 			<constructor><![CDATA[
