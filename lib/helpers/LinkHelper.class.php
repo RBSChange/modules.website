@@ -134,6 +134,12 @@ class LinkHelper
 	 */
 	public static function getDocumentUrl($document, $lang = null, $parameters = array(), $useCache = true)
 	{
+		if (!($document instanceof f_persistentdocument_PersistentDocument))
+		{
+			Framework::fatal(f_util_ProcessUtils::getBackTrace());
+			return null;
+		}
+		
 		if ($useCache)
 		{
 			$key = md5($document->getId() . $lang . serialize($parameters));
