@@ -15,7 +15,7 @@ class website_DefaultValuesJSONAction extends generic_DefaultValuesJSONAction
 		$document = $this->getDocumentInstanceFromRequest($request);
 		if (!$document instanceof website_persistentdocument_page ) 
 		{
-			throw new Exception('Not valid type (page) for parent node: ' + get_class($document));
+			throw new Exception('Not valid type (page) for parent node: ' . get_class($document));
 		}		
 	
 		if (!$request->hasParameter('duplicate'))
@@ -23,7 +23,7 @@ class website_DefaultValuesJSONAction extends generic_DefaultValuesJSONAction
 			return parent::_execute($context, $request);
 		}
 		
-		//For correction get master document
+		// For correction get master document.
 		if ($document->getCorrectionofid())
 		{
 			$document = DocumentHelper::getDocumentInstance($document->getCorrectionofid());

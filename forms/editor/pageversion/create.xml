@@ -8,7 +8,7 @@
 	</section>
 	<section labeli18n="modules.website.document.page.LayoutInformations">
 		<field name="defaultContent" type="dropdownlist" required="true" 
-			label="Gabarit de la page" nocache="true"></field>
+			labeli18n="modules.website.document.page.Template" nocache="true" />
 		<field name="skin" />
 	</section>
 	<section labeli18n="modules.website.document.page.DateInformations">
