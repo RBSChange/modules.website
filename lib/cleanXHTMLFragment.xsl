@@ -3,7 +3,6 @@
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
 	xmlns:php="http://php.net/xsl">
 	<xsl:output indent="no" method="xml" omit-xml-declaration="yes" encoding="UTF-8" />
-	<xsl:strip-space elements="*"/>
 	<xsl:template match="/">
 		<body>
 			<xsl:apply-templates />
@@ -49,6 +48,7 @@
 	<xsl:template match="b"><strong><xsl:apply-templates /></strong></xsl:template>
 	
 	<xsl:template match="span[@class='underline']"><span class="underline"><xsl:apply-templates /></span></xsl:template>
+	<xsl:template match="span[@style='text-decoration: underline;']"><span class="underline"><xsl:apply-templates /></span></xsl:template>
 	
 	<xsl:template match="u[parent::u]"><xsl:apply-templates /></xsl:template>
 	<xsl:template match="u[normalize-space(.) ='']" priority="5"></xsl:template>
