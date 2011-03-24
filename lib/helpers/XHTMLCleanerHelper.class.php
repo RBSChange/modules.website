@@ -23,7 +23,10 @@ class website_XHTMLCleanerHelper
 		}	
 		
 		$xml = '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "'.$dtdPath.'"><body>' . $XHTMLFragment . '</body>';
-		$domTemplate->loadXML($xml);
+		if (!$domTemplate->loadXML($xml))
+		{
+			throw new Exception("Could not load $xml as XML");
+		}
 		$xslt = self::getCleanerXSLTProcessor();
 		$content = $xslt->transformToXml($domTemplate);
 		
