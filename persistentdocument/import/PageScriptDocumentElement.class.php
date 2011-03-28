@@ -15,25 +15,32 @@ class website_PageScriptDocumentElement extends import_ScriptDocumentElement
 	protected function getDocumentProperties()
 	{
 		$properties = parent::getDocumentProperties();
-		if (isset($properties['template-attr']) && $properties['template-attr'] != '')
-		{
-			$template = $this->getAncestorAttribute($properties['template-attr']);
-		}
-		else
-		{
-			$template = $this->getAncestorAttribute('template');
-		}
-		if ($template !== null)
-		{
-			$properties['template'] = $template;
-		}
+		
 		
 		$page = $this->getPersistentDocument();
+		if ($page->isNew())
+		{
+			if (!isset($properties['template']))
+			{
+				if (isset($properties['template-attr']) && $properties['template-attr'] != '')
+				{
+					$template = $this->getAncestorAttribute($properties['template-attr']);
+				}
+				else
+				{
+					$template = $this->getAncestorAttribute('template');
+				}
+				if ($template !== null)
+				{
+					$properties['template'] = $template;
+				}
+			}
+		}
 		if (isset($properties['url']))
 		{
 			$page->url = $properties['url'];
 		}
-		if ($page->isNew())
+		if (isset($properties['label']))
 		{
 			if (!isset($properties['navigationtitle']))
 			{
@@ -45,17 +52,12 @@ class website_PageScriptDocumentElement extends import_ScriptDocumentElement
 			}
 		}
 		// This must be done if the document is not new to be able to update an ACTIVE/PUBLISHED/DEACTIVATED page.
-		else if (in_array($page->getPublicationstatus(), array('DRAFT', 'ACTIVE', 'PUBLICATED', 'DEACTIVATED')))
+		if (in_array($page->getPublicationstatus(), array('DRAFT', 'ACTIVE', 'PUBLICATED', 'DEACTIVATED')))
 		{
 			if (!isset($properties['publicationstatus']))
 			{
 				$properties['publicationstatus'] = 'DRAFT';
 			}
-		}
-		// In case of invalid status, throw an exception.
-		else
-		{
-			throw new Exception('Invalid page status! (id = ' . $page->getId() . ', status = ' . $page->getPublicationstatus() . ')');
 		}
 		
 		// Handle xxx-<lang> attributes.

@@ -10,195 +10,227 @@
 	<attribute name="templateHome" default="true">webfactory/tplOne</attribute>
 	
 	<attribute name="label" default="true">Site web par défaut</attribute>
+	<attribute name="labelen" default="true">Default website</attribute>
+	
 	<attribute name="protocol" default="true">http</attribute>
 	<attribute name="localizebypath" default="true">true</attribute>
 
 	<pagetemplate byCodename-attr="templateHome" id="tplOne" />
 	<pagetemplate byCodename-attr="template" id="tplTwo" />
 	
-	<website byDocumentId-attr="" label-attr="" protocol-attr="" localizebypath-attr="" allowedpagetemplate-refids="tplOne,tplTwo">
-		<page label="Page d'accueil" label-en="Homepage" isHomePage="true" template-attr="templateHome" id="homepage">
+	<website id="website" byDocumentId-attr="" label-attr="" protocol-attr="" localizebypath-attr="" allowedpagetemplate-refids="tplOne,tplTwo">
+		<page id="homepage" label="Page d'accueil" isHomePage="true" template-attr="templateHome" >
 			<changecontent for="content-block">
 				<changeblock type="richtext">
 					<![CDATA[<h2>Bienvenue</h2><p>...</p>]]>
 				</changeblock>
 			</changecontent>
-			<changecontent for="content-block" lang="en">
-				<changeblock type="richtext">
-					<![CDATA[<h2>Welcome</h2><p>...</p>]]>
-				</changeblock>
-			</changecontent>
 		</page>
 
-		<topic label="Outils" label-en="Tools" navigationVisibility="hidden" navigationVisibility-en="hidden">
-			<page label="Imprimer" label-en="Print" indexingstatus="false"
-				byTag="contextual_website_website_print">
+		<topic id="tools" label="Outils" navigationVisibility="hidden">
+			<page id="print" label="Imprimer" indexingstatus="false" byTag="contextual_website_website_print">
 				<documenturl lang="fr" url="/imprimer" />
-				<documenturl lang="en" url="/print" />
 				<changecontent for="content-block">
 					<changeblock type="richtext">
 						<![CDATA[<p>Ici vos instructions pour imprimer une page. (Cette page n'est utilisée que lorsque javascript n'est pas activé)</p>]]>
 					</changeblock>
 				</changecontent>
-				<changecontent for="content-block" lang="en">
-					<changeblock type="richtext">
-						<![CDATA[<p>Some text explaining how to print a page. (This page is only used when javascript is disabled).</p>]]>
-					</changeblock>
-				</changecontent>
 			</page>
-			<page label="Ajouter aux favoris" label-en="Add to favorites" indexingstatus="false" navigationVisibility="hidden" navigationVisibility-en="hidden"
-				byTag="contextual_website_website_favorite">
+			<page id="addtofavorites" label="Ajouter aux favoris" indexingstatus="false" navigationVisibility="hidden" byTag="contextual_website_website_favorite">
 				<documenturl lang="fr" url="/ajouter-aux-favoris" />
-				<documenturl lang="en" url="/add-to-favorites" />
 				<changecontent for="content-block">
 					<changeblock type="richtext">
 						<![CDATA[<p>Ici vos instructions pour ajouter une page aux favoris. (Cette page n'est utilisée que lorsque javascript n'est pas activé)</p>]]>
 					</changeblock>
 				</changecontent>
-				<changecontent for="content-block" lang="en">
-					<changeblock type="richtext">
-						<![CDATA[<p>Some text explaining how to add a page to favorites. (This page is only used when javascript is disabled).</p>]]>
-					</changeblock>
-				</changecontent>
 			</page>
-			<page label="Plan du site" id="sitemap" label-en="Site map" indexingstatus="false">
+			<page id="sitemap" label="Plan du site" indexingstatus="false">
 				<changecontent for="content-block">
 					<changeblock type="richtext">
 						<![CDATA[<h2 class="heading-two">Plan du site</h2><p>Pour mieux vous orienter, voici un plan du site.<br/>Les rubriques disponibles sont les suivantes :</p>]]>
 					</changeblock>
 					<changeblock type="modules_website_sitemap" />
 				</changecontent>
-				<changecontent for="content-block" lang="en">
-					<changeblock type="richtext">
-						<![CDATA[<h2 class="heading-two">Site Map</h2><p>Here is a site map to help you navigate through it</p>]]>
-					</changeblock>
-					<changeblock type="modules_website_sitemap" />
-				</changecontent>
 			</page>
-			<page label="Mentions légales" id="legal" label-en="Legal notice"
-				byTag="contextual_website_website_legal">
+			<page id="legal" label="Mentions légales" byTag="contextual_website_website_legal">
 				<documenturl lang="fr" url="/mentions-legales" />
-				<documenturl lang="en" url="/legal-notice" />
 				<changecontent for="content-block">
 					<changeblock type="richtext">
 						<![CDATA[<p>Ici vos mentions légales.</p>]]>
 					</changeblock>
 				</changecontent>
-				<changecontent for="content-block" lang="en">
-					<changeblock type="richtext">
-						<![CDATA[<p>Some text about law and obligations.</p>]]>
-					</changeblock>
-				</changecontent>
 			</page>
-			<page label="aide" indexingstatus="false" id="help" label-en="Help"
-				byTag="contextual_website_website_help">
+			<page id="help" label="aide" byTag="contextual_website_website_help">
 				<documenturl lang="fr" url="/aide" />
-				<documenturl lang="en" url="/help" />
 				<changecontent for="content-block">
 					<changeblock type="richtext">
 						<![CDATA[<p>Ici votre texte aidant un visiteur à s'orienter dans votre site.</p>]]>
 					</changeblock>
 				</changecontent>
-				<changecontent for="content-block" lang="en">
-					<changeblock type="richtext">
-						<![CDATA[<p>Some text to help people navigate through your website.</p>]]>
-					</changeblock>
-				</changecontent>
 			</page>
-			<page label="Résultat de recherche" label-en="Search résults" indexingstatus="false" navigationVisibility="hidden" navigationVisibility-en="hidden"
-				byTag="contextual_website_website_modules_solrsearch_page-results">
+			<page id="searchresult" label="Résultat de recherche" indexingstatus="false" navigationVisibility="hidden"  byTag="contextual_website_website_modules_solrsearch_page-results">
 			    <changecontent for="content-block">
-			    	<changeblock type="modules_solrsearch_results" />
-				</changecontent>
-				<changecontent for="content-block" lang="en">
 			    	<changeblock type="modules_solrsearch_results" />
 				</changecontent>
 			</page>
 		</topic>
 
-		<topic label="Système" label-en="System" navigationVisibility="hidden" navigationVisibility-en="hidden">
-			<page label="Page non trouvée (404)" label-en="Page not found (404)" indexingstatus="false" navigationVisibility="hidden" navigationVisibility-en="hidden"
-				byTag="contextual_website_website_error404">
+		<topic id="systemtop" label="Système" navigationVisibility="hidden">
+			<page id="p404" label="Page non trouvée (404)" indexingstatus="false" navigationVisibility="hidden" byTag="contextual_website_website_error404">
 				<changecontent for="content-block">
 				   <changeblock type="richtext">
 					 <![CDATA[<h2>Page non trouvée (Erreur 404)</h2><p>La page demandée n'existe pas.<br/><a href="/">Retour à l'accueil</a>.</p>]]>
 				   </changeblock>
 				</changecontent>
-				<changecontent for="content-block" lang="en">
-				   <changeblock type="richtext">
-					 <![CDATA[<h2>Page not found (404 error code)</h2><p>The request page does not exists.<br/><a href="/">Back to home page</a>.</p>]]>
-				   </changeblock>
-				</changecontent>
 			</page>
-			<page label="Erreur générale (500)" label-en="Internal server error" indexingstatus="false" navigationVisibility="hidden" navigationVisibility-en="hidden"
-				byTag="contextual_website_website_server-error">
+			<page id="p500" label="Erreur générale (500)" indexingstatus="false" navigationVisibility="hidden" byTag="contextual_website_website_server-error">
 				<changecontent for="content-block">
 				   <changeblock type="richtext">
 					 <![CDATA[<h2>Erreur serveur</h2>]]>
 				   </changeblock>
 				   <changeblock type="modules_website_exception" />
 				</changecontent>
-				<changecontent for="content-block" lang="en">
-				   <changeblock type="richtext">
-					 <![CDATA[<h2>Internal server error</h2>]]>
-				   </changeblock>
-				   <changeblock type="modules_website_exception" />
-				</changecontent>
 			</page>
-			<page label="Accès restreint (401.1)" label-en="Restricted area (401.1)" indexingstatus="false" navigationVisibility="hidden" navigationVisibility-en="hidden"
-				byTag="contextual_website_website_error401-1">
+			<page id="p401" label="Accès restreint (401.1)" indexingstatus="false" navigationVisibility="hidden" byTag="contextual_website_website_error401-1">
 				<changecontent for="content-block">
 				   <changeblock type="richtext">
 					 <![CDATA[<h2>Cette page est protégée d'accès</h2><p>Veuillez vous identifier en utilisant le formulaire ci-dessous.</p>]]>
 				   </changeblock>
 				   <changeblock type="modules_users_authentication" />
 				</changecontent>
-				<changecontent for="content-block" lang="en">
-				   <changeblock type="richtext">
-					 <![CDATA[<h2>This is a restricted area</h2><p>Please log in using the following form.</p>]]>
-				   </changeblock>
-				   <changeblock type="modules_users_authentication" />
-				</changecontent>
 			</page>
-			<page label="Edition front-office" label-en="Frontoffice edition" indexingstatus="false" navigationVisibility="hidden" navigationVisibility-en="hidden"
-				byTag="contextual_website_website_modules_website_edit" template-attr="templateHome">
+			<page id="foedt" label="Edition front-office" indexingstatus="false" navigationVisibility="hidden" byTag="contextual_website_website_modules_website_edit" template-attr="templateHome">
 				<changecontent for="content-block">
-				   <changeblock type="modules_website_edit" />
-				</changecontent>
-				<changecontent for="content-block" lang="en">
 				   <changeblock type="modules_website_edit" />
 				</changecontent>
 			</page>
 		</topic>
 
 		<menus>
-			<menu label="Menu d'accès rapide" byTag="contextual_website_website_menu-quicklinks">
-				<menuitemfunction label="aller au contenu" label-en="go to content" url="#content" />
-				<menuitemfunction label="aller au menu principal" label-en="go to main menu" url="#mainMenu" />
+			<menu id="mnuacc" label="Menu d'accès rapide" byTag="contextual_website_website_menu-quicklinks">
+				<menuitemfunction id="mnuitm1" label="aller au contenu" url="#content" />
+				<menuitemfunction id="mnuitm2" label="aller au menu principal" url="#mainMenu" />
 				<menuitempage pageid="help" />
 			</menu>
 			
-			<menu label="Menu en haut de page"
-				 byTag="contextual_website_website_menu-header">
-				<menuitemfunction label="Imprimer" function="print" label-en="Print" />
-				<menuitemfunction label="Ajouter aux favoris" label-en="Add to favorites"
-					function="AddToFavorite" />
+			<menu id="mnuhead" label="Menu en haut de page" byTag="contextual_website_website_menu-header">
+				<menuitemfunction id="mnuitm3" label="Imprimer" function="print" />
+				<menuitemfunction id="mnuitm4" label="Ajouter aux favoris" function="AddToFavorite" />
 				<menuitempage pageid="sitemap" />
 			</menu>
 
-			<menu label="Menu principal"
-				byTag="contextual_website_website_menu-main">
+			<menu id="mnumain" label="Menu principal" byTag="contextual_website_website_menu-main">
 				<menuitempage pageid="homepage" />
 			</menu>
 
-			<menu label="Menu en bas de page"
-				byTag="contextual_website_website_menu-footer">
+			<menu id="mnufooter" label="Menu en bas de page" byTag="contextual_website_website_menu-footer">
 				<menuitempage pageid="homepage" />
 				<menuitempage pageid="legal" />
 				<menuitempage pageid="sitemap" />
 			</menu>
 			
-			<menu label="Menu copyright" byTag="contextual_website_website_menu-copyright" />
+			<menu id="mnucpr" label="Menu copyright" byTag="contextual_website_website_menu-copyright">
+				<menuitemfunction id="mnuitm5" label="Haut de page" url="#top" />
+			</menu>
 		</menus>
 	</website>
+		
+	<i18n lang="en">
+	<website byRefid="website" label-attr="labelen" >
+		<page byRefid="homepage" label="Homepage">
+			<changecontent for="content-block">
+				<changeblock type="richtext">
+					<![CDATA[<h2>Welcome</h2><p>...</p>]]>
+				</changeblock>
+			</changecontent>
+		</page>		
+
+		<topic byRefid="tools" label="Tools" navigationVisibility="hidden">
+			<page byRefid="print" label="Print">
+				<documenturl lang="en" url="/print" />
+				<changecontent for="content-block">
+					<changeblock type="richtext">
+						<![CDATA[<p>Some text explaining how to print a page. (This page is only used when javascript is disabled).</p>]]>
+					</changeblock>
+				</changecontent>
+			</page>
+			<page byRefid="addtofavorites" label="Add to favorites" navigationVisibility="hidden">
+				<documenturl lang="en" url="/add-to-favorites" />
+				<changecontent for="content-block">
+					<changeblock type="richtext">
+						<![CDATA[<p>Some text explaining how to add a page to favorites. (This page is only used when javascript is disabled).</p>]]>
+					</changeblock>
+				</changecontent>
+			</page>
+			<page byRefid="sitemap" label="Site map">
+				<changecontent for="content-block">
+					<changeblock type="richtext">
+						<![CDATA[<h2 class="heading-two">Site Map</h2><p>Here is a site map to help you navigate through it</p>]]>
+					</changeblock>
+					<changeblock type="modules_website_sitemap" />
+				</changecontent>
+			</page>
+			<page byRefid="legal" label="Legal notice">
+				<documenturl lang="en" url="/legal-notice" />
+				<changecontent for="content-block">
+					<changeblock type="richtext">
+						<![CDATA[<p>Some text about law and obligations.</p>]]>
+					</changeblock>
+				</changecontent>
+			</page>
+			<page byRefid="help" label="Help">
+				<documenturl lang="en" url="/help" />
+				<changecontent for="content-block">
+					<changeblock type="richtext">
+						<![CDATA[<p>Some text to help people navigate through your website.</p>]]>
+					</changeblock>
+				</changecontent>
+			</page>
+			<page byRefid="searchresult" label="Search résults" navigationVisibility="hidden">
+				<changecontent for="content-block">
+			    	<changeblock type="modules_solrsearch_results" />
+				</changecontent>
+			</page>
+		</topic>
+
+		<topic byRefid="systemtop" label="System" navigationVisibility="hidden">
+			<page byRefid="p404" label="Page not found (404)" navigationVisibility="hidden">
+				<changecontent for="content-block">
+				   <changeblock type="richtext">
+					 <![CDATA[<h2>Page not found (404 error code)</h2><p>The request page does not exists.<br/><a href="/">Back to home page</a>.</p>]]>
+				   </changeblock>
+				</changecontent>
+			</page>
+			<page byRefid="p500" label="Internal server error" navigationVisibility="hidden">
+				<changecontent for="content-block">
+				   <changeblock type="richtext">
+					 <![CDATA[<h2>Internal server error</h2>]]>
+				   </changeblock>
+				   <changeblock type="modules_website_exception" />
+				</changecontent>
+			</page>
+			<page byRefid="p401" label="Restricted area (401.1)" navigationVisibility="hidden">
+				<changecontent for="content-block">
+				   <changeblock type="richtext">
+					 <![CDATA[<h2>This is a restricted area</h2><p>Please log in using the following form.</p>]]>
+				   </changeblock>
+				   <changeblock type="modules_users_authentication" />
+				</changecontent>
+			</page>
+			<page byRefid="foedt" label="Frontoffice edition" navigationVisibility="hidden">
+				<changecontent for="content-block">
+				   <changeblock type="modules_website_edit" />
+				</changecontent>
+			</page>
+		</topic>
+
+		<menus>
+			<menuitemfunction byRefid="mnuitm1" label="go to content" />
+			<menuitemfunction byRefid="mnuitm2" label="go to main menu" />
+			
+			<menuitemfunction byRefid="mnuitm3" label="Print" />
+			<menuitemfunction byRefid="mnuitm4" label="Add to favorites" />
+		</menus>
+	</website>
+	</i18n>	
 </script>
