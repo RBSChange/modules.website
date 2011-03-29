@@ -298,7 +298,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 *
+	 * @param f_mvc_Request $request
 	 * @return void
 	 * @see f_mvc_Action::onValidateInputFailed()
 	 */
