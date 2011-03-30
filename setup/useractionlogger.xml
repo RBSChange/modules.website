@@ -78,4 +78,6 @@
   <actiondef modulename="website" actionname="savetemplate.template" label="modules.website.bo.useractionlogger.savetemplate-template"/>
   <actiondef modulename="website" actionname="savepermissions.systemtopic" label="modules.website.bo.useractionlogger.savepermissions-systemtopic"/>
   <actiondef modulename="website" actionname="savepermissions.privateshop" label="m.website.bo.useractionlogger.savepermissions-privateshop"/>
+  <actiondef modulename="website" actionname="update.markergas" label="m.website.bo.useractionlogger.update-markergas"/>
+  <actiondef modulename="website" actionname="update.markergas" label="m.website.bo.useractionlogger.update-markergas"/>
 </script>

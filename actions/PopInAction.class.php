@@ -43,8 +43,9 @@ class website_PopInAction extends f_action_BaseAction
 				throw new PageException($pageId, PageException::PAGE_NOT_AVAILABLE);
 			}
 			website_WebsiteModuleService::getInstance()->setCurrentPageId($page->getId());
-			
-			website_PageRessourceService::getInstance()->setGlobalTemplateName('PopIn-ContentBasis');
+			$wprs = website_PageRessourceService::getInstance();
+			$wprs->setGlobalTemplateName('PopIn-ContentBasis');
+			$wprs->setUseMarkers(false);
 			ob_start();
 			website_PageService::getInstance()->render($page);
 			$result = ob_get_clean();

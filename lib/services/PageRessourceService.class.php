@@ -397,7 +397,27 @@ class website_PageRessourceService extends BaseService
 		}
 		return unserialize(file_get_contents($frontOfficeScriptsCache));
 	}
+	
+	private $useMarkers = true;
+	
+	/**
+	 *
+	 * @return Boolean 
+	 */
+	public function getUseMarkers()
+	{
+		return $this->useMarkers;
+	}
 
+	/**
+	 *
+	 * @param Boolean $useMarkers 
+	 */
+	public function setUseMarkers($useMarkers)
+	{
+		$this->useMarkers = $useMarkers;
+	}
+	
 	/**
 	 * @param String $name
 	 * @param String $engine

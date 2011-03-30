@@ -152,4 +152,6 @@
   <key id="log-savepermissions-systemtopic">log-savepermissions-systemtopic</key>
   <key id="savepermissions-privateshop">savepermissions.privateshop {lang} {documentlabel}</key>
   <key id="log-savepermissions-privateshop">log savepermissions privateshop</key>
+  <key id="update-markergas">update.markergas {documentlabel}</key>
+  <key id="log-update-markergas">log update markergas</key>
 </i18n>

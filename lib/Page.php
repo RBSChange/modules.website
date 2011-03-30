@@ -405,7 +405,7 @@ class website_Page implements f_mvc_Context
 	 */
 	public function renderHTMLBody($htmlBody, $templatePath)
 	{
-		if (isset($this->attributes['plainmarker']))
+		if (isset($this->attributes['plainmarker']) && website_PageRessourceService::getInstance()->getUseMarkers())
 		{
 			$htmlBody = str_replace('</body>', $this->attributes['plainmarker'] . K::CRLF . '</body>', $htmlBody);
 		}
