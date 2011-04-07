@@ -571,6 +571,10 @@ class website_UrlRewritingService extends BaseService
 		{
 			return $documentService->generateUrl($document, $lang, $parameters);
 		}
+		else if (Framework::inDevelopmentMode())
+		{
+			Framework::info(__METHOD__ . ' No url rewriting Found for document : ' . $document->__toString());
+		}
 		
 		$module = $document->getPersistentModel()->getModuleName();
 		if (! is_array($parameters))

@@ -153,10 +153,6 @@ class LinkHelper
 		$url = $urs->getDocumentUrl($document, $lang, $parameters);
 		if ($url === null)
 		{
-			if (Framework::isInfoEnabled())
-			{
-				Framework::info(__METHOD__ . ' No url rewriting Found for document : ' . $document->__toString());
-			}
 			$url = $urs->getNonRewrittenDocumentUrl($document, $lang, $parameters);
 		}
 		
