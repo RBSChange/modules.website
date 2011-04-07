@@ -371,6 +371,10 @@ class website_UrlRewritingService extends BaseService
 			else 
 			{
 				$website = DocumentHelper::getDocumentInstance($websiteId, 'modules_website/website');
+				if (RequestContext::getInstance()->inHTTPS())
+	    		{
+	       			$website->setProtocol('https');
+	    		}
 			}
 			
 			if (DocumentHelper::equals($website->getIndexPage(), $document))
