@@ -5,12 +5,18 @@
 	xmlns:xbl="http://www.mozilla.org/xbl">
 		
 	<binding id="cValidPageDialog" extends="modules.task.cTaskDialog#cTaskDialog">
+	
 		<implementation>		
 			<field name="title">"&amp;modules.website.bo.workflow.ValidPage.User-task-title;"</field>
 			<field name="description">"&amp;modules.website.bo.workflow.ValidPage.User-task-help;"</field>
 			<field name="loadDataModule">"website"</field>
 			<field name="loadDataAction">"LoadValidPageData"</field>
 			<field name="documentSectionClass">"cPageData"</field>
+				
+			<constructor><![CDATA[
+					wCore.debug("cValidPageDialog.constructor");
+					this.supportRefuseAndEdit = true;
+			]]></constructor>
 		</implementation>		
 	</binding>
 	
