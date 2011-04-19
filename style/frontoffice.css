@@ -88,22 +88,6 @@ ul.footer-menu li{
 	display: inline;
 }
 
-.modules-website-logo{
-	position: relative;
-}
-
-.modules-website-logo a.logo{
-	position: absolute;
-	top: 40px/*@var logotopposition*/;
-	left: 120px/*@var logoleftposition*/;
-	display: block;
-	width: 350px/*@var logowidth*/;
-	height: 150px/*@var logoheight*/;
-	background-image: url(/media/frontoffice/logo_express.png) /*@var logoimage*/;
-	background-position: 0px 0px/*@var logoposition*/;
-	background-repeat: no-repeat/*@var logorepeat*/;
-}
-
 .modules-website-switchlanguage ul{
 	padding: 16px 10px 0;
 }
