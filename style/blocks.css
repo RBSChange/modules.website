@@ -4,7 +4,7 @@ div.pagination ul {
 div.pagination ul li{
 	display: inline;
 }
-
+.modules-website-switchlanguage ul,
 .modules-website ul.contextual-menu-horizontal,
 .modules-website ul.contextual-menu-vertical,
 .modules-website ul.tagged-menu-horizontal,
@@ -15,11 +15,16 @@ div.pagination ul li{
 	list-style-type: none;
 }
 
+.modules-website-switchlanguage li,
 .modules-website ul.contextual-menu-horizontal li,
 .modules-website ul.tagged-menu-horizontal li,
 .modules-website ul.header-menu li,
 .modules-website ul.footer-menu li,
 .modules-website ul.thread li{
 	display: inline;
+}
+
+.modules-website-sitemap ul {
+	padding-left: 20px;
 }
 
