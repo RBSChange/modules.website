@@ -80,4 +80,11 @@
   <actiondef modulename="website" actionname="savepermissions.privateshop" label="m.website.bo.useractionlogger.savepermissions-privateshop"/>
   <actiondef modulename="website" actionname="update.markergas" label="m.website.bo.useractionlogger.update-markergas"/>
   <actiondef modulename="website" actionname="update.markergas" label="m.website.bo.useractionlogger.update-markergas"/>
+  <actiondef modulename="website" actionname="insert.markergas" label="m.website.bo.useractionlogger.insert-markergas"/>
+  <actiondef modulename="website" actionname="insert.markergmaps" label="m.website.bo.useractionlogger.insert-markergmaps"/>
+  <actiondef modulename="website" actionname="update.markergmaps" label="m.website.bo.useractionlogger.update-markergmaps"/>
+  <actiondef modulename="website" actionname="delete.markergas" label="m.website.bo.useractionlogger.delete-markergas"/>
+  <actiondef modulename="website" actionname="deactivated.markergmaps" label="m.website.bo.useractionlogger.deactivated-markergmaps"/>
+  <actiondef modulename="website" actionname="reactivate.markergmaps" label="m.website.bo.useractionlogger.reactivate-markergmaps"/>
+  <actiondef modulename="website" actionname="deactivated.markergas" label="m.website.bo.useractionlogger.deactivated-markergas"/>
 </script>

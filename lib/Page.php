@@ -96,10 +96,12 @@ class website_Page implements f_mvc_Context
 		{
 			throw new IllegalArgumentException("$page is not a website_persistentdocument_page but a " . get_class($page));
 		}
+		$website = null;
 		
 		if (!$page->isNew())
 		{
 			website_WebsiteModuleService::getInstance()->setCurrentPageId($page->getId());
+			$website =  website_WebsiteModuleService::getInstance()->getCurrentWebsite();
 		}
 			
 		$prs = website_PageRessourceService::getInstance();
@@ -109,10 +111,17 @@ class website_Page implements f_mvc_Context
 		$this->attributes['description'] = $page->getDescription();
 		$this->attributes['keywords'] = $page->getKeywords();
 		$this->addMeta('robots', $page->getRobotsmeta());
-		if (!$page->isNew())
+		if ($website !== null)
 		{
-			$this->setPlainMarker(website_MarkerService::getInstance()->getHtmlMarker(website_WebsiteModuleService::getInstance()->getCurrentWebsite()));
+			$markers = website_MarkerService::getInstance()->getByWebsiteAndLang($website, RequestContext::getInstance()->getLang());
+			foreach ($markers as $marker) 
+			{
+				$mms = $marker->getDocumentService();
+				$this->appendToPlainMarker($mms->getHtmlBody($marker));						
+				$this->appendToPlainHeadMarker($mms->getHtmlHead($marker));
+			}
 		}
+		
 		$this->page = $page;
 	}
 
@@ -336,78 +345,76 @@ class website_Page implements f_mvc_Context
 		return $this;
 	}
 
-
+	/**
+	 * @param string $marker
+	 * @return website_Page
+	 */
 	public function appendToPlainMarker($marker)
 	{
 		if (!isset($this->attributes['plainmarker']))
 		{
 			$this->setPlainMarker($marker);
-			return;
 		}
-		$this->attributes['plainmarker'] = $this->attributes['plainmarker'] . "\n" . $marker;
-	}
-
-	/**
-	 * Add a marker to the current page MARKERS.
-	 *
-	 * @param string $name Marker name
-	 * @param array $parameters Marker parameters
-	 * @return website_Page
-	 */
-	public function addMarker($name, $parameters = array())
-	{
-		if (!isset($this->attributes['markers']))
+		else
 		{
-			$this->attributes['markers'] = array();
+			$this->attributes['plainmarker'] .= "\n" . $marker;
 		}
-
-		$this->attributes['markers'][$name] = $parameters;
 		return $this;
 	}
-
+	
 	/**
-	 * Set a specific marker parameter.
-	 *
-	 * @param string $markerName Marker name
-	 * @param string $paramName Marker's parameter name
-	 * @param mixed $paramValue Marker's parameter value
-	 * @return website_Page
-	 */
-	public function setMarkerParameter($markerName, $paramName, $paramValue)
-	{
-		if (!isset($this->attributes['markers']))
-		{
-			$this->attributes['markers'] = array();
-		}
-
-		if (!isset($this->attributes['markers'][$markerName]))
-		{
-			$this->attributes['markers'][$markerName] = array();
-		}
-		$this->attributes['markers'][$markerName][$paramName] = $paramValue;
-		return $this;
-	}
-
-	/**
-	 * Retrieve all markers as a JavaScript Object.
-	 *
 	 * @return string
 	 */
-	public function getMarkersForJavascript()
+	public function getPlainMarker()
 	{
-		if (!isset($this->attributes['markers'])) {return '{}';};
-		return JsonService::getInstance()->encode($this->attributes['markers']);
+		return isset($this->attributes['plainmarker']) ? $this->attributes['plainmarker'] : '';
 	}
 
+	/**
+	 * @param string $marker
+	 * @return website_Page
+	 */
+	public function setPlainHeadMarker($marker)
+	{
+		$this->attributes['plainheadmarker'] = $marker;
+		return $this;
+	}
+
+	/**
+	 * @param string $marker
+	 * @return website_Page
+	 */
+	public function appendToPlainHeadMarker($marker)
+	{
+		if (!isset($this->attributes['plainheadmarker']))
+		{
+			$this->setPlainHeadMarker($marker);
+		}
+		else
+		{
+			$this->attributes['plainheadmarker'] .= "\n" . $marker;
+		}
+		return $this;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getPlainHeadMarker()
+	{
+		return isset($this->attributes['plainheadmarker']) ? $this->attributes['plainheadmarker'] : '';
+	}	
+	
 	/**
 	 * @param string $htmlBody
 	 * @param string $templatePath
 	 */
 	public function renderHTMLBody($htmlBody, $templatePath)
 	{
-		if (isset($this->attributes['plainmarker']) && website_PageRessourceService::getInstance()->getUseMarkers())
+		$bodyMarker = $this->getPlainMarker();
+		if ($bodyMarker !== '' && website_PageRessourceService::getInstance()->getUseMarkers())
 		{
-			$htmlBody = str_replace('</body>', $this->attributes['plainmarker'] . K::CRLF . '</body>', $htmlBody);
+			$htmlBody = str_replace('</body>', $bodyMarker . K::CRLF . '</body>', $htmlBody);
 		}
 		$this->htmlBody = $htmlBody;
 		include($templatePath);

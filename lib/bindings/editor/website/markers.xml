@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<bindings xmlns="http://www.mozilla.org/xbl" xmlns:xbl="http://www.mozilla.org/xbl" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	
+	<binding id="website_markers" extends="layout.cDocumentEditor#cDocumentEditorPanelProperties">
+		<content>
+			<xul:vbox flex="1">
+				<xul:cmessageinfo anonid="message" />
+				<xul:hbox anonid="action-bar">
+					<xul:button anonid="save_properties" oncommand="saveProperties()" label="&amp;modules.uixul.bo.doceditor.button.Save;"
+						image="{IconsBase}/small/save.png" />
+					<xul:button anonid="reset_properties" oncommand="resetProperties()" label="&amp;modules.uixul.bo.doceditor.button.Canceledit;"
+						image="{IconsBase}/small/undo.png" />
+					<xul:button anonid="next_error_property" oncommand="nextErrorProperty()" label="&amp;modules.uixul.bo.doceditor.button.Nexterror;"
+						image="{IconsBase}/small/next-invalid-field.png" />
+				</xul:hbox>
+				<xul:scrollbox anonid="scrollctrl" flex="1" class="editordatacontainer" orient="vertical">
+					<xul:cfield name="markerGridJSON" id="website_markers_markerGridJSON" 
+						anonid="field_markerGridJSON" fieldtype="namedgridlist" flex="1">
+					</xul:cfield>
+
+					<xul:cfieldsgroup label="${transui:m.website.bo.doceditor.markers.add-marker-section,ucf,attr}">
+					
+						<xul:row anonid="row_newMarkerType">
+							<xul:clabel id="website_markers_newMarkerType_label" control="website_markers_newMarkerType"
+								value="${transui:m.website.bo.doceditor.markers.newmarkertype,ucf,attr}" />
+								
+							<xul:cfield name="newMarkerType" id="website_markers_newMarkerType" anonid="field_newMarkerType"
+								fieldtype="dropdownlist" required="true" listid="modules_website/markerstype"
+								shorthelp="${transui:m.website.bo.doceditor.markers.newmarkertype-help,ucf,attr}" />
+						</xul:row>
+						
+						<xul:row anonid="row_newMarkerAccount">
+							<xul:clabel id="website_markers_newMarkerAccount_label" control="website_markers_newMarkerAccount"
+								value="${transui:m.website.bo.doceditor.markers.newmarkeraccount,ucf,attr}" />
+							<xul:cfield name="newMarkerAccount" id="website_markers_newMarkerAccount" anonid="field_newMarkerAccount"
+								fieldtype="text" required="true" 
+								shorthelp="${transui:m.website.bo.doceditor.markers.newmarkeraccount,ucf,attr}" />	
+						</xul:row>
+						
+					</xul:cfieldsgroup>
+					<xul:spacer flex="1" />
+				</xul:scrollbox>
+			</xul:vbox>
+		</content>
+		<implementation>
+			<field name="mFieldNames">["markerGridJSON", "newMarkerType", "newMarkerAccount"]</field>
+
+			<method name="saveProperties">
+				<body><![CDATA[
+					this.lockCommandsUI();
+					this.showTextMessage("&modules.uixul.bo.doceditor.Update-in-progress;");
+					this.documentEditor.executeServerAction('markers', 'Update');
+				]]></body>
+			</method>
+		</implementation>
+	</binding>
+	
+	<binding id="cMarkerGrid" extends="widgets.cGrid#cAbstractSortableGrid">
+		<implementation>
+			<constructor><![CDATA[
+				this.fireEvent('gridInitialised');
+			]]></constructor>
+
+			<method name="execute_edit">
+				<parameter name="rowNode" />
+				<parameter name="rowData" />
+				<body><![CDATA[
+					if (this.disabled) {return;}
+					var uri = ['website', 'openDocument', rowData.type, rowData.id, 'properties'].join(',');
+					var from = ['website', 'openDocument', 'modules_website_website' , rowData.websiteid, 'markers'].join(',');
+					openActionUri(uri, from);
+				]]></body>
+			</method>
+			
+			<method name="setCellValue">
+				<parameter name="cell" />
+				<parameter name="name" />
+				<parameter name="dataRow" />
+				<body><![CDATA[					
+					if ('value' in cell)
+					{
+						cell.value = dataRow[name];
+					}
+					else if (name === 'status')
+					{
+						cell.firstChild.setAttribute('src', dataRow.status);
+					}
+					else
+					{
+						cell.setAttribute('value', dataRow[name]);
+					}
+				]]></body>
+			</method>
+			
+		</implementation>
+
+		<content>
+			<xul:grid flex="1" anonid="grid" xbl:inherits="disabled" style="padding-left: 5px;padding-right: 5px;">
+				<xul:columns>
+					<xul:column />
+					<xul:column flex="1" />
+					<xul:column />
+					<xul:column />
+					<xul:column />
+					<xul:column />
+				</xul:columns>
+				<xul:rows>
+					<xul:row class="head" anonid="head-row">
+						<xul:hbox name="status" pack="center" align="center">
+							<xul:image src="{IconsBase}/small/status-detail.png"/>
+						</xul:hbox>
+						<xul:label name="label" value="${transui:m.website.document.marker.label,ucf,attr}" sortonfield="true"/>
+						<xul:label name="typename" value="${transui:m.website.document.marker.typename,ucf,attr}" sortonfield="true"/>
+						<xul:label name="account" value="${transui:m.website.document.marker.account,ucf,attr}" sortonfield="true"/>
+						<xul:label name="langs" value="${transui:m.website.document.marker.langs,ucf,attr}" />
+						<xul:label name="actionrow" value="${transui:m.uixul.bo.doceditor.actions,ucf,attr}" />
+					</xul:row>
+				</xul:rows>
+			</xul:grid>
+
+			<xul:row anonid="template-row" class="document" hidden="true">
+				<xul:hbox pack="center" align="center">
+					<xul:image />
+				</xul:hbox>
+				<xul:label value="" />				
+				<xul:label value="" />
+				<xul:label value="" />
+				<xul:label value="" />
+				<xul:toolbar class="actions">
+					<xul:toolbarbutton action="edit" image="{IconsBase}/small/edit.png" tooltiptext="${transui:m.uixul.bo.actions.edit,ucf,attr}" />
+				</xul:toolbar>
+			</xul:row>
+		</content>
+	</binding>
+</bindings>

@@ -19,7 +19,6 @@
 		</model>
 		<model name="modules_website/website">
 			<children>
-				<child model="modules_website/markerfolder"/>
 				<child model="modules_website/menufolder"/>
 				<child model="modules_website/page" />
 				<child model="modules_website/pagegroup" />
@@ -33,7 +32,6 @@
 				<drop model="modules_website/topic" action="move"/>
 				<drop model="modules_website/pageexternal" action="move"/>
 				<drop model="modules_website/menufolder" action="move"/>
-				<drop model="modules_website/markerfolder" action="move"/>
 			</drops>
 			<styles properties="toolbartype isHomePage isIndexPage visibility notindexable block"/>
 			<columns>
@@ -184,11 +182,6 @@
 				<contextaction name="openTags"/>
 				<contextaction name="openPage"/>
 				<contextaction name="removeFromMenu"/>
-			</contextactions>
-		</model>
-		<model name="modules_website/markerfolder">
-			<contextactions>
-				<contextaction name="edit"/>
 			</contextactions>
 		</model>
 		<model name="modules_website/menufolder">
