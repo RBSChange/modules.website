@@ -33,6 +33,7 @@
 		window.onload = initialize;
         </script>
         <?php echo $this->getScripts(); ?>
+        <?php echo $this->getPlainHeadMarker(); ?>
 	</head>
 	<?php echo $this->htmlBody ?>
 </html>

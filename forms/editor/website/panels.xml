@@ -4,8 +4,9 @@
 	<panel name="properties" />
 	<panel name="publication" />
 	<panel name="localization" />
-	<panel name="history" />
+	<panel name="markers" icon="marker-folder" labeli18n="m.website.bo.doceditor.tab.markers" />
 	<panel name="permission" />
+	<panel name="history" />
 	<panel name="create" />
 	<xul>
 		<javascript>

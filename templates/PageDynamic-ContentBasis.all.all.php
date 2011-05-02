@@ -16,6 +16,7 @@
 		<?php echo $this->getLinkTags(); ?>
         <script type="text/javascript">var pageHandler = <?php echo $this->getJSONHandler(); ?></script>
         <?php echo $this->getScripts(); ?>
+        <?php echo $this->getPlainHeadMarker(); ?>
 	</head>
     <?php 
     echo $this->htmlBody;

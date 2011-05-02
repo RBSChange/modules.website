@@ -19,29 +19,10 @@ wdialog[template="selectStructureRoot"]{
 gridlist.versionsJSON{
 	-moz-binding: url(binding:modules.website.cPageEditor#cPageVersionGrid);
 }
-cfield[fieldtype="markerslist"]{
-	-moz-binding: url(binding:modules.website.cMarkerEditor#cMarkersList);
-}
-#edt_website_markerfolder cmarkerspanel
-{
-	-moz-binding: url(binding:modules.website.cMarkerEditor#cMarkersPanel);
-}
-#edt_website_markerfolder cmarkerspanel columns.columns
-{
-	-moz-binding: url(binding:modules.website.cMarkerEditor#cMarkersPanelColumns);
-}
-#edt_website_markerfolder cmarkerspanel row.head
-{
-	-moz-binding: url(binding:modules.website.cMarkerEditor#cMarkersPanelHead);
-}
-#edt_website_markerfolder cmarkerspanel row.document
-{
-	-moz-binding: url(binding:modules.website.cMarkerEditor#cMarkersPanelDocument);
-}
-#edt_website_marker cfieldsgroup.marker-specific-properties
-{
-	-moz-binding: url(binding:modules.website.cMarkerEditor#cMarkerSpecificPropertiesSection);
-}
 #pg_website_bookmarks_cmpref{
 	-moz-binding: url(binding:modules.website.cBookmarksField#cBookmarksField);
+}
+
+gridlist.markerGridJSON{
+	-moz-binding: url(binding:modules.website.editors.website#cMarkerGrid);
 }

@@ -1,0 +1,31 @@
+.benchtimes{
+	clear: both;
+	border: 1px solid yellow;
+	background-color: #ffffca;
+	text-align: left;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	opacity: 0.8;
+	filter: alpha(opacity=80);
+	font-family: Arial;
+	font-size: 12px;
+}
+
+.benchtimes div.title{
+	cursor: pointer;
+	text-decoration: underline;
+	color: blue;
+}
+
+.benchtimes ul {
+	clear: both;
+}
+
+.benchtimes li.block {
+	cursor: pointer;
+}
+.benchtimes li.block strong {
+	text-decoration: underline;
+	color: blue;
+}

@@ -4,8 +4,12 @@
   <key id="edition-form-title">propriétés du marker</key>
   <key id="label">libellé</key>
   <key id="label-help">libellé</key>
-  <key id="account">account</key>
-  <key id="account-help">account</key>
+  <key id="account">identifiant du compte</key>
+  <key id="account-help">identifiant du compte</key>
   <key id="langs">langues</key>
   <key id="langs-help">langues</key>
+  <key id="typename">type</key>
+  
+  <key id="website">site web associé</key>
+  <key id="website-help">site web associé</key>
 </i18n>

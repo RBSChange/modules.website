@@ -114,6 +114,20 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 		}
 	}
 
+	/**
+	 * @param website_persistentdocument_website $document
+	 * @param Integer $parentNodeId Parent node ID where to save the document (optionnal).
+	 * @return void
+	 */
+	protected function postUpdate($document, $parentNodeId = null)
+	{
+		if ($document->getNewMarkerType() && $document->getNewMarkerAccount())
+		{
+			website_MarkerService::getInstance()->createNewMarker($document->getNewMarkerType(), $document->getNewMarkerAccount(), $document);
+			$document->setNewMarkerAccount(null);
+			$document->setNewMarkerType(null);
+		}
+	}
 
 	/**
 	 * @param website_persistentdocument_website $document
@@ -136,11 +150,6 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 		$menuFolder->setLabel('&modules.website.bo.general.Menu-folder-label;');
 		$menuFolder->save($document->getId());
 
-		// Create the markers folder where the website's markers will be stored.
-		$markerFolder = website_MarkerfolderService::getInstance()->getNewDocumentInstance();
-		$markerFolder->setLabel('&modules.website.bo.general.Marker-folder-label;');
-		$markerFolder->save($document->getId());
-		
 		$initScript = $document->getStructureinit();
 		if (f_util_StringUtils::isNotEmpty($initScript) && $document->getTemplate())
 		{
@@ -177,9 +186,11 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 		website_MenufolderService::getInstance()->getInstance()->createQuery()
 			->add(Restrictions::childOf($document->getId()))->delete();
 
-		website_MarkerfolderService::getInstance()->getInstance()->createQuery()
-			->add(Restrictions::childOf($document->getId()))->delete();
-			
+		$markers = website_MarkerService::getInstance()->getAllByWebsite($document);
+		foreach ($markers as $marker) 
+		{
+			$marker->delete();
+		}	
 		TreeService::getInstance()->setTreeNodeCache(false);
 	}
 

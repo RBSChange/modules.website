@@ -60,25 +60,58 @@ class website_MarkerService extends f_persistentdocument_DocumentService
 	public function getHtmlMarker($website)
 	{
 		$markers = $this->getByWebsiteAndLang($website, RequestContext::getInstance()->getLang());
-
-		$html = '';
+		$html = array();
 		foreach ($markers as $marker)
 		{
-			$model = $marker->getPersistentModel();
-			try 
-			{
-				$templateLoader = TemplateLoader::getInstance()->setMimeContentType(K::HTML);
-				$templateLoader->setPackageName('modules_' . $model->getModuleName());
-				$template = $templateLoader->load(ucfirst($model->getModuleName()) . '-marker-Inc');
-				$template->setAttribute('codeMarker', $marker->getAccount());
-				$html .= $template->execute();
-			}
-			catch (TemplateNotFoundException $e)
-			{
-				Framework::info(__METHOD__ . $e->getMessage());
-			}
+			$html[] = $marker->getDocumentService()->getHtmlBody($marker);
 		}		
-		return $html;
+		return implode(K::CRLF, $html);
+	}
+		
+	/**
+	 * @param website_persistentdocument_marker $marker
+	 * @return string
+	 */
+	public function getHtmlBody($marker)
+	{
+		$model = $marker->getPersistentModel();
+		try 
+		{
+			$templateLoader = TemplateLoader::getInstance()->setMimeContentType(K::HTML);
+			$templateLoader->setPackageName('modules_' . $model->getModuleName());
+			$template = $templateLoader->load(ucfirst($model->getModuleName()) . '-marker-Inc');
+			$template->setAttribute('codeMarker', $marker->getAccount());
+			$template->setAttribute('marker', $marker);
+			return $template->execute();
+		}
+		catch (TemplateNotFoundException $e)
+		{
+			Framework::info(__METHOD__ . $e->getMessage());
+		}		
+		return '';
+	}
+	
+	/**
+	 * @param website_persistentdocument_marker $marker
+	 * @return string
+	 */
+	public function getHtmlHead($marker)
+	{
+		$model = $marker->getPersistentModel();
+		try 
+		{
+			$templateLoader = TemplateLoader::getInstance()->setMimeContentType(K::HTML);
+			$templateLoader->setPackageName('modules_' . $model->getModuleName());
+			$template = $templateLoader->load(ucfirst($model->getModuleName()) . '-marker-IncHead');
+			$template->setAttribute('codeMarker', $marker->getAccount());
+			$template->setAttribute('marker', $marker);
+			return $template->execute();
+		}
+		catch (TemplateNotFoundException $e)
+		{
+			Framework::info(__METHOD__ . $e->getMessage());
+		}		
+		return '';
 	}
 	
 	/**
@@ -87,15 +120,8 @@ class website_MarkerService extends f_persistentdocument_DocumentService
 	 */
 	public function getMarkerTypeList()
 	{
-		$markers = array();
-		foreach (ModuleService::getInstance()->getModules() as $module)
-		{
-			if (f_util_StringUtils::beginsWith($module, 'modules_marker'))
-			{
-				$markers[] = substr($module, 14);
-			}
-		}
-		return $markers;
+		$markerModel = f_persistentdocument_PersistentDocumentModel::getInstance('website', 'marker');
+		return $markerModel->getChildrenNames();
 	}	
 	
 	/**
@@ -113,7 +139,22 @@ class website_MarkerService extends f_persistentdocument_DocumentService
 			->createQuery()
 			->add(Restrictions::published())
 			->add(Restrictions::like('langs', $lang, MatchMode::ANYWHERE()))
-			->add(Restrictions::descendentOf($website->getId()))
+			->add(Restrictions::eq('website', $website))
+			->find();
+	}
+	
+	/**
+	 * @param website_persistentdocument_website $website
+	 * @return website_persistentdocument_marker[]
+	 */
+	public function getAllByWebsite($website)
+	{
+		if ($website->isNew())
+		{
+			return array();
+		}
+		return website_MarkerService::getInstance()->createQuery()
+			->add(Restrictions::eq('website', $website))
 			->find();
 	}
 	
@@ -123,8 +164,80 @@ class website_MarkerService extends f_persistentdocument_DocumentService
 	 */
 	public function getWebsiteByMarker($marker)
 	{
-		return website_WebsiteService::getInstance()->createQuery()->add(Restrictions::ancestorOf($marker->getId()))->findUnique();
+		if ($marker instanceof website_persistentdocument_marker)
+		{
+			return $marker->getWebsite();
+		}
+		return null;
 	}
+	
+	/**
+	 * @param website_persistentdocument_marker $marker
+	 */
+	public function getMarkerGridInfo($marker)
+	{
+		$model = $marker->getPersistentModel();
+		if ($marker->isPublished())
+		{
+			$statusSrc = MediaHelper::getIcon('published-document', MediaHelper::SMALL);
+		}
+		else
+		{
+			$statusSrc = MediaHelper::getIcon('publishable-document', MediaHelper::SMALL);
+		}
+		return array(
+			'id' => $marker->getId(),
+			'type' =>  implode('_', array('modules', $model->getModuleName(), $model->getDocumentName())),
+			'model' => $marker->getDocumentModelName(),
+			'status' => $statusSrc,
+			'websiteid' => $marker->getWebsite() ? $marker->getWebsite()->getId() : null,
+		    'typename' => LocaleService::getInstance()->transBO('m.' . $model->getModuleName() . '.bo.general.markertype', array('ucf')),
+			'label' => $marker->getLabel(),
+			'account' => $marker->getAccount(),
+			'langs' => str_replace(',', ', ', $marker->getLangs())
+		);
+	}
+	
+	/**
+	 * @param string $documentModelName
+	 * @param string $account
+	 * @param website_persistentdocument_website $website
+	 * @return website_persistentdocument_marker
+	 */
+	public function createNewMarker($documentModelName, $account, $website)
+	{
+		$modelsName = $this->getMarkerTypeList();
+		$marker = null;
+		if (in_array($documentModelName, $modelsName))
+		{
+			$service = self::getInstanceByDocumentModelName($documentModelName);
+			if ($service instanceof website_MarkerService)
+			{
+				$rc = RequestContext::getInstance();
+				try 
+				{
+					$rc->beginI18nWork($website->getLang());
+					$marker = $service->getNewDocumentInstance();
+					$marker->setAccount($account);
+					$marker->setLabel($account);
+					$marker->setWebsite($website);
+					$marker->setLangs(implode(',', $website->getI18nInfo()->getLangs()));
+					$service->save($marker);
+					$rc->endI18nWork();
+				} 
+				catch (Exception $e) 
+				{
+					$rc->endI18nWork($e);
+				}
+			}
+		}
+		else
+		{
+			Framework::warn('Invalid marker model name: ' . $documentModelName);
+		}
+		return $marker;
+	}
+	
 	
 	/**
 	 * @param website_persistentdocument_marker $document
@@ -133,6 +246,6 @@ class website_MarkerService extends f_persistentdocument_DocumentService
 	 */
 	public function addFormProperties($document, $propertiesNames, &$formProperties)
 	{
-		$formProperties['markerType'] = $document->getMarkerType();
+		$formProperties['websiteid'] = ($document->getWebsite()) ? $document->getWebsite()->getId() : null;
 	}
 }

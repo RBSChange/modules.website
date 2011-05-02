@@ -28,6 +28,7 @@ class website_Setup extends object_InitDataSetup
 		f_util_FileUtils::symlink($browserPath, $webappBrowserPath);
 
 		$this->executeModuleScript('init.xml');	
+		$this->executeModuleScript('markers.xml');	
 		
 		// Fix #721: import the new workflow first, so it will be activated by
 		// default, instead of the old one.

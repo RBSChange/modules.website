@@ -80,4 +80,53 @@ class website_persistentdocument_website extends website_persistentdocument_webs
 	{
 		return $this->getUrl() . '/favicon.ico';
 	}
+	
+	
+	//MARKER EDITION
+	
+	/**
+	 * @return string
+	 */
+	public function getMarkerGridJSON()
+	{
+		$array = array();
+		$markers = website_MarkerService::getInstance()->getAllByWebsite($this);
+		foreach ($markers as $marker) 
+		{
+			$array[] = $marker->getDocumentService()->getMarkerGridInfo($marker);
+		}
+		return JsonService::getInstance()->encode($array);
+	}
+	
+	private $newMarkerType;
+	private $newMarkerAccount;
+	
+	
+	public function getNewMarkerType()
+	{
+		return $this->newMarkerType;
+	}
+	
+	public function setNewMarkerType($newMarkerType)
+	{
+		$this->newMarkerType = $newMarkerType;
+		if ($newMarkerType)
+		{
+			$this->setModificationdate(null);
+		}
+	}	
+	
+	public function getNewMarkerAccount()
+	{
+		return $this->newMarkerAccount;
+	}
+	
+	public function setNewMarkerAccount($newMarkerAccount)
+	{
+		$this->newMarkerAccount = $newMarkerAccount;
+		if ($newMarkerAccount)
+		{
+			$this->setModificationdate(null);
+		}
+	}
 }

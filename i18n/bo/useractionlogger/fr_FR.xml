@@ -154,4 +154,18 @@
   <key id="log-savepermissions-privateshop">log savepermissions privateshop</key>
   <key id="update-markergas">update.markergas {documentlabel}</key>
   <key id="log-update-markergas">log update markergas</key>
+  <key id="insert-markergas">insert.markergas {documentlabel}</key>
+  <key id="log-insert-markergas">log insert markergas</key>
+  <key id="insert-markergmaps">insert.markergmaps {documentlabel}</key>
+  <key id="log-insert-markergmaps">log insert markergmaps</key>
+  <key id="update-markergmaps">update.markergmaps {documentlabel}</key>
+  <key id="log-update-markergmaps">log update markergmaps</key>
+  <key id="delete-markergas">delete.markergas {documentlabel}</key>
+  <key id="log-delete-markergas">log delete markergas</key>
+  <key id="deactivated-markergmaps">deactivated.markergmaps {documentlabel}</key>
+  <key id="log-deactivated-markergmaps">log deactivated markergmaps</key>
+  <key id="reactivate-markergmaps">reactivate.markergmaps {documentlabel}</key>
+  <key id="log-reactivate-markergmaps">log reactivate markergmaps</key>
+  <key id="deactivated-markergas">deactivated.markergas {documentlabel}</key>
+  <key id="log-deactivated-markergas">log deactivated markergas</key>
 </i18n>
