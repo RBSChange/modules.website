@@ -31,6 +31,12 @@
 			<dependency name="modules.website.lib.js.jquery-ifixpng" />
 		</dependencies>
 	</script>
+	
+	<script name="modules.website.lib.js.preventCopyPaste">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery" />
+		</dependencies>
+	</script>
 
 	<script name="modules.website.lib.editcontent">
 	</script>
@@ -46,7 +52,7 @@
 			<dependency name="modules.website.lib.js.jquery" />
 		</dependencies>
 	</script>
-
+	
 	<!-- JQuery UI Core -->
 	<script noreplacement="true" name="modules.website.lib.js.jquery-ui">
 		<dependencies>
