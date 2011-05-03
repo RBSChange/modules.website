@@ -1428,7 +1428,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			}
 			else
 			{
-				if (f_util_StringUtils::isEmpty($html))
+				if (f_util_StringUtils::isEmpty(f_util_StringUtils::htmlToText($html)))
 				{
 					$html = "<strong>" . $this->getBlockLabelFromBlockType($block['type']) . "</strong>";
 				}
@@ -1540,7 +1540,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		else
 		{
-			if (f_util_StringUtils::isEmpty($html))
+			if (f_util_StringUtils::isEmpty(f_util_StringUtils::htmlToText($html)))
 			{
 				$html = "<strong>" . $this->getBlockLabelFromBlockType($block['type']) . "</strong>";
 			}
