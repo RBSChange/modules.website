@@ -10,6 +10,11 @@ class website_BlockBookmarksAction extends website_BlockAction
 	 */
 	function execute($request, $response)
     {
+    	if ($this->isInBackoffice())
+		{
+			return website_BlockView::NONE;
+		}
+    	
     	$input = $this->findParameterValue(K::COMPONENT_ID_ACCESSOR);
     	if (is_array($input))
     	{
@@ -43,14 +48,7 @@ class website_BlockBookmarksAction extends website_BlockAction
 
 	    if (empty($bookmarks_out))
 	    {
-	        if ($this->isInBackoffice())
-	        {
-	            return website_BlockView::DUMMY;
-	        }
-	        else
-	        {
-	           return website_BlockView::NONE;
-	        }
+	    	return website_BlockView::NONE;
 	    }
 
         return website_BlockView::SUCCESS;
