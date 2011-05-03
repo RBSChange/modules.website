@@ -9,7 +9,7 @@ class commands_CompileBlocks extends commands_AbstractChangeCommand
 	 */
 	function getUsage()
 	{
-		return "[module1 module2 ... moduleN]";
+		return "";
 	}
 
 	function getAlias()
@@ -33,12 +33,7 @@ class commands_CompileBlocks extends commands_AbstractChangeCommand
 	 */
 	function getParameters($completeParamCount, $params, $options, $current)
 	{
-		$components = array();
-		foreach (glob("modules/*/config", GLOB_ONLYDIR) as $module)
-		{
-			$components[] = basename(dirname($module));
-		}
-		return array_diff($components, $params);
+		return null;
 	}
 
 	/**
@@ -49,43 +44,16 @@ class commands_CompileBlocks extends commands_AbstractChangeCommand
 	function _execute($params, $options)
 	{
 		$this->message("== Compile blocks ==");
-
 		$this->loadFramework();
 		$bs = block_BlockService::getInstance();
-		if (f_util_ArrayUtils::isEmpty($params) )
+
+		$bs->compileBlocks(array($this, 'showCurrentModule'));
+		if ($this->hasError())
 		{
-			$bs->compileBlocks(array($this, 'showCurrentModule'));
-			if ($this->hasError())
-			{
-				return $this->quitError("All blocks could not be compiled: ".$this->errorCount." errors");
-			}
-			$this->getParent()->executeCommand("clearWebappCache");
-			return $this->quitOk("All blocks compiled successfully.");
+			return $this->quitError("All blocks could not be compiled: ".$this->errorCount." errors");
 		}
-		else
-		{
-			foreach ($params as $package)
-			{
-				$errorCount = $this->getErrorCount();
-				$bs->compileBlocksForPackage($package);
-				if ($this->getErrorCount() == $errorCount)
-				{
-					$this->okMessage("Blocks for package \"".$package."\" compiled successfully.");
-				}
-				else
-				{
-					$this->errorMessage("Blocks for package \"".$package."\" could not be compiled.", false);
-				}
-			}
-				
-			$this->getParent()->executeCommand("clearWebappCache");
-				
-			if ($this->hasError())
-			{
-				return $this->quitError("All blocks could not be compiled: ".$this->errorCount." errors");
-			}
-			return $this->quitOk("blocks compiled successfully.");
-		}
+		$this->getParent()->executeCommand("clearWebappCache");
+		return $this->quitOk("All blocks compiled successfully.");
 	}
 
 	/**

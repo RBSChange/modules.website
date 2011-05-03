@@ -1,301 +1,209 @@
 <?php
 class block_BlockInfo
 {
-	/**
-	 * @var String
-	 */
-	private $label = null;
+	private static $DEFAULT = array('label' => null, 'icon'=> null, 
+		'editable' => false, 'hidden' => false, 'dashboard' => false, 
+		'afterAll' => false, 'beforeAll' => false);
 
 	/**
-	 * @var String
+	 * @var array
 	 */
-	private $id = null;
-
-	/**
-	 * @var String
-	 */
-	private $icon = null;
-
-	/**
-	 * @var String
-	 */
-	private $image = null;
-
-	/**
-	 * @var String
-	 */
-	private $color = null;
-
-	/**
-	 * @var String
-	 */
-	private $type = null;
-
-	/**
-	 * @var String
-	 */
-	private $ref = null;
-
-	/**
-	 * @var String
-	 */
-	private $attributes = array();
-
-	/**
-	 * @var Boolean
-	 */
-	private $hidden = null;
-
-	/**
-	 * @var Boolean
-	 */
-	private $requiresNewEditor = false;
-
-
-	/**
-	 * @var Boolean
-	 */
-	private $dashboard = false;
-
-	/**
-	 * @var Array<block_BlockPropertyInfo>
-	 */
-	protected $parametersInfoArray = array();
-
-	/**
-	 * @var String
-	 */
-	protected $content = null;
+	private $attributes;
 	
 	/**
-	 * @var Boolean
+	 * @var block_BlockPropertyInfo[]
 	 */
-	protected $editable = false;
-
-	/**
-	 * @param String $value
-	 * @return block_BlockInfo
-	 */
-	public function setId($value)
-	{
-		$this->id = $value;
-		return $this;
-	}
-
-	/**
-	 * @return String
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
+	private $parametersInfoArray = array();
 	
 	/**
-	 * @param Boolean $editable
-	 * @return block_BlockInfo
+	 * @var array
 	 */
-	function setEditable($editable)
-	{
-		$this->editable = $editable;
-		return $this;
-	}
+	protected $titleMetas = array();
 	
 	/**
-	 * @return Boolean
+	 * @var array
 	 */
-	function getEditable()
+	protected $descriptionMetas = array();
+	
+	/**
+	 * @var array
+	 */
+	protected $keywordsMetas = array();
+	
+	/**
+	 * @var array
+	 */
+	protected $metas = array();
+
+	protected function __construct($infoArray = array())
 	{
-		return $this->editable;
+		$this->attributes = array_merge(self::$DEFAULT, $infoArray);
+	}
+	
+	protected function addNewBlockPropertyInfo($propertyInfoArray)
+	{
+		$parameterInfo = new block_BlockPropertyInfo($propertyInfoArray);
+		$this->addParameterInfo($parameterInfo);
 	}
 
 	/**
-	 * @param String $value
-	 * @return block_BlockInfo
-	 */
-	public function setLabel($value)
-	{
-		$this->label = $value;
-		return $this;
-	}
-
-	/**
-	 * @return String
-	 */
-	public function getLabel()
-	{
-		return $this->label;
-	}
-
-	/**
-	 * @param String $value
-	 * @return block_BlockInfo
-	 */
-	public function setIcon($value)
-	{
-		$this->icon = $value;
-		return $this;
-	}
-
-	/**
-	 * @return String
-	 */
-	public function getIcon()
-	{
-		return $this->icon;
-	}
-
-	/**
-	 * @param String $value
-	 * @return block_BlockInfo
-	 */
-	public function setImage($value)
-	{
-		$this->image = $value;
-		return $this;
-	}
-
-	/**
-	 * @return String
-	 */
-	public function getImage()
-	{
-		return $this->image;
-	}
-
-	/**
-	 * @param String $value
-	 * @return block_BlockInfo
-	 */
-	public function setColor($value)
-	{
-		$this->color = $value;
-		return $this;
-	}
-
-	/**
-	 * @return String
-	 */
-	public function getColor()
-	{
-		return $this->color;
-	}
-
-	/**
-	 * @param String $value
-	 * @return block_BlockInfo
-	 */
-	public function setType($value)
-	{
-		$this->type = $value;
-		return $this;
-	}
-
-	/**
-	 * @return String
+	 * @return string
 	 */
 	public function getType()
 	{
-		return $this->type;
+		return $this->attributes['type'];
 	}
-
+	
 	/**
-	 * @param String $value
-	 * @return block_BlockInfo
+	 * @return string
 	 */
-	public function setRef($value)
+	public function getId()
 	{
-		$this->ref = $value;
-		return $this;
+		return $this->getType();
 	}
-
+	
 	/**
-	 * @return String
+	 * @return boolean
 	 */
-	public function getRef()
+	function getEditable()
 	{
-		return $this->ref;
+		return $this->attributes['editable'];
 	}
 
 	/**
-	 * @param String $value
-	 * @return block_BlockInfo
+	 * @return string
 	 */
-	public function setContent($value)
+	public function getLabel()
 	{
-		$this->content = $value;
-		return $this;
+		return $this->attributes['label'];
 	}
 
 	/**
-	 * @return String
+	 * @return string
 	 */
-	public function hasContent()
+	public function getIcon()
 	{
-		return ! is_null($this->content);
+		return $this->attributes['icon'];
 	}
 
-	/**
-	 * @return String
-	 */
-	public function getContent()
-	{
-		return $this->content;
-	}
 
 	/**
-	 * @param  Boolean
-	 * @return block_BlockPropertyInfo
-	 */
-	public function setRequiresNewEditor($bool)
-	{
-		$this->requiresNewEditor = $bool;
-		return $this;
-	}
-
-	/**
-	 * @return Boolean
-	 */
-	public function requiresNewEditor()
-	{
-		return $this->requiresNewEditor;
-	}
-
-	/**
-	 * @param  Boolean
-	 * @return block_BlockPropertyInfo
-	 */
-	public function setDashboard($bool)
-	{
-		$this->dashboard = $bool;
-		return $this;
-	}
-
-	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	public function getDashboard()
 	{
-		return $this->dashboard;
+		return $this->attributes['dashboard'];
 	}
 
 	/**
-	 * @param  Boolean
-	 * @return block_BlockPropertyInfo
+	 * @return boolean
 	 */
-	public function setHidden($bool)
+	public function getHidden()
 	{
-		$this->hidden = $bool;
-		return $this;
+		return $this->attributes['hidden'];
 	}
-
+	
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	public function isHidden()
 	{
-		return $this->hidden;
+		return $this->getHidden();
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getSection()
+	{
+		return $this->attributes['section'];
 	}
 
+	/**
+	 * @return string
+	 */
+	public function getDropModels()
+	{
+		return $this->attributes['dropModels'];
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getDropModelArray()
+	{
+		$string = $this->getDropModels();
+		if (!empty($string))
+		{
+			return explode(',', str_replace(' ', '', $string));
+		}
+		return array();
+	}	
+	
+	/**
+	 * @return string
+	 */
+	public final function getModule()
+	{
+		list(,$module,) = explode('_', $this->getType());
+		return $module;
+	}
+	
+	
+	
+	/**
+	 * @return string
+	 */
+	public function getRequestModule()
+	{
+		return $this->attributes['requestModule'];
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getTemplateModule()
+	{
+		return $this->attributes['templateModule'];
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getPhpBlockClass()
+	{
+		return $this->attributes['phpBlockClass'];
+	}
+	
+	public function getInjectedBy()
+	{
+		return isset($this->attributes['injectedBy']) ? $this->attributes['injectedBy'] : null;
+	}
+	
+	/**
+	 * @return boolean
+	 */
+	public function getBeforeAll()
+	{
+		return $this->attributes['beforeAll'];
+	}	
+	
+	/**
+	 * @return boolean
+	 */
+	public function getAfterAll()
+	{
+		return $this->attributes['afterAll'];
+	}
+	
+	/**
+	 * @return boolean
+	 */
+	public function hasContent()
+	{
+		return false;
+	}
+	
 	/**
 	 * @return Array<block_BlockPropertyInfo>
 	 */
@@ -331,58 +239,11 @@ class block_BlockInfo
 	}
 
 	/**
-	 * @return String
-	 */
-	public final function getModule()
-	{
-		return block_BlockService::getInstance()->getDeclaringModuleForBlock($this->getType());
-	}
-
-	/**
-	 * @return Boolean
-	 */
-	public final function isContent()
-	{
-		return $this->getType() == 'content';
-	}
-
-	protected $titleMetas = array();
-	protected $descriptionMetas = array();
-	protected $keywordsMetas = array();
-	protected $metas = array();
-
-	/**
-	 * @param String $metaName
-	 * @param String $allow comma separated values. Default value : "title,description,keywords"
-	 */
-	public function addMeta($metaName, $allow)
-	{
-		$allowArray = null;
-		if ($allow !== null)
-		{
-			$allowArray = explode(',', $allow);
-		}
-		$this->metas[] = $metaName;
-		if ($allowArray === null || in_array('title', $allowArray))
-		{
-			$this->titleMetas[] = $metaName;
-		}
-		if ($allowArray === null || in_array('description', $allowArray))
-		{
-			$this->descriptionMetas[] = $metaName;
-		}
-		if ($allowArray === null || in_array('keywords', $allowArray))
-		{
-			$this->keywordsMetas[] = $metaName;
-		}
-	}
-
-	/**
 	 * @return Boolean
 	 */
 	public function hasMeta()
 	{
-		return f_util_ArrayUtils::isNotEmpty($this->metas);
+		return count($this->metas) > 0;
 	}
 
 	function getTitleMetas()
@@ -463,6 +324,6 @@ class block_BlockInfo
 	 */
 	public final function hasPropertyGrid()
 	{
-		return f_util_ArrayUtils::isNotEmpty($this->getPropertyGridParameters());
+		return count($this->getPropertyGridParameters()) > 0;
 	}
 }

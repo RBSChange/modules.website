@@ -136,7 +136,7 @@ class LinkHelper
 	{
 		if (!($document instanceof f_persistentdocument_PersistentDocument))
 		{
-			Framework::fatal(f_util_ProcessUtils::getBackTrace());
+			Framework::error(f_util_ProcessUtils::getBackTrace());
 			return null;
 		}
 		

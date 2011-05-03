@@ -1,10 +1,53 @@
 <?php
 /**
  * @author <{$author}>
- * @package <{$fullPackage}>
+ * @package <{$moduleName}>
  */
 class <{$className}> extends block_BlockConfiguration
 {
+	/**
+	 * @return string
+	 */
+	public function getRequestModule()
+	{
+		return "<{$blockInfo->getRequestModule()}>";
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTemplateModule()
+	{
+		return "<{$blockInfo->getTemplateModule()}>";
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getBlockActionClassName()
+	{
+		return "<{$blockInfo->getBlockActionClassName()}>";
+	}
+	
+<{if $blockInfo->getBeforeAll()}>	
+	/**
+	 * @return boolean
+	 */
+	public function getBeforeAll()
+	{
+		return true;
+	}
+<{/if}>
+<{if $blockInfo->getAfterAll()}>		
+	/**
+	 * @return boolean
+	 */
+	public function getAfterAll()
+	{
+		return true;
+	}
+<{/if}>
+	
 <{foreach from=$blockInfo->getParametersInfoArray() item=property}>
 	<{if $property->getType() == "Boolean"}>	
 	public function <{$property->getPhpGetter()}>()
@@ -19,7 +62,7 @@ class <{$className}> extends block_BlockConfiguration
 	public function <{$property->getPhpGetter()}>DefaultValue()
 	{
 <{if $property->hasDefaultValue()}>
-<{if $property->getDefaultValue() == 'true'}>
+<{if $property->getDefaultValue()}>
 		return true;
 <{else}>
 		return false;
@@ -42,7 +85,7 @@ class <{$className}> extends block_BlockConfiguration
 	public function <{$property->getPhpGetter()}>DefaultValue()
 	{
 <{if $property->hasDefaultValue()}>
-<{if $property->getDefaultValue() == "null"}>
+<{if $property->getDefaultValue() == null}>
 		return null;
 <{else}>
 		return f_util_Convert::toInteger('<{$property->getDefaultValue()}>');

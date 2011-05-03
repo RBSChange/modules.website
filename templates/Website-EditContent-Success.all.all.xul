@@ -14,6 +14,6 @@
       documentversion: ${PAGEVERSION}
     };
 		]]></script>
-		<cpageditor id="mainEditor">${pageContent}</cpageditor>
+		<cpageditor id="mainEditor" editorType="${editorType}">${pageContent}</cpageditor>
 	</window>
 </tal:block>
