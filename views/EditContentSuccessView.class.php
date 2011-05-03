@@ -10,14 +10,12 @@ class website_EditContentSuccessView extends f_view_BaseView
 	{
 		$document = $request->getAttribute('document');
 		$ps = website_PageService::getInstance();
-	
 		$pageContent = $ps->getContentForEdition($document);
-		//$website = website_WebsiteService::getInstance()->getByDescendentId($document->getId());
-		//$this->getStyleService()->setCurrentWebsite($website);
 		website_WebsiteModuleService::getInstance()->setCurrentPageId($document->getId());
 		
 		$this->setTemplateName('Website-EditContent-Success', K::XUL);
 		$this->setAttribute('pageContent', $pageContent);
+		$this->setAttribute('editorType', website_PageRessourceService::getInstance()->getTemplateType());
 		
 		$link = LinkHelper::getUIChromeActionLink('website', 'GetEditContentStylesheets')
 			->setArgSeparator(f_web_HttpLink::ESCAPE_SEPARATOR);

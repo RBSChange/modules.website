@@ -20,6 +20,11 @@ class website_BlockView
 	private $relativeName;
 	
 	/**
+	 * @var String
+	 */
+	private $templateModuleName;
+	
+	/**
 	 * @var TemplateObject
 	 */
 	private $templateObject;
@@ -30,9 +35,10 @@ class website_BlockView
 	private $loadHandlers = array();
 
 	/**
-	 * @param String $name
+	 * @param String $relativeNameOrTemplate
+	 * @param String $templateModuleName
 	 */
-	public function __construct($relativeNameOrTemplate)
+	public function __construct($relativeNameOrTemplate, $templateModuleName = null)
 	{
 		if ($relativeNameOrTemplate instanceof TemplateObject)
 		{
@@ -40,6 +46,7 @@ class website_BlockView
 		}
 		else
 		{
+			$this->templateModuleName = $templateModuleName;
 			$this->relativeName = $relativeNameOrTemplate;
 		}
 	}
@@ -120,6 +127,15 @@ class website_BlockView
 			include($viewConfigFile);
 		}
 	}
+	
+	/**
+	 * @param website_BlockActionRequest $request
+	 * @return string
+	 */
+	private function getTemplateModule($request)
+	{
+		return $this->templateModuleName !== null ? $this->templateModuleName : $request->getModuleName();
+	}
 
 	/**
 	 * @param website_BlockActionRequest $request
@@ -131,9 +147,11 @@ class website_BlockView
 		$this->executeLoadHandlers($request, $response);
 		if ($this->templateObject === null)
 		{
-			$templateName = ucfirst($request->getModuleName()) .'-'. $this->getName($request);
+			$moduleName = $this->getTemplateModule($request);
+			
+			$templateName = ucfirst($moduleName) .'-'. $this->getName($request);
 			$this->templateObject = TemplateLoader::getInstance()->setMimeContentType(K::HTML)
-										->setDirectory('templates')->setPackageName( 'modules_' . $request->getModuleName())->load($templateName);
+										->setDirectory('templates')->setPackageName( 'modules_' . $moduleName)->load($templateName);
 		}
 		
 		$template = $this->templateObject;

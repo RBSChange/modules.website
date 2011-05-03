@@ -78,4 +78,36 @@ class block_BlockConfiguration
 	{
 		return $this->getConfigurationParameter('blockId', '');
 	}
+	
+	/**
+	 * @return string
+	 */	
+	public function getRequestModule()
+	{
+		return null;
+	}
+	
+	/**
+	 * @return string
+	 */	
+	public function getTemplateModule()
+	{
+		return null;
+	}
+	
+	/**
+	 * @return boolean
+	 */
+	public function getBeforeAll()
+	{
+		return false;
+	}
+	
+	/**
+	 * @return boolean
+	 */
+	public function getAfterAll()
+	{
+		return false;
+	}
 }

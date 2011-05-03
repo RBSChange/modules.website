@@ -10,19 +10,39 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	const BLOCK_PER_PROPERTY_ERRORS_ATTRIBUTE_KEY = "website_BlockAction_propertyErrors";
 
 	/**
-	 * @var String
+	 * 
+	 * @var string
+	 */
+	private $blockType;
+	
+	/**
+	 * @var string
 	 */
 	private $moduleName;
 
 	/**
-	 * @var String
+	 * @var string
 	 */
 	private $name;
 
-	public final function __construct()
+	/**
+	 * @param string $blocType
+	 */
+	public final function __construct($blocType = null)
 	{
-		$this->moduleName = $this->getModuleNameFromClassName();
-		$this->name = $this->getNameFromClassName();
+		
+		if ($blocType === null)
+		{
+			$this->moduleName = $this->getModuleNameFromClassName();
+			$this->name = $this->getNameFromClassName();
+			$blocType = 'modules_' . $this->moduleName . '_' . $this->name;
+		}
+		else
+		{
+			list(,$this->moduleName, $this->name) = explode('_', $blocType);
+		}
+		
+		$this->blockType = $blocType;
 		$this->setLang(RequestContext::getInstance()->getLang());
 	}
 	
@@ -31,7 +51,13 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	 */
 	public function getRequestModuleNames()
 	{
-		return array($this->getModuleName());
+		$names = array($this->moduleName);
+		$requestModule = $this->getConfiguration()->getRequestModule();
+		if ($requestModule !== null && $requestModule !== $this->moduleName)
+		{
+			$names[] = $requestModule;
+		}
+		return $names;
 	}
 	
 	/**
@@ -43,8 +69,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 		{
 			return $this->cacheEnabled;
 		}
-		$blockInfo = $this->getBlockInfo();
-		if ($blockInfo !== null && $blockInfo->getEditable() && users_BackenduserService::getInstance()->getCurrentBackEndUser() !== null)
+		if (users_BackenduserService::getInstance()->getCurrentBackEndUser() !== null)
 		{
 			$this->cacheEnabled = false;
 			Framework::debug("DISABLE ".$this->getName()." cache because fo editable and logged");
@@ -70,8 +95,8 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	 */
 	protected function getConfigurationClassname()
 	{
-		$className = $this->getModuleName() . '_Block' . ucfirst($this->getName()) . 'Configuration';
-		if (f_util_ClassUtils::classExists($className))
+		$className = block_BlockService::getInstance()->getBlockConfigurationClassname($this->blockType);
+		if ($className !== null && f_util_ClassUtils::classExists($className))
 		{
 			return $className;
 		}
@@ -83,22 +108,14 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	 */
 	final function getOrder()
 	{
-		$blockInfo = $this->getBlockInfo();
-		if ($blockInfo == null)
-		{
-			return 0;
-		}
-		if ("true" == $blockInfo->getAttribute("afterAll"))
+		$configuration = $this->getConfiguration();
+		if ($configuration->getAfterAll())
 		{
 			return -100;
 		}
-		if ("true" == $blockInfo->getAttribute("beforeAll"))
+		else if ($configuration->getBeforeAll())
 		{
 			return 100;
-		}
-		if ($blockInfo->hasAttribute("order"))
-		{
-			return intval($blockInfo->getAttribute("order"));
 		}
 		return 0;
 	}

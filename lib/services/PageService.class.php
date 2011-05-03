@@ -237,6 +237,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			throw new Exception("Unable to load page content");
 		}
+		$bs = block_BlockService::getInstance();
 
 		// Process new page content
 		$xpath = $this->getXPathInstance($contentDOM);
@@ -250,15 +251,15 @@ class website_PageService extends f_persistentdocument_DocumentService
 				if ($type != "richtext")
 				{
 					$blockInfoArray = $this->buildBlockInfo($type, $this->parseBlockParameters($blockNode), $blockNode->getAttribute('lang'), $blockNode->getAttribute('blockwidth'), $blockNode->getAttribute('editable') != 'false', $blockNode);
-					$className = $this->getBlockClassNameForSpecs($blockInfoArray);
-					if (!f_util_ClassUtils::classExists($className))
+					$className = $bs->getBlockActionClassNameByType($type);
+					if ($className === null)
 					{
 						continue;
 					}
 					$blockActionClass = new ReflectionClass($className);
 					if ($blockActionClass->isSubclassOf('website_BlockAction'))
 					{
-						$blockAction = $blockActionClass->newInstance();
+						$blockAction = $blockActionClass->newInstance($type);
 						if (isset($blockInfoArray['lang']))
 						{
 							$blockAction->setLang($blockInfoArray['lang']);
@@ -1038,19 +1039,20 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$blocks = array();
 		if ($dom->documentElement)
 		{
+			$bs = block_BlockService::getInstance();
 			$blockElems = $dom->getElementsByTagNameNS(self::CHANGE_PAGE_EDITOR_NS, 'block');
 			foreach ($blockElems as $blockElem)
 			{
 				$type = $blockElem->getAttribute("type");
 				if (!isset($blocks[$type]))
 				{
-					$blockClassName = $this->getBlockClassNameFromType($type);
+					$blockClassName = $bs->getBlockActionClassNameByType($type);
 					if ($blockClassName !== null)
 					{
 						$class = new ReflectionClass($blockClassName);
 						if ($class->implementsInterface("website_PageBlock"))
 						{
-							$block = $class->newInstance();
+							$block = $class->newInstance($type);
 							$blockInfo = $this->buildBlockInfo($type,
 							$this->parseBlockParameters($blockElem),
 							$blockElem->getAttribute('lang'),
@@ -1134,45 +1136,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$resultXPath->registerNameSpace('change', self::CHANGE_PAGE_EDITOR_NS);
 		return $resultXPath;
 	}
-
-	/**
-	 * @param DOMXPath $templateXPath
-	 * @param DOMXPath $contentXPath
-	 * @param DOMNode $templateNode
-	 */
-	private function mergeTemplateAndContent(&$templateXPath, &$contentXPath, &$templateNode)
-	{
-		$contentNodes = $contentXPath->query('//change:content');
-		foreach ($contentNodes as $contentNode)
-		{
-			$contentId = $contentNode->getAttribute("id");
-			$matchingPlaceHolders = $templateXPath->query(".//change:content[@id=\"$contentId\"]", $templateNode);
-			if ($matchingPlaceHolders->length == 1)
-			{
-				$importedNode = $templateXPath->document->importNode($contentNode, true);
-				$placeHolder = $matchingPlaceHolders->item(0);
-				$placeHolder->parentNode->insertBefore($importedNode, $placeHolder);
-				$placeHolder->parentNode->removeChild($placeHolder);
-			}
-		}
-	}
-
-	/**
-	 * @param String $type
-	 * @param DOMXPath $templateXpath
-	 * @return unknown
-	 */
-	private function getChangeTemplateByContentType($type, &$templateXpath)
-	{
-		$templates = $templateXpath->query("//change:template[@content-type=\"$type\"]");
-		if ($templates->length == 0)
-		{
-			$templates = $templateXpath->query('//change:template');
-		}
-		return $templates->item(0);
-	}
-
-
 
 
 	public final function getPendingTasksForCurrentUser()
@@ -1436,38 +1399,14 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 * @param website_persistentdocument_page $page
 	 * @return String
 	 */
-	public function getContentForEdition($page)
+	public function getContentForEdition($page, &$editorType = null)
 	{
-		$pageContent = $page->getContent();
-		$templateDOM = website_PageRessourceService::getInstance()->getBackpagetemplateAsDOMDocument($page);
-		$templateXpath = $this->getXPathInstance($templateDOM);
-		$xulTemplate = $this->getChangeTemplateByContentType(self::CHANGE_TEMPLATE_TYPE_XUL, $templateXpath);
-		$pageDOM = new DOMDocument('1.0', 'UTF-8');
-		$pageDOM->loadXML($pageContent);
-		$pageXpath = new DOMXPath($pageDOM);
-		$this->mergeTemplateAndContent($templateXpath, $pageXpath, $xulTemplate);
-		$xsl = new DOMDocument('1.0', 'UTF-8');
-		$xsl->load(FileResolver::getInstance()->setPackageName('modules_website')->setDirectory('lib')->getPath('pageEditContentTransform.xsl'));
-
-
-		$domTemplate = new DOMDocument('1.0', 'UTF-8');
-		$domTemplate->preserveWhiteSpace = false;
-		$domTemplate->appendChild($domTemplate->importNode($xulTemplate, true));
-		$xulTemplate = null; $templateDOM = null;
-		if (!$domTemplate->documentElement->hasAttribute('id'))
-		{
-			$domTemplate->documentElement->setAttribute('id', $page->getTemplate());
-		}
-		
-		$xslt = new XSLTProcessor();
-		$xslt->importStylesheet($xsl);
-		$pageContent = $xslt->transformToDoc($domTemplate);
+		$wsprs = website_PageRessourceService::getInstance();
+		$pageContent = $wsprs->getBackpagetemplateAsDOMDocument($page);
 		$this->patchOldPageContent($pageContent);
 
-		
-		
 		$blocks = $this->generateBlocks($pageContent);
-		$this->buildBlockContainerForBackOffice($pageContent, $blocks, $page);
+		$wsprs->buildBlockContainerForBackOffice($pageContent, $blocks);
 		
 		$pageContent->preserveWhiteSpace = false;
 		$xulContent = $pageContent->saveXML($pageContent->documentElement);
@@ -1505,6 +1444,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			}
 			else
 			{
+				Framework::warn(__METHOD__ . ' ' . $block['type'] . ' html: ' . $html);
 				$class = str_replace('_', '-', $block['type'] . ' ' . $block['package']);
 				$xmlContent = '<div xmlns="http://www.w3.org/1999/xhtml" style="' . $baseStyle . '" class="'.$class.'"><strong style="color:red;">' . $this->getBlockLabelFromBlockType($block['type'])  . ' : Invalid XML</strong></div>';
 			}
@@ -1682,38 +1622,14 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			$wsprs = website_PageRessourceService::getInstance();
 			$docType = $wsprs->getPageDocType($page);
-			$templateDOM = $wsprs->getPagetemplateAsDOMDocument($page);
-			$templateXpath = $this->getXPathInstance($templateDOM);
-			$htmlTemplate = $this->getChangeTemplateByContentType(self::CHANGE_TEMPLATE_TYPE_HTML, $templateXpath);
-
-			$contentDOM = new DOMDocument('1.0', 'UTF-8');
-			$contentDOM->loadXML($page->getContent());
-			$contentXpath = $this->getXPathInstance($contentDOM);
-			$this->mergeTemplateAndContent($templateXpath, $contentXpath, $htmlTemplate);
-
-			$domTemplate = new DOMDocument('1.0', 'UTF-8');
-			$domTemplate->preserveWhiteSpace = false;
-			$domTemplate->appendChild($domTemplate->importNode($htmlTemplate, true));
-			$htmlTemplate = null; $templateDOM = null;
-
-			if (!$domTemplate->documentElement->hasAttribute('id'))
-			{
-				$domTemplate->documentElement->setAttribute('id', $page->getTemplate());
-			}
-
-			$this->addBenchTime('templateLoading');
-			$xsl = new DOMDocument('1.0', 'UTF-8');
-			$xsl->load(FileResolver::getInstance()->setPackageName('modules_website')
-			->setDirectory('lib')->getPath('pageRenderContentTransform.xsl'));
-			$xslt = new XSLTProcessor();
-			$xslt->importStylesheet($xsl);
-			$pageContent = $xslt->transformToDoc($domTemplate);
+			$pageContent = $wsprs->getPagetemplateAsDOMDocument($page);
+			
 			$this->addBenchTime('templateFill');
 
 			$blocks = $this->generateBlocks($pageContent);
 			$this->addBenchTime('blocksParsing');
 
-			$this->buildBlockContainerForFrontOffice($pageContent, $blocks);
+			$wsprs->buildBlockContainerForFrontOffice($pageContent, $blocks);
 			$this->addBenchTime('blocksContainerGenerating');
 			$pageContent->preserveWhiteSpace = false;
 			$htmlBody = $pageContent->saveXML($pageContent->documentElement);
@@ -1760,35 +1676,9 @@ class website_PageService extends f_persistentdocument_DocumentService
 	public function getRenderedBlock($page)
 	{
 		$wsprs = website_PageRessourceService::getInstance();
+		$pageContent = $wsprs->getPagetemplateAsDOMDocument($page);
 		
-		$templateDOM = $wsprs->getPagetemplateAsDOMDocument($page);
-		$templateXpath = $this->getXPathInstance($templateDOM);
-		$htmlTemplate = $this->getChangeTemplateByContentType(self::CHANGE_TEMPLATE_TYPE_HTML, $templateXpath);
-
-		$contentDOM = new DOMDocument('1.0', 'UTF-8');
-		$contentDOM->loadXML($page->getContent());
-		$contentXpath = $this->getXPathInstance($contentDOM);
-		$this->mergeTemplateAndContent($templateXpath, $contentXpath, $htmlTemplate);
-
-		$domTemplate = new DOMDocument('1.0', 'UTF-8');
-		$domTemplate->preserveWhiteSpace = false;
-		$domTemplate->appendChild($domTemplate->importNode($htmlTemplate, true));
-		$htmlTemplate = null; 
-		$templateDOM = null;
-
-		if (!$domTemplate->documentElement->hasAttribute('id'))
-		{
-			$domTemplate->documentElement->setAttribute('id', $page->getTemplate());
-		}
-		$xsl = new DOMDocument('1.0', 'UTF-8');
-		$xsl->load(FileResolver::getInstance()->setPackageName('modules_website')
-			->setDirectory('lib')->getPath('pageRenderContentTransform.xsl'));
-		$xslt = new XSLTProcessor();
-		$xslt->importStylesheet($xsl);
-		$pageContent = $xslt->transformToDoc($domTemplate);
 		$blocks = $this->generateBlocks($pageContent);
-		
-		
 		$controller = website_BlockController::getInstance();
 		$controller->setPage($page);
 		$pageContext = $controller->getContext();
@@ -1837,6 +1727,8 @@ class website_PageService extends f_persistentdocument_DocumentService
 
 	/**
 	 * Generate the compiled blocks for the given page.
+	 * <changeblock type="modules_xxx_zzz" blockwidth="" editable="false" 
+	 * 	[lang="fr"] [id=""] [marginRight=""] [flex=""] [__aaaaaa="value"]>[content]</changeblock>
 	 * @param DOMDocument $DOMDocument
 	 * @return array
 	 */
@@ -1851,11 +1743,11 @@ class website_PageService extends f_persistentdocument_DocumentService
 			if (! $block->hasAttribute('type')) {continue;}
 			$type = $block->getAttribute('type');
 			$result[$blockIndex] = $this->buildBlockInfo($type,
-			$this->parseBlockParameters($block),
-			$block->getAttribute('lang'),
-			$block->getAttribute('blockwidth'),
-			$block->getAttribute('editable') != 'false',
-			$block);
+				$this->parseBlockParameters($block),
+				$block->getAttribute('lang'),
+				$block->getAttribute('blockwidth'),
+				$block->getAttribute('editable') != 'false',
+				$block);
 		}
 		return $result;
 	}
@@ -1904,7 +1796,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 * @return array
 	 */
 	private function parseBlockParameters($block)
-	{
+	{		
 		$parameters = array();
 		foreach ($block->attributes as $attrName => $attrNode)
 		{
@@ -1941,24 +1833,27 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			$this->benchTimes['blocks'] = array();
 		}
+		$bs = block_BlockService::getInstance();
 
 		foreach ($blocks as $blockId => $block)
 		{
-			$className = $this->getBlockClassNameForSpecs($block);
-			if (!f_util_ClassUtils::classExists($className))
+			$blocType = $block['type'];			
+			$className = $bs->getBlockActionClassNameByType($block['type']);
+			if ($className === null)
 			{
 				$originalClassName = $className;
-				$className = 'website_BlockMissingAction';
+				$blocType = 'modules_website_Missing';
+				$className = $bs->getBlockActionClassNameByType($blocType);
 			}
 			$reflectionClass = new ReflectionClass($className);
 			if ($reflectionClass->isSubclassOf('website_BlockAction'))
 			{
-				$classInstance = $reflectionClass->newInstance();
+				$classInstance = $reflectionClass->newInstance($blocType);
 				if (isset($block['lang']))
 				{
 					$classInstance->setLang($block['lang']);
 				}
-				if ($className == 'website_BlockMissingAction')
+				if ($blocType == 'modules_website_Missing')
 				{
 					$classInstance->setOriginalClassName($originalClassName);
 				}
@@ -2023,105 +1918,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 			unset($blocks[$blockId]['blockaction']);
 		}
 	}
-
-	/**
-	 * @param DOMDocument $pageContent
-	 * @param array $blocks
-	 */
-	private function buildBlockContainerForFrontOffice($pageContent, &$blocks)
-	{
-		foreach ($blocks as $blockId => $blockData)
-		{
-			$node = $blockData['DomNode'];
-			$div = $pageContent->createElement('div');
-			if ($node->hasAttribute('marginRight'))
-			{
-				$style = 'margin-right: ' . $node->getAttribute('marginRight') .'px;';	
-			}
-			else
-			{
-				$style = '';
-			}
-			
-			if (isset($blockData['parameters']['style']))
-			{
-				$style = $blocks[$blockId]['parameters']['style'];
-			}
-			
-			$div->setAttribute('class', $blockData['class']);
-			if (isset($blockData['id']))
-			{
-				$div->setAttribute('id', $blockData['id']);
-			}
-			else
-			{
-				$div->setAttribute('id', 'b_'. $blockId);
-			}
-
-			if ($style !== '')
-			{
-				$div->setAttribute('style', $style);
-			}
-			
-			$div->appendChild($pageContent->createElement('htmlblock_' . $blockId));
-			$node->parentNode->replaceChild($div, $node);
-			unset($blocks[$blockId]['DomNode']);
-		}
-	}
-
-	/**
-	 * @param DOMDocument $pageContent
-	 * @param array $blocks
-	 * @param website_persistentdocument_page $page
-	 */
-	private function buildBlockContainerForBackOffice($pageContent, &$blocks, $page)
-	{
-		foreach ($blocks as $blockId => $blockData)
-		{
-			$static = ($blockData['name'] === 'staticrichtext');
-			$node = $blockData['DomNode'];
-
-			if (!$blockData['editable'])
-			{
-				$element = $pageContent->createElement('hbox');
-				$element->setAttribute('flex', '1');
-			}
-			else if ($static)
-			{
-				$element = $pageContent->createElement('cblock');
-				$element->setAttribute('type', 'richtext');
-				$element->setAttribute('bind', 'richtext');			
-				$blankUrlParams = "cmpref=" . $page->getId() . "&lang=" . RequestContext::getInstance()->getLang();
-				$element->setAttribute('blankUrlParams', $blankUrlParams);
-			}
-			else
-			{
-				$element = $pageContent->createElement('cblock');
-				$element->setAttribute('type', $blockData['type']);
-				$element->setAttribute('bind', 'action');
-			}
-			
-			if (isset($blockData['marginRight']))
-			{
-				$element->setAttribute('marginRight', $blockData['marginRight']);
-			}
-			if (isset($blockData['flex']))
-			{
-				$element->setAttribute('flex', $blockData['flex']);
-			}		
-				
-			foreach ($blockData['parameters'] as $name => $value)
-			{
-				if ($static && $name === 'content') {continue;}
-				$element->setAttribute('__' . $name, $value);
-			}
-
-			$element->appendChild($pageContent->createElement('htmlblock_' . $blockId));
-			$node->parentNode->replaceChild($element, $node);
-			unset($blocks[$blockId]['DomNode']);
-		}
-	}
-
 
 	/**
 	 * @param array $specs

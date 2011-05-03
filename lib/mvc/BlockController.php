@@ -602,8 +602,9 @@ class website_BlockController implements f_mvc_Controller
 		// Render the view
 		if (!$this->shouldRedirect && ($relativeNameOrTemplate instanceof TemplateObject || !f_util_StringUtils::isEmpty($relativeNameOrTemplate)))
 		{
+			$configuration = $this->action->getConfiguration();
 			$this->actionRequest->setAttribute('configuration', $this->action->getConfiguration());
-			$view = new website_BlockView($relativeNameOrTemplate);
+			$view = new website_BlockView($relativeNameOrTemplate, $configuration->getTemplateModule());
 			$view->execute($this->actionRequest, $response);
 		}
 	}
@@ -763,13 +764,14 @@ class website_BlockController implements f_mvc_Controller
 	 */
 	public function getActionInstanceByModuleAndName($moduleName, $actionName)
 	{
-		$className = $moduleName . '_Block' . ucfirst($actionName).'Action';
-		if (f_util_ClassUtils::classExists($className))
+		$blockType = 'modules_' . $moduleName . '_' . $actionName;
+		$className = block_BlockService::getInstance()->getBlockActionClassNameByType($blockType);		
+		if ($className !== null)
 		{
-			$instance = new $className();
-			if ($instance instanceof website_BlockAction)
+			$blockActionClass = new ReflectionClass($className);
+			if ($blockActionClass->isSubclassOf('website_BlockAction'))
 			{
-				return $instance;
+				return $blockActionClass->newInstance($blockType);	
 			}
 			throw new Exception("$className is not a website_BlockAction");
 		}

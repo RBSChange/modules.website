@@ -1,6 +1,9 @@
 <?php
 class block_BlockPropertyInfo extends PropertyInfo
 {
+	private static $DEFAULT = array('name'=> null, 'type' => 'String',  
+		'min-occurs' => 0, 'max-occurs' => 1, 'default-value' => null, 'from-list' => null,
+		'label' => null, 'helptext' => null, 'hidden' => false);
 	/**
 	 * @var String
 	 */
@@ -26,11 +29,30 @@ class block_BlockPropertyInfo extends PropertyInfo
 	 */
 	private $m_extendedAttributes = array();
 	
-	/**
-	 * @var FormPropertyInfo
-	 */
-	private $m_formPropertyInfo = null;
+	public function __construct($propertyInfoArray)
+	{
+		$p = array_merge(self::$DEFAULT, $propertyInfoArray);
+		$name = $p['name'];
+		$type = $p['type'];
+		$minOccurs = intval($p['min-occurs']);
+		$maxOccurs = intval($p['max-occurs']);
+		$isDocument = strpos($type, 'modules_') === 0;
+		$isArray = $isDocument && $maxOccurs != 1;
+		$defaultValue = $p['default-value'];
+		$fromList = $p['from-list'];
+		$constraints = '';
+		
+		parent::__construct($name, $type, $minOccurs, $maxOccurs, '', '', false, false, false, 
+			$isArray, $isDocument, $defaultValue, $constraints, 
+			false, false, false, $fromList);
 	
+		$this->setLabel($p['label']);
+		$this->setHelpText($p['helptext']);
+		$this->setListId($fromList);
+		$this->setHidden($p['hidden']);
+		$this->m_extendedAttributes = array_diff($propertyInfoArray, self::$DEFAULT);
+	}
+		
 	/**
 	 * @param String $value
 	 * @return block_BlockPropertyInfo
@@ -146,43 +168,9 @@ class block_BlockPropertyInfo extends PropertyInfo
 	 */
 	public function hasDefaultValue()
 	{
-		return ! is_null($this->getDefaultValue());
+		return !is_null($this->getDefaultValue());
 	}
 	
-	public function getPhpGetter()
-	{
-		return 'get'.ucfirst($this->getName());
-	}
-	
-	/**
-	 * @return FormPropertyInfo
-	 */
-	public function getFormPropertyInfo()
-	{
-		if ($this->m_formPropertyInfo === null)
-		{
-			$display = $this->getHidden() ? "hidden" : "edit";
-			if (isset($this->m_extendedAttributes['control-type']))
-			{
-				$controlType = $this->m_extendedAttributes['control-type'];
-				unset($this->m_extendedAttributes['control-type']);
-			}
-			else 
-			{
-				$controlType = $this->getType();
-			}
-			$this->m_formPropertyInfo = new FormPropertyInfo($this->getName(), $controlType, $display, $this->isRequired(), $this->getLabel(), $this->m_extendedAttributes);
-		}
-		return $this->m_formPropertyInfo;
-	}
-	
-	/**
-	 * @param FormPropertyInfo $formPropertyInfo
-	 */
-	public function setFormPropertyInfo($formPropertyInfo)
-	{
-		$this->m_formPropertyInfo = $formPropertyInfo;
-	}
 	
 	/**
 	 * @param String $name
