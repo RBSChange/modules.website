@@ -1315,7 +1315,7 @@ jQuery(document).ready(function() {
 		$fullSubmitName = self::buildInputName(website_BlockAction::SUBMIT_PARAMETER_NAME, false) . '[' . self::$currentBlockId . '][' . $name . ']';
 		$params["type"] = "submit";
 		$params["name"] = $fullSubmitName;
-		$value = self::getLabelFromParameters($params);
+		$value = self::getSubmitLabelFromParameters($params);
 		if (!f_util_StringUtils::isEmpty($value))
 		{
 			$params["value"] = $value;
@@ -1720,22 +1720,30 @@ jQuery(document).ready(function() {
 	 */
 	private static function getLabelFromParameters(&$params, $unsetWhenDone = true)
 	{
+		$value = '';
 		if (isset($params['evaluatedlabel']))
 		{
-			return $params['evaluatedlabel'];
+			$value = $params['evaluatedlabel'];
 		}
-		elseif (isset($params['label']))
+		else if (isset($params['labeli18n']))
+		{
+			$value = LocaleService::getInstance()->transFO($params['labeli18n'], array('ucf', 'lab', 'html'));
+			if ($unsetWhenDone)
+			{
+				unset($params['labeli18n']);
+			}
+		}
+		else if (isset($params['label']))
 		{
 			$ls = LocaleService::getInstance();
 			$cKey = $ls->cleanOldKey($params['label']);
-			$result = ($cKey === false) ? $params['label'] : $ls->transFO($cKey);
+			$value = ($cKey === false) ? $params['label'] : $ls->transFO($cKey, array('ucf', 'lab', 'html'));
 			if ($unsetWhenDone)
 			{
 				unset($params['label']);
 			}
-			return $result;
 		}
-		elseif (self::$hasBean && isset($params["shortInputName"]) && BeanUtils::hasProperty(self::$bean, $params["shortInputName"]))
+		else if (self::$hasBean && isset($params["shortInputName"]) && BeanUtils::hasProperty(self::$bean, $params["shortInputName"]))
 		{
 			$propertyInfo = BeanUtils::getPropertyInfo(self::$bean, $params["shortInputName"]);
 			$key = $propertyInfo->getLabelKey();
@@ -1745,11 +1753,44 @@ jQuery(document).ready(function() {
 				$ckey = $ls->cleanOldKey($key);
 				if ($ckey !== false)
 				{
-					return $ls->transFO($ckey, array('ucf', 'lab', 'html'));
+					$value = $ls->transFO($ckey, array('ucf', 'lab', 'html'));
 				}
 			}
 		}
-		return "";
+		return $value;
+	}
+
+	/**
+	 * @param Array $params
+	 * @param Boolean $unsetWhenDone
+	 * @return String
+	 */
+	private static function getSubmitLabelFromParameters(&$params, $unsetWhenDone = true)
+	{
+		$value = '';
+		if (isset($params['evaluatedlabel']))
+		{
+			$value = $params['evaluatedlabel'];
+		}
+		else if (isset($params['labeli18n']))
+		{
+			$value = LocaleService::getInstance()->transFO($params['labeli18n'], array('ucf', 'attr', 'html'));
+			if ($unsetWhenDone)
+			{
+				unset($params['labeli18n']);
+			}
+		}
+		else if (isset($params['label']))
+		{
+			$ls = LocaleService::getInstance();
+			$cKey = $ls->cleanOldKey($params['label']);
+			$value = ($cKey === false) ? $params['label'] : $ls->transFO($cKey, array('ucf', 'attr', 'html'));
+			if ($unsetWhenDone)
+			{
+				unset($params['label']);
+			}
+		}
+		return $value;
 	}
 
 	/**
@@ -1770,7 +1811,7 @@ jQuery(document).ready(function() {
 	}
 
 	// TODO: includeAttributes by type !
-	private static $includeAttributes = array("readonly" => true , "rows" => true , "cols" => true , "size" => true , "maxlength" => true , "minlength" => true , "value" => true , "label" => true , "checked" => true , "selected" => true , "for" => true , "type" => true , "name" => true , "id" => true , "class" => true , "hidden" => true , "disabled" => true , "onclick" => true, "style" => true, "onchange" => true, "multiple" => true, "title" => true);
+	private static $includeAttributes = array("readonly" => true , "rows" => true , "cols" => true , "size" => true , "maxlength" => true , "minlength" => true , "value" => true , "label" => true , "labeli18n" => true, "checked" => true , "selected" => true , "for" => true , "type" => true , "name" => true , "id" => true , "class" => true , "hidden" => true , "disabled" => true , "onclick" => true, "style" => true, "onchange" => true, "multiple" => true, "title" => true);
 
 	/**
 	 * @param Array $params
@@ -1781,6 +1822,10 @@ jQuery(document).ready(function() {
 		if (isset($params['label']))
 		{
 			unset($params['label']);
+		}
+		if (isset($params['labeli18n']))
+		{
+			unset($params['labeli18n']);
 		}
 		if (isset($params['help']))
 		{
@@ -1994,7 +2039,7 @@ jQuery(document).ready(function() {
 		$result .= '<select ';
 		foreach ($params as $name => $value)
 		{
-			if (isset(self::$includeAttributes[$name]) && $name != 'value' && $name != 'label')
+			if (isset(self::$includeAttributes[$name]) && $name != 'value' && $name != 'label' && $name != 'labeli18n')
 			{
 				if ($name == 'name' && isset($params["multiple"]))
 				{
@@ -2295,6 +2340,7 @@ jQuery(document).ready(function() {
 		if (isset($params["hidden"]) && $params["hidden"] == true)
 		{
 			unset($params["label"]);
+			unset($params["labeli18n"]);
 			return self::renderHiddeninput($params);
 		}
 
@@ -2307,7 +2353,7 @@ jQuery(document).ready(function() {
 		{
 			return $params["labeled"];
 		}
-		if (isset($params["label"]) || isset($params["evaluatedlabel"]))
+		if (isset($params["label"]) || isset($params["labeli18n"]) || isset($params["evaluatedlabel"]))
 		{
 			return true;
 		}

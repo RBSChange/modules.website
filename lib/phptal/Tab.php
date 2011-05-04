@@ -1,6 +1,5 @@
 <?php
-// change:actionlink()
-//   <a change:actionlink="module 'news'; id news/getId">bla</a>
+//   <a change:tab="name tab1" labeli18n="m.mymodule...tab1-title">bla</a>
 /**
  * @package phptal.php.attribute
  */
@@ -33,7 +32,14 @@ class PHPTAL_Php_Attribute_CHANGE_tab extends ChangeTalAttribute
 	{
 		$currentTabsId = PHPTAL_Php_Attribute_CHANGE_tabs::getCurrentId();
 		$id = $currentTabsId."_".$params["name"];
-		$label = f_Locale::translate($params["label"]);
+		if (isset($params["labeli18n"]))
+		{
+			$label = LocaleService::getInstance()->transFO($params["labeli18n"], array('ucf', 'html'));
+		}
+		else if (isset($params["label"]))
+		{
+			$label = f_Locale::translate($params["label"]);
+		}
 		PHPTAL_Php_Attribute_CHANGE_tabs::addTab($id, $label);
 		$html = "<div class=\"tab\" id=\"$id\">";
 		
