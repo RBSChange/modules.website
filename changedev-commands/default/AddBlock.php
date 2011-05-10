@@ -8,7 +8,7 @@ class commands_AddBlock extends commands_AbstractChangedevCommand
 	{
 		return "<moduleName> <blockName> [icon] [options]
 where options in:
-  --no-tag: do not create a tag for the block.";
+  --tag: create a tag for the block.";
 	}
 
 	function getOptions()
@@ -65,7 +65,7 @@ where options in:
 		$moduleName = $params[0];
 		$blockName = ucfirst($params[1]);
 		$icon = isset($params[2]) ? $params[2] : null;
-		$createTag = !isset($options["no-tag"]);
+		$createTag = isset($options["tag"]);
 
 		$this->loadFramework();
 		$moduleGenerator = new builder_BlockGenerator($moduleName);
@@ -76,8 +76,8 @@ where options in:
 		{
 			$this->getParent()->executeCommand("compile-tags");
 		}
-		$this->getParent()->executeCommand("clear-webapp-cache");
-		
+		$this->getParent()->executeCommand("compileLocales", array($moduleName));
+				
 		$this->quitOk("Block '$blockName' added in module '$moduleName'.
 Please now edit ".$blockPath.".");
 	}

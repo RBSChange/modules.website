@@ -62,7 +62,7 @@ class commands_CompileBlocks extends commands_AbstractChangeCommand
 	 */
 	function showCurrentModule($moduleName, $exception = null)
 	{
-		if ( ! is_null($exception) )
+		if ($exception !== null)
 		{
 			$this->errorMessage("$moduleName: failure\n".$exception->getMessage());
 			$this->debugMessage($exception->getTraceAsString());
