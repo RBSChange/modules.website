@@ -39,7 +39,8 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 		}
 		else
 		{
-			list(,$this->moduleName, $this->name) = explode('_', $blocType);
+			list(,$this->moduleName, $blockName) = explode('_', $blocType);
+			$this->name = f_util_StringUtils::lcfirst($blockName);
 		}
 		
 		$this->blockType = $blocType;

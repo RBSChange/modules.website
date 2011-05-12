@@ -16,7 +16,7 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 		{
 			$this->_generateBlockTag($blockName, $icon);
 		}
-		block_BlockService::getInstance()->compileBlocksForPackage("modules_".$this->name);
+		block_BlockService::getInstance()->compileBlocks();
 		return $blockPath;
 	}
 
@@ -62,7 +62,7 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 	{
 		return array('blocks', 'BlockAction.class.php.tpl');
 	}
-	
+
 	/**
 	 * @return String[] [$folder, $tplName]
 	 */
@@ -114,7 +114,7 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 	protected function _generateBlocksxml($blockName, $icon)
 	{
 		$blocksFile = f_util_FileUtils::buildWebeditPath('modules', $this->name, 'config', 'blocks.xml');
-		$blockType = "modules_".$this->name."_". f_util_StringUtils::lcfirst($blockName);
+		$blockType = "modules_".$this->name."_".$blockName;
 		if (file_exists($blocksFile))
 		{
 			$dom = f_util_DOMUtils::fromPath($blocksFile);
@@ -151,11 +151,9 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 		$templateDir = f_util_FileUtils::buildWebeditPath('modules', 'website', 'templates', 'builder', $folder);
 		$generator = new builder_Generator();
 		$generator->setTemplateDir($templateDir);
-		$generator->assign('author', $this->author);
 		$generator->assign('blockName', $blockName);
 		$generator->assign('module', $this->name);
 		$generator->assign('icon', $icon);
-		$generator->assign('date', $this->date);
 		foreach ($this->getAdditionalTplVariables() as $key => $value)
 		{
 			$generator->assign($key, $value);
