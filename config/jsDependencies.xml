@@ -53,6 +53,36 @@
 		</dependencies>
 	</script>
 	
+	<!-- Form validation -->
+	<script name="modules.website.lib.js.form-validation-declaration" />
+	<!-- Form validation using jquery-validate -->
+	<script name="modules.website.lib.js.form-validation">
+		<dependencies>
+			<dependency name="modules.website.lib.js.form-validation-declaration" />
+			<dependency
+				name="modules.website.lib.js.i18n.jquery-validation-messages-${LANG}" />
+		</dependencies>
+	</script>
+	<script name="modules.website.lib.js.i18n.jquery-validation-messages-${LANG}">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-validate" />
+		</dependencies>
+	</script>
+	<!-- END Form validation -->
+	
+	<!-- JQuery validation ; http://docs.jquery.com/Plugins/Validation/validate -->
+	<script name="modules.website.lib.js.jquery-validate">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery" />
+		</dependencies>
+	</script>
+	
+	<script name="modules.website.lib.js.jquery-validate-additionnal-methods">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-validate" />
+		</dependencies>
+	</script>
+
 	<!-- JQuery UI Core -->
 	<script noreplacement="true" name="modules.website.lib.js.jquery-ui">
 		<dependencies>
