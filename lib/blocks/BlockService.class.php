@@ -350,6 +350,13 @@ class block_BlockService extends BaseService
 				$blockInfoArray[$blockId][$attName] = $attVal;
 			}
 			
+			// If no label is explicitely set, generate it from the block type.
+			if (!isset($blockInfoArray[$blockId]['label']))
+			{
+				list(, $moduleName, $blockName) = explode('_', strtolower($blockType));
+				$blockInfoArray[$blockId]['label'] = "&modules.$moduleName.bo.blocks.$blockName.Title;";
+			}
+			
 			$nodeParamList = $domDoc->find('parameters/parameter', $blockElm);
 			for ($paramIdx=0; $paramIdx < $nodeParamList->length; $paramIdx++)
 			{

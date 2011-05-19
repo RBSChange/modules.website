@@ -258,7 +258,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 		}
 		if ($required)
 		{
-			throw new Exception("Could not found any document corresponding to '$paramName' parameter");
+			throw new Exception("Could not find any document corresponding to '$paramName' parameter");
 		}
 		return null;
 	}
