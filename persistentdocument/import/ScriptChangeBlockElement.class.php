@@ -33,7 +33,15 @@ class website_ScriptChangeBlockElement extends import_ScriptBaseElement
 				{
 					if ($propertyInfo->hasDefaultValue())
 					{
-						$bloc->setAttribute('__' . $propertyInfo->getName(), $propertyInfo->getDefaultValue());
+						// Convert booleans to string value.
+						if ($propertyInfo->getType() == 'Boolean')
+						{
+							$bloc->setAttribute('__' . $propertyInfo->getName(), $propertyInfo->getDefaultValue() ? 'true' : 'false');
+						}
+						else
+						{
+							$bloc->setAttribute('__' . $propertyInfo->getName(), $propertyInfo->getDefaultValue());
+						}
 					}
 				}
 			}

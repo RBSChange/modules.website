@@ -86,7 +86,7 @@ class block_BlockPropertyInfo extends PropertyInfo
 	 */
 	public function hasHelpText()
 	{
-		return ! is_null($this->m_helpText);
+		return $this->m_helpText !== null;
 	}
 
 	/**
@@ -112,7 +112,7 @@ class block_BlockPropertyInfo extends PropertyInfo
 	 */
 	public function hasListId()
 	{
-		return ! is_null($this->m_listId);
+		return $this->m_listId !== null;
 	}
 
 	/**
@@ -129,11 +129,11 @@ class block_BlockPropertyInfo extends PropertyInfo
 	 */
 	public function setRequired($bool)
 	{
-		if ( $bool && ! $this->isRequired() )
+		if ($bool && !$this->isRequired())
 		{
 			$this->setMinOccurs(1);
 		}
-		else if ( ! $bool )
+		else if (!$bool)
 		{
 			$this->setMinOccurs(0);
 		}
@@ -168,7 +168,7 @@ class block_BlockPropertyInfo extends PropertyInfo
 	 */
 	public function hasDefaultValue()
 	{
-		return !is_null($this->getDefaultValue());
+		return $this->getDefaultValue() !== null;
 	}
 	
 	
