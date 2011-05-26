@@ -87,4 +87,6 @@
   <actiondef modulename="website" actionname="deactivated.markergmaps" label="m.website.bo.useractionlogger.deactivated-markergmaps"/>
   <actiondef modulename="website" actionname="reactivate.markergmaps" label="m.website.bo.useractionlogger.reactivate-markergmaps"/>
   <actiondef modulename="website" actionname="deactivated.markergas" label="m.website.bo.useractionlogger.deactivated-markergas"/>
+  <actiondef modulename="website" actionname="saveredirectinfo.topic" label="m.website.bo.useractionlogger.saveredirectinfo-topic"/>
+  <actiondef modulename="website" actionname="savepermissions.website" label="m.website.bo.useractionlogger.savepermissions-website"/>
 </script>

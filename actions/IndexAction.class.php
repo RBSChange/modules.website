@@ -7,31 +7,25 @@ class website_IndexAction extends f_action_BaseAction
 	 */
 	public function _execute($context, $request)
 	{
-		$ws = website_WebsiteModuleService::getInstance();
-		$website = $ws->getCurrentWebsite(!RequestContext::getInstance()->isLangDefined());
-
-		if ($website instanceof website_persistentdocument_website)
+		try 
 		{
-			if (($homePage = $ws->getIndexPage($website)) === null || !$homePage->isPublished())
+			$host = $_SERVER['HTTP_HOST'];
+			website_UrlRewritingService::getInstance()->initCurrrentWebsite($host);
+			$ws = website_WebsiteModuleService::getInstance();
+			$website = $ws->getCurrentWebsite();
+			$homePage = $ws->getIndexPage($website, false);
+			if ($homePage  === null || !$homePage->isPublished())
 			{
-				require(f_util_FileUtils::buildWebeditPath("site-disabled.php"));
-				return View::NONE ;
+				throw new Exception('Website has no published home page');
 			}
-			else
-			{
-				$request->setParameter(K::PAGE_REF_ACCESSOR, $homePage->getId());
-				$fwdModule = 'website';
-				$fwdAction = 'Display';
-			}
-		}
-		else
+			$request->setParameter(K::PAGE_REF_ACCESSOR, $homePage->getId());
+			$context->getController()->forward('website', 'Display');
+		} 
+		catch (Exception $e) 
 		{
-			$fwdModule = AG_ERROR_404_MODULE;
-			$fwdAction = AG_ERROR_404_ACTION;
-		}
-
-		$context->getController()->forward($fwdModule, $fwdAction);
-
+			Framework::exception($e);
+			require(f_util_FileUtils::buildWebeditPath("site-disabled.php"));
+		}		
 		return View::NONE ;
 	}
 

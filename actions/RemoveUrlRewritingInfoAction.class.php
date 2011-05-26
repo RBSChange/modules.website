@@ -8,7 +8,7 @@ class website_RemoveUrlRewritingInfoAction extends f_action_BaseAction
 	public function _execute($context, $request)
     {
     	$document = $this->getDocumentInstanceFromRequest($request);
-    	$document->getDocumentService()->setUrlRewriting($document, $this->getLang(), null);
+    	website_UrlRewritingService::getInstance()->clearAllCustomPath($document);
 		return self::getSuccessView();
     }
 }

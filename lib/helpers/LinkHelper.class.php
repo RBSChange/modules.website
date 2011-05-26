@@ -1,12 +1,7 @@
 <?php
-/**
- * @date Thu Mar 29 18:53:08 CEST 2007
- * @author INTbonjF
- */
+
 class LinkHelper
-{
-	private static $urls = array();
-		
+{	
 	/**
 	 * @param array $queryParams
 	 * @param website_persistentdocument_website $website
@@ -22,7 +17,7 @@ class LinkHelper
 	    $link->setQueryParameters($queryParams);
 	    return $link;
 	}
-	
+		
 	/**
 	 * @param array $queryParams
 	 * @return f_web_ParametrizedLink
@@ -46,8 +41,8 @@ class LinkHelper
 	    {
 	        $website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
 	    }
-	    $link = new f_web_ParametrizedLink($website->getProtocol(), $website->getDomain(), f_web_HttpLink::SITE_PATH);
-	    $link->setQueryParameters(array('module' => $moduleName, 'action' => $actionName));
+	    $lang = RequestContext::getInstance()->getLang();
+	    $link = website_UrlRewritingService::getInstance()->getDefaultActionWebLink($moduleName, $actionName, $website, $lang, array());
 	    return $link;
 	}
 		
@@ -130,57 +125,61 @@ class LinkHelper
 	 * @param string $lang
 	 * @param array $parameters
 	 * @param Boolean $useCache
-	 * @return string
+	 * @return string or null
 	 */
 	public static function getDocumentUrl($document, $lang = null, $parameters = array(), $useCache = true)
+	{
+		return self::getDocumentUrlForWebsite($document, null, $lang, $parameters);
+	}
+	
+	/**
+	 * @param f_persistentdocument_PersistentDocument $document
+	 * @param website_persistentdocument_website $website
+	 * @param string $lang
+	 * @param array $parameters
+	 * @return string or null
+	 */
+	public static function getDocumentUrlForWebsite($document, $website, $lang = null, $parameters = array())
 	{
 		if (!($document instanceof f_persistentdocument_PersistentDocument))
 		{
 			Framework::error(f_util_ProcessUtils::getBackTrace());
 			return null;
 		}
-		
-		if ($useCache)
-		{
-			$key = md5($document->getId() . $lang . serialize($parameters));
-			if (isset(self::$urls[$key]))
-			{
-				return self::$urls[$key];
-			}
-		}
-		
-		$urs = website_UrlRewritingService::getInstance();
-		$url = $urs->getDocumentUrl($document, $lang, $parameters);
-		if ($url === null)
-		{
-			$url = $urs->getNonRewrittenDocumentUrl($document, $lang, $parameters);
-		}
-		
-		if ($useCache)
-		{
-			self::$urls[$key] = $url;
-		}
-		return $url;
+		if ($lang === null) {$lang = RequestContext::getInstance()->getLang();}
+		return website_UrlRewritingService::getInstance()->getDocumentLinkForWebsite($document, $website, $lang, $parameters)->getUrl();
 	}
-	
 	
 	/**
 	 * @param string $moduleName
 	 * @param string $actionName
 	 * @param array $parameters
-	 * @return string
+	 * @return string or null
 	 */
 	public static function getActionUrl($moduleName, $actionName, $parameters = array())
 	{
-	    $key = md5($moduleName . $actionName . serialize($parameters));
-		if (isset(self::$urls[$key]))
-		{
-			return self::$urls[$key];
-		}
-		$url = website_UrlRewritingService::getInstance()->getUrl($moduleName, $actionName, $parameters);
-        self::$urls[$key] = $url;
-		return $url;
+		return self::getActionUrlForWebsite($moduleName, $actionName, null, null, $parameters);
 	}	
+	
+	/**
+	 * @param string $moduleName
+	 * @param string $actionName
+	 * @param website_persistentdocument_website $website
+	 * @param string $lang
+	 * @param array $parameters
+	 * @return string or null
+	 */
+	public static function getActionUrlForWebsite($moduleName, $actionName, $website = null, $lang = null, $parameters = array())
+	{
+		if (empty($moduleName) || empty($actionName))
+		{
+			Framework::error(f_util_ProcessUtils::getBackTrace());
+			return null;
+		}
+		if ($website === null){$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();}
+		if ($lang === null) {$lang = RequestContext::getInstance()->getLang();}
+		return website_UrlRewritingService::getInstance()->getActionLinkForWebsite($moduleName, $actionName, $website, $lang, $parameters)->getUrl();
+	}
 	
 	/**
 	 * @param f_persistentdocument_PersistentDocument $document
@@ -190,13 +189,35 @@ class LinkHelper
 		return self::getActionUrl('website', 'Permalink', array('cmpref' => $document->getId()));
 	}
 	
+	/**
+	 * @param string $tag
+	 * @param string $lang
+	 * @param array $parameters
+	 * @return string or null
+	 */
 	public static function getTagUrl($tag, $lang = null, $parameters = array())
 	{
-		$urs = website_UrlRewritingService::getInstance();
-		$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();		
-		$url = $urs->getTagUrl($tag, $website, $lang, $parameters);
-		if ($url !== null) {return $url;}
+		return self::getTagUrlForContext($tag, null, $lang, $parameters);
+	}
+	
+	/**
+	 * @param string $tag
+	 * @param f_persistentdocument_PersistentDocument $context
+	 * @param string $lang
+	 * @param array $parameters
+	 * @return string or null
+	 */
+	public static function getTagUrlForContext($tag, $context = null, $lang = null, $parameters = array())
+	{
+		if (empty($tag))
+		{
+			Framework::error(f_util_ProcessUtils::getBackTrace());
+			return null;
+		}		
+		if ($lang === null) {$lang = RequestContext::getInstance()->getLang();}
+		$website = ($context instanceof website_persistentdocument_website) ? $context : null;
 		
+		$urs = website_UrlRewritingService::getInstance();		
 		$ts = TagService::getInstance();
 		try 
 		{
@@ -207,17 +228,41 @@ class LinkHelper
 			}
 			else if ($ts->isFunctionalTag($tag))
 			{
-				$currentPageId = website_WebsiteModuleService::getInstance()->getCurrentPageId();
-				if ($currentPageId)
+				$pageId = null;
+				
+				if ($context === null)
 				{
-					$currentPage = DocumentHelper::getDocumentInstance($currentPageId);
-					$document = $ts->getDocumentBySiblingTag($tag, $currentPage);
+					$pageId = website_WebsiteModuleService::getInstance()->getCurrentPageId();
+				}
+				else if ($context instanceof website_persistentdocument_page)
+				{
+					$pageId = $context->getId();
+				}
+				else if ($context instanceof website_persistentdocument_topic)
+				{
+					$page = $context->getIndexPage();
+					if ($page) {$pageId = $page->getId();}
+				}
+				
+				if ($pageId)
+				{
+					$currentPage = DocumentHelper::getDocumentInstance($pageId);
+					$document = $ts->getDocumentBySiblingTag($tag, $pageId);
 				}
 			}
 			else if ($ts->isContextualTag($tag) && $ts->getTagContext($tag) == 'modules_website/website')
 			{
-				$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
-				if (!$website->isNew())
+				if ($context === null)
+				{
+					$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+				}
+				else if ($context instanceof f_persistentdocument_PersistentDocument)
+				{
+					$websiteId = $context->getDocumentService()->getWebsiteId($context);
+					if ($websiteId) {$website = website_persistentdocument_website::getInstanceById($websiteId);}
+				}
+				
+				if ($website !== null && !$website->isNew())
 				{
 					$document = $ts->getDocumentByContextualTag($tag, $website);
 				}
@@ -233,7 +278,7 @@ class LinkHelper
 			
 			if ($document !== null)
 			{
-				return self::getDocumentUrl($document, $lang, $parameters);
+				return $urs->getDocumentLinkForWebsite($document, $website, $lang, $parameters)->getUrl();
 			}
 			else
 			{
@@ -244,58 +289,67 @@ class LinkHelper
 		{
 			Framework::warn(__METHOD__ . ' ' . $e->getMessage());
 		}
-		return '';
+		return null;
 	}
 
 	/**
 	 * Return the URL of the home page of the current website
-	 *
 	 * @return string
 	 */
 	public static function getHomeUrl()
 	{
-	    $ws = website_WebsiteModuleService::getInstance();
-	    $url = $ws->getEmptyUrl();
-		try
-		{
-            $website = $ws->getCurrentWebsite();
-            if ($website instanceof website_persistentdocument_website
-            && ! is_null($page = $ws->getIndexPage($website)))
-            {
-                $url = LinkHelper::getDocumentUrl($page);
-            }
-		}
-		catch (Exception $e)
-		{
-			Framework::exception($e);
-		}
-	    return $url;
+	    $website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+	    $lang = RequestContext::getInstance()->getLang();
+        return website_UrlRewritingService::getInstance()->getRewriteLink($website, $lang, '')->getUrl();
 	}
 
 
 	/**
 	 * Return the URL of the help page of the current website
-	 *
 	 * @return string
 	 */
 	public static function getHelpUrl()
 	{
 	    $ws = website_WebsiteModuleService::getInstance();
-	    $url = $ws->getEmptyUrl();
 		try
 		{
 		    $website = $ws->getCurrentWebsite();
-            if ($website instanceof website_persistentdocument_website
-            	&& ! is_null($page = TagService::getInstance()->getDocumentByContextualTag(WebsiteConstants::TAG_HELP_PAGE, $website)))
+            $page = TagService::getInstance()->getDocumentByContextualTag(WebsiteConstants::TAG_HELP_PAGE, $website);
+            if ($page !== null)
             {
-    			$url = LinkHelper::getDocumentUrl($page);
+    			return self::getDocumentUrl($page);
             }
 		}
 		catch (Exception $e)
 		{
 			Framework::exception($e);
 		}
-	    return $url;
+	    return $ws->getEmptyUrl();
+	}
+	
+	/**
+	 * @param string $url
+	 * @return f_web_ParametrizedLink
+	 */
+	public static function buildLinkFromUrl($url)
+	{
+		if (f_util_StringUtils::isEmpty($url)) {return null;}
+		$infos = parse_url($url);
+		$link = new f_web_ParametrizedLink($infos['scheme'], $infos['host'], (isset($infos['path'])) ? $infos['path']: '/');
+		if (isset($infos['query']) && $infos['query'] != '')
+		{
+			$parameters = array();
+			parse_str($infos['query'], $parameters);
+			if (count($parameters))
+			{
+				$link->setQueryParameters($parameters);
+			}
+		}
+		if (isset($infos['fragment']) && $infos['fragment'] != '')
+		{
+			$link->setFragment($infos['fragment']);
+		}
+		return $link;
 	}
 
 

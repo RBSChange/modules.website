@@ -103,23 +103,46 @@ class website_SystemtopicService extends website_TopicService
 	}
 	
 	/**
+	 * @param website_UrlRewritingService $urlRewritingService
 	 * @param website_persistentdocument_systemtopic $document
+	 * @param website_persistentdocument_website $website
 	 * @param string $lang
 	 * @param array $parameters
+	 * @return f_web_Link | null
 	 */
-	public function generateUrl($document, $lang, $parameters)
+	public function getWebLink($urlRewritingService, $document, $website, $lang, $parameters)
 	{
 		$reference = $document->getReference();
-		if ($reference === null)
+		if ($reference !== null)
 		{
-			return '';
-		}
-		$ds = $reference->getDocumentService();
-		if (f_util_ClassUtils::methodExists($ds, 'generateSystemtopicUrl'))
-		{
-			return $ds->generateSystemtopicUrl($reference, $document, $lang, $parameters);
-		}
-		return LinkHelper::getDocumentUrl($reference, $lang, $parameters);
+			$ds = $reference->getDocumentService();
+			if (f_util_ClassUtils::methodExists($ds, 'generateSystemtopicUrl'))
+			{
+				$url = $ds->generateSystemtopicUrl($reference, $document, $lang, $parameters);
+				if ($url)
+				{
+					return LinkHelper::buildLinkFromUrl($url);
+				}
+			}
+			else
+			{
+				return $urlRewritingService->getDocumentLinkForWebsite($reference, $website, $lang, $parameters);
+			}	
+		}		
+		return null;
+	}
+	
+	/**
+	 * @param website_persistentdocument_website $website
+	 * @param string $lang
+	 * @param string $modelName
+	 * @param integer $offset
+	 * @param integer $chunkSize
+	 * @return website_persistentdocument_systemtopic[]
+	 */
+	public function getDocumentForSitemap($website, $lang, $modelName, $offset, $chunkSize)
+	{
+		return array();
 	}
 	
 	/**

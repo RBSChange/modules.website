@@ -168,4 +168,8 @@
   <key id="log-reactivate-markergmaps">log reactivate markergmaps</key>
   <key id="deactivated-markergas">deactivated.markergas {documentlabel}</key>
   <key id="log-deactivated-markergas">log deactivated markergas</key>
+  <key id="saveredirectinfo-topic">saveredirectinfo.topic {lang} {documentlabel} {path}</key>
+  <key id="log-saveredirectinfo-topic">log saveredirectinfo topic</key>
+  <key id="savepermissions-website">savepermissions.website {lang} {documentlabel}</key>
+  <key id="log-savepermissions-website">log savepermissions website</key>
 </i18n>

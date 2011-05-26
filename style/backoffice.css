@@ -100,3 +100,6 @@ treechildren::-moz-tree-image(modules_website_websitetopicsfolder){
 treechildren::-moz-tree-image(modules_website_marker){
 	list-style-image: url(/changeicons/small/markers.png);
 }
+treechildren::-moz-tree-image(modules_website_rewriterule){
+	list-style-image: url(/changeicons/small/urlrewriting.png);
+}

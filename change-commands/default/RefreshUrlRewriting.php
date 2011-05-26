@@ -1,5 +1,5 @@
 <?php
-class commands_CompileUrlRewriting extends commands_AbstractChangeCommand
+class commands_RefreshUrlRewriting extends commands_AbstractChangeCommand
 {
 	/**
 	 * @return String
@@ -11,7 +11,7 @@ class commands_CompileUrlRewriting extends commands_AbstractChangeCommand
 	
 	function getAlias()
 	{
-		return "curl";
+		return "rurl";
 	}
 
 	/**
@@ -19,7 +19,7 @@ class commands_CompileUrlRewriting extends commands_AbstractChangeCommand
 	 */
 	function getDescription()
 	{
-		return "compile URL rewriting rules";
+		return "Refresh auto calculated document URL";
 	}
 
 	/**
@@ -29,15 +29,10 @@ class commands_CompileUrlRewriting extends commands_AbstractChangeCommand
 	 */
 	function _execute($params, $options)
 	{
-		$this->message("== Compile URL rewriting ==");
+		$this->message("== Refresh auto calculated document URL ==");
 		
 		$this->loadFramework();
-		website_UrlRewritingService::getInstance()->buildRules();
-		
-		//TODO Deprecated
-		$parser = website_urlrewriting_RulesParser::getInstance();
-		$parser->compile(true);
-		
-		$this->quitOk('URL rewriting rules compiled successfully.');
+		website_UrlRewritingService::getInstance()->refreshAllDocumentUrl(array(), true);
+		$this->quitOk('Refresh successfully.');
 	}
 }

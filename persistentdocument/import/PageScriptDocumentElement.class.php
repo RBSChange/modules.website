@@ -137,9 +137,12 @@ class website_PageScriptDocumentElement extends import_ScriptDocumentElement
 	{
 		parent::saveDocument();
 		$document = $this->getPersistentDocument();
-		if (isset($document->url))
+		$websiteId = $document->getDocumentService()->getWebsiteId($document);
+		$lang = $document->getLang();
+		if ($websiteId !== null && isset($document->url))
 		{
-			$document->getDocumentService()->setUrlRewriting($document, $document->getLang(), $document->url);
+			$website = DocumentHelper::getDocumentInstance($websiteId);
+			website_UrlRewritingService::getInstance()->setCustomPath($document->url, $document, $website, $lang);
 		}
 	}
 	

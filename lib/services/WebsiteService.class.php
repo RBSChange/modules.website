@@ -314,6 +314,49 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 		return $document->getId();
 	}
 	
+	/**
+	 * @param website_persistentdocument_website $document
+	 * @return website_persistentdocument_page or null
+	 */
+	public function getDisplayPage($document)
+	{
+		return $document->getIndexPage();
+	}
+
+	/**
+	 * @param website_UrlRewritingService $urlRewritingService
+	 * @param website_persistentdocument_website $document
+	 * @param website_persistentdocument_website $website
+	 * @param string $lang
+	 * @param array $parameters
+	 * @return f_web_Link | null
+	 */
+	public function getWebLink($urlRewritingService, $document, $website, $lang, $parameters)
+	{
+		if ($document->getIndexPage())
+		{
+			$page = $document->getIndexPage();
+			if ($page->getPublicationstatusForLang($lang) === f_persistentdocument_PersistentDocument::STATUS_PUBLISHED)
+			{
+				return $urlRewritingService->getDocumentLinkForWebsite($page, $website, $lang, $parameters);
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * @param website_persistentdocument_website $website
+	 * @param string $lang
+	 * @param string $modelName
+	 * @param integer $offset
+	 * @param integer $chunkSize
+	 * @return website_persistentdocument_website[]
+	 */
+	public function getDocumentForSitemap($website, $lang, $modelName, $offset, $chunkSize)
+	{
+		return array();
+	}
+	
 	// Deprecated
 	
 	/**
