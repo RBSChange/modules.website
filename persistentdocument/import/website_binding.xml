@@ -30,4 +30,5 @@
   <binding name="marker" className="website_MarkerScriptDocumentElement"/>
   <binding name="documenturl" className="website_DocumentURLElement"/>
   <binding name="websitetopicsfolder" className="website_WebsitetopicsfolderScriptDocumentElement"/>
+  <binding name="rewriterule" className="website_RewriteruleScriptDocumentElement"/>
 </script>

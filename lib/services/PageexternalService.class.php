@@ -133,6 +133,10 @@ class website_PageexternalService extends f_persistentdocument_DocumentService
 		{
 			return $document->getUrl();
 		}
-		return LinkHelper::getActionUrl('website', 'ViewPageexternal', array('cmpref' => $document->getId(), 'navigationtitle' => website_UrlRewritingService::getUrlLabel(strtolower($document->getNavigationtitle())), 'lang' => RequestContext::getInstance()->getLang()));
+		$navigationtitle = strtolower(website_UrlRewritingService::getInstance()->encodePathString($document->getNavigationtitle()));
+		return LinkHelper::getActionUrl('website', 'ViewPageexternal', 
+			array('cmpref' => $document->getId(), 
+			'navigationtitle' => $navigationtitle, 
+			'lang' => RequestContext::getInstance()->getLang()));
 	}
 }

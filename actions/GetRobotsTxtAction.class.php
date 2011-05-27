@@ -10,14 +10,11 @@ class website_GetRobotsTxtAction extends f_action_BaseAction
 	 */
 	public function _execute($context, $request)
 	{
-		if (Framework::isDebugEnabled())
-		{
-			Framework::debug(__METHOD__);
-			Framework::debug(var_export($request->getParameters(), true));
-		}
-		
 		$wsms = website_WebsiteModuleService::getInstance();
 		$websiteInfo  = $wsms->getWebsiteInfos($_SERVER['HTTP_HOST']);
+		$contents = '';
+		$website = null;
+		
 		if ($websiteInfo !== null)
 		{
 			$lang = $websiteInfo['langs'][0];
@@ -26,28 +23,40 @@ class website_GetRobotsTxtAction extends f_action_BaseAction
 			
 			$website = $wsms->getCurrentWebsite();
 			$contents = $website->getRobottxt();
-			if (f_util_StringUtils::isNotEmpty($contents))
-			{
-				header('Content-type: text/plain');
-				header('Content-length: '.strlen($contents));
-				echo $contents;
-				return View::NONE;
-			}
 		}
 		
-		$path = f_util_FileUtils::buildWebeditPath('media', 'frontoffice', $_SERVER['HTTP_HOST'] . '.robots.txt');
-		if (file_exists($path))
+		if (f_util_StringUtils::isEmpty($contents))
 		{
-			$contents = f_util_FileUtils::read($path);
+			$path = f_util_FileUtils::buildWebeditPath('media', 'frontoffice', $_SERVER['HTTP_HOST'] . '.robots.txt');
+			if (file_exists($path))
+			{
+				$contents = f_util_FileUtils::read($path);
+			}
+			else
+			{
+				$contents = f_util_FileUtils::read(f_util_FileUtils::buildWebeditPath('media', 'frontoffice', 'robots.txt'));
+			}
 		}
-		else
+	
+		if ($website !== null && ModuleService::getInstance()->moduleExists('seo'))
 		{
-			$contents = f_util_FileUtils::read(f_util_FileUtils::buildWebeditPath('media', 'frontoffice', 'robots.txt'));
+			$contents = $this->appendSeoContent($contents, $website);
 		}
+		
 		header('Content-type: text/plain');
 		header('Content-length: '.strlen($contents));
 		echo $contents;
 		return View::NONE;	
+	}
+	
+	/**
+	 * @param string $contents
+	 * @param website_persistentdocument_website $website
+	 * @return string
+	 */
+	protected function appendSeoContent($contents, $website)
+	{
+		return seo_ModuleService::getInstance()->appendRobotTxtContent($contents, $website);
 	}
 
 	/**

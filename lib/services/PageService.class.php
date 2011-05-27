@@ -154,6 +154,15 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		$this->buildBlockMetaInfo($document);
 	}
+	
+	/**
+	 * @param website_persistentdocument_page $document
+	 */
+	public function getDisplayPage($document)
+	{
+		return DocumentHelper::getByCorrection($document);
+	}
+	
 
 	/**
 	 * Public for patch 304. Do not call ; private use.
@@ -1962,28 +1971,24 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		return array($label, $shortUrl);
 	}
-	
-	/**
-	 * @return boolean
-	 */
-	public function hasIdsForSitemap()
-	{
-		return true;
-	}
-	
+		
 	/**
 	 * @param website_persistentdocument_website $website
-	 * @param Integer $maxUrl
-	 * @return array
+	 * @param string $lang
+	 * @param string $modelName
+	 * @param integer $offset
+	 * @param integer $chunkSize
+	 * @return website_persistentdocument_page[]
 	 */
-	public function getIdsForSitemap($website, $maxUrl)
+	public function getDocumentForSitemap($website, $lang, $modelName, $offset, $chunkSize)
 	{
-		$query = $this->createQuery()
-			->add(Restrictions::published())
-			->add(Restrictions::descendentOf($website->getId()))
-			->add(Restrictions::ne('navigationVisibility',  WebsiteConstants::VISIBILITY_HIDDEN))
-			->setProjection(Projections::groupProperty('id', 'id'));
-		return $query->setMaxResults($maxUrl)->findColumn('id');
+		return $this->pp->createQuery($modelName, false)->add(Restrictions::published())
+					->add(Restrictions::descendentOf($website->getId()))
+					->add(Restrictions::ne('navigationVisibility',  WebsiteConstants::VISIBILITY_HIDDEN))
+					->addOrder(Order::asc('id'))
+					->setMaxResults($chunkSize)
+					->setFirstResult($offset)
+					->find();
 	}
 
 	

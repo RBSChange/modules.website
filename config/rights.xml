@@ -1,180 +1,178 @@
 <?xml version="1.0"?>
 <rights>
-	<actions>
-		<document name="rootfolder" />
-		<document name="folder" />
-		<document name="website">
-			<action name="ViewGAStatistics" />
-		</document>
-		<document name="topic" />
-		<document name="systemtopic" />
-		<document name="page">
-			<action name="Duplicate" />
-			<action name="SetTopicIndexPage" />
-			<action name="RemoveIndexPage" />
-		</document>
-		<document name="pageexternal" />
-		<document name="pageversion" />
-		
-		<document name="pagegroup">
-			<action name="SetTopicIndexPage" />
-			<action name="RemoveIndexPage" />
-		</document>		
-		
-		<document name="template" />
-		<document name="menufolder" />
-		<document name="menu" />
-		<document name="menuitem" />
-		<document name="menuitemdocument" />
-		<document name="menuitemfunction" />
-		<document name="menuitemtext" />
-		<document name="markerfolder" />
-		<action name="Display">
-			<permission name="AuthenticatedFrontUser" />
-		</action>
-		<action name="AddToMenu" />
-		<action name="CheckLink" />
-		<action name="CheckTemplate" />
-		<action name="EditContent" />
-		<action name="SetHomePage" />
-		<action name="RemoveFromMenu" />
-		<action name="InitDuplicatePageVersion" />
-		<action name="InitEmptyPageVersion" />
-		<action name="WizardSaveAsTemplate" />
-		<action name="InitDefaultStruct" />
-	</actions>
-	<roles>
-		<role name="Admin">
-			<permission name="*" />
-			<permission name="LoadPermissions.*" />
-			<permission name="SavePermissions.*" />
-			<permission name="GetPreferencesDocument" />
-			<permission name="RegenerateWebsite" />
-			<permission name="Move.*" />
-			<permission name="Load.*" />
-			<permission name="Rename.*" />
-			<permission name="PutInTrash.*" />
-			<permission name="Delete.*" />
-			<permission name="Insert.*" />
-			<permission name="Update.*" />
-			<permission name="Activate.*" />
-			<permission name="Deactivated.*" />
-			<permission name="ReActivate.*" />
-			<permission name="EditLocale" />
-			<permission name="ViewGAStatistics.website" />
-		</role>
-		<role name="Writer" extend="Guest">
-			<permission name="Order" />
-			<permission name="Move.topic" />
-			<permission name="Load.page" />
-			<permission name="Load.pageexternal" />
-			<permission name="Load.pageversion" />
-			<permission name="Load.pagegroup" />
-			<permission name="Rename.page" />
-			<permission name="Rename.pageexternal" />
-			<permission name="Rename.pageversion" />
-			<permission name="PutInTrash.page" />
-			<permission name="PutInTrash.pageexternal" />
-			<permission name="PutInTrash.pageversion" />
-			<permission name="Delete.page" />
-			<permission name="Delete.pageexternal" />
-			<permission name="Delete.pageversion" />
-			<permission name="Insert.page" />
-			<permission name="Insert.pageexternal" />
-			<permission name="Insert.pageversion" />
-			<permission name="Update.page" />
-			<permission name="Update.pageexternal" />
-			<permission name="Update.pageversion" />
-			<permission name="Update.pagegroup" />
-			<permission name="Duplicate.page" />
-			<permission name="Deactivated.page" />
-			<permission name="Deactivated.pageexternal" />
-			<permission name="Deactivated.pageversion" />
-			<permission name="ReActivate.page" />
-			<permission name="ReActivate.pageexternal" />
-			<permission name="ReActivate.pageversion" />
-			<permission name="InitDuplicatePageVersion" />
-			<permission name="InitEmptyPageVersion" />
-			<permission name="Update.pageversion" />
-			<permission name="Activate.*" />
-			<permission name="EditContent" />
-			<permission name="CheckTemplate" />
-			<permission name="UpdateTemplate" />
-			<permission name="LoadRedirectInfo" />
-			<permission name="SaveRedirectInfo" />
-			<permission name="LoadTags" />
-			<permission name="WizardSaveAsTemplate" />
-		</role>
-		<role name="TreeManager" extend="Guest">
-			<permission name="Order" />
-			<permission name="Move.*" />
-			<permission name="Load.topic" />
-			<permission name="Load.systemtopic" />
-			<permission name="Load.menu" />
-			<permission name="Load.menuitemfunction" />
-			<permission name="Load.menuitemdocument" />
-			<permission name="Load.markerfolder" />
-			<permission name="Rename.topic" />
-			<permission name="Rename.menu" />
-			<permission name="Rename.menuitemfunction" />
-			<permission name="Rename.menuitemdocument" />
-			<permission name="PutInTrash.topic" />
-			<permission name="PutInTrash.menu" />
-			<permission name="PutInTrash.menuitemfunction" />
-			<permission name="PutInTrash.menuitemdocument" />
-			<permission name="Delete.topic" />
-			<permission name="Delete.menu" />
-			<permission name="Delete.menuitemfunction" />
-			<permission name="Delete.menuitemdocument" />
-			<permission name="Insert.topic" />
-			<permission name="Update.topic" />
-			<permission name="Update.systemtopic" />
-			<permission name="Insert.menuitemfunction" />
-			<permission name="Insert.menuitemdocument" />
-			<permission name="Update.menuitemfunction" />
-			<permission name="Update.menuitemdocument" />
-			<permission name="Insert.menu" />
-			<permission name="Update.menu" />
-			<permission name="SetTopicIndexPage.page" />
-			<permission name="RemoveIndexPage.page" />
-			<permission name="SetTopicIndexPage.pagegroup" />
-			<permission name="RemoveIndexPage.pagegroup" />
-			<permission name="SetHomePage" />
-			<permission name="AddToMenu" />
-			<permission name="RemoveFromMenu" />
-			<permission name="CheckLink" />
-			<permission name="InitDefaultStruct" />
-			<permission name="LoadRedirectInfo" />
-			<permission name="SaveRedirectInfo" />
-			<permission name="Deactivated.website" />
-			<permission name="ReActivate.website" />
-		</role>
-		<role name="Translator" extend="Guest">
-			<permission name="Load.*" />
-			<permission name="LoadForTranslation.*" />
-			<permission name="UpdateTranslation.*" />
-			<permission name="EditContent" />
-			<permission name="LoadRedirectInfo" />
-			<permission name="SaveRedirectInfo" />
-		</role>
-		<role name="Validator" extend="Guest">
-			<permission name="Load.*" />
-			<permission name="Deactivated.page" />
-			<permission name="Deactivated.pageversion" />
-			<permission name="ReActivate.page" />
-			<permission name="ReActivate.pageversion" />
-			<permission name="Activate.*" />
-			<permission name="Cancel.*" />
-			<permission name="LoadRedirectInfo" />
-		</role>
-		<role name="Guest" extend="User">
-			<permission name="Enabled" />
-		</role>
-		<role name="User">
-			<permission name="List.*" />
-		</role>
-		<frontendrole name="AuthenticatedFrontUser">
-			<permission name="AuthenticatedFrontUser" />
-		</frontendrole>
-	</roles>
+  <actions>
+    <document name="rootfolder"/>
+    <document name="folder"/>
+    <document name="website">
+      <action name="ViewGAStatistics"/>
+    </document>
+    <document name="topic"/>
+    <document name="systemtopic"/>
+    <document name="page">
+      <action name="Duplicate"/>
+      <action name="SetTopicIndexPage"/>
+      <action name="RemoveIndexPage"/>
+    </document>
+    <document name="pageexternal"/>
+    <document name="pageversion"/>
+    <document name="pagegroup">
+      <action name="SetTopicIndexPage"/>
+      <action name="RemoveIndexPage"/>
+    </document>
+    <document name="template"/>
+    <document name="menufolder"/>
+    <document name="menu"/>
+    <document name="menuitem"/>
+    <document name="menuitemdocument"/>
+    <document name="menuitemfunction"/>
+    <document name="menuitemtext"/>
+    <document name="markerfolder"/>
+    <action name="Display">
+      <permission name="AuthenticatedFrontUser"/>
+    </action>
+    <action name="AddToMenu"/>
+    <action name="CheckLink"/>
+    <action name="CheckTemplate"/>
+    <action name="EditContent"/>
+    <action name="SetHomePage"/>
+    <action name="RemoveFromMenu"/>
+    <action name="InitDuplicatePageVersion"/>
+    <action name="InitEmptyPageVersion"/>
+    <action name="WizardSaveAsTemplate"/>
+    <action name="InitDefaultStruct"/>
+  </actions>
+  <roles>
+    <role name="Admin">
+      <permission name="*"/>
+      <permission name="LoadPermissions.*"/>
+      <permission name="SavePermissions.*"/>
+      <permission name="GetPreferencesDocument"/>
+      <permission name="RegenerateWebsite"/>
+      <permission name="Move.*"/>
+      <permission name="Load.*"/>
+      <permission name="Rename.*"/>
+      <permission name="PutInTrash.*"/>
+      <permission name="Delete.*"/>
+      <permission name="Insert.*"/>
+      <permission name="Update.*"/>
+      <permission name="Activate.*"/>
+      <permission name="Deactivated.*"/>
+      <permission name="ReActivate.*"/>
+      <permission name="EditLocale"/>
+      <permission name="ViewGAStatistics.website"/>
+    </role>
+    <role name="Writer" extend="Guest">
+      <permission name="Order"/>
+      <permission name="Move.topic"/>
+      <permission name="Load.page"/>
+      <permission name="Load.pageexternal"/>
+      <permission name="Load.pageversion"/>
+      <permission name="Load.pagegroup"/>
+      <permission name="Rename.page"/>
+      <permission name="Rename.pageexternal"/>
+      <permission name="Rename.pageversion"/>
+      <permission name="PutInTrash.page"/>
+      <permission name="PutInTrash.pageexternal"/>
+      <permission name="PutInTrash.pageversion"/>
+      <permission name="Delete.page"/>
+      <permission name="Delete.pageexternal"/>
+      <permission name="Delete.pageversion"/>
+      <permission name="Insert.page"/>
+      <permission name="Insert.pageexternal"/>
+      <permission name="Insert.pageversion"/>
+      <permission name="Update.page"/>
+      <permission name="Update.pageexternal"/>
+      <permission name="Update.pageversion"/>
+      <permission name="Update.pagegroup"/>
+      <permission name="Duplicate.page"/>
+      <permission name="Deactivated.page"/>
+      <permission name="Deactivated.pageexternal"/>
+      <permission name="Deactivated.pageversion"/>
+      <permission name="ReActivate.page"/>
+      <permission name="ReActivate.pageexternal"/>
+      <permission name="ReActivate.pageversion"/>
+      <permission name="InitDuplicatePageVersion"/>
+      <permission name="InitEmptyPageVersion"/>
+      <permission name="Update.pageversion"/>
+      <permission name="Activate.*"/>
+      <permission name="EditContent"/>
+      <permission name="CheckTemplate"/>
+      <permission name="UpdateTemplate"/>
+      <permission name="LoadRedirectInfo"/>
+      <permission name="SaveRedirectInfo"/>
+      <permission name="LoadTags"/>
+      <permission name="WizardSaveAsTemplate"/>
+    </role>
+    <role name="TreeManager" extend="Guest">
+      <permission name="Order"/>
+      <permission name="Move.*"/>
+      <permission name="Load.topic"/>
+      <permission name="Load.systemtopic"/>
+      <permission name="Load.menu"/>
+      <permission name="Load.menuitemfunction"/>
+      <permission name="Load.menuitemdocument"/>
+      <permission name="Load.markerfolder"/>
+      <permission name="Rename.topic"/>
+      <permission name="Rename.menu"/>
+      <permission name="Rename.menuitemfunction"/>
+      <permission name="Rename.menuitemdocument"/>
+      <permission name="PutInTrash.topic"/>
+      <permission name="PutInTrash.menu"/>
+      <permission name="PutInTrash.menuitemfunction"/>
+      <permission name="PutInTrash.menuitemdocument"/>
+      <permission name="Delete.topic"/>
+      <permission name="Delete.menu"/>
+      <permission name="Delete.menuitemfunction"/>
+      <permission name="Delete.menuitemdocument"/>
+      <permission name="Insert.topic"/>
+      <permission name="Update.topic"/>
+      <permission name="Update.systemtopic"/>
+      <permission name="Insert.menuitemfunction"/>
+      <permission name="Insert.menuitemdocument"/>
+      <permission name="Update.menuitemfunction"/>
+      <permission name="Update.menuitemdocument"/>
+      <permission name="Insert.menu"/>
+      <permission name="Update.menu"/>
+      <permission name="SetTopicIndexPage.page"/>
+      <permission name="RemoveIndexPage.page"/>
+      <permission name="SetTopicIndexPage.pagegroup"/>
+      <permission name="RemoveIndexPage.pagegroup"/>
+      <permission name="SetHomePage"/>
+      <permission name="AddToMenu"/>
+      <permission name="RemoveFromMenu"/>
+      <permission name="CheckLink"/>
+      <permission name="InitDefaultStruct"/>
+      <permission name="LoadRedirectInfo"/>
+      <permission name="SaveRedirectInfo"/>
+      <permission name="Deactivated.website"/>
+      <permission name="ReActivate.website"/>
+    </role>
+    <role name="Translator" extend="Guest">
+      <permission name="Load.*"/>
+      <permission name="LoadForTranslation.*"/>
+      <permission name="UpdateTranslation.*"/>
+      <permission name="EditContent"/>
+      <permission name="LoadRedirectInfo"/>
+      <permission name="SaveRedirectInfo"/>
+    </role>
+    <role name="Validator" extend="Guest">
+      <permission name="Load.*"/>
+      <permission name="Deactivated.page"/>
+      <permission name="Deactivated.pageversion"/>
+      <permission name="ReActivate.page"/>
+      <permission name="ReActivate.pageversion"/>
+      <permission name="Activate.*"/>
+      <permission name="Cancel.*"/>
+      <permission name="LoadRedirectInfo"/>
+    </role>
+    <role name="Guest" extend="User">
+      <permission name="Enabled"/>
+    </role>
+    <role name="User">
+      <permission name="List.*"/>
+    </role>
+    <frontendrole name="AuthenticatedFrontUser">
+      <permission name="AuthenticatedFrontUser"/>
+    </frontendrole>
+  </roles>
 </rights>
