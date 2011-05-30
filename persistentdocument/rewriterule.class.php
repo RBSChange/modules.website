@@ -28,7 +28,13 @@ class website_persistentdocument_rewriterule extends website_persistentdocument_
 	 */
 	public function setRuleData($ruleData)
 	{
-		$ruleData = f_util_ArrayUtils::isEmpty($ruleData) ? array() : $ruleData;
-		$this->setDefinition(serialize($ruleData));
+		if (f_util_ArrayUtils::isEmpty($ruleData))
+		{
+			$this->setDefinition(null);
+		}
+		else
+		{
+			$this->setDefinition(serialize($ruleData));
+		}
 	}	
 }

@@ -190,6 +190,41 @@ class website_RewriteruleService extends f_persistentdocument_DocumentService
 	}
 	
 	/**
+	 * @param website_persistentdocument_rewriterule $document
+	 * @param Integer $parentNodeId Parent node ID where to save the document (optionnal).
+	 * @return void
+	 */
+	protected function preUpdate($document, $parentNodeId)
+	{
+		if ($document->isPropertyModified('template') && !$document->isPropertyModified('definition'))
+		{
+			$template = $document->getTemplate();
+			if (empty($template)) 
+			{
+				$infos = f_persistentdocument_PersistentDocumentModel::getModelInfo($document->getModelName());
+				$template = '/rewrite/'.$infos['module'].'/${id}/${label}.html';
+				$document->setTemplate($template);
+			} 
+			else if ($template[0] != '/')
+			{
+				$template = '/' . $template;
+				$document->setTemplate($template);
+			}
+				
+			if ($document->getDefinition() != null)
+			{
+				$lang = RequestContext::getInstance()->getLang();
+				$ruleData = $document->getRuleData();
+				if ($ruleData['lang'][$lang] != $template)
+				{	
+					$ruleData['lang'][$lang] = $template;
+					$document->setRuleData($ruleData);
+				}
+			}
+		}
+	}
+
+	/**
 	 * @param website_persistentdocument_rewriterule $rule
 	 */
 	public function generateRuleData($rule)
