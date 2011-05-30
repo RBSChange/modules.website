@@ -284,6 +284,22 @@ class website_Page implements f_mvc_Context
 	{
 		$this->addLink('alternate', 'application/rss+xml', $href, $title);
 	}
+	
+	public function addCanonicalParam($paramName, $paramValue, $paramModule = null)
+	{
+		if (!isset($this->attributes['canonical']))
+		{
+			$this->attributes['canonical'] = array();
+		}
+		if ($paramModule !== null)
+		{
+			$this->attributes['canonical'][$paramModule . 'Param'][$paramName] = $paramValue;
+		}
+		else
+		{
+			$this->attributes['canonical'][$paramName] = $paramValue;
+		}
+	}
 
 	/**
 	 * @param String $relation
@@ -546,10 +562,12 @@ class website_Page implements f_mvc_Context
 
 	protected function getLinkTags()
 	{
+		$hasCanonical = false;
 		if (!isset($this->attributes['links'])) {return "";}
 		$links = array();
 		foreach ($this->attributes['links'] as $linkTagAttributes)
 		{
+			$hasCanonical = $hasCanonical || (isset($linkTagAttributes['rel']) && $linkTagAttributes['rel'] === 'canonical');
 			$link = '<link ';
 			foreach ($linkTagAttributes as $attributeName => $value)
 			{
@@ -557,6 +575,21 @@ class website_Page implements f_mvc_Context
 			}
 			$link .= '/>';
 			$links[] = $link;
+		}
+		
+		if (!$hasCanonical && isset($this->attributes['canonical']))
+		{
+			$partURI = explode('?', RequestContext::getInstance()->getPathURI());
+			$originalParams = array();
+			if (isset($partURI[1])) {parse_str($partURI[1], $originalParams);}
+			$canonicalParams = $this->attributes['canonical'];
+			f_web_HttpLink::sortQueryParamerters($canonicalParams);
+			if (http_build_query($canonicalParams) !== http_build_query($originalParams))
+			{
+				$link = new f_web_ParametrizedLink(RequestContext::getInstance()->getProtocol(), $this->getWebsite()->getDomain(), $partURI[0]);
+				$link->setQueryParameters($canonicalParams);
+				$links[] = '<link rel="canonical" href="'.htmlspecialchars($link->getUrl()) .'" />';
+			}
 		}
 		return implode("\n", $links);
 	}

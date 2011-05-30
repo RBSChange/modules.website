@@ -53,6 +53,15 @@ class website_SystemtopicService extends website_TopicService
 	}
 	
 	/**
+	 * @param integer $referenceId
+	 * @return website_persistentdocument_systemtopic[]
+	 */
+	public function getByReferenceId($referenceId)
+	{
+		return $this->createQuery()->add(Restrictions::eq('referenceId', $referenceId))->find();
+	}
+	
+	/**
 	 * @param website_persistentdocument_systemtopic $document
 	 * @param string $forModuleName
 	 * @param array $allowedSections
@@ -115,14 +124,11 @@ class website_SystemtopicService extends website_TopicService
 		$reference = $document->getReference();
 		if ($reference !== null)
 		{
+			$website = website_persistentdocument_website::getInstanceById($this->getWebsiteId($document));
 			$ds = $reference->getDocumentService();
-			if (f_util_ClassUtils::methodExists($ds, 'generateSystemtopicUrl'))
+			if (f_util_ClassUtils::methodExists($ds, 'getWebLinkForSystemTopic'))
 			{
-				$url = $ds->generateSystemtopicUrl($reference, $document, $lang, $parameters);
-				if ($url)
-				{
-					return LinkHelper::buildLinkFromUrl($url);
-				}
+				return $ds->getWebLinkForSystemTopic($urlRewritingService, $reference, $document, $lang, $parameters);
 			}
 			else
 			{
