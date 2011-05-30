@@ -348,10 +348,7 @@ class website_BaseRewritingService extends BaseService
 		{
 			$lang = RequestContext::getInstance()->getLang();
 		}
-		
-		// Filter parameters.
-		$additionnalParameters = $document->getDocumentService()->filterDocumentUrlParams($document, $lang, $additionnalParameters);
-				
+						
 		//Get associated webSite;
 		if ($document instanceof website_persistentdocument_website)
 		{
