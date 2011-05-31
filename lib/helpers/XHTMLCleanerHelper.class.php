@@ -231,7 +231,11 @@ class website_XHTMLCleanerHelper
 		if ($element->hasAttribute('class'))
 		{
 			$classArray = explode(' ', $element->getAttribute('class'));
-			if (in_array('media-flash-dummy', $classArray))
+			if (in_array('document-dummy', $classArray))
+			{
+				return 'document-dummy';
+			}
+			else if (in_array('media-flash-dummy', $classArray))
 			{
 				return 'media-flash-dummy';
 			}
@@ -296,7 +300,7 @@ class website_XHTMLCleanerHelper
 			$href = '#';
 		}
 		
-		if ('media-flash-dummy' == $element->getAttribute('class'))
+		if ('document-dummy' == $element->getAttribute('class') || 'media-flash-dummy' == $element->getAttribute('class'))
 		{
 			$href = '#';
 		}
