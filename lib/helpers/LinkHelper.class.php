@@ -229,10 +229,9 @@ class LinkHelper
 			else if ($ts->isFunctionalTag($tag))
 			{
 				$pageId = null;
-				
 				if ($context === null)
 				{
-					$pageId = website_WebsiteModuleService::getInstance()->getCurrentPageId();
+					$pageId = website_WebsiteModuleService::getInstance()->getCurrentPageId();				
 				}
 				else if ($context instanceof website_persistentdocument_page)
 				{
@@ -247,7 +246,7 @@ class LinkHelper
 				if ($pageId)
 				{
 					$currentPage = DocumentHelper::getDocumentInstance($pageId);
-					$document = $ts->getDocumentBySiblingTag($tag, $pageId);
+					$document = $ts->getDocumentBySiblingTag($tag, $currentPage);
 				}
 			}
 			else if ($ts->isContextualTag($tag) && $ts->getTagContext($tag) == 'modules_website/website')
