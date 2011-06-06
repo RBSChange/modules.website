@@ -15,10 +15,10 @@
 	<form byLabel="Formulaire de contact" id="form1" />
 
 	<website byTag="default_modules_website_default-website">
-		<topic byLabel="Pages de test" navigationVisibility="visible">
+		<topic label="Templates de base" navigationVisibility="visible">
 		
-			<page byLabel="home" navigationtitle="home" metatitle="home" 
-					template="default/home" navigationVisibility="visible">
+			<page byLabel="tplOne" navigationtitle="tplOne" metatitle="tplOne" 
+					template="webfactory/tplOne" navigationVisibility="visible">
 				<changecontent for="content-block">
 					<changelayout>
 						<changecolumn>
@@ -38,8 +38,8 @@
 				</changecontent>
 			</page>	
 			
-			<page byLabel="content" navigationtitle="content" metatitle="content" 
-					template="default/content" navigationVisibility="2">
+			<page byLabel="tplOneTwoColumns" navigationtitle="tplOneTwoColumns" metatitle="tplOneTwoColumns" 
+					template="webfactory/tplOneTwoColumns" navigationVisibility="2">
 				<changecontent for="content-block">
 					<changelayout>
 						<changecolumn>
@@ -57,7 +57,7 @@
 						</changecolumn>
 					</changelayout>
 				</changecontent>				
-				<changecontent for="context-block">
+				<changecontent for="left-content-block">
 					<changelayout>
 						<changecolumn>
 							<changerow>
@@ -69,8 +69,8 @@
 				</changecontent>				
 			</page>				
 			
-			<page byLabel="ecom" navigationtitle="ecom" metatitle="ecom" 
-					template="default/ecom" navigationVisibility="2">
+			<page byLabel="tplOneTwoColumnsRight" navigationtitle="tplOneTwoColumnsRight" metatitle="tplOneTwoColumnsRight" 
+					template="webfactory/tplOneTwoColumnsRight" navigationVisibility="2">
 				<changecontent for="content-block">
 					<changelayout>
 						<changecolumn>
@@ -88,7 +88,7 @@
 						</changecolumn>
 					</changelayout>
 				</changecontent>				
-				<changecontent for="context-block">
+				<changecontent for="right-content-block">
 					<changelayout>
 						<changecolumn>
 							<changerow>
@@ -100,8 +100,8 @@
 				</changecontent>				
 			</page>				
 			
-			<page byLabel="orderprocess" navigationtitle="orderprocess" metatitle="orderprocess" 
-					template="default/orderprocess" navigationVisibility="2">
+			<page byLabel="tplOneThreeColumns" navigationtitle="tplOneThreeColumns" metatitle="tplOneThreeColumns" 
+					template="webfactory/tplOneThreeColumns" navigationVisibility="2">
 				<changecontent for="content-block">
 					<changelayout>
 						<changecolumn>
@@ -115,14 +115,394 @@
 							</changerow>
 							<changerow>
 								<changeblock type="modules_form_form" __cmpref-refid="form1" />
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>		
+				<changecontent for="left-content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+								<![CDATA[Sed vulputate, urna vitae ultrices consequat, lacus nisi volutpat ligula, ac condimentum ante metus quis metus. Quisque vestibulum tortor augue, nec auctor augue. Ut mattis lacinia euismod. Integer ante justo, ullamcorper sed convallis cursus, pharetra id sapien. Quisque facilisis lacinia adipiscing. Integer feugiat, urna eu mattis lacinia, turpis dui luctus ipsum, sed viverra magna nibh ac urna. Donec porta faucibus hendrerit. Vivamus luctus; felis sed lacinia interdum, magna massa hendrerit turpis, nec tempor enim mi vitae enim. Donec vitae lorem in lectus rhoncus luctus. Fusce auctor ultrices rhoncus! Nulla pretium quam eu neque aliquam pellentesque. Nam turpis metus, interdum eu sollicitudin vel, venenatis sagittis ipsum? Curabitur vitae leo ac nunc interdum ultricies. Duis neque odio, molestie id ultricies id, mattis vel odio. Suspendisse in nunc quis mi tristique dignissim sit amet non augue! Vivamus vel turpis in massa tempus adipiscing. Vestibulum ultricies nisi vitae neque congue ut mollis turpis fermentum. Mauris mauris libero, fringilla in aliquet sit amet, cursus a nunc.<br/>]]></changeblock>							
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>		
+				<changecontent for="right-content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+								<![CDATA[Sed vulputate, urna vitae ultrices consequat, lacus nisi volutpat ligula, ac condimentum ante metus quis metus. Quisque vestibulum tortor augue, nec auctor augue. Ut mattis lacinia euismod. Integer ante justo, ullamcorper sed convallis cursus, pharetra id sapien. Quisque facilisis lacinia adipiscing. Integer feugiat, urna eu mattis lacinia, turpis dui luctus ipsum, sed viverra magna nibh ac urna. Donec porta faucibus hendrerit. Vivamus luctus; felis sed lacinia interdum, magna massa hendrerit turpis, nec tempor enim mi vitae enim. Donec vitae lorem in lectus rhoncus luctus. Fusce auctor ultrices rhoncus! Nulla pretium quam eu neque aliquam pellentesque. Nam turpis metus, interdum eu sollicitudin vel, venenatis sagittis ipsum? Curabitur vitae leo ac nunc interdum ultricies. Duis neque odio, molestie id ultricies id, mattis vel odio. Suspendisse in nunc quis mi tristique dignissim sit amet non augue! Vivamus vel turpis in massa tempus adipiscing. Vestibulum ultricies nisi vitae neque congue ut mollis turpis fermentum. Mauris mauris libero, fringilla in aliquet sit amet, cursus a nunc.<br/>]]></changeblock>							
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>				
+			</page>				
+			
+			<page byLabel="tplTwo" navigationtitle="tplTwo" metatitle="tplTwo" 
+					template="webfactory/tplTwo" navigationVisibility="visible">
+				<changecontent for="content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+									<![CDATA[<h1 class="heading-one"><img class="image" lang="fr" alt="RBS Change 4" cmpref="{ref-id:logo1}"/>Cras elementum luctus semper.</h1>Cras suscipit, velit a bibendum aliquet, massa magna lacinia erat, nec suscipit ante massa sed libero. Praesent molestie aliquam ullamcorper. Proin nisl mauris, hendrerit ut aliquam fermentum, condimentum luctus odio. Mauris in urna et urna blandit pretium at quis ipsum. Proin mattis rhoncus nibh, eu volutpat est facilisis sit amet. Pellentesque varius blandit velit non lobortis. Aenean et nunc ut libero suscipit fermentum eget quis metus. Duis molestie ante at justo mattis ac varius ligula malesuada? Vestibulum rutrum commodo ornare. Nullam rhoncus dapibus sollicitudin. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque neque sem, dictum eget iaculis eu, commodo rhoncus nulla. Sed nec massa sem.<br/><br/>Aliquam mi elit, placerat a hendrerit quis, fermentum nec ligula. Ut tincidunt congue semper. Nulla facilisi. Morbi aliquam ante et lacus adipiscing molestie. Nullam a magna orci. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam eleifend blandit sem vitae tempor. Aenean faucibus sodales feugiat? Sed ultricies congue eros non volutpat. Sed placerat ultrices pharetra. Integer interdum, sem ac elementum pulvinar, turpis ante aliquet elit, a feugiat metus risus vel dolor. Aenean condimentum odio a elit sagittis dapibus. Duis dignissim pulvinar tellus, vitae convallis purus lacinia in. Ut in nibh quam? Morbi venenatis sagittis orci, at dignissim sapien interdum quis. Nullam cursus tortor eget leo sagittis lacinia. Curabitur lorem urna, tristique id luctus vitae, varius vel est. Donec quis mauris dolor.<br/>]]>
+								</changeblock>							
+							</changerow>
+							<changerow>
+								<changeblock type="modules_contactcard_contact" __cmpref-refid="contact1" />
+							</changerow>
+							<changerow>
+								<changeblock type="modules_form_form" __cmpref-refid="form1" />
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>		
+				<changecontent for="left-content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+								<![CDATA[Sed vulputate, urna vitae ultrices consequat, lacus nisi volutpat ligula, ac condimentum ante metus quis metus. Quisque vestibulum tortor augue, nec auctor augue. Ut mattis lacinia euismod. Integer ante justo, ullamcorper sed convallis cursus, pharetra id sapien. Quisque facilisis lacinia adipiscing. Integer feugiat, urna eu mattis lacinia, turpis dui luctus ipsum, sed viverra magna nibh ac urna. Donec porta faucibus hendrerit. Vivamus luctus; felis sed lacinia interdum, magna massa hendrerit turpis, nec tempor enim mi vitae enim. Donec vitae lorem in lectus rhoncus luctus. Fusce auctor ultrices rhoncus! Nulla pretium quam eu neque aliquam pellentesque. Nam turpis metus, interdum eu sollicitudin vel, venenatis sagittis ipsum? Curabitur vitae leo ac nunc interdum ultricies. Duis neque odio, molestie id ultricies id, mattis vel odio. Suspendisse in nunc quis mi tristique dignissim sit amet non augue! Vivamus vel turpis in massa tempus adipiscing. Vestibulum ultricies nisi vitae neque congue ut mollis turpis fermentum. Mauris mauris libero, fringilla in aliquet sit amet, cursus a nunc.<br/>]]></changeblock>							
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>					
+			</page>				
+			
+			<page byLabel="tplTwoThreeColumns" navigationtitle="tplTwoThreeColumns" metatitle="tplTwoThreeColumns" 
+					template="webfactory/tplTwoThreeColumns" navigationVisibility="2">
+				<changecontent for="content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+									<![CDATA[<h1 class="heading-one"><img class="image" lang="fr" alt="RBS Change 4" cmpref="{ref-id:logo1}"/>Cras elementum luctus semper.</h1>Cras suscipit, velit a bibendum aliquet, massa magna lacinia erat, nec suscipit ante massa sed libero. Praesent molestie aliquam ullamcorper. Proin nisl mauris, hendrerit ut aliquam fermentum, condimentum luctus odio. Mauris in urna et urna blandit pretium at quis ipsum. Proin mattis rhoncus nibh, eu volutpat est facilisis sit amet. Pellentesque varius blandit velit non lobortis. Aenean et nunc ut libero suscipit fermentum eget quis metus. Duis molestie ante at justo mattis ac varius ligula malesuada? Vestibulum rutrum commodo ornare. Nullam rhoncus dapibus sollicitudin. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque neque sem, dictum eget iaculis eu, commodo rhoncus nulla. Sed nec massa sem.<br/><br/>Aliquam mi elit, placerat a hendrerit quis, fermentum nec ligula. Ut tincidunt congue semper. Nulla facilisi. Morbi aliquam ante et lacus adipiscing molestie. Nullam a magna orci. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam eleifend blandit sem vitae tempor. Aenean faucibus sodales feugiat? Sed ultricies congue eros non volutpat. Sed placerat ultrices pharetra. Integer interdum, sem ac elementum pulvinar, turpis ante aliquet elit, a feugiat metus risus vel dolor. Aenean condimentum odio a elit sagittis dapibus. Duis dignissim pulvinar tellus, vitae convallis purus lacinia in. Ut in nibh quam? Morbi venenatis sagittis orci, at dignissim sapien interdum quis. Nullam cursus tortor eget leo sagittis lacinia. Curabitur lorem urna, tristique id luctus vitae, varius vel est. Donec quis mauris dolor.<br/>]]>
+								</changeblock>							
+							</changerow>
+							<changerow>
+								<changeblock type="modules_contactcard_contact" __cmpref-refid="contact1" />
+							</changerow>
+							<changerow>
+								<changeblock type="modules_form_form" __cmpref-refid="form1" />
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>		
+				<changecontent for="left-content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+								<![CDATA[Sed vulputate, urna vitae ultrices consequat, lacus nisi volutpat ligula, ac condimentum ante metus quis metus. Quisque vestibulum tortor augue, nec auctor augue. Ut mattis lacinia euismod. Integer ante justo, ullamcorper sed convallis cursus, pharetra id sapien. Quisque facilisis lacinia adipiscing. Integer feugiat, urna eu mattis lacinia, turpis dui luctus ipsum, sed viverra magna nibh ac urna. Donec porta faucibus hendrerit. Vivamus luctus; felis sed lacinia interdum, magna massa hendrerit turpis, nec tempor enim mi vitae enim. Donec vitae lorem in lectus rhoncus luctus. Fusce auctor ultrices rhoncus! Nulla pretium quam eu neque aliquam pellentesque. Nam turpis metus, interdum eu sollicitudin vel, venenatis sagittis ipsum? Curabitur vitae leo ac nunc interdum ultricies. Duis neque odio, molestie id ultricies id, mattis vel odio. Suspendisse in nunc quis mi tristique dignissim sit amet non augue! Vivamus vel turpis in massa tempus adipiscing. Vestibulum ultricies nisi vitae neque congue ut mollis turpis fermentum. Mauris mauris libero, fringilla in aliquet sit amet, cursus a nunc.<br/>]]></changeblock>							
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>
+				<changecontent for="right-content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+								<![CDATA[Sed vulputate, urna vitae ultrices consequat, lacus nisi volutpat ligula, ac condimentum ante metus quis metus. Quisque vestibulum tortor augue, nec auctor augue. Ut mattis lacinia euismod. Integer ante justo, ullamcorper sed convallis cursus, pharetra id sapien. Quisque facilisis lacinia adipiscing. Integer feugiat, urna eu mattis lacinia, turpis dui luctus ipsum, sed viverra magna nibh ac urna. Donec porta faucibus hendrerit. Vivamus luctus; felis sed lacinia interdum, magna massa hendrerit turpis, nec tempor enim mi vitae enim. Donec vitae lorem in lectus rhoncus luctus. Fusce auctor ultrices rhoncus! Nulla pretium quam eu neque aliquam pellentesque. Nam turpis metus, interdum eu sollicitudin vel, venenatis sagittis ipsum? Curabitur vitae leo ac nunc interdum ultricies. Duis neque odio, molestie id ultricies id, mattis vel odio. Suspendisse in nunc quis mi tristique dignissim sit amet non augue! Vivamus vel turpis in massa tempus adipiscing. Vestibulum ultricies nisi vitae neque congue ut mollis turpis fermentum. Mauris mauris libero, fringilla in aliquet sit amet, cursus a nunc.<br/>]]></changeblock>							
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>					
+			</page>	
+			
+			<page byLabel="tplThreeTwoColumns" navigationtitle="tplThreeTwoColumns" metatitle="tplThreeTwoColumns" 
+					template="webfactory/tplThreeTwoColumns" navigationVisibility="2">
+				<changecontent for="content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+									<![CDATA[<h1 class="heading-one"><img class="image" lang="fr" alt="RBS Change 4" cmpref="{ref-id:logo1}"/>Cras elementum luctus semper.</h1>Cras suscipit, velit a bibendum aliquet, massa magna lacinia erat, nec suscipit ante massa sed libero. Praesent molestie aliquam ullamcorper. Proin nisl mauris, hendrerit ut aliquam fermentum, condimentum luctus odio. Mauris in urna et urna blandit pretium at quis ipsum. Proin mattis rhoncus nibh, eu volutpat est facilisis sit amet. Pellentesque varius blandit velit non lobortis. Aenean et nunc ut libero suscipit fermentum eget quis metus. Duis molestie ante at justo mattis ac varius ligula malesuada? Vestibulum rutrum commodo ornare. Nullam rhoncus dapibus sollicitudin. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque neque sem, dictum eget iaculis eu, commodo rhoncus nulla. Sed nec massa sem.<br/><br/>Aliquam mi elit, placerat a hendrerit quis, fermentum nec ligula. Ut tincidunt congue semper. Nulla facilisi. Morbi aliquam ante et lacus adipiscing molestie. Nullam a magna orci. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam eleifend blandit sem vitae tempor. Aenean faucibus sodales feugiat? Sed ultricies congue eros non volutpat. Sed placerat ultrices pharetra. Integer interdum, sem ac elementum pulvinar, turpis ante aliquet elit, a feugiat metus risus vel dolor. Aenean condimentum odio a elit sagittis dapibus. Duis dignissim pulvinar tellus, vitae convallis purus lacinia in. Ut in nibh quam? Morbi venenatis sagittis orci, at dignissim sapien interdum quis. Nullam cursus tortor eget leo sagittis lacinia. Curabitur lorem urna, tristique id luctus vitae, varius vel est. Donec quis mauris dolor.<br/>]]>
+								</changeblock>							
+							</changerow>
+							<changerow>
+								<changeblock type="modules_contactcard_contact" __cmpref-refid="contact1" />
+							</changerow>
+							<changerow>
+								<changeblock type="modules_form_form" __cmpref-refid="form1" />
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>		
+				<changecontent for="right-content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+								<![CDATA[Sed vulputate, urna vitae ultrices consequat, lacus nisi volutpat ligula, ac condimentum ante metus quis metus. Quisque vestibulum tortor augue, nec auctor augue. Ut mattis lacinia euismod. Integer ante justo, ullamcorper sed convallis cursus, pharetra id sapien. Quisque facilisis lacinia adipiscing. Integer feugiat, urna eu mattis lacinia, turpis dui luctus ipsum, sed viverra magna nibh ac urna. Donec porta faucibus hendrerit. Vivamus luctus; felis sed lacinia interdum, magna massa hendrerit turpis, nec tempor enim mi vitae enim. Donec vitae lorem in lectus rhoncus luctus. Fusce auctor ultrices rhoncus! Nulla pretium quam eu neque aliquam pellentesque. Nam turpis metus, interdum eu sollicitudin vel, venenatis sagittis ipsum? Curabitur vitae leo ac nunc interdum ultricies. Duis neque odio, molestie id ultricies id, mattis vel odio. Suspendisse in nunc quis mi tristique dignissim sit amet non augue! Vivamus vel turpis in massa tempus adipiscing. Vestibulum ultricies nisi vitae neque congue ut mollis turpis fermentum. Mauris mauris libero, fringilla in aliquet sit amet, cursus a nunc.<br/>]]></changeblock>							
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>					
+			</page>	
+			
+			<page byLabel="tplThree" navigationtitle="tplThree" metatitle="tplThree" 
+					template="webfactory/tplThree" navigationVisibility="visible">
+				<changecontent for="content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+									<![CDATA[<h1 class="heading-one"><img class="image" lang="fr" alt="RBS Change 4" cmpref="{ref-id:logo1}"/>Cras elementum luctus semper.</h1>Cras suscipit, velit a bibendum aliquet, massa magna lacinia erat, nec suscipit ante massa sed libero. Praesent molestie aliquam ullamcorper. Proin nisl mauris, hendrerit ut aliquam fermentum, condimentum luctus odio. Mauris in urna et urna blandit pretium at quis ipsum. Proin mattis rhoncus nibh, eu volutpat est facilisis sit amet. Pellentesque varius blandit velit non lobortis. Aenean et nunc ut libero suscipit fermentum eget quis metus. Duis molestie ante at justo mattis ac varius ligula malesuada? Vestibulum rutrum commodo ornare. Nullam rhoncus dapibus sollicitudin. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque neque sem, dictum eget iaculis eu, commodo rhoncus nulla. Sed nec massa sem.<br/><br/>Aliquam mi elit, placerat a hendrerit quis, fermentum nec ligula. Ut tincidunt congue semper. Nulla facilisi. Morbi aliquam ante et lacus adipiscing molestie. Nullam a magna orci. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam eleifend blandit sem vitae tempor. Aenean faucibus sodales feugiat? Sed ultricies congue eros non volutpat. Sed placerat ultrices pharetra. Integer interdum, sem ac elementum pulvinar, turpis ante aliquet elit, a feugiat metus risus vel dolor. Aenean condimentum odio a elit sagittis dapibus. Duis dignissim pulvinar tellus, vitae convallis purus lacinia in. Ut in nibh quam? Morbi venenatis sagittis orci, at dignissim sapien interdum quis. Nullam cursus tortor eget leo sagittis lacinia. Curabitur lorem urna, tristique id luctus vitae, varius vel est. Donec quis mauris dolor.<br/>]]>
+								</changeblock>							
+							</changerow>
+							<changerow>
+								<changeblock type="modules_contactcard_contact" __cmpref-refid="contact1" />
+							</changerow>
+							<changerow>
+								<changeblock type="modules_form_form" __cmpref-refid="form1" />
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>
+				<changecontent for="left-content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+								<![CDATA[Sed vulputate, urna vitae ultrices consequat, lacus nisi volutpat ligula, ac condimentum ante metus quis metus. Quisque vestibulum tortor augue, nec auctor augue. Ut mattis lacinia euismod. Integer ante justo, ullamcorper sed convallis cursus, pharetra id sapien. Quisque facilisis lacinia adipiscing. Integer feugiat, urna eu mattis lacinia, turpis dui luctus ipsum, sed viverra magna nibh ac urna. Donec porta faucibus hendrerit. Vivamus luctus; felis sed lacinia interdum, magna massa hendrerit turpis, nec tempor enim mi vitae enim. Donec vitae lorem in lectus rhoncus luctus. Fusce auctor ultrices rhoncus! Nulla pretium quam eu neque aliquam pellentesque. Nam turpis metus, interdum eu sollicitudin vel, venenatis sagittis ipsum? Curabitur vitae leo ac nunc interdum ultricies. Duis neque odio, molestie id ultricies id, mattis vel odio. Suspendisse in nunc quis mi tristique dignissim sit amet non augue! Vivamus vel turpis in massa tempus adipiscing. Vestibulum ultricies nisi vitae neque congue ut mollis turpis fermentum. Mauris mauris libero, fringilla in aliquet sit amet, cursus a nunc.<br/>]]></changeblock>							
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>		
+				<changecontent for="right-content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+								<![CDATA[Sed vulputate, urna vitae ultrices consequat, lacus nisi volutpat ligula, ac condimentum ante metus quis metus. Quisque vestibulum tortor augue, nec auctor augue. Ut mattis lacinia euismod. Integer ante justo, ullamcorper sed convallis cursus, pharetra id sapien. Quisque facilisis lacinia adipiscing. Integer feugiat, urna eu mattis lacinia, turpis dui luctus ipsum, sed viverra magna nibh ac urna. Donec porta faucibus hendrerit. Vivamus luctus; felis sed lacinia interdum, magna massa hendrerit turpis, nec tempor enim mi vitae enim. Donec vitae lorem in lectus rhoncus luctus. Fusce auctor ultrices rhoncus! Nulla pretium quam eu neque aliquam pellentesque. Nam turpis metus, interdum eu sollicitudin vel, venenatis sagittis ipsum? Curabitur vitae leo ac nunc interdum ultricies. Duis neque odio, molestie id ultricies id, mattis vel odio. Suspendisse in nunc quis mi tristique dignissim sit amet non augue! Vivamus vel turpis in massa tempus adipiscing. Vestibulum ultricies nisi vitae neque congue ut mollis turpis fermentum. Mauris mauris libero, fringilla in aliquet sit amet, cursus a nunc.<br/>]]></changeblock>							
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>					
+			</page>
+			
+			<page byLabel="tplFour" navigationtitle="tplFour" metatitle="tplFour" 
+					template="webfactory/tplFour" navigationVisibility="visible">
+				<changecontent for="content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+									<![CDATA[<h1 class="heading-one"><img class="image" lang="fr" alt="RBS Change 4" cmpref="{ref-id:logo1}"/>Cras elementum luctus semper.</h1>Cras suscipit, velit a bibendum aliquet, massa magna lacinia erat, nec suscipit ante massa sed libero. Praesent molestie aliquam ullamcorper. Proin nisl mauris, hendrerit ut aliquam fermentum, condimentum luctus odio. Mauris in urna et urna blandit pretium at quis ipsum. Proin mattis rhoncus nibh, eu volutpat est facilisis sit amet. Pellentesque varius blandit velit non lobortis. Aenean et nunc ut libero suscipit fermentum eget quis metus. Duis molestie ante at justo mattis ac varius ligula malesuada? Vestibulum rutrum commodo ornare. Nullam rhoncus dapibus sollicitudin. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque neque sem, dictum eget iaculis eu, commodo rhoncus nulla. Sed nec massa sem.<br/><br/>Aliquam mi elit, placerat a hendrerit quis, fermentum nec ligula. Ut tincidunt congue semper. Nulla facilisi. Morbi aliquam ante et lacus adipiscing molestie. Nullam a magna orci. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam eleifend blandit sem vitae tempor. Aenean faucibus sodales feugiat? Sed ultricies congue eros non volutpat. Sed placerat ultrices pharetra. Integer interdum, sem ac elementum pulvinar, turpis ante aliquet elit, a feugiat metus risus vel dolor. Aenean condimentum odio a elit sagittis dapibus. Duis dignissim pulvinar tellus, vitae convallis purus lacinia in. Ut in nibh quam? Morbi venenatis sagittis orci, at dignissim sapien interdum quis. Nullam cursus tortor eget leo sagittis lacinia. Curabitur lorem urna, tristique id luctus vitae, varius vel est. Donec quis mauris dolor.<br/>]]>
+								</changeblock>							
+							</changerow>
+							<changerow>
+								<changeblock type="modules_contactcard_contact" __cmpref-refid="contact1" />
+							</changerow>
+							<changerow>
+								<changeblock type="modules_form_form" __cmpref-refid="form1" />
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>
+				<changecontent for="left-content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+								<![CDATA[Sed vulputate, urna vitae ultrices consequat, lacus nisi volutpat ligula, ac condimentum ante metus quis metus. Quisque vestibulum tortor augue, nec auctor augue. Ut mattis lacinia euismod. Integer ante justo, ullamcorper sed convallis cursus, pharetra id sapien. Quisque facilisis lacinia adipiscing. Integer feugiat, urna eu mattis lacinia, turpis dui luctus ipsum, sed viverra magna nibh ac urna. Donec porta faucibus hendrerit. Vivamus luctus; felis sed lacinia interdum, magna massa hendrerit turpis, nec tempor enim mi vitae enim. Donec vitae lorem in lectus rhoncus luctus. Fusce auctor ultrices rhoncus! Nulla pretium quam eu neque aliquam pellentesque. Nam turpis metus, interdum eu sollicitudin vel, venenatis sagittis ipsum? Curabitur vitae leo ac nunc interdum ultricies. Duis neque odio, molestie id ultricies id, mattis vel odio. Suspendisse in nunc quis mi tristique dignissim sit amet non augue! Vivamus vel turpis in massa tempus adipiscing. Vestibulum ultricies nisi vitae neque congue ut mollis turpis fermentum. Mauris mauris libero, fringilla in aliquet sit amet, cursus a nunc.<br/>]]></changeblock>							
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>				
+			</page>				
+			
+			<page byLabel="tplFourThreeColumns" navigationtitle="tplFourThreeColumns" metatitle="tplFourThreeColumns" 
+					template="webfactory/tplFourThreeColumns" navigationVisibility="2">
+				<changecontent for="content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+									<![CDATA[<h1 class="heading-one"><img class="image" lang="fr" alt="RBS Change 4" cmpref="{ref-id:logo1}"/>Cras elementum luctus semper.</h1>Cras suscipit, velit a bibendum aliquet, massa magna lacinia erat, nec suscipit ante massa sed libero. Praesent molestie aliquam ullamcorper. Proin nisl mauris, hendrerit ut aliquam fermentum, condimentum luctus odio. Mauris in urna et urna blandit pretium at quis ipsum. Proin mattis rhoncus nibh, eu volutpat est facilisis sit amet. Pellentesque varius blandit velit non lobortis. Aenean et nunc ut libero suscipit fermentum eget quis metus. Duis molestie ante at justo mattis ac varius ligula malesuada? Vestibulum rutrum commodo ornare. Nullam rhoncus dapibus sollicitudin. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque neque sem, dictum eget iaculis eu, commodo rhoncus nulla. Sed nec massa sem.<br/><br/>Aliquam mi elit, placerat a hendrerit quis, fermentum nec ligula. Ut tincidunt congue semper. Nulla facilisi. Morbi aliquam ante et lacus adipiscing molestie. Nullam a magna orci. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam eleifend blandit sem vitae tempor. Aenean faucibus sodales feugiat? Sed ultricies congue eros non volutpat. Sed placerat ultrices pharetra. Integer interdum, sem ac elementum pulvinar, turpis ante aliquet elit, a feugiat metus risus vel dolor. Aenean condimentum odio a elit sagittis dapibus. Duis dignissim pulvinar tellus, vitae convallis purus lacinia in. Ut in nibh quam? Morbi venenatis sagittis orci, at dignissim sapien interdum quis. Nullam cursus tortor eget leo sagittis lacinia. Curabitur lorem urna, tristique id luctus vitae, varius vel est. Donec quis mauris dolor.<br/>]]>
+								</changeblock>							
+							</changerow>
+							<changerow>
+								<changeblock type="modules_contactcard_contact" __cmpref-refid="contact1" />
+							</changerow>
+							<changerow>
+								<changeblock type="modules_form_form" __cmpref-refid="form1" />
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>
+				<changecontent for="left-content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+								<![CDATA[Sed vulputate, urna vitae ultrices consequat, lacus nisi volutpat ligula, ac condimentum ante metus quis metus. Quisque vestibulum tortor augue, nec auctor augue. Ut mattis lacinia euismod. Integer ante justo, ullamcorper sed convallis cursus, pharetra id sapien. Quisque facilisis lacinia adipiscing. Integer feugiat, urna eu mattis lacinia, turpis dui luctus ipsum, sed viverra magna nibh ac urna. Donec porta faucibus hendrerit. Vivamus luctus; felis sed lacinia interdum, magna massa hendrerit turpis, nec tempor enim mi vitae enim. Donec vitae lorem in lectus rhoncus luctus. Fusce auctor ultrices rhoncus! Nulla pretium quam eu neque aliquam pellentesque. Nam turpis metus, interdum eu sollicitudin vel, venenatis sagittis ipsum? Curabitur vitae leo ac nunc interdum ultricies. Duis neque odio, molestie id ultricies id, mattis vel odio. Suspendisse in nunc quis mi tristique dignissim sit amet non augue! Vivamus vel turpis in massa tempus adipiscing. Vestibulum ultricies nisi vitae neque congue ut mollis turpis fermentum. Mauris mauris libero, fringilla in aliquet sit amet, cursus a nunc.<br/>]]></changeblock>							
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>		
+				<changecontent for="right-content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+								<![CDATA[Sed vulputate, urna vitae ultrices consequat, lacus nisi volutpat ligula, ac condimentum ante metus quis metus. Quisque vestibulum tortor augue, nec auctor augue. Ut mattis lacinia euismod. Integer ante justo, ullamcorper sed convallis cursus, pharetra id sapien. Quisque facilisis lacinia adipiscing. Integer feugiat, urna eu mattis lacinia, turpis dui luctus ipsum, sed viverra magna nibh ac urna. Donec porta faucibus hendrerit. Vivamus luctus; felis sed lacinia interdum, magna massa hendrerit turpis, nec tempor enim mi vitae enim. Donec vitae lorem in lectus rhoncus luctus. Fusce auctor ultrices rhoncus! Nulla pretium quam eu neque aliquam pellentesque. Nam turpis metus, interdum eu sollicitudin vel, venenatis sagittis ipsum? Curabitur vitae leo ac nunc interdum ultricies. Duis neque odio, molestie id ultricies id, mattis vel odio. Suspendisse in nunc quis mi tristique dignissim sit amet non augue! Vivamus vel turpis in massa tempus adipiscing. Vestibulum ultricies nisi vitae neque congue ut mollis turpis fermentum. Mauris mauris libero, fringilla in aliquet sit amet, cursus a nunc.<br/>]]></changeblock>							
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>					
+			</page>	
+			
+			<page byLabel="tplFive" navigationtitle="tplFive" metatitle="tplFive" 
+					template="webfactory/tplFive" navigationVisibility="visible">
+				<changecontent for="content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+									<![CDATA[<h1 class="heading-one"><img class="image" lang="fr" alt="RBS Change 4" cmpref="{ref-id:logo1}"/>Cras elementum luctus semper.</h1>Cras suscipit, velit a bibendum aliquet, massa magna lacinia erat, nec suscipit ante massa sed libero. Praesent molestie aliquam ullamcorper. Proin nisl mauris, hendrerit ut aliquam fermentum, condimentum luctus odio. Mauris in urna et urna blandit pretium at quis ipsum. Proin mattis rhoncus nibh, eu volutpat est facilisis sit amet. Pellentesque varius blandit velit non lobortis. Aenean et nunc ut libero suscipit fermentum eget quis metus. Duis molestie ante at justo mattis ac varius ligula malesuada? Vestibulum rutrum commodo ornare. Nullam rhoncus dapibus sollicitudin. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque neque sem, dictum eget iaculis eu, commodo rhoncus nulla. Sed nec massa sem.<br/><br/>Aliquam mi elit, placerat a hendrerit quis, fermentum nec ligula. Ut tincidunt congue semper. Nulla facilisi. Morbi aliquam ante et lacus adipiscing molestie. Nullam a magna orci. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam eleifend blandit sem vitae tempor. Aenean faucibus sodales feugiat? Sed ultricies congue eros non volutpat. Sed placerat ultrices pharetra. Integer interdum, sem ac elementum pulvinar, turpis ante aliquet elit, a feugiat metus risus vel dolor. Aenean condimentum odio a elit sagittis dapibus. Duis dignissim pulvinar tellus, vitae convallis purus lacinia in. Ut in nibh quam? Morbi venenatis sagittis orci, at dignissim sapien interdum quis. Nullam cursus tortor eget leo sagittis lacinia. Curabitur lorem urna, tristique id luctus vitae, varius vel est. Donec quis mauris dolor.<br/>]]>
+								</changeblock>							
+							</changerow>
+							<changerow>
+								<changeblock type="modules_contactcard_contact" __cmpref-refid="contact1" />
+							</changerow>
+							<changerow>
+								<changeblock type="modules_form_form" __cmpref-refid="form1" />
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>	
+				<changecontent for="right-content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+								<![CDATA[Sed vulputate, urna vitae ultrices consequat, lacus nisi volutpat ligula, ac condimentum ante metus quis metus. Quisque vestibulum tortor augue, nec auctor augue. Ut mattis lacinia euismod. Integer ante justo, ullamcorper sed convallis cursus, pharetra id sapien. Quisque facilisis lacinia adipiscing. Integer feugiat, urna eu mattis lacinia, turpis dui luctus ipsum, sed viverra magna nibh ac urna. Donec porta faucibus hendrerit. Vivamus luctus; felis sed lacinia interdum, magna massa hendrerit turpis, nec tempor enim mi vitae enim. Donec vitae lorem in lectus rhoncus luctus. Fusce auctor ultrices rhoncus! Nulla pretium quam eu neque aliquam pellentesque. Nam turpis metus, interdum eu sollicitudin vel, venenatis sagittis ipsum? Curabitur vitae leo ac nunc interdum ultricies. Duis neque odio, molestie id ultricies id, mattis vel odio. Suspendisse in nunc quis mi tristique dignissim sit amet non augue! Vivamus vel turpis in massa tempus adipiscing. Vestibulum ultricies nisi vitae neque congue ut mollis turpis fermentum. Mauris mauris libero, fringilla in aliquet sit amet, cursus a nunc.<br/>]]></changeblock>							
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>					
+			</page>	
+			
+			<page byLabel="tplFiveThreeColumns" navigationtitle="tplFiveThreeColumns" metatitle="tplFiveThreeColumns" 
+					template="webfactory/tplFiveThreeColumns" navigationVisibility="2">
+				<changecontent for="content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+									<![CDATA[<h1 class="heading-one"><img class="image" lang="fr" alt="RBS Change 4" cmpref="{ref-id:logo1}"/>Cras elementum luctus semper.</h1>Cras suscipit, velit a bibendum aliquet, massa magna lacinia erat, nec suscipit ante massa sed libero. Praesent molestie aliquam ullamcorper. Proin nisl mauris, hendrerit ut aliquam fermentum, condimentum luctus odio. Mauris in urna et urna blandit pretium at quis ipsum. Proin mattis rhoncus nibh, eu volutpat est facilisis sit amet. Pellentesque varius blandit velit non lobortis. Aenean et nunc ut libero suscipit fermentum eget quis metus. Duis molestie ante at justo mattis ac varius ligula malesuada? Vestibulum rutrum commodo ornare. Nullam rhoncus dapibus sollicitudin. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque neque sem, dictum eget iaculis eu, commodo rhoncus nulla. Sed nec massa sem.<br/><br/>Aliquam mi elit, placerat a hendrerit quis, fermentum nec ligula. Ut tincidunt congue semper. Nulla facilisi. Morbi aliquam ante et lacus adipiscing molestie. Nullam a magna orci. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam eleifend blandit sem vitae tempor. Aenean faucibus sodales feugiat? Sed ultricies congue eros non volutpat. Sed placerat ultrices pharetra. Integer interdum, sem ac elementum pulvinar, turpis ante aliquet elit, a feugiat metus risus vel dolor. Aenean condimentum odio a elit sagittis dapibus. Duis dignissim pulvinar tellus, vitae convallis purus lacinia in. Ut in nibh quam? Morbi venenatis sagittis orci, at dignissim sapien interdum quis. Nullam cursus tortor eget leo sagittis lacinia. Curabitur lorem urna, tristique id luctus vitae, varius vel est. Donec quis mauris dolor.<br/>]]>
+								</changeblock>							
+							</changerow>
+							<changerow>
+								<changeblock type="modules_contactcard_contact" __cmpref-refid="contact1" />
+							</changerow>
+							<changerow>
+								<changeblock type="modules_form_form" __cmpref-refid="form1" />
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>
+				<changecontent for="left-content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+								<![CDATA[Sed vulputate, urna vitae ultrices consequat, lacus nisi volutpat ligula, ac condimentum ante metus quis metus. Quisque vestibulum tortor augue, nec auctor augue. Ut mattis lacinia euismod. Integer ante justo, ullamcorper sed convallis cursus, pharetra id sapien. Quisque facilisis lacinia adipiscing. Integer feugiat, urna eu mattis lacinia, turpis dui luctus ipsum, sed viverra magna nibh ac urna. Donec porta faucibus hendrerit. Vivamus luctus; felis sed lacinia interdum, magna massa hendrerit turpis, nec tempor enim mi vitae enim. Donec vitae lorem in lectus rhoncus luctus. Fusce auctor ultrices rhoncus! Nulla pretium quam eu neque aliquam pellentesque. Nam turpis metus, interdum eu sollicitudin vel, venenatis sagittis ipsum? Curabitur vitae leo ac nunc interdum ultricies. Duis neque odio, molestie id ultricies id, mattis vel odio. Suspendisse in nunc quis mi tristique dignissim sit amet non augue! Vivamus vel turpis in massa tempus adipiscing. Vestibulum ultricies nisi vitae neque congue ut mollis turpis fermentum. Mauris mauris libero, fringilla in aliquet sit amet, cursus a nunc.<br/>]]></changeblock>							
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>		
+				<changecontent for="right-content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+								<![CDATA[Sed vulputate, urna vitae ultrices consequat, lacus nisi volutpat ligula, ac condimentum ante metus quis metus. Quisque vestibulum tortor augue, nec auctor augue. Ut mattis lacinia euismod. Integer ante justo, ullamcorper sed convallis cursus, pharetra id sapien. Quisque facilisis lacinia adipiscing. Integer feugiat, urna eu mattis lacinia, turpis dui luctus ipsum, sed viverra magna nibh ac urna. Donec porta faucibus hendrerit. Vivamus luctus; felis sed lacinia interdum, magna massa hendrerit turpis, nec tempor enim mi vitae enim. Donec vitae lorem in lectus rhoncus luctus. Fusce auctor ultrices rhoncus! Nulla pretium quam eu neque aliquam pellentesque. Nam turpis metus, interdum eu sollicitudin vel, venenatis sagittis ipsum? Curabitur vitae leo ac nunc interdum ultricies. Duis neque odio, molestie id ultricies id, mattis vel odio. Suspendisse in nunc quis mi tristique dignissim sit amet non augue! Vivamus vel turpis in massa tempus adipiscing. Vestibulum ultricies nisi vitae neque congue ut mollis turpis fermentum. Mauris mauris libero, fringilla in aliquet sit amet, cursus a nunc.<br/>]]></changeblock>							
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>					
+			</page>	
+			
+			<page byLabel="tplSix" navigationtitle="tplSix" metatitle="tplSix" 
+					template="webfactory/tplSix" navigationVisibility="visible">
+				<changecontent for="content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+									<![CDATA[<h1 class="heading-one"><img class="image" lang="fr" alt="RBS Change 4" cmpref="{ref-id:logo1}"/>Cras elementum luctus semper.</h1>Cras suscipit, velit a bibendum aliquet, massa magna lacinia erat, nec suscipit ante massa sed libero. Praesent molestie aliquam ullamcorper. Proin nisl mauris, hendrerit ut aliquam fermentum, condimentum luctus odio. Mauris in urna et urna blandit pretium at quis ipsum. Proin mattis rhoncus nibh, eu volutpat est facilisis sit amet. Pellentesque varius blandit velit non lobortis. Aenean et nunc ut libero suscipit fermentum eget quis metus. Duis molestie ante at justo mattis ac varius ligula malesuada? Vestibulum rutrum commodo ornare. Nullam rhoncus dapibus sollicitudin. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque neque sem, dictum eget iaculis eu, commodo rhoncus nulla. Sed nec massa sem.<br/><br/>Aliquam mi elit, placerat a hendrerit quis, fermentum nec ligula. Ut tincidunt congue semper. Nulla facilisi. Morbi aliquam ante et lacus adipiscing molestie. Nullam a magna orci. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam eleifend blandit sem vitae tempor. Aenean faucibus sodales feugiat? Sed ultricies congue eros non volutpat. Sed placerat ultrices pharetra. Integer interdum, sem ac elementum pulvinar, turpis ante aliquet elit, a feugiat metus risus vel dolor. Aenean condimentum odio a elit sagittis dapibus. Duis dignissim pulvinar tellus, vitae convallis purus lacinia in. Ut in nibh quam? Morbi venenatis sagittis orci, at dignissim sapien interdum quis. Nullam cursus tortor eget leo sagittis lacinia. Curabitur lorem urna, tristique id luctus vitae, varius vel est. Donec quis mauris dolor.<br/>]]>
+								</changeblock>							
+							</changerow>
+							<changerow>
+								<changeblock type="modules_contactcard_contact" __cmpref-refid="contact1" />
+							</changerow>
+							<changerow>
+								<changeblock type="modules_form_form" __cmpref-refid="form1" />
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>
+				<changecontent for="left-content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+								<![CDATA[Sed vulputate, urna vitae ultrices consequat, lacus nisi volutpat ligula, ac condimentum ante metus quis metus. Quisque vestibulum tortor augue, nec auctor augue. Ut mattis lacinia euismod. Integer ante justo, ullamcorper sed convallis cursus, pharetra id sapien. Quisque facilisis lacinia adipiscing. Integer feugiat, urna eu mattis lacinia, turpis dui luctus ipsum, sed viverra magna nibh ac urna. Donec porta faucibus hendrerit. Vivamus luctus; felis sed lacinia interdum, magna massa hendrerit turpis, nec tempor enim mi vitae enim. Donec vitae lorem in lectus rhoncus luctus. Fusce auctor ultrices rhoncus! Nulla pretium quam eu neque aliquam pellentesque. Nam turpis metus, interdum eu sollicitudin vel, venenatis sagittis ipsum? Curabitur vitae leo ac nunc interdum ultricies. Duis neque odio, molestie id ultricies id, mattis vel odio. Suspendisse in nunc quis mi tristique dignissim sit amet non augue! Vivamus vel turpis in massa tempus adipiscing. Vestibulum ultricies nisi vitae neque congue ut mollis turpis fermentum. Mauris mauris libero, fringilla in aliquet sit amet, cursus a nunc.<br/>]]></changeblock>							
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>		
+				<changecontent for="right-content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+								<![CDATA[Sed vulputate, urna vitae ultrices consequat, lacus nisi volutpat ligula, ac condimentum ante metus quis metus. Quisque vestibulum tortor augue, nec auctor augue. Ut mattis lacinia euismod. Integer ante justo, ullamcorper sed convallis cursus, pharetra id sapien. Quisque facilisis lacinia adipiscing. Integer feugiat, urna eu mattis lacinia, turpis dui luctus ipsum, sed viverra magna nibh ac urna. Donec porta faucibus hendrerit. Vivamus luctus; felis sed lacinia interdum, magna massa hendrerit turpis, nec tempor enim mi vitae enim. Donec vitae lorem in lectus rhoncus luctus. Fusce auctor ultrices rhoncus! Nulla pretium quam eu neque aliquam pellentesque. Nam turpis metus, interdum eu sollicitudin vel, venenatis sagittis ipsum? Curabitur vitae leo ac nunc interdum ultricies. Duis neque odio, molestie id ultricies id, mattis vel odio. Suspendisse in nunc quis mi tristique dignissim sit amet non augue! Vivamus vel turpis in massa tempus adipiscing. Vestibulum ultricies nisi vitae neque congue ut mollis turpis fermentum. Mauris mauris libero, fringilla in aliquet sit amet, cursus a nunc.<br/>]]></changeblock>							
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>					
+			</page>	
+			
+			<page byLabel="tplSixTwoColumns" navigationtitle="tplSixTwoColumns" metatitle="tplSixTwoColumns" 
+					template="webfactory/tplSixTwoColumns" navigationVisibility="2">
+				<changecontent for="content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+									<![CDATA[<h1 class="heading-one"><img class="image" lang="fr" alt="RBS Change 4" cmpref="{ref-id:logo1}"/>Cras elementum luctus semper.</h1>Cras suscipit, velit a bibendum aliquet, massa magna lacinia erat, nec suscipit ante massa sed libero. Praesent molestie aliquam ullamcorper. Proin nisl mauris, hendrerit ut aliquam fermentum, condimentum luctus odio. Mauris in urna et urna blandit pretium at quis ipsum. Proin mattis rhoncus nibh, eu volutpat est facilisis sit amet. Pellentesque varius blandit velit non lobortis. Aenean et nunc ut libero suscipit fermentum eget quis metus. Duis molestie ante at justo mattis ac varius ligula malesuada? Vestibulum rutrum commodo ornare. Nullam rhoncus dapibus sollicitudin. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque neque sem, dictum eget iaculis eu, commodo rhoncus nulla. Sed nec massa sem.<br/><br/>Aliquam mi elit, placerat a hendrerit quis, fermentum nec ligula. Ut tincidunt congue semper. Nulla facilisi. Morbi aliquam ante et lacus adipiscing molestie. Nullam a magna orci. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam eleifend blandit sem vitae tempor. Aenean faucibus sodales feugiat? Sed ultricies congue eros non volutpat. Sed placerat ultrices pharetra. Integer interdum, sem ac elementum pulvinar, turpis ante aliquet elit, a feugiat metus risus vel dolor. Aenean condimentum odio a elit sagittis dapibus. Duis dignissim pulvinar tellus, vitae convallis purus lacinia in. Ut in nibh quam? Morbi venenatis sagittis orci, at dignissim sapien interdum quis. Nullam cursus tortor eget leo sagittis lacinia. Curabitur lorem urna, tristique id luctus vitae, varius vel est. Donec quis mauris dolor.<br/>]]>
+								</changeblock>							
+							</changerow>
+							<changerow>
+								<changeblock type="modules_contactcard_contact" __cmpref-refid="contact1" />
+							</changerow>
+							<changerow>
+								<changeblock type="modules_form_form" __cmpref-refid="form1" />
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>
+				<changecontent for="left-content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+								<![CDATA[Sed vulputate, urna vitae ultrices consequat, lacus nisi volutpat ligula, ac condimentum ante metus quis metus. Quisque vestibulum tortor augue, nec auctor augue. Ut mattis lacinia euismod. Integer ante justo, ullamcorper sed convallis cursus, pharetra id sapien. Quisque facilisis lacinia adipiscing. Integer feugiat, urna eu mattis lacinia, turpis dui luctus ipsum, sed viverra magna nibh ac urna. Donec porta faucibus hendrerit. Vivamus luctus; felis sed lacinia interdum, magna massa hendrerit turpis, nec tempor enim mi vitae enim. Donec vitae lorem in lectus rhoncus luctus. Fusce auctor ultrices rhoncus! Nulla pretium quam eu neque aliquam pellentesque. Nam turpis metus, interdum eu sollicitudin vel, venenatis sagittis ipsum? Curabitur vitae leo ac nunc interdum ultricies. Duis neque odio, molestie id ultricies id, mattis vel odio. Suspendisse in nunc quis mi tristique dignissim sit amet non augue! Vivamus vel turpis in massa tempus adipiscing. Vestibulum ultricies nisi vitae neque congue ut mollis turpis fermentum. Mauris mauris libero, fringilla in aliquet sit amet, cursus a nunc.<br/>]]></changeblock>							
 							</changerow>
 						</changecolumn>
 					</changelayout>
 				</changecontent>						
-			</page>				
+			</page>	
 			
-			<page byLabel="minimal" navigationtitle="minimal" metatitle="minimal" 
-					template="default/minimal" navigationVisibility="visible">
+			<page byLabel="tplSixTwoColumnsRight" navigationtitle="tplSixTwoColumnsRight" metatitle="tplSixTwoColumnsRight" 
+					template="webfactory/tplSixTwoColumnsRight" navigationVisibility="2">
 				<changecontent for="content-block">
 					<changelayout>
 						<changecolumn>
@@ -139,11 +519,21 @@
 							</changerow>
 						</changecolumn>
 					</changelayout>
-				</changecontent>						
-			</page>				
+				</changecontent>	
+				<changecontent for="right-content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+								<![CDATA[Sed vulputate, urna vitae ultrices consequat, lacus nisi volutpat ligula, ac condimentum ante metus quis metus. Quisque vestibulum tortor augue, nec auctor augue. Ut mattis lacinia euismod. Integer ante justo, ullamcorper sed convallis cursus, pharetra id sapien. Quisque facilisis lacinia adipiscing. Integer feugiat, urna eu mattis lacinia, turpis dui luctus ipsum, sed viverra magna nibh ac urna. Donec porta faucibus hendrerit. Vivamus luctus; felis sed lacinia interdum, magna massa hendrerit turpis, nec tempor enim mi vitae enim. Donec vitae lorem in lectus rhoncus luctus. Fusce auctor ultrices rhoncus! Nulla pretium quam eu neque aliquam pellentesque. Nam turpis metus, interdum eu sollicitudin vel, venenatis sagittis ipsum? Curabitur vitae leo ac nunc interdum ultricies. Duis neque odio, molestie id ultricies id, mattis vel odio. Suspendisse in nunc quis mi tristique dignissim sit amet non augue! Vivamus vel turpis in massa tempus adipiscing. Vestibulum ultricies nisi vitae neque congue ut mollis turpis fermentum. Mauris mauris libero, fringilla in aliquet sit amet, cursus a nunc.<br/>]]></changeblock>							
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>					
+			</page>	
 			
-			<page byLabel="popin" navigationtitle="popin" metatitle="popin" 
-					template="default/popin" navigationVisibility="2">
+			<page byLabel="tplSixThreeColumns" navigationtitle="tplSixThreeColumns" metatitle="tplSixThreeColumns" 
+					template="webfactory/tplSixThreeColumns" navigationVisibility="2">
 				<changecontent for="content-block">
 					<changelayout>
 						<changecolumn>
@@ -160,7 +550,27 @@
 							</changerow>
 						</changecolumn>
 					</changelayout>
-				</changecontent>							
+				</changecontent>
+				<changecontent for="left-content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+								<![CDATA[Sed vulputate, urna vitae ultrices consequat, lacus nisi volutpat ligula, ac condimentum ante metus quis metus. Quisque vestibulum tortor augue, nec auctor augue. Ut mattis lacinia euismod. Integer ante justo, ullamcorper sed convallis cursus, pharetra id sapien. Quisque facilisis lacinia adipiscing. Integer feugiat, urna eu mattis lacinia, turpis dui luctus ipsum, sed viverra magna nibh ac urna. Donec porta faucibus hendrerit. Vivamus luctus; felis sed lacinia interdum, magna massa hendrerit turpis, nec tempor enim mi vitae enim. Donec vitae lorem in lectus rhoncus luctus. Fusce auctor ultrices rhoncus! Nulla pretium quam eu neque aliquam pellentesque. Nam turpis metus, interdum eu sollicitudin vel, venenatis sagittis ipsum? Curabitur vitae leo ac nunc interdum ultricies. Duis neque odio, molestie id ultricies id, mattis vel odio. Suspendisse in nunc quis mi tristique dignissim sit amet non augue! Vivamus vel turpis in massa tempus adipiscing. Vestibulum ultricies nisi vitae neque congue ut mollis turpis fermentum. Mauris mauris libero, fringilla in aliquet sit amet, cursus a nunc.<br/>]]></changeblock>							
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>		
+				<changecontent for="right-content-block">
+					<changelayout>
+						<changecolumn>
+							<changerow>
+								<changeblock type="richtext">
+								<![CDATA[Sed vulputate, urna vitae ultrices consequat, lacus nisi volutpat ligula, ac condimentum ante metus quis metus. Quisque vestibulum tortor augue, nec auctor augue. Ut mattis lacinia euismod. Integer ante justo, ullamcorper sed convallis cursus, pharetra id sapien. Quisque facilisis lacinia adipiscing. Integer feugiat, urna eu mattis lacinia, turpis dui luctus ipsum, sed viverra magna nibh ac urna. Donec porta faucibus hendrerit. Vivamus luctus; felis sed lacinia interdum, magna massa hendrerit turpis, nec tempor enim mi vitae enim. Donec vitae lorem in lectus rhoncus luctus. Fusce auctor ultrices rhoncus! Nulla pretium quam eu neque aliquam pellentesque. Nam turpis metus, interdum eu sollicitudin vel, venenatis sagittis ipsum? Curabitur vitae leo ac nunc interdum ultricies. Duis neque odio, molestie id ultricies id, mattis vel odio. Suspendisse in nunc quis mi tristique dignissim sit amet non augue! Vivamus vel turpis in massa tempus adipiscing. Vestibulum ultricies nisi vitae neque congue ut mollis turpis fermentum. Mauris mauris libero, fringilla in aliquet sit amet, cursus a nunc.<br/>]]></changeblock>							
+							</changerow>
+						</changecolumn>
+					</changelayout>
+				</changecontent>					
 			</page>	
 		</topic>
 	</website>
