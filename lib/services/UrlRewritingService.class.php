@@ -43,15 +43,14 @@ class website_UrlRewritingService extends website_BaseRewritingService
 			$targetWebsiteId = $document->getDocumentService()->getWebsiteId($document);
 			$targetWebsite = $targetWebsiteId === null ? website_WebsiteModuleService::getInstance()->getCurrentWebsite() : DocumentHelper::getDocumentInstance($targetWebsiteId);
 		}
-		$path = $this->getCustomPath($document, $targetWebsite, $lang);
-		
+		$path = $this->getCustomPath($document, $targetWebsite, $lang);		
 		if ($path !== null)
 		{
 			$link = $this->getRewriteLink($targetWebsite, $lang, $path, $parameters);
 		}
 		else
 		{
-			$link = $document->getDocumentService()->getWebLink($this, $document, $website, $lang, $parameters);
+			$link = $document->getDocumentService()->getWebLink($this, $document, $targetWebsite, $lang, $parameters);
 			if ($link === null)
 			{
 				$path = $this->getDocumentDefaultPath($document, $lang);

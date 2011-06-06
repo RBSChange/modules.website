@@ -124,10 +124,9 @@ class LinkHelper
 	 * @param f_persistentdocument_PersistentDocument $document
 	 * @param string $lang
 	 * @param array $parameters
-	 * @param Boolean $useCache
 	 * @return string or null
 	 */
-	public static function getDocumentUrl($document, $lang = null, $parameters = array(), $useCache = true)
+	public static function getDocumentUrl($document, $lang = null, $parameters = array())
 	{
 		return self::getDocumentUrlForWebsite($document, null, $lang, $parameters);
 	}

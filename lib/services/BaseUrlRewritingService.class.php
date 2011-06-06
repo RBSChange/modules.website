@@ -563,16 +563,7 @@ class website_BaseRewritingService extends BaseService
 	 */
 	public function getNonRewrittenDocumentUrl($document, $lang = null, $parameters = array())
 	{
-		$documentService = $document->getDocumentService();
-		if (f_util_ClassUtils::methodExists($documentService, 'generateUrl'))
-		{
-			return $documentService->generateUrl($document, $lang, $parameters);
-		}
-		else if (Framework::inDevelopmentMode())
-		{
-			Framework::info(__METHOD__ . ' No url rewriting Found for document : ' . $document->__toString());
-		}
-		
+		$documentService = $document->getDocumentService();		
 		$module = $document->getPersistentModel()->getModuleName();
 		if (! is_array($parameters))
 		{

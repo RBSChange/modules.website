@@ -40,6 +40,7 @@ class website_BlockStaticrichtextAction extends website_BlockAction
 				$attrs[strtolower($match[1])] = isset($match[3]) ? $match[3] : $match[2];
 			}
 		}
+		
 		if (isset($attrs["cmpref"]))
 		{	
 			$rc = RequestContext::getInstance();
@@ -55,7 +56,7 @@ class website_BlockStaticrichtextAction extends website_BlockAction
 	        {
 	        	$lang = $media->getLang();
 	        }
-			$attrs["src"] = media_MediaService::getInstance()->generateUrl($media, $lang, $formatInfo);
+			$attrs["src"] = LinkHelper::getDocumentUrl($media, $lang, $formatInfo);
 			$imgStr = "<img";
 			foreach ($attrs as $key => $value)
 			{
