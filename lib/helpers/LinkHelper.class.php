@@ -687,24 +687,43 @@ class LinkHelper
 	 * Returns the current URL with all the parameters.
 	 * If $extraAttributes is an array, the parameters it contains will override
 	 * the ones of the current URL.
-	 *
 	 * @param array $extraAttributes
 	 * @return string
 	 */
 	public static function getCurrentUrl($extraAttributes = array())
 	{
-		$url = paginator_Url::getInstanceFromCurrentUrl();
-		if (is_array($extraAttributes))
+		$rq = RequestContext::getInstance();
+		if ($rq->getAjaxMode())
 		{
-			$url->setQueryParameters($extraAttributes);
+			$requestUri = $rq->getAjaxFromURI();
 		}
-		return $url->getStringRepresentation();
+		else
+		{
+			$requestUri = $rq->getPathURI();
+		}
+		$parts = explode('?', $requestUri);
+		$currentLink = new f_web_ParametrizedLink($rq->getProtocol(), $_SERVER['SERVER_NAME'], $parts[0]);
+		if (isset($parts[1]) && $parts[1] != '')
+		{
+			parse_str($parts[1], $queryParameters);
+			$currentLink->setQueryParameters($queryParameters);
+		}
+		if (is_array($extraAttributes) && count($extraAttributes))
+		{
+			foreach ($this->extraParameters as $name => $value) 
+			{
+				$currentLink->setQueryParameter($name, $value);
+			}
+		}
+		return $currentLink->getUrl();
 	}
 	
-	static function getCurrentUrlComplete($extraAttributes = array())
+	/**
+	 * @deprecated
+	 */
+	public static function getCurrentUrlComplete($extraAttributes = array())
 	{
-		$relativeURL = self::getCurrentUrl($extraAttributes);
-		return "http".(isset($_SERVER["HTTPS"]) ? "s" : null)."://".$_SERVER["HTTP_HOST"].$relativeURL;		
+		return self::getCurrentUrl($extraAttributes);
 	}
 	
 	// Deprecated.

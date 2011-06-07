@@ -501,7 +501,6 @@ class website_UrlRewritingService extends website_BaseRewritingService
 				if ($homePage  !== null)
 				{
 					$request->setParameter('pageref', $homePage->getId());
-					Framework::fatal(__METHOD__ . ' ZZZZZZZZZZZZZ ' . $homePage->getId());
 					return array('website', 'Display');
 				}
 			}
