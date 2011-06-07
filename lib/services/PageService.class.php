@@ -376,7 +376,25 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		return intval($document->getMeta("websiteId"));
 	}
-
+	
+	
+	/**
+	 * @param website_UrlRewritingService $urlRewritingService
+	 * @param website_persistentdocument_page $document
+	 * @param website_persistentdocument_website $website
+	 * @param string $lang
+	 * @param array $parameters
+	 * @return f_web_Link | null
+	 */
+	public function getWebLink($urlRewritingService, $document, $website, $lang, $parameters)
+	{
+		if ($document->getIsHomePage())
+		{
+			$website = website_persistentdocument_website::getInstanceById($this->getWebsiteId($document));
+			return $urlRewritingService->getRewriteLink($website, $lang, '/');
+		}
+		return null;
+	}
 
 	/**
 	 * @param website_persistentdocument_page $page

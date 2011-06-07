@@ -101,10 +101,28 @@ class website_RewriteruleService extends f_persistentdocument_DocumentService
 				if ($rule === null)
 				{
 					$rule = $this->getNewDocumentInstance();
+					$rule->setModelName($documentModel);
 					$rule->setRuleData($ruleData);
 				}
+				else
+				{
+					$defaultRuleData = 	$rule->getRuleData();
+					$setDef = false;
+					foreach ($ruleData['parameters'] as $pn => $pnInfo) 
+					{
+						if (!isset($defaultRuleData['parameters'][$pn]))
+						{
+							$setDef = true;
+							$defaultRuleData['parameters'][$pn] = $pnInfo;
+						}
+					}
+					if ($setDef)
+					{
+						unset($defaultRuleData['id']);
+						$rule->setRuleData($defaultRuleData);
+					}
+				}
 				$label = 'Document rule: ' . $documentModel;
-				$rule->setModelName($documentModel);
 			}
 			else
 			{
@@ -114,9 +132,9 @@ class website_RewriteruleService extends f_persistentdocument_DocumentService
 				if ($rule === null)
 				{
 					$rule = $this->getNewDocumentInstance();
-					$rule->setRuleData($ruleData);
 				}
 				$label = 'Action rule: ' . $moduleName . '/' . $actionName;
+				$rule->setRuleData($ruleData);
 			}
 			$rule->setModuleName($ruleData['module']);
 			$rule->setActionName($ruleData['action']);
@@ -264,7 +282,7 @@ class website_RewriteruleService extends f_persistentdocument_DocumentService
 							$method = 'get' . ucfirst($pn);
 							if (f_util_ClassUtils::methodExists($document, $method))
 							{
-								$ruleData['parameters'][$pn] =array('__type' => 'out', 'method' => $method);
+								$ruleData['parameters'][$pn] = array('type' => 'out', 'method' => $method);
 							}
 						}
 					}

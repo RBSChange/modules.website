@@ -479,8 +479,20 @@ class website_UrlRewritingService extends website_BaseRewritingService
 		{
 			$path = $this->initCurrrentWebsite($host, $urlToForward);
 			$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
-			$lang = RequestContext::getInstance()->getLang();
+
+			if ($path === '/')
+			{
+				//Home page
+				$homePage = website_WebsiteModuleService::getInstance()->getIndexPage($website, false);
+				if ($homePage  !== null)
+				{
+					$request->setParameter('pageref', $homePage->getId());
+					Framework::fatal(__METHOD__ . ' ZZZZZZZZZZZZZ ' . $homePage->getId());
+					return array('website', 'Display');
+				}
+			}
 			
+			$lang = RequestContext::getInstance()->getLang();	
 			$infos = $this->getPersistentProvider()->getUrlRewritingInfoByUrl($path, $website->getId(), $lang);
 			if ($infos !== null)
 			{
@@ -887,8 +899,18 @@ class website_UrlRewritingService extends website_BaseRewritingService
 		
 		$rules = array();
 		$redirections = array('0/' .  $document->getLang() => array());
+		$websiteId = $document->getDocumentService()->getWebsiteId($document);
+		if (intval($websiteId) > 0)
+		{
+			$websites = array(website_persistentdocument_website::getInstanceById($websiteId));
+		}
+		else
+		{
+			$websites = website_WebsiteService::getInstance()->getAll();
+		}
+		
 		$rc = RequestContext::getInstance();
-		foreach (website_WebsiteService::getInstance()->getAll() as $website) 
+		foreach ($websites as $website) 
 		{
 			foreach ($website->getI18nInfo()->getLangs() as $lang) 
 			{
@@ -899,7 +921,10 @@ class website_UrlRewritingService extends website_BaseRewritingService
 					$result['definedrules'][$key]['nb_rules'] = 0;
 				}
 				$result['definedrules'][$key]['base'] = $this->getRewriteLink($website, $lang, '')->getUrl();
-				
+				if ($lang == $document->getLang())
+				{
+					$result['definedrules'][$key]['vo'] = true;
+				}
 				$genericPath =  $this->getDocumentDefaultPath($document, $lang);
 				$defaultPath = $ds->generateRewritePath($this, $document, $website, $lang, array());
 				if ($defaultPath === null) {$defaultPath = $genericPath;}
@@ -935,10 +960,25 @@ class website_UrlRewritingService extends website_BaseRewritingService
 	
 	private function boSortDefinedRules($a, $b)
 	{
-		if ($a['nb_rules'] == $b['nb_rules']) 
+		if (isset($a['vo']) && isset($a['$b']))
 		{
-        	return 0;
-    	}
+			if ($a['nb_rules'] == $b['nb_rules']) 
+			{
+	        	return 0;
+	    	}
+		}
+		elseif (isset($a['vo']))
+		{
+			return -1;
+		}
+		elseif (isset($b['vo']))
+		{
+			return 1;
+		}
+		elseif ($a['nb_rules'] == $b['nb_rules'])
+		{
+			return 0;
+		}
     	return ($a['nb_rules'] > $b['nb_rules']) ? -1 : 1;
 	}
 
