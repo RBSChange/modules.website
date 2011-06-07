@@ -35,14 +35,28 @@ class website_UrlRewritingService extends website_BaseRewritingService
 	public function getDocumentLinkForWebsite($document, $website, $lang, $parameters = array())
 	{
 		if ($document === null || $lang === null) {return f_web_ParametrizedLink::getNullLink();}
+		$websiteIds = $document->getDocumentService()->getWebsiteIds($document);
+		if (is_array($websiteIds) && count($websiteIds) === 0) {return f_web_ParametrizedLink::getNullLink();}
+		
 		if (!is_array($parameters)) {$parameters = array();}
 		
 		$targetWebsite = $website;
 		if ($targetWebsite === null)
 		{
-			$targetWebsiteId = $document->getDocumentService()->getWebsiteId($document);
-			$targetWebsite = $targetWebsiteId === null ? website_WebsiteModuleService::getInstance()->getCurrentWebsite() : DocumentHelper::getDocumentInstance($targetWebsiteId);
+			if ($websiteIds === null)
+			{
+				$targetWebsite = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+			}
+			else
+			{
+				$targetWebsite = DocumentHelper::getDocumentInstance(f_util_ArrayUtils::firstElement($websiteIds));
+			}
 		}
+		else if (is_array($websiteIds) && !in_array($targetWebsite->getId(), $websiteIds))
+		{
+			return f_web_ParametrizedLink::getNullLink();
+		}
+		
 		$path = $this->getCustomPath($document, $targetWebsite, $lang);		
 		if ($path !== null)
 		{
@@ -706,10 +720,10 @@ class website_UrlRewritingService extends website_BaseRewritingService
 			website_WebsiteModuleService::getInstance()->setCurrentWebsite($website);
 			$websiteId = $website->getId();
 			$ds = $document->getDocumentService();
-			$docWebsiteId = $ds->getWebsiteId($document);
+			$docWebsiteIds = $ds->getWebsiteIds($document);
 			$model = $document->getPersistentModel();
 			
-			if ($model->hasURL() && ($docWebsiteId === null || $docWebsiteId == $websiteId))
+			if ($model->hasURL() && ($docWebsiteIds === null || in_array($websiteId, $docWebsiteIds)))
 			{
 				$link = $ds->getWebLink($this, $document, $website, $lang, $parameters);
 				if ($link === null)
@@ -882,8 +896,14 @@ class website_UrlRewritingService extends website_BaseRewritingService
 	 */
 	public function getBoDocumentRewriteInfo($document)
 	{
-		$documentId = $document->getId();
 		$ds = $document->getDocumentService();
+		$websiteIds = $ds->getWebsiteIds($document);
+		if (is_array($websiteIds) && count($websiteIds) === 0)
+		{
+			throw new BaseException('Document has no defined Website', 'm.website.errors.no-defined-website');
+		}
+		
+		$documentId = $document->getId();
 		$result = array('documentId' => $documentId,
 						'vo' => $document->getLang(),
 						'isLocalized' => $document->isLocalized(),
@@ -899,10 +919,9 @@ class website_UrlRewritingService extends website_BaseRewritingService
 		
 		$rules = array();
 		$redirections = array('0/' .  $document->getLang() => array());
-		$websiteId = $document->getDocumentService()->getWebsiteId($document);
-		if (intval($websiteId) > 0)
+		if (is_array($websiteIds))
 		{
-			$websites = array(website_persistentdocument_website::getInstanceById($websiteId));
+			$websites = DocumentHelper::getDocumentArrayFromIdArray($websiteIds);
 		}
 		else
 		{

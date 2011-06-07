@@ -69,4 +69,6 @@
   <key id="cant-move-markerfolder-to-other-website">vous ne pouvez pas déplacer les marqueurs vers un autre site web.</key>
   <key id="import-script-not-found">Le script d'initialisation est introuvable.</key>
   <key id="invalid-import-script">Le script d'initialisation n'est pas lisible.</key>
+  
+   <key id="no-defined-website">Pas de site web défini pour ce document</key>
 </i18n>

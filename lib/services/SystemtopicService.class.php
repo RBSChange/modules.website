@@ -70,16 +70,10 @@ class website_SystemtopicService extends website_TopicService
 	public function getResume($document, $forModuleName, $allowedSections = null)
 	{	
 		$urlrewriting = null;
-
 		if (($allowedSections === null && $document->getPersistentModel()->hasURL()) || isset($allowedSections['urlrewriting']))
 		{
-			$reference = $document->getReference();
-			website_WebsiteModuleService::getInstance()->setCurrentWebsiteId($this->getWebsiteId($document));
-			$currenturl = LinkHelper::getDocumentUrl($reference);
-			if (strpos($currenturl, 'action=ViewDetail') === false)
-			{
-				$urlrewriting = array('currenturl' => $currenturl);
-			}
+			$currenturl = LinkHelper::getDocumentUrl($document);
+			$urlrewriting = array('currenturl' => $currenturl);
 		}
 
 		$data = parent::getResume($document, $forModuleName, array('properties' => true, 'publication' => true, 'localization' => true, 'history' => true));
