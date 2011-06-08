@@ -35,7 +35,7 @@ class PHPTAL_Php_Attribute_CHANGE_currentpagelink extends ChangeTalAttribute
 	 */
 	public static function renderCurrentpagelink($params)
 	{
-		$extraParams = (isset($params['extraparams']) && is_array($params['extraparams'])) ? $params['anchor'] : array();
+		$extraParams = (isset($params['extraparams']) && is_array($params['extraparams'])) ? $params['extraparams'] : array();
 		if (isset($params['module']))
 		{
 			$extraParams = array($params['module'] . 'Param' => $extraParams);

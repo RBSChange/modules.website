@@ -1,8 +1,6 @@
 <?php
-// change:currentlink()
-//   <a change:currentlink="module 'news'; id news/getId">bla</a>
 /**
- * @package phptal.php.attribute
+ * @deprecated
  */
 class PHPTAL_Php_Attribute_CHANGE_currentlink extends PHPTAL_Php_Attribute
 {
