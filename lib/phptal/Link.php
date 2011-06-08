@@ -4,9 +4,7 @@
 //require_once 'PHPTAL/Php/Attribute/TAL/Content.php';
 
 // change:link
-//   <a href="#"
-//        change:link="page 14526; lang fr; anchor top"
-//   >
+//   <a href="#" change:link="page 14526; lang fr; anchor top">...</a>
 
 /**
  * @package phptal.php.attribute
@@ -16,7 +14,7 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 	public function start()
 	{
 		$parameters = array();
-		$lang = '';
+		$lang = null;
 		$anchor = 'null';
 		$module = null;
 		$action = null;
@@ -25,9 +23,11 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 		$tag = null;
 		$href = null;
 		$title = null;
-		$pageId = null;
-		$classes = array("link");
+		$documentId = null;
+		$classes = array('link');
 		$exception = null;
+		$forWebsiteId = 'null';
+		$home = false;
 
 		$expressions = $this->tag->generator->splitExpression($this->expression);
 
@@ -48,24 +48,22 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 						$action = $value;
 						break;
 					case 'document':
-						$pageId = $this->tag->generator->evaluateExpression($value.'/getId');
+						$documentId = $this->tag->generator->evaluateExpression($value.'/getId');
+						break;
+					case 'documentId':
+						$documentId = $this->tag->generator->evaluateExpression($value);
+						break;
+					case 'page': // @deprecated use document instead
+						$documentId = $this->tag->generator->evaluateExpression($value);
+						break;
+					case 'pageId': // @deprecated use documentId instead
+						$documentId = $value;
 						break;
 					case 'home':
-						$ws = website_WebsiteModuleService::getInstance();
-						$website = $ws->getCurrentWebsite();
-						if ($website !== null && ($page = $ws->getIndexPage($website)) !== null)
-						{
-							$pageId = $page->getId();
-						}
-						break;
-					case 'page':
-						$pageId = $this->tag->generator->evaluateExpression($value);
+						$home = true;
 						break;
 					case 'anchor':
 						$anchor = $this->evaluate($value, false);
-						break;
-					case 'pageId':
-						$pageId = $value;
 						break;
 					case 'lang':
 						$lang = $this->tag->generator->evaluateExpression($value);
@@ -85,6 +83,12 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 						break;
 					case 'title' :
 						$title = "<?php echo ".$this->tag->generator->evaluateExpression($value)."; ?>";
+						break;
+					case 'forWebsite':
+						$forWebsiteId = $this->tag->generator->evaluateExpression($value.'/getId');
+						break;
+					case 'forWebsiteId':
+						$forWebsiteId = $this->evaluateParameter($value);
 						break;
 					default:
 						$parameters[$attribute] = $this->tag->generator->evaluateExpression($value);
@@ -111,28 +115,40 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 			{
 				$action = AG_DEFAULT_ACTION;
 			}
-			$hrefCode = $this->_getHrefCodeRedirection($module, $action, $lang, $parameters, $anchor);
+			$hrefCode = $this->_getHrefCodeRedirection($module, $action, $lang, $parameters, $anchor, $forWebsiteId);
 		}
 		else if ($back)
 		{
 			$hrefCode = "<?php echo (isset(\$_SERVER['HTTP_REFERER'])?\$_SERVER['HTTP_REFERER'] : '');?>";
 		}
+		else if ($home)
+		{
+			if ($forWebsiteId && $forWebsiteId !== 'null')
+			{
+				$websiteId = $forWebsiteId;
+			}
+			else
+			{
+				$websiteId = website_WebsiteModuleService::getInstance()->getCurrentWebsite()->getId();
+			}
+			$hrefCode = $this->_getHrefCode($websiteId, $lang, $parameters, $anchor, $forWebsiteId);
+		}
 		else if ($tag !== null)
 		{
-			$hrefCode = $this->getTagCode($tag, $lang, $parameters, $anchor);
+			$hrefCode = $this->_getTagCode($tag, $lang, $parameters, $anchor, $forWebsiteId);
 		}
 		else if ($href !== null)
 		{
 			$hrefCode = $href;
 		}
-		else if ($pageId !== null)
+		else if ($documentId !== null)
 		{
-			$hrefCode = $this->_getHrefCode($pageId, $lang, $parameters, $anchor);
+			$hrefCode = $this->_getHrefCode($documentId, $lang, $parameters, $anchor, $forWebsiteId);
 		}
 
 		if ($popup)
 		{
-			$classes[] = "popup";
+			$classes[] = 'popup';
 			self::addLocaleToTitle($title, '&modules.website.frontoffice.in-a-new-window;');
 			$this->tag->attributes['onclick'] = '<?php echo PHPTAL_Php_Attribute_CHANGE_popup::getOnClick('.var_export($popupParameters, true).'); ?>';
 		}
@@ -160,90 +176,47 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 		}
 	}
 
-	private static function addLocaleToTitle(&$title, $locale)
-	{
-		$message = "(".f_Locale::translate($locale).")";
-		if ($title === null)
-		{
-			$title = $message;
-		}
-		else
-		{
-			$title .= " ".$message;
-		}
-	}
-
-	private function getTagCode($tag, $lang, $parameters, $anchor)
-	{
-		if (empty($lang))
-		{
-			$lang = 'null';
-		}
-		else
-		{
-			$lang = '\''. $lang . '\'';
-		}
-		return '<?php echo PHPTAL_Php_Attribute_CHANGE_link::getTaggedPage(\'' . $tag . '\',' . $lang .','.$this->generateParameters($parameters) .', ' . $anchor . '); ?>';
-	}
-
 	public function end()
 	{
 	}
 
-	public function _getHrefCode($pageId, $lang, $parameters, $anchor)
+	/**
+	 * @param integer $documentId
+	 * @param string $lang
+	 * @param array $parameters
+	 * @param string $anchor
+	 * @param integer $forWebsiteId
+	 * @return string
+	 */
+	private function _getHrefCode($documentId, $lang, $parameters, $anchor, $forWebsiteId)
 	{
-		$code = '<?php ';
-		if (empty($lang))
-		{
-			$lang = 'null';
-		}
-		else
-		{
-			$lang = '\''. $lang . '\'';
-		}
-
-		$code .= 'echo PHPTAL_Php_Attribute_CHANGE_link::getUrl('.$pageId.', ' . $lang . ', ' . $this->generateParameters($parameters) . ', ' . $anchor . '); ?>';
-		return $code;
+		return '<?php echo PHPTAL_Php_Attribute_CHANGE_link::getUrl('.$documentId.', ' . var_export($lang, true) . ', ' . $this->generateParameters($parameters) . ', ' . $anchor . ', ' . $forWebsiteId . '); ?>';
 	}
 
-	public function _getHrefCodeRedirection($module, $action, $lang, $parameters, $anchor)
-	{
-		$code = '<?php ';
-		if (empty($lang))
-		{
-			$lang = 'null';
-		}
-		else
-		{
-			$lang = '\''. $lang . '\'';
-		}
-		$code .= 'echo PHPTAL_Php_Attribute_CHANGE_link::getRedirectionUrl(\''.$module.'\', \'' . $action . '\', ' . $lang . ', ' . $this->generateParameters($parameters) . ', ' . $anchor . '); ?>';
-		return $code;
-	}
-
-	public static function getUrl($pageId, $lang, $parameters, $anchor)
+	/**
+	 * @param integer $documentId
+	 * @param string $lang
+	 * @param array $parameters
+	 * @param string $anchor
+	 * @param integer $forWebsiteId
+	 * @return string
+	 */
+	public static function getUrl($documentId, $lang, $parameters, $anchor, $forWebsiteId)
 	{
 		try
 		{
-			if (is_null($lang))
+			$document = DocumentHelper::getDocumentInstance($documentId);
+				
+			$lang = ($lang === null) ? RequestContext::getInstance()->getLang() : $lang;
+			// If the document is not available in the requested lang.
+			if (!$document->isLangAvailable($lang))
 			{
-				$lang = RequestContext::getInstance()->getLang();
+				$lang = $document->getLang();
 			}
 
-			$page = DocumentHelper::getDocumentInstance($pageId);
-
-			// If the page is not available in the requested lang,
-			if (!$page->isLangAvailable($lang))
-			{
-				$lang = $page->getLang();
-			}
-
-			$url = LinkHelper::getDocumentUrl($page, $lang, $parameters);
-			if ($anchor)
-			{
-				$url .= '#'.$anchor;
-			}
-			return $url;
+			$website = ($forWebsiteId !== null) ? website_persistentdocument_website::getInstanceById($forWebsiteId) : null;
+			$url = LinkHelper::getDocumentUrlForWebsite($document, $website, $lang, $parameters);
+			return $url . ($anchor ? '#'.$anchor : '');
 		}
 		catch (Exception  $e)
 		{
@@ -252,25 +225,58 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 		return '#';
 	}
 
-	public static function getRedirectionUrl($module, $action, $lang, $parameters, $anchor)
+	/**
+	 * @param string $module
+	 * @param string $action
+	 * @param string $lang
+	 * @param array $parameters
+	 * @param string $anchor
+	 * @param integer $forWebsiteId
+	 * @return string
+	 */
+	private function _getHrefCodeRedirection($module, $action, $lang, $parameters, $anchor, $forWebsiteId)
 	{
-		if (!is_null($lang))
-		{
-			if (!is_array($parameters))
-			{
-				$parameters = array();
-			}
-			$parameters[K::LANG_ACCESSOR] = $lang;
-		}
-		$url = LinkHelper::getActionUrl($module, $action, $parameters);
-		if ($anchor)
-		{
-			$url .= '#'.$anchor;
-		}
-		return $url;
+		return '<?php echo PHPTAL_Php_Attribute_CHANGE_link::getRedirectionUrl(\''.$module.'\', \'' . $action . '\', ' . var_export($lang, true) . ', ' . $this->generateParameters($parameters) . ', ' . $anchor . ', ' . $forWebsiteId . '); ?>';
 	}
 
-	public static function getTaggedPage($tag, $lang, $parameters, $anchor)
+	/**
+	 * @param string $module
+	 * @param string $action
+	 * @param string $lang
+	 * @param array $parameters
+	 * @param string $anchor
+	 * @param integer $forWebsiteId
+	 * @return string
+	 */
+	public static function getRedirectionUrl($module, $action, $lang, $parameters, $anchor, $forWebsiteId)
+	{
+		$website = ($forWebsiteId !== null) ? website_persistentdocument_website::getInstanceById($forWebsiteId) : null;
+		$url = LinkHelper::getActionUrlForWebsite($module, $action, $website, $lang, $parameters);
+		return $url . ($anchor ? '#'.$anchor : '');
+	}
+
+	/**
+	 * @param string $tag
+	 * @param string $lang
+	 * @param array $parameters
+	 * @param string $anchor
+	 * @param integer $forWebsiteId
+	 * @return string
+	 */
+	private function _getTagCode($tag, $lang, $parameters, $anchor, $forWebsiteId)
+	{
+		return '<?php echo PHPTAL_Php_Attribute_CHANGE_link::getTaggedPage(\'' . $tag . '\',' . var_export($lang, true) .','.$this->generateParameters($parameters) .', ' . $anchor . ', ' . $forWebsiteId . '); ?>';
+	}
+
+	/**
+	 * @param string $tag
+	 * @param string $lang
+	 * @param array $parameters
+	 * @param string $anchor
+	 * @param integer $forWebsiteId
+	 * @return string
+	 */
+	public static function getTaggedPage($tag, $lang, $parameters, $anchor, $forWebsiteId)
 	{
 		if (strpos($tag, 'ctx_') === 0)
 		{
@@ -279,17 +285,20 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 
 		try
 		{
-			$url = LinkHelper::getTagUrl($tag, $lang, $parameters);
-
+			Framework::fatal(__METHOD__ . ' $tag = ' . $tag);
+			Framework::fatal(__METHOD__ . ' ' . var_export($forWebsiteId, true));
+			$context = null;
+			if (TagService::getInstance()->isContextualTag($tag))
+			{
+				$context = ($forWebsiteId !== null) ? website_persistentdocument_website::getInstanceById($forWebsiteId) : null;
+			}
+			$url = LinkHelper::getTagUrlForContext($tag, $context, $lang, $parameters);
+			Framework::fatal(__METHOD__ . ' $url = ' . $url);
 			if (empty($url))
 			{
 				return '#';
 			}
-			if ($anchor)
-			{
-				$url .= '#'.$anchor;
-			}
-			return $url;
+			return $url . ($anchor ? '#'.$anchor : '');
 		}
 		catch (Exception $e)
 		{
@@ -298,6 +307,38 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 		return '#';
 	}
 
+	/**
+	 * @param string $exp
+	 * @return string
+	 */
+	protected function parseSetExpression($exp)
+	{
+		$exp = trim($exp);
+		// (dest) (value)
+		$matches = array();
+		if (preg_match('/^([a-z0-9:\-_\[\]]+)\s+(.*?)$/i', $exp, $matches))
+		{
+			array_shift($matches);
+			return $matches;
+		}
+		// (dest)
+		return array($exp, null);
+	}
+
+	/**
+	 * @param string $title
+	 * @param string $locale
+	 */
+	private static function addLocaleToTitle(&$title, $locale)
+	{
+		$message = "(".f_Locale::translate($locale).")";
+		$title .= ($title ? '' : ' ') . $message;
+	}
+
+	/**
+	 * @param array $parameters
+	 * @return string
+	 */
 	private function generateParameters($parameters)
 	{
 		if (count($parameters) == 0)
@@ -312,16 +353,17 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 		return $str . ')';
 	}
 
-	protected function parseSetExpression($exp)
+	private function evaluateParameter($value)
 	{
-		$exp = trim($exp);
-		// (dest) (value)
-		$matches = array();
-		if (preg_match('/^([a-z0-9:\-_\[\]]+)\s+(.*?)$/i', $exp, $matches)){
-			array_shift($matches);
-			return $matches;
+		$normalizedValue = $this->evaluate($value);
+		if ($normalizedValue[0] == '\'')
+		{
+			$normalizedValue = substr($normalizedValue, 1, strlen($normalizedValue) - 2);
 		}
-		// (dest)
-		return array($exp, null);
+		if (strpos($normalizedValue, '$ctx') === false)
+		{
+			return var_export(f_util_Convert::fixDataType($normalizedValue), true);
+		}
+		return $normalizedValue;
 	}
 }
