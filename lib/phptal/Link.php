@@ -285,15 +285,12 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 
 		try
 		{
-			Framework::fatal(__METHOD__ . ' $tag = ' . $tag);
-			Framework::fatal(__METHOD__ . ' ' . var_export($forWebsiteId, true));
 			$context = null;
 			if (TagService::getInstance()->isContextualTag($tag))
 			{
 				$context = ($forWebsiteId !== null) ? website_persistentdocument_website::getInstanceById($forWebsiteId) : null;
 			}
 			$url = LinkHelper::getTagUrlForContext($tag, $context, $lang, $parameters);
-			Framework::fatal(__METHOD__ . ' $url = ' . $url);
 			if (empty($url))
 			{
 				return '#';
