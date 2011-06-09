@@ -710,7 +710,7 @@ class LinkHelper
 		}
 		if (is_array($extraAttributes) && count($extraAttributes))
 		{
-			foreach ($this->extraParameters as $name => $value) 
+			foreach ($extraAttributes as $name => $value) 
 			{
 				$currentLink->setQueryParameter($name, $value);
 			}
