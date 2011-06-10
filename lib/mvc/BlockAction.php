@@ -642,11 +642,28 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @return Boolean
+	 * @deprecated use isInBackofficeEdition
 	 */
 	protected final function isInBackoffice()
 	{
+		return $this->isInBackofficeEdition();
+	}
+	
+	/**
+	 * @return Boolean
+	 */
+	protected final function isInBackofficeEdition()
+	{
 		return $this->getContext()->getAttribute(self::BLOCK_BO_MODE_ATTRIBUTE, false);
+	}
+	
+	/**
+	 * @return Boolean
+	 */
+	protected final function isInBackofficePreview()
+	{
+		return !$this->isInBackofficeEdition() && 
+			(users_UserService::getInstance()->getCurrentUser() instanceof users_persistentdocument_backenduser);
 	}
 
 	/**

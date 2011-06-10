@@ -28,7 +28,7 @@ class website_BlockXhtmltemplateAction extends website_BlockAction
 	 */
 	public function getCacheKeyParameters($request)
 	{
-		return array('pageId' => $this->getPage()->getId(), 'package' => $this->getConfiguration()->getPackage(), 'template' => $this->getConfiguration()->getTemplate());
+		return array('pageId' => $this->getPage()->getId(), 'template' => $this->getConfiguration()->getTemplate());
 	}
 
 	/**
