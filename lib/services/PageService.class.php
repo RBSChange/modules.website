@@ -1555,7 +1555,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 				{
 					if ($ancestor->getNavigationVisibility() == WebsiteConstants::VISIBILITY_VISIBLE || $ancestor->getNavigationVisibility() == WebsiteConstants::VISIBILITY_HIDDEN_IN_SITEMAP_ONLY)
 					{
-						$breadcrumb->addElement($ancestor->getLabel(), LinkHelper::getDocumentUrl($ancestor));
+						$breadcrumb->addElement($ancestor->getLabel(), ($ancestor->getIndexPage()) ? LinkHelper::getDocumentUrl($ancestor) : null);
 					}
 				}
 			}
