@@ -330,30 +330,38 @@ class website_UrlRewritingService extends website_BaseRewritingService
 			}
 		}
 		
-		$this->getTransactionManager()->beginTransaction();		
-		$this->getPersistentProvider()->deleteUrlRewritingDocument($documentId, $lang, $websiteId);
-		
-		if ($path !== null)
+		$tm = $this->getTransactionManager();
+		try 
 		{
-			$this->getPersistentProvider()->setUrlRewriting($documentId, $lang, $websiteId, $path, null, 200, $moduleName, $actionName, $origine);
-						
-			if ($oldPath !== null)
+			$tm->beginTransaction();
+			$this->getPersistentProvider()->deleteUrlRewritingDocument($documentId, $lang, $websiteId);
+			
+			if ($path !== null)
 			{
-				$this->getPersistentProvider()->setUrlRewriting($documentId, $lang, $websiteId,	$oldPath, $path, 301, $moduleName, $actionName, $origine);
-			}
-						
-			foreach ($oldInfo as $row)
-			{
-				if ($path != $row['from_url'] && $oldPath != $row['from_url'])
+				$this->getPersistentProvider()->setUrlRewriting($documentId, $lang, $websiteId, $path, null, 200, $moduleName, $actionName, $origine);
+							
+				if ($oldPath !== null)
 				{
-					$redirectType = intval($row['redirect_type']) === 200 ? 301 : intval($row['redirect_type']);
-					$this->getPersistentProvider()->setUrlRewriting($documentId, $lang, $websiteId, 
-						$row['from_url'], $path, $redirectType, $row['modulename'], $row['actionname'], $row['origine']);
+					$this->getPersistentProvider()->setUrlRewriting($documentId, $lang, $websiteId,	$oldPath, $path, 301, $moduleName, $actionName, $origine);
 				}
-			}
+							
+				foreach ($oldInfo as $row)
+				{
+					if ($path != $row['from_url'] && $oldPath != $row['from_url'])
+					{
+						$redirectType = intval($row['redirect_type']) === 200 ? 301 : intval($row['redirect_type']);
+						$this->getPersistentProvider()->setUrlRewriting($documentId, $lang, $websiteId, 
+							$row['from_url'], $path, $redirectType, $row['modulename'], $row['actionname'], $row['origine']);
+					}
+				}
+			}	
+			$tm->commit();
 		}
-		
-		$this->getTransactionManager()->commit();
+		catch (Exception $e)
+		{
+			$path = null;
+			$tm->rollBack($e);
+		}
 		return $path;
 	}
 	
@@ -619,7 +627,7 @@ class website_UrlRewritingService extends website_BaseRewritingService
 					if ($rewritePath !== null && $rewritePath != $path)
 					{
 						$finalPath = $this->setCustomPath($rewritePath, $document, $website, $lang, $moduleName, $actionName, 1);
-						if ($finalPath !== $path)
+						if ($finalPath !== null && $finalPath !== $path)
 						{
 							return $this->getRedirectAction($website, $lang, $finalPath, 301, $request);
 						}
@@ -752,10 +760,11 @@ class website_UrlRewritingService extends website_BaseRewritingService
 							{
 								if ($path !== $lastRewritePath)
 								{
-									$this->setCustomPath($path, $document, $website, $lang, null, 'ViewDetail', 1);
+									$path = $this->setCustomPath($path, $document, $website, $lang, null, 'ViewDetail', 1);
 								}
 							}
-							else
+							
+							if ($path === null)
 							{
 								$path = $this->getDocumentDefaultPath($document, $lang);
 							}
