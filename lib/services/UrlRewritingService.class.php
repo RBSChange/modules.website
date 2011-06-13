@@ -102,12 +102,13 @@ class website_UrlRewritingService extends BaseService
 	 * Returns the Rule that matches the URL.
 	 *
 	 * @param string $url The URL to get the rule for.
+	 * @param string $lang
 	 * @return website_lib_urlrewriting_Rule
 	 */
-	public function getRuleByUrl($url)
+	public function getRuleByUrl($url, $lang = null)
 	{
 		$pp = $this->getPersistentProvider();
-		$info = $pp->getPageForUrl($url, website_WebsiteModuleService::getInstance()->getCurrentWebsite()->getId());
+		$info = $pp->getPageForUrl($url, website_WebsiteModuleService::getInstance()->getCurrentWebsite()->getId(), $lang);
 		
 		if (!is_null($info))
 		{

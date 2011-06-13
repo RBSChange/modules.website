@@ -77,7 +77,7 @@ class website_RewriteUrlAction extends f_action_BaseAction
 		}
 	
 		$urlService = website_UrlRewritingService::getInstance();
-		$rule = $urlService->getRuleByUrl($requestedUrl);
+		$rule = $urlService->getRuleByUrl($requestedUrl, $lang);
 		if ($rule instanceof website_lib_urlrewriting_Rule)
 		{
 			$urlService->redirect($rule, $context->getController());
