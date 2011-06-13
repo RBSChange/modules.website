@@ -26,6 +26,7 @@ class website_persistentdocument_pageversion extends website_persistentdocument_
 	 */
 	public function getInfoForPageGroup()
 	{
+		$correction = ($this->hasCorrection() ? DocumentHelper::getDocumentInstance($this->getCorrectionid()) : null);
 		if ($this->isContextLangAvailable())
 		{
 			$url = $this->isPublished() ? LinkHelper::getDocumentUrl($this) : 
@@ -41,6 +42,19 @@ class website_persistentdocument_pageversion extends website_persistentdocument_
 						'url' => $url,
 						'status' => f_Locale::translateUI(DocumentHelper::getPublicationstatusLocaleKey($this)),
 			);
+			if ($correction !== null)
+			{
+				$url = LinkHelper::getUIActionLink("website", "BoDisplay")
+						->setQueryParameter("cmpref", $this->getId())
+						->setQueryParameter("lang", $this->getContextLang())->getUrl();
+				$data['id'] = $correction->getId();
+				$data['label'] = $correction->getLabel()." (".$data['label'].")";
+				$data['startpublicationdate'] = $correction->getStartpublicationdate()." (".$data['startpublicationdate'].")";
+				$data['endpublicationdate'] = $correction->getEndpublicationdate()." (".$data['endpublicationdate'].")";
+				$data['publicationstatus'] = $correction->getPublicationstatus();
+				$data['url'] = $url;
+				$data['status'] = f_Locale::translateUI(DocumentHelper::getPublicationstatusLocaleKey($correction));
+			}
 		}
 		else 
 		{
