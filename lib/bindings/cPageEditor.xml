@@ -139,7 +139,7 @@
 		<content>
 			<xul:grid flex="1" anonid="grid" xbl:inherits="disabled">
 				<xul:columns>
-					<xul:column flex="3" />
+					<xul:column />
 					<xul:column flex="1" />
 					<xul:column flex="1" />
 					<xul:column flex="1" />
@@ -148,14 +148,14 @@
 				</xul:columns>
 				<xul:rows>
 					<xul:row class="head" anonid="head-row">
+						<xul:label name="publicationstatus" sortonfield="true"
+							value="" tooltiptext="&amp;modules.website.bo.doceditor.page-version-list.Status;" />
 						<xul:label name="label" sortonfield="true"
 							value="&amp;modules.website.bo.doceditor.page-version-list.Label;" />
 						<xul:label name="startpublicationdate" sortonfield="true"
 							value="&amp;modules.website.bo.doceditor.page-version-list.Startpublicationdate;" />
 						<xul:label name="endpublicationdate" sortonfield="true"
 							value="&amp;modules.website.bo.doceditor.page-version-list.Endpublicationdate;" />
-						<xul:label name="status" sortonfield="true"
-							value="&amp;modules.website.bo.doceditor.page-version-list.Status;" />
 						<xul:label name="currentlabel"
 							value="&amp;modules.website.bo.doceditor.page-version-list.Current;" />
 						<xul:label name="actionrow"
@@ -165,7 +165,7 @@
 			</xul:grid>
 			
 			<xul:row anonid="template-row" class="document" hidden="true">
-				<xul:label value="" />
+				<xul:cpublicationcell value="" />
 				<xul:label value="" />
 				<xul:label value="" />
 				<xul:label value="" />
