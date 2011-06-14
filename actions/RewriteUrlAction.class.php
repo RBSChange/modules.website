@@ -22,7 +22,7 @@ class website_RewriteUrlAction extends f_action_BaseAction
     	unset($_GET["module"]);
     	unset($_GET["action"]);
    
-		if ($requestedUrl{0} !== '/')
+		if ($requestedUrl[0] !== '/')
 		{
 			$requestedUrl = '/' . $requestedUrl;
 		}		
@@ -62,6 +62,11 @@ class website_RewriteUrlAction extends f_action_BaseAction
 				{
 					$context->getController()->redirectToUrl($requestedUrl.'/');
 				}
+				return View::NONE;
+			}
+			else if ($requestedUrl != '/')
+			{
+				$context->getController()->forward(AG_ERROR_404_MODULE, AG_ERROR_404_ACTION);
 				return View::NONE;
 			}
 		}
