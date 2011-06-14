@@ -287,7 +287,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 						else if ($blockInfo->hasMeta() && $blockConfig->getEnablemetas())
 						{
 							list(, $moduleName) = explode('_', $blockInfoArray["package"]);
-							$metaPrefix = $moduleName."_".$blockInfoArray["name"].".";
+							$metaPrefix = $moduleName."_".f_util_StringUtils::lcfirst($blockInfoArray["name"]).".";
 
 							$newMetas = array();
 							foreach ($blockInfo->getTitleMetas() as $meta)
