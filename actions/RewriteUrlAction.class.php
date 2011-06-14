@@ -64,6 +64,11 @@ class website_RewriteUrlAction extends f_action_BaseAction
 				}
 				return View::NONE;
 			}
+			else if ($requestedUrl != '/')
+			{
+				$context->getController()->forward(AG_ERROR_404_MODULE, AG_ERROR_404_ACTION);
+				return View::NONE;
+			}
 		}
 		
 		if ($lang === null) { $lang = $websiteInfo['langs'][0]; }
