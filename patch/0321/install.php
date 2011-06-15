@@ -10,6 +10,8 @@ class website_patch_0321 extends patch_BasePatch
 	 */
 	public function execute()
 	{
+		// FIX #36064
+		$this->log("=== FIX #36064 ===");
 		$this->log("compile-locales website");
 		$this->execChangeCommand("compile-locales", array("website"));
 		
@@ -48,6 +50,44 @@ class website_patch_0321 extends patch_BasePatch
 			
 			$rc->endI18nWork();
 		}
+		
+		// FIX #35085
+		$this->log("=== FIX #35085 ===");
+		$newPageGroup = f_util_FileUtils::buildWebeditPath("modules/website/patch/0321/page-group.png");
+		$oldPageGroup = f_util_FileUtils::buildWebeditPath("libs/icons/small/page-group.png");
+		if (is_writeable($oldPageGroup))
+		{
+			f_util_FileUtils::cp($newPageGroup, $oldPageGroup, f_util_FileUtils::OVERRIDE);
+		}
+		else
+		{
+			$this->logWarning("Could not override libs/icons/small/page-group.png please do it manually using ".$newPageGroup);
+		}
+		
+		$newPageGroupIndex = f_util_FileUtils::buildWebeditPath("modules/website/patch/0321/page-group-index.png");
+		$oldPageGroupIndex = f_util_FileUtils::buildWebeditPath("libs/icons/small/page-group-index.png");
+		if (is_writeable($oldPageGroupIndex))
+		{
+			f_util_FileUtils::cp($newPageGroupIndex, $oldPageGroupIndex, f_util_FileUtils::OVERRIDE);
+		}
+		else
+		{
+			$this->logWarning("Could not create libs/icons/small/page-group-index.png please do it manually using ".$newPageGroupIndex);
+		}
+		
+		$newPageGroupHome = f_util_FileUtils::buildWebeditPath("modules/website/patch/0321/page-group-home.png");
+		$oldPageGroupHome = f_util_FileUtils::buildWebeditPath("libs/icons/small/page-group-home.png");
+		if (is_writeable($oldPageGroupHome))
+		{
+			f_util_FileUtils::cp($newPageGroupHome, $oldPageGroupHome, f_util_FileUtils::OVERRIDE);
+		}
+		else
+		{
+			$this->logWarning("Could not create libs/icons/small/page-group-home.png please do it manually using ".$newPageGroupHome);
+		}
+		
+		$this->log("clear-webapp-cache");
+		$this->execChangeCommand("clear-webapp-cache");
 	}
 
 	/**

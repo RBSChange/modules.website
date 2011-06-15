@@ -50,13 +50,13 @@ treechildren::-moz-tree-image(modules_website_page isIndexPage){
 	list-style-image: url(/changeicons/small/page-index.png) ;
 }
 treechildren::-moz-tree-image(modules_website_pagegroup isIndexPage){
-	list-style-image: url(/changeicons/small/document_heart.png) ;
+	list-style-image: url(/changeicons/small/page-group-index.png) ;
 }
 treechildren::-moz-tree-image(modules_website_page isHomePage){
 	list-style-image: url(/changeicons/small/page-home.png) ;
 }
 treechildren::-moz-tree-image(modules_website_pagegroup isHomePage){
-	list-style-image: url(/changeicons/small/page-home.png) ;
+	list-style-image: url(/changeicons/small/page-group-home.png) ;
 }
 treechildren::-moz-tree-cell-text(modules_website_page isIndexPage){
 	font-weight:bold;
