@@ -62,5 +62,16 @@
 				<staticitem label="&amp;modules.website.bo.general.structure.Default;" value="defaultsite.xml"/>
 				<staticitem label="&amp;modules.website.bo.general.structure.Sample;" value="sample.xml"/>
 		</staticlist>
+
+		<staticlist listid="modules_website/linkspositions" label="m.website.list.linkspositions-label"
+			description="m.website.list.linkspositions-description">
+			<staticitem label="m.website.list.linkspositions-both" value="both" />
+			<staticitem label="m.website.list.linkspositions-top" value="top" />
+			<staticitem label="m.website.list.linkspositions-bottom" value="bottom" />
+			<staticitem label="m.website.list.linkspositions-none" value="none" />
+		</staticlist>
+		
+		<dynamiclist listid="modules_website/blocktemplates" label="m.website.list.blocktemplates-label"
+			description="m.website.list.blocktemplates-description" />
 	</systemfolder>
 </script>

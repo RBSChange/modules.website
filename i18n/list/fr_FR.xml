@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.list" lcid="fr_FR">
+	<key id="linkspositions-label">position des liens</key>
+	<key id="linkspositions-description">Position des liens de navigation dans les blocs.</key>
+	<key id="linkspositions-both">en haut et en bas</key>
+	<key id="linkspositions-top">en haut</key>
+	<key id="linkspositions-bottom">en bas</key>
+	<key id="linkspositions-none">nul part</key>
+	<key id="blocktemplates-label">templates disponibles</key>
+	<key id="blocktemplates-description">Liste des templates disponibles pour un bloc donné.</key>
+	<key id="blocktemplates-success">par défaut</key>
+</i18n>
