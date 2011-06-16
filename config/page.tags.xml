@@ -10,5 +10,4 @@
 	<tag label="&amp;modules.website.bo.tags.Favorite;" icon="bookmark">contextual_website_website_favorite</tag>
 	<tag label="&amp;modules.website.bo.tags.Legal-notice;" icon="page">contextual_website_website_legal</tag>
 	<tag label="&amp;modules.website.bo.tags.Help;" icon="help">contextual_website_website_help</tag>
-	<tag label="&amp;modules.website.bo.tags.edit;" icon="edit">contextual_website_website_modules_website_edit</tag>
 </tags>

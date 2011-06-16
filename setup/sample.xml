@@ -99,11 +99,6 @@
 				   <changeblock type="modules_users_authentication" />
 				</changecontent>
 			</page>
-			<page id="foedt" label="Edition front-office" indexingstatus="false" navigationVisibility="hidden" byTag="contextual_website_website_modules_website_edit" template-attr="templateHome">
-				<changecontent for="content-block">
-				   <changeblock type="modules_website_edit" />
-				</changecontent>
-			</page>
 		</topic>
 
 		<menus>

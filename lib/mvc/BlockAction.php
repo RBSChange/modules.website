@@ -62,24 +62,6 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 	
 	/**
-	 * @return Boolean
-	 */
-	public function isCacheEnabled()
-	{
-		if ($this->cacheEnabled !== null)
-		{
-			return $this->cacheEnabled;
-		}
-		if (users_BackenduserService::getInstance()->getCurrentBackEndUser() !== null)
-		{
-			$this->cacheEnabled = false;
-			Framework::debug("DISABLE ".$this->getName()." cache because fo editable and logged");
-			return false;
-		}
-		return parent::isCacheEnabled();
-	}
-
-	/**
 	 * @see f_mvc_Action::execute()
 	 *
 	 * @param f_mvc_Request $request
