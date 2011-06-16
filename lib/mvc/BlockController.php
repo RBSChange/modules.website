@@ -789,7 +789,7 @@ class website_BlockController implements f_mvc_Controller
 			}
 			throw new Exception("$className is not a website_BlockAction");
 		}
-		throw new ClassNotFoundException("website_BlockAction $className could not be found");
+		throw new ClassNotFoundException("website_BlockAction \"$className\" could not be found");
 	}
 
 	// private methods
