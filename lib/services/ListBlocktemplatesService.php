@@ -62,8 +62,11 @@ class website_ListBlocktemplatesService extends BaseService implements list_List
 						&& f_util_StringUtils::endsWith($entry, '.all.all.html', f_util_StringUtils::CASE_SENSITIVE))
 					{
 						$value = str_replace($templatePrefix, '', str_replace('.all.all.html', '', $entry));
-						$label = $ls->transBO('m.website.list.blocktemplates-' . strtolower($value), array('ucf'));
-						$this->itemArray[$templatePrefix][] = new list_Item($label, $value);
+						if ($value != 'Error')
+						{    
+						    $label = $ls->transBO('m.' . $blockModule . '.list.blocktemplates-' . strtolower($value), array('ucf'));
+						    $this->itemArray[$templatePrefix][] = new list_Item($label, $value);
+						}
 					}
 				}
 				$dir->close();
