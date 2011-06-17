@@ -73,6 +73,8 @@ class website_BlockController implements f_mvc_Controller
 	 * @var f_mvc_HttpRequest
 	 */
 	private $currentRequest;
+        
+        private $useCache = true;
 
 	/**
 	 * @return website_BlockController
@@ -270,18 +272,30 @@ class website_BlockController implements f_mvc_Controller
 	 * @param String $actionName
 	 * @param array $configurationParameters
 	 * @param f_mvc_HTTPRequest $request
+         * @param Boolean $cache
 	 */
-	function processByName($moduleName, $actionName, $request, $configurationParameters = null)
+	function processByName($moduleName, $actionName, $request, $configurationParameters = null, $cache = false)
 	{
-		$blockAction = $this->getActionInstanceByModuleAndName($moduleName, $actionName);
-		if ($configurationParameters !== null)
-		{
-			foreach ($configurationParameters as $key => $value)
-			{
-				$blockAction->setConfigurationParameter($key, $value);
-			}
-		}
-		$this->process($blockAction, $request);
+                $oldUseCache = $this->useCache;
+                try
+                {
+                    $this->useCache = $cache;
+                    $blockAction = $this->getActionInstanceByModuleAndName($moduleName, $actionName);
+                    if ($configurationParameters !== null)
+                    {
+                            foreach ($configurationParameters as $key => $value)
+                            {
+                                    $blockAction->setConfigurationParameter($key, $value);
+                            }
+                    }
+                    $this->process($blockAction, $request);
+                }
+                catch (Exception $e)
+                {
+                    $this->useCache = $oldUseCache;
+                    throw $e;
+                }
+                $this->useCache = $oldUseCache;
 	}
 
 	/**
@@ -792,7 +806,7 @@ class website_BlockController implements f_mvc_Controller
 	 */
 	private function isCacheEnabled()
 	{
-		return f_DataCacheService::getInstance()->isEnabled() &&
+		return $this->useCache && f_DataCacheService::getInstance()->isEnabled() &&
 		 (!defined("AG_DISABLE_BLOCK_CACHE") || !AG_DISABLE_BLOCK_CACHE) &&
 		 !$this->blockContext->getAttribute(website_BlockAction::BLOCK_BO_MODE_ATTRIBUTE, false);
 	}
