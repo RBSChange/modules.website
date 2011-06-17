@@ -34,5 +34,54 @@ class website_Setup extends object_InitDataSetup
 		$this->executeModuleScript('workflow2.xml');
 		//$this->executeModuleScript('workflow1.xml');		
 		$this->executeModuleScript('iframe.xml');	
+		$this->tempFunctionToRemoveIn350();
+	}
+	
+	private function tempFunctionToRemoveIn350()
+	{
+		// See FIX #35085
+		$newPageGroup = f_util_FileUtils::buildWebeditPath("modules/website/patch/0321/page-group.png");
+		$oldPageGroup = f_util_FileUtils::buildWebeditPath("libs/icons/small/page-group.png");
+		try
+		{
+			f_util_FileUtils::cp($newPageGroup, $oldPageGroup, f_util_FileUtils::OVERRIDE);
+		}
+		catch (Exception $e)
+		{
+			$this->logWarning("Could not override libs/icons/small/page-group.png please do it manually using ".$newPageGroup);
+		}
+		
+		$newPageGroupIndex = f_util_FileUtils::buildWebeditPath("modules/website/patch/0321/page-group-index.png");
+		$oldPageGroupIndex = f_util_FileUtils::buildWebeditPath("libs/icons/small/page-group-index.png");
+		try
+		{
+			f_util_FileUtils::cp($newPageGroupIndex, $oldPageGroupIndex, f_util_FileUtils::OVERRIDE);
+		}
+		catch (Exception $e)
+		{
+			$this->logWarning("Could not create libs/icons/small/page-group-index.png please do it manually using ".$newPageGroupIndex);
+		}
+		
+		$newPageGroupIndex = f_util_FileUtils::buildWebeditPath("modules/website/patch/0321/page-group-index.png");
+		$oldPageGroupIndex = f_util_FileUtils::buildWebeditPath("libs/icons/small/page-group-index.png");
+		try
+		{
+			f_util_FileUtils::cp($newPageGroupIndex, $oldPageGroupIndex, f_util_FileUtils::OVERRIDE);	
+		}
+		catch (Exception $e)
+		{
+			$this->logWarning("Could not create libs/icons/small/page-group-index.png please do it manually using ".$newPageGroupIndex);
+		}
+		
+		$newPageGroupHome = f_util_FileUtils::buildWebeditPath("modules/website/patch/0321/page-group-home.png");
+		$oldPageGroupHome = f_util_FileUtils::buildWebeditPath("libs/icons/small/page-group-home.png");
+		try
+		{
+			f_util_FileUtils::cp($newPageGroupHome, $oldPageGroupHome, f_util_FileUtils::OVERRIDE);
+		}
+		catch (Exception $e)
+		{
+			$this->logWarning("Could not create libs/icons/small/page-group-home.png please do it manually using ".$newPageGroupHome);
+		}
 	}
 }
