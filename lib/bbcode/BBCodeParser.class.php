@@ -153,8 +153,21 @@ class website_BBCodeParser
 		{
 			return null;
 		}
-		$result = $this->convertToXml($this->parseBBCode($bbcode, $profile));
-		return $result;
+		return $this->convertToXml($this->parseBBCode($bbcode, $profile));
+	}
+	
+	/**
+	 * @param string $bbcode
+	 * @param string $profile
+	 * @return string XML string
+	 */
+	public function convertBBCodeToHtml($bbcode, $profile = 'default')
+	{
+		if (f_util_StringUtils::isEmpty($bbcode))
+		{
+			return null;
+		}
+		return $this->convertXmlToHtml($this->convertBBCodeToXml($bbcode, $profile));
 	}
 	
 	/**
@@ -167,8 +180,7 @@ class website_BBCodeParser
 		{
 			return null;
 		}
-		$result = $this->convertToHtml($this->parseXml($xmlString));
-		return $result;
+		return $this->convertToHtml($this->parseXml($xmlString));
 	}
 	
 	/**
@@ -181,8 +193,7 @@ class website_BBCodeParser
 		{
 			return null;
 		}
-		$result = $this->convertToBBCode($this->parseXml($xmlString));
-		return $result;
+		return $this->convertToBBCode($this->parseXml($xmlString));
 	}
 	
 	private function startParsing()
