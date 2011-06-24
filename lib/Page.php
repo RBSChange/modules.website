@@ -285,6 +285,11 @@ class website_Page implements f_mvc_Context
 		$this->addLink('alternate', 'application/rss+xml', $href, $title);
 	}
 	
+	/**
+	 * @param string $paramName
+	 * @param string $paramValue
+	 * @param string $paramModule
+	 */
 	public function addCanonicalParam($paramName, $paramValue, $paramModule = null)
 	{
 		if (!isset($this->attributes['canonical']))

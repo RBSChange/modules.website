@@ -1,90 +1,84 @@
 <?xml version="1.0"?>
 <blocks>
- 
-  <block type="modules_website_staticrichtext" hidden="true" />
-  
-  <block type="modules_website_bookmarks" icon="bookmark" label="&amp;modules.website.bo.blocks.BookmarksBlock;">
-    <parameters>
-      <parameter name="cmpref" type="String"/>
-    </parameters>
-  </block>
-  
-  <block type="modules_website_sitemap" icon="sitemap" label="&amp;modules.website.bo.blocks.Sitemap;">
-    <parameters>
-      <parameter name="column" type="Boolean" default-value="false"/>
-    </parameters>
-  </block>
-  <block type="modules_website_exception" icon="bug" label="&amp;modules.website.bo.blocks.Exception;"/>
-  <block type="modules_website_thread" hidden="true" label="&amp;modules.website.bo.blocks.Thread;" afterAll="true"/>
-  <block type="modules_website_menu" hidden="true" label="&amp;modules.website.bo.blocks.Menu;">
-    <parameters>
-      <parameter name="depth" type="Integer" default-value="1"/>
-      <parameter name="template" type="String" default-value="default"/>
-      <parameter name="deployonlycurrentpath" type="Boolean" default-value="false"/>
-    </parameters>
-  </block>
-  <block type="modules_website_taggedmenu" hidden="true" label="&amp;modules.website.bo.blocks.TaggedMenu;">
-    <parameters>
-      <parameter name="tag" type="String"/>
-      <parameter name="package" type="String" default-value=""/>
-      <parameter name="template" type="String" default-value="default"/>
-      <parameter name="depth" type="Integer" default-value="1"/>
-      <parameter name="deployonlycurrentpath" type="Boolean" default-value="false"/>
-    </parameters>
-  </block>
-  <block type="modules_website_contextualmenu" hidden="true" label="&amp;modules.website.bo.blocks.ContextualMenu;">
-    <parameters>
-      <parameter name="template" type="String" default-value="default"/>
-      <parameter name="package" type="String" default-value=""/>
-      <parameter name="depth" type="Integer" default-value="2"/>
-      <parameter name="startwebsitelevel" type="Integer" default-value="1"/>
-      <parameter name="deployall" type="Boolean" default="false"/>
-    </parameters>
-  </block>
-  <block type="modules_website_switchlanguage" hidden="true" label="&amp;modules.website.bo.blocks.SwitchLanguage;">
-    <parameters>
-      <parameter name="viewall" type="Boolean" default-value="true"/>
-      <parameter name="showflag" type="String" default-value="small"/>
-    </parameters>
-  </block>
-  <block type="modules_website_iframe" icon="iframe" label="&amp;modules.website.bo.blocks.Iframe;">
-    <parameters>
-      <parameter name="title" type="String" min-occurs="1"/>
-      <parameter name="url" type="String" min-occurs="1" default-value="about:blank"/>
-      <parameter name="frameWidth" type="Integer" default-value="640" min-occurs="1"/>
-      <parameter name="frameHeight" type="Integer" default-value="480" min-occurs="1"/>
-      <parameter name="scrolling" type="String" from-list="modules_iframe/scrolling" min-occurs="1" default-value="auto"/>
-      <parameter name="text" type="LongString" default-value="" cols="46" rows="4"/>
-    </parameters>
-  </block>
-  <block type="modules_website_Simplecontent" hidden="true" icon="" label="&amp;modules.website.bo.blocks.Simplecontent;">
-    <parameters>
-      <parameter name="view" type="String"/>
-    </parameters>
-  </block>
-  <block type="modules_website_xhtmltemplate" hidden="true" label="&amp;modules.website.bo.blocks.Xhtmltemplate.Title;">
-    <parameters>
-      <parameter name="template" type="String" default-value=""/>
-      <parameter name="usecache" type="Boolean" default-value="false"/>
-    </parameters>
-  </block>
-  <block type="modules_website_Missing" hidden="true" />
-  
-<!--
-		For now modules_website_editlist is not mature <block type="modules_website_editlist" icon=""
-		label="&amp;modules.website.bo.blocks.EditList;" />
-	-->
-<!-- Dashboard blocks -->
-  <block type="modules_website_dashboardpagevalidation" icon="task" dashboard="true" label="&amp;modules.website.bo.dashboard.Page-validation;">
-    <parameters>
-      <parameter name="showComments" type="Boolean" default-value="true"/>
-    </parameters>
-  </block>
-  <block type="modules_website_dashboardorphanpages" icon="orphan-pages" dashboard="true" label="&amp;modules.website.bo.dashboard.Orphanpages;">
-    <parameters>
-      <parameter name="website" type="modules_website/website" max-occurs="1"/>
-    </parameters>
-  </block>
-  <block type="modules_website_DashboardLastModifiedPages" icon="page" dashboard="true" label="&amp;modules.website.bo.blocks.DashboardLastModifiedPages.Title;"/>
-  <block type="modules_website_Incompatibiltybrowser" icon="warning" label="&amp;modules.website.bo.blocks.incompatibiltybrowser.Title;"/>
+	<block type="modules_website_staticrichtext" hidden="true" />
+	<block type="modules_website_bookmarks" icon="bookmark" label="&amp;modules.website.bo.blocks.BookmarksBlock;">
+		<parameters>
+			<parameter name="cmpref" type="String" />
+		</parameters>
+	</block>
+
+	<block type="modules_website_sitemap" icon="sitemap" label="&amp;modules.website.bo.blocks.Sitemap;">
+		<parameters>
+			<parameter name="column" type="Boolean" default-value="false" />
+		</parameters>
+	</block>
+	<block type="modules_website_exception" icon="bug" label="&amp;modules.website.bo.blocks.Exception;" />
+	<block type="modules_website_thread" hidden="true" label="&amp;modules.website.bo.blocks.Thread;" afterAll="true" />
+	<block type="modules_website_menu" hidden="true" label="&amp;modules.website.bo.blocks.Menu;">
+		<parameters>
+			<parameter name="depth" type="Integer" default-value="1" />
+			<parameter name="template" type="String" default-value="default" />
+			<parameter name="deployonlycurrentpath" type="Boolean" default-value="false" />
+		</parameters>
+	</block>
+	<block type="modules_website_taggedmenu" hidden="true" label="&amp;modules.website.bo.blocks.TaggedMenu;">
+		<parameters>
+			<parameter name="tag" type="String" />
+			<parameter name="package" type="String" default-value="" />
+			<parameter name="template" type="String" default-value="default" />
+			<parameter name="depth" type="Integer" default-value="1" />
+			<parameter name="deployonlycurrentpath" type="Boolean" default-value="false" />
+		</parameters>
+	</block>
+	<block type="modules_website_contextualmenu" hidden="true" label="&amp;modules.website.bo.blocks.ContextualMenu;">
+		<parameters>
+			<parameter name="template" type="String" default-value="default" />
+			<parameter name="package" type="String" default-value="" />
+			<parameter name="depth" type="Integer" default-value="2" />
+			<parameter name="startwebsitelevel" type="Integer" default-value="1" />
+			<parameter name="deployall" type="Boolean" default="false" />
+		</parameters>
+	</block>
+	<block type="modules_website_switchlanguage" hidden="true" label="&amp;modules.website.bo.blocks.SwitchLanguage;">
+		<parameters>
+			<parameter name="viewall" type="Boolean" default-value="true" />
+			<parameter name="showflag" type="String" default-value="small" />
+		</parameters>
+	</block>
+	<block type="modules_website_iframe" icon="iframe" label="&amp;modules.website.bo.blocks.Iframe;">
+		<parameters>
+			<parameter name="title" type="String" min-occurs="1" />
+			<parameter name="url" type="String" min-occurs="1" default-value="about:blank" />
+			<parameter name="frameWidth" type="Integer" default-value="640" min-occurs="1" />
+			<parameter name="frameHeight" type="Integer" default-value="480" min-occurs="1" />
+			<parameter name="scrolling" type="String" from-list="modules_iframe/scrolling" min-occurs="1" default-value="auto" />
+			<parameter name="text" type="LongString" default-value="" cols="46" rows="4" />
+		</parameters>
+	</block>
+	<block type="modules_website_Simplecontent" hidden="true" icon="">
+		<parameters>
+			<parameter name="view" type="String" />
+		</parameters>
+	</block>
+	<block type="modules_website_xhtmltemplate" hidden="true">
+		<parameters>
+			<parameter name="template" type="String" default-value="" />
+			<parameter name="usecache" type="Boolean" default-value="false" />
+		</parameters>
+	</block>
+	<block type="modules_website_Missing" hidden="true" />
+	<block type="modules_website_Incompatibiltybrowser" icon="warning" />
+
+	<!-- Dashboard blocks -->
+	<block type="modules_website_dashboardpagevalidation" icon="task" dashboard="true" label="&amp;modules.website.bo.dashboard.Page-validation;">
+		<parameters>
+			<parameter name="showComments" type="Boolean" default-value="true" />
+		</parameters>
+	</block>
+	<block type="modules_website_dashboardorphanpages" icon="orphan-pages" dashboard="true" label="&amp;modules.website.bo.dashboard.Orphanpages;">
+		<parameters>
+			<parameter name="website" type="modules_website/website" max-occurs="1" />
+		</parameters>
+	</block>
+	<block type="modules_website_DashboardLastModifiedPages" icon="page" dashboard="true" />
 </blocks>

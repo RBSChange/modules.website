@@ -93,13 +93,6 @@
 				   <changeblock type="modules_users_authentication" />
 				</changecontent>
 			</page>
-			
-			<page label="Edition front-office" indexingstatus="false" navigationVisibility="hidden">
-				<tag name="contextual_website_website_modules_website_edit" />
-				<changecontent for="content-block">
-				   <changeblock type="modules_website_edit" />
-				</changecontent>
-			</page>
 		</topic>
 
 		<menus>

@@ -20,6 +20,7 @@ class website_PHPTAL_CHANGE
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('radioinput', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('checkboxinput', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('richtextinput', 30));
+		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('bbcodeinput', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('errors', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('messages', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeSurround('form', 30));

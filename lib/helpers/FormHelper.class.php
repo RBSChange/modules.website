@@ -517,6 +517,39 @@ class website_FormHelper
 		}
 		return $returnValue;
 	}
+	
+	/**
+	 * @param array $params
+	 * @return String
+	 */
+	public static function renderBbcodeinput($params)
+	{
+		$name = self::buildNameAndId($params);
+		if (!array_key_exists('value', $params))
+		{
+			$value = self::getFieldValue($name);
+			if ($value === null && isset($params['default-value']))
+			{
+				$value = $params['default-value'];
+			}
+			$params['value'] = $value;
+		}
+
+		$returnValue = '';
+		if (self::isLabeled($params))
+		{
+			if (f_util_StringUtils::endsWith($name, 'AsBBCode'))
+			{
+				$params['shortInputName'] = substr($params['shortInputName'], 0, -8);
+			}
+			$returnValue .= self::buildLabel($params);
+			$params['shortInputName'] = $name;
+			$params['labeled'] = false;
+		}
+
+		$returnValue .= website_BBCodeEditor::getInstance()->buildEditor($params, self::$context);
+		return $returnValue;
+	}
 
 	/**
 	 * @param array $params
@@ -1799,7 +1832,7 @@ jQuery(document).ready(function() {
 	 */
 	private static function getFieldValue($name)
 	{
-		if (self::$hasBean && BeanUtils::hasProperty(self::$bean, $name))
+		if (self::$hasBean)
 		{
 			return self::buildPropertyValue($name);
 		}
@@ -1853,7 +1886,7 @@ jQuery(document).ready(function() {
 			$result .= '<textarea ';
 			foreach ($params as $name => $val)
 			{
-				if (isset(self::$includeAttributes[$name]) && $name != 'value')
+				if (strpos($name, 'data-') === 0 || (isset(self::$includeAttributes[$name]) && $name != 'value'))
 				{
 					$result .= f_util_HtmlUtils::buildAttribute($name, $val) . ' ';
 				}
@@ -1865,7 +1898,7 @@ jQuery(document).ready(function() {
 			$result .= '<input ';
 			foreach ($params as $name => $val)
 			{
-				if (isset(self::$includeAttributes[$name]))
+				if (strpos($name, 'data-') === 0 || isset(self::$includeAttributes[$name]))
 				{
 					$result .= f_util_HtmlUtils::buildAttribute($name, $val) . ' ';
 				}
@@ -1933,15 +1966,23 @@ jQuery(document).ready(function() {
 		$classes = array();
 		
 		$name = self::buildNameAndId($params);
-		if (!isset($params["ignoreErrors"]) && ($propErrors = self::getErrorsForProperty($name)) && f_util_ArrayUtils::isNotEmpty($propErrors))
+		if (!isset($params["ignoreErrors"]))
 		{
-			$classes[] = "error";
-			$propErrorMsg = "";
-			foreach ($propErrors as $propError)
+			$propErrors = self::getErrorsForProperty($name);
+			/*if (isset($params['relatedname']))
 			{
-				$propErrorMsg .= "- ".$propError."\n";
+				$propErrors = array_merge($propErrors, self::getErrorsForProperty($params['relatedname']));
+			}*/
+			if (f_util_ArrayUtils::isNotEmpty($propErrors))
+			{
+				$classes[] = "error";
+				$propErrorMsg = "";
+				foreach ($propErrors as $propError)
+				{
+					$propErrorMsg .= "- ".$propError."\n";
+				}
+				$params["errorMsg"] = $propErrorMsg;
 			}
-			$params["errorMsg"] = $propErrorMsg;
 		}
 
 		if (isset($params["errorMsg"]))
@@ -1991,21 +2032,28 @@ jQuery(document).ready(function() {
 		{
 			return $invalidProperties[$propertyName];
 		}
-		else if (self::$hasBean && BeanUtils::hasProperty(self::$bean, $propertyName))
+		else if (self::$hasBean)
 		{
-			$value = BeanUtils::getProperty(self::$bean, $propertyName);
-			$property = BeanUtils::getPropertyInfo(self::$bean, $propertyName);
-			$converter = $property->getConverter();
-			if ($converter !== null)
+			try 
 			{
-				$value = $converter->convertFromBeanToRequestValue($value);
+				$value = BeanUtils::getProperty(self::$bean, $propertyName);
+				if (BeanUtils::hasProperty(self::$bean, $propertyName))
+				{
+					$property = BeanUtils::getPropertyInfo(self::$bean, $propertyName);
+					$converter = $property->getConverter();
+					if ($converter !== null)
+					{
+						$value = $converter->convertFromBeanToRequestValue($value);
+					}
+				}
+				return $value;
 			}
-			return $value;
+			catch (Exception $e)
+			{
+				// Unexisting getter.
+			}
 		}
-		else
-		{
-			return self::$currentAction->findParameterValue($propertyName);
-		}
+		return self::$currentAction->findParameterValue($propertyName);
 	}
 
 	/**

@@ -1,0 +1,45 @@
+.BBCodeEditor
+{
+	padding: 0;
+}
+.BBCodeEditor-toolBar
+{
+	font-family: inherit;
+	font-size: 10px;
+	font-style: inherit;
+	font-weight: inherit;
+}
+.BBCodeEditor-toolBar li.button
+{
+	display: inline;
+	display: inline-block;
+	list-style: none;
+	border: 1px solid #ccc;	
+	padding: 2px;
+	margin: 0 1px 1px 0;
+}
+.BBCodeEditor-toolBar li.button:hover
+{
+	background-color: #ddd;
+}
+.BBCodeEditor-toolBar a, .BBCodeEditor-toolBar img
+{
+	display: inline-block;
+	vertical-align: middle;	
+}
+.BBCodeEditor-toolBar a
+{
+	text-decoration: none;
+	color: #3366CC;
+}
+.BBCodeEditor-editor
+{
+	padding: 5px;
+}
+.BBCodeEditor-resizeHandle
+{
+	height: 3px;
+	background-color: none;
+	cursor: n-resize;
+	position: relative;
+}

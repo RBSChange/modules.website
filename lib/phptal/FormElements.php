@@ -121,6 +121,11 @@ class PHPTAL_Php_Attribute_CHANGE_richtextinput extends FormElement
 	
 }
 
+class PHPTAL_Php_Attribute_CHANGE_bbcodeinput extends FormElement 
+{
+	
+}
+
 class PHPTAL_Php_Attribute_CHANGE_durationinput extends FormElement 
 {
 	

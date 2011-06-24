@@ -1,7 +1,6 @@
 <?php
 class website_BBCodeParser
 {
-	
 	/**
 	 * @var website_BBCodeProfile
 	 */
@@ -97,11 +96,10 @@ class website_BBCodeParser
 			$class = 'website_BBCodeProfile' . ucfirst($profile);
 			if (f_util_ClassUtils::classExists($class))
 			{
-				
 				$profile = new $class($this);
 			}
 			else
-			{			
+			{
 				$profile = new website_BBCodeProfile($this);
 			}
 			$this->profile = $profile;
@@ -112,7 +110,7 @@ class website_BBCodeParser
 	 * @param string $bbcode
 	 * @return DOMDocument
 	 */
-	public function parseBBCode($bbcode, $profile = 'default')
+	protected function parseBBCode($bbcode, $profile = 'default')
 	{
 		$this->setProfile($profile);
 		$this->bbcode = strval($bbcode);
@@ -131,6 +129,60 @@ class website_BBCodeParser
 			
 		}
 		return $this->xmlDocument;
+	}
+	
+	/**
+	 * @param string $xmlString
+	 * @return DOMDocument
+	 */
+	protected function parseXml($xmlString)
+	{
+		$dom = new DOMDocument('1.0', 'UTF-8');
+		$dom->loadXML($xmlString);
+		return $dom;
+	}
+	
+	/**
+	 * @param string $bbcode
+	 * @param string $profile
+	 * @return string XML string
+	 */
+	public function convertBBCodeToXml($bbcode, $profile = 'default')
+	{
+		if (f_util_StringUtils::isEmpty($bbcode))
+		{
+			return null;
+		}
+		$result = $this->convertToXml($this->parseBBCode($bbcode, $profile));
+		return $result;
+	}
+	
+	/**
+	 * @param string $xmlString
+	 * @return string HTML string
+	 */
+	public function convertXmlToHtml($xmlString)
+	{
+		if (f_util_StringUtils::isEmpty($xmlString))
+		{
+			return null;
+		}
+		$result = $this->convertToHtml($this->parseXml($xmlString));
+		return $result;
+	}
+	
+	/**
+	 * @param string $xmlString
+	 * @return string BBCode string
+	 */
+	public function convertXmlToBBCode($xmlString)
+	{
+		if (f_util_StringUtils::isEmpty($xmlString))
+		{
+			return null;
+		}
+		$result = $this->convertToBBCode($this->parseXml($xmlString));
+		return $result;
 	}
 	
 	private function startParsing()
@@ -377,7 +429,7 @@ class website_BBCodeParser
 	 * @param DOMDocument $document
 	 * @return string
 	 */
-	public function convertToXml($document)
+	protected function convertToXml($document)
 	{
 		$this->xmlDocument = $document;
 		$this->parentElement = $this->xmlDocument->documentElement;
@@ -401,7 +453,7 @@ class website_BBCodeParser
 	 * @param DOMDocument $document
 	 * @return string
 	 */	
-	public function convertToBBcode($document)
+	protected function convertToBBCode($document)
 	{
 		$bbcode = array();
 		$this->xmlDocument = $document;
@@ -454,7 +506,7 @@ class website_BBCodeParser
 	 * @param DOMDocument $document
 	 * @return string
 	 */
-	public function convertToHtml($document)
+	protected function convertToHtml($document)
 	{
 		$this->xmlDocument = $document;
 		$this->parentElement = $this->xmlDocument->documentElement;
@@ -549,12 +601,26 @@ class website_BBCodeParser
 			unset($this->tags[$tagName]);
 		}
 	}
+	
+	/**
+	 * @return array
+	 */
+	public function getTagInfos()
+	{
+		return $this->tags;
+	}
 }
 
 class website_BBCodeProfile
 {
+	/**
+	 * @var string
+	 */
 	protected $name = 'default';
 	
+	/**
+	 * @return string
+	 */
 	public function getName()
 	{
 		return $this->name;
@@ -584,20 +650,40 @@ class website_BBCodeProfile
 	 */
 	public function __construct($bbcodeParser)
 	{
-		$bbcodeParser->addTagInfo(new website_BBCodeTagInfo('nobb', 'pre', false, true));
-		$bbcodeParser->addTagInfo(new website_BBCodeTagInfo('code', 'pre', false, true));
-		$bbcodeParser->addTagInfo(new website_BBCodeTagInfo('quote', 'blockquote'));
-		$bbcodeParser->addTagInfo(new website_BBCodeTagInfo('b', 'strong'));
-		$bbcodeParser->addTagInfo(new website_BBCodeTagInfo('i', 'em'));
+		$bbcodeParser->addTagInfo(new website_BBCodeTagInfo('b', 'strong', 'richtext/bold'));
+		$bbcodeParser->addTagInfo(new website_BBCodeTagInfo('i', 'em', 'richtext/italic'));
 		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoU());
-		$bbcodeParser->addTagInfo(new website_BBCodeTagInfo('s', 'del'));
-		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoImg());
-		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoUrl());
+		$bbcodeParser->addTagInfo(new website_BBCodeTagInfo('s', 'del', 'richtext/strike'));
+		$bbcodeParser->addTagInfo(new website_BBCodeTagInfo('sup', 'sup', 'richtext/superscript'));
+		$bbcodeParser->addTagInfo(new website_BBCodeTagInfo('sub', 'sub', 'richtext/subscript'));
+		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoAbbr());
+		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoBig());
+		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoSmall());
 		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoAlign());
-		$bbcodeParser->addTagInfo(new website_BBCodeTagInfo('list', 'ul'));
-		$bbcodeParser->addTagInfo(new website_BBCodeTagInfo('item', 'li'));
+		$bbcodeParser->addTagInfo(new website_BBCodeTagInfo('list', 'ul', 'richtext/unordered-list'));
+		$bbcodeParser->addTagInfo(new website_BBCodeTagInfo('item', 'li', 'richtext/list-item'));
+		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoQuote());
+		$bbcodeParser->addTagInfo(new website_BBCodeTagInfo('code', 'pre', 'richtext/code', false, true));
+		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoNoBB());
+		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoUrl());
+		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoDoc());
+		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoImg());
+		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoHr());
 		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoColor());	
 		$this->addProjectConfig($bbcodeParser);
+	}
+}
+
+class website_BBCodeProfileTest extends website_BBCodeProfile
+{
+	/**
+	 * @param website_BBCodeParser $bbcodeParser
+	 */
+	public function __construct($bbcodeParser)
+	{
+		parent::__construct($bbcodeParser);
+		$bbcodeParser->removeTagInfo('quote');
+		$this->name = 'test';
 	}
 }
 
@@ -623,10 +709,16 @@ class website_BBCodeTagInfo
 	 */
 	protected $xmlNodeName;
 	
-	public function __construct($tagName, $xmlNodeName, $emptyTag = false, $rawContent = false)
+	/**
+	 * @var string
+	 */
+	protected $icon;
+	
+	public function __construct($tagName, $xmlNodeName, $icon = null, $emptyTag = false, $rawContent = false)
 	{
 		$this->tagName = $tagName;
 		$this->xmlNodeName = $xmlNodeName;
+		$this->icon = $icon;
 		$this->emptyTag = $emptyTag;
 		$this->rawContent = $rawContent;
 	}
@@ -714,27 +806,94 @@ class website_BBCodeTagInfo
 			$beginStr = '[' . $this->tagName . ']';
 		}
 	}
+	
+	/**
+	 * @return string
+	 */
+	protected function getLabelKey()
+	{
+		return 'm.website.bbeditor.' . $this->getTagName();
+	}
+	
+	/**
+	 * @return string
+	 */
+	protected function getIconName()
+	{
+		return $this->icon;
+	}
+	
+	/**
+	 * @return string
+	 */
+	protected function getClassName()
+	{
+		return 'button';
+	}
+	
+	/**
+	 * @return string
+	 */
+	protected function getOpenTag()
+	{
+		return '[' . $this->getTagName() . ']';
+	}
+	
+	/**
+	 * @return string
+	 */
+	protected function getCloseTag()
+	{
+		return '[/' . $this->getTagName() . ']';
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getInfosForJS()
+	{
+		return array(array(
+			'label' => '${trans:' . $this->getLabelKey() . ',ucf}',
+			'icon' => $this->getIconName(),
+			'openTag' => $this->getOpenTag(),
+			'closeTag' => $this->getCloseTag(),
+			'className' => $this->getClassName()
+		));
+	}
 }
 
 class website_BBCodeTagInfoNewLine extends website_BBCodeTagInfo
 {
 	public function __construct()
 	{
-		parent::__construct('newline', 'br', true);
+		parent::__construct('newline', 'br', null, true);
 	}
 	
+	/**
+	 * @param DOMElement $xmlElement
+	 * @param DOMElement $xhtmlParent
+	 * @return DOMElement Xhtml parent for content
+	 */	
 	public function toBBCode($xmlElement, &$beginStr, &$endStr)
 	{
 		$endStr = '';
 		$beginStr = "\n";
-	}	
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getInfosForJS()
+	{
+		return null;
+	}
 }
 
 class website_BBCodeTagInfoTabulation extends website_BBCodeTagInfo
 {
 	public function __construct()
 	{
-		parent::__construct('tabulation', 'span', true);
+		parent::__construct('tabulation', 'span', null, true);
 	}
 	
 	/**
@@ -762,13 +921,74 @@ class website_BBCodeTagInfoTabulation extends website_BBCodeTagInfo
 		$xhtmlParent->appendChild($element);
 		return null;
 	}
+	
+	/**
+	 * @return array
+	 */
+	public function getInfosForJS()
+	{
+		return null;
+	}
+}
+
+class website_BBCodeTagInfoHr extends website_BBCodeTagInfo
+{
+	public function __construct()
+	{
+		parent::__construct('hr', 'hr', 'richtext/rule', true);
+	}
+
+	/**
+	 * @param DOMElement $xmlElement
+	 * @param string $beginStr
+	 * @param string $endStr
+	 */
+	public function toBBCode($xmlElement, &$beginStr, &$endStr)
+	{
+		$beginStr = '[' . $this->tagName . '/]';
+		$endStr = '';
+	}
+	
+	/**
+	 * @return string
+	 */
+	protected function getOpenTag()
+	{
+		return '';
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getCloseTag()
+	{
+		return '[hr/]';
+	}
+}
+
+class website_BBCodeTagInfoNoBB extends website_BBCodeTagInfo
+{
+	public function __construct()
+	{
+		parent::__construct('nobb', 'none', 'no-bb', false, true);
+	}
+	
+	/**
+	 * @param DOMElement $xmlElement
+	 * @param DOMElement $xhtmlParent
+	 * @return DOMElement Xhtml parent for content
+	 */	
+	public function toHtml($xmlElement, $xhtmlParent)
+	{
+		return $xhtmlParent;
+	}
 }
 
 class website_BBCodeTagInfoU extends website_BBCodeTagInfo
 {
 	public function __construct()
 	{
-		parent::__construct('u', 'span', false);
+		parent::__construct('u', 'span', 'richtext/underline');
 	}
 	
 	/**
@@ -792,14 +1012,76 @@ class website_BBCodeTagInfoU extends website_BBCodeTagInfo
 			$elem->setAttribute('style', 'text-decoration: underline;');
 		}
 		return $elem;
-	}	
+	}
+}
+
+class website_BBCodeTagInfoBig extends website_BBCodeTagInfo
+{
+	public function __construct()
+	{
+		parent::__construct('big', 'span', 'richtext/big');
+	}
+	
+	/**
+	 * @param DOMElement $xmlElement
+	 */
+	public function normalizeXml($xmlElement)
+	{
+		$xmlElement->setAttribute('class', 'big');
+	}
+
+	/**
+	 * @param DOMElement $xmlElement
+	 * @param DOMElement $xhtmlParent
+	 * @return DOMElement Xhtml parent for content
+	 */	
+	public function toHtml($xmlElement, $xhtmlParent)
+	{
+		$elem = parent::toHtml($xmlElement, $xhtmlParent);
+		if ($elem)
+		{
+			$elem->setAttribute('class', 'big');
+		}
+		return $elem;
+	}
+}
+
+class website_BBCodeTagInfoSmall extends website_BBCodeTagInfo
+{
+	public function __construct()
+	{
+		parent::__construct('small', 'span', 'richtext/small');
+	}
+	
+	/**
+	 * @param DOMElement $xmlElement
+	 */
+	public function normalizeXml($xmlElement)
+	{
+		$xmlElement->setAttribute('class', 'small');
+	}
+
+	/**
+	 * @param DOMElement $xmlElement
+	 * @param DOMElement $xhtmlParent
+	 * @return DOMElement Xhtml parent for content
+	 */	
+	public function toHtml($xmlElement, $xhtmlParent)
+	{
+		$elem = parent::toHtml($xmlElement, $xhtmlParent);
+		if ($elem)
+		{
+			$elem->setAttribute('class', 'small');
+		}
+		return $elem;
+	}
 }
 
 class website_BBCodeTagInfoImg extends website_BBCodeTagInfo
 {
 	public function __construct()
 	{
-		parent::__construct('img', 'img', false);
+		parent::__construct('img', 'img', 'photo');
 	}
 	
 	/**
@@ -832,14 +1114,32 @@ class website_BBCodeTagInfoImg extends website_BBCodeTagInfo
 		$elem->setAttribute('alt', $alt);
 		if ($alt) {$elem->setAttribute('title', $alt);}
 		return null;
-	}	
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getOpenTag()
+	{
+		return '[img="@Src@"]';
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getInfosForJS()
+	{
+		$infos = f_util_ArrayUtils::firstElement(parent::getInfosForJS());
+		$infos['paramSrc'] = '${trans:m.website.bbeditor.param-src,ucf}';
+		return array($infos);
+	}
 }
 
 class website_BBCodeTagInfoUrl extends website_BBCodeTagInfo
 {
 	public function __construct()
 	{
-		parent::__construct('url', 'a', false);
+		parent::__construct('url', 'a', 'richtext/link');
 	}
 	
 	/**
@@ -889,14 +1189,134 @@ class website_BBCodeTagInfoUrl extends website_BBCodeTagInfo
 		$href = $this->getTagAttribute($xmlElement);
 		$elem->setAttribute('href', $href);
 		return $elem;
-	}	
+	}
+	
+	/**
+	 * @return string
+	 */
+	protected function getOpenTag()
+	{
+		return '[url="@Url@"]';
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getInfosForJS()
+	{
+		$infos = f_util_ArrayUtils::firstElement(parent::getInfosForJS());
+		$infos['paramUrl'] = '${trans:m.website.bbeditor.param-url,ucf}';
+		return array($infos);
+	}
+}
+
+class website_BBCodeTagInfoDoc extends website_BBCodeTagInfo
+{
+	public function __construct()
+	{
+		parent::__construct('doc', 'a', 'document-link');
+	}
+	
+	/**
+	 * @param DOMElement $xmlElement
+	 */
+	public function normalizeXml($xmlElement)
+	{
+		$id = $this->getTagAttribute($xmlElement);
+		if ($id === null)
+		{
+			$id = $xmlElement->textContent;
+			while ($xmlElement->hasChildNodes()) {$xmlElement->removeChild($xmlElement->firstChild);}
+		}
+		$xmlElement->setAttribute('data-bbcode-attr', intval($id));
+		$xmlElement->setAttribute('href', '#');
+	}
+
+	/**
+	 * @param DOMElement $xmlElement
+	 * @param DOMElement $xhtmlParent
+	 * @return DOMElement Xhtml parent for content
+	 */	
+	public function toHtml($xmlElement, $xhtmlParent)
+	{
+		$documentId = $this->getTagAttribute($xmlElement);
+		try
+		{
+			$document = DocumentHelper::getDocumentInstance($documentId);
+		}
+		catch (Exception $e)
+		{
+			$document = null;
+		}
+		
+		if ($document !== null)
+		{
+			$element = $xhtmlParent->ownerDocument->createElement($this->getXmlNodeName());
+			$element->setAttribute('href', LinkHelper::getDocumentUrl($document));
+			$element->setAttribute('class', 'link');
+			$xhtmlParent->appendChild($element);
+			if (!$xmlElement->hasChildNodes())
+			{
+				$label = $element->ownerDocument->createTextNode($document->getLabelAsHtml());
+				$element->appendChild($label);
+			}
+			return $element;
+		}
+		else 
+		{
+			$element = $xhtmlParent->ownerDocument->createElement('span');
+			$element->setAttribute('class', 'error');
+			$xhtmlParent->appendChild($element);
+			$msg = $element->ownerDocument->createTextNode(LocaleService::getInstance()->transFO('m.website.bbeditor.invalid-documentid', array('ucf'), array('id' => $documentId)));
+			$element->appendChild($msg);
+			return $xhtmlParent;
+		}
+	}
+	
+	/**
+	 * @param DOMElement $xmlElement
+	 * @param string $beginStr
+	 * @param string $endStr
+	 */
+	public function toBBCode($xmlElement, &$beginStr, &$endStr)
+	{
+		$id = $this->getTagAttribute($xmlElement);
+		if (!$xmlElement->hasChildNodes())
+		{
+			$beginStr = '[' . $this->tagName . '="' . $id . '"/]';
+			$endStr = '';
+		}
+		else
+		{
+			$beginStr = '[' . $this->tagName . '="' . $id . '"]';
+			$endStr = '[/' . $this->tagName . ']';
+		}
+	}
+	
+	/**
+	 * @return string
+	 */
+	protected function getOpenTag()
+	{
+		return '[doc="@Docid@"]';
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getInfosForJS()
+	{
+		$infos = f_util_ArrayUtils::firstElement(parent::getInfosForJS());
+		$infos['paramDocid'] = '${trans:m.website.bbeditor.param-docid,ucf}';
+		return array($infos);
+	}
 }
 
 class website_BBCodeTagInfoAlign extends website_BBCodeTagInfo
 {
 	public function __construct()
 	{
-		parent::__construct('align', 'div', false);
+		parent::__construct('align', 'div', 'richtext/link');
 	}
 
 	/**
@@ -905,7 +1325,7 @@ class website_BBCodeTagInfoAlign extends website_BBCodeTagInfo
 	public function normalizeXml($xmlElement)
 	{
 		$align = $this->getTagAttribute($xmlElement);
-		if ($align === null || !in_array($align, array('left','right','center','justify')));
+		if ($align === null || !in_array($align, array('left','right','center','justify')))
 		{
 			$align = 'left';
 			$xmlElement->setAttribute('data-bbcode-attr', $align);
@@ -923,14 +1343,144 @@ class website_BBCodeTagInfoAlign extends website_BBCodeTagInfo
 		$elem = parent::toHtml($xmlElement, $xhtmlParent);
 		$elem->setAttribute('class', 'align-' . $this->getTagAttribute($xmlElement));
 		return $elem;
-	}	
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getInfosForJS()
+	{
+		return array(
+			array(
+				'label' => '${trans:m.website.bbeditor.align-left,ucf}',
+				'icon' => 'richtext/align-left',
+				'openTag' => '[align="left"]',
+				'closeTag' => $this->getCloseTag(),
+				'className' => $this->getClassName()
+			),
+			array(
+				'label' => '${trans:m.website.bbeditor.align-justify,ucf}',
+				'icon' => 'richtext/align-justify',
+				'openTag' => '[align="justify"]',
+				'closeTag' => $this->getCloseTag(),
+				'className' => $this->getClassName()
+			),
+			array(
+				'label' => '${trans:m.website.bbeditor.align-center,ucf}',
+				'icon' => 'richtext/align-center',
+				'openTag' => '[align="center"]',
+				'closeTag' => $this->getCloseTag(),
+				'className' => $this->getClassName()
+			),
+			array(
+				'label' => '${trans:m.website.bbeditor.align-right,ucf}',
+				'icon' => 'richtext/align-right',
+				'openTag' => '[align="right"]',
+				'closeTag' => $this->getCloseTag(),
+				'className' => $this->getClassName()
+			),
+		);
+	}
+}
+
+class website_BBCodeTagInfoQuote extends website_BBCodeTagInfo
+{
+	public function __construct()
+	{
+		parent::__construct('quote', 'blockquote', 'richtext/quote');
+	}
+	
+	/**
+	 * @param DOMElement $xmlElement
+	 * @param DOMElement $xhtmlParent
+	 * @return DOMElement Xhtml parent for content
+	 */
+	public function toHtml($xmlElement, $xhtmlParent)
+	{
+		$element = $xhtmlParent->ownerDocument->createElement($this->getXmlNodeName());
+		$author = $this->getTagAttribute($xmlElement);
+		if ($author)
+		{
+			$authorNode = $element->appendChild($xhtmlParent->ownerDocument->createElement('strong'));
+			$authorNode->setAttribute('class', 'author');
+			$authorNode->appendChild($xhtmlParent->ownerDocument->createTextNode($author . ' ' . LocaleService::getInstance()->transFO('m.website.bbeditor.someone-said', array('lab'))));
+			$authorNode->appendChild($xhtmlParent->ownerDocument->createElement('br'));
+		}
+		$xhtmlParent->appendChild($element);
+		if ($this->emptyTag)
+		{
+			return null;
+		}
+		return $element;
+	}
+	
+	/**
+	 * @return string
+	 */
+	protected function getOpenTag()
+	{
+		return '[quote="@Author@"]';
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getInfosForJS()
+	{
+		$infos = f_util_ArrayUtils::firstElement(parent::getInfosForJS());
+		$infos['paramAuthor'] = '${trans:m.website.bbeditor.param-author,ucf}';
+		return array($infos);
+	}
+}
+
+class website_BBCodeTagInfoAbbr extends website_BBCodeTagInfo
+{
+	public function __construct()
+	{
+		parent::__construct('abbr', 'abbr', 'richtext/abbreviation');
+	}
+	
+	/**
+	 * @param DOMElement $xmlElement
+	 * @param DOMElement $xhtmlParent
+	 * @return DOMElement Xhtml parent for content
+	 */
+	public function toHtml($xmlElement, $xhtmlParent)
+	{
+		$element = $xhtmlParent->ownerDocument->createElement($this->getXmlNodeName());
+		$definition = $this->getTagAttribute($xmlElement);
+		if ($definition)
+		{
+			$element->setAttribute('title', $definition);
+		}
+		$xhtmlParent->appendChild($element);
+		return $element;
+	}
+	
+	/**
+	 * @return string
+	 */
+	protected function getOpenTag()
+	{
+		return '[abbr="@Definition@"]';
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getInfosForJS()
+	{
+		$infos = f_util_ArrayUtils::firstElement(parent::getInfosForJS());
+		$infos['paramDefinition'] = '${trans:m.website.bbeditor.param-definition,ucf}';
+		return array($infos);
+	}
 }
 
 class website_BBCodeTagInfoColor extends website_BBCodeTagInfo
 {
 	public function __construct()
 	{
-		parent::__construct('color', 'span', false);
+		parent::__construct('color', 'span', 'color');
 	}
 	
 	/**
@@ -957,5 +1507,106 @@ class website_BBCodeTagInfoColor extends website_BBCodeTagInfo
 		$elem = parent::toHtml($xmlElement, $xhtmlParent);
 		$elem->setAttribute('style', 'color:' . $this->getTagAttribute($xmlElement) .';');
 		return $elem;
-	}		
+	}
+	
+	/**
+	 * @return string
+	 */
+	protected function getOpenTag()
+	{
+		return '[color="@Color@"]';
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getInfosForJS()
+	{
+		$infos = f_util_ArrayUtils::firstElement(parent::getInfosForJS());
+		$infos['paramColor'] = '${trans:m.website.bbeditor.param-color,ucf}';
+		return array($infos);
+	}
+}
+
+class website_BBCodeEditor extends BaseService
+{
+	/**
+	 * @var website_BBCodeEditor
+	 */
+	protected static $instance;
+	
+	/**
+	 * @return website_BBCodeEditor
+	 */
+	public static function getInstance()
+	{
+		if (self::$instance === null)
+		{
+			self::$instance = self::getServiceClassInstance(get_class());
+		}
+		return self::$instance;
+	}
+	
+	/**
+	 * @var boolean
+	 */
+	protected $bbcodeScriptAdded;
+	
+	/**
+	 * @param array[] $params
+	 * @param website_Page $context
+	 * @return String
+	 */
+	public function buildEditor($params, $context)
+	{
+		// Add the jTagEditor class.
+		$params['class'] = 'BBCodeEditor' . ((isset($params['class'])) ? (' ' . $params['class']) : '');
+		
+		if (isset($params['profile']) && $params['profile'])
+		{
+			$params['data-profile'] = $params['profile'];
+		}
+		else if (isset($params['module-profile']) && $params['module-profile'])
+		{
+			$params['data-profile'] = Framework::getConfigurationValue('modules/' . $params['module-profile'] . '/bbcodeProfile', 'default');
+		}
+		else 
+		{
+			$params['data-profile'] = 'default';
+		}
+		
+		// Include the jTagEditor script.
+		if (!$this->bbcodeScriptAdded)
+		{
+			$context->addScript('modules.website.lib.bbcode.BBCodeEditor');
+			$context->addStyle('modules.website.BBCodeEditor');
+			$this->bbcodeScriptAdded = true;
+		}
+		return website_FormHelper::renderTextarea($params);		
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function compile()
+	{
+		$profiles = Framework::getConfigurationValue('modules/website/bbcodeProfiles', array('default'));
+		$parser = new website_BBCodeParser();
+		$infos = array();
+		foreach ($profiles as $profile)
+		{
+			$parser->setProfile($profile);
+			$profileInfos = array();
+			foreach ($parser->getTagInfos() as $tagInfo)
+			{
+				$tagInfos = $tagInfo->getInfosForJS();
+				if (is_array($tagInfos))
+				{
+					$profileInfos = array_merge($profileInfos, $tagInfos);
+				}
+			}
+			$infos[$profile] = $profileInfos;
+		}
+		return JsonService::getInstance()->encode($infos);
+	}
 }

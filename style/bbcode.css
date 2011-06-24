@@ -10,3 +10,9 @@
 .align-right{
         text-align: right;
 }
+.small{
+	font-size: 0.7em;
+}
+.big{
+	font-size: 1.4em;
+}

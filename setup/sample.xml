@@ -212,11 +212,6 @@
 				   <changeblock type="modules_users_authentication" />
 				</changecontent>
 			</page>
-			<page byRefid="foedt" label="Frontoffice edition" navigationVisibility="hidden">
-				<changecontent for="content-block">
-				   <changeblock type="modules_website_edit" />
-				</changecontent>
-			</page>
 		</topic>
 
 		<menus>
