@@ -1,4 +1,7 @@
 <?php
+/**
+ * @deprecated use website_BBCodeParser
+ */
 class website_BBCodeService extends BaseService
 {
 	/**

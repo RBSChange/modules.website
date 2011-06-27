@@ -86,6 +86,18 @@ class website_BBCodeParser
 		
 	}
 	
+	/**
+	 * @param string $moduleName
+	 * @return string
+	 */
+	public function getModuleProfile($moduleName)
+	{
+		return Framework::getConfigurationValue('modules/' . $moduleName . '/bbcodeProfile', 'default');
+	}
+	
+	/**
+	 * @param string $profile
+	 */
 	public function setProfile($profile = 'default')
 	{
 		if ($this->profile === null || $this->profile->getName() !== $profile)
@@ -685,16 +697,19 @@ class website_BBCodeProfile
 	}
 }
 
-class website_BBCodeProfileTest extends website_BBCodeProfile
+class website_BBCodeProfileEmpty extends website_BBCodeProfile
 {
+	/**
+	 * @var string
+	 */
+	protected $name = 'empty';
+	
 	/**
 	 * @param website_BBCodeParser $bbcodeParser
 	 */
 	public function __construct($bbcodeParser)
 	{
-		parent::__construct($bbcodeParser);
-		$bbcodeParser->removeTagInfo('quote');
-		$this->name = 'test';
+		$this->addProjectConfig($bbcodeParser);
 	}
 }
 
@@ -1579,7 +1594,8 @@ class website_BBCodeEditor extends BaseService
 		}
 		else if (isset($params['module-profile']) && $params['module-profile'])
 		{
-			$params['data-profile'] = Framework::getConfigurationValue('modules/' . $params['module-profile'] . '/bbcodeProfile', 'default');
+			$parser = new website_BBCodeParser();
+			$params['data-profile'] = $parser->getModuleProfile($params['module-profile']);
 		}
 		else 
 		{
