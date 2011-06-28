@@ -7,6 +7,10 @@
 		<category>hot</category>
 	</module>
 	<project>
+		<sample>
+			<entry name="defaultPageTemplate">webfactory/tplTwo</entry>
+			<entry name="defaultHomeTemplate">webfactory/tplOne</entry>
+		</sample>
 		<entry name="jquery-ui-theme">south-street</entry>
 		<entry name="highlighter">website_MinimalHighlighter</entry>
 		<entry name="forms-use-qtip-help">true</entry>
