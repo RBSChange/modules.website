@@ -77,6 +77,11 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 	 */
 	protected function _generateBlockAction($blockName)
 	{
+		$dirPath = f_util_FileUtils::buildWebeditPath('modules', $this->name, 'lib', 'blocks');
+		if (!file_exists($dirPath))
+		{
+			f_util_FileUtils::mkdir($dirPath);
+		}
 		$blockactionFile = f_util_FileUtils::buildWebeditPath('modules', $this->name, 'lib', 'blocks', 'Block'.$blockName.'Action.class.php');
 		if(!file_exists($blockactionFile))
 		{
