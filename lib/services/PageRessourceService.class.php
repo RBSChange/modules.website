@@ -297,7 +297,7 @@ class website_PageRessourceService extends BaseService
 				$style = $blocks[$blockId]['parameters']['style'];
 			}
 			
-			$div->setAttribute('class', $blockData['class']);
+			$div->setAttribute('class', 'cblock ' .$blockData['class']);
 			if (isset($blockData['id']))
 			{
 				$div->setAttribute('id', $blockData['id']);
