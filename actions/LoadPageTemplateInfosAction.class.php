@@ -16,12 +16,16 @@ class website_LoadPageTemplatesInfosByContainerAction extends f_action_BaseJSONA
 		$documentId = intval($request->getParameter('containerId'));
 		$templates = theme_ModuleService::getInstance()->getAllowedTemplateForDocumentId($documentId);			
 		
+		$pageTemplateDefault = Framework::getConfigurationValue('modules/website/sample/defaultPageTemplate');
+		$homeTemplateDefault = Framework::getConfigurationValue('modules/website/sample/defaultHomeTemplate');
 		$result = array();
 		foreach ($templates as $template)
 		{
 			$item = array(
 				'label' => $template->getLabel(),
 				'codename' => $template->getCodename(),
+				'isPageDefault' => $template->getCodename() === $pageTemplateDefault,
+				'isHomeDefault' => $template->getCodename() === $homeTemplateDefault,
 				'id' => $template->getId(),
 				'hasPreviewImage' => ($template->getThumbnail() !== null)
 			);

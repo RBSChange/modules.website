@@ -39,7 +39,15 @@
 							var itemInfos = result.contents[i];
 							this.mConfig[itemInfos.codename] = itemInfos;
 							field.appendItem(itemInfos.label, itemInfos.codename);
+							if (itemInfos.isPageDefault)
+							{
+								field.value = itemInfos.codename;
+							}
 							fieldHome.appendItem(itemInfos.label, itemInfos.codename);
+							if (itemInfos.isHomeDefault)
+							{
+								fieldHome.value = itemInfos.codename;
+							}
 						}
 					}
 					else

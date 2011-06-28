@@ -9,7 +9,7 @@
 		</folder>
 	</rootfolder>
 
-	<website byTag="default_modules_website_default-website" template="webfactory/tplOne">
+	<website byTag="default_modules_website_default-website" template-attr="tempalteHome">
 		<page label="Exemples de texte" template="webfactory/tplOne" navigationVisibility="hidden">
 			<changecontent for="content-block">
 				<changelayout>

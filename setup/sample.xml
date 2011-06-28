@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <script>
 	<!-- 
-		WARNING: before importing this file, you need to install webfactory theme.
+		"template" and "templateHome" attributes are automatically set with the configuration values:
+		 - modules/website/sample/defaultPageTemplate
+		 - modules/website/sample/defaultHomeTemplate
+		
+		WARNING: before importing this file, you need to install the theme.
 	-->
+	
 	<binding fileName="modules/website/persistentdocument/import/website_binding.xml" />
 	<binding fileName="modules/theme/persistentdocument/import/theme_binding.xml" />
 
-	<attribute name="template" default="true">webfactory/tplTwo</attribute>
-	<attribute name="templateHome" default="true">webfactory/tplOne</attribute>
 	
 	<attribute name="label" default="true">Site web par défaut</attribute>
 	<attribute name="labelen" default="true">Default website</attribute>

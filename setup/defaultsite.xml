@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <script>
 	<binding fileName="modules/website/persistentdocument/import/website_binding.xml" />
-
-	<attribute name="template" default="true">webfactory/tplTwo</attribute>
-	<attribute name="templateHome" default="true">webfactory/tplOne</attribute>
 	
 	<attribute name="label" default="true">Site web par défaut</attribute>
 	<attribute name="protocol" default="true">http</attribute>

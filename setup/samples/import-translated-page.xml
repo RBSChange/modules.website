@@ -2,8 +2,6 @@
 <script>
 	<binding fileName="modules/website/persistentdocument/import/website_binding.xml" />
 	<binding fileName="modules/media/persistentdocument/import/media_binding.xml" />
-
-	<attribute name="template" default="true">webfactory/tplOneTwoColumns</attribute>
 	
 	<website byTag="default_modules_website_default-website" template-attr="template">
 		<documentRef type="modules_website/topic" byLabel="Outils">
