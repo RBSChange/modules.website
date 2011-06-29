@@ -29,6 +29,38 @@ class <{$className}> extends block_BlockConfiguration
 		return "<{$blockInfo->getBlockActionClassName()}>";
 	}
 	
+	/**
+	 * @return boolean
+	 */
+	public function isCacheEnabled()
+	{
+		return <{if $blockInfo->isCached()}>true<{else}>false<{/if}>;
+	}
+	
+	/**
+	 * @return int
+	 */
+	public function getCacheTtl()
+	{
+		return <{$blockInfo->getCacheTime()}>;
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getConfiguredCacheKeys()
+	{
+		return <{$configuredCacheKeys}>;
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getConfiguredCacheDeps()
+	{
+		return <{$configuredCacheDeps}>;
+	}
+	
 <{if $blockInfo->getBeforeAll()}>	
 	/**
 	 * @return boolean
@@ -47,7 +79,7 @@ class <{$className}> extends block_BlockConfiguration
 		return true;
 	}
 <{/if}>
-	
+
 <{foreach from=$blockInfo->getParametersInfoArray() item=property}>
 	<{if $property->getType() == "Boolean"}>	
 	public function <{$property->getPhpGetter()}>()

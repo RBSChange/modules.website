@@ -1,35 +1,6 @@
 <?php
 class website_BlockSitemapAction extends website_BlockAction
 {
-	
-	/**
-	 * @see f_mvc_Action::getCacheDependencies()
-	 *
-	 * @return array<string>
-	 */
-	public function getCacheDependencies()
-	{
-		return array("modules_website/page",
-		 "modules_website/pagegroup",
-		 "modules_website/pageexternal",
-		 "modules_website/pagereference",
-		 "modules_website/pageversion",
-		 "modules_website/topic",
-		 "modules_website/systemtopic",
-		 "modules_website/website");
-	}
-
-	/**
-	 * @param website_BlockActionRequest $request
-	 * @return array<mixed>
-	 */
-	public function getCacheKeyParameters($request)
-	{
-		return array("column" => $this->getConfiguration()->getColumn(),  
-			"context->website" => website_WebsiteModuleService::getInstance()->getCurrentWebsite()->getId(),
-		    "lang->id" => RequestContext::getInstance()->getLang());
-	}
-
 	/**
 	 * @see website_BlockAction::execute()
 	 *

@@ -371,7 +371,34 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	 */
 	public function getCacheKeyParameters($request)
 	{
-		return array_merge($request->getParameters(), $this->getConfigurationParameters());
+		$cfg = $this->getConfiguration();
+		$page = $this->getPage();
+		$rc = RequestContext::getInstance();
+	
+		list($theme, $template) = explode('/', $page->getPersistentPage()->getTemplate());
+		$params = array("_lang" => $page->getLang(),
+			"_website" => $page->getWebsite()->getId(),
+			"_theme" =>  $theme,
+			"_https" => $rc->inHTTPS()
+		);
+		foreach ($cfg->getConfiguredCacheKeys() as $configuredCacheKey)
+		{
+			switch ($configuredCacheKey)
+			{
+				case "page":
+					$params["_page"] = $page->getId();
+					break;
+				case "cmpref":
+					$params["_cmpref"] = $request->getParameter("cmpref");
+					break;
+				case "nav":
+					$params["_nav"] = $rc->getUserAgentType().".".$rc->getUserAgentTypeVersion();
+					break;
+			}
+		}
+		$params = array_merge($params , $cfg->getConfigurationParameters());
+		
+		return $params;
 	}
 
 	/**
@@ -939,6 +966,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	
 	/**
 	 * @deprecated (will be removed in 4.0) in favor to getContext()
+	 * @return website_Page
 	 */
 	protected final function getPage()
 	{

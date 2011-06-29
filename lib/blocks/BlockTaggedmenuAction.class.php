@@ -9,37 +9,7 @@ class website_BlockTaggedmenuAction extends website_BlockAction
 	 */
 	public function getCacheDependencies()
 	{
-		return array("modules_website/menu",
-					 "modules_website/menuitem",
-					 "modules_website/menuitemdocument",
-					 "modules_website/menuitemfunction",
-					 "modules_website/menuitemtext",
-					 "modules_website/page",
-		 			 "modules_website/pagegroup",
-					 "modules_website/pageexternal",
-					 "modules_website/pagereference",
-					 "modules_website/pageversion",
-		 			 "modules_website/topic",
-		 			 "modules_website/systemtopic",
-					 "modules_website/website",
-					 "tags/contextual_website_website_menu*");
-	}
-
-	/**
-	 * @param website_BlockActionRequest $request
-	 * @return array<mixed>
-	 */
-	public function getCacheKeyParameters($request)
-	{
-		return array("context->id" => $this->getPage()->getId(),
-			"lang->id" => RequestContext::getInstance()->getLang(),
-			"template" => $this->getConfigurationParameter('template'),
-			"tag" => $this->getConfigurationParameter('tag'),
-			"depth" => $this->getConfigurationParameter('depth'),
-			"class" => $this->getConfigurationParameter('class'),
-			"id" => $this->getConfigurationParameter('id'),
-			"separator" => $this->getConfigurationParameter('separator')
-		);
+		return array("tags/contextual_website_website_menu*");
 	}
 
 	/**

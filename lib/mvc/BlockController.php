@@ -62,6 +62,9 @@ class website_BlockController implements f_mvc_Controller
 
 	private $simpleCacheStack = array();
 
+	/**
+	 * @var website_BlockActionResponse
+	 */
 	private $masterResponse;
 
 	/**
@@ -348,6 +351,7 @@ class website_BlockController implements f_mvc_Controller
 	 */
 	private function processInternal()
 	{
+		//echo "Begin processing ".$this->action->getName()."<br/>\n";
 		$requestContext = RequestContext::getInstance();
 		$cacheItem = null;
 		try
@@ -358,9 +362,48 @@ class website_BlockController implements f_mvc_Controller
 
 			if ($this->isCacheEnabled() && $this->action->isCacheEnabled())
 			{
-				$keyParameters = $this->action->getCacheKeyParameters($this->actionRequest);
-				$keyParameters["https"] = $requestContext->inHTTPS();
-				$cacheItem = f_DataCacheService::getInstance()->readFromCache(get_class($this->action), $keyParameters, $this->action->getCacheDependencies());
+				// Key parameters
+				$cfg = $this->action->getConfiguration();
+				$page = $this->action->getContext();
+				$rc = RequestContext::getInstance();
+				list($theme, $template) = explode('/', $page->getPersistentPage()->getTemplate());
+				
+				$baseParams = array("_lang" => $page->getLang(),
+					"_website" => $page->getWebsite()->getId(),
+					"_theme" =>  $theme,
+					"_https" => $rc->inHTTPS()
+				);
+				foreach ($cfg->getConfiguredCacheKeys() as $configuredCacheKey)
+				{
+					switch ($configuredCacheKey)
+					{
+						case "page":
+							$baseParams["_page"] = $page->getId();
+							break;
+						case "cmpref":
+							$baseParams["_cmpref"] = $this->actionRequest->getParameter("cmpref");
+							break;
+						case "nav":
+							$baseParams["_nav"] = $rc->getUserAgentType().".".$rc->getUserAgentTypeVersion();
+							break;
+					}
+				}
+				$keyParameters = array_merge($baseParams, $cfg->getConfigurationParameters());
+				$actionKeyParameters = $this->action->getCacheKeyParameters($this->actionRequest);
+				if ($actionKeyParameters !== null)
+				{
+					$keyParameters = array_merge($keyParameters, $actionKeyParameters);
+				}
+				
+				$cacheDeps = $cfg->getConfiguredCacheDeps();
+				$actionCacheDeps = $this->action->getCacheDependencies();
+				if ($actionCacheDeps !== null)
+				{
+					$cacheDeps = array_merge($cacheDeps, $actionCacheDeps);
+				}
+				$cs = f_DataCacheService::getInstance();
+				$cacheItem = $cs->readFromCache(get_class($this->action), $keyParameters, $cacheDeps);
+				$cacheItem->setTTL($cfg->getCacheTtl());
 				
 				if ($this->isActionInCache($cacheItem))
 				{
@@ -369,6 +412,7 @@ class website_BlockController implements f_mvc_Controller
 					return;
 				}
 				$this->startCacheRecorders();
+				$cs->markAsBeingRegenerated($cacheItem);
 			}
 
 			$this->executeAction();
@@ -388,6 +432,24 @@ class website_BlockController implements f_mvc_Controller
 			$this->endProcessing($cacheItem);
 			$requestContext->endI18nWork($e);
 		}
+	}
+	
+	private $subBlocks = array();
+	private $subBlocksIndex = -1;
+	
+	function addSubBlock($moduleName, $actionName, $configParams, $inheritedParamNames, $forcedParams)
+	{
+		$id = "{_BLOCK_".count($this->subBlocks[$this->subBlocksIndex])."_}";
+		$this->subBlocks[$this->subBlocksIndex][] = array("moduleName" => $moduleName, 
+			"actionName" => $actionName, "inheritedParamNames" => $inheritedParamNames,
+			"configParams" => $configParams, "forcedParams" => $forcedParams);
+		
+		if ($this->isRecording() && $this->isCacheEnabled() && $this->action->isCacheEnabled())
+		{
+			f_util_ArrayUtils::lastElement($this->pageContextRecorderStack)
+				->addSubBlock($moduleName, $actionName, $configParams, $inheritedParamNames, $forcedParams);
+		}
+		return $id;
 	}
 
 	/**
@@ -428,7 +490,6 @@ class website_BlockController implements f_mvc_Controller
 	{
 		if ($this->isCacheEnabled() && $this->action->isCacheEnabled() && $this->isRecording())
 		{
-
 			if ($e == null)
 			{
 				$this->putActionInCache($cacheItem);
@@ -438,7 +499,6 @@ class website_BlockController implements f_mvc_Controller
 				$cacheItem->setInvalid();
 			}
 			$this->stopCacheRecorders();
-			//$this->popSimpleCache();
 		}
 
 		if ($e !== null)
@@ -477,7 +537,11 @@ class website_BlockController implements f_mvc_Controller
 	private function putActionInCache($cacheItem)
 	{
 		$cacheItem->setValue(self::HTML_CACHE_PATH, $this->getResponse()->getWriter()->peek());
-		$cacheItem->setValue(self::PAGE_CACHE_PATH, "<?php " . implode('', f_util_ArrayUtils::lastElement($this->pageContextRecorderStack)->getRecords()));
+		$code = implode('', f_util_ArrayUtils::lastElement($this->pageContextRecorderStack)->getRecords());
+		if ($code != "")
+		{
+			$cacheItem->setValue(self::PAGE_CACHE_PATH, $code);
+		}
 		$cacheItem->setValidity(true);
 		f_DataCacheService::getInstance()->writeToCache($cacheItem);
 	}
@@ -815,6 +879,7 @@ class website_BlockController implements f_mvc_Controller
 	 */
 	private function isActionInCache($cacheItem)
 	{
+		//echo $this->action->getName()." in cache : ".var_export($cacheItem->isValid(), true)."<br/>\n";
 		return $cacheItem->isValid();
 	}
 
@@ -823,11 +888,15 @@ class website_BlockController implements f_mvc_Controller
 	 */
 	private function processActionFromCache($cacheItem)
 	{
-		// used in cached code
-		$page = $this->getContext();
-		$code = trim($cacheItem->getValue(self::PAGE_CACHE_PATH), "<?php");
 		$htmlContent = $cacheItem->getValue(self::HTML_CACHE_PATH);
-		eval($code);
+		$code = $cacheItem->getValue(self::PAGE_CACHE_PATH);
+		if ($code !== null)
+		{
+			// htmlContent & page variables used in cached code
+			$page = $this->getContext();
+			$controller = $this;
+			eval($code);
+		}
 		$this->getResponse()->getWriter()->write($htmlContent);
 	}
 
@@ -836,11 +905,11 @@ class website_BlockController implements f_mvc_Controller
 	 */
 	private function pushAction($action)
 	{
-		if (!f_util_ArrayUtils::isEmpty($this->actionStack))
-		{
-			$this->responseStack[] = new website_BlockActionResponse();
-		}
+		//echo "Push ".$action->getName();
+		$this->responseStack[] = new website_BlockActionResponse();
 		$this->actionStack[] = $action;
+		$this->subBlocks[] = array();
+		$this->subBlocksIndex++;
 		$this->action = $action;
 		$this->currentBlockId = $this->action->getBlockId();
 	}
@@ -851,35 +920,65 @@ class website_BlockController implements f_mvc_Controller
 		$this->actionRequest = $request;
 	}
 
-	/**
-	 * @param unknown_type $response
-	 */
-	private function pushResponse($response)
-	{
-		$this->responseStack[] = new website_BlockActionResponse();
-	}
-
 	private function pushSimpleCache($cacheItem)
 	{
 		$this->simpleCacheStack[] = $cacheItem;
 	}
 
-	private function popSimpleCache()
-	{
-		array_pop($this->simpleCacheStack);
-	//	$cacheItem = array_pop($this->simpleCacheStack);
-	//	f_DataCacheService::getInstance()->writeToCache($cacheItem);
-	}
-
-
 	private function popAction()
 	{
-		array_pop($this->actionStack);
-		if (f_util_ArrayUtils::isNotEmpty($this->actionStack))
+		$lastAction = array_pop($this->actionStack);
+		
+		$subWriter = $this->getResponse()->getWriter();
+		$subResponseContent = $subWriter->getContent();
+		
+		$subBlocks = array_pop($this->subBlocks);
+		if ($subBlocks !== null && count($subBlocks) > 0)
 		{
-			$subResponse = $this->getResponse()->getWriter()->getContent();
+			//echo "Has subBlocks";
+			$from = array();
+			$to = array();
+			$globalRequest = HttpController::getInstance()->getContext()->getRequest();
+			foreach ($subBlocks as $subBlockIndex => $subBlock)
+			{
+				$moduleName = $subBlock["moduleName"];
+				$parameters = array();
+				if ($globalRequest->hasParameter($moduleName.'Param'))
+				{
+					$parameters = $globalRequest->getParameter($moduleName.'Param');
+				}
+				
+				$inheritedParamNames = $subBlock["inheritedParamNames"];
+				if ($inheritedParamNames !== null)
+				{
+					foreach ($inheritedParamNames as $inheritedParamName)
+					{
+						$parameters[$inheritedParamName] = $this->actionRequest->getParameter($inheritedParamName);
+					}
+				}
+				
+				foreach ($subBlock["forcedParams"] as $forcedParamName => $forcedParamValue)
+				{
+					$parameters[$forcedParamName] = $forcedParamValue;
+				}
+				
+				$request = new f_mvc_FakeHttpRequest(array($moduleName.'Param' => $parameters));
+				
+				$this->processByName($moduleName, $subBlock["actionName"],
+					$request, $subBlock["configParams"], true);
+				
+				$from[] = "{_BLOCK_".$subBlockIndex."_}";
+				$to[] = $subWriter->getContent();
+			}
 			array_pop($this->responseStack);
-			$this->getResponse()->getWriter()->write($subResponse);
+			$subResponseContent = str_replace($from, $to, $subResponseContent);
+		}
+		$this->subBlocksIndex--;
+		array_pop($this->responseStack);
+		$this->getResponse()->getWriter()->write($subResponseContent);
+		
+		if (f_util_ArrayUtils::isNotEmpty($this->actionStack))
+		{	
 			$this->action = f_util_ArrayUtils::lastElement($this->actionStack);
 			$this->currentBlockId = $this->action->getBlockId();
 		}
@@ -892,14 +991,7 @@ class website_BlockController implements f_mvc_Controller
 	private function popRequest()
 	{
 		array_pop($this->actionRequestStack);
-		if (f_util_ArrayUtils::isNotEmpty($this->actionRequestStack))
-		{
-			$this->actionRequest = f_util_ArrayUtils::lastElement($this->actionRequestStack);
-		}
-		else
-		{
-			$this->actionRequest = null;
-		}
+		$this->actionRequest = f_util_ArrayUtils::lastElement($this->actionRequestStack);
 	}
 	
 	// Deprecated
@@ -959,5 +1051,22 @@ class website_PageContextRecorder extends framework_FunctionCallRecorder
 	public function __construct($page)
 	{
 		parent::__construct($page, self::$recordedMethodNames, "page");
+	}
+	
+	function addSubBlock($moduleName, $actionName, $configParams, $inheritedParamNames, $forcedParams)
+	{
+		$this->addRecord('$controller->addSubBlock('.var_export($moduleName, true).','.
+			var_export($actionName, true).','.var_export($configParams, true).','.
+			var_export($inheritedParamNames, true).','.var_export($forcedParams, true).');');
+	}
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see framework_FunctionCallRecorder::getRecords()
+	 */
+	public function getRecords()
+	{
+		$records = parent::getRecords();
+		return $records;
 	}
 }

@@ -1626,11 +1626,11 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		else if ($dcs->isEnabled())
 		{
-			$cacheItem = $dcs->readFromCache(__METHOD__, array($page->getId(), RequestContext::getInstance()->getLang()));
+			$cacheItem = $dcs->readFromCache(__METHOD__, array($page->getId(), RequestContext::getInstance()->getLang()), array($page->getId(), 'modules_theme/pagetemplate'));
 			$putInCache = true;
 		}
 
-		if ($cacheItem !== null && $dcs->exists($cacheItem))
+		if ($cacheItem !== null && $cacheItem->isValid())
 		{
 			$cachedData = $cacheItem->getValue('blocksAndHtmlBody');
 			$pageRenderInfo = unserialize($cachedData);
@@ -1671,7 +1671,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$this->addBenchTime('pageContextInitialize');
 			if ($putInCache)
 			{
-				$cacheItem = $dcs->getNewCacheItem(__METHOD__, array($page->getId(), RequestContext::getInstance()->getLang()), array($page->getId(), 'modules_theme/pagetemplate'));
+				$cacheItem->setTTL(86400);
 				$cacheItem->setValue("blocksAndHtmlBody", serialize(array("blocks" => $blocks, "htmlBody" => $htmlBody, "docType" => $docType)));
 				$dcs->writeToCache($cacheItem);
 			}

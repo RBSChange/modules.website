@@ -90,7 +90,18 @@ class framework_FunctionCallRecorder
 		}
 		return f_util_ClassUtils::callMethodArgsOn($this->wrappedObject, $methodName, $arguments);
 	}
+	
+	/**
+	 * @param String $record
+	 */
+	protected function addRecord($record)
+	{
+		$this->records[] = $record;
+	}
 
+	/**
+	 * @return String[]
+	 */
 	public function getRecords()
 	{
 		return $this->records;

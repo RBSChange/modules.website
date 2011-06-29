@@ -8,16 +8,24 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 	 * @see f_mvc_Action::getCacheDependencies()
 	 *
 	 * @return String[string]
-	 */
-	 
+	 */ 
 	public function getCacheDependencies()
 	{
-		$dep = array("modules_website/page",  "modules_website/pagegroup", "modules_website/website");
 		if ($this->getDetailId())
 		{
-			$dep[] = $this->getDetailId();
+			return array($this->getDetailId());
 		}
-		return $dep;
+		return null;
+	}
+	
+	/**
+	 * @param website_BlockActionRequest $request
+	 * @return array<mixed>
+	 */
+	
+	public function getCacheKeyParameters($request)
+	{
+		return array("detailId" => $this->getDetailId());
 	}
 	
 	private function getDetailId()
@@ -25,6 +33,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 		if ($this->detailId === null)
 		{
 			$params = HttpController::getInstance()->getContext()->getRequest()->getParameters();
+			
 			if (isset($params['wemod']) 
 				&& isset($params[$params['wemod'].'Param']) 
 				&& is_array($params[$params['wemod'].'Param']) 
@@ -39,22 +48,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 		}
 		return $this->detailId;
 	}
-	
 
-	/**
-	 * @param website_BlockActionRequest $request
-	 * @return array<mixed>
-	 */
-	
-	public function getCacheKeyParameters($request)
-	{
-		return array("context->id" => $this->getPage()->getId(),
-			"lang->id" => RequestContext::getInstance()->getLang(),
-			"viewall" =>  $this->getConfigurationParameter('viewall'),
-			"showflag" => $this->getConfigurationParameter('showflag'),
-			"detailId" => $this->getDetailId()
-		);
-	}
 	/**
 	 * @see website_BlockAction::execute()
 	 *

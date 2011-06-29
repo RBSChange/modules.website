@@ -2,20 +2,17 @@
 class website_BlockThreadAction extends website_BlockAction
 {
 	const THREAD_CTX_ATTR = "__thread__";
+	
 	/**
-	 * @see f_mvc_Action::getCacheDependencies()
-	 *
-	 * @return array<string>
+	 * @return boolean
 	 */
-	public function getCacheDependencies()
+	public function isCacheEnabled()
 	{
 		if ($this->getContext()->hasAttribute(self::THREAD_CTX_ATTR))
 		{
-			return null;
+			return false;
 		}
-		return array("modules_website/page", "modules_website/pagegroup",
-			"modules_website/pagereference", "modules_website/pageversion", 
-			"modules_website/topic", "modules_website/systemtopic", "modules_website/website");
+		return parent::isCacheEnabled();
 	}
 
 	/**
@@ -24,13 +21,7 @@ class website_BlockThreadAction extends website_BlockAction
 	 */
 	public function getCacheKeyParameters($request)
 	{
-		if ($this->getContext()->hasAttribute(self::THREAD_CTX_ATTR))
-		{
-			return null;
-		}
-		return array("context->id" => $this->getPage()->getId(),
-			"context->label" => $this->getPage()->getNavigationtitle(), 
-			"lang->id" => RequestContext::getInstance()->getLang());
+		return array("context->label" => $this->getPage()->getNavigationtitle());
 	}
 
 	/**

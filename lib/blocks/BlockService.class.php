@@ -295,7 +295,7 @@ class block_BlockService extends BaseService
 	{
 		$domDoc = f_util_DOMUtils::fromPath($blockFile);
 		$blockDomList = $domDoc->find('/blocks/block');
-		$reservedParameterNames = array("type", "flex", "width");
+		$reservedParameterNames = array("type", "flex", "width", "cusecache");
 		for ($blockIdx=0; $blockIdx < $blockDomList->length ; $blockIdx++)
 		{
 			$blockElm = $blockDomList->item($blockIdx);
@@ -347,6 +347,28 @@ class block_BlockService extends BaseService
 					$attVal = true;
 				}
 				
+				if ($attName == "cache")
+				{
+					$cacheTime = null;
+					if ($attVal == "true")
+					{
+						$cacheTime = CHANGE_CACHE_MAX_TIME;
+					}
+					elseif (is_numeric($attVal))
+					{
+						$cacheTime = $attVal;
+					}
+					$blockInfoArray[$blockId]['cacheTime'] = $cacheTime;
+					
+					if ($cacheTime !== null)
+					{
+						$blockInfoArray[$blockId]['parameters']['cusecache'] = array('name' => 'cusecache',
+		      				'type' => 'Boolean', 'default-value' => true,
+							'label' => '&modules.website.bo.blocks.Usecache;',
+							'helptext' => '&modules.website.bo.blocks.Usecache-help;');
+					}
+				}
+			
 				$blockInfoArray[$blockId][$attName] = $attVal;
 			}
 			
@@ -362,7 +384,7 @@ class block_BlockService extends BaseService
 			{
 				$paramElm = $nodeParamList->item($paramIdx);
 				$paramName = $paramElm->getAttribute('name');				
-				if (in_array($paramName, $reservedParameterNames))
+				if (in_array(strtolower($paramName), $reservedParameterNames))
 				{
 					throw new BlockException("'$paramName' is a reserved block parameter name (block ".$blockType.")");  
 				}
@@ -602,6 +624,39 @@ class block_BlockService extends BaseService
 			$generator->assign_by_ref('author', $author);
 			$generator->assign_by_ref('className', $configClassName);
 			$generator->assign_by_ref('blockInfo', $blocWrapper->setBlocInfoArray($blockInfos));
+			
+			// Cache keys
+			$configuredCacheKeys = isset($blockInfos['cache-key']) ? explode(",", $blockInfos['cache-key']) : array();
+			$allowedKeyCacheName = array("cmpref", "page", "nav");
+			foreach ($configuredCacheKeys as &$value)
+			{
+				$value = trim($value);
+				if (!in_array($value, $allowedKeyCacheName))
+				{
+					throw new Exception("Unknown cache-key attribute value ".$value);
+				}
+			}
+			$generator->assign('configuredCacheKeys', var_export($configuredCacheKeys, true));
+			
+			// Cache deps
+			$configuredCacheDeps = isset($blockInfos['cache-deps']) ? explode(",", $blockInfos['cache-deps']) : array();
+			$modelDeps = array();
+			$otherDeps = array();
+			foreach ($configuredCacheDeps as $value)
+			{
+				$modulesIndex = strpos($value, "modules_");
+				if ($modulesIndex !== false && $modulesIndex < 2)
+				{
+					$modelDeps[] = $value;
+				}
+				else
+				{
+					$otherDeps[] = $value;
+				}
+			}
+			$computedCacheDeps = array_merge(DocumentHelper::expandModelList(join(",", $modelDeps)), $otherDeps);
+			$generator->assign('configuredCacheDeps', var_export($computedCacheDeps, true));
+			
 			f_util_FileUtils::write($destFilePath, $generator->fetch('BlockConfiguration.class.php.tpl'), f_util_FileUtils::OVERRIDE);
 			ClassResolver::getInstance()->appendToAutoloadFile($configClassName, $destFilePath);	
 		}
@@ -775,6 +830,16 @@ class block_blockInfoBuilder
 	public function getTemplateModule()
 	{
 		return $this->blockInfos['templateModule'];
+	}
+	
+	public function isCached()
+	{
+		return isset($this->blockInfos['cache']) && ($this->blockInfos['cache'] === true || is_numeric($this->blockInfos['cache']));
+	}
+	
+	public function getCacheTime()
+	{
+		return isset($this->blockInfos['cacheTime']) ? $this->blockInfos['cacheTime'] : 'null';
 	}
 	
 	public function getType()

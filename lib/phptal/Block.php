@@ -24,23 +24,9 @@ class website_ChangeBlockRenderer
 {
 	private $moduleName;
 	private $actionName;
-	/**
-	 * @return f_action_BaseAction
-	 */
-	function getCallingAction()
-	{
-		return website_BlockController::getInstance()->getProcessedAction();
-	}
 	
-	/**
-	 * @return f_action_BaseAction
-	 */
-	function getCallingActionRequest()
-	{
-		return website_BlockController::getInstance()->getProcessedAction();
-	}
+	private static $paramNames = array('name', 'module', 'inheritedParams', 'useCache', 'container');
 	
-
 	/**
 	 * @param array $params
 	 */
@@ -51,7 +37,8 @@ class website_ChangeBlockRenderer
 			throw new Exception(__METHOD__ . " Can not render block with no name!");
 		}
 		
-		$callingAction = $this->getCallingAction();
+		$controller = website_BlockController::getInstance();
+		$callingAction = $controller->getProcessedAction();
 		
 		if ($callingAction === null)
 		{
@@ -71,24 +58,65 @@ class website_ChangeBlockRenderer
 		
 		// getConfigParameters() has to be called before getRequestParameters()
 		$configParameters = $this->getConfigParameters($params);
-		if (isset($params['container']))
+		
+		$callingActionCached = $callingAction->getConfiguration()->isCacheEnabled();
+		if (isset($params["outside"]) || $callingActionCached)
 		{
-			if (f_util_StringUtils::isEmpty($params['container']))
+			//echo "Render ".$this->moduleName."_".$this->actionName." outside ";
+			$inheritedParamNames = isset($params['inheritedParams']) ? explode(",", $params['inheritedParams']) : null;
+			$forcedParameters = array();
+			foreach ($params as $paramName => $paramValue)
 			{
-				$this->executeBlockAction($this->getRequestParameters($params, $this->moduleName), $configParameters);
+				if (in_array($paramName, self::$paramNames))
+				{
+					continue;
+				}
+				$forcedParameters[$paramName] = $paramValue;
+			}
+			
+			if (isset($params['container']))
+			{
+				if (f_util_StringUtils::isEmpty($params['container']))
+				{
+					echo $controller->addSubBlock($this->moduleName, $this->actionName, $configParameters, $inheritedParamNames, $forcedParameters);
+				}
+				else
+				{
+					echo '<' . $params['container'] .' class="modules-'. $this->moduleName .'-'.  $this->actionName  .' modules-' . $this->moduleName . '">';
+					echo $controller->addSubBlock($this->moduleName, $this->actionName, $configParameters, $inheritedParamNames, $forcedParameters);
+					echo '</' . $params['container'] .'>';
+				}
 			}
 			else
 			{
-				echo '<' . $params['container'] .' class="modules-'. $this->moduleName .'-'.  $this->actionName  .' modules-' . $this->moduleName . '">';
-				$this->executeBlockAction($this->getRequestParameters($params, $this->moduleName));
-				echo '</' . $params['container'] .'>';
+				echo '<div class="modules-'. $this->moduleName .'-'.  $this->actionName  .' modules-' . $this->moduleName . '">';
+				echo $controller->addSubBlock($this->moduleName, $this->actionName, $configParameters, $inheritedParamNames, $forcedParameters);
+				echo '</div>';
 			}
 		}
 		else
 		{
-			echo '<div class="modules-'. $this->moduleName .'-'.  $this->actionName  .' modules-' . $this->moduleName . '">';
-			$this->executeBlockAction($this->getRequestParameters($params, $this->moduleName), $configParameters);
-			echo '</div>';
+			$useCache = $params["useCache"] == "true" || !$callingActionCached;
+			//echo "Render inside";
+			if (isset($params['container']))
+			{
+				if (f_util_StringUtils::isEmpty($params['container']))
+				{
+					$this->executeBlockAction($this->getRequestParameters($params, $this->moduleName), $configParameters, $useCache);
+				}
+				else
+				{
+					echo '<' . $params['container'] .' class="modules-'. $this->moduleName .'-'.  $this->actionName  .' modules-' . $this->moduleName . '">';
+					$this->executeBlockAction($this->getRequestParameters($params, $this->moduleName), $configParameters, $useCache);
+					echo '</' . $params['container'] .'>';
+				}
+			}
+			else
+			{
+				echo '<div class="modules-'. $this->moduleName .'-'.  $this->actionName  .' modules-' . $this->moduleName . '">';
+				$this->executeBlockAction($this->getRequestParameters($params, $this->moduleName), $configParameters, $useCache);
+				echo '</div>';
+			}
 		}
 	}
 	
@@ -133,7 +161,7 @@ class website_ChangeBlockRenderer
 		
 		foreach ($extensionParams as $parameterName => $parameterValue)
 		{
-			if (in_array($parameterName, array('name', 'module', 'inheritedParams')))
+			if (in_array($parameterName, self::$paramNames))
 			{
 				continue;
 			}
@@ -142,12 +170,12 @@ class website_ChangeBlockRenderer
 		return array($this->moduleName.'Param' => $parameters);
 	}
 	
-	private function executeBlockAction($parameters, $configParameters)
+	private function executeBlockAction($parameters, $configParameters, $useCache)
 	{
 		$controller = website_BlockController::getInstance();
 		try
 		{
-			$controller->processByName($this->moduleName, $this->actionName, new f_mvc_FakeHttpRequest($parameters), $configParameters);
+			$controller->processByName($this->moduleName, $this->actionName, new f_mvc_FakeHttpRequest($parameters), $configParameters, $useCache);
 		}
 		catch (Exception $e)
 		{

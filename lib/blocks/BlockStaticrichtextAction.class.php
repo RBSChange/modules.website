@@ -12,7 +12,7 @@ class website_BlockStaticrichtextAction extends website_BlockAction
 	{
 		// TODO: cache for a given time & dependent on page
 		$content = $this->getConfigurationParameter('content');
-		if ($this->isInBackoffice())
+		if ($this->isInBackofficeEdition())
 		{
 			$content = preg_replace_callback('/<img\s+(.*?)\/>/i', array($this, "parseImageTagsBO"), $content);
 			$dom = new DOMDocument("1.0", "UTF-8");

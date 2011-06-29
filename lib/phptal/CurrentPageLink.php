@@ -81,8 +81,8 @@ class PHPTAL_Php_Attribute_CHANGE_currentpagelink extends ChangeTalAttribute
 			$classes[] = 'link';
 		}
 		$this->tag->attributes['class'] = implode(' ', $classes);
-		$parametersString = $this->initParams();
 		$preservedAttributes = array('class', 'title', 'rel', 'name',  'type');
+		$parametersString = $this->initParams($preservedAttributes);
 		foreach (array_keys($this->tag->attributes) as $name)
 		{
 			if (in_array($name, $preservedAttributes))
@@ -91,6 +91,7 @@ class PHPTAL_Php_Attribute_CHANGE_currentpagelink extends ChangeTalAttribute
 			}
 			unset($this->tag->attributes[$name]);
 		}
+		
 		$this->tag->attributes[$this->attrName] = ('<?php echo PHPTAL_Php_Attribute_CHANGE_currentpagelink::renderCurrentpagelink(' . $parametersString . '); ?>');
 	}
 }

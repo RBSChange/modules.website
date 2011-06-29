@@ -61,7 +61,6 @@ class website_BlockActionResponse implements f_mvc_Response
 	{
 		return "text/html";
 	}
-	
 
 	/**
 	 * @see f_mvc_Response::isCommitted()
@@ -80,7 +79,6 @@ class website_BlockActionResponse implements f_mvc_Response
 	{
 		$this->writer = new f_mvc_BufferedWriter();
 	}
-	
 
 	/**
 	 * @see f_mvc_Response::write()
@@ -89,10 +87,6 @@ class website_BlockActionResponse implements f_mvc_Response
 	 */
 	function write($string)
 	{
-		if ($this->writer === null)
-		{
-			throw new Exception('response has no writer');
-		}
-		$this->writer->write($string);
+		$this->getWriter()->write($string);
 	}
 }

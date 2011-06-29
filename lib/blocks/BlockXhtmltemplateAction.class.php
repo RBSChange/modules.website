@@ -6,31 +6,6 @@
 class website_BlockXhtmltemplateAction extends website_BlockAction
 {
 	/**
-	 * @see f_mvc_Action::getCacheDependencies()
-	 *
-	 * @return array
-	 */
-	public function getCacheDependencies()
-	{
-		if ($this->getConfiguration()->getUsecache() == false)
-		{
-			return null;
-		}
-		return array('modules_website/page');
-	}
-	
-	/**
-	 * @see website_BlockAction::getCacheKeyParameters()
-	 *
-	 * @param website_BlockActionRequest $request
-	 * @return unknown
-	 */
-	public function getCacheKeyParameters($request)
-	{
-		return array('pageId' => $this->getPage()->getId(), 'template' => $this->getConfiguration()->getTemplate());
-	}
-
-	/**
 	 * @see website_BlockAction::execute()
 	 *
 	 * @param f_mvc_Request $request

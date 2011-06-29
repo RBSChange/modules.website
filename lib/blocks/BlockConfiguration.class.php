@@ -110,4 +110,13 @@ class block_BlockConfiguration
 	{
 		return false;
 	}
+	
+	/**
+	 * This can be enabled using "cache" (true or number of seconds) attribute in blocks.xml 
+	 * @return boolean
+	 */
+	public function isCacheEnabled()
+	{
+		return false;
+	}
 }
