@@ -41,7 +41,8 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	 * @return void
 	 */
     protected function preSave($document, $parentNodeId)
-    {       
+    {     
+        $document->setProtocol('http');
         $protocol = $document->getProtocol() . '://';
         $masterdomain = $document->getVoDomain();
         $localizebypath = $document->getLocalizebypath();
