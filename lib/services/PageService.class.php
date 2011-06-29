@@ -1671,7 +1671,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$this->addBenchTime('pageContextInitialize');
 			if ($putInCache)
 			{
-				$cacheItem = $dcs->getNewCacheItem(__METHOD__, array($page->getId(), RequestContext::getInstance()->getLang()), array($page->getId()));
+				$cacheItem = $dcs->getNewCacheItem(__METHOD__, array($page->getId(), RequestContext::getInstance()->getLang()), array($page->getId(), 'modules_theme/pagetemplate'));
 				$cacheItem->setValue("blocksAndHtmlBody", serialize(array("blocks" => $blocks, "htmlBody" => $htmlBody, "docType" => $docType)));
 				$dcs->writeToCache($cacheItem);
 			}
