@@ -172,4 +172,6 @@
   <key id="log-saveredirectinfo-topic">log saveredirectinfo topic</key>
   <key id="savepermissions-website">savepermissions.website {lang} {documentlabel}</key>
   <key id="log-savepermissions-website">log savepermissions website</key>
+  <key id="updatetranslation-menu">updatetranslation.menu {lang} {documentlabel}</key>
+  <key id="log-updatetranslation-menu">log updatetranslation menu</key>
 </i18n>

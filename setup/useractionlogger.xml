@@ -89,4 +89,5 @@
   <actiondef modulename="website" actionname="deactivated.markergas" label="m.website.bo.useractionlogger.deactivated-markergas"/>
   <actiondef modulename="website" actionname="saveredirectinfo.topic" label="m.website.bo.useractionlogger.saveredirectinfo-topic"/>
   <actiondef modulename="website" actionname="savepermissions.website" label="m.website.bo.useractionlogger.savepermissions-website"/>
+  <actiondef modulename="website" actionname="updatetranslation.menu" label="m.website.bo.useractionlogger.updatetranslation-menu"/>
 </script>
