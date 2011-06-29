@@ -148,13 +148,19 @@
 		</div>
 	</xsl:template>
 
-	<xsl:template match="change:templateblock">
+	<xsl:template match="change:templateblock[@type]">
 		<changeblock editable="false">
 			<xsl:copy-of select="@*" />
 			<xsl:apply-templates />
 		</changeblock>
 	</xsl:template>
 
+	<xsl:template match="change:templateblock">
+		<div style="display:none">
+			<xsl:copy-of select="@*" />
+		</div>
+	</xsl:template>
+	
 	<xsl:template match="change:spacer">
 		<div class="freeBlock">
 			<xsl:if test="@width">

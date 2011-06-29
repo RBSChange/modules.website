@@ -125,10 +125,16 @@
 		<cdropblockcell />
 	</xsl:template>
 
-	<xsl:template match="change:templateblock">
+	<xsl:template match="change:templateblock[@type]">
 		<changeblock editable="false">
 			<xsl:copy-of select="@*" />
 			<xsl:apply-templates />
 		</changeblock>
+	</xsl:template>
+	
+	<xsl:template match="change:templateblock">
+		<hbox hidden="true">
+			<xsl:copy-of select="@*" />
+		</hbox>
 	</xsl:template>
 </xsl:stylesheet>

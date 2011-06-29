@@ -111,7 +111,7 @@ class website_PageRessourceService extends BaseService
 	public function getPagetemplateAsDOMDocument($page)
 	{
 		$this->setPage($page);
-		$DOMDocument = $this->getPageTemplate($page)->getDOMContent();
+		$DOMDocument = $this->getPageTemplate($page)->getReplacedDOMContent();
 		if ($DOMDocument->documentElement->hasAttribute('templateType'))
 		{
 			$this->templateType = $DOMDocument->documentElement->getAttribute('templateType');
@@ -135,7 +135,7 @@ class website_PageRessourceService extends BaseService
 	public function getBackpagetemplateAsDOMDocument($page)
 	{
 		$this->setPage($page);
-		$DOMDocument = $this->getPageTemplate($page)->getDOMContent();
+		$DOMDocument = $this->getPageTemplate($page)->getReplacedDOMContent();
 		if ($DOMDocument->documentElement->hasAttribute('templateType'))
 		{
 			$this->templateType = $DOMDocument->documentElement->getAttribute('templateType');
