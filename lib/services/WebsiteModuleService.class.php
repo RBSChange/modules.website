@@ -423,9 +423,9 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
             if ($isCacheEnabled)
             {
                 $simpleCache = f_DataCacheService::getInstance();
-                $cacheItem = $simpleCache->readFromCache(__CLASS__, array('domaines'));
+                $cacheItem = $simpleCache->readFromCache(__CLASS__, array('domaines'), array('modules_website/website'));
                 
-                if ($cacheItem !== null && $simpleCache->exists($cacheItem))
+                if ($cacheItem !== null && $cacheItem->isValid())
                 {
                     return unserialize($cacheItem->getValue('sites'));
                 }
@@ -435,8 +435,7 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
 
             if ($isCacheEnabled)
             {
-            	$cacheItem = f_DataCacheService::getInstance()->getNewCacheItem(__CLASS__, array('domaines'), array('modules_website/website'));
-                $cacheItem->setValue('sites', serialize($domaines));
+            	$cacheItem->setValue('sites', serialize($domaines));
             	$simpleCache->writeToCache($cacheItem);
             }
 
