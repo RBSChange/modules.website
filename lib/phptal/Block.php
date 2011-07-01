@@ -96,7 +96,7 @@ class website_ChangeBlockRenderer
 		}
 		else
 		{
-			$useCache = $params["useCache"] == "true" || !$callingActionCached;
+			$useCache = (isset($params["useCache"]) && $params["useCache"] == "true") || !$callingActionCached;
 			//echo "Render inside";
 			if (isset($params['container']))
 			{
