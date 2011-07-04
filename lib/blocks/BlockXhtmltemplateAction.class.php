@@ -21,7 +21,7 @@ class website_BlockXhtmltemplateAction extends website_BlockAction
 		}
 		$request->setAttribute('page', $this->getPage());
 		$tpl = null;
-		if ($this->isInBackoffice())
+		if ($this->isInBackofficeEdition())
 		{
 			$tpl = $this->getTemplate(ucfirst($templateName . website_BlockView::BACKOFFICE));
 		}

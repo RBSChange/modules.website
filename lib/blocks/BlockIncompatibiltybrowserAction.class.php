@@ -14,6 +14,11 @@ class website_BlockIncompatibiltybrowserAction extends website_BlockAction
 	 */
 	public function execute($request, $response)
 	{
+		if ($this->isInBackoffice())
+		{
+			return website_BlockView::NONE;
+		}
+		
 		$requestContextInstance = RequestContext::getInstance();
 		$browserType = $requestContextInstance->getUserAgentType();
 		$browserVersion = $requestContextInstance->getUserAgentTypeVersion();
@@ -21,10 +26,5 @@ class website_BlockIncompatibiltybrowserAction extends website_BlockAction
 		{
 			return website_BlockView::SUCCESS;
 		}
-		
-		if ($this->isInBackoffice())
-		{
-			return website_BlockView::NONE;
-		}	
 	}
 }
