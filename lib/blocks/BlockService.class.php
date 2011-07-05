@@ -93,6 +93,10 @@ class block_BlockService extends BaseService
 			}			
 		}
 		Framework::error(__METHOD__ . ' Undefined block type: ' . $blockType);
+		if (Framework::isInfoEnabled())
+		{
+			Framework::info(f_util_ProcessUtils::getBackTrace());
+		}
 		return null;
 	}
 	

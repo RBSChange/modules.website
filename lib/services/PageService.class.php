@@ -1071,6 +1071,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			foreach ($blockElems as $blockElem)
 			{
 				$type = $blockElem->getAttribute("type");
+				if ($bs->isSpecialBlock($type)) {continue;}
 				if (!isset($blocks[$type]))
 				{
 					$blockClassName = $bs->getBlockActionClassNameByType($type);
