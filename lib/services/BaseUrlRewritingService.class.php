@@ -71,7 +71,12 @@ class website_BaseRewritingService extends BaseService
 		$sPath = f_util_FileUtils::buildChangeBuildPath('urlrewriting_rules.ser');
 		if (!file_exists($sPath))
 		{
-			include_once (website_urlrewriting_RulesParser::getInstance()->getCachedFilePath());
+			$phpPath = website_urlrewriting_RulesParser::getInstance()->getCachedFilePath();
+			if (!file_exists($phpPath)) 
+			{
+				website_urlrewriting_RulesParser::getInstance()->compile();
+			}
+			include_once ($phpPath);
 			file_put_contents($sPath, serialize(array($this->m_documentRules, $this->m_actionRules, $this->m_tagRules)));
 		}
 		else 
