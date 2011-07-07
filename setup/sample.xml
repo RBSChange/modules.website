@@ -30,23 +30,7 @@
 			</changecontent>
 		</page>
 
-		<topic id="tools" label="Outils" navigationVisibility="hidden">
-			<page id="print" label="Imprimer" indexingstatus="false" byTag="contextual_website_website_print">
-				<documenturl lang="fr" url="/imprimer" />
-				<changecontent for="content-block">
-					<changeblock type="richtext">
-						<![CDATA[<p>Ici vos instructions pour imprimer une page. (Cette page n'est utilisée que lorsque javascript n'est pas activé)</p>]]>
-					</changeblock>
-				</changecontent>
-			</page>
-			<page id="addtofavorites" label="Ajouter aux favoris" indexingstatus="false" navigationVisibility="hidden" byTag="contextual_website_website_favorite">
-				<documenturl lang="fr" url="/ajouter-aux-favoris" />
-				<changecontent for="content-block">
-					<changeblock type="richtext">
-						<![CDATA[<p>Ici vos instructions pour ajouter une page aux favoris. (Cette page n'est utilisée que lorsque javascript n'est pas activé)</p>]]>
-					</changeblock>
-				</changecontent>
-			</page>
+		<topic id="tools" label="Outils">
 			<page id="sitemap" label="Plan du site" indexingstatus="false">
 				<changecontent for="content-block">
 					<changeblock type="richtext">
@@ -63,17 +47,12 @@
 					</changeblock>
 				</changecontent>
 			</page>
-			<page id="help" label="aide" byTag="contextual_website_website_help">
+			<page id="help" label="Aide" byTag="contextual_website_website_help">
 				<documenturl lang="fr" url="/aide" />
 				<changecontent for="content-block">
 					<changeblock type="richtext">
 						<![CDATA[<p>Ici votre texte aidant un visiteur à s'orienter dans votre site.</p>]]>
 					</changeblock>
-				</changecontent>
-			</page>
-			<page id="searchresult" label="Résultat de recherche" indexingstatus="false" navigationVisibility="hidden"  byTag="contextual_website_website_modules_solrsearch_page-results">
-			    <changecontent for="content-block">
-			    	<changeblock type="modules_solrsearch_results" />
 				</changecontent>
 			</page>
 		</topic>
@@ -102,6 +81,27 @@
 				   <changeblock type="modules_users_authentication" />
 				</changecontent>
 			</page>
+			<page id="print" label="Imprimer" indexingstatus="false" byTag="contextual_website_website_print">
+				<documenturl lang="fr" url="/imprimer" />
+				<changecontent for="content-block">
+					<changeblock type="richtext">
+						<![CDATA[<p>Ici vos instructions pour imprimer une page. (Cette page n'est utilisée que lorsque javascript n'est pas activé)</p>]]>
+					</changeblock>
+				</changecontent>
+			</page>
+			<page id="addtofavorites" label="Ajouter aux favoris" indexingstatus="false" navigationVisibility="hidden" byTag="contextual_website_website_favorite">
+				<documenturl lang="fr" url="/ajouter-aux-favoris" />
+				<changecontent for="content-block">
+					<changeblock type="richtext">
+						<![CDATA[<p>Ici vos instructions pour ajouter une page aux favoris. (Cette page n'est utilisée que lorsque javascript n'est pas activé)</p>]]>
+					</changeblock>
+				</changecontent>
+			</page>
+			<page id="searchresult" label="Résultat de recherche" indexingstatus="false" navigationVisibility="hidden"  byTag="contextual_website_website_modules_solrsearch_page-results">
+			    <changecontent for="content-block">
+			    	<changeblock type="modules_solrsearch_results" />
+				</changecontent>
+			</page>
 		</topic>
 
 		<menus>
@@ -118,7 +118,7 @@
 			</menu>
 
 			<menu id="mnumain" label="Menu principal" byTag="contextual_website_website_menu-main">
-				<menuitempage pageid="homepage" />
+				<menuitempage pageid="sitemap" />
 			</menu>
 
 			<menu id="mnufooter" label="Menu en bas de page" byTag="contextual_website_website_menu-footer">
@@ -143,23 +143,7 @@
 			</changecontent>
 		</page>		
 
-		<topic byRefid="tools" label="Tools" navigationVisibility="hidden">
-			<page byRefid="print" label="Print">
-				<documenturl lang="en" url="/print" />
-				<changecontent for="content-block">
-					<changeblock type="richtext">
-						<![CDATA[<p>Some text explaining how to print a page. (This page is only used when javascript is disabled).</p>]]>
-					</changeblock>
-				</changecontent>
-			</page>
-			<page byRefid="addtofavorites" label="Add to favorites" navigationVisibility="hidden">
-				<documenturl lang="en" url="/add-to-favorites" />
-				<changecontent for="content-block">
-					<changeblock type="richtext">
-						<![CDATA[<p>Some text explaining how to add a page to favorites. (This page is only used when javascript is disabled).</p>]]>
-					</changeblock>
-				</changecontent>
-			</page>
+		<topic byRefid="tools" label="Tools">
 			<page byRefid="sitemap" label="Site map">
 				<changecontent for="content-block">
 					<changeblock type="richtext">
@@ -182,11 +166,6 @@
 					<changeblock type="richtext">
 						<![CDATA[<p>Some text to help people navigate through your website.</p>]]>
 					</changeblock>
-				</changecontent>
-			</page>
-			<page byRefid="searchresult" label="Search résults" navigationVisibility="hidden">
-				<changecontent for="content-block">
-			    	<changeblock type="modules_solrsearch_results" />
 				</changecontent>
 			</page>
 		</topic>
@@ -213,6 +192,27 @@
 					 <![CDATA[<h2>This is a restricted area</h2><p>Please log in using the following form.</p>]]>
 				   </changeblock>
 				   <changeblock type="modules_users_authentication" />
+				</changecontent>
+			</page>
+			<page byRefid="print" label="Print" navigationVisibility="hidden">
+				<documenturl lang="en" url="/print" />
+				<changecontent for="content-block">
+					<changeblock type="richtext">
+						<![CDATA[<p>Some text explaining how to print a page. (This page is only used when javascript is disabled).</p>]]>
+					</changeblock>
+				</changecontent>
+			</page>
+			<page byRefid="addtofavorites" label="Add to favorites" navigationVisibility="hidden">
+				<documenturl lang="en" url="/add-to-favorites" />
+				<changecontent for="content-block">
+					<changeblock type="richtext">
+						<![CDATA[<p>Some text explaining how to add a page to favorites. (This page is only used when javascript is disabled).</p>]]>
+					</changeblock>
+				</changecontent>
+			</page>
+			<page byRefid="searchresult" label="Search résults" navigationVisibility="hidden">
+				<changecontent for="content-block">
+			    	<changeblock type="modules_solrsearch_results" />
 				</changecontent>
 			</page>
 		</topic>

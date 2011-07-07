@@ -9,25 +9,7 @@
 	<website byDocumentId-attr="" label-attr="" protocol-attr="" localizebypath-attr="">
 		<page label="Page d'accueil" isHomePage="true" template-attr="templateHome" id="homepage" />
 
-		<topic label="Outils" navigationVisibility="hidden">
-			<page label="Imprimer" indexingstatus="false">
-				<tag name="contextual_website_website_print" />
-				<documenturl lang="fr" url="/imprimer" />
-				<changecontent for="content-block">
-					<changeblock type="richtext">
-						<![CDATA[<p>Ici vos instructions pour imprimer une page. (Cette page n'est utilisée que lorsque javascript n'est pas activé)</p>]]>
-					</changeblock>
-				</changecontent>
-			</page>
-			<page label="Ajouter aux favoris" indexingstatus="false" navigationVisibility="hidden">
-				<tag name="contextual_website_website_favorite" />
-				<documenturl lang="fr" url="/ajouter-aux-favoris" />
-				<changecontent for="content-block">
-					<changeblock type="richtext">
-						<![CDATA[<p>Ici vos instructions pour ajouter une page aux favoris. (Cette page n'est utilisée que lorsque javascript n'est pas activé)</p>]]>
-					</changeblock>
-				</changecontent>
-			</page>
+		<topic label="Outils">
 			<page label="Plan du site" id="sitemap" indexingstatus="false">
 				<changecontent for="content-block">
 					<changeblock type="richtext">
@@ -54,12 +36,6 @@
 					</changeblock>
 				</changecontent>
 			</page>
-			<page label="Résultat de recherche" indexingstatus="false" navigationVisibility="hidden"
-				byTag="contextual_website_website_modules_solrsearch_page-results">
-			    <changecontent for="content-block">
-					<changeblock type="modules_solrsearch_results" />
-				</changecontent>
-			</page>
 		</topic>
 
 		<topic label="Système" navigationVisibility="hidden">
@@ -79,8 +55,7 @@
 				   </changeblock>
 				   <changeblock type="modules_website_exception" />
 				</changecontent>
-			</page>
-			
+			</page>			
 			<page label="Accès restreint (401.1)" indexingstatus="false" navigationVisibility="hidden">
 				<tag name="contextual_website_website_error401-1" />
 				<changecontent for="content-block">
@@ -88,6 +63,30 @@
 					 <![CDATA[<h2>Cette page est protégée d'accès</h2><p>Veuillez vous identifier en utilisant le formulaire ci-dessous.</p>]]>
 				   </changeblock>
 				   <changeblock type="modules_users_authentication" />
+				</changecontent>
+			</page>
+			<page label="Imprimer" indexingstatus="false" navigationVisibility="hidden">
+				<tag name="contextual_website_website_print" />
+				<documenturl lang="fr" url="/imprimer" />
+				<changecontent for="content-block">
+					<changeblock type="richtext">
+						<![CDATA[<p>Ici vos instructions pour imprimer une page. (Cette page n'est utilisée que lorsque javascript n'est pas activé)</p>]]>
+					</changeblock>
+				</changecontent>
+			</page>
+			<page label="Ajouter aux favoris" indexingstatus="false" navigationVisibility="hidden">
+				<tag name="contextual_website_website_favorite" />
+				<documenturl lang="fr" url="/ajouter-aux-favoris" />
+				<changecontent for="content-block">
+					<changeblock type="richtext">
+						<![CDATA[<p>Ici vos instructions pour ajouter une page aux favoris. (Cette page n'est utilisée que lorsque javascript n'est pas activé)</p>]]>
+					</changeblock>
+				</changecontent>
+			</page>
+			<page label="Résultat de recherche" indexingstatus="false" navigationVisibility="hidden"
+				byTag="contextual_website_website_modules_solrsearch_page-results">
+			    <changecontent for="content-block">
+					<changeblock type="modules_solrsearch_results" />
 				</changecontent>
 			</page>
 		</topic>

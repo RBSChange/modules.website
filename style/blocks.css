@@ -1,30 +1,46 @@
-div.pagination ul {
-	list-style-type: none;
-}
-div.pagination ul li{
-	display: inline;
-}
-.modules-website-switchlanguage ul,
-.modules-website ul.contextual-menu-horizontal,
-.modules-website ul.contextual-menu-vertical,
-.modules-website ul.tagged-menu-horizontal,
-.modules-website ul.tagged-menu-vertical,
-.modules-website ul.header-menu,
-.modules-website ul.footer-menu,
-.modules-website ul.thread{
-	list-style-type: none;
-}
-
-.modules-website-switchlanguage li,
-.modules-website ul.contextual-menu-horizontal li,
-.modules-website ul.tagged-menu-horizontal li,
-.modules-website ul.header-menu li,
-.modules-website ul.footer-menu li,
-.modules-website ul.thread li{
-	display: inline;
-}
-
 .modules-website-sitemap ul {
 	padding-left: 20px;
 }
 
+/* MODULES-WEBSITE-TAGGEDMENUHEADER */
+ul.header-menu li{
+	display: inline;
+}
+
+/* MODULES-WEBSITE-SWITCHLANGUAGE */
+.modules-website-switchlanguage ul li{
+	display: inline;
+}
+
+/* MODULES-WEBSITE-TAGGEDMENUHORIZONTAL */
+ul.tagged-menu-horizontal li{
+	display: inline-block;
+	zoom: 1;
+	* display: inline;
+}
+
+/* MODULES-WEBSITE-TAGGEDMENUFOOTER */
+ul.footer-menu li{
+	display: inline;
+}
+
+/* MODULES-WEBSITE-THREAD */
+ul.thread li{
+	display: inline;
+}
+
+/* MODULES-WEBSITE-SITEMAP */
+.modules-website-sitemap li{
+	padding: 0 0 4px 60px;
+	font-size: 1.1em;
+	list-style-type: disc;
+	list-style-position: inside;
+}
+
+.modules-website-sitemap li li{
+	font-size: 1em;
+}
+
+.modules-website-sitemap li li li{
+	font-size: 0.9em;
+}

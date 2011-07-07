@@ -137,19 +137,18 @@ class website_FormHelper
 		$formAttributes["method"] = self::getValue($params, "method", "post");
 		$formAttributes["action"] = self::getCurrentFormAction($idParam, $params);
 		$formAttributes["id"] = self::$formId;
-		$formAttributes["name"] = self::$formId;
 		$formAttributes["enctype"] = self::getValue($params, "enctype", "multipart/form-data");
 		$formAttributes["class"] = self::getValue($params, "class", "cmxform change-form");
 		if (isset($params["onsubmit"]))
-                {
-                        $formAttributes["onsubmit"] = $params["onsubmit"];
-                }
+		{
+			$formAttributes["onsubmit"] = $params["onsubmit"];
+		}
 		self::addClassParam($formAttributes, "change-form");
 
 		$html .= "<form" . f_util_HtmlUtils::buildAttributes($formAttributes).">";
 		if (self::$relKey !== null)
 		{
-			$html .= "<div style=\"display: none;\"><input name=\"".self::$moduleName."Param[website_FormHelper_relkey]\" type=\"hidden\" ".f_util_HtmlUtils::buildAttribute("value", self::$relKey)."></a></div>";
+			$html .= "<div style=\"display: none;\"><input name=\"".self::$moduleName."Param[website_FormHelper_relkey]\" type=\"hidden\" ".f_util_HtmlUtils::buildAttribute("value", self::$relKey)." /></div>";
 		}
 		return $html;
 	}
@@ -1346,6 +1345,10 @@ jQuery(document).ready(function() {
 		if (!f_util_StringUtils::isEmpty($value))
 		{
 			$params["value"] = $value;
+		}
+		if (!isset($params['class']))
+		{
+			$params['class'] = 'button';
 		}
 		return self::renderInputCode($params);
 	}
