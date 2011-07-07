@@ -115,6 +115,8 @@ class website_PageRessourceService extends BaseService
 		if ($DOMDocument->documentElement->hasAttribute('templateType'))
 		{
 			$this->templateType = $DOMDocument->documentElement->getAttribute('templateType');
+			$xslPath = FileResolver::getInstance() ->setPackageName('modules_website')
+				->setDirectory('lib')->getPath($this->templateType . 'RenderContent.xsl');
 		}
 		else
 		{
@@ -139,6 +141,8 @@ class website_PageRessourceService extends BaseService
 		if ($DOMDocument->documentElement->hasAttribute('templateType'))
 		{
 			$this->templateType = $DOMDocument->documentElement->getAttribute('templateType');
+			$xslPath = FileResolver::getInstance()->setPackageName('modules_website')
+				->setDirectory('lib')->getPath($this->templateType . 'EditContent.xsl');	
 		}
 		else
 		{
