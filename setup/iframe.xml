@@ -2,9 +2,9 @@
 <script>
 	<binding fileName="modules/list/persistentdocument/import/list_binding.xml" />
 	
-	<systemfolder module="list" relatedmodule="iframe">
+	<systemfolder module="list" relatedmodule="website">
 	
-		<staticlist listid="modules_iframe/scrolling" 
+		<staticlist listid="modules_website/iframescrolling" 
 			description="Define how scrolling is used in iframe block"
 			label="Scrolling value for iframe block">
 			<staticitem label="&amp;modules.website.bo.blocks.iframe.scroll-auto;" value="auto" />
