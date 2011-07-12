@@ -29,6 +29,11 @@ form.cmxform label{
 	font-weight: bold;
 	line-height: 1.6;
 }
+form.cmxform label.form-validation.error{
+	margin-left: 33%;
+	padding-left: 8px;
+    text-align: left;
+}
 
 form.cmxform label.option-label{
 	width: auto;
