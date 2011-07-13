@@ -33,11 +33,18 @@ class website_BlockStaticrichtextAction extends website_BlockAction
 	{
 		$matches = array();
 		$attrs = array();
+		$formatInfo = array();
 		if (preg_match_all('/\s*([\w:]*)\s*=\s*"(.*?)"/i', $imgMatch[1], $matches, PREG_SET_ORDER))
 		{
+			$formatAttributes = array('max-height', 'max-width', 'min-height', 'min-width', 'height', 'width');
 			foreach ($matches as $match)
 			{
-				$attrs[strtolower($match[1])] = isset($match[3]) ? $match[3] : $match[2];
+				$key = strtolower($match[1]);
+				$attrs[$key] = isset($match[3]) ? $match[3] : $match[2];
+				if (in_array($key, $formatAttributes))
+				{
+					$formatInfo[$key] = $attrs[$key];
+				}
 			}
 		}
 		
@@ -46,7 +53,6 @@ class website_BlockStaticrichtextAction extends website_BlockAction
 			$rc = RequestContext::getInstance();
 			$lang = (isset($attrs["lang"]) ? $attrs["lang"] : $rc->getLang());
 			$media = DocumentHelper::getDocumentInstance($attrs["cmpref"]);
-			$formatInfo = $attrs;
 			if (isset($attrs['format']) && !empty($attrs['format']))
 	        {
 	            list($stylesheet, $formatName) = explode('/', $attrs['format']);
