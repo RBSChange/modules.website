@@ -4,21 +4,27 @@
 /**
  * @package phptal.php.attribute
  */
-class PHPTAL_Php_Attribute_CHANGE_actionlink extends ChangeTalAttribute
+class PHPTAL_Php_Attribute_CHANGE_Actionlink extends ChangeTalAttribute
 {
 	private static $preservedAttributes = array("onclick" => true, "class" => true, "title" => true, "rel" => true);
-	public function start()
-	{
-		$this->tag->headFootDisabled = true;
-		parent::start();
+	
+	
+	
+	/**
+     * Called before element printing.
+     */
+    public function before(PHPTAL_Php_CodeWriter $codewriter)
+    {
+		$this->phpelement->headFootDisabled = true;
+		parent::before($codewriter);
 	}
 
-	/**
-	 * @see ChangeTalAttribute::end()
-	 */
-	public function end()
-	{
-		$this->tag->generator->doEchoRaw($this->getRenderClassName() . '::renderEndTag()');
+		/**
+     * Called after element printing.
+     */
+    public function after(PHPTAL_Php_CodeWriter $codewriter)
+    {
+		$codewriter->doEchoRaw($this->getRenderClassName() . '::renderEndTag()');
 	}
 
 	/**

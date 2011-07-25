@@ -1,33 +1,33 @@
 <?php
-
-//require_once 'PHPTAL/Php/Attribute.php';
-
-// change:link
-//   <a href="#"
-//        change:link="page 14526; lang fr; anchor top"
-//   >
-
 /**
+ * change:popup
+ *  <a href="http://www.rbschange.fr" change:popup="width:200,height:100" >
  * @package phptal.php.attribute
  */
-class PHPTAL_Php_Attribute_CHANGE_popup extends PHPTAL_Php_Attribute
+class PHPTAL_Php_Attribute_CHANGE_Popup extends PHPTAL_Php_Attribute
 {
 	private $pageId;
 	private $lang;
 	private $documentId;
 
-	public function start()
-	{
+		/**
+     * Called before element printing.
+     */
+    public function before(PHPTAL_Php_CodeWriter $codewriter)
+    {
 		$popupParameters = self::parsePopupArg($this->expression);
-
-		if ( ! empty($popupParameters) )
+		if (count($popupParameters))
 		{
-			$this->tag->attributes['onclick'] = self::getOnClick($popupParameters);
+			$attr = $this->phpelement->getOrCreateAttributeNode('onclick');
+			$attr->setValueEscaped(self::getOnClick($popupParameters));
 		}
 	}
 
-	public function end()
-	{
+	/**
+     * Called after element printing.
+     */
+    public function after(PHPTAL_Php_CodeWriter $codewriter)
+    {
 	}
 
 	public static function parsePopupArg($value)

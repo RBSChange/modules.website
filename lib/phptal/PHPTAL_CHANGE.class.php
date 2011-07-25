@@ -6,6 +6,9 @@ class website_PHPTAL_CHANGE
 	 */
 	public static function addAttributes($namespaceCHANGE)
 	{
+		
+        $namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('javascript', 10));
+        
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('block', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeSurround('cache', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeSurround('currentlink', 30));

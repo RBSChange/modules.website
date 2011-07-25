@@ -1,5 +1,5 @@
 <?php
-class PHPTAL_Php_Attribute_CHANGE_paginator extends ChangeTalAttribute 
+class PHPTAL_Php_Attribute_CHANGE_Paginator extends ChangeTalAttribute 
 {
 	/**
 	 * @see ChangeTalAttribute::evaluateAll()

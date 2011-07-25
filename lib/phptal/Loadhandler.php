@@ -1,5 +1,5 @@
 <?php
-class PHPTAL_Php_Attribute_CHANGE_loadhandler extends PHPTAL_Php_Attribute
+class PHPTAL_Php_Attribute_CHANGE_Loadhandler extends PHPTAL_Php_Attribute
 {
 
 	public function start()

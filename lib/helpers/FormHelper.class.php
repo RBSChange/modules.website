@@ -449,10 +449,9 @@ class website_FormHelper
 				return null;
 			}
 		}
-		$oldThrow = $ctx->__nothrow;
-		$ctx->__nothrow = true;
+		$oldThrow = $ctx->noThrow(true);
 		$value = $ctx->__get($name);
-		$ctx->__nothrow = $oldThrow;
+		$ctx->noThrow($oldThrow);
 		return $value;
 	}
 

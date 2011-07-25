@@ -2,7 +2,7 @@
 /**
  * @deprecated
  */
-class PHPTAL_Php_Attribute_CHANGE_currentlink extends PHPTAL_Php_Attribute
+class PHPTAL_Php_Attribute_CHANGE_Currentlink extends PHPTAL_Php_Attribute
 {
 	public function start()
 	{

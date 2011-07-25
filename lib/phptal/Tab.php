@@ -3,25 +3,36 @@
 /**
  * @package phptal.php.attribute
  */
-class PHPTAL_Php_Attribute_CHANGE_tab extends ChangeTalAttribute
+class PHPTAL_Php_Attribute_CHANGE_Tab extends ChangeTalAttribute
 {
-	public function start()
-	{
-		$this->tag->headFootDisabled = true;
-		parent::start();
-	}
-	
 	protected function getDefaultValues()
 	{
 		return array("doTitle" => "true", "titleLevel" => "3", "genTitleClass" => "true");
 	}
-
+	
 	/**
-	 * @see ChangeTalAttribute::end()
+	 * @return Boolean
 	 */
-	public function end()
+	protected function evaluateAll()
 	{
-		$this->tag->generator->doEchoRaw('PHPTAL_Php_Attribute_CHANGE_tab::renderEndTag()');
+		return false;
+	}
+	
+	/**
+     * Called before element printing.
+     */
+    public function before(PHPTAL_Php_CodeWriter $codewriter)
+    {
+		$this->phpelement->headFootDisabled = true;
+		parent::before($codewriter);
+	}
+		
+	/**
+     * Called after element printing.
+     */
+    public function after(PHPTAL_Php_CodeWriter $codewriter)
+    {
+		$codewriter->doEchoRaw('PHPTAL_Php_Attribute_CHANGE_Tab::renderEndTag()');
 	}
 
 	/**
@@ -30,7 +41,7 @@ class PHPTAL_Php_Attribute_CHANGE_tab extends ChangeTalAttribute
 	 */
 	public static function renderTab($params)
 	{
-		$currentTabsId = PHPTAL_Php_Attribute_CHANGE_tabs::getCurrentId();
+		$currentTabsId = PHPTAL_Php_Attribute_CHANGE_Tabs::getCurrentId();
 		$id = $currentTabsId."_".$params["name"];
 		if (isset($params["labeli18n"]))
 		{
@@ -40,7 +51,7 @@ class PHPTAL_Php_Attribute_CHANGE_tab extends ChangeTalAttribute
 		{
 			$label = f_Locale::translate($params["label"]);
 		}
-		PHPTAL_Php_Attribute_CHANGE_tabs::addTab($id, $label);
+		PHPTAL_Php_Attribute_CHANGE_Tabs::addTab($id, $label);
 		$html = "<div class=\"tab\" id=\"$id\">";
 		
 		if ($params["doTitle"])
@@ -49,7 +60,7 @@ class PHPTAL_Php_Attribute_CHANGE_tab extends ChangeTalAttribute
 			$html .= "<h".$titleLevel;
 			if ($params["genTitleClass"])
 			{
-				$class = PHPTAL_Php_Attribute_CHANGE_h::getClassByLevel($titleLevel);
+				$class = PHPTAL_Php_Attribute_CHANGE_H::getClassByLevel($titleLevel);
 				if (f_util_StringUtils::isNotEmpty($class))
 				{
 					$html .= " class=\"$class\"";
@@ -67,13 +78,5 @@ class PHPTAL_Php_Attribute_CHANGE_tab extends ChangeTalAttribute
 	static function renderEndTag()
 	{
 		return "</div>";
-	}
-
-	/**
-	 * @return Boolean
-	 */
-	protected function evaluateAll()
-	{
-		return false;
 	}
 }

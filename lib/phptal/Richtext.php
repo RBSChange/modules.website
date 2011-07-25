@@ -2,7 +2,7 @@
 /**
  * @author inthause
  */
-class PHPTAL_Php_Attribute_CHANGE_richtext extends PHPTAL_Php_Attribute
+class PHPTAL_Php_Attribute_CHANGE_Richtext extends PHPTAL_Php_Attribute
 {
 	public function start()
 	{

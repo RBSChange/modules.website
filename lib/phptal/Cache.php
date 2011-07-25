@@ -1,6 +1,6 @@
 <?php
 
-class PHPTAL_Php_Attribute_CHANGE_cache extends ChangeTalAttribute
+class PHPTAL_Php_Attribute_CHANGE_Cache extends ChangeTalAttribute
 {
 	private static $instance;
 	
@@ -14,26 +14,24 @@ class PHPTAL_Php_Attribute_CHANGE_cache extends ChangeTalAttribute
 		return true;
 	}
 	
-	/**
-	 * @see ChangeTalAttribute::start()
-	 *
-	 */
-	public function start()
-	{
-		parent::start();
-		$this->tag->generator->pushCode('if (' . $this->getRenderClassName() . '::isNotInCache()) { //');
+		/**
+     * Called before element printing.
+     */
+    public function before(PHPTAL_Php_CodeWriter $codewriter)
+    {
+		parent::before($codewriter);
+		$codewriter->pushCode('if (' . $this->getRenderClassName() . '::isNotInCache()) { //');
 	}
 	
 	/**
-	 * @see ChangeTalAttribute::end()
-	 *
-	 */
-	public function end()
-	{
-		parent::end();
-		$this->tag->generator->doEcho($this->getRenderClassName() . "::putInCache()");
-		$this->tag->generator->pushCode('}');
-		$this->tag->generator->doEcho($this->getRenderClassName() . "::endProcessing()");
+     * Called after element printing.
+     */
+    public function after(PHPTAL_Php_CodeWriter $codewriter)
+    {
+		parent::after($codewriter);
+		$codewriter->doEcho($this->getRenderClassName() . "::putInCache()");
+		$codewriter->pushCode('}');
+		$codewriter->doEcho($this->getRenderClassName() . "::endProcessing()");
 	}
 
 	/**

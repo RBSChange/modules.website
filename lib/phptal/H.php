@@ -10,33 +10,30 @@
  * @example <hX change:h="level 3;class 'auto'">Title</hX>
  * @example => <h3 class="heading-three">label</h3>
  */
-class PHPTAL_Php_Attribute_CHANGE_h extends ChangeTalAttribute
+class PHPTAL_Php_Attribute_CHANGE_H extends ChangeTalAttribute
 {
+	/**
+     * Called before element printing.
+     */
+    public function before(PHPTAL_Php_CodeWriter $codewriter)
+    {
+		$this->phpelement->headFootDisabled = true;
+		parent::before($codewriter);
+	}
 	
 	/**
-	 * @see ChangeTalAttribute::end()
-	 *
-	 */
-	public function end()
-	{
+     * Called after element printing.
+     */
+    public function after(PHPTAL_Php_CodeWriter $codewriter)
+    {
 		$parameters = array();
-		$parameters[] =	'"tagname" =>' . var_export($this->tag->name, true);
+		$parameters[] =	'"tagname" =>' . var_export($this->phpelement->getLocalName(), true);
 		if ($this->hasParameter('level'))
 		{
 			$parameters[] = '"level" =>' . $this->getParameter('level');
 		}
 		$parametersString = 'array(' . implode(', ', $parameters) . ')';
-		$this->tag->generator->doEchoRaw($this->getRenderClassName() . '::renderEndTag(' . $parametersString  . ')');
-	}
-	
-	/**
-	 * @see ChangeTalAttribute::start()
-	 *
-	 */
-	public function start()
-	{
-		$this->tag->headFootDisabled = true;
-		parent::start();
+		$codewriter->doEchoRaw($this->getRenderClassName() . '::renderEndTag(' . $parametersString  . ')');
 	}
 	
 	/**
@@ -77,15 +74,23 @@ class PHPTAL_Php_Attribute_CHANGE_h extends ChangeTalAttribute
 	{
 		if (isset($params['level']))
 		{
-			$level = intval($params['level']);
-						
+			$level = intval($params['level']);			
 		} 
 		else 
 		{
 			$level = self::getLevelFromTagName($params['tagname']);
 		}
-		$result = '<h' . $level;
 		
+		if ($level < 1) 
+		{
+			$level = 1;
+		}
+		elseif ($level > 6)
+		{
+			$level = 6;
+		}
+		
+		$result = '<h' . $level;
 		foreach (array('id', 'dir', 'title', 'xml:lang') as $attrName)
 		{
 			if (isset($params[$attrName]))

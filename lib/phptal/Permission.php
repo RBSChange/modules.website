@@ -7,7 +7,7 @@
  * - mode: front, back or all. Default front.
  * At least perm or notperm attributes must be defined.
  */
-class PHPTAL_Php_Attribute_CHANGE_permission extends PHPTAL_Php_Attribute
+class PHPTAL_Php_Attribute_CHANGE_Permission extends PHPTAL_Php_Attribute
 {
 	public function start()
 	{

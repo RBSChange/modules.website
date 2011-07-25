@@ -1,5 +1,5 @@
 <?php
-class PHPTAL_Php_Attribute_CHANGE_chart extends ChangeTalAttribute
+class PHPTAL_Php_Attribute_CHANGE_Chart extends ChangeTalAttribute
 {
 	/**
 	 * @param array $params
@@ -80,7 +80,7 @@ class PHPTAL_Php_Attribute_CHANGE_chart extends ChangeTalAttribute
 	}
 }
 
-class PHPTAL_Php_Attribute_CHANGE_piechart extends PHPTAL_Php_Attribute_CHANGE_chart
+class PHPTAL_Php_Attribute_CHANGE_Piechart extends PHPTAL_Php_Attribute_CHANGE_Chart
 {
 	/**
 	 * @param array $params
@@ -102,7 +102,7 @@ class PHPTAL_Php_Attribute_CHANGE_piechart extends PHPTAL_Php_Attribute_CHANGE_c
 		return true;
 	}
 }
-class PHPTAL_Php_Attribute_CHANGE_linechart extends PHPTAL_Php_Attribute_CHANGE_chart
+class PHPTAL_Php_Attribute_CHANGE_Linechart extends PHPTAL_Php_Attribute_CHANGE_Chart
 {
 	/**
 	 * @param array $params
@@ -124,7 +124,7 @@ class PHPTAL_Php_Attribute_CHANGE_linechart extends PHPTAL_Php_Attribute_CHANGE_
 		return true;
 	}
 }
-class PHPTAL_Php_Attribute_CHANGE_barchart extends PHPTAL_Php_Attribute_CHANGE_chart
+class PHPTAL_Php_Attribute_CHANGE_Barchart extends PHPTAL_Php_Attribute_CHANGE_Chart
 {
 	/**
 	 * @param array $params
@@ -146,7 +146,7 @@ class PHPTAL_Php_Attribute_CHANGE_barchart extends PHPTAL_Php_Attribute_CHANGE_c
 		return true;
 	}
 }
-class PHPTAL_Php_Attribute_CHANGE_datatable extends PHPTAL_Php_Attribute_CHANGE_chart
+class PHPTAL_Php_Attribute_CHANGE_Datatable extends PHPTAL_Php_Attribute_CHANGE_Chart
 {
 	/**
 	 * @param array $params
@@ -185,7 +185,7 @@ class PHPTAL_Php_Attribute_CHANGE_datatable extends PHPTAL_Php_Attribute_CHANGE_
 		return true;
 	}
 }
-class PHPTAL_Php_Attribute_CHANGE_producer extends ChangeTalAttribute
+class PHPTAL_Php_Attribute_CHANGE_Producer extends ChangeTalAttribute
 {
 	/**
 	 * @param array $params

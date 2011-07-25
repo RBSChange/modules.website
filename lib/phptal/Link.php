@@ -1,20 +1,19 @@
 <?php
-
-//require_once 'PHPTAL/Php/Attribute.php';
-//require_once 'PHPTAL/Php/Attribute/TAL/Content.php';
-
 // change:link
 //   <a href="#" change:link="page 14526; lang fr; anchor top">...</a>
 
 /**
  * @package phptal.php.attribute
  */
-class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
+class PHPTAL_Php_Attribute_CHANGE_Link extends PHPTAL_Php_Attribute
 {
-	public function start()
-	{
+	/**
+     * Called before element printing.
+     */
+    public function before(PHPTAL_Php_CodeWriter $codewriter)
+    {
 		$parameters = array();
-		$lang = null;
+		$lang = 'null';
 		$anchor = 'null';
 		$module = null;
 		$action = null;
@@ -29,13 +28,13 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 		$forWebsiteId = 'null';
 		$home = false;
 
-		$expressions = $this->tag->generator->splitExpression($this->expression);
-
+		$expressions = $codewriter->splitExpression($this->expression);
 		foreach ($expressions as $exp)
 		{
 			try
 			{
 				list($attribute, $value) = $this->parseSetExpression($exp);
+				
 				switch ($attribute)
 				{
 					case 'back':
@@ -48,29 +47,23 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 						$action = $value;
 						break;
 					case 'document':
-						$documentId = $this->tag->generator->evaluateExpression($value.'/getId');
+						$documentId = $codewriter->evaluateExpression($value.'/getId');
 						break;
 					case 'documentId':
-						$documentId = $this->tag->generator->evaluateExpression($value);
-						break;
-					case 'page': // @deprecated use document instead
-						$documentId = $this->tag->generator->evaluateExpression($value);
-						break;
-					case 'pageId': // @deprecated use documentId instead
-						$documentId = $value;
+						$documentId = $codewriter->evaluateExpression($value);
 						break;
 					case 'home':
 						$home = true;
 						break;
 					case 'anchor':
-						$anchor = $this->evaluate($value, false);
+						$anchor = $codewriter->evaluateExpression($value);
 						break;
 					case 'lang':
-						$lang = $this->tag->generator->evaluateExpression($value);
+						$lang = $codewriter->evaluateExpression($value);
 						break;
 					case 'popup':
 						$popup = true;
-						$popupParameters = PHPTAL_Php_Attribute_CHANGE_popup::parsePopupArg($value);
+						$popupParameters = PHPTAL_Php_Attribute_CHANGE_Popup::parsePopupArg($value);
 						break;
 					case 'tag':
 						$tag = $value;
@@ -79,19 +72,19 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 						$classes[] = $value;
 						break;
 					case 'href':
-						$href = "<?php echo ".$this->tag->generator->evaluateExpression($value)."; ?>";
+						$href = "<?php echo ".$codewriter->evaluateExpression($value)."; ?>";
 						break;
 					case 'title' :
-						$title = "<?php echo ".$this->tag->generator->evaluateExpression($value)."; ?>";
+						$title = "<?php echo ".$codewriter->evaluateExpression($value)."; ?>";
 						break;
 					case 'forWebsite':
-						$forWebsiteId = $this->tag->generator->evaluateExpression($value.'/getId');
+						$forWebsiteId = $codewriter->evaluateExpression($value.'/getId');
 						break;
 					case 'forWebsiteId':
-						$forWebsiteId = $this->evaluateParameter($value);
+						$forWebsiteId = $codewriter->evaluateExpression($value);
 						break;
-					default:
-						$parameters[$attribute] = $this->tag->generator->evaluateExpression($value);
+					default:					
+						$parameters[$attribute] = $codewriter->evaluateExpression($value);
 						break;
 				}
 			}
@@ -107,13 +100,13 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 			Framework::exception($exception);
 			$hrefCode = '#';
 			$classes[] = 'link-broken';
-			self::addLocaleToTitle($title, '&modules.website.frontoffice.link-broken;');
+			self::addLocaleToTitle($title, 'm.website.frontoffice.link-broken');
 		}
 		else if ($module !== null)
 		{
 			if ($action === null)
 			{
-				$action = AG_DEFAULT_ACTION;
+				$action = 'Index';
 			}
 			$hrefCode = $this->_getHrefCodeRedirection($module, $action, $lang, $parameters, $anchor, $forWebsiteId);
 		}
@@ -149,37 +142,57 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 		if ($popup)
 		{
 			$classes[] = 'popup';
-			self::addLocaleToTitle($title, '&modules.website.frontoffice.in-a-new-window;');
-			$this->tag->attributes['onclick'] = '<?php echo PHPTAL_Php_Attribute_CHANGE_popup::getOnClick('.var_export($popupParameters, true).'); ?>';
+			self::addLocaleToTitle($title, 'm.website.frontoffice.in-a-new-window');
+			$this->phpelement->getOrCreateAttributeNode('onclick')
+				->setValueEscaped('<?php echo PHPTAL_Php_Attribute_CHANGE_Popup::getOnClick('.var_export($popupParameters, true).'); ?>');
 		}
 
 		if ($title !== null)
 		{
-			$this->tag->attributes['title'] = $title;
+			$this->phpelement->getOrCreateAttributeNode('title')->setValueEscaped($title);
 		}
-
-		if ($this->tag->name == 'form')
+		
+		$tagName = $this->phpelement->getLocalName();
+		if ($tagName == 'form')
 		{
-			$this->tag->attributes['action'] = $hrefCode;
+			$this->phpelement->getOrCreateAttributeNode('action')->setValueEscaped($hrefCode);
 		}
-		else if ($this->tag->name == 'img')
+		else if ($tagName == 'img')
 		{
-			$this->tag->attributes['src'] = $hrefCode;
+			$this->phpelement->getOrCreateAttributeNode('src')->setValueEscaped($hrefCode);
 		}
 		else
 		{
-			if (!$this->tag->hasAttribute('class'))
+			if (!$this->phpelement->hasAttribute('class'))
 			{
-				$this->tag->attributes['class'] = join(" ", $classes);
+				$this->phpelement->getOrCreateAttributeNode('class')->setValueEscaped(implode(" ", $classes));
 			}
-			$this->tag->attributes['href'] = $hrefCode;
+			$this->phpelement->getOrCreateAttributeNode('href')->setValueEscaped($hrefCode);
 		}
 	}
 
-	public function end()
-	{
+	/**
+     * Called after element printing.
+     */
+    public function after(PHPTAL_Php_CodeWriter $codewriter)
+    {
 	}
-
+	
+	/**
+	 * @see PHPTAL_Php_Attribute::parseSetExpression()
+	 * Ajout des caractères [ et ] dans les nom des attributs
+	 */
+    protected function parseSetExpression($exp)
+    {
+        $exp = trim($exp);
+        // (dest) (value)
+        if (preg_match('/^([a-z0-9:\[\]\-_]+)\s+(.*?)$/si', $exp, $m)) {
+            return array($m[1], trim($m[2]));
+        }
+        // (dest)
+        return array($exp, null);
+    }
+    
 	/**
 	 * @param integer $documentId
 	 * @param string $lang
@@ -190,7 +203,7 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 	 */
 	private function _getHrefCode($documentId, $lang, $parameters, $anchor, $forWebsiteId)
 	{
-		return '<?php echo PHPTAL_Php_Attribute_CHANGE_link::getUrl('.$documentId.', ' . var_export($lang, true) . ', ' . $this->generateParameters($parameters) . ', ' . $anchor . ', ' . $forWebsiteId . '); ?>';
+		return '<?php echo PHPTAL_Php_Attribute_CHANGE_Link::getUrl('.$documentId.', ' . $lang . ', ' . $this->generateParameters($parameters) . ', ' . $anchor . ', ' . $forWebsiteId . '); ?>';
 	}
 
 	/**
@@ -236,7 +249,7 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 	 */
 	private function _getHrefCodeRedirection($module, $action, $lang, $parameters, $anchor, $forWebsiteId)
 	{
-		return '<?php echo PHPTAL_Php_Attribute_CHANGE_link::getRedirectionUrl(\''.$module.'\', \'' . $action . '\', ' . var_export($lang, true) . ', ' . $this->generateParameters($parameters) . ', ' . $anchor . ', ' . $forWebsiteId . '); ?>';
+		return '<?php echo PHPTAL_Php_Attribute_CHANGE_Link::getRedirectionUrl(\''.$module.'\', \'' . $action . '\', ' . $lang . ', ' . $this->generateParameters($parameters) . ', ' . $anchor . ', ' . $forWebsiteId . '); ?>';
 	}
 
 	/**
@@ -265,7 +278,7 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 	 */
 	private function _getTagCode($tag, $lang, $parameters, $anchor, $forWebsiteId)
 	{
-		return '<?php echo PHPTAL_Php_Attribute_CHANGE_link::getTaggedPage(\'' . $tag . '\',' . var_export($lang, true) .','.$this->generateParameters($parameters) .', ' . $anchor . ', ' . $forWebsiteId . '); ?>';
+		return '<?php echo PHPTAL_Php_Attribute_CHANGE_Link::getTaggedPage(\'' . $tag . '\',' . $lang .','.$this->generateParameters($parameters) .', ' . $anchor . ', ' . $forWebsiteId . '); ?>';
 	}
 
 	/**
@@ -305,30 +318,12 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 	}
 
 	/**
-	 * @param string $exp
-	 * @return string
-	 */
-	protected function parseSetExpression($exp)
-	{
-		$exp = trim($exp);
-		// (dest) (value)
-		$matches = array();
-		if (preg_match('/^([a-z0-9:\-_\[\]]+)\s+(.*?)$/i', $exp, $matches))
-		{
-			array_shift($matches);
-			return $matches;
-		}
-		// (dest)
-		return array($exp, null);
-	}
-
-	/**
 	 * @param string $title
 	 * @param string $locale
 	 */
 	private static function addLocaleToTitle(&$title, $locale)
 	{
-		$message = "(".f_Locale::translate($locale).")";
+		$message = "(" . LocaleService::getInstance()->transFO($locale, array('attr')).")";
 		$title .= ($title ? '' : ' ') . $message;
 	}
 
@@ -348,19 +343,5 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 			$str .= "'$name' => " . $value . ",";
 		}
 		return $str . ')';
-	}
-
-	private function evaluateParameter($value)
-	{
-		$normalizedValue = $this->evaluate($value);
-		if ($normalizedValue[0] == '\'')
-		{
-			$normalizedValue = substr($normalizedValue, 1, strlen($normalizedValue) - 2);
-		}
-		if (strpos($normalizedValue, '$ctx') === false)
-		{
-			return var_export(f_util_Convert::fixDataType($normalizedValue), true);
-		}
-		return $normalizedValue;
 	}
 }

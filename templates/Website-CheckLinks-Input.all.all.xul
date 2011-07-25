@@ -283,11 +283,11 @@
        </hbox>
 
        <hbox pack="end">
-           <button id="start" change:icon="media_play_green/small" label=" Démarrer" oncommand="start()" />
-           <button id="stop" change:icon="media_stop_red/small" label=" Arrêter" oncommand="stop()" disabled="true" />
-           <button id="view" change:icon="message/small" label=" Voir le rapport" oncommand="view()" disabled="true" />
+           <button id="start" change:img="icon/small/media_play_green.png" label=" Démarrer" oncommand="start()" />
+           <button id="stop" change:img="icon/small/media_stop_red.png" label=" Arrêter" oncommand="stop()" disabled="true" />
+           <button id="view" change:img="icon/small/message.png" label=" Voir le rapport" oncommand="view()" disabled="true" />
 				<spacer flex="1" />
-           <button id="close" change:icon="error/small" label=" Quitter" oncommand="self.close()" />
+           <button id="close" change:img="icon/small/error.png" label=" Quitter" oncommand="self.close()" />
        </hbox>
 
 	</vbox>

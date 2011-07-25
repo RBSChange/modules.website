@@ -4,26 +4,29 @@
 /**
  * @package phptal.php.attribute
  */
-class PHPTAL_Php_Attribute_CHANGE_code extends ChangeTalAttribute
+class PHPTAL_Php_Attribute_CHANGE_Code extends ChangeTalAttribute
 {
 	private static $called = false;
 	private static $id;
 	private static $tabs;
 	private $parametersString;
 
-	public function start()
-	{
-		$this->tag->headFootDisabled = true;
-		$this->parametersString = parent::initParams();
-		$this->tag->generator->pushCode('ob_start()');
+	/**
+     * Called before element printing.
+     */
+    public function before(PHPTAL_Php_CodeWriter $codewriter)
+    {
+		$this->phpelement->headFootDisabled = true;
+		$this->parametersString = $this->initParams($codewriter);
+		$codewriter->pushCode('ob_start()');
 	}
 
 	/**
-	 * @see ChangeTalAttribute::end()
-	 */
-	public function end()
-	{
-		$this->tag->generator->doEchoRaw('PHPTAL_Php_Attribute_CHANGE_code::renderEndTag(ob_get_clean(), '.$this->parametersString.', $ctx)');
+     * Called after element printing.
+     */
+    public function after(PHPTAL_Php_CodeWriter $codewriter)
+    {
+		$codewriter->doEchoRaw('PHPTAL_Php_Attribute_CHANGE_Code::renderEndTag(ob_get_clean(), '.$this->parametersString.', $ctx)');
 	}
 
 	static function renderEndTag($innerContent, $params, $ctx)

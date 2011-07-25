@@ -4,20 +4,48 @@
 /**
  * @package phptal.php.attribute
  */
-class PHPTAL_Php_Attribute_CHANGE_tabs extends ChangeTalAttribute
+class PHPTAL_Php_Attribute_CHANGE_Tabs extends ChangeTalAttribute
 {
 	private static $called = false;
 	private static $id;
 	private static $tabs;
 	private $parametersString;
+
 	
-	public function start()
+	/**
+	 * @return Boolean
+	 */
+	protected function evaluateAll()
 	{
-		$this->tag->headFootDisabled = true;
-		$this->parametersString = parent::initParams();
-		$this->tag->generator->pushCode('PHPTAL_Php_Attribute_CHANGE_tabs::startTabs('.$this->parametersString . ', $ctx);');
-		$this->tag->generator->pushCode('ob_start();');
+		return false;
 	}
+	
+	protected function getDefaultValues()
+	{
+		return array("collapsible" => "false");
+	}
+	
+	/**
+     * Called before element printing.
+     */
+    public function before(PHPTAL_Php_CodeWriter $codewriter)
+    {
+		$this->phpelement->headFootDisabled = true;
+		$this->parametersString = parent::initParams();
+		$codewriter->pushCode('PHPTAL_Php_Attribute_CHANGE_Tabs::startTabs('.$this->parametersString . ', $ctx);');
+		$codewriter->pushCode('ob_start();');
+	}
+
+	/**
+     * Called after element printing.
+     */
+    public function after(PHPTAL_Php_CodeWriter $codewriter)
+    {
+		$codewriter->pushCode('$_change_tabsResult_innerContent = ob_get_clean();');
+		$this->getRenderMethodCall($this->parametersString);
+		$codewriter->doEchoRaw('$_change_tabsResult_innerContent');
+		$codewriter->doEchoRaw('PHPTAL_Php_Attribute_CHANGE_Tabs::renderEndTag()');
+	}	
 	
 	/**
 	 * @param array<String, mixed> $params
@@ -48,21 +76,7 @@ class PHPTAL_Php_Attribute_CHANGE_tabs extends ChangeTalAttribute
 		return self::$id;
 	}
 	
-	protected function getDefaultValues()
-	{
-		return array("collapsible" => "false");
-	}
 
-	/**
-	 * @see ChangeTalAttribute::end()
-	 */
-	public function end()
-	{
-		$this->tag->generator->pushCode('$_change_tabsResult_innerContent = ob_get_clean();');
-		$this->getRenderMethodCall($this->parametersString);
-		$this->tag->generator->doEchoRaw('$_change_tabsResult_innerContent');
-		$this->tag->generator->doEchoRaw('PHPTAL_Php_Attribute_CHANGE_tabs::renderEndTag()');
-	}
 
 	/**
 	 * @param array $params
@@ -114,13 +128,5 @@ class PHPTAL_Php_Attribute_CHANGE_tabs extends ChangeTalAttribute
 		self::$id = null;
 		self::$tabs = null;
 		return "</div>";
-	}
-
-	/**
-	 * @return Boolean
-	 */
-	protected function evaluateAll()
-	{
-		return false;
 	}
 }

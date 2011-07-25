@@ -6,7 +6,7 @@
  * @example <a change:currentpagelink="extraParamName 'extraParamValue'">...</a>
  * @example <a change:currentpagelink="" extraParamName="extraParamValue">...</a>
  */
-class PHPTAL_Php_Attribute_CHANGE_currentpagelink extends ChangeTalAttribute
+class PHPTAL_Php_Attribute_CHANGE_Currentpagelink extends ChangeTalAttribute
 {
 	/**
 	 * @var string
@@ -53,9 +53,12 @@ class PHPTAL_Php_Attribute_CHANGE_currentpagelink extends ChangeTalAttribute
 		return LinkHelper::getCurrentUrl($extraParams) . (isset($params['anchor']) ? ('#' . $params['anchor']) : '');
 	}
 	
-	public function start()
-	{
-		$tagName = strtolower($this->tag->name);
+	 /**
+     * Called before element printing.
+     */
+    public function before(PHPTAL_Php_CodeWriter $codewriter)
+    {
+		$tagName = strtolower($this->phpelement->getLocalName());
 		if ($tagName == 'form')
 		{
 			$this->attrName = 'action';
@@ -68,9 +71,9 @@ class PHPTAL_Php_Attribute_CHANGE_currentpagelink extends ChangeTalAttribute
 		{
 			$this->attrName = 'value';
 		}
-		if (isset($this->tag->attributes['class']))
+		if ($this->phpelement->hasAttribute('class'))
 		{
-			$classes = explode(' ', $this->tag->attributes['class']);
+			$classes = explode(' ', $this->phpelement->getAttributeNS('', 'class'));
 		}
 		else
 		{
@@ -80,18 +83,20 @@ class PHPTAL_Php_Attribute_CHANGE_currentpagelink extends ChangeTalAttribute
 		{
 			$classes[] = 'link';
 		}
-		$this->tag->attributes['class'] = implode(' ', $classes);
+		$this->phpelement->setAttributeNS('', 'class', implode(' ', $classes));
+		
 		$preservedAttributes = array('class', 'title', 'rel', 'name',  'type');
-		$parametersString = $this->initParams($preservedAttributes);
-		foreach (array_keys($this->tag->attributes) as $name)
+		$parametersString = $this->initParams($codewriter, $preservedAttributes);
+		foreach ($this->phpelement->getAttributeNodes() as $attr)
 		{
-			if (in_array($name, $preservedAttributes))
+			/* @var $attr PHPTAL_Dom_Attr */
+			if ($attr->getNamespaceURI() !== '' || in_array($attr->getLocalName(), $preservedAttributes))
 			{
 				continue;
 			}
-			unset($this->tag->attributes[$name]);
+			$this->phpelement->removeAttributeNS($attr->getNamespaceURI(), $attr->getLocalName());
 		}
-		
-		$this->tag->attributes[$this->attrName] = ('<?php echo PHPTAL_Php_Attribute_CHANGE_currentpagelink::renderCurrentpagelink(' . $parametersString . '); ?>');
+		$this->phpelement->getOrCreateAttributeNode($this->attrName)
+			->setValueEscaped('<?php echo PHPTAL_Php_Attribute_CHANGE_Currentpagelink::renderCurrentpagelink(' . $parametersString . '); ?>');
 	}
 }

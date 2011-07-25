@@ -1,40 +1,42 @@
 <?php
-class PHPTAL_Php_Attribute_CHANGE_menuitem extends PHPTAL_Php_Attribute_TAL_Repeat
+class PHPTAL_Php_Attribute_CHANGE_Menuitem extends PHPTAL_Php_Attribute
 {
 	private $separator;
 	
-    public function start()
+    /**
+     * Called before element printing.
+     * Default implementation is for backwards compatibility only. Please always override both before() and after().
+     */
+    public function before(PHPTAL_Php_CodeWriter $codewriter)
     {
-		$this->item = '$ctx->item';
-
-		// reset item var into template context
-		$this->tag->generator->doIf('!isset('.$this->item.')');
-		$this->tag->generator->doSetVar($this->item, 'false');
-		$this->tag->generator->doEnd();
-
-		// the following line makes the tag not visible, just like if it
-		// contains a tal:omit-tag="".
-		$this->tag->headFootDisabled = true;
-
-		$this->tag->generator->pushCode('ob_start()');
-		$g = $this->tag->generator;
-		$this->separator = 'null';
-		foreach ($g->splitExpression($this->expression) as $exp)
-        {
-			list($attribute, $value) = $this->parseSetExpression($exp);
-			//echo $attribute."\n";
-			if ($attribute == "separator")
+    	$this->separator = 'null';	
+    	foreach ($codewriter->splitExpression($this->expression) as $expr) 
+    	{
+    		list($attribute, $value) = $this->parseSetExpression($expr);
+    		if ($attribute == "separator")
 			{
 				$this->separator = $this->evaluate($value);
 			}
-        }
+    	}
+    	$codewriter->pushCode('ob_start()');
     }
 
-    public function end()
+    public function after(PHPTAL_Php_CodeWriter $codewriter)
     {
-		$this->tag->generator->pushCode('echo PHPTAL_Php_Attribute_CHANGE_menuitem::render('.$this->item.', '.var_export($this->tag->attributes, true).', '.self::REPEAT.'->item, trim(ob_get_clean()), '.$this->separator.')');
+    	$attributes = array();
+    	foreach ($this->phpelement->getAttributeNodes() as $attrNode) 
+    	{
+    		if ($attrNode instanceof PHPTAL_Dom_Attr) 
+    		{
+    			if ($attrNode->getNamespaceURI() == '')
+    			{
+    				$attributes[$attrNode->getLocalName()] = $attrNode->getValue();
+    			}
+    		}
+    	} 
+       $codewriter->pushCode('echo PHPTAL_Php_Attribute_CHANGE_Menuitem::render($ctx->item, '.var_export($attributes, true).', $ctx->repeat->item, trim(ob_get_clean()), '.$this->separator.')');
     }
-
+   
     public static function render($menuItem, $attributes, $controller, $content, $separator = null)
     {
     	foreach ($attributes as $name => $value)

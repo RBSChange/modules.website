@@ -1,5 +1,5 @@
 <?php
-class PHPTAL_Php_Attribute_CHANGE_documentpicker extends FormElement
+class PHPTAL_Php_Attribute_CHANGE_Documentpicker extends FormElement
 {
 	/**
 	 * @see ChangeTalAttribute::getEvaluatedParameters()

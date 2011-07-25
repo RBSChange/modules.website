@@ -1,6 +1,6 @@
 <?php
 
-class PHPTAL_Php_Attribute_CHANGE_block extends ChangeTalAttribute
+class PHPTAL_Php_Attribute_CHANGE_Block extends ChangeTalAttribute
 {
 	/**
 	 * @see ChangeTalAttribute::evaluateAll()
