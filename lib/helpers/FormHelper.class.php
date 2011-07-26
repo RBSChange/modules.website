@@ -1243,28 +1243,26 @@ jQuery(document).ready(function() {
 	 */
 	public static function renderDateinput($params)
 	{
+		self::addDatePickerScript();
 		$params['size'] = 10;
 		$params['maxlength'] = 10;
 		$params['class'] = 'textfield date-picker';
-		// TODO: unifiy
-		$ls = LocaleService::getInstance();
-		$format = $ls->transFO("m.form.frontoffice.datepicker.format");
-		$dateFormat = date_DateFormat::getDateFormatForLang(RequestContext::getInstance()->getLang());
+		
 		if (!isset($params['startdate']))
 		{
 			$params['startdate'] = "1901-01-01";
 		}
-
-		$params['startdate'] = date_DateFormat::format(date_Calendar::getInstance($params['startdate']), $dateFormat);
-
-		self::addDatePickerScript();
+		$params['startdate'] = date_Formatter::toDefaultDate(date_Calendar::getInstance($params['startdate']));
 		$datePickerParam = '{startDate:"' . $params['startdate'] . '"';
+		
 		if (isset($params['enddate']))
 		{
-			$datePickerParam .= ', endDate:"' . date_DateFormat::format(date_Calendar::getInstance($params['enddate']), $dateFormat) . '"';
-
+			$datePickerParam .= ', endDate:"' . date_Formatter::toDefaultDate(date_Calendar::getInstance($params['enddate'])) . '"';
 		}
 		$datePickerParam .= '}';
+		
+		$ls = LocaleService::getInstance();
+		$format = $ls->transFO("m.form.frontoffice.datepicker.format");
 		return self::renderInputByType("text", $params) . '<span>' . $format . "</span><script type=\"text/javascript\">//<![CDATA[\njQuery(document).ready(function(){jQuery('[id=" . $params['id'] . "]').datePicker($datePickerParam);});\n//]]></script>";
 	}
 

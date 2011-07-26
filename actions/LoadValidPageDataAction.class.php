@@ -11,17 +11,19 @@ class website_LoadValidPageDataAction extends task_LoadDataBaseAction
 	 */
 	protected function getInfoForDocument($document)
 	{
+		$ls = LocaleService::getInstance();
 		$data = array();
 		$data['label'] = $document->getLabel();
 		$data['navigationtitle'] = $document->getNavigationtitle();
 		$data['metatitle'] = $document->getMetatitle();
 		$data['description'] = $document->getDescription();
-		$data['indexingstatus'] = $document->getIndexingstatus() == 1 ? f_Locale::translate('&modules.website.bo.workflow.ValidPage.Indexing-status-activate;') : f_Locale::translate('&modules.website.bo.workflow.ValidPage.Indexing-status-no-activate;');
-		$data['template'] = f_Locale::translate('&modules.website.bo.general.template.'.ucfirst($document->getTemplate()).';');
-		$data['skin'] = !is_null($document->getSkin()) ? $document->getSkin()->getLabel() : '';
-		$data['startpublicationdate'] = !is_null($document->getStartpublicationdate()) ? date_DateFormat::format(new date_DateTime($document->getUIStartpublicationdate()), f_Locale::translate('&framework.date.date.localized-user-format;')) : '';
-		$data['endpublicationdate'] = !is_null($document->getEndpublicationdate()) ? date_DateFormat::format(new date_DateTime($document->getUIEndpublicationdate()), f_Locale::translate('&framework.date.date.localized-user-format;')) : '';
-	
+		$data['indexingstatus'] = $ls->transBO('m.uixul.bo.general.' . ($document->getIndexingstatus() == 1 ? 'yes' : 'no'), array('ucf'));
+		$template = theme_PagetemplateService::getInstance()->getByCodeName($document->getTemplate());
+		$data['template'] = $template ? $template->getLabel() : '';
+		$data['skin'] = $document->getSkin() ? $document->getSkin()->getLabel() : '';
+		$data['startpublicationdate'] = $document->getStartpublicationdate() ? date_Formatter::toDefaultDateTimeBO($document->getUIStartpublicationdate()) : '';
+		$data['endpublicationdate'] = $document->getEndpublicationdate() ? date_Formatter::toDefaultDateTimeBO($document->getUIEndpublicationdate()) : '';
+
 		$link = LinkHelper::getUIActionLink('website', 'BoDisplay')
 			->setQueryParameter('cmpref', $document->getId())
 			->setQueryParameter('lang', RequestContext::getInstance()->getLang());
@@ -34,14 +36,14 @@ class website_LoadValidPageDataAction extends task_LoadDataBaseAction
 		switch ($document->getNavigationVisibility())
 		{
 			case 1:
-				$data['navigationVisibility'] = f_Locale::translate('&modules.website.bo.general.visibility.Visible;');
+				$data['navigationVisibility'] = $ls->transBO('m.website.bo.general.visibility.visible', array('ucf'));
 				break;
 			case 2:
-				$data['navigationVisibility'] = f_Locale::translate('&modules.website.bo.general.visibility.Hidden-in-menu-only;');
+				$data['navigationVisibility'] = $ls->transBO('m.website.bo.general.visibility.hidden-in-menu-only', array('ucf'));
 				break;
 			case 0:
 			default:
-				$data['navigationVisibility'] = f_Locale::translate('&modules.website.bo.general.visibility.Hidden;');
+				$data['navigationVisibility'] = $ls->transBO('m.website.bo.general.visibility.hidden', array('ucf'));
 		}
 		return $data;
 	}

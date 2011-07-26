@@ -13,9 +13,9 @@ class website_CheckLinksAction extends f_action_BaseAction
 		{
 			$message = sprintf('<html><body><h1 style="font-family: Trebuchet, Arial, sans-serif; font-size: 90%%;">Erreurs détectées :</h1><dl style="font-family: Trebuchet, Arial, sans-serif; font-size: 80%%;">%s</dl></body></html>', str_replace('<dt', '<dt style="color: navy; margin-top: 10px;"', $request->getParameter('message')));
 			
-			$subject = sprintf("Vérification des liens faite le %s - Rapport d'erreurs.", date_DateFormat::format(date_Calendar::now(), 'l d M Y \à H:i:s'));
+			$subject = sprintf("Vérification des liens faite le %s - Rapport d'erreurs.", date_Formatter::toDefaultDateTimeBO(date_Calendar::now()));
 			
-			$sender = f_Locale::translate('&modules.users.mail.Password.Sender;', array('host' => Framework::getUIDefaultHost()));
+			$sender = LocaleService::getInstance()->transFO('m.users.mail.password.sender', array('ucf'), array('host' => Framework::getUIDefaultHost()));
 			
 			try
 			{

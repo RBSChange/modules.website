@@ -10,6 +10,7 @@ class website_persistentdocument_pageversion extends website_persistentdocument_
 	 */
 	public function getInfoForPageGroup()
 	{
+		$ls = LocaleService::getInstance();
 		$correction = ($this->hasCorrection() ? DocumentHelper::getDocumentInstance($this->getCorrectionid()) : null);
 		if ($this->isContextLangAvailable())
 		{
@@ -24,7 +25,7 @@ class website_persistentdocument_pageversion extends website_persistentdocument_
 						'endpublicationdate' => $this->getEndpublicationdate(),
 						'publicationstatus' => $this->getPublicationstatus(),
 						'url' => $url,
-						'status' => f_Locale::translateUI(DocumentHelper::getPublicationstatusLocaleKey($this)),
+						'status' => $ls->trasnBO(DocumentHelper::getStatusLocaleKey($this)),
 			);
 			if ($correction !== null)
 			{
@@ -37,7 +38,7 @@ class website_persistentdocument_pageversion extends website_persistentdocument_
 				$data['endpublicationdate'] = $correction->getEndpublicationdate()." (".$data['endpublicationdate'].")";
 				$data['publicationstatus'] = $correction->getPublicationstatus();
 				$data['url'] = $url;
-				$data['status'] = f_Locale::translateUI(DocumentHelper::getPublicationstatusLocaleKey($correction));
+				$data['status'] = $ls->trasnBO(DocumentHelper::getStatusLocaleKey($correction));
 			}
 		}
 		else 
@@ -56,8 +57,8 @@ class website_persistentdocument_pageversion extends website_persistentdocument_
 						'status' => null,
 			);			
 		}		
-		$data['uistartpublicationdate'] = ($data['startpublicationdate']) ? date_DateFormat::format($this->getUIStartpublicationdate()) : '';
-		$data['uiendpublicationdate'] = ($data['endpublicationdate']) ? date_DateFormat::format($this->getUIEndpublicationdate()) : '';
+		$data['uistartpublicationdate'] = ($data['startpublicationdate']) ? date_Formatter::toDefaultDateTimeBO($this->getUIStartpublicationdate()) : '';
+		$data['uiendpublicationdate'] = ($data['endpublicationdate']) ? date_Formatter::toDefaultDateTimeBO($this->getUIEndpublicationdate()) : '';
 		return $data;
 	}
 }

@@ -23,20 +23,18 @@ class website_BlockDashboardLastModifiedPagesAction extends  dashboard_BlockDash
 		$moduleName = $this->getModuleName();
 		$ps = f_permission_PermissionService::getInstance();
 		$ms = ModuleService::getInstance();
-		
+		$ls = LocaleService::getInstance();
 		foreach ($lastModifiedPages as $page)
 		{		
-			$lastModification = date_Calendar::getInstance($page->getModificationdate());
+			$lastModification = date_Calendar::getInstance($page->getUIModificationdate());
 			if ($lastModification->isToday())
 			{
-				$status = f_Locale::translateUI('&modules.uixul.bo.datePicker.Calendar.today;') . date_DateFormat::format(date_Converter::convertDateToLocal($lastModification), ', H:i');
+				$status = $ls->transBO('m.uixul.bo.datePicker.calendar.today') . date_Formatter::format($lastModification, ', H:i');
 			}
 			else
 			{
-				$status = date_DateFormat::format(date_Converter::convertDateToLocal($lastModification), 'l j F Y, H:i');
+				$status = date_Formatter::toDefaultDateTimeBO($lastModification);
 			}
-
-			$style = '';
 
 			if ($page->getIshomepage())
 			{
@@ -51,23 +49,16 @@ class website_BlockDashboardLastModifiedPagesAction extends  dashboard_BlockDash
 				$icon = MediaHelper::getIcon('page', MediaHelper::SMALL);
 			}
 
+			$locate = '';
 			if ($ps->hasPermission($user, 'modules_'.$moduleName.'.Enabled', $ms->getRootFolderId($moduleName)))
 			{
-				
 				$locate = "openActionUri('website,locateDocument,". str_replace('/', '_', $page->getDocumentModelName()) .",". $page->getId() . "');";
 			}
-			else
-			{
-				$locate = '';
-			}
 
+			$edit = '';
 			if ($ps->hasAccessToBackofficeAction($user, $moduleName, 'editPageContent', $page->getId()))
 			{
 				$edit = "openActionUri('website,openDocument,". str_replace('/', '_', $page->getDocumentModelName()) .",". $page->getId() . "');";
-			}
-			else
-			{
-				$edit = '';
 			}
 
 			$lang = ($page->getCorrectionofid() > 0) ? $page->getLang() : RequestContext::getInstance()->getLang(); 
@@ -81,7 +72,7 @@ class website_BlockDashboardLastModifiedPagesAction extends  dashboard_BlockDash
 				'label' => $page->getLabelAsHtml(),
 				'thread' => f_util_HtmlUtils::textToHtml($page->getDocumentService()->getPathOf($page)),
 				'status' => ucfirst($status),
-				'style' => $style,
+				'style' => '',
 				'icon' => $icon,
 				'link' => $link
 			);

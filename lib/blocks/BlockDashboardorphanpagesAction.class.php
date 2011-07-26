@@ -14,7 +14,7 @@ class website_BlockDashboardorphanpagesAction extends  dashboard_BlockDashboardA
 		{
 			$websiteLabel = "";
 		}
-		return f_Locale::translateUI('&modules.website.bo.dashboard.OrphanpagesWithCount;', array('websiteLabel' => $websiteLabel, 'count' => $this->getOrphanPageCount()));
+		return LocaleService::getInstance()->transFO('m.website.bo.dashboard.orphanpageswithcount', array('ucf'), array('websiteLabel' => $websiteLabel, 'count' => $this->getOrphanPageCount()));
 	}
 
 	/**
@@ -39,22 +39,24 @@ class website_BlockDashboardorphanpagesAction extends  dashboard_BlockDashboardA
 		
 		if (count($orphanPages) > 0)
 		{
+			$ls = LocaleService::getInstance();
 			$orphanAttr = array();
 			foreach ($orphanPages as $page)
 			{
-				$lastModification = date_Calendar::getInstance($page->getModificationdate());
+				$lastModification = date_Calendar::getInstance($page->getUIModificationdate());
 				if ($lastModification->isToday())
 				{
-					$modificationDate = f_Locale::translateUI('&modules.uixul.bo.datePicker.Calendar.today;') . date_DateFormat::format(date_Converter::convertDateToLocal($lastModification), ', H:i');
+					$modificationDate = $ls->transBO('m.uixul.bo.datePicker.calendar.today') . date_Formatter::format($lastModification, ', H:i');
 				}
 				else
 				{
-					$modificationDate = date_DateFormat::format(date_Converter::convertDateToLocal($lastModification), 'l j F Y, H:i');
+					$modificationDate = date_Formatter::toDefaultDateTimeBO($lastModification);
 				}
+				
 				$link = LinkHelper::getUIActionLink('website', 'BoDisplay')
-						->setQueryParameter('cmpref', $page->getId())
-						->setQueryParameter('lang', $page->getlang())
-						->getUrl();
+					->setQueryParameter('cmpref', $page->getId())
+					->setQueryParameter('lang', $page->getlang())
+					->getUrl();
 				
 				$attr = array(
 					'modificationDate' => ucfirst($modificationDate), 
