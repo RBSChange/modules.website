@@ -1,3 +1,2 @@
-<h3 change:h="" tal:condition="item">${item/getLabelAsHtml} <a change:edit="document item"></a></h3>
-
-<p change:translate="&modules.generic.frontoffice.this-document-is-not-published;"></p>
+<h3 change:h="" tal:condition="item">${item/getLabelAsHtml}</h3>
+<p tal:content="trans:m.generic.frontoffice.this-document-is-not-published"></p>

@@ -33,8 +33,8 @@
 			
 			<tabbox style="margin: 5px;">
 			    <tabs>
-							<tab i18n:attributes="label &amp;modules.uixul.bo.general.The-following-error-occuredSpaced;" change:img="icon/small/information.png" />
-							<tab i18n:attributes="label &amp;modules.website.bo.general.Page-edition-error-contentSpaced;" change:img="icon/small/about.png" />
+							<tab label="${trans:m.uixul.bo.general.the-following-error-occuredspaced,ucf,attr}" change:img="icon/small/information.png" />
+							<tab label="${trans:m.website.bo.general.page-edition-error-contentspaced,ucf,attr}" change:img="icon/small/about.png" />
 			    </tabs>
 			    
 			    <tabpanels>
@@ -55,14 +55,14 @@
 		    </tabbox>
                     
                     <hbox align="center">							
-						<button change:icon="nav_left_blue/small shadow" i18n:attributes="label &amp;modules.uixul.bo.layout.BackToDataEditingSpaced;"
+						<button change:img="icon/small/shadow/nav_left_blue.png" label="${trans:m.uixul.bo.layout.backtodataeditingspaced,ucf,attr}"
 							oncommand="parent.document.getElementById('pageDeck').setAttribute('selectedIndex', 0); parent.document.getElementById('designFrame').setAttribute('src', 'about:blank');" />
                                                 
                         <spacer flex="1" />
-						<button tal:condition="content" change:img="icon/small/reload.png" i18n:attributes="label &amp;modules.website.bo.general.Page-edition-error-restoreSpaced;"
+						<button tal:condition="content" change:img="icon/small/reload.png" label="${trans:m.website.bo.general.page-edition-error-restorespaced,ucf,attr}"
 							oncommand="restorePage();" />
 
-						<button tal:condition="not: content" change:img="icon/small/undo.png" i18n:attributes="label &amp;modules.website.bo.general.Page-edition-error-restoreSpaced;"
+						<button tal:condition="not: content" change:img="icon/small/undo.png" label="${trans:m.website.bo.general.page-edition-error-restorespaced,ucf,attr}"
 							disabled="true" />
 					</hbox>
 		</vbox>
