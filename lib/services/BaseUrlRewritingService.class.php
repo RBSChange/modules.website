@@ -931,14 +931,13 @@ class website_BaseRewritingService extends BaseService
 			if ($rule instanceof website_lib_urlrewriting_TaggedPageRule)
 			{
 				$tag = $rule->getPageTag();
-				// retrieve ID from exclusive tag
-				$ds = f_persistentdocument_DocumentService::getInstance();
+				$ts = TagService::getInstance();
 				
-				if (TagService::getInstance()->isExclusiveTag($tag))
+				if ($ts->isExclusiveTag($tag))
 				{
 					try
 					{
-						$matches[K::COMPONENT_ID_ACCESSOR] = $ds->getDocumentByExclusiveTag($tag)->getId();
+						$matches[K::COMPONENT_ID_ACCESSOR] = $ts->getDocumentByExclusiveTag($tag)->getId();
 					}
 					catch (TagException $e)
 					{
@@ -947,11 +946,11 @@ class website_BaseRewritingService extends BaseService
 						$action = 'Error404';
 					}
 				}
-				else if (TagService::getInstance()->isContextualTag($tag))
+				else if ($ts->isContextualTag($tag))
 				{
 					try
 					{
-						$matches[K::COMPONENT_ID_ACCESSOR] = $ds->getDocumentByContextualTag($tag, website_WebsiteModuleService::getInstance()->getCurrentWebsite())->getId();
+						$matches[K::COMPONENT_ID_ACCESSOR] = $ts->getDocumentByContextualTag($tag, website_WebsiteModuleService::getInstance()->getCurrentWebsite())->getId();
 					}
 					catch (TagException $e)
 					{

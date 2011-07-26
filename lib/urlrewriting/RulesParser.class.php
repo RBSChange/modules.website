@@ -268,7 +268,7 @@ class website_urlrewriting_RulesParser extends BaseService
 		{
 			$fileContent = array();
 			
-			$modules = ModuleService::getInstance()->getModules();
+			$modules = ModuleService::getInstance()->getPackageNames();
 			foreach ($modules as $module)
 			{
 				$filePath = $this->getDefinitionFilePathByPackage($module);

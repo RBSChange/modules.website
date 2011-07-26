@@ -217,7 +217,7 @@ class website_PageversionService extends website_PageService
 					$rc->beginI18nWork($lang);
 					if ($pagegroup->isLangAvailable($lang))
 					{
-						$pagegroup->copyTo($version, $lang == $pagegroup->getLang());
+						$pagegroup->copyPropertiesTo($version, $lang == $pagegroup->getLang());
 						if ($useCorrection)
 						{
 						    $correctionId = $pagegroup->getCorrectionid();

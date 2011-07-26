@@ -539,7 +539,7 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
 	 *
 	 * @return Sitemap
 	 *
-	 * @throws FrameworkException("invalid_lang");
+	 * @throws BaseException("invalid_lang");
 	 */
 	public final function getSitemap($website = null, $maxLevel = 5)
 	{

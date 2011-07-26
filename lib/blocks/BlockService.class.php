@@ -204,7 +204,7 @@ class block_BlockService extends BaseService
 	public function compileBlocks($callback = null)
 	{
 		$blocLists = array();
-		foreach (ModuleService::getInstance()->getModules() as $packageName)
+		foreach (ModuleService::getInstance()->getPackageNames() as $packageName)
 		{
 			try
 			{

@@ -1409,7 +1409,7 @@ class website_UrlRewritingService extends website_BaseRewritingService
 	private function getXMLConfigFiles()
 	{
 		$fileContent = array();
-		$modules = ModuleService::getInstance()->getModules();
+		$modules = ModuleService::getInstance()->getPackageNames();
 		foreach ($modules as $package)
 		{
 			$filePath = FileResolver::getInstance()->setPackageName($package)->getPath('/config/urlrewriting.xml');
