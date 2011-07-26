@@ -9,10 +9,13 @@
  */
 class PHPTAL_Php_Attribute_CHANGE_Permission extends PHPTAL_Php_Attribute
 {
-	public function start()
-	{
-		$expressions = $this->tag->generator->splitExpression($this->expression);
-
+	
+    /**
+     * Called before element printing.
+     */
+    public function before(PHPTAL_Php_CodeWriter $codewriter)
+    {
+		$expressions = $codewriter->splitExpression($this->expression);
 		$permission = null;
 		$nodeId = null;
 		$mode = null;
@@ -25,7 +28,7 @@ class PHPTAL_Php_Attribute_CHANGE_Permission extends PHPTAL_Php_Attribute
 			{
 				case 'perm': $permission = $value; break;
 				case 'notperm': $notPermission = $value; break;
-				case 'nodeId': $nodeId = $this->evaluate($value); break;
+				case 'nodeId': $nodeId = $codewriter->evaluateExpression($value); break;
 				case 'mode' : $mode = $value; break;
 			}
 		}
@@ -43,7 +46,7 @@ class PHPTAL_Php_Attribute_CHANGE_Permission extends PHPTAL_Php_Attribute
 
 		if ($permission === null && $notPermission === null)
 		{
-			$this->tag->generator->doEchoRaw("'<strong>change:permission</strong>: you must define perm or notperm attribute'");
+			$codewriter->doEchoRaw("'<strong>change:permission</strong>: you must define perm or notperm attribute'");
 			$assertionCode = 'true';
 		}
 		elseif ($permission !== null)
@@ -76,11 +79,14 @@ class PHPTAL_Php_Attribute_CHANGE_Permission extends PHPTAL_Php_Attribute
 				throw new Exception("Unsupported mode ".$mode);
 			}
 		}
-		$this->tag->generator->doIf($assertionCode);
+		$codewriter->doIf($assertionCode);
 	}
 
-	public function end()
-	{
-		$this->tag->generator->doEnd();
+	/**
+     * Called after element printing.
+     */
+    public function after(PHPTAL_Php_CodeWriter $codewriter)
+    {
+		$codewriter->doEnd();
 	}
 }
