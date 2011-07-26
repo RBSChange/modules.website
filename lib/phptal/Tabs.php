@@ -31,7 +31,7 @@ class PHPTAL_Php_Attribute_CHANGE_Tabs extends ChangeTalAttribute
     public function before(PHPTAL_Php_CodeWriter $codewriter)
     {
 		$this->phpelement->headFootDisabled = true;
-		$this->parametersString = parent::initParams();
+		$this->parametersString = $this->initParams($codewriter);
 		$codewriter->pushCode('PHPTAL_Php_Attribute_CHANGE_Tabs::startTabs('.$this->parametersString . ', $ctx);');
 		$codewriter->pushCode('ob_start();');
 	}
@@ -42,7 +42,7 @@ class PHPTAL_Php_Attribute_CHANGE_Tabs extends ChangeTalAttribute
     public function after(PHPTAL_Php_CodeWriter $codewriter)
     {
 		$codewriter->pushCode('$_change_tabsResult_innerContent = ob_get_clean();');
-		$this->getRenderMethodCall($this->parametersString);
+		$this->getRenderMethodCall($codewriter, $this->parametersString);
 		$codewriter->doEchoRaw('$_change_tabsResult_innerContent');
 		$codewriter->doEchoRaw('PHPTAL_Php_Attribute_CHANGE_Tabs::renderEndTag()');
 	}	

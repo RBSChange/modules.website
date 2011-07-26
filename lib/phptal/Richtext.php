@@ -4,13 +4,16 @@
  */
 class PHPTAL_Php_Attribute_CHANGE_Richtext extends PHPTAL_Php_Attribute
 {
-	public function start()
-	{
+	/**
+     * Called before element printing.
+     */
+    public function before(PHPTAL_Php_CodeWriter $codewriter)
+    {
 		$this->expression = $this->extractEchoType($this->expression);
-		$expressions = $this->tag->generator->splitExpression($this->expression);
-		$text = '';
-		$configset = '\'ChangeDefault\'';
-		$name = '\'richtext\'';
+		$expressions = $codewriter->splitExpression($this->expression);
+		$text = "''";
+		$configset = "'ChangeDefault'";
+		$name = "'richtext'";
 		
 		foreach ($expressions as $exp)
 		{
@@ -18,18 +21,18 @@ class PHPTAL_Php_Attribute_CHANGE_Richtext extends PHPTAL_Php_Attribute
 			switch ($attribute)
 			{
 				case 'value' :
-					$text = $this->evaluate($value);
+					$text = $codewriter->evaluateExpression($value);
 					break;
 				case 'configset' :
-					$configset = $this->evaluate($value);
+					$configset = $codewriter->evaluateExpression($value);
 					break;
 				case 'name' :
-					$name = $this->evaluate($value);
+					$name = $codewriter->evaluateExpression($value);
 					break;
 			}
 		}
-		$code = 'PHPTAL_Php_Attribute_CHANGE_richtext::buildEditor('. $name .', '. $configset .', '. $text .')';
-		$this->doEcho($code);
+		$code = 'PHPTAL_Php_Attribute_CHANGE_Richtext::buildEditor('. $name .', '. $configset .', '. $text .')';
+		$codewriter->doEchoRaw($code);
 	}
 	
 	public function end()
@@ -40,7 +43,7 @@ class PHPTAL_Php_Attribute_CHANGE_Richtext extends PHPTAL_Php_Attribute
 	{
 		$editor = new FCKeditor($name);
 		$editor->ToolbarSet = 'Change';
-		$editor->Config['CustomConfigurationsPath'] = '/index.php?module=website&action=RichtextConfig&configset=' . $configset;
+		$editor->Config['CustomConfigurationsPath'] = LinkHelper::getActionUrl('website', 'RichtextConfig', array('configset' => $configset));
 		$editor->Value = $text;
 		return $editor->CreateHtml();		
 	}

@@ -16,7 +16,7 @@ class PHPTAL_Php_Attribute_CHANGE_Loadhandler extends PHPTAL_Php_Attribute
 		{
 			return $this->renderError("$handlerClassName is not a website_ViewLoadHandler");
 		}
-		$code = '/* PHPTAL_Php_Attribute_CHANGE_loadhandler begin */
+		$code = '/* PHPTAL_Php_Attribute_CHANGE_Loadhandler begin */
 if (!isset($blockController))
 {
 	$blockController = website_BlockController::getInstance();
@@ -32,7 +32,7 @@ $loadHandler = new '.$handlerClassName.'();';
 			$code .= "\n".'$loadHandler->setParameters('.var_export($handlerParams, true).');';
 		}
 		$code .= '$loadHandler->execute($fakeRequest, $response);
-/* PHPTAL_Php_Attribute_CHANGE_loadhandler end */ ';
+/* PHPTAL_Php_Attribute_CHANGE_Loadhandler end */ ';
 		$this->tag->generator->pushCode($code);
 		return null;
 	}

@@ -39,6 +39,7 @@ class website_PHPTAL_CHANGE
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('documentpicker', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('durationinput', 30));
 		
+ 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('select', 10));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeSurround('tabs', 32));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeSurround('tab', 32));
 		

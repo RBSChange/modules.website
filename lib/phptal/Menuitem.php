@@ -15,7 +15,7 @@ class PHPTAL_Php_Attribute_CHANGE_Menuitem extends PHPTAL_Php_Attribute
     		list($attribute, $value) = $this->parseSetExpression($expr);
     		if ($attribute == "separator")
 			{
-				$this->separator = $this->evaluate($value);
+				$this->separator = $codewriter->evaluateExpression($value);
 			}
     	}
     	$codewriter->pushCode('ob_start()');
