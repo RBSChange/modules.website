@@ -64,7 +64,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 		
 		$rc = RequestContext::getInstance();
 		$currentLang = $rc->getLang();
-		$page = $this->getPage()->getPersistentPage();
+		$page = $this->getContext()->getPersistentPage();
 		
 		
 		$switchArray = array();
@@ -114,7 +114,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 					{
 						$pageUrl = LinkHelper::getDocumentUrl($detailDoc ? $detailDoc : $page, $lang, $parameters);
 						$switchArray[$lang]['url'] = $pageUrl;
-						$this->getPage()->addLink("alternate", "text/html", $pageUrl, f_Locale::translate("&modules.website.frontoffice.this-page-in-mylang;", null, $lang), $lang);
+						$this->getContext()->addLink("alternate", "text/html", $pageUrl, f_Locale::translate("&modules.website.frontoffice.this-page-in-mylang;", null, $lang), $lang);
 					}
 					else
 					{

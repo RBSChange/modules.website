@@ -357,14 +357,4 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	{
 		return array();
 	}
-	
-	// Deprecated
-	
-	/**
-	 * @deprecated (will be removed in 4.0) use website_ModuleService::inititalizeStructure()
-	 */	
-	public function initDefaultStruct($website, $scriptPath)
-	{
-		throw new Exception('Deprecated call to initDefaultStruct!');
-	}
 }

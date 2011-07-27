@@ -16,7 +16,7 @@ class website_BlockContextualmenuAction extends website_BlockAction
 		$depth = intval($this->getConfigurationParameter('depth'));
 		$deployall = $this->getConfigurationParameter('deployall') == 'true';
 		 
-		$page = $this->getPage()->getPersistentPage();
+		$page = $this->getContext()->getPersistentPage();
 		$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
 		if ($startwebsitelevel <= 0)
 		{
@@ -24,7 +24,7 @@ class website_BlockContextualmenuAction extends website_BlockAction
 		}
 		else
 		{
-			$ancestors = $this->getPage()->getAncestors();
+			$ancestors = $this->getContext()->getAncestors();
 			$ancestors[] = $page->getId();
 			if (count($ancestors) > $startwebsitelevel)
 			{

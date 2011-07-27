@@ -961,15 +961,4 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 		$blockAttributes[$blockId] = $value;
 		$context->setAttribute($key, $blockAttributes);
 	}
-	
-	// Deprecated
-	
-	/**
-	 * @deprecated (will be removed in 4.0) in favor to getContext()
-	 * @return website_Page
-	 */
-	protected final function getPage()
-	{
-		return $this->getContext();
-	}
 }

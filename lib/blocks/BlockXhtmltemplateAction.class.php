@@ -19,7 +19,7 @@ class website_BlockXhtmltemplateAction extends website_BlockAction
 		{
 			return website_BlockView::NONE;
 		}
-		$request->setAttribute('page', $this->getPage());
+		$request->setAttribute('page', $this->getContext());
 		$tpl = null;
 		if ($this->isInBackofficeEdition())
 		{

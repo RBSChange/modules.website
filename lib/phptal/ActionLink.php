@@ -81,8 +81,7 @@ class PHPTAL_Php_Attribute_CHANGE_Actionlink extends ChangeTalAttribute
 		// Class
 		if (!isset($params['class']))
 		{
-			// @deprecated: actionlink class will be removed in 4.0.
-			$params['class'] = "link actionlink";
+			$params['class'] = "link";
 		}
 		
 		if (isset($params['anchor']))

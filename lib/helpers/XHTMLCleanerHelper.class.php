@@ -255,7 +255,7 @@ class website_XHTMLCleanerHelper
 			}
 		}
 	
-		//Deprecated attribute
+		// Deprecated attribute.
 		if ($element->hasAttribute('popup'))
 		{
 			if (!in_array('popup', $classArray))
@@ -273,7 +273,7 @@ class website_XHTMLCleanerHelper
 		$href = $element->hasAttribute('href') ? $element->getAttribute('href')  : '#';
 		if (strpos($href, '/') === 0) {$href = '#';}
 				
-		//Deprecated attribute
+		// Deprecated attribute.
 		if ($element->hasAttribute('cmpref'))
 		{
 			$cmpref = intval($element->getAttribute('cmpref'));

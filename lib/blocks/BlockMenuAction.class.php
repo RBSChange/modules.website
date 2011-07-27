@@ -32,7 +32,7 @@ class website_BlockMenuAction extends website_BlockAction
 			$template = website_BlockView::SUCCESS;
 		}
 		
-		$page = $this->getPage()->getPersistentPage();
+		$page = $this->getContext()->getPersistentPage();
 		$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
 		if ($deployOnlyCurrentPath)
 		{

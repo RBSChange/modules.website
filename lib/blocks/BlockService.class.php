@@ -690,79 +690,11 @@ class block_BlockService extends BaseService
 			ClassResolver::getInstance()->appendToAutoloadFile($infoClassName, $destFilePath);
 		}
 	}
-	
-	
-	
+		
 	//DEPRECATED
-	
+		
 	/**
 	 * @deprecated
-	 * @var Array
-	 */
-	private $moduleBlockArray = array();
-	
-	/**
-	 * @deprecated
-	 * @param String $moduleName
-	 * @param Array Array of defined blocks in the given module (block names as strings).
-	 */
-	public function getDeclaredBlocksForModule($moduleName)
-	{
-		if ( ! isset($this->moduleBlockArray[$moduleName]) )
-		{
-			$filePath = f_util_FileUtils::buildChangeBuildPath('modules', $moduleName, 'blocks', 'blockList.php');;
-			if (is_readable($filePath))
-			{
-				$blockIdArray = null;
-				include $filePath;
-				$this->moduleBlockArray[$moduleName] = $blockIdArray; // declared in the included file.
-			}
-			else
-			{
-				$this->moduleBlockArray[$moduleName] = array();
-				if (Framework::isDebugEnabled())
-				{
-					Framework::debug(__METHOD__." module \"$moduleName\" seems to have no block, or they have not been compiled.");
-				}
-			}
-		}
-		return $this->moduleBlockArray[$moduleName];
-	}
-
-	/**
-	 * @deprecated
-	 * Returns the module that declares the given block, identified by $blockName.
-	 * @param String $blockName
-	 * @return String
-	 *
-	 * @throws BlockException
-	 */
-	public function getDeclaringModuleForBlock($blockName)
-	{
-		$matches = null;
-		if (preg_match('/modules_([\w\d]+)_([\w\d]+)/', $blockName, $matches))
-		{
-			return $matches[1];
-		}
-		throw new BlockException("Could not determine the module that declares the block \"$blockName\".");
-	}
-	
-	/**
-	 * @deprecated
-	 * @param string $blockType
-	 * @return string
-	 */
-	public function getBlockClassNameFromBlockName($blockType)
-	{
-		return $this->getBlockActionClassNameByType($blockType);
-	}
-	
-	/**
-	 * @deprecated
-	 * Returns the label of the block named $blockName.
-	 *
-	 * @param String $blockName
-	 * @return String
 	 */
 	public function getBlockLabelFromBlockName($blockName)
 	{
@@ -771,20 +703,6 @@ class block_BlockService extends BaseService
 
 	/**
 	 * @deprecated
-	 * Returns the icon of the block named $blockName.
-	 *
-	 * @param String $blockName
-	 * @return String
-	 */
-	public function getBlockIconFromBlockName($blockName)
-	{
-		return $this->getBlockAttribute($blockName, 'icon');
-	}
-
-	/**
-	 * @deprecated
-	 * @param String $blockName
-	 * @return DomElement or null if blockInfo could not be founded
 	 */
 	private function getBlockAttribute($blockName, $attributeName)
 	{

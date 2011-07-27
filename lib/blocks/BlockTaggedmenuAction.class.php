@@ -49,7 +49,7 @@ class website_BlockTaggedmenuAction extends website_BlockAction
 			$deployOnlyCurrentPath = $this->getConfigurationParameter('deployonlycurrentpath') == 'true';
 			$numberOfCollapseLevel = $this->getConfigurationParameter('collapselevel', 1);
 
-			$page = $this->getPage()->getPersistentPage();
+			$page = $this->getContext()->getPersistentPage();
 			$request->setAttribute('currentPage', $page);
 			$request->setAttribute('currentWebsite', $website);
 

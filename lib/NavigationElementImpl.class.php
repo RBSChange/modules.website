@@ -112,41 +112,4 @@ abstract class NavigationElementImpl extends ArrayObject implements NavigationEl
 	{
 		return in_array($entry->getId(), $this->restrictedIds);
 	}
-	
-	// Deprecated
-	
-	/**
-	 * @deprecated (will be removed in 4.0) Menus and other navigation elements must be rendered with the use of the "change:menu" PHPTal tag into templates.
-	 */
-	public function setCssClass($element, $cssClassName, $appendLevelAccessor = false)
-	{
-		if (!preg_match('/^[a-z0-9_\-%]+$/i', $cssClassName))
-		{
-			throw new IllegalArgumentException('cssClassName', 'valid CSS class name');
-		}
-		if ($appendLevelAccessor)
-		{
-			$cssClassName .= self::CSSCLASS_LEVEL_ACCESSOR;
-		}
-		switch ($element)
-		{
-			case self::CSSCLASS_UL :
-				$this->levelEntryClass = $cssClassName;
-				break;
-			case self::CSSCLASS_LI_PAGE :
-				$this->pageEntryClass = $cssClassName;
-				break;
-			case self::CSSCLASS_LI_FOLDER :
-				$this->folderEntryClass = $cssClassName;
-				break;
-			case self::CSSCLASS_A_PAGE :
-				$this->pageLinkClass = $cssClassName;
-				break;
-			case self::CSSCLASS_A_FOLDER :
-				$this->folderLinkClass = $cssClassName;
-				break;
-			default :
-				throw new IllegalArgumentException('type', 'integer from '.CSSCLASS_UL.' to '.CSSCLASS_A_FOLDER);
-		}
-	}
 }
