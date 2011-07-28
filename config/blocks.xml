@@ -1,31 +1,31 @@
 <?xml version="1.0"?>
 <blocks>
 	<block type="modules_website_staticrichtext" hidden="true" />
-	<block type="modules_website_bookmarks" icon="bookmark" label="&amp;modules.website.bo.blocks.BookmarksBlock;">
+	<block type="modules_website_bookmarks" icon="bookmark" labeli18n="m.website.bo.blocks.bookmarksblock">
 		<parameters>
 			<parameter name="cmpref" type="String" />
 		</parameters>
 	</block>
 
-	<block type="modules_website_sitemap" icon="sitemap" label="&amp;modules.website.bo.blocks.Sitemap;"
-		cache="true" cache-deps="[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
+	<block type="modules_website_sitemap" icon="sitemap" labeli18n="m.website.bo.blocks.sitemap" cache="true"
+		cache-deps="[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
 		<parameters>
 			<parameter name="column" type="Boolean" default-value="false" />
 		</parameters>
 	</block>
-	<block type="modules_website_exception" icon="bug" label="&amp;modules.website.bo.blocks.Exception;" />
-	<block type="modules_website_thread" hidden="true" label="&amp;modules.website.bo.blocks.Thread;" afterAll="true" 
-		cache="true" cache-key="page" cache-deps="[modules_website/page],[modules_website/topic],modules_website/website"/>
-	<block type="modules_website_menu" hidden="true" label="&amp;modules.website.bo.blocks.Menu;"
-		cache="true" cache-key="page,cmpref" cache-deps="modules_website/menu,[modules_website/menuitem],[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
+	<block type="modules_website_exception" icon="bug" labeli18n="m.website.bo.blocks.exception" />
+	<block type="modules_website_thread" hidden="true" labeli18n="m.website.bo.blocks.thread" afterAll="true" cache="true" cache-key="page"
+		cache-deps="[modules_website/page],[modules_website/topic],modules_website/website" />
+	<block type="modules_website_menu" hidden="true" labeli18n="m.website.bo.blocks.menu" cache="true" cache-key="page,cmpref"
+		cache-deps="modules_website/menu,[modules_website/menuitem],[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
 		<parameters>
 			<parameter name="depth" type="Integer" default-value="1" />
 			<parameter name="template" type="String" default-value="default" />
 			<parameter name="deployonlycurrentpath" type="Boolean" default-value="false" />
 		</parameters>
 	</block>
-	<block type="modules_website_taggedmenu" hidden="true" label="&amp;modules.website.bo.blocks.TaggedMenu;"
-		cache="true" cache-key="page" cache-deps="modules_website/menu,[modules_website/menuitem],[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
+	<block type="modules_website_taggedmenu" hidden="true" labeli18n="m.website.bo.blocks.taggedmenu" cache="true" cache-key="page"
+		cache-deps="modules_website/menu,[modules_website/menuitem],[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
 		<parameters>
 			<parameter name="tag" type="String" />
 			<parameter name="package" type="String" default-value="" />
@@ -34,8 +34,8 @@
 			<parameter name="deployonlycurrentpath" type="Boolean" default-value="false" />
 		</parameters>
 	</block>
-	<block type="modules_website_contextualmenu" hidden="true" label="&amp;modules.website.bo.blocks.ContextualMenu;"
-		cache="true" cache-key="page" cache-deps="[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
+	<block type="modules_website_contextualmenu" hidden="true" labeli18n="m.website.bo.blocks.contextualmenu" cache="true" cache-key="page"
+		cache-deps="[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
 		<parameters>
 			<parameter name="template" type="String" default-value="default" />
 			<parameter name="package" type="String" default-value="" />
@@ -44,14 +44,14 @@
 			<parameter name="deployall" type="Boolean" default="false" />
 		</parameters>
 	</block>
-	<block type="modules_website_switchlanguage" hidden="true" label="&amp;modules.website.bo.blocks.SwitchLanguage;"
-		cache="true" cache-key="page" cache-deps="[modules_website/page],modules_website/website">
+	<block type="modules_website_switchlanguage" hidden="true" labeli18n="m.website.bo.blocks.switchlanguage" cache="true" cache-key="page"
+		cache-deps="[modules_website/page],modules_website/website">
 		<parameters>
 			<parameter name="viewall" type="Boolean" default-value="true" />
 			<parameter name="showflag" type="String" default-value="small" />
 		</parameters>
 	</block>
-	<block type="modules_website_iframe" icon="iframe" label="&amp;modules.website.bo.blocks.Iframe;" cache="true">
+	<block type="modules_website_iframe" icon="iframe" labeli18n="m.website.bo.blocks.iframe" cache="true">
 		<parameters>
 			<parameter name="title" type="String" min-occurs="1" />
 			<parameter name="url" type="String" min-occurs="1" default-value="about:blank" />
@@ -61,9 +61,8 @@
 			<parameter name="text" type="LongString" default-value="" cols="46" rows="4" />
 		</parameters>
 	</block>
-	
-	<block type="modules_website_xhtmltemplate" hidden="true"
-		cache="true" cache-key="page" cache-deps="[modules_website/page]">
+
+	<block type="modules_website_xhtmltemplate" hidden="true" cache="true" cache-key="page" cache-deps="[modules_website/page]">
 		<parameters>
 			<parameter name="template" type="String" default-value="" />
 		</parameters>
@@ -79,12 +78,12 @@
 	<block type="modules_website_Incompatibiltybrowser" icon="warning" />
 
 	<!-- Dashboard blocks -->
-	<block type="modules_website_dashboardpagevalidation" icon="task" dashboard="true" label="&amp;modules.website.bo.dashboard.Page-validation;">
+	<block type="modules_website_dashboardpagevalidation" icon="task" dashboard="true" labeli18n="m.website.bo.dashboard.page-validation">
 		<parameters>
 			<parameter name="showComments" type="Boolean" default-value="true" />
 		</parameters>
 	</block>
-	<block type="modules_website_dashboardorphanpages" icon="orphan-pages" dashboard="true" label="&amp;modules.website.bo.dashboard.Orphanpages;">
+	<block type="modules_website_dashboardorphanpages" icon="orphan-pages" dashboard="true" labeli18n="m.website.bo.dashboard.orphanpages">
 		<parameters>
 			<parameter name="website" type="modules_website/website" max-occurs="1" />
 		</parameters>

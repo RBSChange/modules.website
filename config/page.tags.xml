@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <tags>
 	<!-- error pages -->
-	<tag label="&amp;modules.website.bo.tags.Page-not-found;" icon="delete">contextual_website_website_error404</tag>
-	<tag label="&amp;modules.website.bo.tags.Server-error;" icon="error">contextual_website_website_server-error</tag>
-	<tag label="&amp;modules.website.bo.tags.Unauthorized-access;" icon="forbidden">contextual_website_website_error401-1</tag>
+	<tag labeli18n="m.website.bo.tags.page-not-found" icon="delete">contextual_website_website_error404</tag>
+	<tag labeli18n="m.website.bo.tags.server-error" icon="error">contextual_website_website_server-error</tag>
+	<tag labeli18n="m.website.bo.tags.unauthorized-access" icon="forbidden">contextual_website_website_error401-1</tag>
 
 	<!-- special content pages -->
-	<tag label="&amp;modules.website.bo.tags.Print;" icon="printer">contextual_website_website_print</tag>
-	<tag label="&amp;modules.website.bo.tags.Favorite;" icon="bookmark">contextual_website_website_favorite</tag>
-	<tag label="&amp;modules.website.bo.tags.Legal-notice;" icon="page">contextual_website_website_legal</tag>
-	<tag label="&amp;modules.website.bo.tags.Help;" icon="help">contextual_website_website_help</tag>
+	<tag labeli18n="m.website.bo.tags.print" icon="printer">contextual_website_website_print</tag>
+	<tag labeli18n="m.website.bo.tags.favorite" icon="bookmark">contextual_website_website_favorite</tag>
+	<tag labeli18n="m.website.bo.tags.legal-notice" icon="page">contextual_website_website_legal</tag>
+	<tag labeli18n="m.website.bo.tags.help" icon="help">contextual_website_website_help</tag>
 </tags>

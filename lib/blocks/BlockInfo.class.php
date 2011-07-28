@@ -75,6 +75,10 @@ class block_BlockInfo
 	 */
 	public function getLabel()
 	{
+		if (isset($this->attributes['labeli18n']))
+		{
+			return LocaleService::getInstance()->transBO($this->attributes['labeli18n'], array('ucf'));
+		}
 		return $this->attributes['label'];
 	}
 
