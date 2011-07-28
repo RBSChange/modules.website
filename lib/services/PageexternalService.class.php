@@ -46,21 +46,6 @@ class website_PageexternalService extends f_persistentdocument_DocumentService
 	    return $page->getUrl() && parent::isPublishable($page);
 	}
 
-
-	/**
-	 * Returns an associative array of attributes to display in the backoffice
-	 * preview panel.
-	 *
-	 * @param website_persistentdocument_pageexternal $document
-	 * @return array<string, string>
-	 */
-	public function getPreviewAttributes($document)
-	{
-		$attributes = array();
-		$attributes['url'] = $document->getUrl();
-		return $attributes;
-	}
-
 	/**
 	 * @param website_persistentdocument_pageexternal $document
 	 * @param Integer $destId

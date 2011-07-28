@@ -24,7 +24,7 @@ class website_BlockContextualmenuAction extends website_BlockAction
 		}
 		else
 		{
-			$ancestors = $this->getContext()->getAncestors();
+			$ancestors = $this->getContext()->getAncestorIds();
 			$ancestors[] = $page->getId();
 			if (count($ancestors) > $startwebsitelevel)
 			{

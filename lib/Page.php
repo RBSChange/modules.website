@@ -705,36 +705,11 @@ class website_Page implements f_mvc_Context
 	}
 
 	/**
-	 * @deprecated (will be removed in 4.0) use getPersistentPage
-	 */
-	public function getPageDocument()
-	{
-		return $this->getPersistentPage();
-	}
-
-	/**
 	 * @deprecated (will be removed in 4.0)
 	 */
 	public function inBackofficeMode()
 	{
 		return $this->getAttribute(website_BlockAction::BLOCK_BO_MODE_ATTRIBUTE, false);
-	}
-
-	/**
-	 * @deprecated (will be removed in 4.0) use getAncestorIds
-	 */
-	public function getAncestors()
-	{
-		return $this->getAncestorIds();
-	}
-
-	/**
-	 * @deprecated (will be removed in 4.0)
-	 */
-	public function getNearestContainerId()
-	{
-		// if ancestors size is 2 then you retrieve the website !
-		return f_util_ArrayUtils::lastElement($this->getAncestorIds());
 	}
 
 	/**

@@ -77,13 +77,6 @@
 		</parameters>
 	</block>
 	<block type="modules_website_Incompatibiltybrowser" icon="warning" />
-	
-	<!-- deprecated -->
-	<block type="modules_website_Simplecontent" hidden="true" icon="">
-		<parameters>
-			<parameter name="view" type="String" />
-		</parameters>
-	</block>
 
 	<!-- Dashboard blocks -->
 	<block type="modules_website_dashboardpagevalidation" icon="task" dashboard="true" label="&amp;modules.website.bo.dashboard.Page-validation;">

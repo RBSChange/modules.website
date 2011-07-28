@@ -717,14 +717,4 @@ class LinkHelper
 		}
 		return $currentLink->getUrl();
 	}
-	
-	// Deprecated
-	
-	/**
-	 * @deprecated
-	 */
-	public static function getCurrentUrlComplete($extraAttributes = array())
-	{
-		return self::getCurrentUrl($extraAttributes);
-	}
 }
