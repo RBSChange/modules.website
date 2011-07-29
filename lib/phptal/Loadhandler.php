@@ -2,8 +2,11 @@
 class PHPTAL_Php_Attribute_CHANGE_Loadhandler extends PHPTAL_Php_Attribute
 {
 
-	public function start()
-	{
+	/**
+     * Called before element printing.
+     */
+    public function before(PHPTAL_Php_CodeWriter $codewriter)
+    {
 		// Block parameter
 		if (f_util_StringUtils::isEmpty($this->expression))
 		{
@@ -22,23 +25,27 @@ if (!isset($blockController))
 	$blockController = website_BlockController::getInstance();
 	$request = $blockController->getRequest();
 	$response = $blockController->getResponse();
-	$template = website_BlockView::getCurrentTemplate();
-	$fakeRequest = new website_TemplateRequest($request, $template);
+	$fakeRequest = new website_TemplateRequest($request, $ctx);
 }
 $loadHandler = new '.$handlerClassName.'();';
-		if (isset($this->tag->attributes['args']))
+		
+		if ($this->phpelement->hasAttribute('args'))
 		{
-			$handlerParams = website_BlockView::parseHandlerArgs($this->tag->attributes['args']);
+			$args = $this->phpelement->getAttributeNS('', 'args');
+			$handlerParams = website_BlockView::parseHandlerArgs($args);
 			$code .= "\n".'$loadHandler->setParameters('.var_export($handlerParams, true).');';
 		}
 		$code .= '$loadHandler->execute($fakeRequest, $response);
 /* PHPTAL_Php_Attribute_CHANGE_Loadhandler end */ ';
-		$this->tag->generator->pushCode($code);
+		$codewriter->pushCode($code);
 		return null;
 	}
 
-	public function end()
-	{
+	/**
+     * Called after element printing.
+     */
+    public function after(PHPTAL_Php_CodeWriter $codewriter)
+    {
 		// empty
 	}
 
@@ -55,13 +62,13 @@ class website_TemplateRequest
 	 */
 	private $request;
 	/**
-	 * @var TemplateObject
+	 * @var PHPTAL_Context
 	 */
 	private $template;
 
 	/**
 	 * @param website_BlockActionRequest $request
-	 * @param TemplateObject $template
+	 * @param PHPTAL_Context $template
 	 */
 	function __construct($request, $template)
 	{
@@ -72,7 +79,7 @@ class website_TemplateRequest
 	function setAttribute($attrName, $attrValue)
 	{
 		$this->request->setAttribute($attrName, $attrValue);
-		$this->template->setAttribute($attrName, $attrValue);
+		$this->template->{$attrName} = $attrValue;
 	}
 
 	function hasAttribute($attrName)
