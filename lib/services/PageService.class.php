@@ -265,56 +265,52 @@ class website_PageService extends f_persistentdocument_DocumentService
 					{
 						continue;
 					}
-					$blockActionClass = new ReflectionClass($className);
-					if ($blockActionClass->isSubclassOf('website_BlockAction'))
+					
+					$blockAction = new $className($type);
+					if (isset($blockInfoArray['lang']))
 					{
-						$blockAction = $blockActionClass->newInstance($type);
-						if (isset($blockInfoArray['lang']))
+						$blockAction->setLang($blockInfoArray['lang']);
+					}
+	
+					foreach ($blockInfoArray['parameters'] as $name => $value)
+					{
+						$blockAction->setConfigurationParameter($name, $value);
+					}
+					$blockConfig = $blockAction->getConfiguration();
+					$blockInfo = block_BlockService::getInstance()->getBlockInfo($blockInfoArray["package"]."_".$blockInfoArray["name"]);
+					if ($blockInfo === null)
+					{
+						Framework::warn(__METHOD__ . " This block has no block info. You should declare it in the blocks.xml config file and hide it if you need to.");
+					}
+					else if ($blockInfo->hasMeta() && $blockConfig->getEnablemetas())
+					{
+						list(, $moduleName) = explode('_', $blockInfoArray["package"]);
+						$metaPrefix = $moduleName."_".f_util_StringUtils::lcfirst($blockInfoArray["name"]).".";
+	
+						$newMetas = array();
+						foreach ($blockInfo->getTitleMetas() as $meta)
 						{
-							$blockAction->setLang($blockInfoArray['lang']);
+							$newMetas[] = $metaPrefix . $meta;
 						}
-
-						foreach ($blockInfoArray['parameters'] as $name => $value)
+						$metasAvailable["title"] = array_merge($metasAvailable["title"], $newMetas);
+	
+						$newMetas = array();
+						foreach ($blockInfo->getDescriptionMetas() as $meta)
 						{
-							$blockAction->setConfigurationParameter($name, $value);
+							$newMetas[] = $metaPrefix . $meta;
 						}
-						$blockConfig = $blockAction->getConfiguration();
-						$blockInfo = block_BlockService::getInstance()->getBlockInfo($blockInfoArray["package"]."_".$blockInfoArray["name"]);
-						if ($blockInfo === null)
+						$metasAvailable["description"] = array_merge($metasAvailable["description"], $newMetas);
+	
+						$newMetas = array();
+						foreach ($blockInfo->getKeywordsMetas() as $meta)
 						{
-							Framework::warn(__METHOD__ . " This block has no block info. You should declare it in the blocks.xml config file and hide it if you need to.");
+							$newMetas[] = $metaPrefix . $meta;
 						}
-						else if ($blockInfo->hasMeta() && $blockConfig->getEnablemetas())
-						{
-							list(, $moduleName) = explode('_', $blockInfoArray["package"]);
-							$metaPrefix = $moduleName."_".f_util_StringUtils::lcfirst($blockInfoArray["name"]).".";
-
-							$newMetas = array();
-							foreach ($blockInfo->getTitleMetas() as $meta)
-							{
-								$newMetas[] = $metaPrefix . $meta;
-							}
-							$metasAvailable["title"] = array_merge($metasAvailable["title"], $newMetas);
-
-							$newMetas = array();
-							foreach ($blockInfo->getDescriptionMetas() as $meta)
-							{
-								$newMetas[] = $metaPrefix . $meta;
-							}
-							$metasAvailable["description"] = array_merge($metasAvailable["description"], $newMetas);
-
-							$newMetas = array();
-							foreach ($blockInfo->getKeywordsMetas() as $meta)
-							{
-								$newMetas[] = $metaPrefix . $meta;
-							}
-							$metasAvailable["keywords"] = array_merge($metasAvailable["keywords"], $newMetas);
-						}
+						$metasAvailable["keywords"] = array_merge($metasAvailable["keywords"], $newMetas);
 					}
 				}
 			}
 		}
-
 		return $metasAvailable;
 	}
 
@@ -1874,43 +1870,33 @@ class website_PageService extends f_persistentdocument_DocumentService
 				$blocType = 'modules_website_Missing';
 				$className = $bs->getBlockActionClassNameByType($blocType);
 			}
+			
 			$reflectionClass = new ReflectionClass($className);
 			if ($traceBlockAction)
 			{
 				$block['file'] = $reflectionClass->getFileName();
 			}
-			if ($reflectionClass->isSubclassOf('website_BlockAction'))
+			$classInstance = $reflectionClass->newInstance($blocType);
+			if (isset($block['lang']))
 			{
-				$classInstance = $reflectionClass->newInstance($blocType);
-				if (isset($block['lang']))
-				{
-					$classInstance->setLang($block['lang']);
-				}
-				if ($blocType == 'modules_website_Missing')
-				{
-					$classInstance->setOriginalClassName($originalClassName);
-				}
-
-				foreach ($block['parameters'] as $name => $value)
-				{
-					$classInstance->setConfigurationParameter($name, $value);
-				}
-				$idPName = isset($block['id']) ? $block['id'] : 'b_'.$blockId;
-				
-				// This parameter can be used to identify this block inside the page.
-				$classInstance->setConfigurationParameter(website_BlockAction::BLOCK_ID_PARAMETER_NAME, $idPName);
-
-				$block['blockaction'] = $classInstance;
-				$blockPriorities[$blockId] = $classInstance->getOrder();
+				$classInstance->setLang($block['lang']);
 			}
-			else
+			if ($blocType == 'modules_website_Missing')
 			{
-				$classInstance = block_BlockHandler::getNewInstance($blockId);
-				$classInstance->setSpecificationsArray($block);
-				$classInstance->initialize($controller);
-				$block['blockaction'] = $classInstance;
-				$blockPriorities[$blockId] = $classInstance->getOrder();
+				$classInstance->setOriginalClassName($originalClassName);
 			}
+
+			foreach ($block['parameters'] as $name => $value)
+			{
+				$classInstance->setConfigurationParameter($name, $value);
+			}
+			$idPName = isset($block['id']) ? $block['id'] : 'b_'.$blockId;
+			
+			// This parameter can be used to identify this block inside the page.
+			$classInstance->setConfigurationParameter(website_BlockAction::BLOCK_ID_PARAMETER_NAME, $idPName);
+
+			$block['blockaction'] = $classInstance;
+			$blockPriorities[$blockId] = $classInstance->getOrder();
 		}
 
 		asort($blockPriorities);
@@ -1924,22 +1910,14 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$blockData = &$blocks[$blockId];
 			$html = ($traceBlockAction) ? "<!-- Generated by ".$blockData['file']." -->" : "";
 			$blockInstance = $blockData['blockaction'];
-			if ($blockInstance instanceof website_BlockAction)
-			{
-				// Begin capturing. TODO: make a dedicated method instead of write()
-				$controller->getResponse()->getWriter()->write("");
-				$controller->process($blockInstance, $httpRequest);
-				$html .= $controller->getResponse()->getWriter()->getContent();
-			}
-			else
-			{
-				$blockCache = new block_BlockCache($blockInstance);
-				$blockCache->doAction();
-				$html .= $blockCache->doView();
-			}
-			
+
+			// Begin capturing. TODO: make a dedicated method instead of write()
+			$controller->getResponse()->getWriter()->write("");
+			$controller->process($blockInstance, $httpRequest);
+			$html .= $controller->getResponse()->getWriter()->getContent();
+				
 			$blockData['html'] = $html;
-			
+		
 			if ($bench)
 			{
 				if (isset($blocks[$blockId]['id']))

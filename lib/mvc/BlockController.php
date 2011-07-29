@@ -1041,7 +1041,116 @@ class website_BlockController implements f_mvc_Controller
 	}
 }
 
-class website_PageContextRecorder extends framework_FunctionCallRecorder
+class website_FunctionCallRecorder
+{
+	/**
+	 * @var Request
+	 */
+	private $wrappedObject;
+	/**
+	 * @var String
+	 */
+	private $wrappedObjectName;
+	/**
+	 * @var array<String>
+	 */
+	private $recordedMethodNames;
+	/**
+	 * @var array<String>
+	 */
+	private $records;
+	
+
+	/**
+	 * @param Object $request
+	 * @param array<String> $recordedMethodNames
+	 * @param String $wrappedObjectName
+	 */
+	protected function __construct($wrappedObject, &$recordedMethodNames, $wrappedObjectName)
+	{
+		$this->wrappedObject = $wrappedObject;
+		$this->wrappedObjectName = $wrappedObjectName;
+		$this->recordedMethodNames = $recordedMethodNames;
+		$this->records = array();
+		$this->varCount = 0;
+	}
+
+	/**
+	 * @param string $methodName
+	 * @param array $arguments
+	 * @return mixed the return of the call of methodName on wrappedObject
+	 */
+	public function __call($methodName, array $arguments)
+	{
+		if (in_array($methodName, $this->recordedMethodNames))
+		{
+			$record = '$'.$this->wrappedObjectName.'->'.$methodName.'(';
+			$i = 0;
+			foreach ($arguments as $arg)
+			{
+				if ($i > 0)
+				{
+					$record .= ', ';
+				}
+				if (is_object($arg))
+				{
+					$varName = '$obj'.$this->varCount;
+					$this->records[] = $varName.' = unserialize('.var_export(serialize($arg), true).');';
+					$record .= $varName;
+					$this->varCount += 1;
+				}
+				elseif (is_array($arg))
+				{
+					// TODO : refactor
+					$record .= "array(";
+					foreach ($arg as $key => $value)
+					{
+						$record .= var_export($key, true). "=>";
+						if (is_object($value))
+						{
+							$varName = '$obj'.$this->varCount;
+							$this->records[] = $varName.' = unserialize('.var_export(serialize($value), true).');';
+							$record .= $varName;
+							$this->varCount += 1;
+						}
+						else
+						{
+							$record .= var_export($value, true);
+						}
+						$record .= ",";
+					}
+					$record .= ")";
+				}
+				else
+				{
+					$record .= var_export($arg, true);
+				}
+				$i++;
+			}
+			$record .= ');';
+			$this->records[] = $record;
+		}
+		return f_util_ClassUtils::callMethodArgsOn($this->wrappedObject, $methodName, $arguments);
+	}
+	
+	/**
+	 * @param String $record
+	 */
+	protected function addRecord($record)
+	{
+		$this->records[] = $record;
+	}
+
+	/**
+	 * @return String[]
+	 */
+	public function getRecords()
+	{
+		return $this->records;
+	}
+}
+
+class website_PageContextRecorder extends website_FunctionCallRecorder
 {
 	private static $recordedMethodNames = array("setAttribute", "removeAttribute", "setMetatitle", "addScript", "setKeywords", "setDescription", "setTitle", "appendToDescription", "addStyle", "addKeyword", "addMeta", "addRssFeed", "addLink", "addBlockMeta");
 
@@ -1062,7 +1171,7 @@ class website_PageContextRecorder extends framework_FunctionCallRecorder
 	
 	/**
 	 * (non-PHPdoc)
-	 * @see framework_FunctionCallRecorder::getRecords()
+	 * @see website_BlockCacheFunctionCallRecorder::getRecords()
 	 */
 	public function getRecords()
 	{

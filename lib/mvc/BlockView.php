@@ -159,34 +159,8 @@ class website_BlockView
 		$model["context"] = $request->getContext();
 		$model["website_page"] = $request->getContext()->getAttribute("website_page");
 		$template->importAttributes($model);
-		self::pushTemplate($template);
-		try
-		{
-			$response->getWriter()->write($template->execute());
-			self::popTemplate();	
-		}
-		catch (Exception $e)
-		{
-			// simulate finally
-			self::popTemplate();
-			throw $e;
-		}
-	}
-	
-	private static $templates = array();
-	
-	private static function pushTemplate($template)
-	{
-		 self::$templates[] = $template;
-	}
-	
-	private static function popTemplate()
-	{
-		array_pop(self::$templates);
-	}
-	
-	static function getCurrentTemplate()
-	{
-		return f_util_ArrayUtils::lastElement(self::$templates);
+		
+		$response->getWriter()->write($template->execute());
+
 	}
 }
