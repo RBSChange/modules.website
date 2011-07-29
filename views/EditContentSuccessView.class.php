@@ -1,7 +1,6 @@
 <?php
 class website_EditContentSuccessView extends f_view_BaseView
 {
-	
 	/**
 	 * @param Context $context
 	 * @param Request $request
@@ -27,13 +26,13 @@ class website_EditContentSuccessView extends f_view_BaseView
 		$this->setAttribute('cssInclusion', '<?xml-stylesheet href="' . $link->getUrl() . '" type="text/css"?>');
 		
 		// include JavaScript
-		$this->getJsService()->registerScript('modules.website.lib.editcontent');
-		$this->setAttribute('scriptInclusion', $this->getJsService()->executeInline(K::XUL));
+		$jss = website_JsService::getInstance();
+		$jss->registerScript('modules.website.lib.editcontent');
+		$this->setAttribute('scriptInclusion', $jss->executeInline(K::XUL));
 		
 		$link = LinkHelper::getUIChromeActionLink('uixul', 'GetAdminJavascripts')
 			->setArgSeparator(f_web_HttpLink::ESCAPE_SEPARATOR);
-			$this->setAttribute('scriptlibrary', '<script type="application/x-javascript" src="' . $link->getUrl() . '"/>');
-		
+		$this->setAttribute('scriptlibrary', '<script type="application/x-javascript" src="' . $link->getUrl() . '"/>');
 		
 		$this->setAttribute('PAGEID', $document->getId());
 		$this->setAttribute('PAGELANG', RequestContext::getInstance()->getLang());	
@@ -64,6 +63,10 @@ class website_EditContentSuccessView extends f_view_BaseView
 		$this->setAttribute('pageName', f_util_StringUtils::quoteDouble($document->getLabel()));
 	}
 	
+	/**
+	 * @param string $content
+	 * @return string
+	 */
 	public static function normalizeContent($content)
 	{
 		$content = preg_replace('/blockwidth="[0-9]+%"/i', '', $content);

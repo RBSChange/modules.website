@@ -14,7 +14,7 @@ class website_BlankAction extends f_action_BaseAction
 		header("Expires: " . gmdate("D, d M Y H:i:s", time()+60) . " GMT");
 		header("Cache-Control:");
 		header("Pragma:");
-		$ss = StyleService::getInstance();
+		$ss = website_StyleService::getInstance();
 		try
 		{
 			$documentId = $this->getDocumentIdFromRequest($request);
@@ -57,7 +57,7 @@ class website_BlankAction extends f_action_BaseAction
 		{
 			$ss->registerStyle($request->getParameter('specificstylesheet'));
 		}
-		$request->setAttribute('cssInclusion', StyleService::getInstance()->execute(K::HTML));
+		$request->setAttribute('cssInclusion', $ss->execute(K::HTML));
 		return View::SUCCESS;
 	}
 }

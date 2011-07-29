@@ -92,7 +92,7 @@ class website_GenerateStyleSheetAction extends f_action_BaseAction
 						{
 							echo "/* $stylesheetName $mediaType $fullEngine */\n";
 						}
-						echo StyleService::getInstance()->getCSS($stylesheetName, $fullEngine);
+						echo website_StyleService::getInstance()->getCSS($stylesheetName, $fullEngine);
 					}
 					$cssContent = ob_get_contents();		
 					$cssFilePath = f_util_FileUtils::buildWebCachePath('css', $request->getParameter("param"));

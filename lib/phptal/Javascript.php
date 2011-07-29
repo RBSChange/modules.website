@@ -6,7 +6,6 @@
  */
 class PHPTAL_Php_Attribute_CHANGE_Javascript extends PHPTAL_Php_Attribute
 {
-	
     /**
      * Called before element printing.
      * Default implementation is for backwards compatibility only. Please always override both before() and after().
@@ -31,13 +30,13 @@ class PHPTAL_Php_Attribute_CHANGE_Javascript extends PHPTAL_Php_Attribute
             {
             	case 'src':
             		$src = $codewriter->evaluateExpression($value);
-            		$code = '$jsService = JsService::newInstance();$jsService->registerScript('.$src.');';
+            		$code = '$jsService = website_JsService::newInstance();$jsService->registerScript('.$src.');';
 					$codewriter->pushCode($code);
 					$codewriter->doEchoRaw('$jsService->execute("html")');
 					break;
             	case 'head':
             		$src = $codewriter->evaluateExpression($value);
-            		$code = '$wp = $ctx->__get("website_page");if ($wp !== null) {$wp->addScript('.$src.');} else {JsService::getInstance()->registerScript('.$src.');};';
+            		$code = '$wp = $ctx->__get("website_page");if ($wp !== null) {$wp->addScript('.$src.');} else {website_JsService::getInstance()->registerScript('.$src.');};';
 					$codewriter->pushCode($code);
 					break;
             	default:

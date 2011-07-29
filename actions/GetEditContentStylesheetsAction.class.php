@@ -30,7 +30,7 @@ class website_GetEditContentStylesheetsAction extends f_action_BaseAction
 		$styleArray = array('modules.website.backoffice', 'modules.uixul.backoffice', 
 		 'modules.generic.backoffice', 'modules.uixul.EditContent', 'modules.uixul.bindings');
 		
-		$ss = StyleService::getInstance();
+		$ss = website_StyleService::getInstance();
 		foreach ($styleArray as $stylename)
 		{
 			echo $ss->getCSS($stylename, $ss->getFullEngineName('xul'));
@@ -42,7 +42,7 @@ class website_GetEditContentStylesheetsAction extends f_action_BaseAction
 	 */
 	private function renderStylesheets($page)
 	{
-		$ss = StyleService::getInstance();
+		$ss = website_StyleService::getInstance();
 		$skinId = $page->getSkinId();
 		$skin = ($skinId) ? DocumentHelper::getDocumentInstance($skinId) : null;		
 		

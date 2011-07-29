@@ -1,5 +1,4 @@
 <?php
-
 class website_PageRessourceService extends BaseService
 {
 	const GLOBAL_SCREEN_NAME = 'screen';
@@ -7,7 +6,7 @@ class website_PageRessourceService extends BaseService
 	const CHANGE_PAGE_EDITOR_NS = "http://www.rbs.fr/change/1.0/schema";
 
 	/**
-	 * @var f_web_CSSVariables
+	 * @var website_CSSVariables
 	 */
 	private $skin;
 
@@ -21,14 +20,11 @@ class website_PageRessourceService extends BaseService
 	 */
 	private $templateType;
 
-	
 	/**
 	 * @var website_PageRessourceService
 	 */
 	private static $instance;
 	
-
-
 	/**
 	 * @return website_PageRessourceService
 	 */
@@ -41,9 +37,8 @@ class website_PageRessourceService extends BaseService
 		return self::$instance;
 	}
 
-
 	/**
-	 * @param f_web_CSSVariables $skin
+	 * @param website_CSSVariables $skin
 	 */
 	public function setSkin($skin)
 	{
@@ -51,7 +46,7 @@ class website_PageRessourceService extends BaseService
 	}
 
 	/**
-	 * @return f_web_CSSVariables
+	 * @return website_CSSVariables
 	 */
 	private function getSkin()
 	{
@@ -705,7 +700,7 @@ class website_PageRessourceService extends BaseService
 	 */
 	private function appendStylesheetContent($fileHandle, $styleName, $fullengine)
 	{
-		$content = StyleService::getInstance()->getCSS($styleName, $fullengine, $this->getSkin());
+		$content = website_StyleService::getInstance()->getCSS($styleName, $fullengine, $this->getSkin());
 		if ($content !== null)
 		{
 			fwrite($fileHandle, $content);

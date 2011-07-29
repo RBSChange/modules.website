@@ -551,7 +551,7 @@ class website_Page implements f_mvc_Context
 
 	protected function getStyles()
 	{
-		$ss = StyleService::getInstance();
+		$ss = website_StyleService::getInstance();
 		if (isset($this->attributes['styles']))
 		{
 			foreach ($this->attributes['styles'] as $media => $styles)

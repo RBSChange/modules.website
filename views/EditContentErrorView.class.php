@@ -22,11 +22,12 @@ class website_EditContentErrorView extends f_view_BaseView
         }
 
         $modules = array('generic', 'uixul', 'website');
+        $ss = website_StyleService::getInstance();
         foreach ($modules as $module)
         {
-			$this->getStyleService()->registerStyle('modules.' . $module . '.backoffice');
+			$ss->registerStyle('modules.' . $module . '.backoffice');
         }
-        $this->setAttribute('cssInclusion', $this->getStyleService()->execute(K::XUL));
+        $this->setAttribute('cssInclusion', $ss->execute(K::XUL));
     }
 
     public static function normalizeContent($content)

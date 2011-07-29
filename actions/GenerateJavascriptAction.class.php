@@ -62,7 +62,7 @@ class website_GenerateJavascriptAction extends f_action_BaseAction
 				$frontofficeScripts = array();
 			}
 
-			$js = JsService::getInstance();
+			$js = website_JsService::getInstance();
 			foreach ($frontofficeScripts as $script)
 			{
 				$js->registerScript($script);

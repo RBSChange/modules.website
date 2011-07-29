@@ -23,17 +23,19 @@ class website_CheckLinksInputView extends f_view_BaseView
 			$modules[] = substr($availableModuleName, strpos($availableModuleName, '_') + 1);
 		}
 
+		$ss = website_StyleService::getInstance();
 		foreach ($modules as $module)
 		{
 			if (($module == 'website') || ($module == 'uixul') || ($module == 'generic'))
 			{
-				$this->getStyleService()->registerStyle('modules.' . $module . '.backoffice');
+				$ss->registerStyle('modules.' . $module . '.backoffice');
 			}
 		}
-		$this->setAttribute('cssInclusion', $this->getStyleService()->execute(K::XUL));
+		$this->setAttribute('cssInclusion', $ss->execute(K::XUL));
 
-		$this->getJsService()->registerScript('modules.uixul.lib.default');
-		$this->setAttribute('scriptInclusion', $this->getJsService()->executeInline(K::XUL));
+		$jss = website_JsService::getInstance();
+		$jss->registerScript('modules.uixul.lib.default');
+		$this->setAttribute('scriptInclusion', $jss->executeInline(K::XUL));
 
 		$this->setAttribute('ids', implode(', ', $request->getAttribute('ids')));
 
