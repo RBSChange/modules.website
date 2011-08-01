@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <panel>
-	<section labeli18n="modules.uixul.bo.doceditor.fieldsgroup.Title">
+	<section labeli18n="m.uixul.bo.doceditor.fieldsgroup.title">
 		<field name="allowedpagetemplate" />
 		<field name="skin" />
 		<field name="navigationVisibility" />
@@ -13,7 +13,7 @@
 			<field name="mEditReferenceButton">null</field>
 			
 			<constructor><![CDATA[
-				this.mEditReferenceButton = this.addActionButton('&modules.website.bo.actions.EditReferenceButton;', wToolkit.getIcon('edit', 'small'));
+				this.mEditReferenceButton = this.addActionButton("${transui:m.website.bo.actions.editreferencebutton,js,ucf}", wToolkit.getIcon('edit', 'small'));
 				var me = this;
 				this.mEditReferenceButton.addEventListener('command', function(event) {me.onEditReference();}, true);	
 			]]></constructor>

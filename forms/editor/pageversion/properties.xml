@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <panel>
-	<section labeli18n="modules.website.document.page.PrincipalInformations">
+	<section labeli18n="m.website.document.page.principalinformations">
 		<field name="label" />
 		<field name="navigationtitle" />
 		<field name="navigationVisibility" />
 		<field name="indexingstatus" />
 		<field name="usehttps" />
 	</section>
-	<section labeli18n="modules.website.document.page.LayoutInformations">
+	<section labeli18n="m.website.document.page.layoutinformations">
 		<field name="template" type="dropdownlist" nocache="true" />
 		<field name="skin" />
 	</section>
-	<section labeli18n="modules.website.document.page.DateInformations">
+	<section labeli18n="m.website.document.page.dateinformations">
 		<field name="startpublicationdate" />
 		<field name="endpublicationdate" />
 	</section>
-	<section labeli18n="modules.website.document.page.Referencing">
+	<section labeli18n="m.website.document.page.referencing">
 		<field name="robotsmeta" />
 		<field name="metatitle" class="template" rows="3" />
 		<field name="description" class="template" rows="3" />
@@ -26,7 +26,7 @@
 			<field name="mEditContentButton">null</field>
 
 			<constructor><![CDATA[
-				this.mEditContentButton = this.addActionButton('&modules.website.bo.actions.EditContent;', wToolkit.getIcon('edit-page-content', 'small'));
+				this.mEditContentButton = this.addActionButton("${transui:m.website.bo.actions.editcontent,js,ucf}", wToolkit.getIcon('edit-page-content', 'small'));
 				var me = this;
 				this.mEditContentButton.addEventListener('command', function(event) {me.onEditContent();}, true);			
 				this.extendMethod("updateCommandsUI", this.updateEditContentUI);

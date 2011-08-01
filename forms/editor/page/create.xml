@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <panel>
-	<section labeli18n="modules.website.document.page.TitleInformations">
+	<section labeli18n="m.website.document.page.titleinformations">
 		<field name="navigationtitle"/>
 		<field name="defaultContent" type="dropdownlist" required="true" 
 			label="Gabarit de la page" nocache="true"></field>

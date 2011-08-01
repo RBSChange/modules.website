@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <panel>
-	<section labeli18n="modules.website.document.page.PrincipalInformations">
+	<section labeli18n="m.website.document.page.principalinformations">
 		<field name="label" />
 		<field name="navigationtitle" />
 		<field name="navigationVisibility" />
 		<field name="indexingstatus" />
 	</section>
-	<section labeli18n="modules.website.document.page.LayoutInformations">
+	<section labeli18n="m.website.document.page.layoutinformations">
 		<field name="defaultContent" type="dropdownlist" required="true" 
-			labeli18n="modules.website.document.page.Template" nocache="true" />
+			labeli18n="m.website.document.page.template" nocache="true" />
 		<field name="skin" />
 	</section>
-	<section labeli18n="modules.website.document.page.DateInformations">
+	<section labeli18n="m.website.document.page.dateinformations">
 		<field name="startpublicationdate" />
 		<field name="endpublicationdate" />
 	</section>
-	<section labeli18n="modules.website.document.page.Referencing" class="toggle" hidden="true">
+	<section labeli18n="m.website.document.page.referencing" class="toggle" hidden="true">
 		<field name="robotsmeta" />
 		<field name="metatitle" class="template" rows="3" />
 		<field name="description" class="template" rows="3" />

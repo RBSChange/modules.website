@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <panel>
-	<section labeli18n="modules.uixul.bo.doceditor.fieldsgroup.Title">
+	<section labeli18n="m.uixul.bo.doceditor.fieldsgroup.title">
 		<field name="label" />
 		<field name="domain" />
 		<field name="localizebypath" />
@@ -9,22 +9,22 @@
 		<field name="description" />
 	</section>
 	
-	<section labeli18n="modules.website.document.website.Section-advanced">
+	<section labeli18n="m.website.document.website.section-advanced">
 		<field name="favicon" />
 		<field name="robottxt" />
 		<field name="stylesheet" emptylabel="" />
 	</section>	
 		
-	<section labeli18n="modules.website.document.website.Section-searchengine">
-		<section labeli18n="modules.website.document.website.Section-google">
+	<section labeli18n="m.website.document.website.section-searchengine">
+		<section labeli18n="m.website.document.website.section-google">
 			<field name="googlefileid" />
 			<field name="googlefilecontent" />
 		</section>
-		<section labeli18n="modules.website.document.website.Section-yahoo">
+		<section labeli18n="m.website.document.website.section-yahoo">
 			<field name="yahoofileid" />
 			<field name="yahoofilecontent" />
 		</section>		
-		<section labeli18n="modules.website.document.website.Section-msn">
+		<section labeli18n="m.website.document.website.section-msn">
 			<field name="msnfilecontent" />
 		</section>
 	</section>	

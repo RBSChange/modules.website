@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <panel>
-	<section labeli18n="modules.website.document.pagegroup.VersionTitle">
+	<section labeli18n="m.website.document.pagegroup.versiontitle">
 		<fieldinput name="versionsJSON" type="namedgridlist" flex="1" />
 	</section>
 	<xul>
@@ -17,7 +17,7 @@
 				button = this.getElementByAnonId('next_error_property');
 				if (button) {button.hidden = true;}	
 
-				this.mAddNewVersionButton = this.addActionButton('&modules.website.bo.actions.AddNewEmptyVersionButton;', wToolkit.getIcon('add', 'small'));
+				this.mAddNewVersionButton = this.addActionButton("${transui:m.website.bo.actions.addnewemptyversionbutton,js,ucf}", wToolkit.getIcon('add', 'small'));
 				var me = this;
 				this.mAddNewVersionButton.addEventListener('command', function(event) {me.onAddNewVersion();}, true);
 			]]></constructor>

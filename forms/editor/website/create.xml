@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <panel>
-	<section labeli18n="modules.uixul.bo.doceditor.fieldsgroup.Title">
+	<section labeli18n="m.uixul.bo.doceditor.fieldsgroup.title">
 		<field name="label" />
 		<field name="domain" />
 		<field name="localizebypath" />
-		<field name="structureinit" labeli18n="modules.website.document.website.Structureinit"
-			shorthelp="&amp;modules.website.document.website.Structureinit-help;"
+		<field name="structureinit" labeli18n="m.website.document.website.structureinit"
+			shorthelpi18n="m.website.document.website.structureinit-help"
 			type="dropdownlist" listid="modules_website/defaultstructure" 
 			emptylabel="&amp;modules.website.bo.general.structure.No-content;"/>
-		<field name="template" labeli18n="modules.website.document.website.Template"
-			shorthelp="&amp;modules.website.document.website.Template-help;"
+		<field name="template" labeli18n="m.website.document.website.template"
+			shorthelpi18n="m.website.document.website.template-help"
 			type="document" allow="modules_theme_pagetemplate" moduleselector="theme" />
-		<field name="templateHome" labeli18n="modules.website.document.website.TemplateHome"
-			shorthelp="&amp;modules.website.document.website.TemplateHome-help;"
+		<field name="templateHome" labeli18n="m.website.document.website.templatehome"
+			shorthelpi18n="m.website.document.website.templatehome-help"
 			type="document" allow="modules_theme_pagetemplate" moduleselector="theme" />
 	</section>
 </panel>
