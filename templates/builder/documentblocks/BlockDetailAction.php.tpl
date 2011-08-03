@@ -34,7 +34,7 @@ class <{$module}>_Block<{$blockName}>Action extends <{if $genTag }>website_Tagge
 		if (!$<{$documentModel->getDocumentName()}>->isPublished())
 		{
 			// Un-published documents must not be seen in front-office
-			return $this->genericView(block_BlockView::UNAVAILABLE);
+			return $this->genericView('Unavailable');
 		}
 
 		return website_BlockView::SUCCESS;
