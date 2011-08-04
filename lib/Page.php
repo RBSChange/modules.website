@@ -674,105 +674,11 @@ class website_Page implements f_mvc_Context
 	// Deprecated
 	
 	/**
-	 * @deprecated (will be removed in 4.0) use block meta mechanism instead and implement getMeta() on your block
-	 */
-	public function setKeywords($string)
-	{
-		$this->setAttribute('keywords', $string);
-	}
-
-	/**
-	 * @deprecated (will be removed in 4.0) use block meta mechanism instead and implement getMeta() on your block
-	 */
-	public function setDescription($string)
-	{
-		$this->setAttribute('description', $string);
-	}
-
-	/**
-	 * @deprecated (will be removed in 4.0) use block meta mechanism instead and implement getMeta() on your block
-	 */
-	public function setNavigationtitle($string)
-	{
-		$this->page->setNavigationtitle($string);
-	}
-	
-	/**
-	 * @deprecated (will be removed in 4.0) use block meta mechanism instead and implement getMeta() on your block
-	 */
-	public function appendToDescription($string)
-	{
-		if ($this->hasAttribute('description'))
-		{
-			$this->setAttribute('description', $this->getAttribute('description') . ' ' . $string);;
-		}
-		else
-		{
-			$this->setAttribute('description', $string);
-		}
-	}
-	
-	/**
-	 * @deprecated (will be removed in 4.0) in favor to setTitle()
-	 */
-	public function setMetatitle($string)
-	{
-		$this->setTitle($string);
-	}
-
-	/**
-	 * @deprecated (will be removed in 4.0) use block meta mechanism instead and implement getMeta() on your block
-	 */
-	public function setTitle($string)
-	{
-		$this->setAttribute('title', $string);
-	}
-	
-	/**
-	 * @deprecated (will be removed in 4.0) use block meta mechanism instead and implement getMeta() on your block
-	 */
-	public function addKeyword($string)
-	{
-		if ($this->hasAttribute('keywords'))
-		{
-			$this->setAttribute('keywords', $this->getAttribute('keywords') . ', ' . $string);
-		}
-		else
-		{
-			$this->setAttribute('keywords', $string);
-		}
-	}
-
-	/**
 	 * @deprecated (will be removed in 4.0)
 	 */
 	public function inBackofficeMode()
 	{
 		return $this->getAttribute(website_BlockAction::BLOCK_BO_MODE_ATTRIBUTE, false);
-	}
-
-	/**
-	 * @deprecated (will be removed in 4.0)
-	 */
-	public function getGlobalRequest()
-	{
-		return change_Controller::getInstance()->getContext()->getRequest();
-	}
-
-	/**
-	 * @deprecated (will be removed in 4.0)
-	 */
-	public function getGlobalContext()
-	{
-		return change_Controller::getInstance()->getContext();
-	}
-
-	/**
-	 * @deprecated (will be removed in 4.0)
-	 */
-	public function inIndexingMode()
-	{
-		return false;
 	}
 
 	/**

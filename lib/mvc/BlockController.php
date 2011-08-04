@@ -1041,52 +1041,6 @@ class website_BlockController implements f_mvc_Controller
 		array_pop($this->actionRequestStack);
 		$this->actionRequest = f_util_ArrayUtils::lastElement($this->actionRequestStack);
 	}
-	
-	// Deprecated
-	
-	/**
-	 * @deprecated (will be removed in 4.0)
-	 */
-	private $globalRequest;
-	
-	/**
-	 * @deprecated (will be removed in 4.0)
-	 */
-	private $globalContext;
-
-	/**
-	 * @deprecated (will be removed in 4.0)
-	 */
-	public function getGlobalRequest()
-	{
-		if ($this->globalRequest !== null) { return $this->globalRequest;}
-		return change_Controller::getInstance()->getContext()->getRequest();
-	}
-
-	/**
-	 * @deprecated (will be removed in 4.0)
-	 */
-	public function setGlobalRequest($globalRequest)
-	{
-		$this->globalRequest = $globalRequest;
-	}
-
-	/**
-	 * @deprecated (will be removed in 4.0)
-	 */
-	public function getGlobalContext()
-	{
-		if ($this->globalContext !== null) { return $this->globalContext; }
-		return change_Controller::getInstance()->getContext();
-	}
-
-	/**
-	 * @deprecated (will be removed in 4.0)
-	 */
-	public function setContext($globalContext)
-	{
-		$this->globalContext = $globalContext;
-	}
 }
 
 class website_FunctionCallRecorder
@@ -1200,7 +1154,7 @@ class website_FunctionCallRecorder
 
 class website_PageContextRecorder extends website_FunctionCallRecorder
 {
-	private static $recordedMethodNames = array("setAttribute", "removeAttribute", "setMetatitle", "addScript", "setKeywords", "setDescription", "setTitle", "appendToDescription", "addStyle", "addKeyword", "addMeta", "addRssFeed", "addLink", "addBlockMeta");
+	private static $recordedMethodNames = array("setAttribute", "removeAttribute", "addScript", "addStyle", "addMeta", "addRssFeed", "addLink", "addBlockMeta");
 
 	/**
 	 * @param website_Page $page
