@@ -8,8 +8,8 @@
 			</children>
 			<styles properties="toolbartype isHomePage isIndexPage visibility notindexable block"/>
 			<columns>
-				<column name="domain" label="Website-url" flex="2"/>
-				<column name="modificationdate" label="Modificationdate" flex="1"/>
+				<column name="domain" labeli18n="m.website.bo.general.column.website-url" flex="2"/>
+				<column name="modificationdate" flex="1"/>
 			</columns>
 			<contextactions>
 				<contextaction name="edit"/>
@@ -35,7 +35,7 @@
 			</drops>
 			<styles properties="toolbartype isHomePage isIndexPage visibility notindexable block"/>
 			<columns>
-				<column name="modificationdate" label="Modificationdate" flex="1"/>
+				<column name="modificationdate" flex="1"/>
 			</columns>
 			<contextactions>
 				<contextaction name="edit"/>
@@ -70,7 +70,7 @@
 			</drops>
 			<styles properties="toolbartype isHomePage isIndexPage visibility notindexable block"/>
 			<columns>
-				<column name="modificationdate" label="Modificationdate" flex="1"/>
+				<column name="modificationdate" flex="1"/>
 			</columns>
 			<contextactions>
 				<contextaction name="edit"/>
@@ -102,7 +102,7 @@
 			</drops>
 			<styles properties="toolbartype isHomePage isIndexPage visibility notindexable block"/>
 			<columns>
-				<column name="modificationdate" label="Modificationdate" flex="1"/>
+				<column name="modificationdate" flex="1"/>
 			</columns>
 			<contextactions>
 				<contextaction name="edit"/>
@@ -148,7 +148,7 @@
 		<model name="modules_website/pagegroup">
 			<styles properties="toolbartype isHomePage isIndexPage visibility notindexable block"/>
 			<columns>
-				<column name="modificationdate" label="Modificationdate" flex="1"/>
+				<column name="modificationdate" flex="1"/>
 			</columns>
 			<contextactions>
 				<contextaction name="edit"/>
@@ -190,8 +190,8 @@
 			</children>
 			<styles properties="toolbartype isHomePage isIndexPage visibility notindexable block"/>
 			<columns>
-				<column name="tagLabel" label="Menu-tag" flex="2"/>
-				<column name="modificationdate" label="Modificationdate" flex="1"/>
+				<column name="tagLabel" labeli18n="m.website.bo.general.column.menu-tag" flex="2"/>
+				<column name="modificationdate" flex="1"/>
 			</columns>
 			<contextactions>
 				<contextaction name="openFolder"/>
@@ -213,9 +213,9 @@
 			</drops>
 			<styles properties="toolbartype isHomePage isIndexPage visibility notindexable block"/>
 			<columns>
-				<column name="refers-to" label="Menuitem-refers-to" flex="5"/>
-				<column name="popup" label="Menuitem-popup" flex="1"/>
-				<column name="modificationdate" label="Modificationdate" flex="1"/>
+				<column name="refers-to" labeli18n="m.website.bo.general.column.menuitem-refers-to" flex="5"/>
+				<column name="popup" labeli18n="m.website.bo.general.column.menuitem-popup" flex="1"/>
+				<column name="modificationdate" flex="1"/>
 			</columns>
 			<contextactions>
 				<contextaction name="edit"/>
