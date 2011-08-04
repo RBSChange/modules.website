@@ -2,11 +2,11 @@
 /**
  * @package modules.website.actions
  */
-class website_GetSearchEngineFileAction extends f_action_BaseAction
+class website_GetSearchEngineFileAction extends change_Action
 {
 	/**
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	public function _execute($context, $request)
 	{	
@@ -29,12 +29,12 @@ class website_GetSearchEngineFileAction extends f_action_BaseAction
 			$id = $request->getParameter('id');
 			if ($this->sendContent($website, $engine, $id))
 			{
-				return View::NONE;
+				return change_View::NONE;
 			}
 		}
 		
 		f_web_http_Header::setStatus(404);
-    	return View::NONE;
+    	return change_View::NONE;
 	}
 	
 	/**

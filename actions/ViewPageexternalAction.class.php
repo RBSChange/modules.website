@@ -3,11 +3,11 @@
  * website_ViewPageexternalAction
  * @package modules.website.actions
  */
-class website_ViewPageexternalAction extends f_action_BaseAction
+class website_ViewPageexternalAction extends change_Action
 {
 	/**
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	public function _execute($context, $request)
 	{
@@ -25,14 +25,14 @@ class website_ViewPageexternalAction extends f_action_BaseAction
 			
 			if ($pageexternal instanceof website_persistentdocument_pageexternal && $pageexternal->isPublished())
 			{
-				HttpController::getInstance()->redirectToUrl($pageexternal->getUrl());
+				change_Controller::getInstance()->redirectToUrl($pageexternal->getUrl());
 			}
 		}
 		catch (Exception $e)
 		{		
 			Framework::exception($e);
 		}
-		$context->getController()->forward(AG_ERROR_404_MODULE, AG_ERROR_404_ACTION);
+		$context->getController()->forward('website', 'Error404');
 	}
 	
 	/**

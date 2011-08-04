@@ -1,9 +1,9 @@
 <?php
-class website_UrlForwardAction extends f_action_BaseAction
+class website_UrlForwardAction extends change_Action
 {
 	/**
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	public function _execute($context, $request)
     {
@@ -21,7 +21,7 @@ class website_UrlForwardAction extends f_action_BaseAction
 
     public function getRequestMethods()
     {
-    	return Request::GET | Request::POST;
+    	return change_Request::GET | change_Request::POST;
     }
 
     /**

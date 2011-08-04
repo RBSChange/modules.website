@@ -71,7 +71,7 @@ class website_ChangeCacheRenderer
 	 */
 	private function isCacheEnabled()
 	{
-		return f_DataCacheService::getInstance()->isEnabled() && (!defined("AG_DISABLE_BLOCK_CACHE") || !AG_DISABLE_BLOCK_CACHE);
+		return f_DataCacheService::getInstance()->isEnabled() && !DISABLE_BLOCK_CACHE;
 	}
 	
 	/**

@@ -3,11 +3,11 @@
  * website_BlankAction
  * @package modules.website
  */
-class website_BlankAction extends f_action_BaseAction
+class website_BlankAction extends change_Action
 {
 	/**
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	public function _execute($context, $request)
 	{
@@ -58,6 +58,6 @@ class website_BlankAction extends f_action_BaseAction
 			$ss->registerStyle($request->getParameter('specificstylesheet'));
 		}
 		$request->setAttribute('cssInclusion', $ss->execute(K::HTML));
-		return View::SUCCESS;
+		return change_View::SUCCESS;
 	}
 }

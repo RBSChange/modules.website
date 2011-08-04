@@ -143,7 +143,7 @@ class website_ChangeBlockRenderer
 	private function getRequestParameters($extensionParams, $moduleName)
 	{
 		$parameters = array();
-		$globalRequest = HttpController::getInstance()->getContext()->getRequest();
+		$globalRequest = change_Controller::getInstance()->getContext()->getRequest();
 		if ($globalRequest->hasParameter($moduleName.'Param'))
 		{
 			$parameters = $globalRequest->getParameter($moduleName.'Param');

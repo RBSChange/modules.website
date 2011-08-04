@@ -33,7 +33,7 @@ class website_ListBlocktemplatesService extends BaseService implements list_List
 	 */
 	public final function getItems()
 	{
-		$request = Controller::getInstance()->getContext()->getRequest();
+		$request = change_Controller::getInstance()->getContext()->getRequest();
 		if (!$request->hasParameter('blockModule'))
 		{
 			Framework::info(__METHOD__ . ' Missing blockModule parameter');

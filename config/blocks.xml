@@ -83,10 +83,5 @@
 			<parameter name="showComments" type="Boolean" default-value="true" />
 		</parameters>
 	</block>
-	<block type="modules_website_dashboardorphanpages" icon="orphan-pages" dashboard="true" labeli18n="m.website.bo.dashboard.orphanpages">
-		<parameters>
-			<parameter name="website" type="modules_website/website" max-occurs="1" />
-		</parameters>
-	</block>
 	<block type="modules_website_DashboardLastModifiedPages" icon="page" dashboard="true" />
 </blocks>

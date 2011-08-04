@@ -37,7 +37,7 @@ class commands_CompileHtaccessOnDevMode extends commands_AbstractChangeCommand
 		$old = $oldAndCurrent["old"];
 		$current = $oldAndCurrent["current"];
 		
-		if ($old["defines"]["AG_DEVELOPMENT_MODE"] != $current["defines"]["AG_DEVELOPMENT_MODE"])
+		if ($old["defines"]["DEVELOPMENT_MODE"] != $current["defines"]["DEVELOPMENT_MODE"])
 		{
 			$this->loadFramework();
 			$this->getParent()->executeCommand("compile-htaccess");

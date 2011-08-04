@@ -1,9 +1,9 @@
 <?php
-class website_GetEditContentStylesheetsAction extends f_action_BaseAction
+class website_GetEditContentStylesheetsAction extends change_Action
 {
 	/**
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	public function _execute($context, $request)
 	{
@@ -14,7 +14,7 @@ class website_GetEditContentStylesheetsAction extends f_action_BaseAction
         $pageId = $this->getDocumentIdFromRequest($request);
         if (intval($pageId) > 0)
         {
-        	controller_ChangeController::getInstance()->setNoCache();
+        	change_Controller::getInstance()->setNoCache();
 			$this->renderStylesheets(DocumentHelper::getDocumentInstance($pageId));
         }
         else
@@ -22,7 +22,7 @@ class website_GetEditContentStylesheetsAction extends f_action_BaseAction
         	$this->renderBindings();
         }
 		$rq->endI18nWork();		
-		return View::NONE;
+		return change_View::NONE;
 	}
 	
 	private function renderBindings()

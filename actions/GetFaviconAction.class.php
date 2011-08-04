@@ -2,11 +2,11 @@
 /**
  * @package modules.website.actions
  */
-class website_GetFaviconAction extends f_action_BaseAction
+class website_GetFaviconAction extends change_Action
 {
 	/**
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	public function _execute($context, $request)
 	{
@@ -31,7 +31,7 @@ class website_GetFaviconAction extends f_action_BaseAction
 			{
 				$request->setParameter('cmpref', $favicon->getId());
 				$context->getController()->forward('media', 'Display');	
-				return View::NONE;
+				return change_View::NONE;
 			}
 		}	
 		$mimeType = ($website) ? $website->getFaviconMimeType() : 'image/x-icon';
@@ -46,7 +46,7 @@ class website_GetFaviconAction extends f_action_BaseAction
 		{
 			readfile(f_util_FileUtils::buildWebeditPath('media', 'frontoffice', 'favicon.ico'));
 		}	
-		return View::NONE;			
+		return change_View::NONE;			
 	}
 	
 	public function isSecure()

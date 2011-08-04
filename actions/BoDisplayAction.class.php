@@ -1,14 +1,14 @@
 <?php
-class website_BoDisplayAction extends f_action_BaseAction
+class website_BoDisplayAction extends change_Action
 {
 
     /**
-     * @param Context $context
-     * @param Request $request
+     * @param change_Context $context
+     * @param change_Request $request
      */
     public function _execute ($context, $request)
     {
-    	controller_ChangeController::setNoCache();      
+    	change_Controller::setNoCache();      
         try
         {
         	$document = $this->getDocumentInstanceFromRequest($request);
@@ -17,7 +17,7 @@ class website_BoDisplayAction extends f_action_BaseAction
         	if ($page instanceof website_persistentdocument_pageexternal)
         	{
         		$context->getController()->redirectToUrl($page->getUrl());
-        		return View::NONE;
+        		return change_View::NONE;
         	} 
         	else if (!$page instanceof website_persistentdocument_page)
         	{
@@ -25,7 +25,7 @@ class website_BoDisplayAction extends f_action_BaseAction
         	}
             
         	website_PageService::getInstance()->render($page); 	
-        	return View::NONE;            
+        	return change_View::NONE;            
         } 
         catch (Exception $e)
         {
@@ -33,7 +33,7 @@ class website_BoDisplayAction extends f_action_BaseAction
             $controller = $context->getController();
             $controller->forward('website', 'Error404');
         }
-        return View::NONE;
+        return change_View::NONE;
     }
     	
 	/**

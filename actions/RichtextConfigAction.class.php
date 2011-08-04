@@ -1,9 +1,9 @@
 <?php
-class website_RichtextConfigAction extends f_action_BaseAction
+class website_RichtextConfigAction extends change_Action
 {
 	/**
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	public function _execute($context, $request)
 	{
@@ -12,7 +12,7 @@ class website_RichtextConfigAction extends f_action_BaseAction
 			
 		$request->setAttribute('subset', $subset);
 		$request->setAttribute('configset', $configSet);
-		return View::SUCCESS;
+		return change_View::SUCCESS;
 	}
 
 	/**

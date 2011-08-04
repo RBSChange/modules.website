@@ -150,7 +150,7 @@ class website_BlockController implements f_mvc_Controller
 		{
 			$currentRequest = f_util_ArrayUtils::lastElement($this->actionRequestStack);
 			// TODO : take care of website_BlockAction::SUBMIT_PARAMETER_NAME value ! (must reinitialize to the proper value)
-			$globalRequest = HttpController::getInstance()->getContext()->getRequest();
+			$globalRequest = change_Controller::getInstance()->getContext()->getRequest();
 			$parameters = $this->buildActionRequestParameters($action->getRequestModuleNames(), $globalRequest);
 			if ($currentRequest !== null)
 			{
@@ -986,7 +986,7 @@ class website_BlockController implements f_mvc_Controller
 			//echo "Has subBlocks";
 			$from = array();
 			$to = array();
-			$globalRequest = HttpController::getInstance()->getContext()->getRequest();
+			$globalRequest = change_Controller::getInstance()->getContext()->getRequest();
 			foreach ($subBlocks as $subBlockIndex => $subBlock)
 			{
 				$moduleName = $subBlock["moduleName"];
@@ -1060,7 +1060,7 @@ class website_BlockController implements f_mvc_Controller
 	public function getGlobalRequest()
 	{
 		if ($this->globalRequest !== null) { return $this->globalRequest;}
-		return HttpController::getInstance()->getContext()->getRequest();
+		return change_Controller::getInstance()->getContext()->getRequest();
 	}
 
 	/**
@@ -1077,7 +1077,7 @@ class website_BlockController implements f_mvc_Controller
 	public function getGlobalContext()
 	{
 		if ($this->globalContext !== null) { return $this->globalContext; }
-		return HttpController::getInstance()->getContext();
+		return change_Controller::getInstance()->getContext();
 	}
 
 	/**
@@ -1092,7 +1092,7 @@ class website_BlockController implements f_mvc_Controller
 class website_FunctionCallRecorder
 {
 	/**
-	 * @var Request
+	 * @var change_Request
 	 */
 	private $wrappedObject;
 	/**

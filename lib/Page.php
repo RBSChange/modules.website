@@ -639,11 +639,11 @@ class website_Page implements f_mvc_Context
 	}
 
 	/**
-	 * @return FrameworkSecurityUser
+	 * @return change_User
 	 */
 	public function getSessionUser()
 	{
-		return HttpController::getInstance()->getContext()->getUser();
+		return change_Controller::getInstance()->getContext()->getUser();
 	}
 
 	public function addContainerStylesheet()
@@ -756,7 +756,7 @@ class website_Page implements f_mvc_Context
 	 */
 	public function getGlobalRequest()
 	{
-		return HttpController::getInstance()->getContext()->getRequest();
+		return change_Controller::getInstance()->getContext()->getRequest();
 	}
 
 	/**
@@ -764,7 +764,7 @@ class website_Page implements f_mvc_Context
 	 */
 	public function getGlobalContext()
 	{
-		return HttpController::getInstance()->getContext();
+		return change_Controller::getInstance()->getContext();
 	}
 
 	/**

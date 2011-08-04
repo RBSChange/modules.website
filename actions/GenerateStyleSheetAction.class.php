@@ -3,7 +3,7 @@
  * website_GenerateStyleSheetAction
  * @package modules.website.actions
  */
-class website_GenerateStyleSheetAction extends f_action_BaseAction
+class website_GenerateStyleSheetAction extends change_Action
 {
 	/**
 	 * @see f_action_BaseAction::isSecure()
@@ -15,15 +15,15 @@ class website_GenerateStyleSheetAction extends f_action_BaseAction
 	}
 
 	/**
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	public function _execute($context, $request)
 	{
 		$this->setContentType('text/css; charset=UTF-8');
 		if (Framework::inDevelopmentMode())
 		{
-			controller_ChangeController::setNoCache();
+			change_Controller::setNoCache();
 		}
 		if (Framework::isInfoEnabled())
 		{
@@ -129,6 +129,6 @@ class website_GenerateStyleSheetAction extends f_action_BaseAction
 			f_web_http_Header::setStatus(404);
 			echo $e->getMessage();
 		}
-		return View::NONE;		
+		return change_View::NONE;		
 	}
 }

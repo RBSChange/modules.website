@@ -15,10 +15,10 @@ class website_BlockExceptionAction extends website_BlockAction
 			return website_BlockView::NONE;
 		}
 		
-		$globalRequest = Controller::getInstance()->getContext()->getRequest();
-		if ($globalRequest->hasAttribute(f_action_BaseAction::EXCEPTION_KEY))
+		$globalRequest = change_Controller::getInstance()->getContext()->getRequest();
+		if ($globalRequest->hasAttribute(change_Action::EXCEPTION_KEY))
 		{
-			$exception = $globalRequest->getAttribute(f_action_BaseAction::EXCEPTION_KEY);
+			$exception = $globalRequest->getAttribute(change_Action::EXCEPTION_KEY);
 			$request->setAttribute("exception", $exception);
 		}
 		

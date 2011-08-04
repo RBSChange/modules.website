@@ -1,6 +1,11 @@
 <?php
-class website_UrlRewritingService extends website_BaseRewritingService
+class website_UrlRewritingService extends BaseService
 {
+	/**
+	 * @var website_UrlRewritingService
+	 */
+	protected static $instance;
+	
 	/**
 	 * @return website_UrlRewritingService
 	 */
@@ -484,7 +489,7 @@ class website_UrlRewritingService extends website_BaseRewritingService
 	/**
 	 * @param string $urlToForward
 	 * @param string $host
-	 * @param ChangeRequest $request
+	 * @param change_Request $request
 	 * @return array<$moduleName, $actionName>
 	 */
 	public function getActionToforward($urlToForward, $host, $request)
@@ -639,15 +644,16 @@ class website_UrlRewritingService extends website_BaseRewritingService
 		{
 			return $this->getUnavailableAction($e);	
 		}
+		
 		if ($moduleName === null)
 		{
-			return $this->getCompatibleActionToForward($urlToForward, $host, $request);
+			return array('website', 'Error404');
 		}
 		return array($moduleName, $actionName);
 	}
 	
 	/**
-	 * @param ChangeRequest $request
+	 * @param change_Request $request
 	 * @param string $moduleName
 	 * @param string $paramName
 	 * @param string $paramValue
@@ -858,7 +864,7 @@ class website_UrlRewritingService extends website_BaseRewritingService
 	/**
 	 * @param string $urlToForward
 	 * @param string $domaine
-	 * @param ChangeRequest $request
+	 * @param change_Request $request
 	 * @return array<$moduleName, $actionName>
 	 */
 	private function getCompatibleActionToForward($urlToForward, $domaine, $request)
@@ -886,7 +892,7 @@ class website_UrlRewritingService extends website_BaseRewritingService
 	 * @param string $lang
 	 * @param string $path
 	 * @param integer $redirectType
-	 * @param ChangeRequest $request
+	 * @param change_Request $request
 	 * @return array<modulename, actionName>
 	 */
 	private function getRedirectAction($website, $lang, $path, $redirectType, $request)

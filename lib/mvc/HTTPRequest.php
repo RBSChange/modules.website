@@ -29,7 +29,7 @@ class f_mvc_HTTPRequest implements f_mvc_Request
 	private $messages = array();
 	
 	/**
-	 * @var WebRequest
+	 * @var change_Request
 	 */
 	private $agaviRequest;
 	
@@ -40,7 +40,7 @@ class f_mvc_HTTPRequest implements f_mvc_Request
 	
 	private function __construct()
 	{
-		$this->agaviRequest = HttpController::getInstance()->getContext()->getRequest();
+		$this->agaviRequest = change_Controller::getInstance()->getContext()->getRequest();
 	}
 	
 	/**

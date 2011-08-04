@@ -1,11 +1,11 @@
 <?php
-class website_SaveContentAction extends f_action_BaseJSONAction
+class website_SaveContentAction extends change_JSONAction
 {
 	const PAGE_CONTENT_ACCESSOR = 'content';
 	
 	/**
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	public function _execute($context, $request)
 	{

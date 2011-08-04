@@ -1,5 +1,5 @@
 <?php
-class website_DisplayAction extends f_action_BaseAction
+class website_DisplayAction extends change_Action
 {
 	protected function getDocumentIdArrayFromRequest($request)
 	{
@@ -25,8 +25,8 @@ class website_DisplayAction extends f_action_BaseAction
 	}
 	
 	/**
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	public function _execute($context, $request)
 	{
@@ -34,10 +34,10 @@ class website_DisplayAction extends f_action_BaseAction
 		if (!$website->isPublished())
 		{
 			include f_util_FileUtils::buildWebeditPath('site-disabled.php');
-			return View::NONE;
+			return change_View::NONE;
 		}
 			
-		controller_ChangeController::setNoCache();
+		change_Controller::setNoCache();
 		$this->setContentType('text/html');
 		$pageId = $this->getDocumentIdFromRequest($request);
 		try
@@ -46,7 +46,7 @@ class website_DisplayAction extends f_action_BaseAction
 			if ($page instanceof website_persistentdocument_pageexternal)
 			{
 				$context->getController()->redirectToUrl($page->getUrl());
-				return View::NONE;
+				return change_View::NONE;
 			}
 			else if (! $page instanceof website_persistentdocument_page)
 			{
@@ -74,23 +74,23 @@ class website_DisplayAction extends f_action_BaseAction
 					}
 					header("HTTP/1.1 301 Moved Permanently");
 					$context->getController()->redirectToUrl($url);
-					return View::NONE;
+					return change_View::NONE;
 				}
 			}
 			website_PageService::getInstance()->render($page);
-			return View::NONE;
+			return change_View::NONE;
 		}
 		catch (PageException $e)
 		{
 			$this->handlePageException($pageId, $e, $request, $context);
 		}
-		return View::NONE;
+		return change_View::NONE;
 	}
 	/**
 	 * @param Integer $pageId
 	 * @param PageException $e
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	private function handlePageException($pageId, $e, $request, $context)
 	{
@@ -142,6 +142,6 @@ class website_DisplayAction extends f_action_BaseAction
 	
 	public function getRequestMethods()
 	{
-		return Request::GET | Request::POST;
+		return change_Request::GET | change_Request::POST;
 	}
 }

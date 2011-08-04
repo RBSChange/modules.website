@@ -3,11 +3,11 @@
  * website_LoadMarkersPropertiesAction
  * @package modules.website.actions
  */
-class website_LoadMarkersPropertiesAction extends f_action_BaseJSONAction
+class website_LoadMarkersPropertiesAction extends change_JSONAction
 {
 	/**
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	public function _execute($context, $request)
 	{

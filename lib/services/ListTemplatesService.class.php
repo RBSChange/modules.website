@@ -26,7 +26,7 @@ class website_ListTemplatesService extends BaseService implements list_ListItems
 	 */
 	public function getItems()
 	{
-		$request = Controller::getInstance()->getContext()->getRequest();
+		$request = change_Controller::getInstance()->getContext()->getRequest();
 		$addPageDefaultContent = false;
 		$documentId = null;
 		$currentTemplate = null;

@@ -34,10 +34,6 @@ class commands_CompileUrlRewriting extends commands_AbstractChangeCommand
 		$this->loadFramework();
 		website_UrlRewritingService::getInstance()->buildRules();
 		
-		//TODO Deprecated
-		$parser = website_urlrewriting_RulesParser::getInstance();
-		$parser->compile(true);
-		
 		$this->quitOk('URL rewriting rules compiled successfully.');
 	}
 }

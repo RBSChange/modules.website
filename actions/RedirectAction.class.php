@@ -3,11 +3,11 @@
  * website_RedirectAction
  * @package modules.website.actions
  */
-class website_RedirectAction extends f_action_BaseAction
+class website_RedirectAction extends change_Action
 {
 	/**
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	public function _execute($context, $request)
 	{
@@ -27,7 +27,7 @@ class website_RedirectAction extends f_action_BaseAction
 		}
 		f_web_http_Header::setStatus($redirectType);
 		header("Location: ".$location);
-		return View::NONE;
+		return change_View::NONE;
 	}
 	
 	/**

@@ -372,7 +372,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	public function getCacheKeyParameters($request)
 	{
 		$cfg = $this->getConfiguration();
-		$page = $this->getPage();
+		$page = $this->getContext();
 		$rc = RequestContext::getInstance();
 	
 		list($theme, $template) = explode('/', $page->getPersistentPage()->getTemplate());

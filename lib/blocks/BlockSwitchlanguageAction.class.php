@@ -32,7 +32,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 	{
 		if ($this->detailId === null)
 		{
-			$params = HttpController::getInstance()->getContext()->getRequest()->getParameters();
+			$params = change_Controller::getInstance()->getContext()->getRequest()->getParameters();
 			
 			if (isset($params['wemod']) 
 				&& isset($params[$params['wemod'].'Param']) 
@@ -83,7 +83,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 			}
 		}
 		
-		$parameters = $this->getCleanGlobalParameters(Controller::getInstance()->getContext()->getRequest()->getParameters(), $detailDoc);
+		$parameters = $this->getCleanGlobalParameters(change_Controller::getInstance()->getContext()->getRequest()->getParameters(), $detailDoc);
 		$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
 		$homePage = $website->getIndexPage();
 		

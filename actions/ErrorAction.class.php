@@ -1,9 +1,9 @@
 <?php
-abstract class website_ErrorAction extends f_action_BaseAction
+abstract class website_ErrorAction extends change_Action
 {
 	/**
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	public function _execute($context, $request)
 	{
@@ -26,7 +26,7 @@ abstract class website_ErrorAction extends f_action_BaseAction
 		{
 			Framework::exception($e);
 		}
-		return View::NONE;
+		return change_View::NONE;
 	}
 
 	/**

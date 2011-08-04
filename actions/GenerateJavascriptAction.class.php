@@ -3,7 +3,7 @@
  * website_GenerateJavascriptAction
  * @package modules.website.actions
  */
-class website_GenerateJavascriptAction extends f_action_BaseAction
+class website_GenerateJavascriptAction extends change_Action
 {
 	
 	/**
@@ -17,15 +17,15 @@ class website_GenerateJavascriptAction extends f_action_BaseAction
 	}
 
 	/**
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	public function _execute($context, $request)
 	{
 		$this->setContentType('application/javascript');
 		if (Framework::inDevelopmentMode())
 		{
-			controller_ChangeController::setNoCache();
+			change_Controller::setNoCache();
 		}
 		$parameters = explode("/", $request->getParameter("param"));
 		$nbParameters = count($parameters);
@@ -122,6 +122,6 @@ class website_GenerateJavascriptAction extends f_action_BaseAction
 			f_web_http_Header::setStatus(404);
 			echo $e->getMessage();
 		}
-		return View::NONE;
+		return change_View::NONE;
 	}
 }

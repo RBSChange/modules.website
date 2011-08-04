@@ -78,7 +78,7 @@ class block_BlockService extends BaseService
 			{
 				return $className;
 			}
-			Framework::error(__METHOD__ . ' Class $className not found for: ' . $blockType);
+			Framework::error(__METHOD__ . ' Class ' . $className .' not found for: ' . $blockType);
 		}
 		else if (!$this->isSpecialBlock($blockType))
 		{

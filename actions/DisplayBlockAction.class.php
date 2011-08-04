@@ -1,5 +1,5 @@
 <?php
-class website_DisplayBlockAction extends f_action_BaseJSONAction
+class website_DisplayBlockAction extends change_JSONAction
 {
 	/**
 	 * type=modules_website_iframe
@@ -7,8 +7,8 @@ class website_DisplayBlockAction extends f_action_BaseJSONAction
 	 * &pageid=877
 	 * &pagelang=fr
 	 * &lang=fr
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	public function _execute($context, $request)
 	{

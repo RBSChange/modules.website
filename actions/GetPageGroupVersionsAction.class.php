@@ -1,11 +1,11 @@
 <?php
-class website_GetPageGroupVersionsAction extends f_action_BaseJSONAction
+class website_GetPageGroupVersionsAction extends change_JSONAction
 {
 	/**
 	 * @see f_action_BaseAction::_execute()
 	 *
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	protected function _execute ($context, $request) 
 	{
@@ -14,7 +14,7 @@ class website_GetPageGroupVersionsAction extends f_action_BaseJSONAction
  	}
 
  	/**
- 	 * @param Request $request
+ 	 * @param change_Request $request
  	 * @return website_persistentdocument_pagegroup
  	 */
 	private function getPageGroup($request)

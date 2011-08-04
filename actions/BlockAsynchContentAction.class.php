@@ -3,11 +3,11 @@
  * website_BlockAsynchContentAction
  * @package modules.website.actions
  */
-class website_BlockAsynchContentAction extends f_action_BaseAction
+class website_BlockAsynchContentAction extends change_Action
 {
 	/**
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	public function _execute($context, $request)
 	{
@@ -33,10 +33,10 @@ class website_BlockAsynchContentAction extends f_action_BaseAction
 		{
 			$json = array($section => "<div>Block: $blockId not found</div>");
 		}
-		controller_ChangeController::setNoCache();
+		change_Controller::setNoCache();
 		header('Content-Type: application/json; charset=utf-8');
 		echo JsonService::getInstance()->encode($json);		
-		return View::NONE;
+		return change_View::NONE;
 	}
 	
 	

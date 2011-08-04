@@ -1,9 +1,9 @@
 <?php
-class website_RichtextConnectorAction extends f_action_BaseAction
+class website_RichtextConnectorAction extends change_Action
 {
 	/**
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	public function _execute($context, $request)
 	{
@@ -29,7 +29,7 @@ class website_RichtextConnectorAction extends f_action_BaseAction
 				$serializer->currentFolder = $currentFolder;
 				$serializer->currentFolderKey = $currentFolderKey;
 				echo $serializer->serialize($this->getNodeList($resourceType, $parentId));
-				return View::NONE;
+				return change_View::NONE;
 			
 			case 'GetFolders' :
 				header('Content-Type' . ':' . 'text/xml');
@@ -39,7 +39,7 @@ class website_RichtextConnectorAction extends f_action_BaseAction
 				$serializer->currentFolder = $currentFolder;
 				$serializer->currentFolderKey = $currentFolderKey;
 				echo $serializer->serialize($this->getNodeList($resourceType, $parentId, true));
-				return View::NONE;
+				return change_View::NONE;
 			
 			case 'CreateFolder' :
 				header('Content-Type' . ':' . 'text/xml');
@@ -57,7 +57,7 @@ class website_RichtextConnectorAction extends f_action_BaseAction
 					$serializer->error = '110';
 				}
 				echo $serializer->serialize(null);
-				return View::NONE;
+				return change_View::NONE;
 			
 			case 'FileUpload' :
 				//NewFile
@@ -70,9 +70,9 @@ class website_RichtextConnectorAction extends f_action_BaseAction
 					$request->setParameter('errorNumber', 1);
 					$request->setParameter('customMsg', 'Upload error');
 				}
-				return View::SUCCESS;
+				return change_View::SUCCESS;
 		}
-		return View::NONE;
+		return change_View::NONE;
 	}
 	
 	private function getDataProvider($resourceType)

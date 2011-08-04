@@ -3,8 +3,8 @@ class website_InsertJSONAction extends generic_InsertJSONAction
 {
 
 	/**
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	public function _execute($context, $request)
 	{
@@ -95,8 +95,8 @@ class website_InsertJSONAction extends generic_InsertJSONAction
 	}
 		
 	/**
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */	
 	private function insertPageVersion($context, $request)
 	{

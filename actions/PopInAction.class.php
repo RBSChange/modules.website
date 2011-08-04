@@ -1,5 +1,5 @@
 <?php
-class website_PopInAction extends f_action_BaseAction
+class website_PopInAction extends change_Action
 {
 	protected function getDocumentIdArrayFromRequest($request)
 	{
@@ -27,12 +27,12 @@ class website_PopInAction extends f_action_BaseAction
 	/**
 	 * S'assurer d'inclure CSS -> modules.website.jquery-ui.south-street
 	 *  et JS -> modules.website.lib.js.jquery-ui-dialog
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	public function _execute($context, $request)
 	{	
-		controller_ChangeController::setNoCache();
+		change_Controller::setNoCache();
 		$this->setContentType('text/html');
 		$pageId = $this->getDocumentIdFromRequest($request);
 		try
@@ -51,13 +51,13 @@ class website_PopInAction extends f_action_BaseAction
 			$result = ob_get_clean();
 			
 			echo str_replace(array('<body ', '</body>'), array('<div ', '</div>'), $result);
-			return View::NONE;
+			return change_View::NONE;
 		}
 		catch (PageException $e)
 		{
 			Framework::exception($e);
 		}
-		return View::NONE;
+		return change_View::NONE;
 	}
 
 	/**
@@ -77,7 +77,7 @@ class website_PopInAction extends f_action_BaseAction
 	 */
 	protected function onMissingPermission($login, $permission, $nodeId)
 	{
-		return View::NONE;
+		return change_View::NONE;
 	}
 	
 	/**
@@ -90,6 +90,6 @@ class website_PopInAction extends f_action_BaseAction
 	
 	public function getRequestMethods()
 	{
-		return Request::GET | Request::POST;
+		return change_Request::GET | change_Request::POST;
 	}
 }

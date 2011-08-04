@@ -2,11 +2,11 @@
 /**
  * @package modules.website.actions
  */
-class website_GetRobotsTxtAction extends f_action_BaseAction
+class website_GetRobotsTxtAction extends change_Action
 {
 	/**
-	 * @param Context $context
-	 * @param Request $request
+	 * @param change_Context $context
+	 * @param change_Request $request
 	 */
 	public function _execute($context, $request)
 	{
@@ -46,7 +46,7 @@ class website_GetRobotsTxtAction extends f_action_BaseAction
 		header('Content-type: text/plain');
 		header('Content-length: '.strlen($contents));
 		echo $contents;
-		return View::NONE;	
+		return change_View::NONE;	
 	}
 	
 	/**
