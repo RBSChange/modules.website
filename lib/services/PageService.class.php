@@ -395,6 +395,20 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$page->setIsIndexPage($isIndexPage);
 			if ($page->isModified())
 			{
+				// Search for corrections
+				if ($isIndexPage && $page->getPersistentModel()->useCorrection())
+				{
+					$q = $this->createQuery()
+						->add(Restrictions::eq("publicationstatus", "CORRECTION"))
+						->add(Restrictions::eq("isIndexPage", true));
+					$c = $q->createPropertyCriteria("correctionofid", "modules_website/page")
+						->add(Restrictions::siblingOf($page->getId()));
+					foreach ($q->find() as $correction)
+					{
+						$correction->setIsIndexPage(false);
+						$this->pp->updateDocument($correction);
+					}
+				}
 				$this->pp->updateDocument($page);
 				if ($page instanceof website_persistentdocument_pagegroup)
 				{
