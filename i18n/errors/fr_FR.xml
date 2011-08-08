@@ -66,7 +66,6 @@
   <key id="modules-website-loadfortranslation-page">vous n'avez pas les permissions suffisantes pour effectuer l'action suivante : ″Traduire une page″</key>
   <key id="modules-website-loadfortranslation-pageversion">vous n'avez pas les permissions suffisantes pour effectuer l'action suivante : ″Traduire une page″</key>
   <key id="cant-move-menufolder-to-other-website">vous ne pouvez pas déplacer un dossier de menus vers un autre site web.</key>
-  <key id="cant-move-markerfolder-to-other-website">vous ne pouvez pas déplacer les marqueurs vers un autre site web.</key>
   <key id="import-script-not-found">Le script d'initialisation est introuvable.</key>
   <key id="invalid-import-script">Le script d'initialisation n'est pas lisible.</key>
   

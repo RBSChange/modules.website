@@ -26,7 +26,6 @@
     <document name="menuitemdocument"/>
     <document name="menuitemfunction"/>
     <document name="menuitemtext"/>
-    <document name="markerfolder"/>
     <action name="Display">
       <permission name="AuthenticatedFrontUser"/>
     </action>
@@ -111,7 +110,6 @@
       <permission name="Load.menu"/>
       <permission name="Load.menuitemfunction"/>
       <permission name="Load.menuitemdocument"/>
-      <permission name="Load.markerfolder"/>
       <permission name="Rename.topic"/>
       <permission name="Rename.menu"/>
       <permission name="Rename.menuitemfunction"/>

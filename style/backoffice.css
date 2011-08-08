@@ -1,9 +1,6 @@
 treechildren::-moz-tree-image(modules_website_menufolder){
 	list-style-image: url(/changeicons/small/folder.png) ;
 }
-treechildren::-moz-tree-image(modules_website_markerfolder){
-	list-style-image: url(/changeicons/small/marker-folder.png) ;
-}
 treechildren::-moz-tree-image(modules_website_topic){
 	list-style-image: url(/changeicons/small/topic.png) ;
 }
