@@ -18,43 +18,45 @@ class website_persistentdocument_pageversion extends website_persistentdocument_
 				LinkHelper::getUIActionLink("website", "BoDisplay")
 					->setQueryParameter("cmpref", $this->getId())
 					->setQueryParameter("lang", $this->getContextLang())->getUrl();
-			$data  = array('id' => $this->getId(), 
-						'lang' => $this->getContextLang(),
-						'label' => $this->getLabel(),
-						'startpublicationdate' => $this->getStartpublicationdate(),
-						'endpublicationdate' => $this->getEndpublicationdate(),
-						'publicationstatus' => $this->getPublicationstatus(),
-						'url' => $url,
-						'status' => $ls->trasnBO(DocumentHelper::getStatusLocaleKey($this)),
+			$data  = array(
+				'id' => $this->getId(), 
+				'lang' => $this->getContextLang(),
+				'label' => $this->getLabel(),
+				'startpublicationdate' => $this->getStartpublicationdate(),
+				'endpublicationdate' => $this->getEndpublicationdate(),
+				'publicationstatus' => $this->getPublicationstatus(),
+				'url' => $url,
+				'status' => $ls->transBO(DocumentHelper::getStatusLocaleKey($this))
 			);
 			if ($correction !== null)
 			{
 				$url = LinkHelper::getUIActionLink("website", "BoDisplay")
-						->setQueryParameter("cmpref", $correction->getId())
-						->setQueryParameter("lang", $this->getContextLang())->getUrl();
+					->setQueryParameter("cmpref", $correction->getId())
+					->setQueryParameter("lang", $this->getContextLang())->getUrl();
 				$data['id'] = $correction->getId();
 				$data['label'] = $correction->getLabel()." (".$data['label'].")";
 				$data['startpublicationdate'] = $correction->getStartpublicationdate()." (".$data['startpublicationdate'].")";
 				$data['endpublicationdate'] = $correction->getEndpublicationdate()." (".$data['endpublicationdate'].")";
 				$data['publicationstatus'] = $correction->getPublicationstatus();
 				$data['url'] = $url;
-				$data['status'] = $ls->trasnBO(DocumentHelper::getStatusLocaleKey($correction));
+				$data['status'] = $ls->transBO(DocumentHelper::getStatusLocaleKey($correction));
 			}
 		}
-		else 
+		else
 		{
 			$url = $this->isPublished() ? LinkHelper::getDocumentUrl($this, $this->getLang()) : 
 				LinkHelper::getUIActionLink("website", "BoDisplay")
 					->setQueryParameter("cmpref", $this->getId())
 					->setQueryParameter("lang", $this->getLang())->getUrl();
-			$data  = array('id' => $this->getId(), 
-						'lang' => $this->getLang(),
-						'label' => '(' . $this->getLang() . ') ' . $this->getVoLabel(),
-						'startpublicationdate' => null,
-						'endpublicationdate' => null,
-						'publicationstatus' => null,
-						'url' => $url,
-						'status' => null,
+			$data  = array(
+				'id' => $this->getId(), 
+				'lang' => $this->getLang(),
+				'label' => '(' . $this->getLang() . ') ' . $this->getVoLabel(),
+				'startpublicationdate' => null,
+				'endpublicationdate' => null,
+				'publicationstatus' => null,
+				'url' => $url,
+				'status' => null
 			);			
 		}		
 		$data['uistartpublicationdate'] = ($data['startpublicationdate']) ? date_Formatter::toDefaultDateTimeBO($this->getUIStartpublicationdate()) : '';
