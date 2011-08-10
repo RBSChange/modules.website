@@ -10,7 +10,11 @@ class website_ShortenUrlService extends BaseService
 	 * @var website_ShortenUrlService
 	 */
 	private static $instance = null;
-
+	
+	/**
+	 * @var Zend_Service_ShortUrl_AbstractShortener 
+	 */
+	private $shortenerInstance;
 	/**
 	 * @return website_ShortenUrlService
 	 */
@@ -19,6 +23,7 @@ class website_ShortenUrlService extends BaseService
 		if (is_null(self::$instance))
 		{
 			self::$instance = self::getServiceClassInstance(get_class());
+			self::$instance->shortenerInstance = f_util_ClassUtils::newInstance(Framework::getConfiguration('modules/website/shortenerClassName'));
 		}
 		return self::$instance;
 	}
@@ -29,13 +34,7 @@ class website_ShortenUrlService extends BaseService
 	 */
 	public function shortenUrl($url)
 	{
-		// TODO: handle other services to shorten the urls.
-		$httpClient = HTTPClientService::getInstance()->getNewHTTPClient();
-		$shortUrl = $httpClient->get('http://tinyurl.com/api-create.php?url=' . urlencode($url));
-		if (!$shortUrl)
-		{
-			$shortUrl = $url;
-		}
-		return $shortUrl;
+		$this->shortenerInstance->setHttpClient(change_HttpClientService::getInstance()->getNewHttpClient());
+		return $this->shortenerInstance->shorten($url);
 	}
 }
