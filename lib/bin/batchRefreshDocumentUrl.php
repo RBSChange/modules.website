@@ -1,6 +1,6 @@
 <?php
-Framework::info(__FILE__ . ' -> ' . implode(', ', $_POST['argv']));
-list($websiteId, $lang, $modelName, $offset) = $_POST['argv'];
+Framework::info(__FILE__ . ' -> ' . implode(', ', $arguments));
+list($websiteId, $lang, $modelName, $offset) = $arguments;
 RequestContext::getInstance()->setLang($lang);
 $website = website_WebsiteModuleService::getInstance()->setCurrentWebsiteId($websiteId);
 $chunkSize = 100;
