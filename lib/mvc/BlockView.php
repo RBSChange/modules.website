@@ -155,11 +155,11 @@ class website_BlockView
 		}
 		
 		$template = $this->templateObject;
-		$model = array_merge($request->getParameters(), f_mvc_HTTPRequest::getInstance()->getSession()->getAttributes(), $request->getAttributes());
+		$model = array_merge($request->getParameters(), $request->getAttributes());
+		$model["session_Attributes"] = change_Controller::getInstance()->getStorage()->readAll();
 		$model["context"] = $request->getContext();
 		$model["website_page"] = $request->getContext()->getAttribute("website_page");
 		$template->importAttributes($model);
-		
 		$response->getWriter()->write($template->execute());
 
 	}

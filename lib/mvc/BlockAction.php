@@ -62,6 +62,15 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 	
 	/**
+	 *
+	 * @return change_Storage 
+	 */
+	function getStorage()
+	{
+		return change_Controller::getInstance()->getStorage();
+	}
+	
+	/**
 	 * @see f_mvc_Action::execute()
 	 *
 	 * @param f_mvc_Request $request
@@ -129,11 +138,10 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 			return $actionRequest->getAttribute($parameterName);
 		}
 
-		$globalRequest = f_mvc_HTTPRequest::getInstance();
-		$session = $globalRequest->getSession();
-		if ($session->hasAttribute($parameterName))
+		$storage = $this->getStorage();
+		if ($storage->read($parameterName))
 		{
-			return $session->getAttribute($parameterName);
+			return $storage->read($parameterName);
 		}
 
 		if ($actionRequest->hasNonEmptyParameter($parameterName))
@@ -344,18 +352,18 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 			return $actionRequest->getAttribute($parameterName);
 		}
 
-		$globalRequest = f_mvc_HTTPRequest::getInstance();
-		$session = $globalRequest->getSession();
-		if ($session->hasAttribute($parameterName))
+		$storage = $this->getStorage();
+		if ($storage->read($parameterName))
 		{
-			return $session->getAttribute($parameterName);
+			return $storage->read($parameterName);
 		}
+
 
 		if ($actionRequest->hasNonEmptyParameter($parameterName))
 		{
 			return $actionRequest->getParameter($parameterName);
 		}
-
+		$globalRequest = change_Controller::getInstance()->getRequest();
 		if ($globalRequest->hasNonEmptyParameter($parameterName))
 		{
 			return $globalRequest->getParameter($parameterName);
@@ -540,14 +548,6 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	{
 		return $this->getName() . $this->getConfigurationParameter(self::BLOCK_ID_PARAMETER_NAME);
 	}
-
-	/**
-	 * @return f_mvc_HTTPSession
-	 */
-	protected function getSession()
-	{
-		return f_mvc_HTTPRequest::getInstance()->getSession();
-	}
 	
 	/**
 	 * Shortcut returning the current BlockActionRequest
@@ -556,14 +556,6 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	protected function getRequest()
 	{
 		return website_BlockController::getInstance()->getRequest();
-	}
-
-	/**
-	 * @return f_mvc_HTTPRequest
-	 */
-	protected function getHTTPRequest()
-	{
-		return f_mvc_HTTPRequest::getInstance();
 	}
 
 	/**
@@ -1185,4 +1177,21 @@ abstract class f_mvc_Action
 	 * @param String $parameterName
 	 */
 	abstract protected function findParameterValue($parameterName);
+	
+	
+	/**
+	 * @deprecated (will be removed in RBS Change 5.0)
+	 */
+	protected function getSession()
+	{
+		return f_mvc_HTTPRequest::getInstance()->getSession();
+	}
+	
+	/**
+	 * @deprecated (will be removed in RBS Change 5.0)
+	 */
+	protected function getHTTPRequest()
+	{
+		return f_mvc_HTTPRequest::getInstance();
+	}
 }

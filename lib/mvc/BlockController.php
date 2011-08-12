@@ -114,13 +114,8 @@ class website_BlockController implements f_mvc_Controller
 	 * @var website_BlockActionResponse
 	 */
 	private $masterResponse;
-
-	/**
-	 * @var f_mvc_HttpRequest
-	 */
-	private $currentRequest;
         
-        private $useCache = true;
+    private $useCache = true;
         
 	/**
 	 * @return website_BlockController
@@ -253,8 +248,10 @@ class website_BlockController implements f_mvc_Controller
 		{
 			$this->stopCacheRecorders();
 		}
-
-		$this->process($this->getActionInstanceByModuleAndName($moduleName, $actionName), new f_mvc_FakeHttpRequest($parameters));
+		$classes = Framework::getConfiguration('mvc/classes');
+		$fakeRequest = new $classes['change_Request'];
+		$fakeRequest->setParameters($parameters);
+		$this->process($this->getActionInstanceByModuleAndName($moduleName, $actionName), $fakeRequest);
 		$this->shouldRedirect = true;
 	}
 
@@ -269,7 +266,7 @@ class website_BlockController implements f_mvc_Controller
         
 	/**
 	 * @param website_BlockAction $action
-	 * @param f_mvc_HTTPRequest $request
+	 * @param change_Request $request
 	 */
 	function process($action, $request)
 	{
@@ -293,7 +290,7 @@ class website_BlockController implements f_mvc_Controller
 	
 	/**
 	 * @param array $requestModuleNames
-	 * @param f_mvc_HTTPRequest $request
+	 * @param change_Request $request
 	 * @return array
 	 */
 	private function buildActionRequestParameters($requestModuleNames, $request)
@@ -314,8 +311,8 @@ class website_BlockController implements f_mvc_Controller
 	 * @param String $moduleName
 	 * @param String $actionName
 	 * @param array $configurationParameters
-	 * @param f_mvc_HTTPRequest $request
-         * @param Boolean $cache
+	 * @param change_Request $request
+     * @param Boolean $cache
 	 */
 	function processByName($moduleName, $actionName, $request, $configurationParameters = null, $cache = false)
 	{
@@ -1009,8 +1006,9 @@ class website_BlockController implements f_mvc_Controller
 				{
 					$parameters[$forcedParamName] = $forcedParamValue;
 				}
-				
-				$request = new f_mvc_FakeHttpRequest(array($moduleName.'Param' => $parameters));
+				$classes = Framework::getConfiguration('mvc/classes');
+				$request = new $classes['change_Request'];
+				$request->setParameters(array($moduleName.'Param' => $parameters));
 				
 				$this->processByName($moduleName, $subBlock["actionName"],
 					$request, $subBlock["configParams"], true);

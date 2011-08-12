@@ -66,11 +66,10 @@ abstract class website_ViewLoadHandlerImpl implements website_ViewLoadHandler
 			return $actionRequest->getAttribute($parameterName);
 		}
 
-		$globalRequest = f_mvc_HTTPRequest::getInstance();
-		$session = $globalRequest->getSession();
-		if ($session->hasAttribute($parameterName))
+		$storage = change_Controller::getInstance()->getStorage();
+		if ($storage->read($parameterName))
 		{
-			return $session->getAttribute($parameterName);
+			return $storage->read($parameterName);
 		}
 
 		if ($actionRequest->hasNonEmptyParameter($parameterName))
@@ -88,20 +87,30 @@ abstract class website_ViewLoadHandlerImpl implements website_ViewLoadHandler
 		$actionRequest = website_BlockController::getInstance()->getRequest();
 		return $actionRequest->getAttribute("configuration");
 	}
-	
+
 	/**
-	 * @return f_mvc_HTTPSession
+	 * @return change_Storage
+	 */
+	protected function getStorage()
+	{
+		return change_Controller::getInstance()->getStorage();
+	}
+
+
+	/**
+	 * @deprecated (will be removed in RBS Change 5.0) use getStorage instead
 	 */
 	protected function getSession()
 	{
 		return f_mvc_HTTPRequest::getInstance()->getSession();
 	}
-
+	
 	/**
-	 * @return f_mvc_HTTPRequest
+	 * @deprecated (will be removed in RBS Change 5.0)
 	 */
 	protected function getHTTPRequest()
 	{
 		return f_mvc_HTTPRequest::getInstance();
 	}
+	
 }

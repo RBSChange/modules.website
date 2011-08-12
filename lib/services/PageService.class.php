@@ -1901,7 +1901,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 
 		asort($blockPriorities);
 		$blockPriorities = array_reverse($blockPriorities, true);
-		$httpRequest = f_mvc_HTTPRequest::getInstance();
+		$httpRequest = change_Controller::getInstance()->getRequest();
 		$traceBlockAction = Framework::inDevelopmentMode() && Framework::isDebugEnabled();
 		foreach (array_keys($blockPriorities) as $blockId)
 		{
