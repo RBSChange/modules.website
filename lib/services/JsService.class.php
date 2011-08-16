@@ -615,7 +615,7 @@ class website_JsService extends BaseService
 		$attributes['UIHOST_PREFIX'] = Framework::getUIProtocol() . '://';
 		$attributes['UIHOST'] = Framework::getUIDefaultHost();
 		$attributes['UIBASEURL'] = Framework::getUIBaseUrl();
-		$attributes['LOG_LEVEL'] = Framework::$logLevel;
+		$attributes['LOG_LEVEL'] = Framework::getLogPriority();
 		$attributes['DEV_MODE'] = Framework::inDevelopmentMode();
 		$attributes['inDragSession'] = false;
 		$attributes['RICHTEXT_PRESERVE_H1_TAGS'] = (defined('RICHTEXT_PRESERVE_H1_TAGS') && RICHTEXT_PRESERVE_H1_TAGS == 'true');
