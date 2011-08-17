@@ -1556,8 +1556,16 @@ jQuery(document).ready(function() {
 	public static function renderCheckboxInput($params)
 	{
 		$name = self::buildNameAndId($params);
-		$value = self::getFieldValue($name);
 		$radioValue = $params["value"];
+		if (strpos($name, '[]') !== false)
+		{
+			$value = self::getFieldValue(substr($name, 0, -2));
+			$value = (is_array($value) && in_array($radioValue, $value)) ? $radioValue : null;
+		}
+		else
+		{
+			$value = self::getFieldValue($name);
+		}
 		$params["value"] = $value;
 		self::setDefaultValue('label', '', $params);
 		echo self::buildCheckbox($radioValue, $params["label"] , $params);
