@@ -37,11 +37,11 @@ class website_RichtextConfigSuccessView extends change_View
 				break;
 			case 'css' :
 				header('Content-Type:text/css');
-				$this->setTemplateName('RichtextCss-' . $configset, K::HTML);
+				$this->setTemplateName('RichtextCss-' . $configset, 'html');
 				break;
 			default :
 				header('Content-Type:application/x-javascript');
-				$this->setTemplateName('RichtextConfig-' . $configset, K::HTML);
+				$this->setTemplateName('RichtextConfig-' . $configset, 'html');
 				break;
 		}
 	}

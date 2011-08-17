@@ -20,7 +20,7 @@ abstract class website_ViewLoadHandlerImpl implements website_ViewLoadHandler
 	/**
 	 * @return f_persistentdocument_PersistentDocument
 	 */
-	protected final function getDocumentParameter($paramName = K::COMPONENT_ID_ACCESSOR, $expectedClassName = null)
+	protected final function getDocumentParameter($paramName = change_Request::DOCUMENT_ID, $expectedClassName = null)
 	{
 		$value = $this->findLocalParameterValue($paramName);
 		if (is_array($value))

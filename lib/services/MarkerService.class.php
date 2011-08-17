@@ -65,7 +65,7 @@ class website_MarkerService extends f_persistentdocument_DocumentService
 		{
 			$html[] = $marker->getDocumentService()->getHtmlBody($marker);
 		}		
-		return implode(K::CRLF, $html);
+		return implode(PHP_EOL, $html);
 	}
 		
 	/**
@@ -77,7 +77,7 @@ class website_MarkerService extends f_persistentdocument_DocumentService
 		$model = $marker->getPersistentModel();
 		try 
 		{
-			$templateLoader = TemplateLoader::getInstance()->setMimeContentType(K::HTML);
+			$templateLoader = TemplateLoader::getInstance()->setMimeContentType('html');
 			$templateLoader->setPackageName('modules_' . $model->getModuleName());
 			$template = $templateLoader->load(ucfirst($model->getModuleName()) . '-marker-Inc');
 			$template->setAttribute('codeMarker', $marker->getAccount());
@@ -100,7 +100,7 @@ class website_MarkerService extends f_persistentdocument_DocumentService
 		$model = $marker->getPersistentModel();
 		try 
 		{
-			$templateLoader = TemplateLoader::getInstance()->setMimeContentType(K::HTML);
+			$templateLoader = TemplateLoader::getInstance()->setMimeContentType('html');
 			$templateLoader->setPackageName('modules_' . $model->getModuleName());
 			$template = $templateLoader->load(ucfirst($model->getModuleName()) . '-marker-IncHead');
 			$template->setAttribute('codeMarker', $marker->getAccount());

@@ -15,7 +15,7 @@ class generic_DocumentLoadHandler extends website_ViewLoadHandlerImpl
 		
 		if (!$request->hasAttribute($attrName))
 		{
-			$paramName = $this->getParameter(1, K::COMPONENT_ID_ACCESSOR);
+			$paramName = $this->getParameter(1, change_Request::DOCUMENT_ID);
 			$expectedClassName = $this->getParameter(2);
 			$request->setAttribute($attrName, $this->getDocumentParameter($paramName, $expectedClassName));
 		}

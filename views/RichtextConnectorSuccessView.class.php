@@ -7,7 +7,7 @@ class website_RichtextConnectorSuccessView extends change_View
 	 */
 	public function _execute($context, $request)
 	{
-		$this->setTemplateName('RichtextConnector-FileUpload', K::HTML);
+		$this->setTemplateName('RichtextConnector-FileUpload', 'html');
 		$this->setAttribute('errorNumber', $request->getParameter('errorNumber'));
 		$this->setAttribute('customMsg', $request->getParameter('customMsg', ''));
 		$this->setAttribute('url', $request->getParameter('url', ''));

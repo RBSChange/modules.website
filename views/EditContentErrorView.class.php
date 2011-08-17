@@ -8,7 +8,7 @@ class website_EditContentErrorView extends change_View
 	 */
     public function _execute($context, $request)
     {
-        $this->setTemplateName('Website-EditContent-Error', K::XUL);
+        $this->setTemplateName('Website-EditContent-Error', 'xul');
 
         $this->setAttribute('error', f_Locale::translateUI("&modules.website.bo.general.Page-edition-error-message-" . $request->getAttribute('error') . ";"));
 
@@ -27,7 +27,7 @@ class website_EditContentErrorView extends change_View
         {
 			$ss->registerStyle('modules.' . $module . '.backoffice');
         }
-        $this->setAttribute('cssInclusion', $ss->execute(K::XUL));
+        $this->setAttribute('cssInclusion', $ss->execute('xul'));
     }
 
     public static function normalizeContent($content)

@@ -156,7 +156,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	 * @return Integer | null
 	 * @see website_BlockAction::_getDocumentIdParameter()
 	 */
-	protected function getDocumentIdParameter($paramName = K::COMPONENT_ID_ACCESSOR)
+	protected function getDocumentIdParameter($paramName = change_Request::DOCUMENT_ID)
 	{
 		return $this->_getDocumentIdParameter($paramName, false);
 	}
@@ -166,7 +166,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	 * @return Integer | null
 	 * @see website_BlockAction::_getDocumentIdParameter()
 	 */
-	protected function getRequiredDocumentIdParameter($paramName = K::COMPONENT_ID_ACCESSOR)
+	protected function getRequiredDocumentIdParameter($paramName = change_Request::DOCUMENT_ID)
 	{
 		return $this->_getDocumentIdParameter($paramName, true);
 	}
@@ -177,7 +177,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	 * @return f_persistentdocument_PersistentDocument | null
 	 * @see website_BlockAction::_getDocumentParameter()
 	 */
-	protected function getDocumentParameter($paramName = K::COMPONENT_ID_ACCESSOR, $className = null)
+	protected function getDocumentParameter($paramName = change_Request::DOCUMENT_ID, $className = null)
 	{
 		return $this->_getDocumentParameter($paramName, false, $className);
 	}
@@ -189,7 +189,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	 * @throws Exception if no document could be founded or it is not an instance of the expected
 	 * @see website_BlockAction::_getDocumentParameter()
 	 */
-	protected function getRequiredDocumentParameter($paramName = K::COMPONENT_ID_ACCESSOR, $expectedClassName = null)
+	protected function getRequiredDocumentParameter($paramName = change_Request::DOCUMENT_ID, $expectedClassName = null)
 	{
 		return $this->_getDocumentParameter($paramName, true, $expectedClassName);
 	}
@@ -201,7 +201,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	 * @return f_persistentdocument_PersistentDocument
 	 * @throws Exception if required and no document could be founded
 	 */
-	private function _getDocumentParameter($paramName = K::COMPONENT_ID_ACCESSOR, $required, $expectedClassName)
+	private function _getDocumentParameter($paramName = change_Request::DOCUMENT_ID, $required, $expectedClassName)
 	{
 		$id = $this->_getDocumentIdParameter($paramName, $required);
 		if ($id !== null)
@@ -235,7 +235,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	 * @return Integer
 	 * @throws Exception if required and no document could be founded
 	 */
-	private function _getDocumentIdParameter($paramName = K::COMPONENT_ID_ACCESSOR, $required)
+	private function _getDocumentIdParameter($paramName = change_Request::DOCUMENT_ID, $required)
 	{
 		$value = $this->findLocalParameterValue($paramName);
 		if (is_array($value))
@@ -726,7 +726,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 				$directory .= DIRECTORY_SEPARATOR . $subDirectory;
 			}
 			$templateLoader = TemplateLoader::getInstance()
-			->setMimeContentType(K::HTML)
+			->setMimeContentType('html')
 			->setDirectory($directory)
 			->setPackageName($packageName);
 	

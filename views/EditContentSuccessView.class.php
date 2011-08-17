@@ -12,7 +12,7 @@ class website_EditContentSuccessView extends change_View
 		$pageContent = $ps->getContentForEdition($document);
 		website_WebsiteModuleService::getInstance()->setCurrentPageId($document->getId());
 		
-		$this->setTemplateName('Website-EditContent-Success', K::XUL);
+		$this->setTemplateName('Website-EditContent-Success', 'xul');
 		$this->setAttribute('pageContent', $pageContent);
 		$this->setAttribute('editorType', website_PageRessourceService::getInstance()->getTemplateType());
 		
@@ -28,7 +28,7 @@ class website_EditContentSuccessView extends change_View
 		// include JavaScript
 		$jss = website_JsService::getInstance();
 		$jss->registerScript('modules.website.lib.editcontent');
-		$this->setAttribute('scriptInclusion', $jss->executeInline(K::XUL));
+		$this->setAttribute('scriptInclusion', $jss->executeInline('xul'));
 		
 		$link = LinkHelper::getUIChromeActionLink('uixul', 'GetAdminJavascripts')
 			->setArgSeparator(f_web_HttpLink::ESCAPE_SEPARATOR);

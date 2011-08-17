@@ -19,7 +19,7 @@ abstract class website_ErrorAction extends change_Action
 			{
 				throw new PageException(PageException::PAGE_NOT_AVAILABLE);
 			}
-			$request->setParameter(K::PAGE_REF_ACCESSOR, $page->getId());
+			$request->setParameter('pageref', $page->getId());
 			$context->getController()->forward('website', 'Display');
 		}
 		catch (Exception $e)

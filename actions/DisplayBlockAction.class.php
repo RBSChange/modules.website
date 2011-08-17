@@ -18,7 +18,7 @@ class website_DisplayBlockAction extends change_JSONAction
 			$page = $ps->getDocumentInstance($request->getParameter('pageid'));
 			
 			$blocType = $request->getParameter('type');
-			$componentLang = $request->getParameter(K::COMPONENT_LANG_ACCESSOR);
+			$componentLang = $request->getParameter('lang');
 			$displayParam = $request->getParameter('display', array());
 			if (!is_array($displayParam)) {$displayParam = array();}
 			

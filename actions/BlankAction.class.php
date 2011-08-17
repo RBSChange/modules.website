@@ -57,7 +57,7 @@ class website_BlankAction extends change_Action
 		{
 			$ss->registerStyle($request->getParameter('specificstylesheet'));
 		}
-		$request->setAttribute('cssInclusion', $ss->execute(K::HTML));
+		$request->setAttribute('cssInclusion', $ss->execute('html'));
 		return change_View::SUCCESS;
 	}
 }

@@ -5,17 +5,17 @@ class website_DisplayAction extends change_Action
 	{
 		$pageIds = array();
 		// Page ID could come in (too) many flavours :
-		if ($request->hasParameter(K::PAGE_REF_ACCESSOR))
+		if ($request->hasParameter('pageref'))
 		{
-			$pageIds[] = $request->getParameter(K::PAGE_REF_ACCESSOR);
+			$pageIds[] = $request->getParameter('pageref');
 		}
 		else if ($request->hasModuleParameter('website', 'id'))
 		{
 			$pageIds[] = $request->getModuleParameter('website', 'id');
 		}
-		else if ($request->hasModuleParameter('website', K::COMPONENT_ID_ACCESSOR))
+		else if ($request->hasModuleParameter('website', change_Request::DOCUMENT_ID))
 		{
-			$pageIds[] = $request->getModuleParameter('website', K::COMPONENT_ID_ACCESSOR);
+			$pageIds[] = $request->getModuleParameter('website', change_Request::DOCUMENT_ID);
 		}
 		else
 		{

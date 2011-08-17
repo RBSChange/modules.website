@@ -15,7 +15,7 @@ class website_BlockBookmarksAction extends website_BlockAction
 			return website_BlockView::NONE;
 		}
     	
-    	$input = $this->findParameterValue(K::COMPONENT_ID_ACCESSOR);
+    	$input = $this->findParameterValue(change_Request::DOCUMENT_ID);
     	if (is_array($input))
     	{
     		$bookmarks_in = explode(';', implode('', $input));

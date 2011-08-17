@@ -18,7 +18,7 @@ class website_IndexAction extends change_Action
 			{
 				throw new Exception('Website has no published home page');
 			}
-			$request->setParameter(K::PAGE_REF_ACCESSOR, $homePage->getId());
+			$request->setParameter('pageref', $homePage->getId());
 			$context->getController()->forward('website', 'Display');
 		} 
 		catch (Exception $e) 

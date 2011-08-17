@@ -8,7 +8,7 @@ class website_AddToMenuAction extends change_JSONAction
 	public function _execute($context, $request)
 	{
 		$pagesId = $this->getDocumentIdArrayFromRequest($request);
-		$menuId  = $request->getParameter(K::DESTINATION_ID_ACCESSOR);
+		$menuId  = $request->getParameter('destref');
 		$label = array("");
 		$menuObject = DocumentHelper::getDocumentInstance($menuId); 
 		$menulabel = $menuObject->getLabel();

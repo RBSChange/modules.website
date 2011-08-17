@@ -192,7 +192,7 @@ class website_StyleService extends BaseService
 		}
 		$skin = $this->normalizeSkin($skin);
 		
-		if ($mimeContentType == K::XUL)
+		if ($mimeContentType == 'xul')
 		{
 			foreach (array_keys(self::$styleRegistry) as $styleName)
 			{
@@ -239,7 +239,7 @@ class website_StyleService extends BaseService
 		}
 		if (count($style) > 0)
 		{
-			return implode(K::CRLF, $style);
+			return implode(PHP_EOL, $style);
 		}
 		return null;
 	}

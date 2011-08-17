@@ -53,6 +53,6 @@ abstract class website_DetailBlockAction extends website_TaggerBlockAction
 	 */
 	protected function hidePageFromMenusAndSiteMap()
 	{
-		return !$this->hasNonEmptyConfigurationParameter(K::COMPONENT_ID_ACCESSOR);
+		return !$this->hasNonEmptyConfigurationParameter(change_Request::DOCUMENT_ID);
 	}
 }

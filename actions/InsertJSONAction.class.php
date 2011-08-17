@@ -30,7 +30,7 @@ class website_InsertJSONAction extends generic_InsertJSONAction
 
 		uixul_DocumentEditorService::getInstance()->importFieldsData($document, $propertiesValue);
 
-		$parentNodeId = intval($request->getParameter(K::PARENT_ID_ACCESSOR));
+		$parentNodeId = intval($request->getParameter('parentref'));
 		if ($parentNodeId <= 0) { $parentNodeId = null; }
 
 		$documentService->save($document, $parentNodeId);

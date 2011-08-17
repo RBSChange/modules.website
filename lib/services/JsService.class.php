@@ -199,7 +199,7 @@ class website_JsService extends BaseService
 		
 		$scriptRegistryOrdered = $this->getComputedRegisteredScripts();
 		$script = array();		
-		if ($mimeContentType == K::HTML)
+		if ($mimeContentType == 'html')
 		{
 			$script[] = '<script type="text/javascript">';
 		}
@@ -220,7 +220,7 @@ class website_JsService extends BaseService
 			}
 		}
 						
-		if ($mimeContentType == K::HTML)
+		if ($mimeContentType == 'html')
 		{
 			$script[] = '</script>';
 		}
@@ -228,7 +228,7 @@ class website_JsService extends BaseService
 		{
 			$script[] = ']]></script>';
 		}
-		return implode(K::CRLF, $script);
+		return implode(PHP_EOL, $script);
 	}
 
 	/**
@@ -469,7 +469,7 @@ class website_JsService extends BaseService
 	public function generateXulLibrary()
 	{
 		$rc = RequestContext::getInstance();
-		$rc->setMimeContentType(K::XUL);
+		$rc->setMimeContentType('xul');
 		$scriptRegistryOrdered = $this->getComputedRegisteredScripts();
 		foreach ($scriptRegistryOrdered as $scriptPath => $skin)
 		{
@@ -631,24 +631,7 @@ class website_JsService extends BaseService
 		$attributes['LANGS'] = $langs;
 		$attributes['W_LANG'] = $rc->getLang();
 		$attributes['W_UILANG'] = $rc->getUILang();
-
-		$js = K::CRLF . 'var Context = ' . JsonService::getInstance()->encode($attributes) . ';' . K::CRLF;
-
-		$constants = array();
-		$constants['WEBEDIT_MODULE_ACCESSOR'] = K::WEBEDIT_MODULE_ACCESSOR;
-		$constants['COMPONENT_ACCESSOR'] = K::COMPONENT_ACCESSOR;
-		$constants['COMPONENT_ID_ACCESSOR'] = K::COMPONENT_ID_ACCESSOR;
-		$constants['COMPONENT_LANG_ACCESSOR'] = K::COMPONENT_LANG_ACCESSOR;
-		$constants['GENERIC_MODULE_NAME'] = K::GENERIC_MODULE_NAME;
-		$constants['PARENT_ID_ACCESSOR'] = K::PARENT_ID_ACCESSOR;
-		$constants['VALUE_ACCESSOR'] = K::VALUE_ACCESSOR;
-		$constants['LABEL_ACCESSOR'] = K::LABEL_ACCESSOR;
-		$constants['TREE_FILTER'] = K::TREE_FILTER;
-		$constants['LANG_ACCESSOR'] = K::LANG_ACCESSOR;
-		$constants['FULL_TREE_CONTENT_ACCESSOR'] = K::FULL_TREE_CONTENT_ACCESSOR;
-		$constants['LINKED_COMPONENT_ACCESSOR'] = K::LINKED_COMPONENT_ACCESSOR;
-		$js .= K::CRLF . 'var K = ' . JsonService::getInstance()->encode($constants) . ';' . K::CRLF;
-
+		$js = PHP_EOL . 'var Context = ' . JsonService::getInstance()->encode($attributes) . ';' . PHP_EOL;
 		return $js;
 	}
 	

@@ -179,10 +179,10 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 	 */
 	private function getCleanGlobalParameters($parameters, $detailDoc)
 	{
-		unset($parameters[K::LANG_ACCESSOR]);
-		unset($parameters[K::PAGE_REF_ACCESSOR]);
-		unset($parameters[K::COMPONENT_ID_ACCESSOR]);
-		unset($parameters[K::URL_REWRITE_PAGE_NAME_ACCESSOR]);
+		unset($parameters['lang']);
+		unset($parameters['pageref']);
+		unset($parameters[change_Request::DOCUMENT_ID]);
+		unset($parameters['pagename']);
 		unset($parameters['websiteParam']);
 		unset($parameters['module']);
 		unset($parameters['action']);

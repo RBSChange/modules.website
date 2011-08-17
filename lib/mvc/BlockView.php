@@ -150,7 +150,7 @@ class website_BlockView
 			$moduleName = $this->getTemplateModule($request);
 			
 			$templateName = ucfirst($moduleName) .'-'. $this->getName($request);
-			$this->templateObject = TemplateLoader::getInstance()->setMimeContentType(K::HTML)
+			$this->templateObject = TemplateLoader::getInstance()->setMimeContentType('html')
 										->setDirectory('templates')->setPackageName( 'modules_' . $moduleName)->load($templateName);
 		}
 		

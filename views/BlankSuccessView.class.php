@@ -11,7 +11,7 @@ class website_BlankSuccessView extends change_View
 	 */
     public function _execute($context, $request)
     {
-        $this->setTemplateName('Blank', K::HTML);
+        $this->setTemplateName('Blank', 'html');
 
         if ($request->hasParameter('content'))
         {

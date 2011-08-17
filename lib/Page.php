@@ -474,7 +474,7 @@ class website_Page implements f_mvc_Context
 		$bodyMarker = $this->getPlainMarker();
 		if ($bodyMarker !== '' && website_PageRessourceService::getInstance()->getUseMarkers())
 		{
-			$htmlBody = str_replace('</body>', $bodyMarker . K::CRLF . '</body>', $htmlBody);
+			$htmlBody = str_replace('</body>', $bodyMarker . PHP_EOL . '</body>', $htmlBody);
 		}
 		$this->htmlBody = $htmlBody;
 		include($templatePath);
@@ -567,7 +567,7 @@ class website_Page implements f_mvc_Context
 			}
 		}
 
-		return implode(K::CRLF, $styleInclusions);
+		return implode(PHP_EOL, $styleInclusions);
 	}
 
 	protected function getScripts()
@@ -601,7 +601,7 @@ class website_Page implements f_mvc_Context
 				}
 			}
 		}
-		return $ss->execute(K::HTML, $this->getSkin());
+		return $ss->execute('html', $this->getSkin());
 	}
 
 	protected function getLinkTags()
