@@ -124,10 +124,10 @@ class website_DisplayAction extends change_Action
 		if (Framework::isDebugEnabled())
 		{
 			Framework::debug(__METHOD__ . " ($login, $permission, $nodeId)");
-			Framework::debug(__METHOD__ . " illegalAccessPage : " . $_SERVER["REQUEST_URI"]);
+			Framework::debug(__METHOD__ . " users_illegalAccessPage : " . $_SERVER["REQUEST_URI"]);
 		}
 		$user = $this->getContext()->getUser();
-		$user->setAttribute('illegalAccessPage', $_SERVER["REQUEST_URI"]);
+		change_Controller::getInstance()->getStorage()->write('users_illegalAccessPage', $_SERVER["REQUEST_URI"]);
 		$this->getContext()->getController()->forward('website', 'Error401');
 	}
 	

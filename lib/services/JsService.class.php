@@ -619,7 +619,8 @@ class website_JsService extends BaseService
 		$attributes['DEV_MODE'] = Framework::inDevelopmentMode();
 		$attributes['inDragSession'] = false;
 		$attributes['RICHTEXT_PRESERVE_H1_TAGS'] = (defined('RICHTEXT_PRESERVE_H1_TAGS') && RICHTEXT_PRESERVE_H1_TAGS == 'true');
-		$attributes['CHROME_BASEURL'] = isset($_SESSION['ChromeBaseUri']) ? 'xchrome://' . $_SESSION['ChromeBaseUri'] : false;
+		$chromeUri = change_Controller::getInstance()->getStorage()->read('uixul_ChromeBaseUri');
+		$attributes['CHROME_BASEURL'] = $chromeUri ? 'xchrome://' . $chromeUri : false;
 		$attributes['CONTROLLER'] = $attributes['UIBASEURL'] . '/xul_controller.php';
 
 		$langs = array();

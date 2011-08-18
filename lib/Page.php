@@ -643,7 +643,7 @@ class website_Page implements f_mvc_Context
 	 */
 	public function getSessionUser()
 	{
-		return change_Controller::getInstance()->getContext()->getUser();
+		return change_Controller::getInstance()->getUser();
 	}
 
 	public function addContainerStylesheet()

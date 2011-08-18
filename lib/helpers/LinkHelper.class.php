@@ -65,11 +65,12 @@ class LinkHelper
 	 */
 	public static function getUIChromeActionLink($moduleName, $actionName)
 	{
-		if (!isset($_SESSION['ChromeBaseUri']))
+		$chromeUri = change_Controller::getInstance()->getStorage()->read('uixul_ChromeBaseUri');
+		if (!$chromeUri)
 		{
 			return self::getUIActionLink($moduleName, $actionName);
 		}
-	    $link = new f_web_ChromeParametrizedLink($_SESSION['ChromeBaseUri']);
+	    $link = new f_web_ChromeParametrizedLink($chromeUri);
 	    $link->setQueryParameters(array('module' => $moduleName, 'action' => $actionName));
 	    return $link;
 	}	
@@ -109,12 +110,13 @@ class LinkHelper
 	 */
 	public static function getUIChromeRessourceLink($ressourceName)
 	{
-		if (!isset($_SESSION['ChromeBaseUri']))
+		$chromeUri = change_Controller::getInstance()->getStorage()->read('uixul_ChromeBaseUri');
+		if (!$chromeUri)
 		{
 			return self::getUIRessourceLink($ressourceName);
 		}
 		
-	    $link = new f_web_ChromeParametrizedLink($_SESSION['ChromeBaseUri']);
+	    $link = new f_web_ChromeParametrizedLink($chromeUri);
 	    $link->setArgSeparator(f_web_HttpLink::ESCAPE_SEPARATOR);
 	    $link->setQueryParameters(array('module' => 'uixul', 'action' => 'GetChromeRessource', 'path' => $ressourceName));
 	    return $link;
