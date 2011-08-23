@@ -22,7 +22,7 @@ class website_ShortenUrlService extends BaseService
 	{
 		if (is_null(self::$instance))
 		{
-			self::$instance = self::getServiceClassInstance(get_class());
+			self::$instance = new self();
 			self::$instance->shortenerInstance = f_util_ClassUtils::newInstance(Framework::getConfiguration('modules/website/shortenerClassName'));
 		}
 		return self::$instance;

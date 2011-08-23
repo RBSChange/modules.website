@@ -114,7 +114,7 @@ class website_persistentdocument_page extends website_persistentdocument_pagebas
 	 */
 	private function getFrontendAccessorIds()
 	{
-		$ps = f_permission_PermissionService::getInstance();
+		$ps = change_PermissionService::getInstance();
 		$users = $ps->getAccessorIdsForRoleByDocumentId('modules_website.AuthenticatedFrontUser', $this->getId());
 		if (count($users) == 0)
 		{

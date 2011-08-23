@@ -51,7 +51,7 @@ class website_FileChildrenFinder
 	private function _hasPermission($parentDocumentId, $perm)
 	{
 		$us = users_UserService::getInstance();
-		$ps = f_permission_PermissionService::getInstance();
+		$ps = change_PermissionService::getInstance();
 
 		$foUser = $us->getCurrentFrontEndUser();
 		if ($foUser !== null && $ps->hasPermission($foUser, $perm, $parentDocumentId))

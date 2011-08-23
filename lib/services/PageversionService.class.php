@@ -13,7 +13,7 @@ class website_PageversionService extends website_PageService
 	{
 		if (self::$instance === null)
 		{
-			self::$instance = self::getServiceClassInstance(get_class());
+			self::$instance = new self();
 		}
 		return self::$instance;
 	}

@@ -21,7 +21,7 @@ class website_BlockDashboardLastModifiedPagesAction extends  dashboard_BlockDash
 
 		$user = users_UserService::getInstance()->getCurrentBackEndUser();
 		$moduleName = $this->getModuleName();
-		$ps = f_permission_PermissionService::getInstance();
+		$ps = change_PermissionService::getInstance();
 		$ms = ModuleService::getInstance();
 		$ls = LocaleService::getInstance();
 		foreach ($lastModifiedPages as $page)

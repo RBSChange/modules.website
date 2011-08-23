@@ -50,7 +50,7 @@ class website_SelectNextActorsWorkflowaction extends workflow_BaseWorkflowaction
 	 */
 	private function getActors($id, $roleName, $addSuperAdmin)
 	{
-		$permissionService = f_permission_PermissionService::getInstance();
+		$permissionService = change_PermissionService::getInstance();
 		$document = DocumentHelper::getByCorrectionId($id);
 		$originalId = $document->getId();
 		$roleName = $permissionService->resolveRole($roleName, $originalId);

@@ -37,7 +37,7 @@ class website_JsService extends BaseService
 	{
 		if (is_null(self::$instance))
 		{
-			self::$instance = self::getServiceClassInstance(get_class());
+			self::$instance = new self();
 		}
 		return self::$instance;
 	}
@@ -48,7 +48,7 @@ class website_JsService extends BaseService
 	 */
 	public static function newInstance()
 	{
-		return self::getServiceClassInstance(get_class());
+		return new self();
 	}
 
 	/**

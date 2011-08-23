@@ -22,7 +22,7 @@ class website_ListBlocktemplatesService extends BaseService implements list_List
 	{
 		if (self::$instance === null)
 		{
-			self::$instance = self::getServiceClassInstance(get_class());
+			self::$instance = new self();
 		}
 		return self::$instance;
 	}

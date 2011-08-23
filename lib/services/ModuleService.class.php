@@ -18,7 +18,7 @@ class website_ModuleService extends ModuleBaseService
 	{
 		if (is_null(self::$instance))
 		{
-			self::$instance = self::getServiceClassInstance(get_class());
+			self::$instance = new self();
 		}
 		return self::$instance;
 	}
@@ -66,7 +66,7 @@ class website_ModuleService extends ModuleBaseService
 		$result['createwebsite'] = count($result['websites']) == 0;
 		if ($result['createwebsite'])
 		{
-			$result['createwebsite'] = f_permission_PermissionService::getInstance()
+			$result['createwebsite'] = change_PermissionService::getInstance()
 			->hasPermission(users_UserService::getInstance()->getCurrentBackEndUser(), 
 				'modules_website.Insert.website',
 				ModuleService::getInstance()->getRootFolderId('websites'));

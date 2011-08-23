@@ -12,7 +12,7 @@ class website_PageChildrenFinder
 	protected function hasPermission($parentDocument)
 	{
 		$us = users_UserService::getInstance();
-		$ps = f_permission_PermissionService::getInstance();
+		$ps = change_PermissionService::getInstance();
 
 		$foUser = $us->getCurrentFrontEndUser();
 		if ($foUser !== null && $ps->hasPermission($foUser, 'modules_website.List.topic', $parentDocument->getId()))

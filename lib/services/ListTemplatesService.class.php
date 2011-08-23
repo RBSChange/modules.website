@@ -14,7 +14,7 @@ class website_ListTemplatesService extends BaseService implements list_ListItems
 	{
 		if (self::$instance === null)
 		{
-			self::$instance = self::getServiceClassInstance(get_class());
+			self::$instance = new self();
 		}
 		return self::$instance;
 	}
