@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/static/schema/change-document/1.0.xsd" 
+	xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/static/schema/change-document/4.0.xsd" 
 	model-version="2.0" icon="page" indexable="true">
 	<properties>
 		<add name="startpublicationdate" localized="true"/>
@@ -12,13 +12,13 @@
 		<add name="metatitle" type="LongString" localized="true" />
 		<add name="description" type="LongString" localized="true" />
 		<add name="keywords" type="LongString" localized="true" />
-		<add name="robotsmeta" type="String" db-size="20" from-list="modules_website/robotsmeta" default-value="index,follow" />
+		<add name="robotsmeta" type="String" db-size="20" from-list="modules_website/robotsmeta" default-value="index,follow" indexed="none"/>
 
 		<add name="indexingstatus" type="Boolean" default-value="true" />
 
-		<add name="template" type="String" min-occurs="1" />
+		<add name="template" type="String" min-occurs="1" indexed="none"/>
 
-		<add name="content" type="XHTMLFragment" localized="true" />
+		<add name="content" type="XHTMLFragment" localized="true" indexed="description"/>
 		<add name="skin" type="modules_skin/skin" />
 
 		<add name="navigationVisibility" type="Integer" min-occurs="1" from-list="modules_website/navigationvisibility" default-value="1" localized="true" />

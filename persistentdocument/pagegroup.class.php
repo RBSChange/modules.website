@@ -6,15 +6,6 @@
 class website_persistentdocument_pagegroup extends website_persistentdocument_pagegroupbase 
 {
 	/**
-	 * @see website_persistentdocument_pagebase::getBackofficeIndexedDocument()
-	 * @return indexer_IndexedDocument
-	 */
-	public function getBackofficeIndexedDocument()
-	{
-		return null;
-	}
-
-	/**
 	 * @return array
 	 */
 	public function getVersionsInfo()

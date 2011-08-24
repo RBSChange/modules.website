@@ -3,40 +3,13 @@
  * website_persistentdocument_page
  * @package website
  */
-class website_persistentdocument_page extends website_persistentdocument_pagebase implements website_PublishableElement, indexer_IndexableDocument
+class website_persistentdocument_page extends website_persistentdocument_pagebase implements website_PublishableElement
 {
 	/**
 	 * transient property, setted by PageService on insert success
 	 * @var website_persistentdocument_topic
 	 */
 	private $topic;
-
-	/**
-	 * Get the indexable document
-	 *
-	 * @return indexer_IndexedDocument
-	 */
-	public function getIndexedDocument()
-	{
-		if ($this->getIndexingstatus() == false)
-		{
-			return null;
-		}
-		$indexedDoc = new indexer_IndexedDocument();
-		$indexedDoc->setId($this->getId());
-		$indexedDoc->setDocumentModel('modules_website/page');
-		$indexedDoc->setLabel($this->getNavigationtitle());
-		$indexedDoc->setLang(RequestContext::getInstance()->getLang());
-		$indexedDoc->setText($this->getTextContent());
-
-		$indexedDoc->setDocumentAccessors($this->getFrontendAccessorIds());
-		$parentTopic = $this->getParentTopic();
-		if (!is_null($parentTopic))
-		{
-			$indexedDoc->setIntegerField('parentTopicId', $parentTopic->getId());
-		}
-		return $indexedDoc;
-	}
 
 	/**
 	 * @return website_persistentdocument_topic
@@ -99,16 +72,6 @@ class website_persistentdocument_page extends website_persistentdocument_pagebas
 		return null;
 	}
 	
-	/**
-	 * @see website_persistentdocument_pagebase::getBackofficeIndexedDocument()
-	 *
-	 * @return indexer_IndexedDocument
-	 */
-	public function getBackofficeIndexedDocument()
-	{
-		return parent::getBackofficeIndexedDocument();
-	}
-
 	/**
 	 * @return Integer[]
 	 */

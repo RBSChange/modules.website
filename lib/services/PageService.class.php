@@ -2059,4 +2059,19 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		$formProperties["metainfo"] = $jsonMeta; 		
 	}
+	
+	/**
+	 * @param indexer_IndexedDocument $indexedDocument
+	 * @param website_persistentdocument_page $document
+	 * @param indexer_IndexService $indexService
+	 */
+	protected function updateIndexDocument($indexedDocument, $document, $indexService)
+	{
+		if ($document->getIndexingstatus() == false)
+		{
+			$indexedDocument->foIndexable(false);
+		}
+		$indexedDocument->setLabel($document->getNavigationtitle());
+		$indexedDocument->setText($this->getFullTextContent($document));
+	}
 }
