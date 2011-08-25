@@ -598,16 +598,14 @@ class website_JsService extends BaseService
 
 	/**
 	 * Returns the content of the initialization script (script with predefined PHP constants, etc.).
-	 * @param change_Context $context Agavi context
 	 * @return string Init script content
 	 */
-	static public function getScriptInit($context = null)
+	static public function getScriptInit()
 	{
-		if (null === $context)
+		if (RequestContext::getInstance()->getMode() == RequestContext::FRONTOFFICE_MODE)
 		{
-			$context = change_Controller::getInstance()->getContext();
+			return '';
 		}
-
 		$attributes = array();
 		$attributes['W_HOST_PREFIX'] = Framework::getUIProtocol() . '://';
 		$attributes['W_HOST'] = Framework::getUIDefaultHost();
@@ -619,6 +617,8 @@ class website_JsService extends BaseService
 		$attributes['DEV_MODE'] = Framework::inDevelopmentMode();
 		$attributes['inDragSession'] = false;
 		$attributes['RICHTEXT_PRESERVE_H1_TAGS'] = (defined('RICHTEXT_PRESERVE_H1_TAGS') && RICHTEXT_PRESERVE_H1_TAGS == 'true');
+		
+		
 		$chromeUri = change_Controller::getInstance()->getStorage()->read('uixul_ChromeBaseUri');
 		$attributes['CHROME_BASEURL'] = $chromeUri ? 'xchrome://' . $chromeUri : false;
 		$attributes['CONTROLLER'] = $attributes['UIBASEURL'] . '/xul_controller.php';
