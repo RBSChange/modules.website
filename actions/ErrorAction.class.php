@@ -1,6 +1,8 @@
 <?php
 abstract class website_ErrorAction extends change_Action
 {
+	protected static $called = false;
+	
 	/**
 	 * @param change_Context $context
 	 * @param change_Request $request
@@ -8,24 +10,30 @@ abstract class website_ErrorAction extends change_Action
 	public function _execute($context, $request)
 	{
 		f_web_http_Header::setStatus($this->getStatus());
-		try
+		if (self::$called)
 		{
-			$page = $this->getPage();
-			if ($page === null)
+			$e = $request->getAttribute(change_Action::EXCEPTION_KEY);
+			if (!($e instanceof Exception))
 			{
-				throw new Exception("No page was found");
+				$e = new Exception('Recurcive Error call');
 			}
-			if (!$page->isPublished())
-			{
-				throw new PageException(PageException::PAGE_NOT_AVAILABLE);
-			}
-			$request->setParameter('pageref', $page->getId());
-			$context->getController()->forward('website', 'Display');
+			$r = new exception_HtmlRenderer();
+			$r->printStackTrace($e);
+			return change_View::NONE;
 		}
-		catch (Exception $e)
+		
+		self::$called = true;
+		$page = $this->getPage();
+		if ($page === null)
 		{
-			Framework::exception($e);
+			throw new Exception("No page was found");
 		}
+		if (!$page->isPublished())
+		{
+			throw new PageException(PageException::PAGE_NOT_AVAILABLE);
+		}
+		$request->setParameter('pageref', $page->getId());
+		$context->getController()->forward('website', 'Display');
 		return change_View::NONE;
 	}
 
@@ -46,4 +54,6 @@ abstract class website_ErrorAction extends change_Action
 	{
 		return false;
 	}
+	
+	
 }
