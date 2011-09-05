@@ -703,17 +703,19 @@ class LinkHelper
 		}
 		$parts = explode('?', $requestUri);
 		$currentLink = new f_web_ParametrizedLink($rq->getProtocol(), $_SERVER['SERVER_NAME'], $parts[0]);
+		$flatParams = array();
 		if (isset($parts[1]) && $parts[1] != '')
 		{
 			parse_str($parts[1], $queryParameters);
-			$currentLink->setQueryParameters($queryParameters);
+			$flatParams = f_web_HttpLink::flattenArray($queryParameters);
 		}
 		if (is_array($extraAttributes) && count($extraAttributes))
 		{
-			foreach ($extraAttributes as $name => $value) 
-			{
-				$currentLink->setQueryParameter($name, $value);
-			}
+		    $flatParams = array_merge($flatParams, f_web_HttpLink::flattenArray($extraAttributes));
+		}
+		if (count($flatParams))
+		{
+		    $currentLink->setQueryParameters($flatParams);
 		}
 		return $currentLink->getUrl();
 	}
