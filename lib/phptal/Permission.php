@@ -53,11 +53,11 @@ class PHPTAL_Php_Attribute_CHANGE_Permission extends PHPTAL_Php_Attribute
 		{
 			if ($mode == "front")
 			{
-				$assertionCode = '($user = users_FrontenduserService::getInstance()->getCurrentFrontEndUser()) !== null && f_permission_PermissionService::getInstance()->hasFrontEndPermission($user, "modules_'.$permission.'", '.$nodeId.')';
+				$assertionCode = '($user = users_FrontenduserService::getInstance()->getCurrentFrontEndUser()) !== null && change_PermissionService::getInstance()->hasFrontEndPermission($user, "modules_'.$permission.'", '.$nodeId.')';
 			}
 			elseif ($mode == "back")
 			{
-				$assertionCode = '($user = users_FrontenduserService::getInstance()->getCurrentBackEndUser()) !== null && f_permission_PermissionService::getInstance()->hasPermission($user, "modules_'.$permission.'", '.$nodeId.')';
+				$assertionCode = '($user = users_FrontenduserService::getInstance()->getCurrentBackEndUser()) !== null && change_PermissionService::getInstance()->hasPermission($user, "modules_'.$permission.'", '.$nodeId.')';
 			}
 			else
 			{
@@ -68,11 +68,11 @@ class PHPTAL_Php_Attribute_CHANGE_Permission extends PHPTAL_Php_Attribute
 		{
 			if ($mode == "front")
 			{
-				$assertionCode = '($user = users_FrontenduserService::getInstance()->getCurrentFrontEndUser()) === null || !f_permission_PermissionService::getInstance()->hasFrontEndPermission($user, "modules_'.$notPermission.'", '.$nodeId.')';
+				$assertionCode = '($user = users_FrontenduserService::getInstance()->getCurrentFrontEndUser()) === null || !change_PermissionService::getInstance()->hasFrontEndPermission($user, "modules_'.$notPermission.'", '.$nodeId.')';
 			}
 			elseif ($mode == "back")
 			{
-				$assertionCode = '($user = users_FrontenduserService::getInstance()->getCurrentBackEndUser()) === null || !f_permission_PermissionService::getInstance()->hasPermission($user, "modules_'.$notPermission.'", '.$nodeId.')';
+				$assertionCode = '($user = users_FrontenduserService::getInstance()->getCurrentBackEndUser()) === null || !change_PermissionService::getInstance()->hasPermission($user, "modules_'.$notPermission.'", '.$nodeId.')';
 			}
 			else
 			{
