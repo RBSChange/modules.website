@@ -415,9 +415,10 @@ class website_BBCodeParser
 		{
 			foreach ($smiles[$endChar] as $baseSmile) 
 			{
-				
-				substr($text, -strlen($baseSmile)) === $baseSmile;
-				return $baseSmile.$endChar;
+				if (substr($text, -strlen($baseSmile)) === $baseSmile)
+				{
+					return $baseSmile.$endChar;
+				}
 			}			
 		}
 		return null;
