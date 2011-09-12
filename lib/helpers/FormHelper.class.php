@@ -2020,7 +2020,7 @@ jQuery(document).ready(function() {
 		
 		if ($close)
 		{
-			$result .= '</label>';
+			$result .= '</label> ';
 		}
 		return $result;
 	}
