@@ -209,48 +209,6 @@ class website_PagereferenceService extends website_PageService
 	{
 		throw new IllegalOperationException('This document cannot be duplicated.');
 	}
-
-	/**
-	 * @param website_persistentdocument_pagereference $document
-	 */
-	public function deleteAll($document)
-	{
-		$requestContext = RequestContext::getInstance();
-		$vo = $document->getLang();
-		
-		foreach ($requestContext->getSupportedLanguages() as $lang)
-		{
-			if ($lang == $vo)
-			{
-				continue;
-			}
-			
-			try
-			{
-				$requestContext->beginI18nWork($lang);
-				if ($document->isContextLangAvailable())
-				{
-					$this->delete($document);
-				}
-				$requestContext->endI18nWork();
-			}
-			catch (Exception $e)
-			{
-				$requestContext->endI18nWork($e);
-			}			
-		}
-		
-		try
-		{
-			$requestContext->beginI18nWork($vo);
-			$this->delete($document);
-			$requestContext->endI18nWork();
-		}
-		catch (Exception $e)
-		{
-			$requestContext->endI18nWork($e);
-		}
-	}
 	
 	/**
 	 * @param website_persistentdocument_pagereference $pageReference
@@ -313,4 +271,14 @@ class website_PagereferenceService extends website_PageService
 		$label = $document->isContextLangAvailable() ? $document->getLabel() : $document->getVoLabel();
 		$nodeAttributes['label'] = $this->getPathOf(DocumentHelper::getDocumentInstance($document->getReferenceofid()));
 	}	
+	
+	// Deprecated
+
+	/**
+	 * @deprecated use purgeDocument
+	 */
+	public function deleteAll($document)
+	{
+		$this->purgeDocument($document);
+	}
 }

@@ -673,12 +673,12 @@ class website_PageService extends f_persistentdocument_DocumentService
 
 			foreach ($pagesReference as $pageReference)
 			{
-				$pgrefService->deleteAll($pageReference);
+				$pgrefService->purgeDocument($pageReference);
 			}
 
 			if ($deletePage)
 			{
-				$pgrefService->deleteAll($page);
+				$pgrefService->purgeDocument($page);
 			}
 		} 
 		else
