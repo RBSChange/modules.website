@@ -2,7 +2,7 @@
 /**
  * Should be in website module
  */
-class commands_CompileBlocks extends commands_AbstractChangeCommand
+class commands_CompileBlocks extends c_ChangescriptCommand
 {
 	/**
 	 * @return String
@@ -25,6 +25,16 @@ class commands_CompileBlocks extends commands_AbstractChangeCommand
 		return "compile blocks";
 	}
 
+	/**
+	 * @see c_ChangescriptCommand::getEvents()
+	 */
+	public function getEvents()
+	{
+		return array(
+			array('target' => 'compile-all'),
+		);
+	}
+	
 	/**
 	 * @param Integer $completeParamCount the parameters that are already complete in the command line
 	 * @param String[] $params
@@ -52,7 +62,7 @@ class commands_CompileBlocks extends commands_AbstractChangeCommand
 		{
 			return $this->quitError("All blocks could not be compiled: ".$this->errorCount." errors");
 		}
-		$this->getParent()->executeCommand("clearWebappCache");
+		$this->executeCommand("clear-webapp-cache");
 		return $this->quitOk("All blocks compiled successfully.");
 	}
 

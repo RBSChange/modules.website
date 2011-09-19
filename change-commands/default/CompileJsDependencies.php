@@ -1,5 +1,5 @@
 <?php
-class commands_CompileJsDependencies extends commands_AbstractChangeCommand
+class commands_CompileJsDependencies extends c_ChangescriptCommand
 {
 	/**
 	 * @return String
@@ -20,6 +20,16 @@ class commands_CompileJsDependencies extends commands_AbstractChangeCommand
 	public function getDescription()
 	{
 		return "compile javascript dependencies files";
+	}
+	
+	/**
+	 * @see c_ChangescriptCommand::getEvents()
+	 */
+	public function getEvents()
+	{
+		return array(
+			array('target' => 'compile-all'),
+		);
 	}
 
 	/**

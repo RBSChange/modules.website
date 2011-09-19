@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<listeners>
-	<listener pointcut="after" command="compile-url-rewriting" />
-	<listener pointcut="after" command="compile-blocks" />
-	<listener pointcut="after" command="compile-htaccess" />
-	<listener pointcut="after" command="website.compile-bbcodes" />
-</listeners>

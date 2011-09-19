@@ -1,5 +1,5 @@
 <?php
-class commands_GenerateBeanFrontofficeForm extends commands_AbstractChangedevCommand
+class commands_GenerateBeanFrontofficeForm extends c_ChangescriptCommand
 {
 	/**
 	 * @return String

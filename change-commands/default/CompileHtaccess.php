@@ -1,5 +1,5 @@
 <?php
-class commands_CompileHtaccess extends commands_AbstractChangeCommand
+class commands_CompileHtaccess extends c_ChangescriptCommand
 {
 	/**
 	 * @return String
@@ -21,6 +21,16 @@ class commands_CompileHtaccess extends commands_AbstractChangeCommand
 	{
 		return "generate htaccess instructions";
 	}
+	
+	/**
+	 * @see c_ChangescriptCommand::getEvents()
+	 */
+	public function getEvents()
+	{
+		return array(
+			array('target' => 'compile-config'),
+		);
+	}	
 
 	/**
 	 * @param String[] $params

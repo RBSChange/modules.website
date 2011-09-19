@@ -1,5 +1,5 @@
 <?php
-class commands_RefreshUrlRewriting extends commands_AbstractChangeCommand
+class commands_RefreshUrlRewriting extends c_ChangescriptCommand
 {
 	/**
 	 * @return String

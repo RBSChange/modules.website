@@ -3,7 +3,7 @@
  * commands_website_CompileBbcodes
  * @package modules.website.command
  */
-class commands_website_CompileBbcodes extends commands_AbstractChangeCommand
+class commands_website_CompileBbcodes extends c_ChangescriptCommand
 {
 	/**
 	 * @return String
@@ -21,6 +21,16 @@ class commands_website_CompileBbcodes extends commands_AbstractChangeCommand
 	public function getDescription()
 	{
 		return "compile BBCodes infos";
+	}
+	
+	/**
+	 * @see c_ChangescriptCommand::getEvents()
+	 */
+	public function getEvents()
+	{
+		return array(
+			array('target' => 'compile-all'),
+		);
 	}
 
 	/**

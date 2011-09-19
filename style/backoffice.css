@@ -1,18 +1,3 @@
-treechildren::-moz-tree-image(modules_website_menufolder){
-	list-style-image: url(/changeicons/small/folder.png) ;
-}
-treechildren::-moz-tree-image(modules_website_topic){
-	list-style-image: url(/changeicons/small/topic.png) ;
-}
-treechildren::-moz-tree-image(modules_website_systemtopic){
-	list-style-image: url(/changeicons/small/systemtopic.png) ;
-}
-treechildren::-moz-tree-image(modules_website_menu){
-	list-style-image: url(/changeicons/small/menu.png) ;
-}
-treechildren::-moz-tree-image(modules_website_website){
-	list-style-image: url(/changeicons/small/website.png) ;
-}
 treechildren::-moz-tree-cell-text(notVisible){
 	color: red;
 }
@@ -37,12 +22,6 @@ treechildren::-moz-tree-cell-text(modules_website_pagereference){
 treechildren::-moz-tree-image(modules_website_pagereference isIndexPage){
 	list-style-image: url(/changeicons/small/page-index.png) ;
 }
-treechildren::-moz-tree-image(modules_website_page){
-	list-style-image: url(/changeicons/small/page.png) ;
-}
-treechildren::-moz-tree-image(modules_website_pagegroup){
-	list-style-image: url(/changeicons/small/page-group.png) ;
-}
 treechildren::-moz-tree-image(modules_website_page isIndexPage){
 	list-style-image: url(/changeicons/small/page-index.png) ;
 }
@@ -58,7 +37,6 @@ treechildren::-moz-tree-image(modules_website_pagegroup isHomePage){
 treechildren::-moz-tree-cell-text(modules_website_page isIndexPage){
 	font-weight:bold;
 }
-
 treechildren::-moz-tree-cell-text(modules_website_page isHomePage){
 	color: blue;
 	font-weight:bold;
@@ -66,37 +44,4 @@ treechildren::-moz-tree-cell-text(modules_website_page isHomePage){
 treechildren::-moz-tree-cell-text(modules_website_pagegroup isHomePage){
 	color: blue;
 	font-weight:bold;
-}
-treechildren::-moz-tree-image(modules_website_pageexternal){
-	list-style-image: url(/changeicons/small/page-external.png) ;
-}
-treechildren::-moz-tree-image(modules_website_template){
-	list-style-image: url(/changeicons/small/document_notebook.png) ;
-}
-treechildren::-moz-tree-image(modules_website_preferences){
-	list-style-image: url(/changeicons/small/website.png) ;
-}
-treechildren::-moz-tree-image(modules_website_menuitem){
-	list-style-image: url(/changeicons/small/menuitem.png) ;
-}
-treechildren::-moz-tree-image(modules_website_menuitemdocument){
-	list-style-image: url(/changeicons/small/menuitem-document.png) ;
-}
-treechildren::-moz-tree-image(modules_website_menuitemfunction){
-	list-style-image: url(/changeicons/small/menuitem-function.png) ;
-}
-treechildren::-moz-tree-image(modules_website_pageversion){
-	list-style-image: url(/changeicons/small/page.png) ;
-}
-treechildren::-moz-tree-image(modules_website_menuitemtext){
-	list-style-image: url(/changeicons/small/menuitem-text.png) ;
-}
-treechildren::-moz-tree-image(modules_website_websitetopicsfolder){
-	list-style-image: url(/changeicons/small/website-folder.png) ;
-}
-treechildren::-moz-tree-image(modules_website_marker){
-	list-style-image: url(/changeicons/small/markers.png);
-}
-treechildren::-moz-tree-image(modules_website_rewriterule){
-	list-style-image: url(/changeicons/small/urlrewriting.png);
 }

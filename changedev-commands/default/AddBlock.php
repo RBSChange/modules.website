@@ -1,5 +1,5 @@
 <?php
-class commands_AddBlock extends commands_AbstractChangedevCommand
+class commands_AddBlock extends c_ChangescriptCommand
 {
 	/**
 	 * @return String
@@ -74,9 +74,9 @@ where options in:
 		
 		if ($createTag)
 		{
-			$this->getParent()->executeCommand("compile-tags");
+			$this->executeCommand("compile-tags");
 		}
-		$this->getParent()->executeCommand("compileLocales", array($moduleName));
+		$this->executeCommand("compile-locales", array($moduleName));
 				
 		$this->quitOk("Block '$blockName' added in module '$moduleName'.
 Please now edit ".$blockPath.".");
