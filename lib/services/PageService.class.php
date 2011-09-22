@@ -387,7 +387,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		if ($document->getIsHomePage())
 		{
 			$website = website_persistentdocument_website::getInstanceById($this->getWebsiteId($document));
-			return $urlRewritingService->getRewriteLink($website, $lang, '/');
+			return $urlRewritingService->getRewriteLink($website, $lang, '/', $parameters);
 		}
 		return null;
 	}
