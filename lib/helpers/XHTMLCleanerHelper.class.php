@@ -84,16 +84,15 @@ class website_XHTMLCleanerHelper
 		$xsl->save(self::$xsltCleanerCachePath);
 	}
 
+	/**
+	 * @return array
+	 */
 	private static function getProjectStyle()
 	{
-		$result = uixul_RichtextConfigService::getInstance()->getConfigurationArray();
 		$rules = array();
-		foreach ($result as $row)
+		foreach (uixul_RichtextConfigService::getInstance()->getConfigurationArray() as $row)
 		{
-			if (isset($row[uixul_RichtextConfigService::ATTR_ATTRIBUTE_NAME]) && isset($row[uixul_RichtextConfigService::ATTR_ATTRIBUTE_NAME]['class']))
-			{
-				$rules[] = array('tag' => $row[uixul_RichtextConfigService::TAG_ATTRIBUTE_NAME], 'class' => $row[uixul_RichtextConfigService::ATTR_ATTRIBUTE_NAME]['class']);
-			}
+			$rules[] = array('tag' => $row['tag'], 'class' => $row['class']);
 		}
 		return $rules;
 	}

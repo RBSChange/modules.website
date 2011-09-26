@@ -17,15 +17,15 @@ class website_RichtextConfigSuccessView extends change_View
 				ob_start();
 				echo '<?xml version="1.0" encoding="utf-8" ?><Styles>';
 				echo "<Style name=\"Paragraphe\" element=\"p\"><Attribute name=\"class\" value=\"normal\" /></Style>";
+				$ls = LocaleService::getInstance();
 				foreach ($richtextConf as $style)
 				{
-					echo "<Style name=\"".f_Locale::translate($style["label"])."\" element=\"".$style["tag"]."\">";
-					if (isset($style["attributes"]))
+					$label = $style->hasAttribute('labeli18n') ? $ls->transFO($style->getAttribute('labeli18n'), array('ucf')) : $style->getAttribute('label');
+					echo "<Style name=\"".$label."\" element=\"".$style["tag"]."\">";
+					echo "<Attribute name=\"class\" value=\"".$style["class"]."\" />";
+					if (!$style["block"])
 					{
-						foreach ($style["attributes"] as $attrName => $attrValue)
-						{
-							echo "<Attribute name=\"".$attrName."\" value=\"".$attrValue."\" />";
-						}
+						echo "<Attribute name=\"block\" value=\"false\" />";
 					}
 					echo "</Style>";
 				}

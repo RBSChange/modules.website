@@ -55,7 +55,10 @@ class website_BlankAction extends change_Action
 		
 		if ($request->hasParameter('specificstylesheet'))
 		{
-			$ss->registerStyle($request->getParameter('specificstylesheet'));
+			foreach (explode(',', $request->getParameter('specificstylesheet')) as $stylesheet)
+			{
+				$ss->registerStyle(trim($stylesheet));
+			}
 		}
 		$request->setAttribute('cssInclusion', $ss->execute('html'));
 		return change_View::SUCCESS;

@@ -1,28 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <styles>
-	<style tag="h1" label="&amp;modules.website.bo.general.Richtext-Title1;">
-		<attribute name="class" value="heading-one" />
-	</style>
-	<style tag="h2" label="&amp;modules.website.bo.general.Richtext-Title2;">
-		<attribute name="class" value="heading-two" />
-	</style>
-	<style tag="h3" label="&amp;modules.website.bo.general.Richtext-Title3;">
-		<attribute name="class" value="heading-three" />
-	</style>
-	<style tag="h4" label="&amp;modules.website.bo.general.Richtext-Title4;">
-		<attribute name="class" value="heading-four" />
-	</style>
-	<style tag="h5" label="&amp;modules.website.bo.general.Richtext-Title5;">
-		<attribute name="class" value="heading-five" />
-	</style>
-	<style tag="h6" label="&amp;modules.website.bo.general.Richtext-Title6;">
-		<attribute name="class" value="heading-six" />
-	</style>
-	
-	<style tag="pre" label="&amp;modules.website.bo.general.Richtext-Pre;">
-		<attribute name="class" value="normal" />
-	</style>
-	<style tag="pre" label="&amp;modules.website.bo.general.Richtext-Code;">
-		<attribute name="class" value="code" />
-	</style>
+	<style tag="h1" class="heading-one" labeli18n="m.website.bo.general.richtext-title1" />
+	<style tag="h2" class="heading-two" labeli18n="m.website.bo.general.richtext-title2" />
+	<style tag="h3" class="heading-three" labeli18n="m.website.bo.general.richtext-title3" />
+	<style tag="h4" class="heading-four" labeli18n="m.website.bo.general.richtext-title4" />
+	<style tag="h5" class="heading-five" labeli18n="m.website.bo.general.richtext-title5" />
+	<style tag="h6" class="heading-six" labeli18n="m.website.bo.general.richtext-title6" />
+	<style tag="pre" class="normal" labeli18n="m.website.bo.general.richtext-pre" />
+	<style tag="pre" class="code" labeli18n="m.website.bo.general.richtext-code" />
 </styles>
