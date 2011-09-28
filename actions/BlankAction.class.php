@@ -14,6 +14,7 @@ class website_BlankAction extends change_Action
 		header("Expires: " . gmdate("D, d M Y H:i:s", time()+60) . " GMT");
 		header("Cache-Control:");
 		header("Pragma:");
+		RequestContext::getInstance()->setCompleteUserAgent('xul');
 		$ss = website_StyleService::getInstance();
 		try
 		{
