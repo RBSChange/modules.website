@@ -499,7 +499,7 @@ class website_Page implements f_mvc_Context
 
 	protected function getJSONHandler()
 	{
-		$data = array('id' => $this->getId(), 'lang' => $this->getLang());
+		$data = array('id' => $this->getId(), 'lang' => $this->getLang(), 'dev_mod' => Framework::inDevelopmentMode());
 		return JsonService::getInstance()->encode($data);
 	}
 
