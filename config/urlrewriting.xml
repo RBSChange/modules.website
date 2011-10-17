@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlrewriting>
 	<rules>
-		<rule redirection="website/ViewPageexternal">
-			<template>/external/$navigationtitle,$cmpref,$lang</template>
-			<parameters>
-				<parameter name="navigationtitle" />
-				<parameter name="cmpref" />
-				<parameter name="lang" />
-			</parameters>
-		</rule>
 		<rule redirection="website/Permalink">
 			<template>/permalink/$cmpref</template>
 			<parameters>
