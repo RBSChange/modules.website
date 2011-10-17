@@ -109,19 +109,28 @@ class website_PageexternalService extends f_persistentdocument_DocumentService
 	}
 	
 	/**
+	 * @param website_UrlRewritingService $urlRewritingService
 	 * @param website_persistentdocument_pageexternal $document
-	 * @return String
+	 * @param website_persistentdocument_website $website
+	 * @param string $lang
+	 * @param array $parameters
+	 * @return f_web_Link | null
 	 */
-	public function generateUrl($document)
+	public function getWebLink($urlRewritingService, $document, $website, $lang, $parameters)
 	{
 		if ($document->getUseurl())
 		{
-			return $document->getUrl();
+			return LinkHelper::buildLinkFromUrl($document->getUrl());
 		}
-		$navigationtitle = strtolower(website_UrlRewritingService::getInstance()->encodePathString($document->getNavigationtitle()));
-		return LinkHelper::getActionUrl('website', 'ViewPageexternal', 
-			array('cmpref' => $document->getId(), 
-			'navigationtitle' => $navigationtitle, 
-			'lang' => RequestContext::getInstance()->getLang()));
+		return null;
+	}
+	
+	/**
+	 * @param website_persistentdocument_pageexternal $document
+	 * @return website_persistentdocument_page or null
+	 */
+	public function getDisplayPage($document)
+	{
+		return $document;
 	}
 }
