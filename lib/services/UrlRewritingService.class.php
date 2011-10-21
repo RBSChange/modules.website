@@ -50,7 +50,7 @@ class website_UrlRewritingService extends BaseService
 		{
 			if ($websiteIds === null)
 			{
-				$targetWebsite = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+				$targetWebsite = website_WebsiteService::getInstance()->getCurrentWebsite();
 			}
 			else
 			{
@@ -150,7 +150,7 @@ class website_UrlRewritingService extends BaseService
 	 */
 	public function getActionUrl($moduleName, $actionName, $lang = null, $parameters = array())
 	{
-		$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+		$website = website_WebsiteService::getInstance()->getCurrentWebsite();
 		$lang = ($lang !== null) ? $lang : RequestContext::getInstance()->getLang();
 		return $this->getActionLinkForWebsite($moduleName, $actionName, $website, $lang, $parameters)->getUrl();
 	}	
@@ -261,7 +261,7 @@ class website_UrlRewritingService extends BaseService
 		$link = new f_web_ParametrizedLink($website->getProtocol(), $website->getDomain(), $path);
 		if (count($parameters))
 		{	
-			$parameters = $this->convertToModuleParameters($parameters, $moduleName);
+			//$parameters = $this->convertToModuleParameters($parameters, $moduleName);
 			$link->setQueryParameters($parameters);
 		}
 		return $link;		
@@ -314,9 +314,7 @@ class website_UrlRewritingService extends BaseService
 		if ($moduleName === null)
 		{
 			$moduleName = $document->getPersistentModel()->getModulename();
-		}
-		//Framework::fatal(__METHOD__ . "($path, $documentId, $websiteId, $lang, $moduleName, $actionName, $origine)");
-		
+		}		
 		//rule_id, origine, modulename, actionname, document_id, website_lang, website_id, from_url, to_url, redirect_type
 		$oldInfo = $this->getPersistentProvider()->getUrlRewritingDocument($documentId, $lang, $websiteId);
 		foreach ($oldInfo as $row) 
@@ -387,7 +385,6 @@ class website_UrlRewritingService extends BaseService
 		$websiteId = ($website === null || $website->isNew()) ? 0 : $website->getId();
 		if ($moduleName === null) {$moduleName = $document->getPersistentModel()->getModulename();}
 		if ($redirectType != 302) {$redirectType = 301;}	
-		//Framework::fatal(__METHOD__ . "($path, $redirectType, $documentId, $websiteId, $lang, $moduleName, $actionName, $origine)");
 		
 		//rule_id, origine, modulename, actionname, document_id, website_lang, website_id, from_url, to_url, redirect_type
 		$oldInfo = $this->getPersistentProvider()->getUrlRewritingDocument($documentId, $lang, $websiteId);
@@ -505,12 +502,12 @@ class website_UrlRewritingService extends BaseService
 		try 
 		{
 			$path = $this->initCurrrentWebsite($host, $urlToForward);
-			$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+			$website = website_WebsiteService::getInstance()->getCurrentWebsite();
 
 			if ($path === '/')
 			{
 				//Home page
-				$homePage = website_WebsiteModuleService::getInstance()->getIndexPage($website, false);
+				$homePage = $website->getDocumentService()->getIndexPage($website, false);
 				if ($homePage  !== null)
 				{
 					$request->setParameter('pageref', $homePage->getId());
@@ -680,7 +677,7 @@ class website_UrlRewritingService extends BaseService
 
 	public function initCurrrentWebsite($host, $urlToForward = null)
 	{
-		$wsms = website_WebsiteModuleService::getInstance();
+		$wsms = website_WebsiteService::getInstance();
 		$websiteInfo  = $wsms->getWebsiteInfos($host);
 		if ($websiteInfo === null)
 		{
@@ -730,7 +727,7 @@ class website_UrlRewritingService extends BaseService
 		try 
 		{
 			$rc->beginI18nWork($lang);
-			website_WebsiteModuleService::getInstance()->setCurrentWebsite($website);
+			website_WebsiteService::getInstance()->setCurrentWebsite($website);
 			$websiteId = $website->getId();
 			$ds = $document->getDocumentService();
 			$docWebsiteIds = $ds->getWebsiteIds($document);

@@ -84,7 +84,7 @@ class formatter_Xhtml
 		if (preg_match('/^https?:\/\/(.*?)(\/.*)$/', $url, $match))
 		{
 			$domaine = $match[1];
-			if (website_WebsiteModuleService::getInstance()->getWebsiteByUrl($domaine) !== null)
+			if (website_WebsiteService::getInstance()->getByUrl($domaine) !== null)
 			{
 				return $match[2];
 			}

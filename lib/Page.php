@@ -139,8 +139,8 @@ class website_Page implements f_mvc_Context
 		
 		if (!$page->isNew())
 		{
-			website_WebsiteModuleService::getInstance()->setCurrentPageId($page->getId());
-			$website =  website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+			website_PageService::getInstance()->setCurrentPageId($page->getId());
+			$website =  website_WebsiteService::getInstance()->getCurrentWebsite();
 		}
 			
 		$prs = website_PageRessourceService::getInstance();
@@ -240,7 +240,7 @@ class website_Page implements f_mvc_Context
 		if (!isset($this->attributes['ancestorsids']))
 		{
 
-			$ancestors = website_WebsiteModuleService::getInstance()->getCurrentPageAncestors();
+			$ancestors = website_PageService::getInstance()->getCurrentPageAncestors();
 			$this->attributes['ancestorsids'] = DocumentHelper::getIdArrayFromDocumentArray($ancestors);
 
 		}

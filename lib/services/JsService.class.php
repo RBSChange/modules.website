@@ -172,9 +172,9 @@ class website_JsService extends BaseService
 		}		
 		$scriptNames[] = 'block.js';
 		$names = implode('/', $scriptNames);
-		$websiteId = website_WebsiteModuleService::getInstance()->getDefaultWebsite()->getId();	
+		$websiteId = website_WebsiteService::getInstance()->getDefaultWebsite()->getId();	
 		if ($websiteId <= 0) {$websiteId = 0;}
-		$protocol = website_WebsiteModuleService::getInstance()->getDefaultWebsite()->getProtocol();
+		$protocol = website_WebsiteService::getInstance()->getDefaultWebsite()->getProtocol();
 		$pathPart = array('', 'cache', 'www', 'js', $protocol, $websiteId, $rc->getLang(), 0, $names);				
 		$inclusionSrc = LinkHelper::getRessourceLink(implode('/', $pathPart))->getUrl();
 		return '<script src="' . $inclusionSrc . '" type="text/javascript"></script>';

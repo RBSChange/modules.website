@@ -444,7 +444,6 @@ class website_CSSStylesheet
 				// Beginning of declarations
 				if (!$inSelector)
 				{
-					Framework::fatal("$i " . substr($cssText, $i-50, 50));
 					throw new Exception("Declarations without a selector");
 				}
 				$inDeclarationBlock = true;

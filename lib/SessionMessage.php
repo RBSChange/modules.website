@@ -3,31 +3,51 @@ class website_SessionMessage
 {
 	public static function addVolatileMessage($message)
 	{
-		$_SESSION['website_SessionMessage']['messages'][] = array(true, $message);
+		$storage = change_Controller::getInstance()->getStorage();
+		$sm = $storage->read('website_SessionMessage');
+		if (!is_array($sm)) {$sm = array();}
+		$sm['messages'][] = array(true, $message);
+		$storage->write('website_SessionMessage', $sm);
 	}
 	
 	public static function addMessage($message)
 	{
-		$_SESSION['website_SessionMessage']['messages'][] = array(false, $message);
+		$storage = change_Controller::getInstance()->getStorage();
+		$sm = $storage->read('website_SessionMessage');
+		if (!is_array($sm)) {$sm = array();}
+		$sm['messages'][] = array(false, $message);
+		$storage->write('website_SessionMessage', $sm);		
 	}
 	
 	public static function addVolatileError($error)
 	{
-		$_SESSION['website_SessionMessage']['errors'][] = array(true, $error);
+		$storage = change_Controller::getInstance()->getStorage();
+		$sm = $storage->read('website_SessionMessage');
+		if (!is_array($sm)) {$sm = array();}
+		$sm['errors'][] = array(true, $error);
+		$storage->write('website_SessionMessage', $sm);
 	}
 	
 	public static function addError($error)
 	{
-		$_SESSION['website_SessionMessage']['errors'][] = array(false, $error);
+		$storage = change_Controller::getInstance()->getStorage();
+		$sm = $storage->read('website_SessionMessage');
+		if (!is_array($sm)) {$sm = array();}
+		$sm['errors'][] = array(false, $error);
+		$storage->write('website_SessionMessage', $sm);	
 	}
 	
 	public static function getMessages($flush = true)
 	{
+		$storage = change_Controller::getInstance()->getStorage();
+		$sm = $storage->read('website_SessionMessage');
 		$messages = array();
+		if (!isset($sm['messages'])) {return  $messages;}
+		
 		if ($flush)
 		{
 			$newMessages = array();
-			foreach ($_SESSION['website_SessionMessage']['messages'] as $message)
+			foreach ($sm['messages'] as $message)
 			{
 				$messages[] = $message[1];
 				if (!$message[0])
@@ -35,11 +55,12 @@ class website_SessionMessage
 					$newMessages = $message[1];
 				}
 			}
-			$_SESSION['website_SessionMessage']['messages'] = $newMessages;
+			$sm['messages'] = $newMessages;
+			$storage->write('website_SessionMessage', $sm);	
 		}
 		else
 		{
-			foreach ($_SESSION['website_SessionMessage']['messages'] as $message)
+			foreach ($sm['messages'] as $message)
 			{
 				$messages[] = $message[1];
 			}
@@ -49,17 +70,22 @@ class website_SessionMessage
 	
 	public static function hasMessages()
 	{
-		return isset($_SESSION['website_SessionMessage']['messages'])
-			&& f_util_ArrayUtils::isNotEmpty($_SESSION['website_SessionMessage']['messages']);
+		$storage = change_Controller::getInstance()->getStorage();
+		$sm = $storage->read('website_SessionMessage');
+		return (is_array($sm) && isset($sm['messages']) && count($sm['errors']));
 	}
 	
 	public static function getErrors($flush = true)
 	{
+		$storage = change_Controller::getInstance()->getStorage();
+		$sm = $storage->read('website_SessionMessage');
 		$messages = array();
+		if (!isset($sm['errors'])) {return  $messages;}
+		
 		if ($flush)
 		{
 			$newMessages = array();
-			foreach ($_SESSION['website_SessionMessage']['errors'] as $message)
+			foreach ($sm['errors'] as $message)
 			{
 				$messages[] = $message[1];
 				if (!$message[0])
@@ -67,11 +93,12 @@ class website_SessionMessage
 					$newMessages = $message[1];
 				}
 			}
-			$_SESSION['website_SessionMessage']['errors'] = $newMessages;
+			$sm['errors'] = $newMessages;
+			$storage->write('website_SessionMessage', $sm);	
 		}
 		else
 		{
-			foreach ($_SESSION['website_SessionMessage']['errors'] as $message)
+			foreach ($sm['errors'] as $message)
 			{
 				$messages[] = $message[1];
 			}
@@ -81,12 +108,14 @@ class website_SessionMessage
 	
 	public static function hasErrors()
 	{
-		return isset($_SESSION['website_SessionMessage']['errors'])
-			&& f_util_ArrayUtils::isNotEmpty($_SESSION['website_SessionMessage']['errors']);
+		$storage = change_Controller::getInstance()->getStorage();
+		$sm = $storage->read('website_SessionMessage');
+		return (is_array($sm) && isset($sm['errors']) && count($sm['errors']));
 	}
 	
 	public static function clear()
 	{
-		unset($_SESSION['website_SessionMessage']['errors']);
+		$storage = change_Controller::getInstance()->getStorage();
+		$sm = $storage->remove('website_SessionMessage');
 	}
 }

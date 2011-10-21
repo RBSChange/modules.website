@@ -796,7 +796,7 @@ jQuery(document).ready(function() {
 		$html .= " />";
 
 		// The "choose" button
-		$currentWebsite = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+		$currentWebsite = website_WebsiteService::getInstance()->getCurrentWebsite();
 		$url = 'http://'.$currentWebsite->getDomain(). '/fckeditorbrowser/browser.html?Type='.$chooserType.'&Connector=%2Findex.php%3Fmodule%3Dwebsite%26action%3DRichtextConnector&property='.urlencode($params['id']);
 		$html .= "<a id=\"".$params["id"]."_choose\" class=\"iframe picker-choose button\" href=\"".$url."\">".$ls->transFO("m.website.frontoffice.picker.choose")."</a>";
 

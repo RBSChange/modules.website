@@ -10,7 +10,7 @@ class website_EditContentSuccessView extends change_View
 		$document = $request->getAttribute('document');
 		$ps = website_PageService::getInstance();
 		$pageContent = $ps->getContentForEdition($document);
-		website_WebsiteModuleService::getInstance()->setCurrentPageId($document->getId());
+		$ps->setCurrentPageId($document->getId());
 		
 		$this->setTemplateName('Website-EditContent-Success', 'xul');
 		$this->setAttribute('pageContent', $pageContent);
@@ -38,11 +38,10 @@ class website_EditContentSuccessView extends change_View
 		$this->setAttribute('PAGELANG', RequestContext::getInstance()->getLang());	
 		$this->setAttribute('PAGEVERSION', $document->getDocumentversion());
 
-		$ps = website_PageService::getInstance();
 		$ancestors = $ps->getAncestorsOf($document);
 		$path = '';
 		
-		if (($document->getDocumentModelName() == 'modules_website/pageversion'))
+		if ($document instanceof website_persistentdocument_pageversion)
 		{
 			array_pop($ancestors);
 		}

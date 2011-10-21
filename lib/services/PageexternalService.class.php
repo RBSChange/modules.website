@@ -55,7 +55,20 @@ class website_PageexternalService extends f_persistentdocument_DocumentService
 		// Remove index page
 		if ($document instanceof website_persistentdocument_pageexternal && $document->getIsIndexPage())
 		{
-			website_WebsiteModuleService::getInstance()->removeIndexPage($document);
+			$document->getDocumentService()->removeIndexPage($document, true);
+		}
+	}
+
+	/**
+	 * @param website_persistentdocument_pageexternal $page
+	 * @param boolean $userSetting
+	 */
+	public function removeIndexPage($page, $userSetting = false)
+	{
+        $topic = website_TopicService::getInstance()->getParentByPage($page);
+		if ($topic)
+		{
+			website_TopicService::getInstance()->setIndexPage($topic, null, $userSetting);
 		}
 	}
 	

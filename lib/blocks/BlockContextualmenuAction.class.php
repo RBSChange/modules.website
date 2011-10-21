@@ -17,7 +17,7 @@ class website_BlockContextualmenuAction extends website_BlockAction
 		$deployall = $this->getConfigurationParameter('deployall') == 'true';
 		 
 		$page = $this->getContext()->getPersistentPage();
-		$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+		$website = website_WebsiteService::getInstance()->getCurrentWebsite();
 		if ($startwebsitelevel <= 0)
 		{
 			$rootElement = null;

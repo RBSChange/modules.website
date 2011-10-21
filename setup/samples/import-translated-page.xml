@@ -5,7 +5,7 @@
 	
 	<website byTag="default_modules_website_default-website" template-attr="template">
 		<documentRef type="modules_website/topic" byLabel="Outils">
-			<documentRef type="modules_website/page" id="unePage" byLabel="Ajouter aux favoris" />
+			<documentRef type="modules_website/page" id="unePage" byLabel="Aide" />
 			<documentRef type="modules_website/page" id="uneAutrePage" byTag="contextual_website_website_legal" />
 		</documentRef>
 		
@@ -16,7 +16,7 @@
 						<![CDATA[
 							<h2>Bloc dans un layout implicite</h2>
 							<p>Un peu de contenu...</p>
-							<p>Lien vers une page : <a lang="fr" cmpref="{ref-id:unePage}">Ajouter aux favoris qsd</a></p>
+							<p>Lien vers une page : <a lang="fr" cmpref="{ref-id:unePage}">Aide qsd</a></p>
 						]]>
 					</changeblock>
 				</changecontent>

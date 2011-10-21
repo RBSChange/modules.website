@@ -61,7 +61,7 @@ class website_ModuleService extends ModuleBaseService
 	public function checkInitModuleInfos()
 	{
 		$result = array();
-		$defaultWebsite = website_WebsiteModuleService::getInstance()->getDefaultWebsite();
+		$defaultWebsite = website_WebsiteService::getInstance()->getDefaultWebsite();
 		$result['websites'] = ($defaultWebsite->isNew()) ? array() : array($defaultWebsite->getId());		
 		$result['createwebsite'] = count($result['websites']) == 0;
 		if ($result['createwebsite'])
@@ -131,7 +131,7 @@ class website_ModuleService extends ModuleBaseService
 				throw new BaseException('Website is not empty', 'modules.website.bo.actions.Website-is-not-empty');
 			}
 		}		
-		website_WebsiteModuleService::getInstance()->setCurrentWebsite($container);
+		website_WebsiteService::getInstance()->setCurrentWebsite($container);
 		
 		// Set atrtibutes.
 		$attributes['byDocumentId'] = $container->getId();

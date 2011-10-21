@@ -43,7 +43,7 @@ class PHPTAL_Php_Attribute_CHANGE_Actionlink extends ChangeTalAttribute
 			$currentBlock = $controller->getProcessedAction();
 			$block = $currentBlock->getModuleName()."_".$currentBlock->getName();
 			
-			$page = website_WebsiteModuleService::getInstance()->getCurrentPage();
+			$page = website_PageService::getInstance()->getCurrentPage();
 		}
 		else
 		{

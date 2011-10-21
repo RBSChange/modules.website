@@ -10,8 +10,7 @@ class website_BlockSitemapAction extends website_BlockAction
 	 */
 	function execute($request, $response)
 	{
-        $ws = website_WebsiteModuleService::getInstance();
-        $siteMap = $ws->getSitemap($ws->getCurrentWebsite());
+        $siteMap = website_WebsiteModuleService::getInstance()->getSitemap(website_WebsiteService::getInstance()->getCurrentWebsite());
         $request->setAttribute('sitemap', $siteMap);
         $column = $this->getConfiguration()->getColumn();        
         if ($column)

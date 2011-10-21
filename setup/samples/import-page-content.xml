@@ -4,14 +4,14 @@
 	<binding fileName="modules/media/persistentdocument/import/media_binding.xml" />
 
 	<rootfolder module="media">
-		<folder byLabel="Exemple de media Actualité">
-			<documentRef type="modules_media/media" id="uneImage" byLabel="Anniversaire 3" />
+		<folder byLabel="Exemple de media">
+			<documentRef type="modules_media/media" id="uneImage" byLabel="logo_CHANGE" />
 		</folder>
 	</rootfolder>
 
 	<website byTag="default_modules_website_default-website">
 		<documentRef type="modules_website/topic" byLabel="Outils">
-			<documentRef type="modules_website/page" id="unePage" byLabel="Ajouter aux favoris" />
+			<documentRef type="modules_website/page" id="unePage" byLabel="Aide" />
 		</documentRef>
 		<page byLabel="page test" template-attr="templateHome" id="homepage">
 			<changecontent for="content-block">
@@ -20,7 +20,7 @@
 						<h2>Bloc dans un layout implicite</h2>
 						<p>Un peu de contenu...</p>
 						<p>
-							Lien vers une page : <a lang="fr" cmpref="{ref-id:unePage}">Ajouter aux favoris qsd</a><br/><br/>
+							Lien vers une page : <a lang="fr" cmpref="{ref-id:unePage}">Aide qsd</a><br/><br/>
 							Image : <img lang="fr" alt="RBS Change 4" cmpref="{ref-id:uneImage}" />
 						</p>
 					]]>

@@ -13,7 +13,7 @@ class website_BlockAsynchContentAction extends change_Action
 	{
 		$pageId = $this->getDocumentIdFromRequest($request);
 		$page = website_persistentdocument_page::getInstanceById($pageId);
-		website_WebsiteModuleService::getInstance()->setCurrentPageId($page->getId());
+		website_PageService::getInstance()->setCurrentPageId($page->getId());
 		$moduleName = $request->getParameter('blockModule');
 		$blockId = $request->getParameter('blockId');
 		$section = $request->getParameter('section', 'All');

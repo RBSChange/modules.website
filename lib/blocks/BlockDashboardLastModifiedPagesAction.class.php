@@ -56,7 +56,7 @@ class website_BlockDashboardLastModifiedPagesAction extends  dashboard_BlockDash
 			}
 
 			$edit = '';
-			if ($ps->hasAccessToBackofficeAction($user, $moduleName, 'editPageContent', $page->getId()))
+			if ($ps->hasPermission($user, 'modules_'.$moduleName.'.EditContent', $page->getId()))
 			{
 				$edit = "openActionUri('website,openDocument,". str_replace('/', '_', $page->getDocumentModelName()) .",". $page->getId() . "');";
 			}

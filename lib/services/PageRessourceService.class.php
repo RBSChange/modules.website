@@ -642,7 +642,7 @@ class website_PageRessourceService extends BaseService
 		}
 		$fullName .= '.css';
 		$lang = RequestContext::getInstance()->getLang();
-		$websiteId = website_WebsiteModuleService::getInstance()->getCurrentWebsite()->getId();
+		$websiteId = website_WebsiteService::getInstance()->getCurrentWebsite()->getId();
 		if ($websiteId < 0) {$websiteId = 0;}
 		return f_util_FileUtils::buildPath('cache', 'www', 'css', $protocol , $websiteId, $lang, $engine, $version, $fullName);
 	}
@@ -655,9 +655,9 @@ class website_PageRessourceService extends BaseService
 	{
 		$fullName = $name . '.js';
 		$lang = RequestContext::getInstance()->getLang();
-		$websiteId = website_WebsiteModuleService::getInstance()->getCurrentWebsite()->getId();
+		$websiteId = website_WebsiteService::getInstance()->getCurrentWebsite()->getId();
 		if ($websiteId < 0) {$websiteId = 0;}
-		$protocol = website_WebsiteModuleService::getInstance()->getCurrentWebsite()->getProtocol();
+		$protocol = website_WebsiteService::getInstance()->getCurrentWebsite()->getProtocol();
 		return f_util_FileUtils::buildPath('cache', 'www', 'js', $protocol, $websiteId, $lang, $templateId, $fullName);
 	}
 

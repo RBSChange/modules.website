@@ -48,7 +48,7 @@ class website_PageversionService extends website_PageService
 			throw new Exception('Invalide parent type '. $page->getDocumentModelName() .' for pageversion');
 		}
 		$document->setVersionofid($parentNodeId);
-		website_WebsiteModuleService::getInstance()->setWebsiteMetaFromParentId($document, $parentNodeId);
+		website_WebsiteService::getInstance()->setWebsiteMetaFromParentId($document, $parentNodeId);
 	}
 
 
@@ -118,7 +118,28 @@ class website_PageversionService extends website_PageService
 	{
 		return $this->getDocumentInstance($document->getVersionofid(), 'modules_website/pagegroup');
 	}
+	
+	/**
+	 * Sets the homepage for a website.
+	 *
+	 * @param website_persistentdocument_pageversion $page
+	 */
+	public function makeHomePage($page)
+	{
+		parent::makeHomePage($this->getPageGroupByPageVersion(DocumentHelper::getByCorrection($page)));
+	}
 
+	/**
+	 * Sets the index page for a topic.
+	 *
+	 * @param website_persistentdocument_pageversion $page
+	 * @param boolean $userSetting
+	 */
+	public function makeIndexPage($page, $userSetting = false)
+	{
+		parent::makeIndexPage($this->getPageGroupByPageVersion(DocumentHelper::getByCorrection($page), $userSetting));
+	}
+	
 	/**
 	 * @param website_persistentdocument_pageversion $document
 	 * @param String $oldPublicationStatus

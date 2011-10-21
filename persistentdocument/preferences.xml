@@ -5,7 +5,7 @@
 	publish-on-day-change="false" backoffice-indexable="false" has-url="false">
   <properties>
   	<add name="label" default-value="preferences" />
-    <add name="checkersrecipient" type="modules_users/backenduser" max-occurs="-1" />
+    <add name="checkersrecipient" type="modules_users/user" max-occurs="-1" />
   </properties>
   <statuses default="PUBLICATED" />
 </document>

@@ -18,7 +18,7 @@ class website_SetTopicIndexPageAction extends change_JSONAction
 				{
 					if (!$pageRef->getIsIndexPage())
 					{
-						website_WebsiteModuleService::getInstance()->setIndexPage($pageRef, true);
+						website_PageService::getInstance()->makeIndexPage($pageRef, true);
 						$this->logAction($pageRef);
 					}
 				}
@@ -33,7 +33,7 @@ class website_SetTopicIndexPageAction extends change_JSONAction
 		{
 			try
 			{
-				website_WebsiteModuleService::getInstance()->setIndexPage($page, true);
+				website_PageService::getInstance()->makeIndexPage($page, true);
 				$this->logAction($page);
 			}
 			catch (Exception $e)

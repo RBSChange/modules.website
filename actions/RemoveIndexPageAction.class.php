@@ -10,7 +10,7 @@ class website_RemoveIndexPageAction extends change_JSONAction
 		$topic = $this->getDocumentInstanceFromRequest($request);
 		try
 		{
-		    website_WebsiteModuleService::getInstance()->removeIndexPage($topic, true);
+			$topic->getDocumentService()->removeIndexPage($topic, true);
 		    $this->logAction($topic);
 		}
 		catch (Exception $e)

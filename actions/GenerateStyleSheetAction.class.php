@@ -44,7 +44,7 @@ class website_GenerateStyleSheetAction extends change_Action
 			$websiteId = intval($parameters[1]);
 			if ($websiteId <= 0)
 			{
-				$website =  website_WebsiteModuleService::getInstance()->getDefaultWebsite();
+				$website =  website_WebsiteService::getInstance()->getDefaultWebsite();
 			}
 			else
 			{
@@ -52,7 +52,7 @@ class website_GenerateStyleSheetAction extends change_Action
 			}
 			
 			RequestContext::getInstance()->setLang($parameters[2]);		
-			website_WebsiteModuleService::getInstance()->setCurrentWebsite($website);
+			website_WebsiteService::getInstance()->setCurrentWebsite($website);
 			
 			$engine = $parameters[3];
 			$version = $parameters[4];

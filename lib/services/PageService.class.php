@@ -42,7 +42,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	public function createQuery()
 	{
-		return $this->pp->createQuery('modules_website/page');
+		return $this->getPersistentProvider()->createQuery('modules_website/page');
 	}
 
 	/**
@@ -53,7 +53,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		
 		if ($page instanceof website_persistentdocument_page)
 		{
-			$query = $this->pp->createQuery('modules_website/pagereference')->add(Restrictions::eq('referenceofid', $page->getId()));
+			$query = $this->getPersistentProvider()->createQuery('modules_website/pagereference')->add(Restrictions::eq('referenceofid', $page->getId()));
 			$pagesReference = $query->find();
 
 			$copyToVo = $page->getLang() == RequestContext::getInstance()->getLang();
@@ -123,7 +123,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			$this->initContent($document);
 		}
-		website_WebsiteModuleService::getInstance()->setWebsiteMetaFromParentId($document, $parentNodeId);
+		website_WebsiteService::getInstance()->setWebsiteMetaFromParentId($document, $parentNodeId);
 	}
 
 	/**
@@ -415,11 +415,11 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		try
 		{
-			$this->tm->beginTransaction();
+			$this->getTransactionManager()->beginTransaction();
 			$page->setIsIndexPage($isIndexPage);
 			if ($page->isModified())
 			{
-				$this->pp->updateDocument($page);
+				$this->getPersistentProvider()->updateDocument($page);
 				if ($page instanceof website_persistentdocument_pagegroup)
 				{
 					$versions = $page->getChildrenVersions();
@@ -430,12 +430,24 @@ class website_PageService extends f_persistentdocument_DocumentService
 					}
 				}
 			}
-			$this->tm->commit();
+			$this->getTransactionManager()->commit();
 		}
 		catch (Exception $e)
 		{
-			$this->tm->rollBack($e);
+			$this->getTransactionManager()->rollBack($e);
 		}
+	}
+	
+	/**
+	 * @param f_persistentdocument_PersistentDocument $parent
+	 * @return website_persistentdocument_page || null
+	 */
+	public function getFirstPublished($parent)
+	{
+		return $this->createQuery()->add(Restrictions::published())
+			->add(Restrictions::childOf($parent->getId()))
+			->setMaxResults(1)
+			->findUnique();	
 	}
 
 	/**
@@ -446,11 +458,11 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		try
 		{
-			$this->tm->beginTransaction();
+			$this->getTransactionManager()->beginTransaction();
 			$page->setIsHomePage($isHomePage);
 			if ($page->isModified())
 			{
-				$this->pp->updateDocument($page);
+				$this->getPersistentProvider()->updateDocument($page);
 				if ($page instanceof website_persistentdocument_pagegroup)
 				{
 					$versions = $page->getChildrenVersions();
@@ -461,10 +473,63 @@ class website_PageService extends f_persistentdocument_DocumentService
 					}
 				}
 			}
-			$this->tm->commit();
+			$this->getTransactionManager()->commit();
 		} catch (Exception $e)
 		{
-			$this->tm->rollBack($e);
+			$this->getTransactionManager()->rollBack($e);
+		}
+	}
+	
+	/**
+	 * Sets the homepage for a website.
+	 *
+	 * @param website_persistentdocument_page $page
+	 */
+	public function makeHomePage($page)
+	{
+		$indexPage = DocumentHelper::getByCorrection($page);
+		
+		$website = website_WebsiteService::getInstance()->getByDocument($indexPage);
+        if ($website)
+        {
+    		$website->getDocumentService()->setHomePage($website, $indexPage);
+        }
+	}
+	
+	/**
+	 * Sets the index page for a topic.
+	 *
+	 * @param website_persistentdocument_page $page
+	 * @param Boolean $userSetting
+	 */
+	public function makeIndexPage($page, $userSetting = false)
+	{
+		$indexPage = DocumentHelper::getByCorrection($page);
+		$topic = $indexPage->getTopic();
+		if ($topic)
+		{
+			website_TopicService::getInstance()->setIndexPage($topic, $indexPage, $userSetting);
+		}
+		else
+		{
+			$parent = $this->getParentOf($page);
+			if ($parent instanceof website_persistentdocument_website)
+			{
+				$parent->getDocumentService()->setHomePage($parent, $indexPage);
+			}	
+		}
+	}
+	
+	/**
+	 * @param website_persistentdocument_page $page
+	 * @param boolean $userSetting
+	 */
+	public function removeIndexPage($page, $userSetting = false)
+	{
+        $topic = website_TopicService::getInstance()->getParentByPage($page);
+		if ($topic)
+		{
+			website_TopicService::getInstance()->setIndexPage($topic, null, $userSetting);
 		}
 	}
 
@@ -491,7 +556,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		if ($document instanceof website_persistentdocument_page && $document->getIsIndexPage())
 		{
 			// TODO: document the precise use of the second argument of removeIndexPage ???
-			website_WebsiteModuleService::getInstance()->removeIndexPage($document, true);
+			$document->getDocumentService()->removeIndexPage($document, true);
 		}
 
 		$ts = TagService::getInstance();
@@ -562,7 +627,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$pageTreeNode = TreeService::getInstance()->getInstanceByDocument($page);
 		$parentTreeNode = $pageTreeNode->getParent();
 
-		$query = $this->pp->createQuery('modules_website/topic')->add(Restrictions::descendentOf($parentTreeNode->getId()));
+		$query = $this->getPersistentProvider()->createQuery('modules_website/topic')->add(Restrictions::descendentOf($parentTreeNode->getId()));
 		$topics = $query->find();
 		foreach ($topics as $topic)
 		{
@@ -594,7 +659,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	private function setPageReferenceInTopics($topic, $page)
 	{
-		$query = $this->pp->createQuery('modules_website/pagereference')
+		$query = $this->getPersistentProvider()->createQuery('modules_website/pagereference')
 			->add(Restrictions::childOf($topic->getId()))
 			->add(Restrictions::eq('referenceofid', $page->getId()));
 
@@ -630,7 +695,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$pageReference->save($topic->getId());
 		if ($setAsIndex)
 		{
-			website_WebsiteModuleService::getInstance()->setIndexPage($pageReference, false);
+			$pageReference->getDocumentService()->makeIndexPage($pageReference, false);
 		}
 		return $pageReference;
 	}
@@ -660,7 +725,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 				$deletePage = false;
 			}
 			$parentTreeNode = $pageTreeNode->getParent();
-			$query = $this->pp->createQuery('modules_website/pagereference')->add(Restrictions::eq('referenceofid', $pageId));
+			$query = $this->getPersistentProvider()->createQuery('modules_website/pagereference')->add(Restrictions::eq('referenceofid', $pageId));
 
 			//Tag deplacer d'une page reference on ne prend que les descendants de rubrique
 			if ($deletePage)
@@ -743,7 +808,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 				return;
 			}
 
-			$pageRefs = $this->pp->createQuery('modules_website/pagereference')->add(Restrictions::eq('referenceofid', $document->getId()))->find();
+			$pageRefs = $this->getPersistentProvider()->createQuery('modules_website/pagereference')->add(Restrictions::eq('referenceofid', $document->getId()))->find();
 
 
 			foreach ($pageRefs as $pageRef)
@@ -766,7 +831,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 				return;
 			}
 
-			$query = $this->pp->createQuery('modules_website/page')->add(Restrictions::descendentOf($parentTopic->getId(), 1))->add(Restrictions::hasTag($tag));
+			$query = $this->getPersistentProvider()->createQuery('modules_website/page')->add(Restrictions::descendentOf($parentTopic->getId(), 1))->add(Restrictions::hasTag($tag));
 			$page = $query->findUnique();
 
 			if (Framework::isDebugEnabled())
@@ -786,7 +851,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 
 			$this->setPageReferenceInTopics($topic, $page);
 
-			$query = $this->pp->createQuery('modules_website/topic')->add(Restrictions::descendentOf($topic->getId()));
+			$query = $this->getPersistentProvider()->createQuery('modules_website/topic')->add(Restrictions::descendentOf($topic->getId()));
 
 			$topics = $query->find();
 			foreach ($topics as $topic)
@@ -881,6 +946,90 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$this->initContent($page);
 		$this->save($page);
 	}
+	
+	/**
+	 * @var integer
+	 * Set by website/DisplayAction.
+	 */
+	private $currentPageId = null;
+	
+	/**
+	 * @var integer[]
+	 */
+	private $currentPageAncestorsIds = array();
+	
+	private $currentPageAncestors = array();
+	
+	/**
+	 * This function set the currentPageId and calculate :
+	 * 	- currentPageAncestors[Ids]
+	 *  - currentWebsite
+	 * @param Integer $currentPageId
+	 */
+	public function setCurrentPageId($currentPageId)
+	{
+		if (Framework::isDebugEnabled())
+		{
+			Framework::debug(__METHOD__ . ' ' . $currentPageId);
+		}
+		$this->currentPageId = $currentPageId;
+		$this->currentPageAncestorsIds = array();
+		$this->currentPageAncestors = array();
+		$page = DocumentHelper::getDocumentInstance($this->currentPageId);
+		$ancestors = $page->getDocumentService()->getAncestorsOf($page);
+		foreach ($ancestors as $document)
+		{
+			if ($document instanceof website_persistentdocument_website)
+			{
+			    $this->currentPageAncestors[] = $document;
+				$this->currentPageAncestorsIds[] = $document->getId();
+				website_WebsiteService::getInstance()->setCurrentWebsite($document);
+			}
+			elseif ($document instanceof website_persistentdocument_topic)
+			{
+			    $this->currentPageAncestors[] = $document;
+			    $this->currentPageAncestorsIds[] = $document->getId();
+			}
+		}
+	}	
+	
+	/**
+	 * @return integer
+	 */
+	public function getCurrentPageId()
+	{
+		return $this->currentPageId;
+	}
+
+	/**
+	 * @return website_persistentdocument_page
+	 */
+	function getCurrentPage()
+	{
+		return $this->getDocumentInstance($this->currentPageId, "modules_website/page");
+	}	
+	
+	/**
+	 * @return array the current page ancestors ids
+	 */
+	public function getCurrentPageAncestorsIds()
+	{
+		return $this->currentPageAncestorsIds;
+	}
+
+	/**
+	 * @return array the current page ancestors
+	 */
+	public function getCurrentPageAncestors()
+	{
+		return $this->currentPageAncestors;
+	}	
+	
+	
+	
+	
+	
+	
 
 	const CHANGE_PAGE_EDITOR_NS = "http://www.rbs.fr/change/1.0/schema";
 	const CHANGE_TEMPLATE_TYPE_HTML = "html";
@@ -1725,7 +1874,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	private function addFavIconInfo($pageContext)
 	{
-		$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+		$website = website_WebsiteService::getInstance()->getCurrentWebsite();
 		if ($website && $website->getFavicon())
 		{
 			$favicon = $website->getFavicon();
@@ -1979,7 +2128,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	public function getDocumentForSitemap($website, $lang, $modelName, $offset, $chunkSize)
 	{
-		return $this->pp->createQuery($modelName, false)->add(Restrictions::published())
+		return $this->getPersistentProvider()->createQuery($modelName, false)->add(Restrictions::published())
 					->add(Restrictions::descendentOf($website->getId()))
 					->add(Restrictions::ne('navigationVisibility',  WebsiteConstants::VISIBILITY_HIDDEN))
 					->addOrder(Order::asc('id'))

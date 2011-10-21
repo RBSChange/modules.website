@@ -36,7 +36,7 @@ class website_TopicService extends f_persistentdocument_DocumentService
 	 */
 	public function createQuery()
 	{
-		return $this->pp->createQuery('modules_website/topic');
+		return $this->getPersistentProvider()->createQuery('modules_website/topic');
 	}
 
 	/**
@@ -143,7 +143,7 @@ class website_TopicService extends f_persistentdocument_DocumentService
 	 */
 	protected function preInsert($document, $parentNodeId = null)
 	{
-		website_WebsiteModuleService::getInstance()->setWebsiteMetaFromParentId($document, $parentNodeId);
+		website_WebsiteService::getInstance()->setWebsiteMetaFromParentId($document, $parentNodeId);
 	}
 
 	/**
@@ -209,7 +209,7 @@ class website_TopicService extends f_persistentdocument_DocumentService
 		$topicNode = TreeService::getInstance()->getInstanceByDocument($topic);
 		$parentNode = $topicNode->getParent();
 
-		$query = $this->pp->createQuery('modules_website/page')
+		$query = $this->getPersistentProvider()->createQuery('modules_website/page')
 		->add(Restrictions::childOf($parentNode->getId()));
 		$pages = $query->find();
 
@@ -311,6 +311,30 @@ class website_TopicService extends f_persistentdocument_DocumentService
 			}
 		}
 	}
+	
+	/**
+	 * @param website_persistentdocument_page $page
+	 * @return website_persistentdocument_topic
+	 */
+	public function getParentByPage($page)
+	{
+		if ($page instanceof website_persistentdocument_pageversion)
+		{
+			$indexPage = website_PageversionService::getInstance()->getVersionOf(DocumentHelper::getByCorrection($page));
+			return $indexPage->getDocumentService()->getParentOf($indexPage);
+		}
+		else if ($page instanceof website_persistentdocument_page)
+        {
+        	$indexPage = DocumentHelper::getByCorrection($page);
+        	return $indexPage->getDocumentService()->getParentOf($indexPage);
+        }
+        else if ($page instanceof website_persistentdocument_pageexternal)
+        {
+        	$indexPage = DocumentHelper::getByCorrection($page);
+        	return $indexPage->getDocumentService()->getParentOf($indexPage);
+        }
+       	return null;
+	}
 
 	/**
 	 * @param website_persistentdocument_topic $topic
@@ -325,7 +349,7 @@ class website_TopicService extends f_persistentdocument_DocumentService
 		}
 		try
 		{
-			$this->tm->beginTransaction();
+			$this->getTransactionManager()->beginTransaction();
 			$oldPage = $topic->getIndexPage();
 			if (!DocumentHelper::equals($oldPage, $newIndexPage))
 			{
@@ -352,12 +376,42 @@ class website_TopicService extends f_persistentdocument_DocumentService
 					$requestContext->endI18nWork($e);
 				}
 			}
-			$this->tm->commit();
+			$this->getTransactionManager()->commit();
 		}
 		catch (Exception $e)
 		{
-			$this->tm->rollBack($e);
+			$this->getTransactionManager()->rollBack($e);
 		}
+	}
+	
+	/**
+	 * @param website_persistentdocument_topic $topic
+	 * @param boolean $userSetting
+	 */
+	public function removeIndexPage($topic, $userSetting = false)
+	{
+		if ($topic instanceof website_persistentdocument_topic)
+        {
+          	$this->setIndexPage($topic, null, $userSetting);
+        }
+	}
+	
+	/**
+	 * Returns the index page for a topic.
+	 *
+	 * @param website_persistentdocument_topic $topic
+	 * @param boolean $getFirstPageIfNotFound If true, and if no index page is defined, get the first child page.
+	 *
+	 * @return website_persistentdocument_page || null
+	 */
+	public function getIndexPage($topic, $getFirstPageIfNotFound = false)
+	{
+		$indexPage = $topic->getIndexPage();
+		if ($indexPage === null && $getFirstPageIfNotFound)
+		{
+			return website_PageService::getInstance()->getFirstPublished($topic);
+		}
+		return $indexPage;
 	}
 	
 	/**

@@ -42,7 +42,7 @@ class website_PopInAction extends change_Action
 			{
 				throw new PageException($pageId, PageException::PAGE_NOT_AVAILABLE);
 			}
-			website_WebsiteModuleService::getInstance()->setCurrentPageId($page->getId());
+			website_PageService::getInstance()->setCurrentPageId($page->getId());
 			$wprs = website_PageRessourceService::getInstance();
 			$wprs->setGlobalTemplateName('PopIn-ContentBasis');
 			$wprs->setUseMarkers(false);

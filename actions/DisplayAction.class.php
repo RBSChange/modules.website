@@ -30,7 +30,7 @@ class website_DisplayAction extends change_Action
 	 */
 	public function _execute($context, $request)
 	{
-		$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();	
+		$website = website_WebsiteService::getInstance()->getCurrentWebsite();	
 		if (!$website->isPublished())
 		{
 			include f_util_FileUtils::buildWebeditPath('site-disabled.php');
@@ -65,7 +65,7 @@ class website_DisplayAction extends change_Action
 			{
 				if ($page->getUsehttps() != RequestContext::getInstance()->inHTTPS())
 				{
-					$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+					$website = website_WebsiteService::getInstance()->getCurrentWebsite();
 					$url = ($page->getUsehttps()) ? 'https://' : 'http://';
 					$url .= $website->getDomain() . RequestContext::getInstance()->getPathURI();
 					if (Framework::isDebugEnabled())
@@ -136,7 +136,7 @@ class website_DisplayAction extends change_Action
 	protected function isDocumentAction()
 	{
 		$user = users_UserService::getInstance()->getCurrentUser();
-		return ($user instanceof users_persistentdocument_backenduser);
+		return ($user instanceof users_persistentdocument_user);
 	}
 	
 	public function getRequestMethods()

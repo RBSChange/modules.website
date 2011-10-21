@@ -20,11 +20,11 @@ class generic_TaggedDocumentLoadHandler extends website_ViewLoadHandlerImpl
 					$document = null;
 					if ($ts->isContextualTag($tagName))
 					{
-						$document = $ts->getDocumentByContextualTag($tagName, website_WebsiteModuleService::getInstance()->getCurrentWebsite());
+						$document = $ts->getDocumentByContextualTag($tagName, website_WebsiteService::getInstance()->getCurrentWebsite());
 					}
 					else if ($ts->isFunctionalTag($tagName))
 					{
-						$document = $ts->getDocumentBySiblingTag($tagName, website_WebsiteModuleService::getInstance()->getCurrentPage());
+						$document = $ts->getDocumentBySiblingTag($tagName, website_PageService::getInstance()->getCurrentPage());
 					}
 					else if ($ts->isExclusiveTag($tagName))
 					{

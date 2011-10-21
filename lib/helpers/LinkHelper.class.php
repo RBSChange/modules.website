@@ -3,6 +3,14 @@
 class LinkHelper
 {	
 	/**
+	 * @return string '#'
+	 */
+	public static function getEmptyUrl()
+	{
+		return '#';
+	}
+	
+	/**
 	 * @param array $queryParams
 	 * @param website_persistentdocument_website $website
 	 * @return f_web_ParametrizedLink
@@ -11,7 +19,7 @@ class LinkHelper
 	{
 	    if ($website === NULL)
 	    {
-	        $website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+	        $website = website_WebsiteService::getInstance()->getCurrentWebsite();
 	    }
 	    $link = new f_web_ParametrizedLink($website->getProtocol(), $website->getDomain(), f_web_HttpLink::SITE_PATH);
 	    $link->setQueryParameters($queryParams);
@@ -39,7 +47,7 @@ class LinkHelper
 	{
 	    if ($website === NULL)
 	    {
-	        $website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+	        $website = website_WebsiteService::getInstance()->getCurrentWebsite();
 	    }
 	    $lang = RequestContext::getInstance()->getLang();
 	    $link = website_UrlRewritingService::getInstance()->getDefaultActionWebLink($moduleName, $actionName, $website, $lang, array());
@@ -84,7 +92,7 @@ class LinkHelper
 	{
 		if ($website === NULL)
 	    {
-	        $website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+	        $website = website_WebsiteService::getInstance()->getCurrentWebsite();
 	    }
 	    $link = new f_web_ResourceLink($website->getProtocol(), $website->getDomain());
 	    $link->setPath($ressourceName);
@@ -177,7 +185,7 @@ class LinkHelper
 			Framework::error(f_util_ProcessUtils::getBackTrace());
 			return null;
 		}
-		if ($website === null){$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();}
+		if ($website === null){$website = website_WebsiteService::getInstance()->getCurrentWebsite();}
 		if ($lang === null) {$lang = RequestContext::getInstance()->getLang();}
 		return website_UrlRewritingService::getInstance()->getActionLinkForWebsite($moduleName, $actionName, $website, $lang, $parameters)->getUrl();
 	}
@@ -232,7 +240,7 @@ class LinkHelper
 				$pageId = null;
 				if ($context === null)
 				{
-					$pageId = website_WebsiteModuleService::getInstance()->getCurrentPageId();				
+					$pageId = website_PageService::getInstance()->getCurrentPageId();				
 				}
 				else if ($context instanceof website_persistentdocument_page)
 				{
@@ -254,7 +262,7 @@ class LinkHelper
 			{
 				if ($context === null)
 				{
-					$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+					$website = website_WebsiteService::getInstance()->getCurrentWebsite();
 				}
 				else if ($context instanceof f_persistentdocument_PersistentDocument)
 				{
@@ -298,7 +306,7 @@ class LinkHelper
 	 */
 	public static function getHomeUrl()
 	{
-	    $website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+	    $website = website_WebsiteService::getInstance()->getCurrentWebsite();
 	    $lang = RequestContext::getInstance()->getLang();
         return website_UrlRewritingService::getInstance()->getRewriteLink($website, $lang, '')->getUrl();
 	}
@@ -310,10 +318,9 @@ class LinkHelper
 	 */
 	public static function getHelpUrl()
 	{
-	    $ws = website_WebsiteModuleService::getInstance();
 		try
 		{
-		    $website = $ws->getCurrentWebsite();
+		    $website = website_WebsiteService::getInstance()->getCurrentWebsite();
             $page = TagService::getInstance()->getDocumentByContextualTag(WebsiteConstants::TAG_HELP_PAGE, $website);
             if ($page !== null)
             {
@@ -324,7 +331,7 @@ class LinkHelper
 		{
 			Framework::exception($e);
 		}
-	    return $ws->getEmptyUrl();
+	    return self::getEmptyUrl();
 	}
 	
 	/**
@@ -522,7 +529,7 @@ class LinkHelper
 			$url = LinkHelper::getTagUrl(WebsiteConstants::TAG_ADD_TO_FAVORITES_PAGE);
 			if (f_util_StringUtils::isEmpty($url))
 			{
-				$url = website_WebsiteModuleService::getInstance()->getEmptyUrl();
+				$url = self::getEmptyUrl();
 			}
 		}
 		catch (Exception $e)
@@ -531,7 +538,7 @@ class LinkHelper
 			{
 				Framework::exception($e);
 			}
-			$url = website_WebsiteModuleService::getInstance()->getEmptyUrl();
+			$url = self::getEmptyUrl();
 		}
 		
 		if (is_null($label))
@@ -568,7 +575,7 @@ class LinkHelper
 			$url = LinkHelper::getTagUrl(WebsiteConstants::TAG_PRINT_PAGE);
 			if (f_util_StringUtils::isEmpty($url))
 			{
-				$url = website_WebsiteModuleService::getInstance()->getEmptyUrl();
+				$url = self::getEmptyUrl();
 			}
 		}
 		catch (Exception $e)
@@ -577,7 +584,7 @@ class LinkHelper
 			{
 				Framework::exception($e);
 			}
-			$url = website_WebsiteModuleService::getInstance()->getEmptyUrl();
+			$url = self::getEmptyUrl();
 		}		
 
 		if (is_null($label))
@@ -614,7 +621,7 @@ class LinkHelper
 			$url = LinkHelper::getTagUrl(WebsiteConstants::TAG_HELP_PAGE);
 			if (f_util_StringUtils::isEmpty($url))
 			{
-				$url = website_WebsiteModuleService::getInstance()->getEmptyUrl();
+				$url = self::getEmptyUrl();
 			}
 		}
 		catch (Exception $e)
@@ -623,7 +630,7 @@ class LinkHelper
 			{
 				Framework::exception($e);
 			}
-			$url = website_WebsiteModuleService::getInstance()->getEmptyUrl();
+			$url = self::getEmptyUrl();
 		}	
 		
 		if (is_null($label))
@@ -658,7 +665,7 @@ class LinkHelper
 			$url = LinkHelper::getTagUrl(WebsiteConstants::TAG_LEGAL_NOTICE_PAGE);
 			if (f_util_StringUtils::isEmpty($url))
 			{
-				$url = website_WebsiteModuleService::getInstance()->getEmptyUrl();
+				$url = self::getEmptyUrl();
 			}
 		}
 		catch (Exception $e)
@@ -667,7 +674,7 @@ class LinkHelper
 			{
 				Framework::exception($e);
 			}
-			$url = website_WebsiteModuleService::getInstance()->getEmptyUrl();
+			$url = self::getEmptyUrl();
 		}	
 
 		if (is_null($label))

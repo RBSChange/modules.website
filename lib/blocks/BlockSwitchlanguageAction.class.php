@@ -84,7 +84,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 		}
 		
 		$parameters = $this->getCleanGlobalParameters(change_Controller::getInstance()->getContext()->getRequest()->getParameters(), $detailDoc);
-		$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+		$website = website_WebsiteService::getInstance()->getCurrentWebsite();
 		$homePage = $website->getIndexPage();
 		
 		foreach ($rc->getSupportedLanguages() as $lang)

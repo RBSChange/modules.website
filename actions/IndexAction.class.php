@@ -11,7 +11,7 @@ class website_IndexAction extends change_Action
 		{
 			$host = $_SERVER['HTTP_HOST'];
 			website_UrlRewritingService::getInstance()->initCurrrentWebsite($host);
-			$ws = website_WebsiteModuleService::getInstance();
+			$ws = website_WebsiteService::getInstance();
 			$website = $ws->getCurrentWebsite();
 			$homePage = $ws->getIndexPage($website, false);
 			if ($homePage  === null || !$homePage->isPublished())

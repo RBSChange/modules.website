@@ -58,7 +58,7 @@ class website_SelectNextActorsWorkflowaction extends workflow_BaseWorkflowaction
 		$actorsIds = $permissionService->getUsersByRoleAndDocumentId($roleName, $originalId);
 		if ($addSuperAdmin)
 		{
-			$rootUsers = users_BackenduserService::getInstance()->getRootUsers();
+			$rootUsers = users_UserService::getInstance()->getRootUsers();
 			foreach ($rootUsers as $rootUser) 
 			{
 				$rootUserId = $rootUser->getId();

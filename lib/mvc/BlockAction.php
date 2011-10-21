@@ -679,7 +679,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	 */
 	protected final function isInBackoffice()
 	{
-		return (users_UserService::getInstance()->getCurrentUser() instanceof users_persistentdocument_backenduser);
+		return (RequestContext::getInstance()->getMode() === RequestContext::BACKOFFICE_MODE);
 	}
 	
 	/**

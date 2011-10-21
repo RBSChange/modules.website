@@ -47,4 +47,7 @@
   <key id="template-help">Template à appliquer aux pages de contenu.</key>
   <key id="templatehome">template d'accueil</key>
   <key id="templatehome-help">Template à appliquer à la page d'accueil. Laisser vide pour prendre le même template que les pages de contenu.</key>
+  
+  <key id="group">Groupe d'utilisateurs</key>
+  <key id="group">Groupe d'utilisateurs authorisés à s'authentifier sur le site</key>
 </i18n>

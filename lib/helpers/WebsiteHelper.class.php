@@ -128,7 +128,7 @@ abstract class WebsiteHelper
 	 */
 	public static function getCurrentPageAttributeForMenu()
 	{
-    	$ws = website_WebsiteModuleService::getInstance();
+    	$ws = website_PageService::getInstance();
 		$currentPageDoc = DocumentHelper::getDocumentInstance($ws->getCurrentPageId());
     	$currentPageAttr = array(
     		'id' => $ws->getCurrentPageId(),

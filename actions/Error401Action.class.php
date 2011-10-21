@@ -17,6 +17,6 @@ class website_Error401Action extends website_ErrorAction
 	 */
 	protected function getPage()
 	{
-		return TagService::getInstance()->getDocumentByContextualTag(WebsiteConstants::TAG_ERROR_401_PAGE, website_WebsiteModuleService::getInstance()->getCurrentWebsite());
+		return TagService::getInstance()->getDocumentByContextualTag(WebsiteConstants::TAG_ERROR_401_PAGE, website_WebsiteService::getInstance()->getCurrentWebsite());
 	}
 }

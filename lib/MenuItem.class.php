@@ -146,7 +146,7 @@ class website_MenuItem
      */
     public function getUrl()
     {
-        return $this->url !== null ? $this->url : website_WebsiteModuleService::EMPTY_URL;
+        return $this->url !== null ? $this->url : LinkHelper::getEmptyUrl();
     }
 
     /**

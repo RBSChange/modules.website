@@ -10,7 +10,7 @@ class website_GetRobotsTxtAction extends change_Action
 	 */
 	public function _execute($context, $request)
 	{
-		$wsms = website_WebsiteModuleService::getInstance();
+		$wsms = website_WebsiteService::getInstance();
 		$websiteInfo  = $wsms->getWebsiteInfos($_SERVER['HTTP_HOST']);
 		$contents = '';
 		$website = null;

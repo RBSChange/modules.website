@@ -13,8 +13,7 @@ class website_RedirectAction extends change_Action
 	{
 		
 		$redirectType = $request->getParameter('redirectType', 301);
-		$location = $request->getParameter('location');
-		
+		$location = $request->getParameter('location');		
 		if (Framework::isInfoEnabled())
 		{ 
 			Framework::info(__METHOD__ . '(' . $location . ', ' . $redirectType . ')');
@@ -25,8 +24,10 @@ class website_RedirectAction extends change_Action
 			Framework::warn(__METHOD__ .' location note defined.');
 			$context->getController()->forward('website', 'Unavailable');
 		}
+		
 		f_web_http_Header::setStatus($redirectType);
 		header("Location: ".$location);
+		echo '<html><head><meta http-equiv="refresh" content="0;url=', $location, '"/></head></html>';	
 		return change_View::NONE;
 	}
 	

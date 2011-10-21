@@ -32,7 +32,7 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	 */
 	public function createQuery()
 	{
-		return $this->pp->createQuery('modules_website/website');
+		return $this->getPersistentProvider()->createQuery('modules_website/website');
 	}
 	
 	/**
@@ -83,8 +83,25 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
         		 $rc->endI18nWork($e);
         	}
         }
+        
+        $group = $document->getGroup();
+        if ($group === null)
+        {
+        	$group = $this->createAuthenticationGroup($document);
+        }
     }
 	
+    /**
+     * @param website_persistentdocument_website $document
+     */
+	protected function createAuthenticationGroup($document)
+	{
+		$grp = users_GroupService::getInstance()->getNewDocumentInstance();
+		$grp->setLabel($document->getLabel());
+		$grp->save(ModuleService::getInstance()->getRootFolderId('users'));
+		$document->setGroup($grp);
+		return $grp;
+	}
 	
 	/**
 	 * @param website_persistentdocument_website $document
@@ -143,7 +160,7 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 		// website.
 		if (is_null($query->findUnique()) )
 		{	
-			website_WebsiteModuleService::getInstance()->setDefaultWebsite($document);
+			$this->setDefaultWebsite($document);
 		}
 
 		// Create the menus folder where the website's menus will be stored.
@@ -156,6 +173,11 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 		{
 			$this->generateDefaultStructure($document, $initScript);
 		}
+		$roleName = 'modules_website.AuthenticatedFrontUser';
+		change_PermissionService::getInstance()->addRoleToGroup($document->getGroup(), $roleName, array($document->getId()));
+		
+		$anonymouseUser = users_AnonymoususerService::getInstance()->getAnonymousUser();
+		change_PermissionService::getInstance()->addRoleToUser($anonymouseUser, $roleName, array($document->getId()));	
 	}
 		
 	/**
@@ -211,6 +233,22 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	}
 	
 	/**
+	 * Indicates whether the given $website has a unique URL for its version in
+	 * language $lang.
+	 *
+	 * @param website_persistentdocument_website $website
+	 * @param string $lang
+	 *
+	 * @return boolean
+	 */
+	public function hasUniqueDomainNameForLang($website, $lang)
+	{
+		$urlForLang = $website->getUrlForLang($lang);
+		$i18nWebsites = $this->getPersistentProvider()->getI18nWebsitesFromUrl($urlForLang);
+		return count($i18nWebsites) == 1;
+	}
+	
+	/**
 	 * @param website_persistentdocument_website $website
 	 * @param website_persistentdocument_page $newHomePage
 	 */
@@ -222,7 +260,7 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	    }  
 		try
 		{
-		    $this->tm->beginTransaction();
+		    $this->getTransactionManager()->beginTransaction();
 		    
             $oldPage = $website->getIndexPage();
       
@@ -247,12 +285,43 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
             {
               	$requestContext->endI18nWork($e);
             }
-            $this->tm->commit();
+            $this->getTransactionManager()->commit();
 	    }
 		catch (Exception $e)
 		{
-			$this->tm->rollBack($e);
+			$this->getTransactionManager()->rollBack($e);
 		}          
+	}
+	
+	/**
+	 * Returns the index page for a website.
+	 *
+	 * @param website_persistentdocument_website $website
+	 * @param boolean $getFirstPageIfNotFound If true, and if no index page is defined, get the first child page.
+	 *
+	 * @return website_persistentdocument_page || null
+	 */
+	public function getIndexPage($website, $getFirstPageIfNotFound = false)
+	{
+		$indexPage = $website->getIndexPage();
+		if ($indexPage === null && $getFirstPageIfNotFound)
+		{
+			return website_PageService::getInstance()->getFirstPublished($website);
+		}
+		return $indexPage;
+	}
+	
+	/**
+	 * Returns the index page for a website.
+	 *
+	 * @param website_persistentdocument_website $website
+	 * @param boolean $getFirstPageIfNotFound If true, and if no index page is defined, get the first child page.
+	 *
+	 * @return website_persistentdocument_page || null
+	 */
+	public function getHomePage($website, $getFirstPageIfNotFound = false)
+	{
+		return $this->getIndexPage($website, $getFirstPageIfNotFound);
 	}
 	
 	/**
@@ -356,5 +425,264 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	public function getDocumentForSitemap($website, $lang, $modelName, $offset, $chunkSize)
 	{
 		return array();
+	}
+	
+	/**
+	 * @var website_persistentdocument_website
+	 */
+	private $currentWebsite = null;
+
+	/**
+	 * @var website_persistentdocument_website
+	 */
+	private $defaultWebsite = null;
+
+	
+	/**
+	 * Returns the default website for the whole project.
+	 *
+	 * If a website is exclusively tagged with 'default_modules_website_default-website',
+	 * this website will be returned. Otherwise, this method returns the first website it
+	 * finds in the website module, <strong>using an undefined order</strong>.
+	 *
+	 * @return website_persistentdocument_website
+	 */
+	public function getDefaultWebsite()
+	{
+		if ($this->defaultWebsite === null)
+		{
+			try
+			{
+				$this->defaultWebsite = TagService::getInstance()->getDocumentByExclusiveTag(WebsiteConstants::TAG_DEFAULT_WEBSITE);
+			}
+			catch (TagException $e)
+			{
+				if (Framework::isDebugEnabled())
+				{
+			    	Framework::exception($e);
+				}
+
+				$this->defaultWebsite = $this->getNewDocumentInstance();
+				$this->defaultWebsite->setLabel('Temporary web site');
+				$this->defaultWebsite->setDomain(Framework::getUIDefaultHost());
+				$protocol = RequestContext::getInstance()->getProtocol();
+				$this->defaultWebsite->setProtocol($protocol);
+				$this->defaultWebsite->setUrl($protocol . '://'. Framework::getUIDefaultHost());
+			}
+		}
+		return $this->defaultWebsite;
+	}
+	
+	/**
+	 * @param website_persistentdocument_website $website
+	 */
+	public function setDefaultWebsite($website)
+	{
+		TagService::getInstance()->setExclusiveTag($website, WebsiteConstants::TAG_DEFAULT_WEBSITE);
+		$this->defaultWebsite = $website;
+	}
+	
+	/**
+	 * @param boolean $setLang try to set the context language
+	 * @return website_persistentdocument_website
+	 */
+	public function getCurrentWebsite($setLang = false)
+	{
+		if ($this->currentWebsite === null)
+		{
+			$currentWebsite = null;
+
+			if (isset($_SERVER['HTTP_HOST']))
+			{
+		    	$host = $_SERVER['HTTP_HOST'];
+				$currentWebsite = $this->getByUrl($host, $setLang);
+			}
+
+			if ($currentWebsite === null)
+			{
+			    $currentWebsite = $this->getDefaultWebsite();
+				if ($setLang)
+				{
+					RequestContext::getInstance()->setLang($currentWebsite->getLang());
+				}
+			}
+
+			$this->setCurrentWebsite($currentWebsite);
+		}
+
+		return $this->currentWebsite;
+	}
+	
+	/**
+	 * @param integer $websiteId
+	 * @return website_persistentdocument_website
+	 */
+	public function setCurrentWebsiteId($websiteId)
+	{
+		$this->setCurrentWebsite($this->getDocumentInstance($websiteId, 'modules_website/website'));
+		return $this->currentWebsite;
+	}
+	
+	/**
+	 * @param website_persistentdocument_website $website
+	 */
+	public function setCurrentWebsite($website)
+	{
+		if (RequestContext::getInstance()->inHTTPS())
+	    {
+	        $website->setProtocol('https');
+	    }
+	    
+	    $cu = users_UserService::getInstance()->getCurrentUser();
+	    if ($cu === null)
+	    {
+	    	users_GroupService::getInstance()->setDefaultGroup($website->getGroup());
+	    	users_ProfileService::getInstance()->initCurrent();
+	    }
+	    
+	    $this->currentWebsite = $website;
+	}
+	
+	/**
+	 * @param string $domaine
+	 * @param boolean $setLang
+	 * @return website_persistentdocument_website
+	 */
+	public function getByUrl($domaine, $setLang = false)
+	{
+	    $domaines = $this->getWebsitesDomain();
+	    if (isset($domaines[$domaine]))
+	    {
+	        $data = $domaines[$domaine];
+	        if ($setLang)
+	        {
+	            RequestContext::getInstance()->setLang($data['langs'][0]);
+	        }
+
+	        return $this->getDocumentInstance($data['id'], "modules_website/website");
+	    }
+	    return null;
+	}
+	
+	/**
+	 * @param string $domaine
+	 * @return array<id=>integer, localizebypath=>boolean, langs=>array<lang>>
+	 */
+	public function getWebsiteInfos($domaine)
+	{
+		$domaines = $this->getWebsitesDomain();
+		if (isset($domaines[$domaine]))
+		{
+			return $domaines[$domaine];
+		}
+
+		return null;
+	}
+	
+	/**
+	 * @return array<>
+	 */
+    private function getWebsitesDomain()
+    {
+            $isCacheEnabled = (f_DataCacheService::getInstance()->isEnabled());
+            if ($isCacheEnabled)
+            {
+                $simpleCache = f_DataCacheService::getInstance();
+                $cacheItem = $simpleCache->readFromCache(__CLASS__, array('domaines'), array('modules_website/website'));
+                
+                if ($cacheItem !== null && $cacheItem->isValid())
+                {
+                    return unserialize($cacheItem->getValue('sites'));
+                }
+            }
+
+            $domaines = $this->compileWebsitesDomain();
+
+            if ($isCacheEnabled)
+            {
+            	$cacheItem->setValue('sites', serialize($domaines));
+            	$simpleCache->writeToCache($cacheItem);
+            }
+
+            return $domaines;
+    }
+
+    private function compileWebsitesDomain()
+    {
+    	$rc = RequestContext::getInstance();
+        $domaines = array();
+
+        $websites = $this->getAll();
+
+        $supportedLanguages = $rc->getSupportedLanguages();
+        foreach ($websites as $website)
+        {
+        	$localizebypath = $website->getLocalizebypath();
+        	$domaineInfo = array('id' => $website->getId(), 'localizebypath' => $localizebypath, 'langs' => array());
+        	foreach ($supportedLanguages as $supportedLanguage)
+        	{
+        		if ($website->isLangAvailable($supportedLanguage))
+        		{
+        		   $domaine = $website->getDomainForLang($supportedLanguage);
+        		   if (!isset($domaines[$domaine]))
+        		   {
+        		   		$domaines[$domaine] = $domaineInfo;
+        		   }
+        		   $domaines[$domaine]['langs'][] = $supportedLanguage;
+        		}
+        	}
+        }
+    	return $domaines;
+    }
+    
+	/**
+	 * Returns the parent website document for $document or null if no website
+	 * document is a parent of $document.
+	 *
+	 * @param f_persistentdocument_PersistentDocument $document
+	 * @return website_persistentdocument_website
+	 */
+	public function getByDocument($document)
+	{
+		$websiteId = $document->getDocumentService()->getWebsiteId($document);
+		if ($websiteId)
+		{
+			return DocumentHelper::getDocumentInstance($websiteId, 'modules_website/website');
+		}
+		return null;
+	}
+	
+	/**
+	 * Set the meta websiteId on the given document, using the parent document one.
+	 * Warning: the document has to be persisted.
+	 * @param f_persistentdocument_PersistentDocument $document
+	 * @param Integer $parentId
+	 */
+	public function setWebsiteMetaFromParentId($document, $parentId)
+	{
+		if ($parentId !== null)
+		{
+			$parent = $this->getDocumentInstance($parentId);
+			if ($parent instanceof website_persistentdocument_website)
+			{
+				$website = $parent;
+			}
+			else
+			{
+				$website = $this->getByDocument($parent);
+			}
+			if ($website)
+			{
+				$document->setMeta("websiteId", $website->getId());
+			}
+			else
+			{
+				$document->setMeta("websiteId", null);
+			}
+		}
+		else
+		{
+			$document->setMeta("websiteId", null);
+		}
 	}
 }

@@ -1,35 +1,15 @@
 <?php
-class website_WebsiteModuleService extends f_persistentdocument_DocumentService
+class website_WebsiteModuleService extends BaseService
 {
 	/**
 	 * @var website_WebsiteModuleService
 	 */
 	private static $instance;
 
-	/**
-	 * @var Integer The current page ID.
-	 * Set by website/DisplayAction.
-	 */
-	private $currentPageId = null;
-	private $currentPageAncestorsIds = array();
-	private $currentPageAncestors = array();
-
 	private $lang;
 	private $ignoreVisibility = false;
 
-	/**
-	 * @var website_persistentdocument_website
-	 */
-	private $defaultWebsite = null;
 
-	/**
-	 * @var website_persistentdocument_website
-	 */
-	private $currentWebsite = null;
-
-
-    // intcours - Defined elsewhere as a private property, but it might be needed by other classes :
-    const EMPTY_URL = '#';
 
     /**
      * Tableau des modeles de documents pouvant apparaitre dans un menu
@@ -50,13 +30,6 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
 			self::$instance = new self();
 		}
 		return self::$instance;
-	}
-
-	protected function __construct()
-	{
-		parent::__construct();
-		$this->tm = f_persistentdocument_TransactionManager::getInstance();
-		$this->pp = f_persistentdocument_PersistentProvider::getInstance();
 	}
 
 	// --- Configuration methods ---
@@ -133,397 +106,6 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
 		return $breadcrumb;
 	}
 
-
-	/**
-	 * Returns the index page for a topic or a website.
-	 *
-	 * @param website_persistentdocument_website | website_persistentdocument_topic $topic
-	 * @param boolean $getFirstPageIfNotFound If true, and if no index page is defined, get the first child page.
-	 *
-	 * @return website_persistentdocument_page
-	 *
-	 * @throws IllegalArgumentException
-	 */
-	public function getIndexPage($topic, $getFirstPageIfNotFound = true)
-	{
-		$indexPage = $topic->getIndexPage();
-		if (is_null($indexPage) && $topic instanceof website_persistentdocument_topic && $getFirstPageIfNotFound)
-		{
-			$indexPage = $this->getFirstChildOf($topic);
-		}
-
-		return $indexPage;
-	}
-
-	/**
-	 * Sets the index page for a topic.
-	 *
-	 * @param website_persistentdocument_page $page
-	 * @param Boolean $userSetting
-	 */
-	public function setIndexPage($page, $userSetting = false)
-	{
-		//Recuperation de la page
-		if ($page instanceof website_persistentdocument_pageversion)
-		{
-			$indexPage = website_PageversionService::getInstance()->getVersionOf(DocumentHelper::getByCorrection($page));
-		}
-		else if ($page instanceof website_persistentdocument_page)
-		{
-		    $indexPage = DocumentHelper::getByCorrection($page);
-		}
-		// Fix #736: external pages may not pe index pages.
-		else
-		{
-		    throw new IllegalArgumentException('page', 'website_persistentdocument_page');
-		}
-
-		try
-		{
-			$this->tm->beginTransaction();
-			// FIXME : what if $indexPage is under website directy ?!
-			$topic = $indexPage->getTopic();
-			website_TopicService::getInstance()->setIndexPage($topic, $indexPage, $userSetting);
-			$this->tm->commit();
-		}
-		catch (Exception $e)
-		{
-			$this->tm->rollBack($e);
-		}
-	}
-
-	/**
-	 * Removes the index page of the given topic. If the given document is a page
-	 *
-	 * @param website_persistentdocument_topic $topicOrPage
-	 * @param Boolean $userSetting
-	 */
-	public function removeIndexPage($topicOrPage, $userSetting = false)
-	{
-		if ($topicOrPage instanceof website_persistentdocument_topic)
-        {
-            $topic = $topicOrPage;
-            $indexPage = $topic->getIndexPage();
-        }
-        else if ($topicOrPage instanceof website_persistentdocument_pageversion)
-		{
-			$indexPage = website_PageversionService::getInstance()->getVersionOf(DocumentHelper::getByCorrection($topicOrPage));
-			$topic = $indexPage->getDocumentService()->getParentOf($indexPage);
-		}
-		else if ($topicOrPage instanceof website_persistentdocument_page)
-        {
-        	$indexPage = DocumentHelper::getByCorrection($topicOrPage);
-        	$topic = $indexPage->getDocumentService()->getParentOf($indexPage);
-        }
-        else
-        {
-            throw new IllegalArgumentException('topicOrPage', 'website_persistentdocument_page,website_persistentdocument_topic');
-        }
-
-		try
-		{
-			$this->tm->beginTransaction();
-			website_TopicService::getInstance()->setIndexPage($topic, null, $userSetting);
-			$this->tm->commit();
-		}
-		catch (Exception $e)
-		{
-			$this->tm->rollBack($e);
-			throw $e;
-		}
-	}
-
-	/**
-	 * Sets the homepage for a website.
-	 *
-	 * @param website_persistentdocument_page $page
-	 */
-	public function setHomePage($page)
-	{
-		if ($page instanceof website_persistentdocument_pageversion)
-		{
-			$indexPage = website_PageversionService::getInstance()->getVersionOf(DocumentHelper::getByCorrection($page));
-		}
-		else if ($page instanceof website_persistentdocument_page)
-		{
-		    $indexPage = DocumentHelper::getByCorrection($page);
-		}
-		else
-		{
-		    throw new IllegalArgumentException('page', 'website_persistentdocument_page');
-		}
-
-		$websites = $indexPage->getDocumentService()->getAncestorsOf($indexPage, 'modules_website/website');
-        if (count($websites) == 1)
-        {
-    		try
-    		{
-    			$this->tm->beginTransaction();
-    			$website = $websites[0];
-    			$website->getDocumentService()->setHomePage($website, $indexPage);
-    			$this->tm->commit();
-    		}
-    		catch (Exception $e)
-    		{
-    			$this->tm->rollBack($e);
-    		}
-        }
-	}
-
-	/**
-	 * Returns the default website for the whole project.
-	 *
-	 * If a website is exclusively tagged with 'default_modules_website_default-website',
-	 * this website will be returned. Otherwise, this method returns the first website it
-	 * finds in the website module, <strong>using an undefined order</strong>.
-	 *
-	 * @return website_persistentdocument_website
-	 */
-	public function getDefaultWebsite()
-	{
-		if ($this->defaultWebsite === null)
-		{
-			try
-			{
-				$this->defaultWebsite = TagService::getInstance()->getDocumentByExclusiveTag(WebsiteConstants::TAG_DEFAULT_WEBSITE);
-			}
-			catch (TagException $e)
-			{
-				if (Framework::isDebugEnabled())
-				{
-			    	Framework::exception($e);
-				}
-
-				$this->defaultWebsite = website_WebsiteService::getInstance()->getNewDocumentInstance();
-				$this->defaultWebsite->setLabel('Temporary web site');
-				$this->defaultWebsite->setDomain(Framework::getUIDefaultHost());
-				$protocol = RequestContext::getInstance()->getProtocol();
-				$this->defaultWebsite->setProtocol($protocol);
-				$this->defaultWebsite->setUrl($protocol . '://'. Framework::getUIDefaultHost());
-			}
-		}
-		return $this->defaultWebsite;
-	}
-
-
-	/**
-	 * @param website_persistentdocument_website $website
-	 */
-	public function setDefaultWebsite($website)
-	{
-		TagService::getInstance()->setExclusiveTag($website, WebsiteConstants::TAG_DEFAULT_WEBSITE);
-		$this->defaultWebsite = $website;
-	}
-
-	/**
-	 * @param string $domaine
-	 * @param boolean $setLang
-	 * @return website_persistentdocument_website
-	 */
-	public final function getWebsiteByUrl($domaine, $setLang = false)
-	{
-	    $domaines = $this->getWebsitesDomaine();
-	    if (isset($domaines[$domaine]))
-	    {
-	        $data = $domaines[$domaine];
-	        if ($setLang)
-	        {
-	            RequestContext::getInstance()->setLang($data['langs'][0]);
-	        }
-
-	        return $this->getDocumentInstance($data['id'], "modules_website/website");
-	    }
-	    return null;
-	}
-
-	/**
-	 * @param boolean $setLang try to set the context language
-	 * @return website_persistentdocument_website
-	 */
-	public final function getCurrentWebsite($setLang = false)
-	{
-		if ($this->currentWebsite === null)
-		{
-			$currentWebsite = null;
-
-			if (isset($_SERVER['HTTP_HOST']))
-			{
-		    	$host = $_SERVER['HTTP_HOST'];
-				if (Framework::isDebugEnabled())
-		    	{
-		        	Framework::debug(__METHOD__ . "($setLang, " . $host . ")");
-		    	}
-				$currentWebsite = $this->getWebsiteByUrl($host, $setLang);
-			}
-
-			if ($currentWebsite === null)
-			{
-			    $currentWebsite = $this->getDefaultWebsite();
-				if ($setLang)
-				{
-					RequestContext::getInstance()->setLang($currentWebsite->getLang());
-				}
-			}
-
-			$this->setCurrentWebsite($currentWebsite);
-		}
-
-		return $this->currentWebsite;
-	}
-
-	/**
-	 * @param integer $websiteId
-	 * @return website_persistentdocument_website
-	 */
-	public final function setCurrentWebsiteId($websiteId)
-	{
-		$this->setCurrentWebsite($this->getDocumentInstance($websiteId, 'modules_website/website'));
-		return $this->currentWebsite;
-	}
-
-
-	/**
-	 * @param website_persistentdocument_website $currentWebsite
-	 */
-	public final function setCurrentWebsite($currentWebsite)
-	{
-		if (Framework::isDebugEnabled())
-	    {
-	        Framework::debug(__METHOD__);
-	    }
-
-	   if (RequestContext::getInstance()->inHTTPS())
-	    {
-	        $currentWebsite->setProtocol('https');
-	    }
-	    $this->currentWebsite = $currentWebsite;
-	}
-
-	/**
-	 * @param string $domaine
-	 * @return array<id=>integer, localizebypath=>boolean, langs=>array<lang>>
-	 */
-	public function getWebsiteInfos($domaine)
-	{
-		$domaines = $this->getWebsitesDomaine();
-		if (isset($domaines[$domaine]))
-		{
-			return $domaines[$domaine];
-		}
-
-		return null;
-	}
-
-	/**
-	 * @return array<>
-	 */
-    private function getWebsitesDomaine()
-    {
-            $isCacheEnabled = (f_DataCacheService::getInstance()->isEnabled());
-            if ($isCacheEnabled)
-            {
-                $simpleCache = f_DataCacheService::getInstance();
-                $cacheItem = $simpleCache->readFromCache(__CLASS__, array('domaines'), array('modules_website/website'));
-                
-                if ($cacheItem !== null && $cacheItem->isValid())
-                {
-                    return unserialize($cacheItem->getValue('sites'));
-                }
-            }
-
-            $domaines = $this->compileWebsitesDomaine();
-
-            if ($isCacheEnabled)
-            {
-            	$cacheItem->setValue('sites', serialize($domaines));
-            	$simpleCache->writeToCache($cacheItem);
-            }
-
-            return $domaines;
-    }
-
-    private function compileWebsitesDomaine()
-    {
-    	$rc = RequestContext::getInstance();
-        $domaines = array();
-
-        $websites = website_WebsiteService::getInstance()->getAll();
-
-        $supportedLanguages = $rc->getSupportedLanguages();
-        foreach ($websites as $website)
-        {
-        	$localizebypath = $website->getLocalizebypath();
-        	$domaineInfo = array('id' => $website->getId(), 'localizebypath' => $localizebypath, 'langs' => array());
-        	foreach ($supportedLanguages as $supportedLanguage)
-        	{
-        		if ($website->isLangAvailable($supportedLanguage))
-        		{
-        		   $domaine = $website->getDomainForLang($supportedLanguage);
-        		   if (!isset($domaines[$domaine]))
-        		   {
-        		   		$domaines[$domaine] = $domaineInfo;
-        		   }
-        		   $domaines[$domaine]['langs'][] = $supportedLanguage;
-        		}
-        	}
-        }
-    	return $domaines;
-    }
-
-	/**
-	 * Returns the parent website document for $document or null if no website
-	 * document is a parent of $document.
-	 *
-	 * @param f_persistentdocument_PersistentDocument $document
-	 * @return website_persistentdocument_website
-	 */
-	public function getParentWebsite($document)
-	{
-		$documentService = $document->getDocumentService();
-		$websiteId = $documentService->getWebsiteId($document);
-		if ($websiteId)
-		{
-			return DocumentHelper::getDocumentInstance($websiteId, 'modules_website/website');
-		}
-		return null;
-	}
-
-	/**
-	 * Set the meta websiteId on the given document, using the parent document one.
-	 * Warning: the document has to be persisted.
-	 * @param f_persistentdocument_PersistentDocument $document
-	 * @param Integer $parentId
-	 */
-	public function setWebsiteMetaFromParentId($document, $parentId)
-	{
-		if ($parentId !== null)
-		{
-			$parent = $this->getDocumentInstance($parentId);
-			if ($parent instanceof website_persistentdocument_website)
-			{
-				$website = $parent;
-			}
-			else
-			{
-				$website = website_WebsiteModuleService::getInstance()->getParentWebsite($parent);
-			}
-			$document->setMeta("websiteId", $website->getId());
-		}
-		else
-		{
-			$document->setMeta("websiteId", null);
-		}
-	}
-
-	/**
-	 * @return String
-	 */
-	public function getEmptyUrl()
-	{
-		return self::EMPTY_URL;
-	}
-
-
 	/**
 	 * @param f_persistentdocument_PersistentDocument $pageRef
 	 * @return string
@@ -545,7 +127,7 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
 	{
 		if (is_null($website))
 		{
-			$website = $this->getDefaultWebsite();
+			$website = website_WebsiteService::getInstance()->getDefaultWebsite();
 		}
 		$sitemap = new Sitemap();
 		$sitemap->setMaxLevel($maxLevel);
@@ -580,7 +162,7 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
         $ancestorsIds = DocumentHelper::getIdArrayFromDocumentArray(TreeService::getInstance()->getInstanceByDocumentId($id)->getAncestors());
         $ancestorsIds[] = $id;
         $menuObjects = array();
-        $menuItemDocuments = $this->pp->createQuery('modules_website/menuitemdocument')->add(Restrictions::in('document.id', $ancestorsIds))->find();
+        $menuItemDocuments = $this->getPersistentProvider()->createQuery('modules_website/menuitemdocument')->add(Restrictions::in('document.id', $ancestorsIds))->find();
 		foreach ($menuItemDocuments as $menuItemDocument)
 		{
 			$menuArray = $menuItemDocument->getMenuArrayInverse();
@@ -618,7 +200,7 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
     private function getMenuDocumentByTag($shortTagName)
     {
         $tagName = 'contextual_website_website_' . $shortTagName;
-        $menuDoc = TagService::getInstance()->getDocumentByContextualTag($tagName, $this->getCurrentWebsite(), false);
+        $menuDoc = TagService::getInstance()->getDocumentByContextualTag($tagName, website_WebsiteService::getInstance()->getCurrentWebsite(), false);
         if ($menuDoc === null)
         {
             throw new TopicException('No menu has the tag "'.$tagName.'".');
@@ -691,7 +273,7 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
 					$item = $menuItemDocument->getDocument();
 					if ($item instanceof website_persistentdocument_topic)
 					{
-						if (($maxLevel > 0 || $maxLevel == - 1) && (in_array($item->getId(), $this->getCurrentPageAncestorsIds())))
+						if (($maxLevel > 0 || $maxLevel == - 1) && (in_array($item->getId(), website_PageService::getInstance()->getCurrentPageAncestorsIds())))
 						{
 							$node = TreeService::getInstance()->getInstanceByDocument($item);
 							TreeService::getInstance()->loadDescendants($node, $maxLevel);
@@ -789,79 +371,13 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
 		}
 		else if ($document === null)
 		{
-			$parentNode = TreeService::getInstance()->getInstanceByDocument($this->getCurrentWebsite());
+			$parentNode = TreeService::getInstance()->getInstanceByDocument(website_WebsiteService::getInstance()->getCurrentWebsite());
 		}
 		else
 		{
 			$parentNode = TreeService::getInstance()->getInstanceByDocument($document)->getParent();
 		}
 		return $parentNode;
-	}
-
-	/**
-	 * Indicates whether the given $website has a unique URL for its version in
-	 * language $lang.
-	 *
-	 * @param website_persistentdocument_website $website
-	 * @param string $lang
-	 *
-	 * @return boolean
-	 */
-	public function hasUniqueDomainNameForLang($website, $lang)
-	{
-		$urlForLang = $website->getUrlForLang($lang);
-		$i18nWebsites = $this->pp->getI18nWebsitesFromUrl($urlForLang);
-		return count($i18nWebsites) == 1;
-	}
-
-
-	/**
-	 * This function set the currentPageId and calculate :
-	 * 	- currentPageAncestors[Ids]
-	 *  - currentWebsite
-	 * @param Integer $currentPageId
-	 */
-	public function setCurrentPageId($currentPageId)
-	{
-		if (Framework::isDebugEnabled())
-		{
-			Framework::debug(__METHOD__ . ' ' . $currentPageId);
-		}
-		$this->currentPageId = $currentPageId;
-		$this->currentPageAncestorsIds = array();
-		$this->currentPageAncestors = array();
-		$page = DocumentHelper::getDocumentInstance($this->currentPageId);
-		$ancestors = $page->getDocumentService()->getAncestorsOf($page);
-		foreach ($ancestors as $document)
-		{
-			if ($document instanceof website_persistentdocument_website)
-			{
-			    $this->currentPageAncestors[] = $document;
-				$this->currentPageAncestorsIds[] = $document->getId();
-				$this->setCurrentWebsite($document);
-			}
-			elseif ($document instanceof website_persistentdocument_topic)
-			{
-			    $this->currentPageAncestors[] = $document;
-			    $this->currentPageAncestorsIds[] = $document->getId();
-			}
-		}
-	}
-
-	/**
-	 * @return Integer
-	 */
-	public function getCurrentPageId()
-	{
-		return $this->currentPageId;
-	}
-
-	/**
-	 * @return website_persistentdocument_page
-	 */
-	function getCurrentPage()
-	{
-		return $this->getDocumentInstance($this->currentPageId, "modules_website/page");
 	}
 
 	/**
@@ -910,7 +426,7 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
 				$navigationElement[$navigationElement->count()] = $menuItem;
 				if (($level < $maxLevel || $maxLevel == -1) && $doc instanceof website_persistentdocument_topic)
 				{
-					if (in_array($doc->getId(), $this->getCurrentPageAncestorsIds()))
+					if (in_array($doc->getId(), website_PageService::getInstance()->getCurrentPageAncestorsIds()))
 					{
 						$this->populateNavigationElementFromCurrentDescendants($navigationElement, $child, $level+1, $maxLevel);
 					}
@@ -921,21 +437,7 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
 	}
 
 
-	/**
-	 * @return array the current page ancestors ids
-	 */
-	public function getCurrentPageAncestorsIds()
-	{
-		return $this->currentPageAncestorsIds;
-	}
 
-	/**
-	 * @return array the current page ancestors
-	 */
-	public function getCurrentPageAncestors()
-	{
-		return $this->currentPageAncestors;
-	}
 
 
 	/**
@@ -1127,5 +629,109 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
             }
         }
 		return $styles;
+	}
+	
+	// DEPRECATED
+
+    /**
+     * @deprecated use LinkHelper::getEmptyUrl()
+     */
+    const EMPTY_URL = '#';	
+    
+    public function __call($name, $arguments)
+	{
+		switch ($name)
+		{
+			case 'getEmptyUrl': 
+				Framework::error('Call to deleted ' . get_class($this) . '->' . $name . ' method');		
+				return LinkHelper::getEmptyUrl();
+					
+			case 'setCurrentPageId': 
+				Framework::error('Call to deleted ' . get_class($this) . '->' . $name . ' method');	
+				return website_PageService::getInstance()->setCurrentPageId($arguments[0]);	
+			case 'getCurrentPageId': 
+				Framework::error('Call to deleted ' . get_class($this) . '->' . $name . ' method');	
+				return website_PageService::getInstance()->getCurrentPageId();
+			case 'getCurrentPage': 
+				Framework::error('Call to deleted ' . get_class($this) . '->' . $name . ' method');	
+				return website_PageService::getInstance()->getCurrentPage();
+			case 'getCurrentPageAncestorsIds': 
+				Framework::error('Call to deleted ' . get_class($this) . '->' . $name . ' method');	
+				return website_PageService::getInstance()->getCurrentPageAncestorsIds();
+			case 'getCurrentPageAncestors': 
+				Framework::error('Call to deleted ' . get_class($this) . '->' . $name . ' method');	
+				return website_PageService::getInstance()->getCurrentPageAncestors();				
+			case 'getIndexPage': 
+				Framework::error('Call to deleted ' . get_class($this) . '->' . $name . ' method');
+				$topic = $arguments[0]; $getFirstPageIfNotFound = isset($arguments[1]) ? $arguments[1] : true;	
+				if ($topic instanceof website_persistentdocument_topic || $topic instanceof website_persistentdocument_website)
+				{
+					return $topic->getDocumentService()->getIndexPage($topic, $getFirstPageIfNotFound);
+				}
+				return null;
+			case 'removeIndexPage': 
+				Framework::error('Call to deleted ' . get_class($this) . '->' . $name . ' method');
+				$topicOrPage = $arguments[0]; $userSetting = isset($arguments[1]) ? $arguments[1] : false;	
+				if ($topicOrPage instanceof website_persistentdocument_topic)
+		        {
+		           	$topicOrPage->getDocumentService()->removeIndexPage($topicOrPage, $userSetting);
+		        }
+		       	elseif ($topicOrPage instanceof website_persistentdocument_page)
+		        {
+		        	$topicOrPage->getDocumentService()->removeIndexPage($topicOrPage, $userSetting);
+		        }
+		        elseif ($topicOrPage instanceof website_persistentdocument_pageexternal)
+		        {
+		        	$topicOrPage->getDocumentService()->removeIndexPage($topicOrPage, $userSetting);
+		        }
+				return;
+			case 'setHomePage': 
+				Framework::error('Call to deleted ' . get_class($this) . '->' . $name . ' method');	
+				if ($arguments[0] instanceof website_persistentdocument_page)
+				{
+					$arguments[0]->getDocumentService()->makeHomePage($arguments[0]);
+				}
+				return;
+			case 'setIndexPage': 
+				Framework::error('Call to deleted ' . get_class($this) . '->' . $name . ' method');
+				if ($arguments[0] instanceof website_persistentdocument_page)
+				{
+					$arguments[0]->getDocumentService()->makeIndexPage($arguments[0], $userSetting);
+				}
+				return;
+
+			case 'setWebsiteMetaFromParentId': 
+				Framework::error('Call to deleted ' . get_class($this) . '->' . $name . ' method');	
+				return website_WebsiteService::getInstance()->setWebsiteMetaFromParentId($arguments[0], $arguments[1]);					
+			case 'hasUniqueDomainNameForLang': 
+				Framework::error('Call to deleted ' . get_class($this) . '->' . $name . ' method');	
+				return website_WebsiteService::getInstance()->hasUniqueDomainNameForLang($arguments[0], $arguments[1]);	
+			case 'getDefaultWebsite': 
+				Framework::error('Call to deleted ' . get_class($this) . '->' . $name . ' method');
+				return website_WebsiteService::getInstance()->getDefaultWebsite();				
+			case 'setDefaultWebsite': 
+				Framework::error('Call to deleted ' . get_class($this) . '->' . $name . ' method');
+				return website_WebsiteService::getInstance()->setDefaultWebsite($arguments[0]);				 
+			case 'getWebsiteByUrl': 
+				Framework::error('Call to deleted ' . get_class($this) . '->' . $name . ' method');
+				return website_WebsiteService::getInstance()->getByUrl($arguments[0], isset($arguments[1]) ? $arguments[1] : false);
+			case 'getCurrentWebsite': 
+				Framework::error('Call to deleted ' . get_class($this) . '->' . $name . ' method');
+				return website_WebsiteService::getInstance()->getCurrentWebsite(isset($arguments[0]) ? $arguments[0] : false);				
+			case 'setCurrentWebsiteId': 
+				Framework::error('Call to deleted ' . get_class($this) . '->' . $name . ' method');
+				return website_WebsiteService::getInstance()->setCurrentWebsiteId($arguments[0]);
+			case 'setCurrentWebsite': 
+				Framework::error('Call to deleted ' . get_class($this) . '->' . $name . ' method');
+				return website_WebsiteService::getInstance()->setCurrentWebsite($arguments[0]);
+			case 'getWebsiteInfos': 
+				Framework::error('Call to deleted ' . get_class($this) . '->' . $name . ' method');
+				return website_WebsiteService::getInstance()->getWebsiteInfos($arguments[0]);
+			case 'getParentWebsite': 
+				Framework::error('Call to deleted ' . get_class($this) . '->' . $name . ' method');
+				return website_WebsiteService::getInstance()->getByDocument($arguments[0]);								
+			default:
+				throw new Exception('No method ' . get_class($this) . '->' . $name);				
+		}
 	}
 }

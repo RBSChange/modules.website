@@ -97,14 +97,15 @@ class website_PageScriptDocumentElement extends import_ScriptDocumentElement
 	public function process()
 	{
 		parent::process();
+		$page = $this->getPersistentDocument();
 		if ($this->isHomePage)
 		{
-			website_WebsiteModuleService::getInstance()->setHomePage($this->getPersistentDocument());
+			$page->getDocumentService()->makeHomePage($page);
 		}
 		
 		if ($this->isIndexPage)
 		{
-			website_WebsiteModuleService::getInstance()->setIndexPage($this->getPersistentDocument());
+			$page->getDocumentService()->makeIndexPage($page);
 		}
 	}
 	
@@ -204,10 +205,11 @@ class website_PageScriptDocumentElement extends import_ScriptDocumentElement
 		$refs = website_PagereferenceService::getInstance()->getPagesReferenceByPage($page);
 		foreach ($refs as $pageRef) 
 		{
+			/* @var $pageRef website_persistentdocument_pagereference */
 			if (!$pageRef->getIsIndexPage())
 			{
 				Framework::info(__METHOD__ . ': ' . $pageRef->__toString());
-				website_WebsiteModuleService::getInstance()->setIndexPage($pageRef, true);
+				$pageRef->getDocumentService()->makeIndexPage($pageRef, true);
 			}
 		}
 	}

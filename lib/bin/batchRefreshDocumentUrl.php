@@ -2,7 +2,7 @@
 Framework::info(__FILE__ . ' -> ' . implode(', ', $arguments));
 list($websiteId, $lang, $modelName, $offset) = $arguments;
 RequestContext::getInstance()->setLang($lang);
-$website = website_WebsiteModuleService::getInstance()->setCurrentWebsiteId($websiteId);
+$website = website_WebsiteService::getInstance()->setCurrentWebsiteId($websiteId);
 $chunkSize = 100;
 $wsurs = website_UrlRewritingService::getInstance();
 $tm = f_persistentdocument_TransactionManager::getInstance();

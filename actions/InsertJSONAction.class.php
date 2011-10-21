@@ -58,7 +58,7 @@ class website_InsertJSONAction extends generic_InsertJSONAction
 			$indexPage = $parentDocument->getIndexPage();
 			if (is_null($indexPage))
 			{
-				website_WebsiteModuleService::getInstance()->setIndexPage($document, false);
+				website_PageService::getInstance()->makeIndexPage($document, false);
 				$actionName = strtolower('settopicindexpage.' . $document->getPersistentModel()->getDocumentName());
 				UserActionLoggerService::getInstance()->addCurrentUserDocumentEntry($actionName, $document, array(), 'website');
 			}
@@ -68,7 +68,7 @@ class website_InsertJSONAction extends generic_InsertJSONAction
 			$indexPage = $parentDocument->getIndexPage();
 			if (is_null($indexPage))
 			{
-				website_WebsiteModuleService::getInstance()->setHomePage($document);
+				website_PageService::getInstance()->makeHomePage($document);
 				$actionName = strtolower('sethomepage.' . $document->getPersistentModel()->getDocumentName());
 				UserActionLoggerService::getInstance()->addCurrentUserDocumentEntry($actionName, $document, array(), 'website');
 			}

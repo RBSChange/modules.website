@@ -16,7 +16,7 @@ class website_GetSearchEngineFileAction extends change_Action
 			Framework::debug(var_export($request->getParameters(), true));
 		}
 		
-		$wsms = website_WebsiteModuleService::getInstance();
+		$wsms = website_WebsiteService::getInstance();
 		$websiteInfo  = $wsms->getWebsiteInfos($_SERVER['HTTP_HOST']);
 		if ($websiteInfo !== null)
 		{

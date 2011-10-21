@@ -27,8 +27,8 @@ class website_BlockTaggedmenuAction extends website_BlockAction
 			return null;
 		}
 
-			$wsModuleService = website_WebsiteModuleService::getInstance();
-			$website = $wsModuleService->getCurrentWebsite();
+		$wsModuleService = website_WebsiteModuleService::getInstance();
+		$website = website_WebsiteService::getInstance()->getCurrentWebsite();
 		$menu = TagService::getInstance()->getDocumentByContextualTag($tag, $website, false);
 		if ($menu === null)
 		{

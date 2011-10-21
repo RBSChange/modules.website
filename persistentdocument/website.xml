@@ -15,6 +15,7 @@
     <add name="alwaysappendtitle" type="Boolean" default-value="true"/>
     <add name="favicon" type="modules_media/media"/>
     <add name="allowedpagetemplate" type="modules_theme/pagetemplate" max-occurs="-1"/>
+    <add name="group" type="modules_users/group" inverse="true"/>
   </properties>
   <serializedproperties>
     <add name="robottxt" type="LongString"/>

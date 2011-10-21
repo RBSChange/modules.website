@@ -26,7 +26,7 @@ class website_BlankAction extends change_Action
 				{
 					$ss->registerStyle('modules.generic.richtextbo');
 					
-					website_WebsiteModuleService::getInstance()->setCurrentPageId($document->getId());
+					website_PageService::getInstance()->setCurrentPageId($document->getId());
 					$prs = website_PageRessourceService::getInstance();
 					$prs->setPage($document);
 					

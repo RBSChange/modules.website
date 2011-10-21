@@ -15,7 +15,7 @@ class website_GetFaviconAction extends change_Action
 			Framework::debug(__METHOD__);
 			Framework::debug(var_export($request->getParameters(), true));
 		}
-		$wsms = website_WebsiteModuleService::getInstance();
+		$wsms = website_WebsiteService::getInstance();
 		$websiteInfo  = $wsms->getWebsiteInfos($_SERVER['HTTP_HOST']);
 		$website = null;
 		

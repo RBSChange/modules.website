@@ -229,7 +229,7 @@ class website_StyleService extends BaseService
 					$styleSheetName .= ".css";
 					$styleNames[] = $styleSheetName;
 					$names = implode(',', $styleNames);
-					$websiteId = website_WebsiteModuleService::getInstance()->getDefaultWebsite()->getId();	
+					$websiteId = website_WebsiteService::getInstance()->getDefaultWebsite()->getId();	
 					if ($websiteId <= 0) {$websiteId = 0;}			
 					$pathPart = array('', 'cache', 'www', 'css', $rc->getProtocol(), $websiteId, $rc->getLang(), $rc->getUserAgentType(), $rc->getUserAgentTypeVersion(), $names);				
 					$inclusionSrc = LinkHelper::getRessourceLink(implode('/', $pathPart))->getUrl();
@@ -424,7 +424,7 @@ class website_StyleService extends BaseService
 	 */
 	private function getCurrentWebsiteId()
 	{
-		return website_WebsiteModuleService::getInstance()->getCurrentWebsite()->getId();
+		return website_WebsiteService::getInstance()->getCurrentWebsite()->getId();
 	}
 	
 	/**

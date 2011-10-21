@@ -38,7 +38,7 @@ class commands_SetSiteUrl extends c_ChangescriptCommand
 		try
 		{
 			$tm->beginTransaction();
-			$website = website_WebsiteModuleService::getInstance()->getDefaultWebsite();
+			$website = website_WebsiteService::getInstance()->getDefaultWebsite();
 			$website->setDomain($url);
 			// TODO: handle secure protocol
 			$website->setProtocol('http');

@@ -7,6 +7,7 @@
 		<field name="allowedpagetemplate" />
 		<field name="skin" />
 		<field name="description" />
+		<field name="group" />
 	</section>
 	
 	<section labeli18n="m.website.document.website.section-advanced">
