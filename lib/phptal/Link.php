@@ -216,7 +216,15 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 
 			$website = ($forWebsiteId !== null) ? website_persistentdocument_website::getInstanceById($forWebsiteId) : null;
 			$url = LinkHelper::getDocumentUrlForWebsite($document, $website, $lang, $parameters);
-			return $url . ($anchor ? '#'.$anchor : '');
+			if ($anchor)
+			{
+				if (strpos($url, '#') !== false)
+				{
+					list($url,) = explode('#', $url);
+				}
+				$url .= '#'.$anchor;
+			}
+			return $url;
 		}
 		catch (Exception  $e)
 		{
@@ -252,7 +260,15 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 	{
 		$website = ($forWebsiteId !== null) ? website_persistentdocument_website::getInstanceById($forWebsiteId) : null;
 		$url = LinkHelper::getActionUrlForWebsite($module, $action, $website, $lang, $parameters);
-		return $url . ($anchor ? '#'.$anchor : '');
+		if ($anchor)
+		{
+			if (strpos($url, '#') !== false)
+			{
+				list($url,) = explode('#', $url);
+			}
+			$url .= '#'.$anchor;
+		}
+		return $url;
 	}
 
 	/**
@@ -295,7 +311,15 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 			{
 				return '#';
 			}
-			return $url . ($anchor ? '#'.$anchor : '');
+			if ($anchor)
+			{
+				if (strpos($url, '#') !== false)
+				{
+					list($url,) = explode('#', $url);
+				}
+				$url .= '#'.$anchor;
+			}
+			return $url;
 		}
 		catch (Exception $e)
 		{
