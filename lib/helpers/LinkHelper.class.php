@@ -709,14 +709,16 @@ class LinkHelper
 		else
 		{
 			$requestUri = $rq->getPathURI();
-		}
+		}		
+		
 		$parts = explode('?', $requestUri);
 		$currentLink = new f_web_ParametrizedLink($rq->getProtocol(), $_SERVER['SERVER_NAME'], $parts[0]);
 		if (isset($parts[1]) && $parts[1] != '')
 		{
-			parse_str($parts[1], $queryParameters);
-			$currentLink->setQueryParameters($queryParameters);
+			$extraAttrString =  (is_array($extraAttributes) && count($extraAttributes)) ? $parts[1] . '&' . http_build_query($extraAttributes, 'f', '&') :  $parts[1];
+			parse_str($extraAttrString, $extraAttributes);
 		}
+		
 		if (is_array($extraAttributes) && count($extraAttributes))
 		{
 			foreach ($extraAttributes as $name => $value) 
