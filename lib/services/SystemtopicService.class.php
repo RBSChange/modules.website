@@ -91,6 +91,10 @@ class website_SystemtopicService extends website_TopicService
 			{
 				$data['properties']['reference'] = $reference->getLabel() . ' (' . f_Locale::translateUI($reference->getPersistentModel()->getLabel()) . ' - ' . $reference->getId() . ')';
 			}
+			else
+			{
+				Framework::fatal(__METHOD__ . $document->__toString());
+			}
 			
 			$rc->endI18nWork();
 		}
