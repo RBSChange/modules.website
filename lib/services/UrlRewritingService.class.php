@@ -516,6 +516,8 @@ class website_UrlRewritingService extends BaseService
 			}
 			
 			$lang = RequestContext::getInstance()->getLang();	
+			RequestContext::getInstance()->setUILang($lang);
+			
 			$infos = $this->getPersistentProvider()->getUrlRewritingInfoByUrl($path, $website->getId(), $lang);
 			if ($infos !== null)
 			{
