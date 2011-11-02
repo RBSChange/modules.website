@@ -376,10 +376,10 @@ class website_FormHelper
 		}
 		$result .= '>';
 
+		$listArray = array();
 		if (isset($params['listId']))
 		{
 			$list = list_ListService::getInstance()->getByListId($params['listId']);
-			$listArray = array();
 			if ($list !== null)
 			{
 				foreach ($list->getItems() as $listItem)
@@ -390,9 +390,8 @@ class website_FormHelper
 		}
 		elseif (isset($params['documentList']))
 		{
-			$listArray = array();
 			$documentList = self::contextSafeGet($params['documentList'], $ctx);
-			if ($documentList !== null)
+			if (is_array($documentList))
 			{
 				foreach ($documentList as $document)
 				{
@@ -402,9 +401,8 @@ class website_FormHelper
 		}
 		elseif (isset($params['documentIdList']))
 		{
-			$listArray = array();
 			$documentList = self::contextSafeGet($params['documentIdList'], $ctx);
-			if ($documentList !== null)
+			if (is_array($documentList))
 			{
 				foreach ($documentList as $documentId)
 				{
@@ -416,14 +414,10 @@ class website_FormHelper
 		{
 			$listArray = $params['list'];
 		}
-		else
-		{
-			$listArray = array();
-		}
 
 		if (!isset($params["nopreamble"]) && !isset($params["multiple"]) && !array_key_exists("", $listArray))
 		{
-			$tmpArray = array("" => LocaleService::getInstance()->transFO("m.website.frontoffice.selectoption"));
+			$tmpArray = array("" => LocaleService::getInstance()->trans("m.website.frontoffice.selectoption"));
 			foreach ($listArray as $key => $value)
 			{
 				$tmpArray[$key] = $value;
@@ -450,7 +444,7 @@ class website_FormHelper
 			}
 		}
 		$oldThrow = $ctx->noThrow(true);
-		$value = $ctx->__get($name);
+		$value = $ctx->$name;
 		$ctx->noThrow($oldThrow);
 		return $value;
 	}
@@ -470,7 +464,7 @@ class website_FormHelper
 				throw new Exception("PHPTal context is unreachable");
 			}
 		}
-		$ctx->__set($name, $value);
+		$ctx->$name = $value;
 	}
 
 	/**
