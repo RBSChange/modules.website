@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/static/schema/change-document/1.0.xsd" 
-	model-version="1.0" icon="urlrewriting" publish-on-day-change="false" has-url="false" backoffice-indexable="false">
+<document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/static/schema/change-document/4.0.xsd" model-version="1.0" icon="urlrewriting" publish-on-day-change="false" has-url="false" backoffice-indexable="false">
   <properties>
-	<add name="moduleName" type="String" min-occurs="1" />
-    <add name="actionName" type="String" min-occurs="1" default-value="ViewDetail"/>
-    <add name="modelName" type="String" />
-    <add name="template" type="String" localized="true"/>
-    <add name="definition" type="Lob" />
+    <property name="moduleName" type="String" min-occurs="1"/>
+    <property name="actionName" type="String" min-occurs="1" default-value="ViewDetail"/>
+    <property name="modelName" type="String"/>
+    <property name="template" type="String" localized="true"/>
+    <property name="definition" type="Lob"/>
   </properties>
-  <statuses default="PUBLICATED" />
+  <statuses default="PUBLICATED"/>
 </document>

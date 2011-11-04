@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/static/schema/change-document/1.0.xsd" model-version="1.0" icon="website" publish-on-day-change="false" linked-to-root-module="true">
+<document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/static/schema/change-document/4.0.xsd" model-version="1.0" icon="website" publish-on-day-change="false" linked-to-root-module="true">
   <properties>
-    <add name="publicationstatus" localized="true"/>
-    <add name="description" type="LongString" localized="true"/>
-    <add name="localizebypath" type="Boolean" max-occurs="1" default-value="0"/>
-    <add name="url" type="String" min-occurs="1" localized="true"/>
-    <add name="protocol" type="String" min-occurs="1" db-size="10" from-list="modules_website/protocol" default-value="http"/>
-    <add name="domain" type="String" min-occurs="1" localized="true" db-size="100">
-      <constraints>domain:true;unique:true</constraints>
-    </add>
-    <add name="indexPage" type="modules_website/page"/>
-    <add name="stylesheet" type="String" from-list="modules_website/stylesheets"/>
-    <add name="skin" type="modules_skin/skin"/>
-    <add name="alwaysappendtitle" type="Boolean" default-value="true"/>
-    <add name="favicon" type="modules_media/media"/>
-    <add name="allowedpagetemplate" type="modules_theme/pagetemplate" max-occurs="-1"/>
-    <add name="group" type="modules_users/group" inverse="true"/>
+    <property name="publicationstatus" localized="true"/>
+    <property name="description" type="LongString" localized="true"/>
+    <property name="localizebypath" type="Boolean" max-occurs="1" default-value="0"/>
+    <property name="url" type="String" min-occurs="1" localized="true"/>
+    <property name="protocol" type="String" min-occurs="1" db-size="10" from-list="modules_website/protocol" default-value="http"/>
+    <property name="domain" type="String" min-occurs="1" localized="true" db-size="100">
+      <constraint name="domain"/>
+      <constraint name="unique" propertyName="domain" modelName="modules_website/website"/>
+    </property>
+    <property name="indexPage" type="modules_website/page"/>
+    <property name="stylesheet" type="String" from-list="modules_website/stylesheets"/>
+    <property name="skin" type="modules_skin/skin"/>
+    <property name="alwaysappendtitle" type="Boolean" default-value="true"/>
+    <property name="favicon" type="modules_media/media"/>
+    <property name="allowedpagetemplate" type="modules_theme/pagetemplate" max-occurs="-1"/>
+    <property name="group" type="modules_users/group" inverse="true"/>
   </properties>
   <serializedproperties>
-    <add name="robottxt" type="LongString"/>
-    <add name="googlefileid" type="String"/>
-    <add name="googlefilecontent" type="String"/>
-    <add name="yahoofileid" type="String"/>
-    <add name="yahoofilecontent" type="String"/>
-    <add name="msnfilecontent" type="LongString"/>
+    <property name="robottxt" type="LongString"/>
+    <property name="googlefileid" type="String"/>
+    <property name="googlefilecontent" type="String"/>
+    <property name="yahoofileid" type="String"/>
+    <property name="yahoofilecontent" type="String"/>
+    <property name="msnfilecontent" type="LongString"/>
   </serializedproperties>
   <children>
     <child name="topics" type="modules_website/topic"/>
