@@ -222,6 +222,27 @@ ol.inline-list li{
 
 
 
+dl.document-infos{
+	margin-bottom: 16px;
+}
+
+dl.document-infos dt{
+	float: left;
+	font-weight: bold;
+	margin-right: 4px;
+}
+
+dl.document-infos dt:after{
+	content: " :";
+}
+
+
+dl.document-infos dd{
+	margin-bottom: 5px;
+}
+
+
+
 dl.menu-list dt{
 }
 
