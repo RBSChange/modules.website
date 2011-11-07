@@ -27,7 +27,7 @@ class <{$className}> extends block_BlockInfo
 		parent::__construct(<{$blockInfo->getVarExportInfo()}>);
 
 <{foreach from=$blockInfo->getAttributes() item=value key=name}>
-		$this->setAttribute("<{$name}>", "<{$value}>");
+		$this->setAttribute("<{$name}>", <{$value|@var_export:true}>);
 <{/foreach}>
 		
 <{foreach from=$blockInfo->getParametersInfoArray() item=parameterInfo}>
