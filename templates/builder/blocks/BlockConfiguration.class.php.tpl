@@ -279,7 +279,7 @@ class <{$className}> extends block_BlockConfiguration
 	public function <{$property->getPhpGetter()}>DefaultValue()
 	{
 <{if $property->hasDefaultValue()}>
-		return '<{$property->getDefaultValue()}>';
+		return <{$property->getDefaultValue()|@var_export:true}>;
 <{else}>
 		return null;
 <{/if}>
