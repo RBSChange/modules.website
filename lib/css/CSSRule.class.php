@@ -274,4 +274,24 @@ class website_CSSRule
 		$this->label = $label;
 	}
 
+    /**
+     * @var String 
+     */
+    private $mediaType;
+    
+    /**
+     * @return String 
+     */
+    public function getMediaType() 
+    {
+		return $this->mediaType;
+    }
+
+    /**
+     * @param String $type 
+     */
+    public function setMediaType($type) 
+    {
+		$this->mediaType = $type;
+    }
 }

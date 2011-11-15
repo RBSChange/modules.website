@@ -63,12 +63,26 @@ class website_CSSStylesheet
 	public function getAsCSS($fullEngine, $skin)
 	{
 		$result = array();
+		$media = null;
 		foreach ($this->cssRules as $rule)
 		{
-			$rule = $rule->getAsCSS($fullEngine, $skin);
-			if ($rule !== null)
+			$ruleText = $rule->getAsCSS($fullEngine, $skin);
+			$currentMedia = $rule->getMediaType();
+			if ($currentMedia!= $media)
 			{
-				$result[] = $rule;
+				if ($media !== null)
+				{
+					$result[] = "}\n";
+				}
+				if ($currentMedia !== null)
+				{
+					$result[] ='@media ' . $currentMedia . " {\n";
+				}
+				$media = $currentMedia;
+			}
+			if ($ruleText !== null)
+			{
+				$result[] = $ruleText;
 			}
 		}
 		if (count($result) > 0)
@@ -345,8 +359,11 @@ class website_CSSStylesheet
 		$inParenthesis = false;
 		$inDeclarationBlock = false;
 		$inSelector = true;
+		$inMediaType = false;
+		$inMediaRule = false;
 		$selectorText = "";
 		$declarationText = "";
+		$mediaText = "";
 		$commentText = "";
 		$comments = array();
 		$currentRule = null;
@@ -364,6 +381,7 @@ class website_CSSStylesheet
 					$inParenthesis = false;
 				}
 			}
+			// handle @import
 			if ($cssText[$i] === '@' && $inSelector && substr($cssText, $i, 7) === '@import' && !$inComment)
 			{
 				$idx = strpos($cssText, ";", $i);
@@ -383,6 +401,14 @@ class website_CSSStylesheet
 				}
 				$i = $idx;
 			}
+			// handle @media
+		    else if ($cssText[$i] === '@' && $inSelector && substr($cssText, $i, 6) === '@media' && !$inComment)
+			{
+				$inMediaRule = true;
+				$inMediaType = true;
+				$i += 6;
+				$inSelector = false;
+		    }
 			else if ($cssText[$i] === '/' && $cssText[$i + 1] === '*' && !$inComment)
 			{
 				$inComment = true;
@@ -404,29 +430,38 @@ class website_CSSStylesheet
 			}
 			else if ($cssText[$i] === '}' && !$inComment)
 			{
-				if ($inDeclarationBlock && !f_util_StringUtils::isEmpty($declarationText))
+				if ($inDeclarationBlock)
 				{
-					if ($lastDeclaration !== null)
+					if (!f_util_StringUtils::isEmpty($declarationText))
 					{
-						$currentRule->addDeclaration($lastDeclaration);
-						$lastDeclaration = null;
+						if ($lastDeclaration !== null)
+						{
+							$currentRule->addDeclaration($lastDeclaration);
+							$lastDeclaration = null;
+						}
+						$lastDeclaration = new website_CSSDeclaration();
+						$lastDeclaration->setCssText(trim($declarationText));
+						if (f_util_ArrayUtils::isNotEmpty($comments))
+						{
+							$lastDeclaration->setComments($comments);
+							$comments = array();
+						}
+						$declarationText = "";
 					}
-					$lastDeclaration = new website_CSSDeclaration();
-					$lastDeclaration->setCssText(trim($declarationText));
-					if (f_util_ArrayUtils::isNotEmpty($comments))
-					{
-						$lastDeclaration->setComments($comments);
-						$comments = array();
-					}
-					$declarationText = "";
+					
+	
+					// End of declarations
+					$inSelector = true;
+	
+					$inDeclarationBlock = false;
+					$selectorText = "";
+				}								
+				else if ($inMediaRule)
+				{
+					$inMediaRule = false;
+					$mediaText = "";
 				}
 				
-
-				// End of declarations
-				$inSelector = true;
-
-				$inDeclarationBlock = false;
-				$selectorText = "";
 				if ($currentRule)
 				{
 					if ($lastDeclaration !== null)
@@ -441,30 +476,42 @@ class website_CSSStylesheet
 			}
 			else if ($cssText[$i] === '{' && !$inComment)
 			{
-				// Beginning of declarations
-				if (!$inSelector)
+				if ($inMediaType)
+			    {
+					$inMediaType = false;
+					$inSelector = true;
+			    }
+				else
 				{
-					throw new Exception("Declarations without a selector");
-				}
-				$inDeclarationBlock = true;
-				$inSelector = false;
-
-				if ($lastDeclaration !== null && $currentRule)
-				{
-					$currentRule->addDeclaration($lastDeclaration);
-					$lastDeclaration = null;
-				}
-
-				$currentRule = new website_CSSRule();
-				$currentRule->setSelectorText(trim($selectorText));
-				if ($currentEngine !== null)
-				{
-					$currentRule->setEngine($currentEngine);
-				}
-				if (f_util_ArrayUtils::isNotEmpty($comments))
-				{
-					$currentRule->setComments($comments);
-					$comments = array();
+					// Beginning of declarations
+					if (!$inSelector)
+					{
+						throw new Exception("Declarations without a selector");
+					}
+					$inDeclarationBlock = true;
+					$inSelector = false;
+	
+					if ($lastDeclaration !== null && $currentRule)
+					{
+						$currentRule->addDeclaration($lastDeclaration);
+						$lastDeclaration = null;
+					}
+	
+					$currentRule = new website_CSSRule();
+					$currentRule->setSelectorText(trim($selectorText));
+					if ($mediaText != "")
+					{
+						$currentRule->setMediaType(trim($mediaText));
+					}
+					if ($currentEngine !== null)
+					{
+						$currentRule->setEngine($currentEngine);
+					}
+					if (f_util_ArrayUtils::isNotEmpty($comments))
+					{
+						$currentRule->setComments($comments);
+						$comments = array();
+					}
 				}
 			}
 			else if ($cssText[$i] === ";"  && !$inParenthesis && !$inComment)
@@ -488,13 +535,17 @@ class website_CSSStylesheet
 			}
 			else
 			{
-				if (!$inDeclarationBlock && !$inComment)
+				if (!$inDeclarationBlock && !$inComment && !$inMediaType)
 				{
 					$selectorText .= $cssText[$i];
 				}
 				else if ($inDeclarationBlock && !$inComment)
 				{
 					$declarationText .= $cssText[$i];
+				}
+				else if ($inMediaType && !$inComment)
+				{
+					$mediaText .= $cssText[$i];
 				}
 				else if ($inComment)
 				{
