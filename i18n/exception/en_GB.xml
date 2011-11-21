@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <i18n baseKey="m.website.exception" lcid="en_GB">
-  <key id="not_a_valid_topic">The specified component (ID=%id%) is not a valid topic because its type is ″%type%″.</key>
-  <key id="not_a_valid_website">The specified component (ID=%id%) is not a valid ″website″ topic because its type is ″%type%″.</key>
-  <key id="invalid_page_reference">Invalid page reference (ID=%id%).</key>
+  <key id="not_a_valid_topic">The specified component (ID=%id%) is not a valid topic because it is of type ″%type%″.</key>
+  <key id="not_a_valid_website">The specified component (ID=%id%) is not a valid ″website″ topic because it is of type ″%type%″.</key>
+  <key id="invalid_page_reference">The page reference is not valid (ID=%id%).</key>
   <key id="invalid_tag">The specified tag ″%tag%″ is not valid.</key>
   <key id="invalid_lang">The specified language ″%lang%″ is not valid.</key>
-  <key id="not_an_exclusive_tag">The specified tag ″%tag%″ must be exclusive.</key>
+  <key id="not_an_exclusive_tag">The specified tag ″%tag%″ must be an exclusive tag.</key>
   <key id="page_reference_not_found">No page reference seems to match the required criteria: pageRef=″%pageRef%″, tags: primary=″%primaryTag%″, secondary=″%secondaryTag%″.</key>
-  <key id="index_page_not_found">No index page found for the topic ″%topicId%: %topicLabel%″.</key>
+  <key id="index_page_not_found">No index page found for the ″%topicId%: %topicLabel%″ topic.</key>
   <key id="bad_topic_id">The specified ID is not a valid: ″%id%″.</key>
   <key id="invalid-page-document">The referenced document (ID=″{id}″) is not a valid page.</key>
   <key id="bad-url">The specified URL (″{url}″) is not valid: %message%</key>
   <key id="bad-referenced-component-id">The specified component (ID=″{id}″) is not a valid page reference.</key>
-  <key id="url-already-used">The specified URL ″{url}″ cannot be applied to the page reference ″{pageRef}″ because it seems to be used by another page.</key>
-  <key id="unknown-page-name">The specified page name (″{pageName}″) is not used by any page.</key>
+  <key id="url-already-used">The specified URL ″{url}″ cannot be applied to the reference page ″{pageRef}″ because it seems to be already in use by another page.</key>
+  <key id="unknown-page-name">The specified page name (″{pageName}″) does not match any page names.</key>
   <key id="page-1">No page identifier specified.</key>
-  <key id="page-2">The specified page identifier (ID=″{param}″) is not used by any page.</key>
+  <key id="page-2">The specified page identifier (ID=″{param}″) is not used by any valid page.</key>
   <key id="page-3">The page declaration (″{param}″ file) is invalid.</key>
   <key id="page-4">The requested page (ID=″{param}″) is not available.</key>
   <key id="page-5">The blocks declaration (″{param}″ file) is invalid.</key>
   <key id="page-6">The content declaration (″{param}″ file) is invalid.</key>
-  <key id="page-7">The requested page is not the index of the group (ID=″{param}″).</key>
+  <key id="page-7">The requested page is not the index for the group (ID=″{param}″).</key>
 </i18n>

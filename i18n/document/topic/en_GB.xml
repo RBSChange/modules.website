@@ -2,13 +2,15 @@
 <i18n baseKey="m.website.document.topic" lcid="en_GB">
   <key id="document-name">topic</key>
   <key id="label">topic title</key>
-  <key id="label-help">topic title, may appear in the menus on the website</key>
+  <key id="label-help">topic title, as it will appear in the menus on the website</key>
   <key id="description">topic description</key>
   <key id="stylesheet">stylesheet</key>
-  <key id="stylesheet-help">select a sylesheet in order to apply it to the element</key>
-  <key id="url">label in URLs</key>
+  <key id="stylesheet-help">select a sylesheet to apply it to the element</key>
+  <key id="url">title in the URLs</key>
   <key id="navigationvisibility">visibility</key>
   <key id="navigationvisibility-help">visibility in navigation menus</key>
   <key id="skin">skin</key>
-  <key id="skin-help">select a Skin here in order to apply it to the element</key>
+  <key id="skin-help">select a skin here to apply it to the element</key>
+  <key id="allowedpagetemplate">Page templates</key>
+  <key id="allowedpagetemplate-help">List of the page templates authorised on this site</key>
 </i18n>

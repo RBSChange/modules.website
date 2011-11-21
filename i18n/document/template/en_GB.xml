@@ -4,6 +4,12 @@
   <key id="edition-form-title">template properties</key>
   <key id="label">label</key>
   <key id="author">author</key>
-  <key id="template">originate template</key>
-  <key id="template-help">originate template</key>
+  <key id="template">original template</key>
+  <key id="template-help">original template</key>
+  <key id="author-help">author</key>
+  <key id="content">content</key>
+  <key id="content-help">content</key>
+  <key id="description">description</key>
+  <key id="description-help">description</key>
+  <key id="label-help">label</key>
 </i18n>

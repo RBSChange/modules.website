@@ -3,7 +3,7 @@
   <key id="document-name">predefined link</key>
   <key id="edition-form-title">predefined link properties</key>
   <key id="label">label</key>
-  <key id="label-help">link label that appears in the menus</key>
+  <key id="label-help">the link label that will appear in the menus</key>
   <key id="url">link type</key>
-  <key id="url-help">lets the user choose a pre-defined link</key>
+  <key id="url-help">permits choosing a predefined link</key>
 </i18n>

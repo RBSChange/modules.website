@@ -2,44 +2,51 @@
 <i18n baseKey="m.website.document.page" lcid="en_GB">
   <key id="document-name">page</key>
   <key id="edition-form-title">page properties</key>
-  <key id="generalities">main data</key>
+  <key id="generalities">main properties</key>
   <key id="publication">publication</key>
-  <key id="referencing">page metas</key>
-  <key id="principalinformations">standard properties</key>
+  <key id="referencing">page meta-information</key>
+  <key id="principalinformations">main properties</key>
   <key id="titleinformations">page title</key>
   <key id="layoutinformations">page layout</key>
   <key id="dateinformations">publication date</key>
   <key id="label">page name</key>
-  <key id="label-help">document title for strictly internal usage, used for document back-office display.</key>
+  <key id="label-help">document title strictly for internal use, used for displaying the document in the Backoffice.</key>
   <key id="navigationtitle">link text</key>
-  <key id="navigationtitle-help">short title for navigation's elements (menus, breadcrumb, etc. - 80 characters max.)</key>
+  <key id="navigationtitle-help">short title for navigation elements (menus, breadcrumb, etc. - 80 characters max.)</key>
   <key id="metatitle">page title</key>
-  <key id="metatitle-help">full title displayed in your browser's title bar (corresponds to TITLE tag used for referencing).</key>
+  <key id="metatitle-help">
+Full title displayed in your browser's title bar (corresponds to the TITLE tag used for referencing).
+Recommended size: 60 to 80 characters. Put the most important keywords first.
+This title will be completed by the website name if the option
+			″Append website's name to the title of the pages″
+is enabled on the website.</key>
   <key id="template">page template</key>
-  <key id="template-help">if the original template has been modified, proceed to its update thanks to the next button.</key>
-  <key id="updatetemplate">update template</key>
-  <key id="updatetemplatequestion">are you sure to update this template ? A bad template could corrupt the existing content...</key>
+  <key id="template-help">If the original template has been modified, update it by pressing the opposite button.</key>
+  <key id="updatetemplate">update the template</key>
+  <key id="updatetemplatequestion">Do you really want to update this page template? A bad template can corrupt the existing content…</key>
   <key id="skin">skin</key>
-  <key id="skin-help">drop a Skin here in order to apply it to the element</key>
+  <key id="skin-help">drop a skin here to apply it to the element</key>
   <key id="description">description</key>
-  <key id="description-help">description of the page for search engines</key>
+  <key id="description-help">description of the page for the search engines. Recommended size: between 160 and 180 characters. Place the most important keywords first.</key>
   <key id="startpublicationdate">start</key>
-  <key id="startpublicationdate-help">The start publication date indicates the date from which the users will be able to view the page. Before this date, the page will not be viewable.</key>
+  <key id="startpublicationdate-help">The start publication date indicates the first date on which visitors will be able to view the page. Before this date, it will be impossible to view the page.</key>
   <key id="endpublicationdate">end</key>
-  <key id="endpublicationdate-help">The end publication date indicates the date to which the users will be able to view the page. After this date, the page will not be viewable anymore.</key>
+  <key id="endpublicationdate-help">The end publication date indicates the latest date on which visitors will be able to view the page. After this date, it will be impossible to view the page.</key>
   <key id="indexinginformations">search</key>
   <key id="indexingstatus">indexable page</key>
   <key id="indexingstatus-help">enable/disable page indexing</key>
   <key id="keywords">keywords</key>
-  <key id="keywords-help">comma-separated keywords related to the page</key>
+  <key id="keywords-help">Comma-separated keywords related to the page. Limit to keywords that most match the page contents.</key>
   <key id="author">author</key>
-  <key id="author-help">name of the page's author</key>
+  <key id="author-help">name of the page author</key>
   <key id="navigationvisibility">visibility</key>
   <key id="navigationvisibility-help">visibility in navigation menus</key>
-  <key id="ishomepage">website's homepage</key>
+  <key id="ishomepage">website homepage</key>
   <key id="isindexpage">parent topic's index page</key>
-  <key id="default-version-label">version #{count} of {label}</key>
-  <key id="usehttps">Secured mode (https)</key>
-  <key id="usehttps-help">The page will only be accessible using an URL starting with ″https://″. For this option, a specific server configuration is required.</key>
-  <key id="robotsmeta">Robots management</key>
+  <key id="default-version-label">version No.{count} of {label}</key>
+  <key id="usehttps">Secure mode (HTTPS)</key>
+  <key id="usehttps-help">It will only be possible to access the page with a URL starting with ″https://″. With this option, the server must be configured to accept HTTPS connections</key>
+  <key id="robotsmeta">Robot management</key>
+  <key id="isindexpageforsubtopics">Index for the sub-topics</key>
+  <key id="isindexpageforsubtopics-help">Index for the sub-topics, only when the page is functionally tagged</key>
 </i18n>

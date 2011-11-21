@@ -146,10 +146,11 @@
 		<xbl:content>
 			<xul:vbox flex="1">
 				<xul:hbox class="dialog-header">
-					<xul:label value="&amp;modules.website.bo.dialog.Import-structure-title;" class="dialog-title" />
+					<xul:label value="${transui:m.website.bo.dialog.import-structure-title,ucf,attr}" class="dialog-title" />
 					<xul:spacer flex="1" />
 					<xul:vbox pack="center">
-						<xul:toolbarbutton height="16" width="16" image="{IconsBase}/small/delete.png" oncommand="onClose()" tooltiptexts="&amp;modules.uixul.bo.dialog.Cancel;" />
+						<xul:toolbarbutton height="16" width="16" image="{IconsBase}/small/delete.png" oncommand="onClose()" 
+							tooltiptexts="${transui:m.uixul.bo.dialog.cancel,ucf,attr}" />
 					</xul:vbox>
 				</xul:hbox>
 				<xul:hbox flex="1">
@@ -158,7 +159,7 @@
 							<xul:vbox flex="1">
 								<xul:hbox>
 									<xul:vbox flex="1" pack="center">
-										<xul:description>&amp;modules.website.bo.dialog.Select-page-template;</xul:description>
+										<xul:description>${transui:m.website.bo.dialog.select-page-template,ucf}</xul:description>
 										<xul:spacer height="5px"/>
 										<xul:cfield anonid="template" name="template" fieldtype="dropdownlist" hidehelp="true" required="true" />
 									</xul:vbox>
@@ -169,7 +170,7 @@
 								</xul:hbox>
 								<xul:hbox>
 									<xul:vbox flex="1" pack="center">
-										<xul:description>&amp;modules.website.bo.dialog.Select-home-page-template;</xul:description>
+										<xul:description>${transui:m.website.bo.dialog.select-home-page-template,ucf}</xul:description>
 										<xul:spacer height="5px"/>
 										<xul:cfield anonid="templateHome" name="templateHome" fieldtype="dropdownlist" hidehelp="true" />
 									</xul:vbox>
@@ -179,7 +180,8 @@
 									</xul:vbox>
 								</xul:hbox>
 								<xul:spacer height="10px" />
-								<xul:hbox align="center" pack="center"><xul:button anonid="submitButton" disabled="true" image="{IconsBase}/small/check.png" label="&amp;modules.website.bo.dialog.Initialize;" oncommand="handleSelected()" /></xul:hbox>								
+								<xul:hbox align="center" pack="center"><xul:button anonid="submitButton" disabled="true" image="{IconsBase}/small/check.png" 
+									label="${transui:m.website.bo.dialog.initialize,ucf,attr}" oncommand="handleSelected()" /></xul:hbox>								
 							</xul:vbox>
 						</xul:vbox>
 						<xul:vbox anonid="importing-panel" flex="1">
@@ -189,7 +191,7 @@
 							</xul:hbox>
 							<xul:spacer height="16px" />
 							<xul:hbox pack="center">
-								<xul:description style="font-size:18px" value="&amp;modules.website.bo.dialog.Importing-structure;" />
+								<xul:description style="font-size:18px" value="${transui:m.website.bo.dialog.importing-structure,ucf,attr}" />
 							</xul:hbox>
 						</xul:vbox>
 						<xul:vbox anonid="message-panel" flex="1">

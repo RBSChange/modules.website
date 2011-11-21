@@ -3,6 +3,6 @@
   <key id="menu-tag">tag</key>
   <key id="modificationdate">modification date</key>
   <key id="menuitem-refers-to">points to</key>
-  <key id="menuitem-popup">popup</key>
-  <key id="website-url">website URL</key>
+  <key id="menuitem-popup">popup window</key>
+  <key id="website-url">Website URL</key>
 </i18n>

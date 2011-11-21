@@ -3,16 +3,16 @@
   <key id="user-task-title">validate page publishing</key>
   <key id="accept">accept</key>
   <key id="refuse">refuse</key>
-  <key id="user-task-help">you have to validate parameters and contents presented below. The ″page parameters″ tab presents the main information related to the name, referencing, page template and publishing dates. ″Page content″ tab displays the content as the internaut will see it, once the page is published. 
-To continue, insert a commentary that will be sent to the page author, and click ″accept″ or ″refuse″ at the top right of this screen.</key>
-  <key id="user-task-decision-commentary">commentary</key>
+  <key id="user-task-help">You have to validate the parameters and the contents shown below. The ″page parameters″ tab provides the main information related to the name, referencing, page template and publishing dates. The ″Page content″ tab displays the contents as the visitor will see it, once the page is published.
+To continue, insert a comment that will be sent to the page author, and click on the ″accept″ or ″refuse″ button on top right of this screen.</key>
+  <key id="user-task-decision-commentary">comment (optional)</key>
   <key id="indexing-status-activate">yes</key>
   <key id="indexing-status-no-activate">no</key>
   <key id="documentinformation">information to be validated</key>
-  <key id="originaldocumentinformation">information of the currently published version</key>
-  <key id="contenttovalidate">content to be validated</key>
-  <key id="contentinproduction">content of the version in production</key>
-  <key id="synchscrolldata">Synchonize information flow</key>
-  <key id="datavalidation">page parameters</key>
-  <key id="contentvalidation">page content</key>
+  <key id="originaldocumentinformation">currently published version information</key>
+  <key id="contenttovalidate">contents to be validated</key>
+  <key id="contentinproduction">contents of the production version</key>
+  <key id="synchscrolldata">Synchronise information scrolling</key>
+  <key id="datavalidation">Page parameters</key>
+  <key id="contentvalidation">Page contents</key>
 </i18n>

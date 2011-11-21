@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <i18n baseKey="m.website.bo.blocks.iframe" lcid="en_GB">
   <key id="title">Title</key>
-  <key id="url">URL</key>
-  <key id="url-help">complete URL (with http://) from page to show in iframe</key>
-  <key id="text">alternate texte</key>
-  <key id="text-help">alternate text showed when browser cannot show iframe</key>
+  <key id="url">address (URL)</key>
+  <key id="url-help">complete address URL (with ″http://″) of the page to show in the iframe</key>
+  <key id="text">alternative text</key>
+  <key id="text-help">alternative text displayed when the browser cannot display the iframe</key>
   <key id="frameHeight">height</key>
   <key id="frameHeight-help">iframe height in pixels</key>
   <key id="frameWidth">width</key>
   <key id="frameWidth-help">iframe width in pixels</key>
-  <key id="scrolling">show scrollbars</key>
-  <key id="scrolling-help">scrollbars can be show when content page showed in iframe is bigger than iframe place</key>
+  <key id="scrolling">show scroll bars</key>
+  <key id="scrolling-help">scroll bars can show up when the page contents displayed in the iframe is bigger than the size allowed to the iframe</key>
   <key id="scroll-auto">Auto</key>
   <key id="scroll-yes">Yes</key>
   <key id="scroll-no">No</key>

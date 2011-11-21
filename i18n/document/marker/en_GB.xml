@@ -3,6 +3,12 @@
   <key id="document-name">marker</key>
   <key id="label">label</key>
   <key id="label-help">label</key>
-  <key id="account">account</key>
-  <key id="account-help">account</key>
+  <key id="account">account ID</key>
+  <key id="account-help">account ID</key>
+  <key id="edition-form-title">marker properties</key>
+  <key id="langs">languages</key>
+  <key id="langs-help">languages</key>
+  <key id="typename">type</key>
+  <key id="website">Associated website</key>
+  <key id="website-help">Associated website</key>
 </i18n>

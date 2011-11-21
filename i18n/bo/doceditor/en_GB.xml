@@ -4,5 +4,5 @@
   <key id="current-word-count-empty">empty</key>
   <key id="current-word-count-singular">1 word</key>
   <key id="current-word-count">{wordCount} words</key>
-  <key id="edit-content-link">edit page content</key>
+  <key id="edit-content-link">edit page contents…</key>
 </i18n>

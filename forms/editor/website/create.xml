@@ -5,14 +5,14 @@
 		<field name="domain" />
 		<field name="localizebypath" />
 		<field name="structureinit" labeli18n="modules.website.document.website.Structureinit"
-			shorthelp="&amp;modules.website.document.website.Structureinit-help;"
+			shorthelp="modules.website.document.website.Structureinit-help"
 			type="dropdownlist" listid="modules_website/defaultstructure" 
-			emptylabel="&amp;modules.website.bo.general.structure.No-content;"/>
+			emptylabel="${transui:m.website.bo.general.structure.no-content,ucf,attr}"/>
 		<field name="template" labeli18n="modules.website.document.website.Template"
-			shorthelp="&amp;modules.website.document.website.Template-help;"
+			shorthelp="modules.website.document.website.Template-help"
 			type="document" allow="modules_theme_pagetemplate" moduleselector="theme" />
 		<field name="templateHome" labeli18n="modules.website.document.website.TemplateHome"
-			shorthelp="&amp;modules.website.document.website.TemplateHome-help;"
+			shorthelp="modules.website.document.website.TemplateHome-help"
 			type="document" allow="modules_theme_pagetemplate" moduleselector="theme" />
 	</section>
 </panel>

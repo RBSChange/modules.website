@@ -26,7 +26,7 @@
 			<field name="mEditContentButton">null</field>
 
 			<constructor><![CDATA[
-				this.mEditContentButton = this.addActionButton('&modules.website.bo.actions.EditContent;', wToolkit.getIcon('edit-page-content', 'small'));
+				this.mEditContentButton = this.addActionButton("${transui:m.website.bo.actions.editcontent,ucf,js}", wToolkit.getIcon('edit-page-content', 'small'));
 				var me = this;
 				this.mEditContentButton.addEventListener('command', function(event) {me.onEditContent();}, true);			
 				this.extendMethod("updateCommandsUI", this.updateEditContentUI);

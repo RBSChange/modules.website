@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.frontoffice.picker" lcid="en_GB">
+  <key id="choose">Browse to the server…</key>
+  <key id="remove">Remove</key>
+  <key id="remove-confirm">Are you sure you want to delete this document?</key>
+</i18n>
