@@ -279,42 +279,42 @@
 		<toolbarbutton name="openPage"/>
 	</toolbar>
 	<actions>
-		<action name="refresh" single="true" icon="refresh" label="&amp;modules.uixul.bo.actions.Refresh;"/>
-		<action name="delete" permission="Delete" icon="delete" label="&amp;modules.uixul.bo.actions.Delete;"/>
-		<action name="edit" single="true" permission="Load" icon="edit" label="&amp;modules.uixul.bo.actions.Edit;"/>
-		<action name="openFolder" single="true" icon="open-folder" label="&amp;modules.uixul.bo.actions.OpenFolder;"/>
-		<action name="createPage" single="true" permission="Insert_page" group="topiccreate_" icon="add" label="&amp;modules.website.bo.actions.Create-page;"/>
-		<action name="createExternalPage" single="true" permission="Insert_pageexternal" group="topiccreate_" icon="add" label="&amp;modules.website.bo.actions.Create-external-page;"/>
+		<action name="refresh" single="true" icon="refresh" labeli18n="m.uixul.bo.actions.Refresh"/>
+		<action name="delete" permission="Delete" icon="delete" labeli18n="m.uixul.bo.actions.Delete"/>
+		<action name="edit" single="true" permission="Load" icon="edit" labeli18n="m.uixul.bo.actions.Edit"/>
+		<action name="openFolder" single="true" icon="open-folder" labeli18n="m.uixul.bo.actions.OpenFolder"/>
+		<action name="createPage" single="true" permission="Insert_page" group="topiccreate_" icon="add" labeli18n="m.website.bo.actions.Create-page"/>
+		<action name="createExternalPage" single="true" permission="Insert_pageexternal" group="topiccreate_" icon="add" labeli18n="m.website.bo.actions.Create-external-page"/>
 		<action name="topiccreate_" single="true" actions="createPage,createTopic,createExternalPage" icon="add"/>
 		<action name="systemtopiccreate_" single="true" actions="createPage,createExternalPage" icon="add"/>
-		<action name="createTopic" single="true" permission="Insert_topic" group="topiccreate_" icon="add" label="&amp;modules.website.bo.actions.Create-topic;"/>
-		<action name="openTreeNodeOrder" single="true" permission="Order" icon="sort" label="&amp;modules.uixul.bo.actions.Set-children-order;"/>
-		<action name="move" permission="Move" icon="up_down" label="&amp;modules.uixul.bo.actions.Move;"/>
-		<action name="openTags" single="true" permission="LoadTags" icon="edit-tags" label="&amp;modules.uixul.bo.actions.Open-tags-panel;"/>
-		<action name="createMenu" single="true" permission="Insert_menu" icon="add" label="&amp;modules.website.bo.actions.Create-menu;"/>
-		<action name="orderMenuItems" single="true" icon="sort" label="&amp;modules.uixul.bo.actions.Set-children-order;"/>
+		<action name="createTopic" single="true" permission="Insert_topic" group="topiccreate_" icon="add" labeli18n="m.website.bo.actions.Create-topic"/>
+		<action name="openTreeNodeOrder" single="true" permission="Order" icon="sort" labeli18n="m.uixul.bo.actions.Set-children-order"/>
+		<action name="move" permission="Move" icon="up_down" labeli18n="m.uixul.bo.actions.Move"/>
+		<action name="openTags" single="true" permission="LoadTags" icon="edit-tags" labeli18n="m.uixul.bo.actions.Open-tags-panel"/>
+		<action name="createMenu" single="true" permission="Insert_menu" icon="add" labeli18n="m.website.bo.actions.Create-menu"/>
+		<action name="orderMenuItems" single="true" icon="sort" labeli18n="m.uixul.bo.actions.Set-children-order"/>
 		<action name="menucreate_" single="true" actions="createMenuitemfunction,createMenuitemtext,createMenuitemdocument" icon="add"/>
-		<action name="createMenuitemfunction" single="true" permission="Insert_menuitemfunction" group="menucreate_" label="&amp;modules.website.bo.actions.Create-Menuitemfunction;"/>
-		<action name="createMenuitemtext" single="true" permission="Insert_menuitemtext" group="menucreate_" label="&amp;modules.website.bo.actions.Create-Menuitemtext;"/>
-		<action name="createMenuitemdocument" single="true" permission="Insert_menuitemdocument" group="menucreate_" label="&amp;modules.website.bo.actions.Create-Menuitemdocument;"/>
-		<action name="addToMenu" permission="AddToMenu" icon="add" label="&amp;modules.website.bo.actions.Add-to-menu;"/>
+		<action name="createMenuitemfunction" single="true" permission="Insert_menuitemfunction" group="menucreate_" labeli18n="m.website.bo.actions.Create-Menuitemfunction"/>
+		<action name="createMenuitemtext" single="true" permission="Insert_menuitemtext" group="menucreate_" labeli18n="m.website.bo.actions.Create-Menuitemtext"/>
+		<action name="createMenuitemdocument" single="true" permission="Insert_menuitemdocument" group="menucreate_" labeli18n="m.website.bo.actions.Create-Menuitemdocument"/>
+		<action name="addToMenu" permission="AddToMenu" icon="add" labeli18n="m.website.bo.actions.Add-to-menu"/>
 		<action name="websitecreate_" single="true" actions="createPage,createTopic,createExternalPage,initDefaultStruct" icon="add"/>
-		<action name="initDefaultStruct" single="true" permission="InitDefaultStruct" group="websitecreate_" icon="add" label="&amp;modules.website.bo.actions.Init-default-struct;"/>
-		<action name="duplicate" single="true" permission="Duplicate" icon="duplicate" label="&amp;modules.uixul.bo.actions.Duplicate;"/>
-		<action name="openPage" single="true" icon="preview" label="&amp;modules.website.bo.actions.OpenPage;"/>
-		<action name="editPageContent" single="true" permission="EditContent" icon="edit-page-content" label="&amp;modules.website.bo.actions.EditContent;"/>
-		<action name="setAsIndexPage" single="true" permission="SetTopicIndexPage" icon="page-index" label="&amp;modules.website.bo.actions.Set-as-index-page;"/>
-		<action name="setAsIndexPageRef" single="true" permission="SetTopicIndexPage" icon="page-index" label="&amp;modules.website.bo.actions.Set-as-index-page-ref;"/>
-		<action name="removeIndexPage" single="true" permission="RemoveIndexPage" icon="document" label="&amp;modules.website.bo.actions.Remove-index-page;"/>
-		<action name="setAsHomePage" single="true" permission="SetHomePage" icon="page-home" label="&amp;modules.website.bo.actions.Set-as-home-page;"/>
-		<action name="activate" single="true" permission="Activate" icon="activate" label="&amp;modules.uixul.bo.actions.Activate;"/>
-		<action name="deactivated" permission="Deactivated" icon="deactivated" label="&amp;modules.uixul.bo.actions.Deactivate;"/>
-		<action name="reactivate" permission="ReActivate" icon="reactivate" label="&amp;modules.uixul.bo.actions.ReActivate;"/>
-		<action name="createEmptyPageVersionFromPage" single="true" permission="InitEmptyPageVersion" icon="new-empty-version" label="&amp;modules.website.bo.actions.Create-empty-page-version;"/>
-		<action name="createPageVersionFromPage" single="true" permission="InitDuplicatePageVersion" icon="new-version" label="&amp;modules.website.bo.actions.Create-page-version;"/>
-		<action name="openUrlRewritingPanel" single="true" permission="LoadRedirectInfo" icon="urlrewriting" label="&amp;modules.uixul.bo.actions.Url-rewriting;"/>
-		<action name="removeFromMenu" single="true" permission="RemoveFromMenu" icon="remove" label="&amp;modules.website.bo.actions.Remove-from-menu;"/>
-		<action name="createWebsite" single="true" permission="Insert_website" icon="add" label="&amp;modules.website.bo.actions.Create-website;"/>
-		<action name="checkLink" global="true" permission="CheckLink" icon="check" label="&amp;modules.website.bo.actions.Check-link;"/>
+		<action name="initDefaultStruct" single="true" permission="InitDefaultStruct" group="websitecreate_" icon="add" labeli18n="m.website.bo.actions.Init-default-struct"/>
+		<action name="duplicate" single="true" permission="Duplicate" icon="duplicate" labeli18n="m.uixul.bo.actions.Duplicate"/>
+		<action name="openPage" single="true" icon="preview" labeli18n="m.website.bo.actions.OpenPage"/>
+		<action name="editPageContent" single="true" permission="EditContent" icon="edit-page-content" labeli18n="m.website.bo.actions.EditContent"/>
+		<action name="setAsIndexPage" single="true" permission="SetTopicIndexPage" icon="page-index" labeli18n="m.website.bo.actions.Set-as-index-page"/>
+		<action name="setAsIndexPageRef" single="true" permission="SetTopicIndexPage" icon="page-index" labeli18n="m.website.bo.actions.Set-as-index-page-ref"/>
+		<action name="removeIndexPage" single="true" permission="RemoveIndexPage" icon="document" labeli18n="m.website.bo.actions.Remove-index-page"/>
+		<action name="setAsHomePage" single="true" permission="SetHomePage" icon="page-home" labeli18n="m.website.bo.actions.Set-as-home-page"/>
+		<action name="activate" single="true" permission="Activate" icon="activate" labeli18n="m.uixul.bo.actions.Activate"/>
+		<action name="deactivated" permission="Deactivated" icon="deactivated" labeli18n="m.uixul.bo.actions.Deactivate"/>
+		<action name="reactivate" permission="ReActivate" icon="reactivate" labeli18n="m.uixul.bo.actions.ReActivate"/>
+		<action name="createEmptyPageVersionFromPage" single="true" permission="InitEmptyPageVersion" icon="new-empty-version" labeli18n="m.website.bo.actions.Create-empty-page-version"/>
+		<action name="createPageVersionFromPage" single="true" permission="InitDuplicatePageVersion" icon="new-version" labeli18n="m.website.bo.actions.Create-page-version"/>
+		<action name="openUrlRewritingPanel" single="true" permission="LoadRedirectInfo" icon="urlrewriting" labeli18n="m.uixul.bo.actions.Url-rewriting"/>
+		<action name="removeFromMenu" single="true" permission="RemoveFromMenu" icon="remove" labeli18n="m.website.bo.actions.Remove-from-menu"/>
+		<action name="createWebsite" single="true" permission="Insert_website" icon="add" labeli18n="m.website.bo.actions.Create-website"/>
+		<action name="checkLink" global="true" permission="CheckLink" icon="check" labeli18n="m.website.bo.actions.Check-link"/>
 	</actions>
 </perspective>
