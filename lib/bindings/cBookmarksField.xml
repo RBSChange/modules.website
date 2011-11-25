@@ -9,20 +9,20 @@
                 <xul:hbox>
             
                		<xul:button anonid="moveUp" image="{IconsBase}/small/arrow-up-blue.png"
-						label="&amp;modules.website.bo.blocks.bookmarks.MoveUp;" orient="vertical" 
+						label="${trans:m.website.bo.blocks.bookmarks.MoveUp,ucf,attr}" orient="vertical" 
 						oncommand="moveItemUp();" disabled="true" />
                 	<xul:button anonid="remove" image="{IconsBase}/small/delete.png" 
-						label="&amp;modules.website.bo.blocks.bookmarks.Remove;" orient="vertical" 
+						label="${trans:m.website.bo.blocks.bookmarks.Remove,ucf,attr}" orient="vertical" 
 						oncommand="removeItem();" disabled="true" />
                     <xul:button anonid="moveDown" image="{IconsBase}/small/arrow-down-blue.png" 
-                    	label="&amp;modules.website.bo.blocks.bookmarks.MoveDown;" orient="vertical" 
+                    	label="${trans:m.website.bo.blocks.bookmarks.MoveDown,ucf,attr}" orient="vertical" 
                     	oncommand="moveItemDown();" disabled="true" />
                 </xul:hbox>
                 
-                <xul:label value="&amp;modules.website.bo.blocks.bookmarks.AvailableBookmarksLabel;" 
+                <xul:label value="${trans:m.website.bo.blocks.bookmarks.AvailableBookmarks,lab,ucf,attr}" 
                 		   style="font-weight: bold; font-size: 12px;" />
 				<xul:listbox anonid="availableList" seltype="multiple" onselect="handleAvailableSelect();" />
-                <xul:button anonid="add" image="{IconsBase}/small/add.png" label="&amp;modules.website.bo.blocks.bookmarks.Add;" 
+                <xul:button anonid="add" image="{IconsBase}/small/add.png" label="${trans:m.website.bo.blocks.bookmarks.Add,ucf,attr}" 
                 		orient="vertical" oncommand="addItems();" disabled="true" />
 			</xul:vbox>
 		</content>	

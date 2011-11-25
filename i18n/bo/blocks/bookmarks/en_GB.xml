@@ -3,7 +3,7 @@
   <key id="cmpref">displayed bookmarks</key>
   <key id="availablebookmarks">available bookmarks</key>
   <key id="add">add</key>
-  <key id="remove">remove</key>
+  <key id="remove">delete</key>
   <key id="moveup">move up</key>
   <key id="movedown">move down</key>
 </i18n>

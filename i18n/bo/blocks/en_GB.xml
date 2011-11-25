@@ -2,12 +2,15 @@
 <i18n baseKey="m.website.bo.blocks" lcid="en_GB">
   <key id="sitemap">sitemap</key>
   <key id="bookmarksblock">bookmarks</key>
-  <key id="emptybookmarksmessage">Block contains no bookmark.</key>
+  <key id="emptybookmarksmessage">The block does not contain any bookmarks.</key>
   <key id="one-col">One column layout</key>
-  <key id="two-col">Two columns layout</key>
+  <key id="two-col">Two column layout</key>
   <key id="exception">exception</key>
   <key id="iframe">Iframe</key>
-  <key id="edit">Front-office edition</key>
-  <key id="enablemetas">Expose block's metadata</key>
-  <key id="contextualmenu">Contextual menu</key>
+  <key id="edit">Frontoffice edition</key>
+  <key id="enablemetas">publish block metadata</key>
+  <key id="contextualmenu">Context menu</key>
+  <key id="enablemetas-help">This block contains metadata (title, description, keywords) that can be used as the page's metadata. Choose ″yes″ to make them available to the page.</key>
+  <key id="usecache">Activate the cache</key>
+  <key id="usecache-help">This block handles a cache, you can disable it</key>
 </i18n>

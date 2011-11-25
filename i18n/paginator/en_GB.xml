@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <i18n baseKey="m.website.paginator" lcid="en_GB">
-  <key id="detail">page {currentPage} on {pageCount} pages</key>
+  <key id="detail">page {currentPage} of {pageCount} pages of list {listName}</key>
   <key id="next">next ›</key>
   <key id="previous">‹ Previous</key>
   <key id="first">« First</key>
   <key id="last">last »</key>
+  <key id="first-title">first page of list {listName}</key>
+  <key id="last-title">last page of list {listName}</key>
+  <key id="next-title">next page of list {listName}</key>
+  <key id="page-title">page {pageNumber} of list {listName}</key>
+  <key id="previous-title">previous page of list {listName}</key>
 </i18n>

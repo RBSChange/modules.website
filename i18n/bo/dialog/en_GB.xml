@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.bo.dialog" lcid="en_GB">
+  <key id="import-structure-title">import the default structure</key>
+  <key id="importing-structure">Structure initialisation…</key>
+  <key id="initialize">start the initialisation</key>
+  <key id="no-page-template">There are no page templates assigned to the container.</key>
+  <key id="select-home-page-template">Select the homepage template.</key>
+  <key id="select-page-template">Select the template to associate with the images</key>
+  <key id="structure-initialized">The structure has been initialised.</key>
+</i18n>

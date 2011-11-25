@@ -2,11 +2,11 @@
 <i18n baseKey="m.website.document.menuitemdocument" lcid="en_GB">
   <key id="document-name">menu item (page or topic)</key>
   <key id="label">label</key>
-  <key id="label-help">link label that appears in the menus</key>
+  <key id="label-help">the link label that will appear in the menus</key>
   <key id="document">document</key>
-  <key id="document-help">document pointed by the menu item</key>
+  <key id="document-help">document (page or topic) to which the menu item points</key>
   <key id="popup">open in a new window</key>
-  <key id="popup-help">indicate that the link will open in a new window</key>
+  <key id="popup-help">states that the link target will open in a new window</key>
   <key id="popupparameters">window parameters</key>
-  <key id="popupparameters-help">define the parameters for the new window to open</key>
+  <key id="popupparameters-help">defines how the new window will open</key>
 </i18n>

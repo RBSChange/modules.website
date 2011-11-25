@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <i18n baseKey="m.website.document.permission" lcid="en_GB">
-	<include id="m.generic.document.permission" />
-	<key id="treemanager">Tree manager</key>
-	<key id="treemanager-help">Tree manager</key>
-	<key id="authenticatedfrontuser">Front user</key>
-	<key id="authenticatedfrontuser-help">Front user</key>
+  <include id="m.generic.document.permission"/>
+  <key id="treemanager">Tree manager</key>
+  <key id="treemanager-help">Tree manager</key>
+  <key id="authenticatedfrontuser">Front user</key>
+  <key id="authenticatedfrontuser-help">User accounts used for restricted website access</key>
 </i18n>

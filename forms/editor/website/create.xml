@@ -7,7 +7,7 @@
 		<field name="structureinit" labeli18n="m.website.document.website.structureinit"
 			shorthelpi18n="m.website.document.website.structureinit-help"
 			type="dropdownlist" listid="modules_website/defaultstructure" 
-			emptylabel="&amp;modules.website.bo.general.structure.No-content;"/>
+			emptylabel="${trans:m.website.bo.general.structure.No-content,ucf,attr}"/>
 		<field name="template" labeli18n="m.website.document.website.template"
 			shorthelpi18n="m.website.document.website.template-help"
 			type="document" allow="modules_theme_pagetemplate" moduleselector="theme" />

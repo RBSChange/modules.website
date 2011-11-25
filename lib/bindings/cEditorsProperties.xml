@@ -52,7 +52,7 @@
 			<xul:hbox>
 				<xul:label class="label" xbl:inherits="value=label" />
 				<xul:label class="label separator" value=":" />
-				<xul:label class="text-link" onclick="document.getBindingParent(this).editContent()" value="&amp;modules.website.bo.doceditor.Edit-content-link;"/>
+				<xul:label class="text-link" onclick="document.getBindingParent(this).editContent()" value="${trans:m.website.bo.doceditor.Edit-content-link,ucf,attr}"/>
 			</xul:hbox>			
 		</content>
 	</binding>
@@ -83,7 +83,7 @@
 			<xul:hbox>
 				<xul:label class="label" xbl:inherits="value=label" />
 				<xul:label class="label separator" value=":" />
-				<xul:label class="text-link" onclick="document.getBindingParent(this).editDocument()" value="&amp;modules.website.bo.doceditor.property.Edit-MenuitemDocument;"/>
+				<xul:label class="text-link" onclick="document.getBindingParent(this).editDocument()" value="${trans:m.website.bo.doceditor.property.Edit-MenuitemDocument,ucf,attr}"/>
 			</xul:hbox>			
 		</content>
 	</binding>

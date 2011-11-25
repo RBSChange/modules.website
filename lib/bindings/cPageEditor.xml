@@ -29,7 +29,7 @@
 			<xul:hbox>
 				<xul:label xbl:inherits="value=label" />
 				<xul:label value=":" />
-				<xul:label class="text-link" onclick="document.getBindingParent(this).editContent()" value="&amp;modules.website.bo.doceditor.Edit-content-link;"/>
+				<xul:label class="text-link" onclick="document.getBindingParent(this).editContent()" value="${trans:m.website.bo.doceditor.Edit-content-link,ucf,attr}"/>
 			</xul:hbox>			
 		</content>
 	</binding>
@@ -149,17 +149,17 @@
 				<xul:rows>
 					<xul:row class="head" anonid="head-row">
 						<xul:label name="publicationstatus" sortonfield="true"
-							value="" tooltiptext="&amp;modules.website.bo.doceditor.page-version-list.Status;" />
+							value="" tooltiptext="${trans:m.website.bo.doceditor.page-version-list.Status,ucf,attr}" />
 						<xul:label name="label" sortonfield="true"
-							value="&amp;modules.website.bo.doceditor.page-version-list.Label;" />
+							value="${trans:m.website.bo.doceditor.page-version-list.Label,ucf,attr}" />
 						<xul:label name="startpublicationdate" sortonfield="true"
-							value="&amp;modules.website.bo.doceditor.page-version-list.Startpublicationdate;" />
+							value="${trans:m.website.bo.doceditor.page-version-list.Startpublicationdate,ucf,attr}" />
 						<xul:label name="endpublicationdate" sortonfield="true"
-							value="&amp;modules.website.bo.doceditor.page-version-list.Endpublicationdate;" />
+							value="${trans:m.website.bo.doceditor.page-version-list.Endpublicationdate,ucf,attr}" />
 						<xul:label name="currentlabel"
-							value="&amp;modules.website.bo.doceditor.page-version-list.Current;" />
+							value="${trans:m.website.bo.doceditor.page-version-list.Current,ucf,attr}" />
 						<xul:label name="actionrow"
-							value="&amp;modules.website.bo.doceditor.page-version-list.Actions;" />
+							value="${trans:m.website.bo.doceditor.page-version-list.Actions,ucf,attr}" />
 					</xul:row>
 				</xul:rows>
 			</xul:grid>
@@ -172,13 +172,13 @@
 				<xul:label value="" />
 				<xul:toolbar class="actions">
 					<xul:toolbarbutton action="preview" image="{IconsBase}/small/preview.png" 
-						tooltiptext="&amp;modules.website.bo.actions.OpenPage;" />
+						tooltiptext="${trans:m.website.bo.actions.OpenPage,ucf,attr}" />
 					<xul:toolbarbutton action="edit" image="{IconsBase}/small/edit.png" 
-						tooltiptext="&amp;modules.uixul.bo.actions.Edit;" />
+						tooltiptext="${trans:m.uixul.bo.actions.Edit,ucf,attr}" />
 					<xul:toolbarbutton action="newversion" image="{IconsBase}/small/add.png" 
-						tooltiptext="&amp;modules.uixul.bo.actions.Duplicate;" />
+						tooltiptext="${trans:m.uixul.bo.actions.Duplicate,ucf,attr}" />
 					<xul:toolbarbutton action="delete" image="{IconsBase}/small/delete.png" 
-						tooltiptext="&amp;modules.uixul.bo.actions.Delete;" />
+						tooltiptext="${trans:m.uixul.bo.actions.Delete,ucf,attr}" />
 				</xul:toolbar>
 			</xul:row>	
 		</content>	

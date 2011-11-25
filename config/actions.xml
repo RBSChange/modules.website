@@ -20,12 +20,12 @@
 					
 					var callback = function (notif, bI) {bI.module.createDocumentEditor('modules_website_website', bI.module.mRootFolderId)};
 					var buttons = [{callback:callback, label:insertWebsiteAction.label, accessKey:"", module: this}];
-					notifZone.appendNotification("&amp;modules.website.bo.general.notification.No-default-website;", 
+					notifZone.appendNotification("${trans:m.website.bo.general.notification.No-default-website,ucf,js}", 
 						'createwebsite', wToolkit.getIcon('website', 'small'), notifZone.PRIORITY_CRITICAL_BLOCK, buttons);
 				}
 				else
 				{
-					notifZone.appendNotification("&amp;modules.website.bo.general.notification.No-default-website;", 
+					notifZone.appendNotification("${trans:m.website.bo.general.notification.No-default-website,ucf,js}", 
 						'nodefaultwebsite', wToolkit.getIcon('website', 'small'), notifZone.PRIORITY_WARNING_LOW, []);
 				}
 			
@@ -84,7 +84,7 @@
 		<body><![CDATA[
 			var id = listWidget.getSelectedIds()[0];
 			var lang = this.getContextLang();
-			if (confirm("&amp;modules.website.bo.actions.Set-as-home-page-confirm;"))
+			if (confirm("${trans:m.website.bo.actions.Set-as-home-page-confirm,ucf,js}"))
 			{
 				this.executeJSON("SetHomePage", {cmpref: id, lang: lang});
 			}
