@@ -124,7 +124,7 @@ table.normal tr th{
 	background:#ff8888 center left no-repeat;
 	font-size:10px;
 	color:#220000;
-	-moz-opacity:0.7;
+	opacity:0.7;
 }
 
 .block-message{
@@ -137,7 +137,7 @@ table.normal tr th{
 	background:#88ff88 center left no-repeat;
 	font-size:10px;
 	color:#220000;
-	-moz-opacity:0.7;
+	opacity:0.7;
 }
 
 .link-broken,
