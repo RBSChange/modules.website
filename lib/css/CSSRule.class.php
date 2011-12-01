@@ -274,24 +274,45 @@ class website_CSSRule
 		$this->label = $label;
 	}
 
-    /**
-     * @var String 
+	/**
+     * @var sString 
      */
-    private $mediaType;
+    private $atSelector;
     
     /**
-     * @return String 
+     * @return string 
      */
-    public function getMediaType() 
+    public function getAtSelector() 
     {
-		return $this->mediaType;
+		return $this->atSelector;
     }
 
     /**
-     * @param String $type 
+     * @param string $selector 
      */
-    public function setMediaType($type) 
+    public function setAtSelector($selector) 
     {
-		$this->mediaType = $type;
+		$this->atSelector = $selector;
+    }
+    
+    /**
+     * @var integer 
+     */
+    private $atLevel;
+    
+    /**
+     * @return intger 
+     */
+    public function getAtLevel() 
+    {
+		return $this->atLevel;
+    }
+
+    /**
+     * @param integer $level
+     */
+    public function setAtLevel($level) 
+    {
+		$this->atLevel = $level;
     }
 }
