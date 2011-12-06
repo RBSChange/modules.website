@@ -548,14 +548,39 @@ class website_UrlRewritingService extends website_BaseRewritingService
 				$pattern = '/^\/([a-z0-9]+)\/([a-zA-Z0-9_\-\.]+),([0-9]+)\.html$/';
 				if (preg_match($pattern, $path, $matches))
 				{
-					$moduleName = $matches[1];
-					$actionName = 'ViewDetail';
 					$documentId = intval($matches[3]);
-					if (Framework::isInfoEnabled())
-					{		
-						Framework::info('Generic Document Rule ' .$moduleName . '/ViewDetail cmpref: ' . $documentId);
+					$modelName = $this->getPersistentProvider()->getDocumentModelName($documentId);
+					if ($modelName)
+					{
+						$document = $this->getPersistentProvider()->getDocumentInstance($documentId, $modelName, $lang);
+						$defaultPath = $this->getDocumentDefaultPath($document, $lang);					
+						if ($defaultPath !== $path)
+						{
+							if (Framework::isInfoEnabled())
+							{
+								Framework::info('Generic Document Rule not match path: ' .$defaultPath);
+							}
+							return $this->getRedirectAction($website, $lang, $defaultPath, 301, $request);
+						}
+						
+						$moduleName = $matches[1];
+						$actionName = 'ViewDetail';
+						if (Framework::isInfoEnabled())
+						{		
+							Framework::info('Generic Document Rule ' .$moduleName . '/ViewDetail cmpref: ' . $documentId);
+						}
+						$request->setModuleParameter($moduleName, 'cmpref', $documentId);
 					}
-					$request->setModuleParameter($moduleName, 'cmpref', $documentId);
+					else
+					{
+						if (Framework::isInfoEnabled())
+						{
+							Framework::info('Invalid Document Id: ' .$documentId);
+						}
+						$moduleName = 'website';
+						$actionName = 'Error404';
+						$documentId = null;
+					}
 				}
 			}
 			if ($moduleName === null)
@@ -574,8 +599,7 @@ class website_UrlRewritingService extends website_BaseRewritingService
 			
 			if ($moduleName === null)
 			{
-				//All rewrited action rules
-				
+				//All rewrited action rules				
 				$this->getRewriteRules();
 				$matches = array();
 				foreach ($this->rewriteRules['actions'] as $moduleAction => $ruleData) 
