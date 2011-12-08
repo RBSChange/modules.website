@@ -906,11 +906,11 @@ class website_PageService extends f_persistentdocument_DocumentService
 	public function getLastModified($pageCount = 5)
 	{
 		$query = $this->createQuery()
-		->add(Restrictions::ne('model', 'modules_website/pagereference'))
-		->add(Restrictions::ne('model', 'modules_website/pagegroup'))
-		->add(Restrictions::ne('publicationstatus', 'DEPRECATED'))
-		->addOrder(Order::desc('document_modificationdate'))
-		->setMaxResults($pageCount);
+			->add(Restrictions::ne('model', 'modules_website/pagereference'))
+			->add(Restrictions::ne('model', 'modules_website/pagegroup'))
+			->add(Restrictions::ne('publicationstatus', 'DEPRECATED'))
+			->addOrder(Order::desc('document_modificationdate'))
+			->setMaxResults($pageCount);
 		$pageModel = f_persistentdocument_PersistentDocumentModel::getInstanceFromDocumentModelName('modules_website/page');
 		if ($pageModel->useCorrection())
 		{
@@ -2139,36 +2139,22 @@ class website_PageService extends f_persistentdocument_DocumentService
 
 	
 	/**
-	 * @param website_persistentdocument_page $document
+	 * @param website_persistentdocument_menuitemfunction $document
+	 * @param array<string, string> $attributes
+	 * @param integer $mode
 	 * @param string $moduleName
-	 * @param string $treeType
-	 * @param array<string, string> $nodeAttributes
 	 */
-	public function addTreeAttributes($document, $moduleName, $treeType, &$nodeAttributes)
+	public function completeBOAttributes($document, &$attributes, $mode, $moduleName)
 	{
-		if ($treeType === 'wmultilist')
-		{
-			try
-			{
-				$nodeAttributes['plainlink'] = LinkHelper::getDocumentUrl($document);
-			}
-			catch (Exception $e)
-			{
-				Framework::warn(__METHOD__ . ' ' . $e->getMessage());
-			}
-		}
-
-		if (!$document->getIndexingstatus())
-		{
-			$nodeAttributes['notindexable'] = 'notindexable';
-		}
 		if ($document->getIsHomePage())
 		{
-			$nodeAttributes['isHomePage'] = 'isHomePage';
+			$attributes['icon'] = 'page-home';
+			$attributes['isHomePage'] = true;
 		} 
-		else if ($document->getIsIndexPage())
+		elseif ($document->getIsIndexPage())
 		{
-			$nodeAttributes['isIndexPage'] = 'isIndexPage';
+			$attributes['icon'] = 'page-index';
+			$attributes['isIndexPage'] = true;
 		}
 		
 		if (!($document instanceof website_persistentdocument_pagereference) && 
@@ -2177,7 +2163,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$countRef = website_PagereferenceService::getInstance()->getCountPagesReferenceByPage($document);
 			if ($countRef > 0)
 			{
-				$nodeAttributes['hasPageRef'] = true;
+				$attributes['hasPageRef'] = true;
 			}
 		}
 	}

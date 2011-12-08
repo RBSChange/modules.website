@@ -17,14 +17,7 @@ class website_persistentdocument_pagegroup extends website_persistentdocument_pa
 		{
 			$info = $version->getInfoForPageGroup();
 			$info['current'] = $version->getId() == $currentversionId;
-			if ($info['current'])
-			{
-				$info['currentlabel'] = f_Locale::translateUI('&framework.boolean.True;');
-			}
-			else
-			{
-				$info['currentlabel'] = '';
-			}
+			$info['currentlabel'] = ($info['current']) ? LocaleService::getInstance()->trans('f.boolean.true', array('ucf')) : '';
 			$data[] = $info;	
 		}
 		return array('versions' => $data);

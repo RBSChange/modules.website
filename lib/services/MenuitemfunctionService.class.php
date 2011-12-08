@@ -39,15 +39,18 @@ class website_MenuitemfunctionService extends website_MenuitemService
 		return $this->pp->createQuery('modules_website/menuitemfunction');
 	}
 
-    /**
-     * @param website_persistentdocument_menuitemfunction $document
+	/**
+	 * @param website_persistentdocument_menuitemfunction $document
+	 * @param array<string, string> $attributes
+	 * @param integer $mode
 	 * @param string $moduleName
-	 * @param string $treeType
-	 * @param array<string, string> $nodeAttributes
-	 */	
-	public function addTreeAttributes($document, $moduleName, $treeType, &$nodeAttributes)
+	 */
+	public function completeBOAttributes($document, &$attributes, $mode, $moduleName)
 	{
-         $nodeAttributes['refers-to'] = $document->getUrl();
-         $nodeAttributes['popup'] = LocaleService::getInstance()->transBO('m.generic.backoffice.no');	        
+		if ($mode & DocumentHelper::MODE_CUSTOM)
+		{
+			$attributes['refers-to'] = $document->getUrl();
+			$attributes['popup'] = LocaleService::getInstance()->trans('m.generic.backoffice.no', array('ucf'));
+		}
 	}
 }

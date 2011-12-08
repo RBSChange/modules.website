@@ -161,35 +161,36 @@ class website_MenuitemdocumentService extends website_MenuitemService
 	
 	/**
 	 * @param website_persistentdocument_menuitemdocument $document
+	 * @param array<string, string> $attributes
+	 * @param integer $mode
 	 * @param string $moduleName
-	 * @param string $treeType
-	 * @param array<string, string> $nodeAttributes
 	 */
-	public function addTreeAttributes($document, $moduleName, $treeType, &$nodeAttributes)
+	public function completeBOAttributes($document, &$attributes, $mode, $moduleName)
 	{
-		try 
-        {
-			$breadcrumb = website_WebsiteModuleService::getInstance()->getBreadcrumb($document->getDocument());
-			$nodeAttributes['refers-to'] = $breadcrumb->renderAsText();
-        }
-        catch (Exception $e)
-        {
-        	$nodeAttributes['refers-to'] = 'ERROR: '.$e->getMessage();
-        }
-		if ($document->getPopup())
+		if ($mode & DocumentHelper::MODE_CUSTOM)
 		{
-			$nodeAttributes['popup'] = LocaleService::getInstance()->transBO('m.generic.backoffice.yes');
-			$params = $document->getPopupParametersArray();
-			if ($params['width'] && $params['height'])
+			try 
+	        {
+				$breadcrumb = website_WebsiteModuleService::getInstance()->getBreadcrumb($document->getDocument());
+				$attributes['refers-to'] = $breadcrumb->renderAsText();
+	        }
+	        catch (Exception $e)
+	        {
+	        	$attributes['refers-to'] = 'ERROR: ' . $e->getMessage();
+	        }
+			if ($document->getPopup())
 			{
-				$nodeAttributes['popup'] .= ' (' . $params['width'] . ' x ' . $params['height'] . ')';
+				$attributes['popup'] = LocaleService::getInstance()->trans('m.generic.backoffice.yes', array('ucf'));
+				$params = $document->getPopupParametersArray();
+				if (isset($params['width']) && isset($params['height']))
+				{
+					$attributes['popup'] .= ' (' . $params['width'] . ' x ' . $params['height'] . ')';
+				}
+			}
+			else
+			{
+				$attributes['popup'] = LocaleService::getInstance()->trans('m.generic.backoffice.no', array('ucf'));
 			}
 		}
-		else
-		{
-			$nodeAttributes['popup'] = LocaleService::getInstance()->transBO('m.generic.backoffice.no');
-		}
-		// This tree attribute is used by wBaseModule to prevent a document from being translated
-		$nodeAttributes['isTranslatable'] = "false";
 	}
 }

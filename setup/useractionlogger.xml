@@ -90,4 +90,7 @@
   <actiondef modulename="website" actionname="saveredirectinfo.topic" label="m.website.bo.useractionlogger.saveredirectinfo-topic"/>
   <actiondef modulename="website" actionname="savepermissions.website" label="m.website.bo.useractionlogger.savepermissions-website"/>
   <actiondef modulename="website" actionname="updatetranslation.menu" label="m.website.bo.useractionlogger.updatetranslation-menu"/>
+  <actiondef modulename="website" actionname="settopicindexpage.pagegroup" label="m.website.bo.useractionlogger.settopicindexpage-pagegroup"/>
+  <actiondef modulename="website" actionname="sethomepage.pagegroup" label="m.website.bo.useractionlogger.sethomepage-pagegroup"/>
+  <actiondef modulename="website" actionname="removeindexpage.pagegroup" label="m.website.bo.useractionlogger.removeindexpage-pagegroup"/>
 </script>

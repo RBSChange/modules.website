@@ -23,32 +23,12 @@ class website_BlockDashboardLastModifiedPagesAction extends  dashboard_BlockDash
 		$moduleName = $this->getModuleName();
 		$ps = change_PermissionService::getInstance();
 		$ms = ModuleService::getInstance();
-		$ls = LocaleService::getInstance();
 		foreach ($lastModifiedPages as $page)
-		{		
-			$lastModification = date_Calendar::getInstance($page->getUIModificationdate());
-			if ($lastModification->isToday())
-			{
-				$status = $ls->transBO('m.uixul.bo.datePicker.calendar.today') . date_Formatter::format($lastModification, ', H:i');
-			}
-			else
-			{
-				$status = date_Formatter::toDefaultDateTimeBO($lastModification);
-			}
-
-			if ($page->getIshomepage())
-			{
-				$icon = MediaHelper::getIcon('page-home', MediaHelper::SMALL);
-			}
-			else if ($page->getIsindexpage())
-			{
-				$icon = MediaHelper::getIcon('page-index', MediaHelper::SMALL);
-			}
-			else
-			{
-				$icon = MediaHelper::getIcon('page', MediaHelper::SMALL);
-			}
-
+		{
+			$attributes = array();
+			DocumentHelper::completeBOAttributes($page, $attributes, DocumentHelper::MODE_ICON);
+			$icon = MediaHelper::getIcon($attributes['icon'], MediaHelper::SMALL);
+			
 			$locate = '';
 			if ($ps->hasPermission($user, 'modules_'.$moduleName.'.Enabled', $ms->getRootFolderId($moduleName)))
 			{
@@ -71,7 +51,7 @@ class website_BlockDashboardLastModifiedPagesAction extends  dashboard_BlockDash
 				'edit' => $edit,
 				'label' => $page->getLabelAsHtml(),
 				'thread' => f_util_HtmlUtils::textToHtml($page->getDocumentService()->getPathOf($page)),
-				'status' => ucfirst($status),
+				'status' => date_Formatter::toDefaultDateTimeBO($page->getUIModificationdate()),
 				'style' => '',
 				'icon' => $icon,
 				'link' => $link

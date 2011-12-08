@@ -174,4 +174,10 @@
   <key id="log-savepermissions-website">log savepermissions website</key>
   <key id="updatetranslation-menu">updatetranslation.menu {lang} {documentlabel}</key>
   <key id="log-updatetranslation-menu">log updatetranslation menu</key>
+  <key id="settopicindexpage-pagegroup">settopicindexpage.pagegroup {lang} {documentlabel} {path}</key>
+  <key id="log-settopicindexpage-pagegroup">log settopicindexpage pagegroup</key>
+  <key id="sethomepage-pagegroup">sethomepage.pagegroup {lang} {documentlabel} {path}</key>
+  <key id="log-sethomepage-pagegroup">log sethomepage pagegroup</key>
+  <key id="removeindexpage-pagegroup">removeindexpage.pagegroup {lang} {documentlabel} {path}</key>
+  <key id="log-removeindexpage-pagegroup">log removeindexpage pagegroup</key>
 </i18n>

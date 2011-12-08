@@ -54,15 +54,15 @@ class website_WebsitetopicsfolderService extends generic_FolderService
 	
 	/**
 	 * @param website_persistentdocument_websitetopicsfolder $document
+	 * @param array<string, string> $attributes
+	 * @param integer $mode
 	 * @param string $moduleName
-	 * @param string $treeType
-	 * @param array<string, string> $nodeAttributes
 	 */
-	public  function addTreeAttributes($document, $moduleName, $treeType, &$nodeAttributes)
+	public function completeBOAttributes($document, &$attributes, $mode, $moduleName)
 	{
 		if ($document->getWebsite() !== null)
 		{
-			$nodeAttributes['websiteId'] = $document->getWebsite()->getId();
+			$attributes['websiteId'] = $document->getWebsite()->getId();
 		}
 	}
 }

@@ -27,22 +27,12 @@ class website_BlockDashboardpagevalidationAction extends dashboard_BlockDashboar
 				continue;
 			}
 			
-			$lastModification = date_Calendar::getInstance($task->getUICreationdate());
-			if ($lastModification->isToday())
-			{
-				$status = $ls->transBO('m.uixul.bo.datepicker.calendar.today') . date_Formatter::format($lastModification, ', H:i');
-			}
-			else
-			{
-				$status = date_Formatter::toDefaultDateTimeBO($lastModification);
-			}
-			
 			$attr = array(
 				'id' => $task->getId(),
-				'taskLabel' => $ls->transBO('m.website.bo.dashboard.task-label-validate', array('ucf'), array('author' => $task->getDescriptionAsHtml())),
+				'taskLabel' => $ls->trans('m.website.bo.dashboard.task-label-validate', array('ucf'), array('author' => $task->getDescriptionAsHtml())),
 				'dialog' => $task->getDialogName(),
 				'module' => $task->getModule(),
-				'status' => ucfirst($status),
+				'status' => date_Formatter::toDefaultDateTimeBO($task->getUICreationdate()),
 				'documentId' => $document->getId(),
 			    'documentLabel' => f_util_HtmlUtils::textToHtml($document->getPersistentModel()->isLocalized() ? $document->getLabelForLang($task->getLang()) : $document->getLabel()),
 				'documentThread' => f_util_HtmlUtils::textToHtml($document->getDocumentService()->getPathOf($document)),

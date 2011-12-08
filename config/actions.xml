@@ -44,7 +44,7 @@
 	<action name="setAsIndexPageIsActive">
 		<parameter name="itemData"/>
 		<body><![CDATA[
-			return itemData.isIndexPage !== 'isIndexPage' && itemData.isHomePage !== 'isHomePage';
+			return !itemData.isIndexPage && !itemData.isHomePage;
 		]]></body>
 	</action>
 	
@@ -61,8 +61,7 @@
 		<body><![CDATA[
 			return itemData.hasPageRef;
 		]]></body>
-	</action>	
-	
+	</action>
    
 	<action name="removeIndexPage">
 		<parameter name="listWidget"/>
@@ -75,7 +74,7 @@
 	<action name="removeIndexPageIsActive">
 		<parameter name="itemData"/>
 		<body><![CDATA[
-			return itemData.isIndexPage === 'isIndexPage';
+			return itemData.isIndexPage;
 		]]></body>
 	</action>
   
@@ -93,7 +92,7 @@
 	<action name="setAsHomePageIsActive">
 		<parameter name="itemData"/>
 		<body><![CDATA[
-			return itemData.isHomePage !== 'isHomePage';
+			return !itemData.isHomePage;
 		]]></body>
 	</action>
   

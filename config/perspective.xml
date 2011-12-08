@@ -6,7 +6,6 @@
 				<child model="modules_website/website"/>
 				<child model="modules_generic/systemfolder"/>
 			</children>
-			<styles properties="toolbartype isHomePage isIndexPage visibility notindexable block"/>
 			<columns>
 				<column name="domain" labeli18n="m.website.bo.general.column.website-url" flex="2"/>
 				<column name="modificationdate" flex="1"/>
@@ -33,7 +32,6 @@
 				<drop model="modules_website/pageexternal" action="move"/>
 				<drop model="modules_website/menufolder" action="move"/>
 			</drops>
-			<styles properties="toolbartype isHomePage isIndexPage visibility notindexable block"/>
 			<columns>
 				<column name="modificationdate" flex="1"/>
 			</columns>
@@ -68,7 +66,6 @@
 				<drop model="modules_website/topic" action="move"/>
 				<drop model="modules_website/pageexternal" action="move"/>
 			</drops>
-			<styles properties="toolbartype isHomePage isIndexPage visibility notindexable block"/>
 			<columns>
 				<column name="modificationdate" flex="1"/>
 			</columns>
@@ -100,7 +97,6 @@
 				<drop model="modules_website/pageexternal" action="move"/>
 				<drop model="modules_website/topic" action="move"/>
 			</drops>
-			<styles properties="toolbartype isHomePage isIndexPage visibility notindexable block"/>
 			<columns>
 				<column name="modificationdate" flex="1"/>
 			</columns>
@@ -146,10 +142,6 @@
 			</contextactions>
 		</model>
 		<model name="modules_website/pagegroup">
-			<styles properties="toolbartype isHomePage isIndexPage visibility notindexable block"/>
-			<columns>
-				<column name="modificationdate" flex="1"/>
-			</columns>
 			<contextactions>
 				<contextaction name="edit"/>
 				<contextaction name="delete"/>
@@ -188,7 +180,6 @@
 			<children>
 				<child model="modules_website/menu"/>
 			</children>
-			<styles properties="toolbartype isHomePage isIndexPage visibility notindexable block"/>
 			<columns>
 				<column name="tagLabel" labeli18n="m.website.bo.general.column.menu-tag" flex="2"/>
 				<column name="modificationdate" flex="1"/>
@@ -211,7 +202,6 @@
 				<drop model="modules_website/pagegroup" action="addToMenu"/>
 				<drop model="modules_website/pageexternal" action="addToMenu"/>
 			</drops>
-			<styles properties="toolbartype isHomePage isIndexPage visibility notindexable block"/>
 			<columns>
 				<column name="refers-to" labeli18n="m.website.bo.general.column.menuitem-refers-to" flex="5"/>
 				<column name="popup" labeli18n="m.website.bo.general.column.menuitem-popup" flex="1"/>

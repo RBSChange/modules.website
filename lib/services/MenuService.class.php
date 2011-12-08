@@ -53,35 +53,30 @@ class website_MenuService extends f_persistentdocument_DocumentService
 		}
 	}
 
-    /**
-     * @param website_persistentdocument_menu $document
+	/**
+	 * @param notification_persistentdocument_notification $document
+	 * @param array<string, string> $attributes
+	 * @param integer $mode
 	 * @param string $moduleName
-	 * @param string $treeType
-	 * @param array<string, string> $nodeAttributes
-	 */	
-	public function addTreeAttributes($document, $moduleName, $treeType, &$nodeAttributes)
+	 */
+	public function completeBOAttributes($document, &$attributes, $mode, $moduleName)
 	{
-	    if ($treeType == 'wlist')
-	    {
-            $ts = TagService::getInstance();
-            $tagObjectArray = $ts->getTagObjects($document);
-            $label = array();
-            foreach ($tagObjectArray as $tagObject)
-            {
-                if ($ts->isContextualTag($tagObject->getValue()))
-                {
-                    $label[] = f_Locale::translateUI($tagObject->getLabel());
-                }
-            }
-            if (f_util_ArrayUtils::isEmpty($label))
-            {
-            	$label[] = LocaleService::getInstance()->transBO('m.website.bo.general.no-tag-available');
-            }
-            $nodeAttributes['tagLabel'] = join(', ', $label);   
-	    }
-	    else
-	    {
-	        $nodeAttributes['_skip_children'] = true;  
-	    }
-	}	
+		if ($mode & DocumentHelper::MODE_CUSTOM)
+		{
+			$ts = TagService::getInstance();
+			$label = array();
+			foreach ($ts->getTagObjects($document) as $tagObject)
+			{
+				if ($ts->isContextualTag($tagObject->getValue()))
+				{
+					$label[] = $tagObject->getLabel();
+				}
+			}
+			if (f_util_ArrayUtils::isEmpty($label))
+			{
+				$label[] = LocaleService::getInstance()->trans('m.website.bo.general.no-tag-available');
+			}
+			$attributes['tagLabel'] = join(', ', $label);
+		}
+	}
 }

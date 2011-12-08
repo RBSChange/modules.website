@@ -207,24 +207,20 @@ class website_PagegroupService extends website_PageService
 	
 	/**
 	 * @param website_persistentdocument_pagegroup $document
+	 * @param array<string, string> $attributes
+	 * @param integer $mode
 	 * @param string $moduleName
-	 * @param string $treeType
-	 * @param array<string, string> $nodeAttributes
 	 */
-	public function addTreeAttributes($document, $moduleName, $treeType, &$nodeAttributes)
+	public function completeBOAttributes($document, &$attributes, $mode, $moduleName)
 	{
-		parent::addTreeAttributes($document, $moduleName, $treeType, $nodeAttributes);
-		
-		$nodeAttributes['_follow_children'] = true;
-		$currentVersionId = intval($document->getCurrentversionid());
-		if ($currentVersionId != 0)
+		parent::completeBOAttributes($document, $attributes, $mode, $moduleName);
+		if ($document->getIsHomePage())
 		{
-			$nodeAttributes['related-id'] = $currentVersionId;
-			$nodeAttributes['related-type'] = 'modules_website_pageversion';
-		}
-		else
+			$attributes['icon'] = 'page-group-home';
+		} 
+		elseif ($document->getIsIndexPage())
 		{
-			$nodeAttributes['related-id'] = - 1;
+			$attributes['icon'] = 'page-group-index';
 		}
 	}
 }

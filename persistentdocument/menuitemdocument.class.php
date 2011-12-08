@@ -32,8 +32,11 @@ class website_persistentdocument_menuitemdocument extends website_persistentdocu
 		$paramArray = explode(',', $this->getPopupParameters());
 		foreach ($paramArray as $p)
 		{
-			list ($n, $v) = explode(':', $p);
-			$popupParameters[trim($n)] = trim($v);
+			if (strpos($p, ':') !== false)
+			{
+				list ($n, $v) = explode(':', $p);
+				$popupParameters[trim($n)] = trim($v);
+			}
 		}
 		return $popupParameters;
 	}

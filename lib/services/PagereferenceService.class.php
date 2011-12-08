@@ -258,19 +258,21 @@ class website_PagereferenceService extends website_PageService
 			}
 		}
 	}
-	    
+		
 	/**
 	 * @param website_persistentdocument_pagereference $document
+	 * @param array<string, string> $attributes
+	 * @param integer $mode
 	 * @param string $moduleName
-	 * @param string $treeType
-	 * @param array<string, string> $nodeAttributes
-	 */	
-	public function addTreeAttributes($document, $moduleName, $treeType, &$nodeAttributes)
+	 */
+	public function completeBOAttributes($document, &$attributes, $mode, $moduleName)
 	{
-		parent::addTreeAttributes($document, $moduleName, $treeType, $nodeAttributes);
-		$label = $document->isContextLangAvailable() ? $document->getLabel() : $document->getVoLabel();
-		$nodeAttributes['label'] = $this->getPathOf(DocumentHelper::getDocumentInstance($document->getReferenceofid()));
-	}	
+		parent::completeBOAttributes($document, $attributes, $mode, $moduleName);
+		if ($document->getIsIndexPage())
+		{
+			$attributes['icon'] = 'page-reference-index';
+		}
+	}
 	
 	// Deprecated
 
