@@ -1,8 +1,4 @@
 <?php
-/**
- * @date Wed, 23 May 2007 09:14:53 +0200
- * @author intcours
- */
 class website_PreferencesService extends f_persistentdocument_DocumentService
 {
 	/**
@@ -36,7 +32,7 @@ class website_PreferencesService extends f_persistentdocument_DocumentService
 	 */
 	public function createQuery()
 	{
-		return $this->pp->createQuery('modules_website/preferences');
+		return $this->getPersistentProvider()->createQuery('modules_website/preferences');
 	}
 	
 	/**
@@ -46,6 +42,6 @@ class website_PreferencesService extends f_persistentdocument_DocumentService
 	 */
 	protected function preSave($document, $parentNodeId)
 	{
-		$document->setLabel('&modules.website.bo.general.Module-name;');
+		$document->setLabel('website');
 	}
 }
