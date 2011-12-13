@@ -1,17 +1,22 @@
 <?php
-/**
- * @date Tue Apr 24 14:51:43 CEST 2007
- * @author INTcoutL, INTbonjF
- */
 class website_Setup extends object_InitDataSetup
 {
 	public function install()
 	{
+
+		
+		$this->addProjectConfigurationEntry('tal/prefix/alternateclass', 'website_TalesAlternateClass');
+		$this->addProjectConfigurationEntry('tal/prefix/url', 'website_TalesUrl');
+		$this->addProjectConfigurationEntry('tal/prefix/actionurl', 'website_TalesUrl');
+		$this->addProjectConfigurationEntry('tal/prefix/currenturl', 'website_TalesUrl');
+		
 		//Ajout des liens symboliques pour l'utilisation de fckeditor en front office
 		$repositoryPath = f_util_FileUtils::buildWebeditPath('libs', 'fckeditor');
 		$browserPath = f_util_FileUtils::buildWebeditPath('modules', 'website',  'lib', 'fckeditor', 'browser');
 		$webappFckPath = f_util_FileUtils::buildDocumentRootPath('fckeditor');
 		$webappBrowserPath = f_util_FileUtils::buildDocumentRootPath('fckeditorbrowser');
+		
+	
 		
 		if (is_link($webappFckPath))
 		{
