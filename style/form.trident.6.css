@@ -3,24 +3,20 @@
 /*---------------*/
 /* FORM CONTROLS */
 /*---------------*/
-form input.textfield,
-form.cmxform input.textfield{
+input.textfield{
 	min-height: 18px;
 }
 
-form textarea,
-form.cmxform textarea{
+textarea{
 	padding: 2px 3px;
 }
 
-form input.button,
-form.cmxform input.button{
+input.button{
 	line-height: 1.4;
 	cursor: pointer;
 }
 
-form select,
-form.cmxform select{
+select{
 	min-height: 20px;
 	padding-top: 0px;
 }

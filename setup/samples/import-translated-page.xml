@@ -3,14 +3,14 @@
 	<binding fileName="modules/website/persistentdocument/import/website_binding.xml" />
 	<binding fileName="modules/media/persistentdocument/import/media_binding.xml" />
 	
-	<website byTag="default_modules_website_default-website" template-attr="template">
+	<website byTag="default_modules_website_default-website">
 		<documentRef type="modules_website/topic" byLabel="Outils">
 			<documentRef type="modules_website/page" id="unePage" byLabel="Ajouter aux favoris" />
 			<documentRef type="modules_website/page" id="uneAutrePage" byTag="contextual_website_website_legal" />
 		</documentRef>
 		
 		<topic id="top1" byLabel="Multilingue">
-			<page id="pg1" byLabel="page test" template-attr="template">
+			<page id="pg1" byLabel="page test">
 				<changecontent for="content-block">
 					<changeblock type="richtext">
 						<![CDATA[

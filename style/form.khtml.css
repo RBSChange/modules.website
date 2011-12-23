@@ -4,8 +4,7 @@ fieldset.radio legend{
 	line-height: 1.5;
 }
 
-form input.button,
-form.cmxform input.button{
+input.button{
 	line-height: 1.4;
 }
 

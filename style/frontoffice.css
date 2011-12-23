@@ -17,7 +17,7 @@ select, input, textarea{
 	font:99% sans-serif;
 }
 
-body, textarea, input{
+body, textarea, input, button{
 	font-family: Arial, Helvetica, sans-serif ;
 }
 
@@ -32,17 +32,12 @@ html{
 
 /* Site Font Color */
 /* FORM */
-form.cmxform legend,
 legend,
-form.cmxform input.textfield,
 form.cmxform input.date-picker,
 form.cmxform input.passwordinput,
-form.cmxform textarea,
-form.cmxform select,
 input.textfield,
 textarea,
 select,
-form.cmxform option,
 option{
 	color:#000000;
 }
@@ -59,7 +54,6 @@ hr,
 code,
 pre,
 /* FORM */
-form.cmxform fieldset,
 fieldset,
 p.buttons,
 form.cmxform .description,
@@ -76,6 +70,15 @@ ul.mini-navigation,
 	margin-bottom:20px;
 }
 
+.heading-one,
+.heading-two,
+.heading-three,
+.heading-four,
+.heading-five,
+.heading-six{
+	margin-bottom:10px;
+}
+
 /* General Border Color */
 hr{
 	color: #cccccc;
@@ -85,17 +88,12 @@ hr{
 blockquote,
 blockquote:before,
 abbr, acronym,
-form.cmxform fieldset,
 fieldset,
-form.cmxform input.textfield,
 form.cmxform input.date-picker,
 form.cmxform input.passwordinput,
-form.cmxform textarea,
-form.cmxform select,
 input.textfield,
 textarea,
 select,
-form.cmxform input.button,
 input.button,
 a.button{
 	border-color:#cccccc;

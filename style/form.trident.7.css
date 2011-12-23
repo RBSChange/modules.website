@@ -1,11 +1,9 @@
 /* MODULES FORM (IE9 SPECIES) */
 
-form textarea,
-form.cmxform textarea{
+form textarea{
 	padding: 2px 3px;
 }
 
-form.cmxform input.button,
 input.button{
 	line-height: 1.4;
 }

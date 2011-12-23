@@ -4,17 +4,15 @@
 /* FORM CONTROLS */
 /*---------------*/
 
-form input.textfield,
-form.cmxform input.textfield{
+form input.textfield{
 	min-height: 18px;
 }
 
-form textarea,
-form.cmxform textarea{
+form textarea{
 	padding: 1px 3px;
 }
 
-form.cmxform input.button{
+input.button{
 	min-height: 22px;
 	cursor: pointer;
 	overflow: visible;	
@@ -27,7 +25,6 @@ a.button{
 	line-height: 1.5;
 }
 
-form.cmxform fieldset.radio legend,
 fieldset.radio legend{
 	line-height: 1.9;
 }

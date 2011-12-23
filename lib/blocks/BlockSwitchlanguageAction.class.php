@@ -1,12 +1,12 @@
 <?php
-
 class website_BlockSwitchlanguageAction extends website_BlockAction
 {
+	/**
+	 * @return var
+	 */
 	private $detailId = null;
 	
 	/**
-	 * @see f_mvc_Action::getCacheDependencies()
-	 *
 	 * @return String[string]
 	 */ 
 	public function getCacheDependencies()
@@ -21,13 +21,15 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 	/**
 	 * @param website_BlockActionRequest $request
 	 * @return array<mixed>
-	 */
-	
+	 */	
 	public function getCacheKeyParameters($request)
 	{
 		return array("detailId" => $this->getDetailId());
 	}
 	
+	/**
+	 * @return integer
+	 */
 	private function getDetailId()
 	{
 		if ($this->detailId === null)
@@ -50,13 +52,11 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 	}
 
 	/**
-	 * @see website_BlockAction::execute()
-	 *
 	 * @param website_BlockActionRequest $request
 	 * @param website_BlockActionResponse $response
 	 * @return String
 	 */
-	function execute($request, $response)
+	public function execute($request, $response)
 	{
 		$viewall = $this->getConfiguration()->getViewall();
 		$request->setAttribute('viewall', $viewall);
@@ -66,8 +66,6 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 		$currentLang = $rc->getLang();
 		$page = $this->getPage()->getPersistentPage();
 		
-		
-		$switchArray = array();
 		$hasLink = false;
 		$detailId = $this->getDetailId($request);
 		$detailDoc = null;
@@ -87,6 +85,9 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 		$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
 		$homePage = $website->getIndexPage();
 		
+		$switchArray = array();
+		$otherLangsInfos = array();
+		$currentLangInfos = null;
 		foreach ($rc->getSupportedLanguages() as $lang)
 		{
 			$rc->beginI18nWork($lang);
@@ -98,13 +99,14 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 			
 			if ($website->isPublished() && ($isPageLink || ($viewall && $homePage->isPublished())))
 			{
-				$switchArray[$lang] = array();
-				$switchArray[$lang]['label'] = strtoupper($lang);
-				$switchArray[$lang]['title'] = $this->getLangLabel($lang);
+				$langInfos = array();
+				$langInfos = array();
+				$langInfos['label'] = strtoupper($lang);
+				$langInfos['title'] = $this->getLangLabel($lang);
 				
 				if (!empty($showflag))
 				{
-					$switchArray[$lang]['flagicon'] = MediaHelper::getIcon($this->getFlagIcon($lang), $showflag);
+					$langInfos['flagicon'] = MediaHelper::getIcon($this->getFlagIcon($lang), $showflag);
 				}
 				
 				if ($lang != $currentLang)
@@ -113,15 +115,21 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 					if ($isPageLink)
 					{
 						$pageUrl = LinkHelper::getDocumentUrl($detailDoc ? $detailDoc : $page, $lang, $parameters);
-						$switchArray[$lang]['url'] = $pageUrl;
-						$this->getPage()->addLink("alternate", "text/html", $pageUrl, f_Locale::translate("&modules.website.frontoffice.this-page-in-mylang;", null, $lang), $lang);
+						$langInfos['url'] = $pageUrl;
+						$this->getPage()->addLink("alternate", "text/html", $pageUrl, LocaleService::getInstance()->transFO("m.website.frontoffice.this-page-in-mylang", array(), null, $lang), $lang);
 					}
 					else
 					{
-						$switchArray[$lang]['url'] = LinkHelper::getDocumentUrl($homePage, $lang);
+						$langInfos['url'] = LinkHelper::getDocumentUrl($homePage, $lang);
 					}
+					$otherLangsInfos[$lang] = $langInfos; 
 				}
-			}	
+				else
+				{
+					$currentLangInfos = $langInfos;
+				}
+				$switchArray[$lang] = $langInfos;
+			}
 			$rc->endI18nWork();
 		}
 		if (!$hasLink) 
@@ -130,12 +138,16 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 		}
 		
 		$request->setAttribute('switchArray', $switchArray);
-		return website_BlockView::SUCCESS;
+		$request->setAttribute('currentLangInfos', $currentLangInfos);
+		$request->setAttribute('otherLangsInfos', $otherLangsInfos);
+		return $this->getConfiguration()->getDisplayMode();
 	}
 	
+	/**
+	 * @param string $lang
+	 */
 	private function getLangLabel($lang)
 	{
-		// TODO locale
 		if (Framework::hasConfiguration('languages/' . $lang . '/label'))
 		{
 			return Framework::getConfiguration('languages/' . $lang . '/label');
@@ -154,6 +166,9 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 		return strtoupper($lang);
 	}
 	
+	/**
+	 * @param string $lang
+	 */	
 	private function getFlagIcon($lang)
 	{
 		if (Framework::hasConfiguration('languages/' . $lang . '/flag'))

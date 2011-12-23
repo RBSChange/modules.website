@@ -1,0 +1,11 @@
+<tal:block metal:define-macro="lang">
+	<a tal:condition="lang/url" class="link" tal:attributes="href lang/url;title lang/title"><img tal:condition="lang/flagicon" tal:attributes="src lang/flagicon;alt lang/title" /><tal:block tal:condition="not: lang/flagicon">${lang/label}</tal:block></a>
+	<strong tal:condition="not:lang/url"><img tal:condition="lang/flagicon" tal:attributes="src lang/flagicon;alt lang/title" /><tal:block tal:condition="not: lang/flagicon">${lang/label}</tal:block></strong>
+</tal:block>
+
+<div class="scroll" tal:condition="switchArray">
+	<tal:block tal:define="lang currentLangInfos" metal:use-macro="lang" />
+	<ul>
+		<li tal:repeat="lang otherLangsInfos"><tal:block metal:use-macro="lang" /></li>
+	</ul>
+</div>
