@@ -71,9 +71,7 @@ class website_BlockView
 	}
 
 	/**
-	 * @example website_BlockView::parseHandlerArgs('arg1Value, arg2Value')
-	 * @example website_BlockView::parseHandlerArgs('arg1Name : arg1Value, arg2Name : arg2Value')
-	 * @param String $args
+	 * @param String $args For example: 'arg1Value, arg2Value' or 'arg1Name : arg1Value, arg2Name : arg2Value'
 	 * @return array<String, String>
 	 */
 	public static function parseHandlerArgs($args)

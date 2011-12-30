@@ -7,7 +7,6 @@ class commands_website_CompileBbcodes extends commands_AbstractChangeCommand
 {
 	/**
 	 * @return String
-	 * @example "<moduleName> <name>"
 	 */
 	public function getUsage()
 	{
@@ -16,8 +15,7 @@ class commands_website_CompileBbcodes extends commands_AbstractChangeCommand
 
 	/**
 	 * @return String
-	 * @example "initialize a document"
-	 */
+		 */
 	public function getDescription()
 	{
 		return "compile BBCodes infos";

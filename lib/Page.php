@@ -157,7 +157,6 @@ class website_Page implements f_mvc_Context
 
 	/**
 	 * @see block_Context::addScript($string)
-	 * @example addScript("modules.website.lib.js.jquery")
 	 */
 	public function addScript($string)
 	{
