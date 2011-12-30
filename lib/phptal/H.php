@@ -7,8 +7,7 @@
  *   <li>class, default auto, evaluated : the value of class attribute</li>
  * </ul>
  * @package website.lib.phptal
- * @example <hX change:h="level 3;class 'auto'">Title</hX>
- * @example => <h3 class="heading-three">label</h3>
+ * @uses <hX change:h="level 3;class 'auto'">Title</hX> => <h3 class="heading-three">label</h3>
  */
 class PHPTAL_Php_Attribute_CHANGE_h extends ChangeTalAttribute
 {

@@ -212,7 +212,6 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 	
 	/**
-	 * @example 'All' for all content
 	 * @return string | null
 	 */
 	protected function getRefreshSectionName()
@@ -707,7 +706,6 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @example $this->getTemplate('Success');
 	 * @param String $viewName
 	 * @return TemplateObject
 	 */
@@ -718,9 +716,8 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @example $this->getTemplateByFullName('modules_website', 'Website-Block-Taggedmenu-Footer');
-	 * @param String $packageName
-	 * @param String $templateName
+	 * @param String $packageName For example: 'modules_website'
+	 * @param String $templateName For example: 'Website-Block-Taggedmenu-Footer'
 	 * @param String $subDirectory
 	 * @return TemplateObject
 	 */

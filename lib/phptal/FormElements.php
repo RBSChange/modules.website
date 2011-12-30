@@ -24,7 +24,7 @@ class FormElement extends ChangeTalAttribute
 }
 
 /**
- * @example <anytag change:submit="name toto"/>
+ * Use in HTML: <anytag change:submit="name toto"/>
  */
 class PHPTAL_Php_Attribute_CHANGE_submit extends FormElement
 {
@@ -32,7 +32,7 @@ class PHPTAL_Php_Attribute_CHANGE_submit extends FormElement
 }
 
 /**
- * @example <anytag change:textinput="name toto; label &modules.tutu.tata.titiLabel"/>
+ * Use in HTML: <anytag change:textinput="name toto; label &modules.tutu.tata.titiLabel"/>
  */
 class PHPTAL_Php_Attribute_CHANGE_textinput extends FormElement
 {
@@ -74,7 +74,7 @@ class PHPTAL_Php_Attribute_CHANGE_listmultifield extends FormElement
 }
 
 /**
- * @example <anytag change:dateinput="name toto; label &modules.tutu.tata.titiLabel; format dd/yy/uu"/>
+ * Use in HTML: <anytag change:dateinput="name toto; label &modules.tutu.tata.titiLabel; format dd/yy/uu"/>
  */
 class PHPTAL_Php_Attribute_CHANGE_dateinput extends FormElement
 {
@@ -93,7 +93,7 @@ class PHPTAL_Php_Attribute_CHANGE_dateinput extends FormElement
 }
 
 /**
- * @example <anytag change:errors="[key myKey]"/>
+ * Use in HTML: <anytag change:errors="[key myKey]"/>
  */
 class PHPTAL_Php_Attribute_CHANGE_errors extends FormElement
 {
@@ -101,7 +101,7 @@ class PHPTAL_Php_Attribute_CHANGE_errors extends FormElement
 }
 
 /**
- * @example <anytag change:messages="[key myKey]"/>
+ * Use in HTML: <anytag change:messages="[key myKey]"/>
  */
 class PHPTAL_Php_Attribute_CHANGE_messages extends FormElement
 {
@@ -109,7 +109,7 @@ class PHPTAL_Php_Attribute_CHANGE_messages extends FormElement
 }
 
 /**
- * @example <anytag change:hiddeninput="name toto;"/>
+ * Use in HTML: <anytag change:hiddeninput="name toto;"/>
  */
 class PHPTAL_Php_Attribute_CHANGE_hiddeninput extends FormElement
 {
@@ -147,7 +147,7 @@ class PHPTAL_Php_Attribute_CHANGE_selectinput extends FormElement
 }
 
 /**
- * @example <anytag change:field="name toto;"/>
+ * Use in HTML: <anytag change:field="name toto;"/>
  */
 class PHPTAL_Php_Attribute_CHANGE_field extends FormElement
 {
@@ -168,7 +168,7 @@ class PHPTAL_Php_Attribute_CHANGE_field extends FormElement
 }
 
 /**
- * @example <anytag change:textarea="name toto;"/>
+ * Use in HTML: <anytag change:textarea="name toto;"/>
  */
 class PHPTAL_Php_Attribute_CHANGE_textarea extends FormElement
 {
@@ -196,7 +196,7 @@ class PHPTAL_Php_Attribute_CHANGE_label extends FormElement
 }
 
 /**
- * @example <anytag change:form="method get">[...]</anytag>
+ * Use in HTML: <anytag change:form="method get">[...]</anytag>
  */
 class PHPTAL_Php_Attribute_CHANGE_form extends FormElement
 {
