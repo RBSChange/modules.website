@@ -8,8 +8,8 @@
 	</module>
 	<project>
 		<sample>
-			<entry name="defaultPageTemplate">webfactory/tplTwo</entry>
-			<entry name="defaultHomeTemplate">webfactory/tplOne</entry>
+			<entry name="defaultPageTemplate">default/contentpage</entry>
+			<entry name="defaultHomeTemplate">default/homepage</entry>
 		</sample>
 		<entry name="jquery-ui-theme">south-street</entry>
 		<entry name="highlighter">website_MinimalHighlighter</entry>
