@@ -135,21 +135,17 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 	
 	private function getLangLabel($lang)
 	{
-		// TODO locale
+		/* @deprected (will be removed in 4.0) use the locale instead */
 		if (Framework::hasConfiguration('languages/' . $lang . '/label'))
 		{
 			return Framework::getConfiguration('languages/' . $lang . '/label');
 		}
 		
-		switch ($lang)
+		$key = 'm.website.frontoffice.version-in-lang';
+		$text = LocaleService::getInstance()->formatKey($lang, $key, array('ucf'));
+		if ($key != $text)
 		{
-			case 'fr' : return 'Version française';
-			case 'en' : return 'English version';
-			case 'de' : return 'Deutsche Version';
-			case 'it' : return 'Versione italiana';
-			case 'pt' : return 'Versão Português';
-			case 'nl' : return 'Dutsch versie';
-			case 'es' : return 'Versión en español';
+			return $text;
 		}
 		return strtoupper($lang);
 	}
