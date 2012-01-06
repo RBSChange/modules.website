@@ -61,7 +61,7 @@
 			<page id="p404" label="Page non trouvée (404)" indexingstatus="false" navigationVisibility="hidden" byTag="contextual_website_website_error404">
 				<changecontent for="content-block">
 				   <changeblock type="richtext">
-					 <![CDATA[<h2>Page non trouvée (Erreur 404)</h2><p>La page demandée n'existe pas.<br/><a href="/">Retour à l'accueil</a>.</p>]]>
+					 <![CDATA[<h2>Page non trouvée (Erreur 404)</h2><p>La page demandée n'existe pas.<br/><a rel="cmpref:{ref-id:website}" href="#">Retour à l'accueil</a>.</p>]]>
 				   </changeblock>
 				</changecontent>
 			</page>
@@ -174,7 +174,7 @@
 			<page byRefid="p404" label="Page not found (404)" navigationVisibility="hidden">
 				<changecontent for="content-block">
 				   <changeblock type="richtext">
-					 <![CDATA[<h2>Page not found (404 error code)</h2><p>The request page does not exists.<br/><a href="/">Back to home page</a>.</p>]]>
+					 <![CDATA[<h2>Page not found (404 error code)</h2><p>The request page does not exists.<br/><a rel="cmpref:{ref-id:website}" href="#">Back to home page</a>.</p>]]>
 				   </changeblock>
 				</changecontent>
 			</page>
