@@ -5,13 +5,15 @@
 
 	<systemfolder module="notification" relatedmodule="website">	
 			<notification id="ncreate"
-				label="Validation du contenu d'une page"
-				codename="modules_website/newPageValidation"
-				availableparameters="{documentId}, {documentLabel}, {documentLang}, {documentPath}, {workflowId}, {workflowLabel}, {transitionId}, {transitionLabel}, {currentUserId}, {currentUserFullname}, {__LAST_COMMENTARY}, {__LAST_DECISION}"
-				subject="Demande de validation de la page : {documentLabel}"
-				header="Processus de validation d'une page"
-				body="{workflowAuthor} vous a demandé de valider la page &lt;strong&gt;{documentPath}&lt;/strong&gt;."
-				footer="Veuillez vous connecter a &lt;a href=&quot;{UIHOST}/admin&quot; class=&quot;link&quot; &gt;l'interface d'administration&lt;/a&gt; pour effectuer cette tâche." />
+                label="Validation du contenu d'une page"
+                codename="modules_website/newPageValidation"
+                availableparameters="{documentId}, {documentLabel}, {documentLang}, {documentPath}, {workflowId}, {workflowLabel}, {transitionId}, {transitionLabel}, {currentUserId}, {currentUserFullname}, {START_COMMENT}"
+                subject="Demande de validation de la page : {documentLabel}"
+                header="Processus de validation d'une page"
+                body="{workflowAuthor} vous a demandé de valider la page &lt;strong&gt;{documentPath}&lt;/strong&gt;.&lt;br/&gt;
+- Commentaire : {START_COMMENT}"
+                footer="Veuillez vous connecter a &lt;a href=&quot;{UIHOST}/admin&quot; class=&quot;link&quot; &gt;l'interface d'administration&lt;/a&gt; pour effectuer cette tâche." />
+
 				
 			<notification id="nterminate"
 				label="Validation du contenu d'une page effectuée"
