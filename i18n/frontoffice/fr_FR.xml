@@ -33,6 +33,7 @@
   <key id="this-field-is-mandatory">Ce champ est obligatoire</key>
   <key id="append-title-separator"> - </key>
   <key id="this-page-in-mylang">Cette page en Français</key>
+  <key id="version-in-lang">Version française</key>
   <key id="this-is-the-correction-of">Vous visualisez la correction de {documentLabel}</key>
   <key id="there-is-a-correction">Une correction existe pour ce document</key>
   <key id="are-you-sure-you-want-js">Êtes-vous sûr(e) de vouloir {action} ?</key>
