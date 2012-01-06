@@ -6,7 +6,7 @@
 	<attribute name="protocol" default="true">http</attribute>
 	<attribute name="localizebypath" default="true">true</attribute>
 
-	<website byDocumentId-attr="" label-attr="" protocol-attr="" localizebypath-attr="">
+	<website byDocumentId-attr="" label-attr="" protocol-attr="" localizebypath-attr="" id="defwebsite">
 		<page label="Page d'accueil" isHomePage="true" template-attr="templateHome" id="homepage" />
 
 		<topic label="Outils">
@@ -43,7 +43,7 @@
 				<tag name="contextual_website_website_error404" />
 				<changecontent for="content-block">
 				   <changeblock type="richtext">
-					 <![CDATA[<h2>Page non trouvée (Erreur 404)</h2><p>La page demandée n'existe pas.<br/><a href="/">Retour à l'accueil</a>.</p>]]>
+					 <![CDATA[<h2>Page non trouvée (Erreur 404)</h2><p>La page demandée n'existe pas.<br/><a rel="cmpref:{ref-id:defwebsite}" href="#">Retour à l'accueil</a>.</p>]]>
 				   </changeblock>
 				</changecontent>
 			</page>
