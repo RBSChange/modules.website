@@ -45,6 +45,6 @@
   <key id="usehttps">Mode sécurisé (https)</key>
   <key id="usehttps-help">La page ne sera visible qu’à partir d’une URL du type https://... . Nécessite que le serveur soit spécialement configuré pour supporter ce protocole.</key>
   <key id="robotsmeta">Gestion des robots</key>
-  <key id="isIndexPageForSubTopics">Index pour les sous-rubriques</key>
-  <key id="isIndexPageForSubTopics-help">Index pour les sous-rubriques uniquement lorsque la page est tagguée fonctionnellement</key>
+  <key id="isindexpageforsubtopics">Index pour les sous-rubriques</key>
+  <key id="isindexpageforsubtopics-help">Index pour les sous-rubriques uniquement lorsque la page est tagguée fonctionnellement</key>
 </i18n>
