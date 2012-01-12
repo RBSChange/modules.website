@@ -43,13 +43,13 @@ class website_UrlRewritingService extends website_BaseRewritingService
 		$targetWebsite = $website;
 		if ($targetWebsite === null)
 		{
-			if ($websiteIds === null)
+			$targetWebsite = website_WebsiteModuleService::getInstance()->getCurrentWebsite();			
+			if ($websiteIds !== null)
 			{
-				$targetWebsite = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
-			}
-			else
-			{
-				$targetWebsite = DocumentHelper::getDocumentInstance(f_util_ArrayUtils::firstElement($websiteIds));
+				if (!in_array($targetWebsite->getId(), $websiteIds))
+				{
+					$targetWebsite = DocumentHelper::getDocumentInstance(f_util_ArrayUtils::firstElement($websiteIds));
+				}
 			}
 		}
 		else if (is_array($websiteIds) && !in_array($targetWebsite->getId(), $websiteIds))
@@ -552,7 +552,7 @@ class website_UrlRewritingService extends website_BaseRewritingService
 					$modelName = $this->getPersistentProvider()->getDocumentModelName($documentId);
 					if ($modelName)
 					{
-						$document = $this->getPersistentProvider()->getDocumentInstance($documentId, $modelName, $lang);
+						$document = $this->getPersistentProvider()->getDocumentInstance($documentId, $modelName, $lang);						
 						$defaultPath = $this->getDocumentDefaultPath($document, $lang);					
 						if ($defaultPath !== $path)
 						{
