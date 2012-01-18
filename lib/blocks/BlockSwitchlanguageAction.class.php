@@ -168,21 +168,13 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 	 */	
 	private function getFlagIcon($lang)
 	{
+		/* @deprected (will be removed in 4.0) override the icons instead */
 		if (Framework::hasConfiguration('languages/' . $lang . '/flag'))
 		{
 			return Framework::getConfiguration('languages/' . $lang . '/flag');
 		}
-		switch ($lang)
-		{
-			case 'fr' : return 'flag_france';
-			case 'en' : return 'flag_great_britain';
-			case 'de' : return 'flag_germany';
-			case 'it' : return 'flag_italy';
-			case 'pt' : return 'flag_portugal';
-			case 'nl' : return 'flag_netherlands';
-			case 'es' : return 'flag_spain';
-		}
-		return 'flag_generic';
+		
+		return 'flags/' . $lang;
 	}
 	
 	/**

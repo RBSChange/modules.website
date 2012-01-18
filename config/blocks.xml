@@ -6,7 +6,6 @@
 			<parameter name="cmpref" type="String" />
 		</parameters>
 	</block>
-
 	<block type="modules_website_sitemap" icon="sitemap" label="&amp;modules.website.bo.blocks.Sitemap;"
 		cache="true" cache-deps="[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
 		<parameters>
@@ -14,8 +13,80 @@
 		</parameters>
 	</block>
 	<block type="modules_website_exception" icon="bug" label="&amp;modules.website.bo.blocks.Exception;" />
-	<block type="modules_website_thread" hidden="true" label="&amp;modules.website.bo.blocks.Thread;" afterAll="true" 
+	<block type="modules_website_thread" icon="breadcrumb" afterAll="true" 
 		cache="true" cache-key="page" cache-deps="[modules_website/page],[modules_website/topic],modules_website/website"/>
+	<block type="modules_website_ConfigurableMenu" icon="menu">
+		<parameters>
+			<parameter name="depth" type="Integer" default-value="1" />
+			<parameter name="template" type="String" default-value="default" min-occurs="1" />
+			<parameter name="mode" type="String" default-value="document" min-occurs="1">
+				<fieldlistitem labeli18n="m.website.bo.blocks.configurablemenu.mode-document" value="document" />
+				<fieldlistitem labeli18n="m.website.bo.blocks.configurablemenu.mode-tag" value="tag" />
+				<fieldlistitem labeli18n="m.website.bo.blocks.configurablemenu.mode-contextual" value="contextual" />
+			</parameter>
+			<parameter name="cmpref" type="Integer" default-value="1" />
+			<parameter name="tag" type="Integer" default-value="1" />
+			<parameter name="startwebsitelevel" type="Integer" default-value="1" />
+			<parameter name="deployAll" type="Boolean" default-value="true" />
+		</parameters>
+	</block>
+	<block type="modules_website_switchlanguage" label="&amp;modules.website.bo.blocks.SwitchLanguage;"
+		cache="true" cache-key="page" cache-deps="[modules_website/page],modules_website/website">
+		<parameters>
+			<parameter name="displayMode" type="String" min-occurs="1" default-value="Success" fieldtype="dropdownlist" />
+			<parameter name="viewall" type="Boolean" default-value="true" />
+			<parameter name="showflag" type="String" default-value="small" />
+		</parameters>
+		<xul>
+			<javascript>
+				<constructor><![CDATA[
+					var me = this;
+					var fields = this.getFields();
+					fields.displayMode.replaceItems({cmpref: 'modules_website/blocktemplates', blockModule: 'website', blockName: 'Switchlanguage'});
+				]]></constructor>
+			</javascript>
+		</xul>
+	</block>
+	<block type="modules_website_iframe" icon="iframe" label="&amp;modules.website.bo.blocks.Iframe;" cache="true">
+		<parameters>
+			<parameter name="title" type="String" min-occurs="1" />
+			<parameter name="url" type="String" min-occurs="1" default-value="about:blank" />
+			<parameter name="frameWidth" type="Integer" default-value="640" min-occurs="1" />
+			<parameter name="frameHeight" type="Integer" default-value="480" min-occurs="1" />
+			<parameter name="scrolling" type="String" from-list="modules_website/iframescrolling" min-occurs="1" default-value="auto" />
+			<parameter name="text" type="LongString" default-value="" cols="46" rows="4" />
+		</parameters>
+	</block>	
+	<block type="modules_website_xhtmltemplate" icon="template" cache="true" cache-key="page" cache-deps="[modules_website/page]">
+		<parameters>
+			<parameter name="template" type="String" default-value="" fieldtype="dropdownlist" min-occurs="1" />
+		</parameters>
+		<xul>
+			<javascript>
+				<constructor><![CDATA[
+					var me = this;
+					var fields = this.getFields();
+					fields.template.replaceItems({cmpref: 'modules_website/blocktemplates', blockModule: 'website', blockName: 'Xhtmltemplate'});
+				]]></constructor>
+			</javascript>
+		</xul>
+	</block>
+	<block type="modules_website_Missing" hidden="true" />
+	<block type="modules_website_Messages" hidden="true">
+		<parameters>
+			<parameter name="show" type="String" default-value="all" />
+			<parameter name="flush" type="Boolean" default-value="true" />
+			<parameter name="clear" type="Boolean" default-value="false" />
+		</parameters>
+	</block>
+	<block type="modules_website_Incompatibiltybrowser" icon="warning" />
+	
+	<!-- deprecated -->
+	<block type="modules_website_Simplecontent" hidden="true" icon="">
+		<parameters>
+			<parameter name="view" type="String" />
+		</parameters>
+	</block>
 	<block type="modules_website_menu" hidden="true" label="&amp;modules.website.bo.blocks.Menu;"
 		cache="true" cache-key="page,cmpref" cache-deps="modules_website/menu,[modules_website/menuitem],[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
 		<parameters>
@@ -42,47 +113,6 @@
 			<parameter name="depth" type="Integer" default-value="2" />
 			<parameter name="startwebsitelevel" type="Integer" default-value="1" />
 			<parameter name="deployall" type="Boolean" default="false" />
-		</parameters>
-	</block>
-	<block type="modules_website_switchlanguage" hidden="true" label="&amp;modules.website.bo.blocks.SwitchLanguage;"
-		cache="true" cache-key="page" cache-deps="[modules_website/page],modules_website/website">
-		<parameters>
-			<parameter name="displayMode" type="String" default-value="Success" />
-			<parameter name="viewall" type="Boolean" default-value="true" />
-			<parameter name="showflag" type="String" default-value="small" />
-		</parameters>
-	</block>
-	<block type="modules_website_iframe" icon="iframe" label="&amp;modules.website.bo.blocks.Iframe;" cache="true">
-		<parameters>
-			<parameter name="title" type="String" min-occurs="1" />
-			<parameter name="url" type="String" min-occurs="1" default-value="about:blank" />
-			<parameter name="frameWidth" type="Integer" default-value="640" min-occurs="1" />
-			<parameter name="frameHeight" type="Integer" default-value="480" min-occurs="1" />
-			<parameter name="scrolling" type="String" from-list="modules_website/iframescrolling" min-occurs="1" default-value="auto" />
-			<parameter name="text" type="LongString" default-value="" cols="46" rows="4" />
-		</parameters>
-	</block>
-	
-	<block type="modules_website_xhtmltemplate" hidden="true"
-		cache="true" cache-key="page" cache-deps="[modules_website/page]">
-		<parameters>
-			<parameter name="template" type="String" default-value="" />
-		</parameters>
-	</block>
-	<block type="modules_website_Missing" hidden="true" />
-	<block type="modules_website_Messages" hidden="true">
-		<parameters>
-			<parameter name="show" type="String" default-value="all" />
-			<parameter name="flush" type="Boolean" default-value="true" />
-			<parameter name="clear" type="Boolean" default-value="false" />
-		</parameters>
-	</block>
-	<block type="modules_website_Incompatibiltybrowser" icon="warning" />
-	
-	<!-- deprecated -->
-	<block type="modules_website_Simplecontent" hidden="true" icon="">
-		<parameters>
-			<parameter name="view" type="String" />
 		</parameters>
 	</block>
 
