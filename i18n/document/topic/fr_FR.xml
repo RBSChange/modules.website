@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <i18n baseKey="m.website.document.topic" lcid="fr_FR">
-  <key id="document-name">rubrique</key>
-  <key id="label">intitulé de la rubrique</key>
-  <key id="label-help">intitulé de la rubrique, tel qu'il apparaîtra dans les menus</key>
-  <key id="description">description de la rubrique</key>
-  <key id="stylesheet">feuille de styles</key>
-  <key id="stylesheet-help">sélectionner une feuille de style pour l'appliquer à l'élément</key>
-  <key id="url">libellé dans les URLs</key>
-  <key id="navigationvisibility">visibilité</key>
-  <key id="navigationvisibility-help">visibilité dans les menus de navigation</key>
-  <key id="skin">habillage</key>
-  <key id="skin-help">sélectionnez ici un Habillage pour l'appliquer à l'élément</key>
-  <key id="allowedpagetemplate">Gabarits de pages</key>
-  <key id="allowedpagetemplate-help">Liste des gabarits de pages autorisé sur ce site</key>
+	<key id="document-name">rubrique</key>
+	<key id="label">intitulé de la rubrique</key>
+	<key id="label-help">intitulé de la rubrique, tel qu'il apparaîtra dans les menus</key>
+	<key id="description">description de la rubrique</key>
+	<key id="stylesheet">feuille de styles</key>
+	<key id="stylesheet-help">sélectionner une feuille de style pour l'appliquer à l'élément</key>
+	<key id="url">libellé dans les URLs</key>
+	<key id="navigationvisibility">visibilité</key>
+	<key id="navigationvisibility-help">visibilité dans les menus de navigation</key>
+	<key id="skin">habillage</key>
+	<key id="skin-help">sélectionnez ici un Habillage pour l'appliquer à l'élément</key>
+	<key id="allowedpagetemplate">Gabarits de pages</key>
+	<key id="allowedpagetemplate-help">Liste des gabarits de pages autorisé sur ce site</key>
+	<key id="visual">visuel</key>
+	<key id="visual-help">Visuel de la rubrique, utilisé notament dans certains gabarits de menus.</key>
 </i18n>

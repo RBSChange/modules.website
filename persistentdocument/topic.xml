@@ -9,6 +9,7 @@
     <add name="skin" type="modules_skin/skin"/>
     <add name="advancedreferencing" type="XHTMLFragment" localized="true"/>
     <add name="allowedpagetemplate" type="modules_theme/pagetemplate" max-occurs="-1"/>
+    <add name="visual" type="modules_media/media"/>
   </properties>
   <children>
     <child name="topics" type="modules_website/topic"/>

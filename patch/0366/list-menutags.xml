@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<script>
+	<binding fileName="modules/list/persistentdocument/import/list_binding.xml" />
+	
+	<systemfolder module="list" relatedmodule="website">
+		<dynamiclist listid="modules_website/menutags" label="m.website.list.menutags-label"
+			description="m.website.list.menutags-description" />
+	</systemfolder>
+</script>
