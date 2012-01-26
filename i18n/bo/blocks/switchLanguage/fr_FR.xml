@@ -8,4 +8,5 @@
 	<key id="showflag-help">Laisser vide pour ne pas afficher les îcones des drapeaux, ou utiliser 'flags' pour la librarie par défaut.</key>
 	<key id="currentfirst">Langue courante en 1er</key>
 	<key id="currentfirst-help">Affiche la langue courante en 1er position.</key>
+	<key id="displaymode">gabarit</key>
 </i18n>

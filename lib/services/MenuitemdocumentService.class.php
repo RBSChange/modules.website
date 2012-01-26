@@ -192,4 +192,20 @@ class website_MenuitemdocumentService extends website_MenuitemService
 		// This tree attribute is used by wBaseModule to prevent a document from being translated
 		$nodeAttributes['isTranslatable'] = "false";
 	}
+	
+	/**
+	 * @param website_persistentdocument_menuitemdocument $document
+	 * @return website_MenuEntry|null
+	 */
+	public function getMenuEntry($document)
+	{
+		$linkedDoc = $document->getDocument();
+		$entry = $linkedDoc->getDocumentService()->getMenuEntry($linkedDoc);
+		if ($entry == null)
+		{
+			return null;
+		}
+		$entry->setPopup($document->getPopup());
+		return $entry;
+	}
 }

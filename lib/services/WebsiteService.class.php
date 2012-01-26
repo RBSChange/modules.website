@@ -357,6 +357,47 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	{
 		return array();
 	}
+
+	/**
+	 * @param website_persistentdocument_website $document
+	 * @return website_MenuEntry|null
+	 */
+	public function getMenuEntry($document)
+	{
+		return $this->doGetMenuEntry($document);
+	}
+
+	/**
+	 * @param website_persistentdocument_website $document
+	 * @return website_MenuEntry|null
+	 */
+	public function getSitemapEntry($document)
+	{
+		return $this->doGetMenuEntry($document);
+	}
+
+	/**
+	 * @param website_persistentdocument_website $document
+	 * @return website_MenuEntry|null
+	 */
+	protected function doGetMenuEntry($document)
+	{
+		$entry = website_MenuEntry::getNewInstance();
+		$entry->setDocument($document);
+		$entry->setLabel($document->getLabel());
+		$entry->setUrl(LinkHelper::getDocumentUrl($document));
+		$entry->setContainer(true);
+		return $entry;
+	}
+	
+	/**
+	 * @param website_persistentdocument_website $document
+	 * @return website_persistentdocument_menuitem[]
+	 */
+	public function getChildrenDocumentsForMenu($document)
+	{
+		return $document->getDocumentService()->getPublishedChildrenOf($document);
+	}
 	
 	// Deprecated
 	

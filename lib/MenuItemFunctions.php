@@ -2,20 +2,20 @@
 class website_MenuItemPrintFunction
 {
 	/**
-	 * @param website_MenuItem $menuItem
+	 * @param website_MenuEntry $entry
 	 */
-	static function execute($menuItem)
+	static function execute($entry)
 	{
-			$currentWebsite = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+		$currentWebsite = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
 		$page = TagService::getInstance()->getDocumentByContextualTag('contextual_website_website_print', $currentWebsite, false);
 		if ($page !== null)
 		{
-			$menuItem->setUrl(LinkHelper::getDocumentUrl($page));
-			$menuItem->setOnClick('return accessiblePrint(this)');
+			$entry->setUrl(LinkHelper::getDocumentUrl($page));
+			$entry->setOnClick('return accessiblePrint(this)');
 		}
-		else 
+		else
 		{
-			$menuItem->setUrl('javascript:accessiblePrint()');
+			$entry->setUrl('javascript:accessiblePrint()');
 		}
 	}
 }
@@ -23,20 +23,20 @@ class website_MenuItemPrintFunction
 class website_MenuItemAddToFavoriteFunction
 {
 	/**
-	 * @param website_MenuItem $menuItem
+	 * @param website_MenuEntry $entry
 	 */
-	static function execute($menuItem)
+	static function execute($entry)
 	{
-			$currentWebsite = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+		$currentWebsite = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
 		$page = TagService::getInstance()->getDocumentByContextualTag('contextual_website_website_favorite', $currentWebsite, false);
 		if ($page !== null)
 		{
-			$menuItem->setUrl(LinkHelper::getDocumentUrl($page));
-			$menuItem->setOnClick('return accessibleAddToFavorite(this)');
+			$entry->setUrl(LinkHelper::getDocumentUrl($page));
+			$entry->setOnClick('return accessibleAddToFavorite(this)');
 		}
 		else
 		{
-			$menuItem->setUrl('javascript: accessibleAddToFavorite()');
+			$entry->setUrl('javascript: accessibleAddToFavorite()');
 		}
 	}
 }
@@ -44,12 +44,12 @@ class website_MenuItemAddToFavoriteFunction
 class website_MenuItemViewAsPDFFunction
 {
 	/**
-	 * @param website_MenuItem $menuItem
+	 * @param website_MenuEntry $entry
 	 */
-	static function execute($menuItem)
+	static function execute($entry)
 	{
-		$link = LinkHelper::getActionLink("generic", "ConvertPdf");
-		$link->setQueryParameter("url", LinkHelper::getCurrentUrl());
-		$menuItem->setUrl($link->getUrl());
+		$link = LinkHelper::getActionLink('generic', 'ConvertPdf');
+		$link->setQueryParameter('url', LinkHelper::getCurrentUrl());
+		$entry->setUrl($link->getUrl());
 	}
 }

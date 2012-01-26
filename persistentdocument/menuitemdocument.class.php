@@ -6,25 +6,22 @@
 class website_persistentdocument_menuitemdocument extends website_persistentdocument_menuitemdocumentbase
 {
 	/**
-	 * Returns the title used in the navigation elements on the website.
-	 *
-	 * @return string
+	 * @return String
 	 */
-	public function getNavigationtitle()
+	public function getPublicationstatus()
 	{
-		return website_WebsiteModuleService::getNavigationTitleFor($this->getDocument());
+		$doc = $this->getDocument();
+		if ($doc !== null)
+		{
+			return $doc->getPublicationstatus();
+		}
+		return parent::getPublicationstatus();
 	}
 	
+	// Deprecated.
+	
 	/**
-	 * @see WebsiteHelper, WebsiteConstants
-	 */
-	public function getNavigationVisibility()
-	{
-		return $this->getDocument()->getNavigationVisibility();
-	}
-		
-	/**
-	 * @return array The popup parameters as an array.
+	 * @deprecated (will be removed in 4.0) with no replacement
 	 */
 	public function getPopupParametersArray()
 	{
@@ -39,15 +36,18 @@ class website_persistentdocument_menuitemdocument extends website_persistentdocu
 	}
 	
 	/**
-	 * @return String
+	 * @deprecated (will be removed in 4.0) use getDocument()->getNavigationtitle()
 	 */
-	public function getPublicationstatus()
+	public function getNavigationtitle()
 	{
-		$doc = $this->getDocument();
-		if ($doc !== null)
-		{
-			return $doc->getPublicationstatus();
-		}
-		return parent::getPublicationstatus();
+		return website_WebsiteModuleService::getNavigationTitleFor($this->getDocument());
+	}
+	
+	/**
+	 * @deprecated (will be removed in 4.0) use getDocument()->getNavigationVisibility()
+	 */
+	public function getNavigationVisibility()
+	{
+		return $this->getDocument()->getNavigationVisibility();
 	}
 }

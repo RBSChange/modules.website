@@ -36,7 +36,7 @@
 					<changeblock type="richtext">
 						<![CDATA[<h2 class="heading-two">Plan du site</h2><p>Pour mieux vous orienter, voici un plan du site.<br/>Les rubriques disponibles sont les suivantes :</p>]]>
 					</changeblock>
-					<changeblock type="modules_website_sitemap" />
+					<changeblock type="modules_website_ConfigurableSitemap" __showTitle="false" />
 				</changecontent>
 			</page>
 			<page id="legal" label="Mentions légales" byTag="contextual_website_website_legal">
@@ -149,7 +149,7 @@
 					<changeblock type="richtext">
 						<![CDATA[<h2 class="heading-two">Site Map</h2><p>Here is a site map to help you navigate through it</p>]]>
 					</changeblock>
-					<changeblock type="modules_website_sitemap" />
+					<changeblock type="modules_website_ConfigurableSitemap" __showTitle="false" />
 				</changecontent>
 			</page>
 			<page byRefid="legal" label="Legal notice">

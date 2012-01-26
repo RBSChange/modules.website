@@ -6,41 +6,108 @@
 			<parameter name="cmpref" type="String" />
 		</parameters>
 	</block>
-	<block type="modules_website_sitemap" icon="sitemap" label="&amp;modules.website.bo.blocks.Sitemap;"
-		cache="true" cache-deps="[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
-		<parameters>
-			<parameter name="column" type="Boolean" default-value="false" />
-		</parameters>
-	</block>
 	<block type="modules_website_exception" icon="bug" label="&amp;modules.website.bo.blocks.Exception;" />
-	<block type="modules_website_thread" icon="breadcrumb" afterAll="true" 
-		cache="true" cache-key="page" cache-deps="[modules_website/page],[modules_website/topic],modules_website/website"/>
-	<block type="modules_website_ConfigurableMenu" icon="menu">
+	<block type="modules_website_thread" icon="breadcrumb" afterAll="true" cache="true" cache-key="page"
+		cache-deps="[modules_website/page],[modules_website/topic],modules_website/website" />
+	<block type="modules_website_ConfigurableMenu" icon="menu" dropModels="[modules_website/menu]" cache="true" cache-key="page,cmpref"
+		cache-deps="modules_website/menu,[modules_website/menuitem],[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
 		<parameters>
+			<parameter name="displayMode" type="String" default-value="Default" min-occurs="1" fieldtype="dropdownlist" hidehelp="true" />
+			<parameter name="showTitle" type="Boolean" default-value="false" />
+			<parameter name="blockTitle" type="String" />
 			<parameter name="depth" type="Integer" default-value="1" />
-			<parameter name="template" type="String" default-value="default" min-occurs="1" />
-			<parameter name="mode" type="String" default-value="document" min-occurs="1">
+			<parameter name="deployAll" type="Boolean" default-value="true" />
+			<parameter name="mode" type="String" default-value="document" min-occurs="1" fieldtype="dropdownlist">
 				<fieldlistitem labeli18n="m.website.bo.blocks.configurablemenu.mode-document" value="document" />
 				<fieldlistitem labeli18n="m.website.bo.blocks.configurablemenu.mode-tag" value="tag" />
 				<fieldlistitem labeli18n="m.website.bo.blocks.configurablemenu.mode-contextual" value="contextual" />
 			</parameter>
-			<parameter name="cmpref" type="Integer" default-value="1" />
-			<parameter name="tag" type="Integer" default-value="1" />
-			<parameter name="startwebsitelevel" type="Integer" default-value="1" />
-			<parameter name="deployAll" type="Boolean" default-value="true" />
+			<parameter name="cmpref" type="modules_generic/Document" allow="[modules_website_menu],[modules_website_topic],[modules_website_website]"
+				moduleselector="website" />
+			<parameter name="tag" type="String" from-list="modules_website/menutags" />
+			<parameter name="startLevel" type="Integer" default-value="1" />
 		</parameters>
+		<xul>
+			<javascript>
+				<constructor><![CDATA[
+					var fields = this.getFields();
+					fields.displayMode.replaceItems({cmpref: 'modules_website/blocktemplates', blockModule: 'website', blockName: 'ConfigurableMenu'});
+					var me = this;
+					fields.mode.addEventListener('fieldChanged', function(event) { me.onModeChange(); }, true)
+					me.addEventListener('gridValuesUpdated', function(event) { me.onModeChange(); }, true);
+					fields.showTitle.addEventListener('fieldChanged', function(event) { me.onShowTitle(); }, true);
+					me.addEventListener('gridValuesUpdated', function(event) { me.onShowTitleChange(); }, true);
+				]]></constructor>
+				<method name="onShowTitle">
+					<body><![CDATA[
+						var fields = this.getFields();
+						this.getElementByAnonId('blockTitle_cnt').collapsed = (fields.showTitle.value != 'true');
+					]]></body>
+				</method>
+				<method name="onModeChange">
+					<body><![CDATA[
+						var fields = this.getFields();
+						switch (fields.mode.value)
+						{
+							case 'document':
+								this.getElementByAnonId('cmpref_cnt').collapsed = false;
+								this.getElementByAnonId('tag_cnt').collapsed = true;
+								this.getElementByAnonId('startLevel_cnt').collapsed = true;
+								break;
+							
+							case 'tag':
+								this.getElementByAnonId('cmpref_cnt').collapsed = true;
+								this.getElementByAnonId('tag_cnt').collapsed = false;
+								this.getElementByAnonId('startLevel_cnt').collapsed = true;
+								break;
+							
+							case 'contextual':
+								this.getElementByAnonId('cmpref_cnt').collapsed = true;
+								this.getElementByAnonId('tag_cnt').collapsed = true;
+								this.getElementByAnonId('startLevel_cnt').collapsed = false;
+								break;
+						}
+					]]></body>
+				</method>
+			</javascript>
+		</xul>
 	</block>
-	<block type="modules_website_switchlanguage" label="&amp;modules.website.bo.blocks.SwitchLanguage;"
-		cache="true" cache-key="page" cache-deps="[modules_website/page],modules_website/website">
+	<block type="modules_website_ConfigurableSitemap" icon="sitemap" cache="true"
+		cache-deps="[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
 		<parameters>
-			<parameter name="displayMode" type="String" min-occurs="1" default-value="Success" fieldtype="dropdownlist" />
+			<parameter name="displayMode" type="String" default-value="Default" min-occurs="1" fieldtype="dropdownlist" hidehelp="true" />
+			<parameter name="showTitle" type="Boolean" default-value="true" />
+			<parameter name="blockTitle" type="String" />
+			<parameter name="depth" type="Integer" default-value="5" />
+		</parameters>
+		<xul>
+			<javascript>
+				<constructor><![CDATA[
+					var fields = this.getFields();
+					fields.displayMode.replaceItems({cmpref: 'modules_website/blocktemplates', blockModule: 'website', blockName: 'ConfigurableSitemap'});
+					var me = this;
+					fields.showTitle.addEventListener('fieldChanged', function(event) { me.onShowTitle(); }, true);
+					me.addEventListener('gridValuesUpdated', function(event) { me.onShowTitleChange(); }, true);
+				]]></constructor>
+				<method name="onShowTitle">
+					<body><![CDATA[
+						var fields = this.getFields();
+						this.getElementByAnonId('blockTitle_cnt').collapsed = (fields.showTitle.value != 'true');
+					]]></body>
+				</method>
+			</javascript>
+		</xul>
+	</block>
+	<block type="modules_website_switchlanguage" label="&amp;modules.website.bo.blocks.SwitchLanguage;" cache="true" cache-key="page"
+		cache-deps="[modules_website/page],modules_website/website">
+		<parameters>
+			<parameter name="displayMode" type="String" min-occurs="1" default-value="Success" fieldtype="dropdownlist" hidehelp="true" />
 			<parameter name="viewall" type="Boolean" default-value="true" />
 			<parameter name="showflag" type="String" default-value="small" />
 		</parameters>
 		<xul>
 			<javascript>
 				<constructor><![CDATA[
-					var me = this;
 					var fields = this.getFields();
 					fields.displayMode.replaceItems({cmpref: 'modules_website/blocktemplates', blockModule: 'website', blockName: 'Switchlanguage'});
 				]]></constructor>
@@ -56,7 +123,7 @@
 			<parameter name="scrolling" type="String" from-list="modules_website/iframescrolling" min-occurs="1" default-value="auto" />
 			<parameter name="text" type="LongString" default-value="" cols="46" rows="4" />
 		</parameters>
-	</block>	
+	</block>
 	<block type="modules_website_xhtmltemplate" icon="template" cache="true" cache-key="page" cache-deps="[modules_website/page]">
 		<parameters>
 			<parameter name="template" type="String" default-value="" fieldtype="dropdownlist" min-occurs="1" />
@@ -64,7 +131,6 @@
 		<xul>
 			<javascript>
 				<constructor><![CDATA[
-					var me = this;
 					var fields = this.getFields();
 					fields.template.replaceItems({cmpref: 'modules_website/blocktemplates', blockModule: 'website', blockName: 'Xhtmltemplate'});
 				]]></constructor>
@@ -80,42 +146,6 @@
 		</parameters>
 	</block>
 	<block type="modules_website_Incompatibiltybrowser" icon="warning" />
-	
-	<!-- deprecated -->
-	<block type="modules_website_Simplecontent" hidden="true" icon="">
-		<parameters>
-			<parameter name="view" type="String" />
-		</parameters>
-	</block>
-	<block type="modules_website_menu" hidden="true" label="&amp;modules.website.bo.blocks.Menu;"
-		cache="true" cache-key="page,cmpref" cache-deps="modules_website/menu,[modules_website/menuitem],[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
-		<parameters>
-			<parameter name="depth" type="Integer" default-value="1" />
-			<parameter name="template" type="String" default-value="default" />
-			<parameter name="deployonlycurrentpath" type="Boolean" default-value="false" />
-		</parameters>
-	</block>
-	<block type="modules_website_taggedmenu" hidden="true" label="&amp;modules.website.bo.blocks.TaggedMenu;"
-		cache="true" cache-key="page" cache-deps="modules_website/menu,[modules_website/menuitem],[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
-		<parameters>
-			<parameter name="tag" type="String" />
-			<parameter name="package" type="String" default-value="" />
-			<parameter name="template" type="String" default-value="default" />
-			<parameter name="depth" type="Integer" default-value="1" />
-			<parameter name="deployonlycurrentpath" type="Boolean" default-value="false" />
-		</parameters>
-	</block>
-	<block type="modules_website_contextualmenu" hidden="true" label="&amp;modules.website.bo.blocks.ContextualMenu;"
-		cache="true" cache-key="page" cache-deps="[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
-		<parameters>
-			<parameter name="template" type="String" default-value="default" />
-			<parameter name="package" type="String" default-value="" />
-			<parameter name="depth" type="Integer" default-value="2" />
-			<parameter name="startwebsitelevel" type="Integer" default-value="1" />
-			<parameter name="deployall" type="Boolean" default="false" />
-		</parameters>
-	</block>
-
 	<!-- Dashboard blocks -->
 	<block type="modules_website_dashboardpagevalidation" icon="task" dashboard="true" label="&amp;modules.website.bo.dashboard.Page-validation;">
 		<parameters>
@@ -128,4 +158,44 @@
 		</parameters>
 	</block>
 	<block type="modules_website_DashboardLastModifiedPages" icon="page" dashboard="true" />
+	<!-- @deprecated -->
+	<block type="modules_website_Simplecontent" hidden="true" icon="">
+		<parameters>
+			<parameter name="view" type="String" />
+		</parameters>
+	</block>
+	<block type="modules_website_menu" hidden="true" label="&amp;modules.website.bo.blocks.Menu;" cache="true" cache-key="page,cmpref"
+		cache-deps="modules_website/menu,[modules_website/menuitem],[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
+		<parameters>
+			<parameter name="depth" type="Integer" default-value="1" />
+			<parameter name="template" type="String" default-value="default" />
+			<parameter name="deployonlycurrentpath" type="Boolean" default-value="false" />
+		</parameters>
+	</block>
+	<block type="modules_website_taggedmenu" hidden="true" label="&amp;modules.website.bo.blocks.TaggedMenu;" cache="true" cache-key="page"
+		cache-deps="modules_website/menu,[modules_website/menuitem],[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
+		<parameters>
+			<parameter name="tag" type="String" />
+			<parameter name="package" type="String" default-value="" />
+			<parameter name="template" type="String" default-value="default" />
+			<parameter name="depth" type="Integer" default-value="1" />
+			<parameter name="deployonlycurrentpath" type="Boolean" default-value="false" />
+		</parameters>
+	</block>
+	<block type="modules_website_contextualmenu" hidden="true" label="&amp;modules.website.bo.blocks.ContextualMenu;" cache="true"
+		cache-key="page" cache-deps="[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
+		<parameters>
+			<parameter name="template" type="String" default-value="default" />
+			<parameter name="package" type="String" default-value="" />
+			<parameter name="depth" type="Integer" default-value="2" />
+			<parameter name="startwebsitelevel" type="Integer" default-value="1" />
+			<parameter name="deployall" type="Boolean" default="false" />
+		</parameters>
+	</block>
+	<block type="modules_website_sitemap" hidden="true" icon="sitemap" label="&amp;modules.website.bo.blocks.Sitemap;" cache="true"
+		cache-deps="[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
+		<parameters>
+			<parameter name="column" type="Boolean" default-value="false" />
+		</parameters>
+	</block>
 </blocks>

@@ -12,10 +12,7 @@
 		<topic label="Outils">
 			<page label="Plan du site" id="sitemap" indexingstatus="false">
 				<changecontent for="content-block">
-					<changeblock type="richtext">
-						<![CDATA[<h2 class="heading-two">Plan du site</h2>]]>
-					</changeblock>
-					<changeblock type="modules_website_sitemap" />
+					<changeblock type="modules_website_ConfigurableSitemap" __blockTitle="Plan du site" />
 				</changecontent>
 			</page>
 			<page label="Mentions légales" id="legal" >
