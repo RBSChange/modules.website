@@ -35,10 +35,10 @@
 					var me = this;
 					fields.mode.addEventListener('fieldChanged', function(event) { me.onModeChange(); }, true)
 					me.addEventListener('gridValuesUpdated', function(event) { me.onModeChange(); }, true);
-					fields.showTitle.addEventListener('fieldChanged', function(event) { me.onShowTitle(); }, true);
+					fields.showTitle.addEventListener('fieldChanged', function(event) { me.onShowTitleChange(); }, true);
 					me.addEventListener('gridValuesUpdated', function(event) { me.onShowTitleChange(); }, true);
 				]]></constructor>
-				<method name="onShowTitle">
+				<method name="onShowTitleChange">
 					<body><![CDATA[
 						var fields = this.getFields();
 						this.getElementByAnonId('blockTitle_cnt').collapsed = (fields.showTitle.value != 'true');
@@ -86,10 +86,10 @@
 					var fields = this.getFields();
 					fields.displayMode.replaceItems({cmpref: 'modules_website/blocktemplates', blockModule: 'website', blockName: 'ConfigurableSitemap'});
 					var me = this;
-					fields.showTitle.addEventListener('fieldChanged', function(event) { me.onShowTitle(); }, true);
+					fields.showTitle.addEventListener('fieldChanged', function(event) { me.onShowTitleChange(); }, true);
 					me.addEventListener('gridValuesUpdated', function(event) { me.onShowTitleChange(); }, true);
 				]]></constructor>
-				<method name="onShowTitle">
+				<method name="onShowTitleChange">
 					<body><![CDATA[
 						var fields = this.getFields();
 						this.getElementByAnonId('blockTitle_cnt').collapsed = (fields.showTitle.value != 'true');
