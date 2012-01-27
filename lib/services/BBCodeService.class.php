@@ -1,21 +1,21 @@
 <?php
 /**
- * @deprecated use website_BBCodeParser
+ * @deprecated (will be removed in 4.0) use website_BBCodeParser
  */
 class website_BBCodeService extends BaseService
 {
 	/**
-	 * @var String
+	 * @deprecated (will be removed in 4.0)
 	 */
 	const URL_STRING_REGEXP = '(?:http\:\/\/|https\:\/\/|ftp\:\/\/)[a-zA-Z0-9,;\:\/\-\+\?%\&\.\=\_\~\#\\\'\[\]\{\}]+';
 
 	/**
-	 * @var website_BBCodeService.
+	 * @deprecated (will be removed in 4.0)
 	 */
 	protected static $instance;
 	
 	/**
-	 * @return website_BBCodeService
+	 * @deprecated (will be removed in 4.0)
 	 */
 	public static function getInstance()
 	{
@@ -27,19 +27,17 @@ class website_BBCodeService extends BaseService
 	}
 	
 	/**
-	 * @var String[]
+	 * @deprecated (will be removed in 4.0)
 	 */
 	protected $codeContents = array();
 	
 	/**
-	 * @var boolean
+	 * @deprecated (will be removed in 4.0)
 	 */
 	protected $bbcodeScriptAdded = false;
 	
 	/**
-	 * @param array[] $params
-	 * @param website_Page $context
-	 * @return String
+	 * @deprecated (will be removed in 4.0)
 	 */
 	public function buildEditor($params, $context)
 	{
@@ -55,11 +53,9 @@ class website_BBCodeService extends BaseService
 		}
 		return website_FormHelper::renderTextarea($params);		
 	}	
-	
-	
+		
 	/**
-	 * @param Array $matches
-	 * @return String
+	 * @deprecated (will be removed in 4.0)
 	 */
 	public function parseCode($matches)
 	{
@@ -68,8 +64,7 @@ class website_BBCodeService extends BaseService
 	}
 	
 	/**
-	 * @param String $bbcode
-	 * @return String
+	 * @deprecated (will be removed in 4.0)
 	 */
 	public function fixContent($bbcode)
 	{
@@ -94,8 +89,7 @@ class website_BBCodeService extends BaseService
 	}
 	
 	/**
-	 * @param String $bbcode
-	 * @return String
+	 * @deprecated (will be removed in 4.0)
 	 */
 	protected function extractCodeContentFix($bbcode)
 	{
@@ -103,8 +97,7 @@ class website_BBCodeService extends BaseService
 	}
 	
 	/**
-	 * @param String $bbcode
-	 * @return String
+	 * @deprecated (will be removed in 4.0)
 	 */
 	protected function fixDefaultCodes($bbcode)
 	{
@@ -131,8 +124,7 @@ class website_BBCodeService extends BaseService
 	}
 	
 	/**
-	 * @param String $bbcode
-	 * @return String
+	 * @deprecated (will be removed in 4.0)
 	 */
 	protected function fixSpecificCodes($bbcode)
 	{
@@ -141,8 +133,7 @@ class website_BBCodeService extends BaseService
 	}
 	
 	/**
-	 * @param String $html
-	 * @return String
+	 * @deprecated (will be removed in 4.0)
 	 */
 	protected function reinjectCodeContentFix($html)
 	{
@@ -158,8 +149,7 @@ class website_BBCodeService extends BaseService
 	}
 	
 	/**
-	 * @param String $bbcode
-	 * @return String
+	 * @deprecated (will be removed in 4.0)
 	 */
 	public function toHtml($bbcode)
 	{
@@ -188,8 +178,7 @@ class website_BBCodeService extends BaseService
 	}
 	
 	/**
-	 * @param String $bbcode
-	 * @return String
+	 * @deprecated (will be removed in 4.0)
 	 */
 	protected function extractCodeContent($bbcode)
 	{
@@ -197,8 +186,7 @@ class website_BBCodeService extends BaseService
 	}
 	
 	/**
-	 * @param String $html
-	 * @return String
+	 * @deprecated (will be removed in 4.0)
 	 */
 	protected function convertDefaultCodes($html)
 	{
@@ -239,8 +227,7 @@ class website_BBCodeService extends BaseService
 	}
 	
 	/**
-	 * @param String $text
-	 * @return String
+	 * @deprecated (will be removed in 4.0)
 	 */
 	public function parseQuote($html)
 	{
@@ -249,8 +236,7 @@ class website_BBCodeService extends BaseService
 	}
 	
 	/**
-	 * @param Array $matches
-	 * @return String
+	 * @deprecated (will be removed in 4.0)
 	 */
 	public function parseQuoteCallback($matches)
 	{
@@ -266,8 +252,7 @@ class website_BBCodeService extends BaseService
 	}
 	
 	/**
-	 * @param String $html
-	 * @return String
+	 * @deprecated (will be removed in 4.0)
 	 */
 	protected function reinjectCodeContent($html)
 	{
@@ -283,8 +268,7 @@ class website_BBCodeService extends BaseService
 	}
 	
 	/**
-	 * @param String $html
-	 * @return String
+	 * @deprecated (will be removed in 4.0)
 	 */
 	protected function convertSpecificCodes($html)
 	{
@@ -293,8 +277,7 @@ class website_BBCodeService extends BaseService
 	}
 		
 	/**
-	 * @param String $bbcode
-	 * @return String
+	 * @deprecated (will be removed in 4.0)
 	 */
 	public function toText($bbcode)
 	{
@@ -317,8 +300,7 @@ class website_BBCodeService extends BaseService
 	}
 	
 	/**
-	 * @param String $text
-	 * @return String
+	 * @deprecated (will be removed in 4.0)
 	 */
 	protected function removeDefaultCodes($text)
 	{
@@ -368,8 +350,7 @@ class website_BBCodeService extends BaseService
 	}
 	
 	/**
-	 * @param String $text
-	 * @return String
+	 * @deprecated (will be removed in 4.0)
 	 */
 	protected function removeSpecificCodes($text)
 	{
@@ -378,8 +359,7 @@ class website_BBCodeService extends BaseService
 	}
 	
 	/**
-	 * @param Array $matches
-	 * @return String
+	 * @deprecated (will be removed in 4.0)
 	 */
 	public function shortenUrl($matches)
 	{
@@ -392,8 +372,7 @@ class website_BBCodeService extends BaseService
 	}
 	
 	/**
-	 * @param Array $matches
-	 * @return String
+	 * @deprecated (will be removed in 4.0)
 	 */
 	public function addQuotesAroundUrl($matches)
 	{
@@ -428,7 +407,7 @@ class website_BBCodeService extends BaseService
 	}
 	
 	/**
-	 * @param website_Page $page
+	 * @deprecated (will be removed in 4.0)
 	 */
 	public function addJs($page)
 	{
@@ -443,7 +422,7 @@ class website_BBCodeService extends BaseService
 	}
 	
 	/**
-	 * @return strin[]
+	 * @deprecated (will be removed in 4.0)
 	 */
 	public function getJs()
 	{
@@ -451,7 +430,7 @@ class website_BBCodeService extends BaseService
 	}
 	
 	/**
-	 * @return string[]
+	 * @deprecated (will be removed in 4.0)
 	 */
 	protected function getDefaultJs()
 	{
@@ -459,7 +438,7 @@ class website_BBCodeService extends BaseService
 	}
 	
 	/**
-	 * @return string[]
+	 * @deprecated (will be removed in 4.0)
 	 */
 	protected function getSpecificJs()
 	{
@@ -467,10 +446,8 @@ class website_BBCodeService extends BaseService
 		return array();
 	}
 	
-	// Deprecated
-	
 	/**
-	 * @deprecated (will be removed in 4.0) use toText
+	 * @deprecated (will be removed in 4.0)
 	 */
 	public function removeBBCode($bbcode)
 	{
