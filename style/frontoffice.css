@@ -2,31 +2,36 @@
 	fonts.css from the YUI Library: developer.yahoo.com/yui/
 	Please refer to developer.yahoo.com/yui/fonts/ for font sizing percentages
 */
-body{
-	font:13px sans-serif;
-	*font-size:small;
-	*font:x-small;
+body {
+	font: 13px sans-serif;
+	*font-size: small;
+	*font: x-small;
 }
 
-table{
-	font-size:inherit;
-	font:100%;
+table {
+	font-size: inherit;
+	font: 100%;
 }
 
-select, input, textarea{
-	font:99% sans-serif;
+select, 
+input,
+textarea {
+	font: 99% sans-serif;
 }
 
-body, textarea, input, button{
+body, 
+textarea, 
+input, 
+button {
 	font-family: Arial, Helvetica, sans-serif ;
 }
 
-body{
+body {
 	line-height: 1.33;
 }
 
 /* maxvoltar.com/archive/-webkit-font-smoothing */
-html{
+html {
 	-webkit-font-smoothing: antialiased;
 }
 
@@ -38,8 +43,8 @@ form.cmxform input.passwordinput,
 input.textfield,
 textarea,
 select,
-option{
-	color:#000000;
+option {
+	color: #000000;
 }
 
 /* General Markup Margin Bottom */
@@ -54,6 +59,7 @@ hr,
 code,
 pre,
 /* FORM */
+form.cmxform,
 fieldset,
 p.buttons,
 form.cmxform .description,
@@ -62,26 +68,66 @@ form.cmxform .free-text,
 ul.errors,
 ul.messages,
 /* GENERIC */
-.website-block,
-.row-100,
+.freeLocation,
+.columns,
 div.normal,
-.valign-buttons,
 ul.mini-navigation,
-.pagination{
-	margin-bottom:20px;
+.pagination,
+.document-list,
+.normal-margin {
+	margin-bottom: 20px;
+}
+
+table.normal:last-child,
+p.normal:last-child,
+ul.normal:last-child,
+ol.normal:last-child,
+dl.normal:last-child,
+blockquote:last-child,
+hr:last-child,
+code:last-child,
+pre:last-child,
+/* FORM */
+form.cmxform:last-child,
+fieldset:last-child,
+p.buttons:last-child,
+form.cmxform .description:last-child,
+form.cmxform .bottom-description:last-child,
+form.cmxform .free-text:last-child,
+ul.errors:last-child,
+ul.messages:last-child,
+/* GENERIC */
+.freeLocation:last-child,
+.columns:last-child,
+div.normal:last-child,
+ul.mini-navigation:last-child,
+.pagination:last-child,
+.document-list:last-child,
+.normal-margin:last-child {
+	margin-bottom: 0;
+}
+
+hr {
+	margin-top: 20px;
 }
 
 .heading-one,
+.h-1,
 .heading-two,
+.h-2,
 .heading-three,
+.h-3,
 .heading-four,
+.h-4,
 .heading-five,
-.heading-six{
-	margin-bottom:10px;
+.h-5,
+.heading-six,
+.h-6 {
+	margin-bottom: 10px;
 }
 
 /* General Border Color */
-hr{
+hr {
 	color: #cccccc;
 	background-color: #cccccc;
 }
@@ -96,14 +142,14 @@ input.textfield,
 textarea,
 select,
 input.button,
-a.button{
-	border-color:#cccccc;
+a.button {
+	border-color: #cccccc;
 }
 
 /* General inBlock Padding */
 /* RICHTEXT */
 table.normal tr td,
-table.normal tr th{
+table.normal tr th {
 	padding: 6px;
 }
 
@@ -113,62 +159,34 @@ table.normal tr th{
 /* CORE ELEMENTS */
 /*---------------*/
 
-.block-error{
-	border:1px dashed red;
-	padding:5px 5px 5px 20px;
-	max-width:180px;
-	max-height:60px;
-	overflow:auto;
-	text-align:left;
-	background:#ff8888 center left no-repeat;
-	font-size:10px;
-	color:#220000;
-	-moz-opacity:0.7;
-}
-
-.block-message{
-	border:1px dashed green;
-	padding:5px 5px 5px 20px;
-	max-width:180px;
-	max-height:60px;
-	overflow:auto;
-	text-align:left;
-	background:#88ff88 center left no-repeat;
-	font-size:10px;
-	color:#220000;
-	-moz-opacity:0.7;
-}
-
 .link-broken,
 a.link-broken:hover,
 a.link-broken:active,
-a.link-broken:visited{
+a.link-broken:visited {
 	text-decoration:line-through;
 	color:red;
 }
 
-ul.mini-navigation{
+ul.mini-navigation {
 	text-align:right;
 	float: right;
 }
 
-.pagination{
+.pagination {
 	clear: both;
 	padding: 5px 0 5px 0; 
 }
-
-.pagination ul li{
+.pagination ul li {
 	margin-right: 5px;
 	display: inline;
 }
-
-.pagination span.detail{
+.pagination span.detail {
 	float: right;
 	margin-left: 5px
 }
 
 .highlight,
-.modules-solrsearch ol.document-list em{
+.modules-solrsearch ol.document-list em {
 	color: #000000;
 	background: #ffff00;
 	padding: 1px 4px;
@@ -180,20 +198,17 @@ ul.mini-navigation{
 /* LISTS */
 /*------*/
 ul.document-list,
-ol.document-list{
+ol.document-list {
 	border-top-width: 1px;
 	border-top-style: dotted;
-	margin-bottom: 20px;		 
 }
-
 ul.document-list > li,
-ol.document-list > li{
+ol.document-list > li {
 	border-bottom-width: 1px;
 	border-bottom-style: dotted;
 	padding: 6px;	
 }
-
-.document-list img.document-visual{
+.document-list img.document-visual {
 	float: left;
 	margin-right: 5px;
 }
@@ -201,45 +216,41 @@ ol.document-list > li{
 
 
 dl.inline-list dt,
-dl.inline-list dd{
+dl.inline-list dd {
 	display: inline;
 }
-
-dl.inline-list dt{
-	font-weight: bold;
+dl.inline-list dt {
 	margin-right: 4px;
 }
-
-dl.inline-list dt:after{
+dl.inline-list dt:after {
 	content: " :";
 }
-
 ul.inline-list li,
-ol.inline-list li{
+ol.inline-list li {
 	display: inline;
-}
-
-
-
-dl.menu-list dt{
 }
 
 dl.menu-list dd,
 ul.menu-list li,
-ol.menu-list li{
+ol.menu-list li {
 	margin-left: 15px;	
 }
 
-
-
 dl.cloud-list dd,
 ul.cloud-list li,
-ol.cloud-list li{
+ol.cloud-list li {
 	display: inline;
 	padding-right: 5px;
 }
 
+dl.document-infos dt {
+	float: left;
+	margin-right: 4px;
+}
+dl.document-infos dd {
+	margin-bottom: 3px;
+}
+
 @import url(/modules/website/style/form.css);
-@import url(/modules/website/style/blocks.css);
 @import url(/modules/website/style/bbcode.css);
 @import url(/modules/website/style/bench.css);

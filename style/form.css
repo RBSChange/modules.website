@@ -5,20 +5,23 @@
 /*---------------*/
 /* FORM CONTROLS */
 /*---------------*/
-fieldset{
+fieldset {
 	padding:10px;
 	border-width:1px /*@var fieldsetborderwidth*/;
 	border-style:solid;
 }
 
-legend{
+legend {
 	padding:0 2px;
 	white-space:normal;
 	font-size: 150%;
 	font-weight: bold;
 }
+form.cmxform legend {
+	margin-bottom: 0px;
+}
 
-form.cmxform label{
+form.cmxform label {
 	text-align: right;
 	width: 33%;
 	display:block;
@@ -27,19 +30,18 @@ form.cmxform label{
 	font-weight: bold;
 	line-height: 1.6;
 }
-form.cmxform label.form-validation.error{
+form.cmxform label.form-validation.error {
 	margin-left: 33%;
 	padding-left: 8px;
     text-align: left;
 }
 
-form.cmxform label.option-label{
+form.cmxform label.option-label {
 	width: auto;
 	float: left;
 	font-weight: normal;
 }
-
-form.cmxform input.option-label{
+form.cmxform input.option-label {
 	float: left;
 	margin-right: 8px;
 }
@@ -51,7 +53,7 @@ textarea,
 select,
 option,
 input.button, 
-button.button{
+button.button {
 	font-size: 1em;
 }
 
@@ -59,31 +61,33 @@ form.cmxform input.date-picker,
 form.cmxform input.passwordinput,
 input.textfield,
 textarea,
-select{
+select {
 	border-width: 1px;
 	border-style: solid;
 }
 /* The label node has width:33% and margin-left:8px, so we must fix field width */
-form.cmxform input.textfield, form.cmxform textarea, form.cmxform select{
+form.cmxform input.textfield, 
+form.cmxform textarea, 
+form.cmxform select {
 	max-width: 62%;	
 }
 
 form.cmxform input.date-picker,
 form.cmxform input.passwordinput,
 input.textfield,
-select{
+select {
 	line-height: 1.33;
 	min-height: 18px;
 }
 
 input.textfield,
-textarea{
+textarea {
 	padding:0 3px;	
 }
 
 input.button,
 button.button,
-a.button{
+a.button {
 	cursor: pointer;
 	border-width: 1px;
 	border-style: solid;
@@ -94,11 +98,11 @@ a.button{
 	color:#ffffff;
 }
 
-input.button{
+input.button {
 	padding:0 4px;
 }
 
-a.button{
+a.button {
 	display: inline-block;
 	padding: 0 8px;
 	line-height: 1.4;
@@ -106,19 +110,19 @@ a.button{
 
 input.button:hover,
 button.button:hover,
-a.button:hover{
+a.button:hover {
 	text-decoration: none;
 }
 
 /*----------------*/
 /* FORM STRUCTURE */
 /*----------------*/
-form.cmxform ol{
+form.cmxform ol {
 	margin:0;
 	padding:0;
 }
 
-form.cmxform ol li{
+form.cmxform ol li {
 	float:none;
 	clear:both;
 	list-style:none;
@@ -127,7 +131,7 @@ form.cmxform ol li{
 }
 
 form.cmxform ol li.radio label,
-form.cmxform label.nocmx{
+form.cmxform label.nocmx {
 	width: 23%;
 	min-height: 10px;
 	display: -moz-inline-stack;
@@ -146,7 +150,7 @@ li.radio-container {
 	overflow: hidden;
 }
 
-fieldset.radio{
+fieldset.radio {
 	border-width: 0px;
 	padding: 0px;
 	position: relative;
@@ -155,7 +159,7 @@ fieldset.radio{
 	margin-left: 8px;	
 }
 
-fieldset.radio legend{
+fieldset.radio legend {
 	font-size: 1em;
 	line-height: 1.6;
 	position: absolute;
@@ -165,16 +169,16 @@ fieldset.radio legend{
 	text-align: right;	
 }
 
-fieldset.radio ol{
+fieldset.radio ol {
 	margin-right: 33%;
 }
 
 li.checkbox input[type="radio"],
-li.checkbox input[type="checkbox"]{
+li.checkbox input[type="checkbox"] {
 	margin-left: 0px;
 }
 
-span.captcha{
+span.captcha {
 	vertical-align: bottom;
 	text-align:right;
 	width: 33%;
@@ -183,7 +187,7 @@ span.captcha{
 	margin-right: 8px;
 }
 
-p.buttons{
+p.buttons {
 	clear: both;
 	width: 100%;
 	text-align: center;
@@ -198,11 +202,11 @@ p.buttons{
 form.cmxform .description,
 form.cmxform .bottom-description,
 form.cmxform fieldset div,
-form.cmxform .free-text{
+form.cmxform .free-text {
 
 }
 
-form.cmxform p.help-text{
+form.cmxform p.help-text {
 	font-size: .9em;
 	margin-left: 33%;
 	padding-left: 8px;
@@ -212,38 +216,38 @@ form.cmxform p.help-text{
 .error,
 .errors,
 form.cmxform ul.errors li,
-form.cmxform em{
+form.cmxform em {
 	color:#ff0000;
 }
 
-.warning{
+.warning {
 	color:orange;
 }
 
-.success{
+.success {
 	color:green;
 }
 
-form.cmxform ul.errors{
+form.cmxform ul.errors {
 
 }
 
-form.cmxform ul.errors li{
+form.cmxform ul.errors li {
 	list-style-type:disc;
 	list-style-position:inside;
 	padding-left:40px;
 }
 
-form.cmxform em{
+form.cmxform em {
 	font-style:normal;
 }
 
-a.dp-choose-date{
+a.dp-choose-date {
 	text-decoration: none;
 }
 
 /* Commentaires */
-.jTagEditor .textfield-label{
+.jTagEditor .textfield-label {
 	width:33%;
 	display:block;
 	float:left;
@@ -255,13 +259,23 @@ a.dp-choose-date{
 	http://html5boilerplate.com/
 */
 
-input, select { vertical-align: middle; }
+input,
+select {
+	vertical-align: middle;
+}
 
-textarea { overflow: auto; } /* www.sitepoint.com/blogs/2010/08/20/ie-remove-textarea-scrollbars/ */
+textarea {
+	overflow: auto; /* www.sitepoint.com/blogs/2010/08/20/ie-remove-textarea-scrollbars/ */
+} 
 
 /* Align checkboxes, radios, text inputs with their label by: Thierry Koblentz tjkdesign.com/ez-css/css/base.css  */
-input[type="radio"] { vertical-align: text-bottom; }
-input[type="checkbox"] { vertical-align: bottom; *vertical-align: baseline; }
+input[type="radio"] {
+	vertical-align: text-bottom;
+}
+input[type="checkbox"] {
+	vertical-align: bottom;
+	*vertical-align: baseline;
+}
 
 input[type="radio"],
 input[type="checkbox"] {
@@ -269,19 +283,24 @@ input[type="checkbox"] {
 }
 
 /* Hand cursor on clickable input elements */
-label, input[type="button"], input[type="submit"], input[type="image"], button { cursor: pointer; }
+label, 
+input[type="button"],
+input[type="submit"],
+input[type="image"],
+button {
+	cursor: pointer;
+}
 
 /* Make buttons play nice in IE:
    www.viget.com/inspire/styling-the-button-element-in-internet-explorer/ */
 input.button,
-button {  width: auto; overflow: visible; }
+button { 
+	width: auto;
+	overflow: visible;
+}
 
-
-
-@import url(/modules/website/style/form.gecko.3.css);
 @import url(/modules/website/style/form.khtml.css);
-@import url(/modules/website/style/form.trident.4.css);
-@import url(/modules/website/style/form.trident.5.css);
 @import url(/modules/website/style/form.trident.6.css);
 @import url(/modules/website/style/form.trident.7.css);
+@import url(/modules/website/style/form.gecko.css);
 @import url(/modules/website/style/datepicker.css);
