@@ -568,8 +568,7 @@ class website_FormHelper
 	}
 
 	/**
-	 * @param array $params
-	 * @return String
+	 * @deprecated (will be removed in 4.0) use change:bbcodeinput instead of change:richtextinput="mode 'bbcode'"
 	 */
 	private function buildBBeditorinput($params)
 	{
