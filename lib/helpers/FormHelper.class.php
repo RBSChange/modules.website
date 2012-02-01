@@ -564,7 +564,7 @@ class website_FormHelper
 		$editor->Value = $params['value'];
 		$editor->Width = $params['width'];
 		$editor->Height = $params['height'];
-		return $editor->CreateHtml();
+		return '<div class="richtextfield">' . $editor->CreateHtml() . '</div>';
 	}
 
 	/**
@@ -1265,7 +1265,9 @@ jQuery(document).ready(function() {
 
 		}
 		$datePickerParam .= '}';
-		return self::renderInputByType("text", $params) . '<span>' . $format . "</span><script type=\"text/javascript\">//<![CDATA[\njQuery(document).ready(function(){jQuery('[id=" . $params['id'] . "]').datePicker($datePickerParam);});\n//]]></script>";
+		
+		$dateFormatTitle = $ls->transFO('m.form.frontoffice.datepicker.format-help', array('ucf'));
+		return self::renderInputByType("text", $params) . '<span class="date-format" title="' . $dateFormatTitle . '">' . $format . "</span><script type=\"text/javascript\">//<![CDATA[\njQuery(document).ready(function(){jQuery('[id=" . $params['id'] . "]').datePicker($datePickerParam);});\n//]]></script>";
 	}
 
 	/**

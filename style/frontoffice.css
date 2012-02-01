@@ -213,26 +213,20 @@ ol.document-list > li {
 	margin-right: 5px;
 }
 
-
-
-dl.inline-list dt,
-dl.inline-list dd {
-	display: inline;
-}
-dl.inline-list dt {
+.inline-list dt {
 	margin-right: 4px;
 }
-dl.inline-list dt:after {
+.inline-list dt:after {
 	content: " :";
 }
-ul.inline-list li,
-ol.inline-list li {
+.inline-list dt,
+.inline-list dd,
+.inline-list li {
 	display: inline;
 }
 
-dl.menu-list dd,
-ul.menu-list li,
-ol.menu-list li {
+.menu-list ul,
+.menu-list dl {
 	margin-left: 15px;	
 }
 

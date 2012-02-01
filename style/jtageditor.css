@@ -1,31 +1,32 @@
-.jTagEditor	{
-	padding:1px;
+.jTagEditor {
+	padding: 1px;
 }
-.jTagEditor-toolBar	{
-	font:10px Arial, Helvetica, sans-serif;
+.jTagEditor-toolBar {
+	font: 10px Arial, Helvetica, sans-serif;
 }
-.jTagEditor-toolBar ul	{
-	margin:0; padding:0;
+.jTagEditor-toolBar ul {
+	margin: 0;
+	padding: 0;
 }
-.jTagEditor-toolBar li.button	{
-	float:left;
-	clear:none;
-	list-style:none;
-	border:1px solid #fff;
-  	border-color:#DDD #999 #999 #CCC;	
-	padding:2px 4px; 
-	margin:1px 2px 1px 0;
+.jTagEditor-toolBar li.button {
+	float: left;
+	clear: none;
+	list-style: none;
+	border: 1px solid #fff;
+	border-color: #DDD #999 #999 #CCC;
+	padding: 2px 4px;
+	margin: 1px 2px 1px 0;
 }
-.jTagEditor-toolBar a	{
-	text-decoration:none;
-	color:#3366CC;
+.jTagEditor-toolBar a {
+	text-decoration: none;
+	color: #3366CC;
 }
 .jTagEditor-editor {
-	padding:5px;
+	padding: 5px;
 }
 .jTagEditor-resizeHandle {
-	height:3px;
-	background-color:none;
-	cursor:n-resize;
-	position:relative;
+	height: 3px;
+	background-color: none;
+	cursor: n-resize;
+	position: relative;
 }

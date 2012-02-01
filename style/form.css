@@ -68,8 +68,15 @@ select {
 /* The label node has width:33% and margin-left:8px, so we must fix field width */
 form.cmxform input.textfield, 
 form.cmxform textarea, 
-form.cmxform select {
-	max-width: 62%;	
+form.cmxform select,
+form.cmxform .richtextfield {
+	max-width: 62%;
+}
+form.cmxform .richtextfield {
+	display: inline-block;
+}
+form.cmxform .richtextfield iframe {
+	max-width: 100%;	
 }
 
 form.cmxform input.date-picker,
