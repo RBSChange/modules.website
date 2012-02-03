@@ -107,26 +107,26 @@ ul.mini-navigation:last-child,
 	margin-bottom: 0;
 }
 
-.normal + .cleaner,
-blockquote + .cleaner,
-hr + .cleaner,
-code + .cleaner,
-pre + .cleaner,
+.normal + .cleaner:last-child,
+blockquote + .cleaner:last-child,
+hr + .cleaner:last-child,
+code + .cleaner:last-child,
+pre + .cleaner:last-child,
 /* FORM */
-fieldset + .cleaner,
-p.buttons + .cleaner,
-form.cmxform .description + .cleaner,
-form.cmxform .bottom-description + .cleaner,
-form.cmxform .free-text + .cleaner,
-ul.errors + .cleaner,
-ul.messages + .cleaner,
+fieldset + .cleaner:last-child,
+p.buttons + .cleaner:last-child,
+form.cmxform .description + .cleaner:last-child,
+form.cmxform .bottom-description + .cleaner:last-child,
+form.cmxform .free-text + .cleaner:last-child,
+ul.errors + .cleaner:last-child,
+ul.messages + .cleaner:last-child,
 /* GENERIC */
-.freeLocation + .cleaner,
+.freeLocation + .cleaner:last-child,
 .columns + .cleaner,
-.mini-navigation + .cleaner,
-.pagination + .cleaner,
-.document-list + .cleaner,
-.normal-margin + .cleaner {
+.mini-navigation + .cleaner:last-child,
+.pagination + .cleaner:last-child,
+.document-list + .cleaner:last-child,
+.normal-margin + .cleaner:last-child {
 	margin-top: -20px;
 }
 
