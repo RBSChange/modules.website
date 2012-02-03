@@ -1942,8 +1942,16 @@ class website_PageService extends f_persistentdocument_DocumentService
 			{
 				// Begin capturing. TODO: make a dedicated method instead of write()
 				$controller->getResponse()->getWriter()->write("");
-				$controller->process($blockInstance, $httpRequest);
-				$html .= $controller->getResponse()->getWriter()->getContent();
+				try
+				{
+					$controller->process($blockInstance, $httpRequest);
+					$html .= $controller->getResponse()->getWriter()->getContent();
+				} 
+				catch (TemplateNotFoundException $e) 
+				{
+					Framework::exception($e);
+					$html .= $e->getMessage();
+				}
 			}
 			else
 			{
