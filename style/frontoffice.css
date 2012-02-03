@@ -107,6 +107,29 @@ ul.mini-navigation:last-child,
 	margin-bottom: 0;
 }
 
+.normal + .cleaner,
+blockquote + .cleaner,
+hr + .cleaner,
+code + .cleaner,
+pre + .cleaner,
+/* FORM */
+fieldset + .cleaner,
+p.buttons + .cleaner,
+form.cmxform .description + .cleaner,
+form.cmxform .bottom-description + .cleaner,
+form.cmxform .free-text + .cleaner,
+ul.errors + .cleaner,
+ul.messages + .cleaner,
+/* GENERIC */
+.freeLocation + .cleaner,
+.columns + .cleaner,
+.mini-navigation + .cleaner,
+.pagination + .cleaner,
+.document-list + .cleaner,
+.normal-margin + .cleaner {
+	margin-top: -20px;
+}
+
 hr {
 	margin-top: 20px;
 }
