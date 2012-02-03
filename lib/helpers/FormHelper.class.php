@@ -227,25 +227,15 @@ class website_FormHelper
 	public static function renderFieldlabel($params)
 	{
 		$propertyName = $params['name'];
-		if (!self::$hasBean)
+		if (BeanUtils::hasProperty(self::$bean, $propertyName))
 		{
-			if (Framework::isDebugEnabled())
+			$beanPropertyInfo = BeanUtils::getPropertyInfo(self::$bean, $propertyName);
+			if ($beanPropertyInfo->isRequired())
 			{
-				return "<strong>change:labelfield for property $propertyName has no attached bean</strong>";
+				self::setDefaultValue("required", true, $params);
 			}
-			return "";
+			self::setDefaultValue('label', self::getLabelizedLocale($beanPropertyInfo->getLabelKey()), $params);
 		}
-
-		if (!BeanUtils::hasProperty(self::$bean, $propertyName))
-		{
-			return "<strong>bean '".BeanUtils::getClassName(self::$bean)."' has no property $propertyName</strong>";
-		}
-		$beanPropertyInfo = BeanUtils::getPropertyInfo(self::$bean, $propertyName);
-		if ($beanPropertyInfo->isRequired())
-		{
-			self::setDefaultValue("required", true, $params);
-		}
-		self::setDefaultValue('label', self::getLabelizedLocale($beanPropertyInfo->getLabelKey()), $params);
 		self::setDefaultValue("id", self::buildFieldId($params['name']), $params);
 		return self::buildLabel($params);
 	}
@@ -1557,7 +1547,7 @@ jQuery(document).ready(function() {
 	public static function renderCheckboxInput($params)
 	{
 		$name = self::buildNameAndId($params);
-		$radioValue = $params["value"];
+		$radioValue = $params['value'];
 		if (strpos($name, '[]') !== false)
 		{
 			$value = self::getFieldValue(substr($name, 0, -2));
@@ -1629,12 +1619,29 @@ jQuery(document).ready(function() {
 		}
 		$params['ignoreErrors'] = $ignoreErrors;
 		$params['label'] = $radioLabel;
-		$params['id'] .= "_".$radioValue;
-		$params['value'] = $radioValue;
-		if (!isset($params['class']))
+		
+		$standalone = false;
+		if (isset($params['standalone']))
 		{
-			$params['class'] = "option-label";
+			$standalone = ($params['standalone'] == 'true');
+			unset($params['standalone']);
 		}
+		
+		if (!$standalone)
+		{
+			$params['id'] .= "_" . $radioValue;
+			if (!isset($params['class']))
+			{
+				$params['class'] = "option-label";
+			}
+		}
+		else if (!isset($params['class']))
+		{
+			$params['class'] = "standalone-checkbox";
+		}
+		
+		$params['value'] = $radioValue;
+		
 		return self::renderInputByType('checkbox', $params);
 	}
 
@@ -1975,10 +1982,6 @@ jQuery(document).ready(function() {
 		if (!isset($params["ignoreErrors"]))
 		{
 			$propErrors = self::getErrorsForProperty($name);
-			/*if (isset($params['relatedname']))
-			{
-				$propErrors = array_merge($propErrors, self::getErrorsForProperty($params['relatedname']));
-			}*/
 			if (f_util_ArrayUtils::isNotEmpty($propErrors))
 			{
 				$classes[] = "error";
