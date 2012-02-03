@@ -306,8 +306,8 @@ button {
 	overflow: visible;
 }
 
-@import url(/modules/website/style/form.khtml.css);
+@import url(/modules/website/style/form.khtml.all.css);
 @import url(/modules/website/style/form.trident.6.css);
 @import url(/modules/website/style/form.trident.7.css);
-@import url(/modules/website/style/form.gecko.css);
+@import url(/modules/website/style/form.gecko.all.css);
 @import url(/modules/website/style/datepicker.css);
