@@ -150,7 +150,18 @@ class website_BBCodeParser
 	protected function parseXml($xmlString)
 	{
 		$dom = new DOMDocument('1.0', 'UTF-8');
-		$dom->loadXML($xmlString);
+		if ($dom->loadXML($xmlString) === true)
+		{
+			return $dom;
+		}
+		
+		if (Framework::isWarnEnabled())
+		{
+			Framework::warn(__METHOD__ . ' Invalid xml string.');
+			Framework::warn(f_util_ProcessUtils::getBackTrace());
+		}
+		$dom = $this->parseBBCode($xmlString);
+		$dom->documentElement->setAttribute('class', 'error');
 		return $dom;
 	}
 	
@@ -534,8 +545,13 @@ class website_BBCodeParser
 		$this->xmlDocument = $document;
 		$this->parentElement = $this->xmlDocument->documentElement;
 		$this->setProfile($this->parentElement->getAttribute('data-profile'));
+		$classes = array('bbcode', $this->profile->getName());
+		if ($this->parentElement->hasAttribute('class'))
+		{
+			$classes[] = $this->parentElement->getAttribute('class');
+		}
 		$xhtmlDoc = new DOMDocument('1.0', 'UTF-8');
-		$xhtmlDoc->loadXML('<div class="bbcode ' . $this->profile->getName() . '"></div>');
+		$xhtmlDoc->loadXML('<div class="' . implode(' ', $classes) . '"></div>');
 		foreach ($this->parentElement->childNodes as $node) 
 		{
 			$this->convertNodeToHtml($node, $xhtmlDoc->documentElement, $xhtmlDoc);
