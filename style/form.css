@@ -21,15 +21,21 @@ form.cmxform legend {
 	margin-bottom: 0px;
 }
 
+fieldset.radio legend,
 form.cmxform label {
 	text-align: right;
 	width: 33%;
-	display:block;
-	float:left;
-	margin-right:8px;
+	margin-right: 8px;
 	font-weight: bold;
 	line-height: 1.6;
+	font-size: 1em;	
 }
+
+form.cmxform label {
+	display: block;
+	float: left;
+}
+
 form.cmxform label.form-validation.error {
 	margin-left: 33%;
 	padding-left: 8px;
@@ -139,24 +145,22 @@ form.cmxform ol li {
 
 form.cmxform ol li.radio label,
 form.cmxform label.nocmx {
-	width: 23%;
+	width: auto;
 	min-height: 10px;
-	display: -moz-inline-stack;
 	display: inline-block;
 	vertical-align: top;
-	margin-right: 8px;
+	margin-right: 16px;
 	text-align: left;
 	float: none;
 	font-weight: normal;
-	zoom: 1;
-	*display: inline;
-	_height: 10px;	
+	zoom: 1;	
 }
 
 li.radio-container {
 	overflow: hidden;
 }
 
+form.cmxform fieldset.radio,
 fieldset.radio {
 	border-width: 0px;
 	padding: 0px;
@@ -167,22 +171,13 @@ fieldset.radio {
 }
 
 fieldset.radio legend {
-	font-size: 1em;
-	line-height: 1.6;
+	padding: 0;
 	position: absolute;
 	right: 100%;
-	width: 33%;
-	margin-right: 8px;
-	text-align: right;	
 }
 
 fieldset.radio ol {
 	margin-right: 33%;
-}
-
-li.checkbox input[type="radio"],
-li.checkbox input[type="checkbox"] {
-	margin-left: 0px;
 }
 
 span.captcha {
@@ -275,18 +270,10 @@ textarea {
 	overflow: auto; /* www.sitepoint.com/blogs/2010/08/20/ie-remove-textarea-scrollbars/ */
 } 
 
-/* Align checkboxes, radios, text inputs with their label by: Thierry Koblentz tjkdesign.com/ez-css/css/base.css  */
-input[type="radio"] {
-	vertical-align: text-bottom;
-}
-input[type="checkbox"] {
-	vertical-align: bottom;
-	*vertical-align: baseline;
-}
-
 input[type="radio"],
 input[type="checkbox"] {
 	vertical-align: baseline;
+	margin-left: 0px;	
 }
 
 /* Hand cursor on clickable input elements */

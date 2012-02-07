@@ -234,7 +234,7 @@ class website_FormHelper
 			{
 				self::setDefaultValue("required", true, $params);
 			}
-			self::setDefaultValue('label', self::getLabelizedLocale($beanPropertyInfo->getLabelKey()), $params);
+			self::setDefaultValue('label', $beanPropertyInfo->getLabelKey(), $params);
 		}
 		self::setDefaultValue("id", self::buildFieldId($params['name']), $params);
 		return self::buildLabel($params);
@@ -258,13 +258,7 @@ class website_FormHelper
 	public static function endLabel()
 	{
 		$result = "";
-		if (isset(self::$labelParams['required']) && self::$labelParams['required'] == true)
-		{
-			$title = LocaleService::getInstance()->transFo("&modules.website.frontoffice.this-field-is-mandatory;");
-			$result .= ' <span class="requiredsymbol" '.f_util_HtmlUtils::buildAttribute("title", $title).'>*</span>';
-		}
-		self::$labelParams = null;
-		
+		self::$labelParams = null;		
 		return $result."</label>";
 	}
 
@@ -604,7 +598,7 @@ class website_FormHelper
 				throw new Exception("Unsupported document type ".$beanPropertyInfo->getDocumentType());
 		}
 
-		self::setDefaultValue('label', self::getLabelizedLocale($beanPropertyInfo->getLabelKey()), $params);
+		self::setDefaultValue('label', $beanPropertyInfo->getLabelKey(), $params);
 		self::setDefaultValue('required', $beanPropertyInfo->isRequired(), $params);
 		self::setDefaultValue('help', $beanPropertyInfo->getHelpKey(), $params);
 		// END TODO: refactor with renderField
@@ -860,7 +854,7 @@ jQuery(document).ready(function() {
 		self::setDefaultValue("labeled", true, $params);
 		if ($params["labeled"])
 		{
-			self::setDefaultValue('label', self::getLabelizedLocale($beanPropertyInfo->getLabelKey()), $params);
+			self::setDefaultValue('label', $beanPropertyInfo->getLabelKey(), $params);
 		}
 		self::setDefaultValue('required', $beanPropertyInfo->isRequired(), $params);
 		self::setDefaultValue('help', $beanPropertyInfo->getHelpKey(), $params);
@@ -943,7 +937,7 @@ jQuery(document).ready(function() {
 		self::setDefaultValue("labeled", true, $params);
 		if ($params["labeled"])
 		{
-			self::setDefaultValue('label', self::getLabelizedLocale($beanPropertyInfo->getLabelKey()), $params);
+			self::setDefaultValue('label', $beanPropertyInfo->getLabelKey(), $params);
 		}
 		self::setDefaultValue('help', $beanPropertyInfo->getHelpKey(), $params);
 		$params["onchange"] = "Change_UploadField_FileChanged(this, '".($name."_add")."');";
@@ -1256,8 +1250,8 @@ jQuery(document).ready(function() {
 		}
 		$datePickerParam .= '}';
 		
-		$dateFormatTitle = $ls->transFO('m.form.frontoffice.datepicker.format-help', array('ucf'));
-		return self::renderInputByType("text", $params) . '<span class="date-format" title="' . $dateFormatTitle . '">' . $format . "</span><script type=\"text/javascript\">//<![CDATA[\njQuery(document).ready(function(){jQuery('[id=" . $params['id'] . "]').datePicker($datePickerParam);});\n//]]></script>";
+		$dateFormatTitle = $ls->transFO('m.form.frontoffice.datepicker.format-help', array('ucf', 'attr'));
+		return self::renderInputByType("text", $params) . ' <span class="date-format" title="(' . $dateFormatTitle . ')">' . $format . "</span><script type=\"text/javascript\">//<![CDATA[\njQuery(document).ready(function(){jQuery('[id=" . $params['id'] . "]').datePicker($datePickerParam);});\n//]]></script>";
 	}
 
 	/**
@@ -1289,7 +1283,7 @@ jQuery(document).ready(function() {
 		{
 			$propName = trim($beanProperty);
 			$beanPropertyInfo = BeanUtils::getPropertyInfo(self::$bean, $propName);
-			$params['label'] = self::getLabelizedLocale($beanPropertyInfo->getLabelKey());
+			$params['label'] = $beanPropertyInfo->getLabelKey();
 			$params['required'] = $beanPropertyInfo->isRequired();
 			$params['useFor'] = false;
 			echo '<tr class="row' . ($i % 2) . '">';
@@ -1676,21 +1670,6 @@ jQuery(document).ready(function() {
 	}
 
 	/**
-	 * @param String $localeKey
-	 * @return String
-	 */
-	private function getLabelizedLocale($localeKey)
-	{
-		$ls = LocaleService::getInstance();
-		$cleanKey = $ls->cleanOldKey($localeKey);
-		if ($cleanKey !== false)
-		{
-			return $ls->transFO($cleanKey, array('ucf','lab','html'));
-		}
-		return $localeKey;
-	}
-
-	/**
 	 * Add the required scripts for the date picker
 	 */
 	private static function addDatePickerScript()
@@ -1773,7 +1752,7 @@ jQuery(document).ready(function() {
 		}
 		else if (isset($params['labeli18n']))
 		{
-			$value = LocaleService::getInstance()->transFO($params['labeli18n'], array('ucf', 'lab', 'html'));
+			$value = LocaleService::getInstance()->transFO($params['labeli18n'], array('ucf', 'html'));
 			if ($unsetWhenDone)
 			{
 				unset($params['labeli18n']);
@@ -1783,7 +1762,7 @@ jQuery(document).ready(function() {
 		{
 			$ls = LocaleService::getInstance();
 			$cKey = $ls->cleanOldKey($params['label']);
-			$value = ($cKey === false) ? $params['label'] : $ls->transFO($cKey, array('ucf', 'lab', 'html'));
+			$value = ($cKey === false) ? $params['label'] : $ls->transFO($cKey, array('ucf', 'html'));
 			if ($unsetWhenDone)
 			{
 				unset($params['label']);
@@ -1799,7 +1778,7 @@ jQuery(document).ready(function() {
 				$ckey = $ls->cleanOldKey($key);
 				if ($ckey !== false)
 				{
-					$value = $ls->transFO($ckey, array('ucf', 'lab', 'html'));
+					$value = $ls->transFO($ckey, array('ucf', 'html'));
 				}
 			}
 		}
@@ -1959,6 +1938,7 @@ jQuery(document).ready(function() {
 	 */
 	private function buildLabel($params, $close = true)
 	{
+		$ls = LocaleService::getInstance();
 		self::setDefaultValue('useFor', true, $params);
 		$label = self::getLabelFromParameters($params);
 		$result = '<label ';
@@ -2006,11 +1986,11 @@ jQuery(document).ready(function() {
 		if (isset($params['required']) && $params['required'] == true)
 		{
 			$classes[] = "required";
-			$result .= ' class="' . join(" ", $classes) . '">' . $label;
+			$result .= ' class="' . join(" ", $classes) . '">';
 			if ($close)
 			{
-				$title = LocaleService::getInstance()->transFO('m.website.frontoffice.this-field-is-mandatory');
-				$result .= ' <span class="requiredsymbol" '.f_util_HtmlUtils::buildAttribute("title", $title).'>*</span>';
+				$title = '(' . $ls->transFO('m.website.frontoffice.this-field-is-mandatory') . ')';
+				$result .= ' <em class="requiredsymbol" '.f_util_HtmlUtils::buildAttribute("title", $title).'>*</em> ';
 			}
 		}
 		else
@@ -2019,8 +1999,10 @@ jQuery(document).ready(function() {
 			{
 				$result .= ' class="' . join(" ", $classes) . '"';
 			}
-			$result .= '>' . $label;
+			$result .= '>';
 		}
+		$lang = RequestContext::getInstance()->getLang();
+		$result .= $ls->transformLab($label, $lang);
 		
 		if ($close)
 		{
