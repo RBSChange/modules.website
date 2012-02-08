@@ -42,16 +42,6 @@ form.cmxform label.form-validation.error {
     text-align: left;
 }
 
-form.cmxform label.option-label {
-	width: auto;
-	float: left;
-	font-weight: normal;
-}
-form.cmxform input.option-label {
-	float: left;
-	margin-right: 8px;
-}
-
 form.cmxform input.date-picker,
 form.cmxform input.passwordinput,
 input.textfield,
@@ -143,7 +133,7 @@ form.cmxform ol li {
 	margin-bottom: 8px;
 }
 
-form.cmxform ol li.radio label,
+form.cmxform label.option-label,
 form.cmxform label.nocmx {
 	width: auto;
 	min-height: 10px;

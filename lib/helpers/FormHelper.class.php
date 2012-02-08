@@ -1286,6 +1286,8 @@ jQuery(document).ready(function() {
 			$params['label'] = $beanPropertyInfo->getLabelKey();
 			$params['required'] = $beanPropertyInfo->isRequired();
 			$params['useFor'] = false;
+			$params['class'] = 'nocmx';
+			$params['withcolon'] = 'false';
 			echo '<tr class="row' . ($i % 2) . '">';
 			echo '<th scope="row">' . self::buildLabel($params) . '</th>';
 			foreach ($listItems as $item)
@@ -1478,7 +1480,7 @@ jQuery(document).ready(function() {
 			$params['id'] = $oldId;
 		}
 
-		// The labels for radio buttons must be always rendernd ans as not required.
+		// The labels for radio buttons must be always rendered and as not required.
 		$oldRequiredValue = (isset($params['required'])) ? $params['required'] : null;
 		$params['required'] = false;
 		$oldLabeledValue = (isset($params['labeled'])) ? $params['labeled'] : null;
@@ -1489,8 +1491,14 @@ jQuery(document).ready(function() {
 		$cKey = $ls->cleanOldKey($falseLabel);
 		if ($cKey !== false) {$falseLabel = $ls->transFO($cKey);}
 		
+		// Option labels should not have colon.
+		self::setDefaultValue('withcolon', 'true', $params);
+		$oldColonValue = $params['withcolon'];
+		$params['withcolon'] = 'false';
 		$result .= self::buildRadio("true", $trueLabel, $params, true);
 		$result .= self::buildRadio("false", $falseLabel, $params, true);
+		$params['withcolon'] = $oldColonValue;
+		
 		if (isset($params["unknownValue"]))
 		{
 			if (isset($params['unknownLabelKey']))
@@ -1586,7 +1594,7 @@ jQuery(document).ready(function() {
 		{
 			$params['class'] = "option-label";
 		}
-		return self::renderInputByType('radio', $params);
+		return self::renderOptionInputByType('radio', $params);
 	}
 	
 	/**
@@ -1636,7 +1644,14 @@ jQuery(document).ready(function() {
 		
 		$params['value'] = $radioValue;
 		
-		return self::renderInputByType('checkbox', $params);
+		if ($standalone)
+		{
+			return self::renderInputByType('checkbox', $params);
+		}
+		else
+		{
+			return self::renderOptionInputByType('checkbox', $params);
+		}
 	}
 
 	/**
@@ -1683,9 +1698,9 @@ jQuery(document).ready(function() {
 	}
 
 	/**
-	 * @param unknown_type $type
-	 * @param unknown_type $params
-	 * @return unknown
+	 * @param string $type
+	 * @param array $params
+	 * @return string
 	 */
 	private static function renderInputByType($type, &$params)
 	{
@@ -1703,6 +1718,31 @@ jQuery(document).ready(function() {
 		if (self::isLabeled($params))
 		{
 			return self::buildLabel($params) . self::renderInputCode($params);
+		}
+		return self::renderInputCode($params);
+	}
+
+	/**
+	 * @param string $type
+	 * @param array $params
+	 * @return string
+	 */
+	private static function renderOptionInputByType($type, &$params)
+	{
+		$name = self::buildNameAndId($params);
+		$params["type"] = $type;
+		if (!array_key_exists('value', $params))
+		{
+			$value = self::getFieldValue($name);
+			if ($value === null && isset($params['default-value']))
+			{
+				$value = $params['default-value'];
+			}
+			$params['value'] = $value;
+		}
+		if (self::isLabeled($params))
+		{
+			return self::buildLabel($params, true, self::renderInputCode($params) . ' ');
 		}
 		return self::renderInputCode($params);
 	}
@@ -1936,7 +1976,7 @@ jQuery(document).ready(function() {
 	 * @param Boolean $close
 	 * @return String
 	 */
-	private function buildLabel($params, $close = true)
+	private function buildLabel($params, $close = true, $contentPrefix = '')
 	{
 		$ls = LocaleService::getInstance();
 		self::setDefaultValue('useFor', true, $params);
@@ -1986,7 +2026,7 @@ jQuery(document).ready(function() {
 		if (isset($params['required']) && $params['required'] == true)
 		{
 			$classes[] = "required";
-			$result .= ' class="' . join(" ", $classes) . '">';
+			$result .= ' class="' . join(" ", $classes) . '">' . $contentPrefix;
 			if ($close)
 			{
 				$title = '(' . $ls->transFO('m.website.frontoffice.this-field-is-mandatory') . ')';
@@ -1999,10 +2039,17 @@ jQuery(document).ready(function() {
 			{
 				$result .= ' class="' . join(" ", $classes) . '"';
 			}
-			$result .= '>';
+			$result .= '>' . $contentPrefix;
 		}
-		$lang = RequestContext::getInstance()->getLang();
-		$result .= $ls->transformLab($label, $lang);
+		if (!isset($params['withcolon']) || $params['withcolon'] == 'true')
+		{
+			$lang = RequestContext::getInstance()->getLang();
+			$result .= $ls->transformLab($label, $lang);
+		}
+		else
+		{
+			$result .= $label;
+		}
 		
 		if ($close)
 		{
