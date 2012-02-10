@@ -229,11 +229,15 @@ ul.document-list > li,
 ol.document-list > li {
 	border-bottom-width: 1px;
 	border-bottom-style: dotted;
-	padding: 6px;	
+	padding: 6px;		
 }
 .document-list img.document-visual {
 	float: left;
 	margin-right: 5px;
+}
+.document-list > .odd, 
+.document-list > .even {
+	margin: 0;
 }
 
 .inline-list dt {

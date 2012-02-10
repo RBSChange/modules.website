@@ -226,17 +226,22 @@ class website_FormHelper
 	 */
 	public static function renderFieldlabel($params)
 	{
-		$propertyName = $params['name'];
-		if (BeanUtils::hasProperty(self::$bean, $propertyName))
+		if (!isset($params['name']))
 		{
-			$beanPropertyInfo = BeanUtils::getPropertyInfo(self::$bean, $propertyName);
+			throw new Exception('Use change:label or set name attribute');
+		}
+		
+		$pn = $params['name'];
+		if (self::$bean && BeanUtils::hasProperty(self::$bean, $pn))
+		{
+			$beanPropertyInfo = BeanUtils::getPropertyInfo(self::$bean, $pn);
 			if ($beanPropertyInfo->isRequired())
 			{
 				self::setDefaultValue("required", true, $params);
 			}
 			self::setDefaultValue('label', $beanPropertyInfo->getLabelKey(), $params);
 		}
-		self::setDefaultValue("id", self::buildFieldId($params['name']), $params);
+		self::setDefaultValue("id", self::buildFieldId($pn), $params);	
 		return self::buildLabel($params);
 	}
 	
@@ -249,7 +254,24 @@ class website_FormHelper
 	 */
 	public static function renderLabel($params)
 	{
-		self::setDefaultValue("id", self::buildFieldId($params['name']), $params);
+		if (isset($params['for']))
+		{
+			self::setDefaultValue("id", $params['for'], $params);
+		}
+		elseif (isset($params['name']))
+		{
+			self::setDefaultValue("id", self::buildFieldId($params['name']), $params);
+			
+			if (self::$bean && BeanUtils::hasProperty(self::$bean, $params['name']))
+			{	
+				$beanPropertyInfo = BeanUtils::getPropertyInfo(self::$bean, $params['name']);
+				if ($beanPropertyInfo->isRequired())
+				{
+					self::setDefaultValue("required", true, $params);
+				}
+				self::setDefaultValue('label', $beanPropertyInfo->getLabelKey(), $params);
+			}
+		}
 		$labelCode = self::buildLabel($params, false);
 		self::$labelParams = $params; 
 		return $labelCode;
@@ -257,9 +279,13 @@ class website_FormHelper
 	
 	public static function endLabel()
 	{
-		$result = "";
-		self::$labelParams = null;		
-		return $result."</label>";
+		$withcolon = (!isset(self::$labelParams['withcolon']) || self::$labelParams['withcolon'] == 'true');
+		self::$labelParams = null;	
+		if ($withcolon)
+		{
+			return LocaleService::getInstance()->transformLab('', RequestContext::getInstance()->getLang()).'</label>';
+		}
+		return '</label>';
 	}
 
 	private static function getParameterName($fieldName)
@@ -1979,7 +2005,7 @@ jQuery(document).ready(function() {
 	private function buildLabel($params, $close = true, $contentPrefix = '')
 	{
 		$ls = LocaleService::getInstance();
-		self::setDefaultValue('useFor', true, $params);
+		self::setDefaultValue('useFor', isset($params["id"]), $params);
 		$label = self::getLabelFromParameters($params);
 		$result = '<label ';
 		if ($params['useFor'])
@@ -2026,12 +2052,10 @@ jQuery(document).ready(function() {
 		if (isset($params['required']) && $params['required'] == true)
 		{
 			$classes[] = "required";
-			$result .= ' class="' . join(" ", $classes) . '">' . $contentPrefix;
-			if ($close)
-			{
-				$title = '(' . $ls->transFO('m.website.frontoffice.this-field-is-mandatory') . ')';
-				$result .= ' <em class="requiredsymbol" '.f_util_HtmlUtils::buildAttribute("title", $title).'>*</em> ';
-			}
+			$result .= ' class="' . join(" ", $classes) . '">';
+			$title = '(' . $ls->transFO('m.website.frontoffice.this-field-is-mandatory') . ')';
+			$result .= ' <em class="requiredsymbol" '.f_util_HtmlUtils::buildAttribute("title", $title).'>*</em> ';
+
 		}
 		else
 		{
@@ -2041,19 +2065,24 @@ jQuery(document).ready(function() {
 			}
 			$result .= '>' . $contentPrefix;
 		}
-		if (!isset($params['withcolon']) || $params['withcolon'] == 'true')
+		
+		$withcolon =  (!isset($params['withcolon']) || $params['withcolon'] == 'true');
+		if ($close)
 		{
-			$lang = RequestContext::getInstance()->getLang();
-			$result .= $ls->transformLab($label, $lang);
+			if ($withcolon)
+			{
+				$lang = RequestContext::getInstance()->getLang();
+				$result .= $ls->transformLab($label, $lang);
+			}
+			else
+			{
+				$result .= $label;
+			}
+			$result .= '</label> ';
 		}
 		else
 		{
 			$result .= $label;
-		}
-		
-		if ($close)
-		{
-			$result .= '</label> ';
 		}
 		return $result;
 	}
@@ -2593,12 +2622,17 @@ jQuery(document).ready(function() {
 	 */
 	private static function hasErrorsForProperty($propertyName)
 	{
+		if (!self::$context)
+		{
+			return false;
+		}
 		$ctxKey = website_BlockAction::BLOCK_PER_PROPERTY_ERRORS_ATTRIBUTE_KEY;
 		if (self::$relKey !== null)
 		{
 			$ctxKey .= "_relative";
 		}
 		$blockKey = self::$currentBlockId;
+		
 		$propertyErrors = self::$context->getAttribute($ctxKey, array());
 		return isset($propertyErrors[$blockKey]) && isset($propertyErrors[$blockKey][$propertyName]);
 	}
