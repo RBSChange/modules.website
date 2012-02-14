@@ -1672,6 +1672,7 @@ jQuery(document).ready(function() {
 		
 		if ($standalone)
 		{
+			
 			return self::renderInputByType('checkbox', $params);
 		}
 		else
@@ -2052,7 +2053,7 @@ jQuery(document).ready(function() {
 		if (isset($params['required']) && $params['required'] == true)
 		{
 			$classes[] = "required";
-			$result .= ' class="' . join(" ", $classes) . '">';
+			$result .= ' class="' . join(" ", $classes) . '">' . $contentPrefix;
 			$title = '(' . $ls->transFO('m.website.frontoffice.this-field-is-mandatory') . ')';
 			$result .= ' <em class="requiredsymbol" '.f_util_HtmlUtils::buildAttribute("title", $title).'>*</em> ';
 
