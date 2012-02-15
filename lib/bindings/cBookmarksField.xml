@@ -19,7 +19,7 @@
                     	oncommand="moveItemDown();" disabled="true" />
                 </xul:hbox>
                 
-                <xul:label value="${transui:m.website.bo.blocks.bookmarks.availablebookmarkslabel,ucf,attr}" 
+                <xul:label value="${transui:m.website.bo.blocks.bookmarks.availablebookmarks,ucf,attr}" 
                 		   style="font-weight: bold; font-size: 12px;" />
 				<xul:listbox anonid="availableList" seltype="multiple" onselect="handleAvailableSelect();" />
                 <xul:button anonid="add" image="{IconsBase}/small/add.png" label="${transui:m.website.bo.blocks.bookmarks.add,ucf,attr}" 
