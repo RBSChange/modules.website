@@ -128,10 +128,12 @@
 		</h6>
 	</xsl:template>
 	
-	<xsl:template match="ol[normalize-space(.) ='' and not(descendant::hr) and not(descendant::br) and not(descendant::img)]" priority="5"></xsl:template>	
+	<xsl:template match="ol[normalize-space(.) ='' and not(descendant::hr) and not(descendant::br) and not(descendant::img)]" priority="5"></xsl:template>
+	<xsl:template match="ol[parent::ul or parent::ol]"><li>&#160;<ol class="normal"><xsl:apply-templates /></ol></li></xsl:template>		
 	<xsl:template match="ol"><ol class="normal"><xsl:apply-templates /></ol></xsl:template>
 	
-	<xsl:template match="ul[normalize-space(.) ='' and not(descendant::hr) and not(descendant::br) and not(descendant::img)]" priority="5"></xsl:template>	
+	<xsl:template match="ul[normalize-space(.) ='' and not(descendant::hr) and not(descendant::br) and not(descendant::img)]" priority="5"></xsl:template>
+	<xsl:template match="ul[parent::ul or parent::ol]"><li>&#160;<ul class="normal"><xsl:apply-templates /></ul></li></xsl:template>	
 	<xsl:template match="ul"><ul class="normal"><xsl:apply-templates /></ul></xsl:template>
 	
 	<xsl:template match="li[normalize-space(.) ='' and not(descendant::hr) and not(descendant::br) and not(descendant::img)]" priority="5"></xsl:template>	
