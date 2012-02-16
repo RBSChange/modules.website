@@ -39,7 +39,8 @@ form.cmxform label {
 form.cmxform label.form-validation.error {
 	margin-left: 33%;
 	padding-left: 8px;
-    text-align: left;
+	text-align: left;
+	float: none;
 }
 
 form.cmxform input.date-picker,
