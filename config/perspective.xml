@@ -315,6 +315,5 @@
 		<action name="openUrlRewritingPanel" single="true" permission="LoadRedirectInfo" icon="urlrewriting" labeli18n="m.uixul.bo.actions.Url-rewriting"/>
 		<action name="removeFromMenu" single="true" permission="RemoveFromMenu" icon="remove" labeli18n="m.website.bo.actions.Remove-from-menu"/>
 		<action name="createWebsite" single="true" permission="Insert_website" icon="add" labeli18n="m.website.bo.actions.Create-website"/>
-		<action name="checkLink" global="true" permission="CheckLink" icon="check" labeli18n="m.website.bo.actions.Check-link"/>
 	</actions>
 </perspective>

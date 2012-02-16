@@ -1,10 +1,11 @@
 <?php
+/**
+ * @deprecated (will be removed in 4.0)
+ */
 class website_CheckLinksInputView extends f_view_BaseView
 {
-
     /**
-	 * @param Context $context
-	 * @param Request $request
+	 * @deprecated (will be removed in 4.0)
 	 */
     public function _execute($context, $request)
     {

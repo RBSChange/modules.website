@@ -1,9 +1,11 @@
 <?php
+/**
+ * @deprecated (will be removed in 4.0)
+ */
 class website_CheckLinksAction extends f_action_BaseAction
 {
 	/**
-	 * @param Context $context
-	 * @param Request $request
+	 * @deprecated (will be removed in 4.0)
 	 */
 	public function _execute($context, $request)
 	{
@@ -144,6 +146,9 @@ class website_CheckLinksAction extends f_action_BaseAction
 		return self::getErrorView();
 	}
 	
+	/**
+	 * @deprecated (will be removed in 4.0)
+	 */
 	public function checkLinks($document)
 	{
 		$errors = array();
@@ -247,6 +252,9 @@ class website_CheckLinksAction extends f_action_BaseAction
 		return $errors;
 	}
 	
+	/**
+	 * @deprecated (will be removed in 4.0)
+	 */
 	public function getPagePath($document)
 	{
 		$path = sprintf('<a href="%s"><strong>%s</strong></a>', LinkHelper::getDocumentUrl($document), $document->getLabel());
@@ -278,6 +286,9 @@ class website_CheckLinksAction extends f_action_BaseAction
 		return $path;
 	}
 	
+	/**
+	 * @deprecated (will be removed in 4.0)
+	 */
 	public function getPages($document)
 	{
 		$lang = RequestContext::getInstance()->getLang();
@@ -323,6 +334,9 @@ class website_CheckLinksAction extends f_action_BaseAction
 		return array_unique($ids);
 	}
 	
+	/**
+	 * @deprecated (will be removed in 4.0)
+	 */
 	public function getRequestMethods()
 	{
 		return Request::POST | Request::GET;
