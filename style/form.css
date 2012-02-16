@@ -6,9 +6,9 @@
 /* FORM CONTROLS */
 /*---------------*/
 fieldset {
-	padding:10px;
-	border-width:1px /*@var fieldsetborderwidth*/;
-	border-style:solid;
+	padding: 10px;
+	border-width: 1px /*@var fieldsetborderwidth*/;
+	border-style: solid;
 }
 
 legend {
@@ -21,7 +21,7 @@ form.cmxform legend {
 	margin-bottom: 0px;
 }
 
-fieldset.radio legend,
+fieldset.inline-set legend,
 form.cmxform label {
 	text-align: right;
 	width: 33%;
@@ -146,12 +146,12 @@ form.cmxform label.nocmx {
 	zoom: 1;	
 }
 
-li.radio-container {
+li.inline-set-container {
 	overflow: hidden;
 }
 
-form.cmxform fieldset.radio,
-fieldset.radio {
+form.cmxform fieldset.inline-set,
+fieldset.inline-set {
 	border-width: 0px;
 	padding: 0px;
 	position: relative;
@@ -160,13 +160,13 @@ fieldset.radio {
 	margin-left: 8px;	
 }
 
-fieldset.radio legend {
+fieldset.inline-set legend {
 	padding: 0;
 	position: absolute;
 	right: 100%;
 }
 
-fieldset.radio ol {
+fieldset.inline-set ol {
 	margin-right: 33%;
 }
 

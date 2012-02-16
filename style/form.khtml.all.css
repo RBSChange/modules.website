@@ -1,6 +1,6 @@
 form.cmxform label,
-form.cmxform fieldset.radio legend,
-fieldset.radio legend{
+form.cmxform fieldset.inline-set legend,
+fieldset.inline-set legend{
 	line-height: 1.5;
 }
 
