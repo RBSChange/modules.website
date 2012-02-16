@@ -32,7 +32,8 @@
 			}
 		]]></body>
 	</action>
-				
+	
+	<!-- @deprecated (will be removed in 4.0) -->	
 	<action name="checkLink">
 		<parameter name="listWidget"/>
 		<body><![CDATA[
