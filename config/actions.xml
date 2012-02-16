@@ -32,62 +32,6 @@
 			}
 		]]></body>
 	</action>
-	
-	<!-- @deprecated (will be removed in 4.0) -->	
-	<action name="checkLink">
-		<parameter name="listWidget"/>
-		<body><![CDATA[
-			var selectedIds = listWidget.getSelectedIds();
-			var lang = this.getContextLang();
-
-			var proceedAll = false;
-			var proceedSelected = false;
-
-			if (selectedIds.length == 0)
-			{
-				proceedAll = true;
-			}
-			else if (selectedIds.length > 0)
-			{
-				var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"].getService(Components.interfaces.nsIPromptService);
-				var check = {value: false};
-				var flags = prompts.BUTTON_TITLE_IS_STRING * prompts.BUTTON_POS_0 +
-							prompts.BUTTON_TITLE_IS_STRING * prompts.BUTTON_POS_1;
-
-				var button = prompts.confirmEx(window,
-					"${transui:m.website.bo.actions.Check-link-confirm,ucf,js}",
-					"${transui:m.website.bo.actions.Check-link-confirm-selected-or-all,ucf,js}",
-					flags,
-					"${transui:m.website.bo.actions.Regenerate-selected,ucf,js}",
-					"${transui:m.website.bo.actions.Regenerate-all,ucf,js}",
-					null, null, check
-				);
-
-				switch (button)
-				{
-					case 0:
-						proceedSelected = true;
-						break;
-
-					case 1:
-						proceedAll = true;
-						break;
-				}
-			}
-
-			if (proceedAll)
-			{
-				if (window.confirm("${transui:m.website.bo.actions.Check-link-confirm-all,ucf,js}"))
-				{
-					wToolkit.dialog("website", "CheckLinks", {lang: lang }, null, null, true);
-				}
-			}
-			else if (proceedSelected)
-			{
-			   wToolkit.dialog("website", "CheckLinks", {lang: lang, cmpref: selectedIds }, null, null, true);
-			}
-		]]></body>
-	</action>
 
 	<action name="setAsIndexPage">
 		<parameter name="listWidget"/>
@@ -361,6 +305,62 @@
 			catch (e)
 			{
 				wCore.error('website.initDefaultStruct', [], e);
+			}
+		]]></body>
+	</action>
+	
+	<!-- @deprecated (will be removed in 4.0) -->	
+	<action name="checkLink">
+		<parameter name="listWidget"/>
+		<body><![CDATA[
+			var selectedIds = listWidget.getSelectedIds();
+			var lang = this.getContextLang();
+
+			var proceedAll = false;
+			var proceedSelected = false;
+
+			if (selectedIds.length == 0)
+			{
+				proceedAll = true;
+			}
+			else if (selectedIds.length > 0)
+			{
+				var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"].getService(Components.interfaces.nsIPromptService);
+				var check = {value: false};
+				var flags = prompts.BUTTON_TITLE_IS_STRING * prompts.BUTTON_POS_0 +
+							prompts.BUTTON_TITLE_IS_STRING * prompts.BUTTON_POS_1;
+
+				var button = prompts.confirmEx(window,
+					"${transui:m.website.bo.actions.Check-link-confirm,ucf,js}",
+					"${transui:m.website.bo.actions.Check-link-confirm-selected-or-all,ucf,js}",
+					flags,
+					"${transui:m.website.bo.actions.Regenerate-selected,ucf,js}",
+					"${transui:m.website.bo.actions.Regenerate-all,ucf,js}",
+					null, null, check
+				);
+
+				switch (button)
+				{
+					case 0:
+						proceedSelected = true;
+						break;
+
+					case 1:
+						proceedAll = true;
+						break;
+				}
+			}
+
+			if (proceedAll)
+			{
+				if (window.confirm("${transui:m.website.bo.actions.Check-link-confirm-all,ucf,js}"))
+				{
+					wToolkit.dialog("website", "CheckLinks", {lang: lang }, null, null, true);
+				}
+			}
+			else if (proceedSelected)
+			{
+			   wToolkit.dialog("website", "CheckLinks", {lang: lang, cmpref: selectedIds }, null, null, true);
 			}
 		]]></body>
 	</action>
