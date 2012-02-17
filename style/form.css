@@ -160,13 +160,11 @@ fieldset.inline-set {
 	margin: 0;	
 	margin-left: 8px;	
 }
-
 fieldset.inline-set legend {
 	padding: 0;
 	position: absolute;
 	right: 100%;
 }
-
 fieldset.inline-set ol {
 	margin-right: 33%;
 }
@@ -198,8 +196,7 @@ form.cmxform fieldset div,
 form.cmxform .free-text {
 
 }
-
-form.cmxform p.help-text {
+form.cmxform .help-text {
 	font-size: .9em;
 	margin-left: 33%;
 	padding-left: 8px;
@@ -208,15 +205,12 @@ form.cmxform p.help-text {
 /* Erreurs */
 .error,
 .errors,
-form.cmxform ul.errors li,
-form.cmxform em {
+.requiredsymbol {
 	color:#ff0000;
 }
-
 .warning {
 	color:orange;
 }
-
 .success {
 	color:green;
 }
@@ -224,15 +218,10 @@ form.cmxform em {
 form.cmxform ul.errors {
 
 }
-
 form.cmxform ul.errors li {
 	list-style-type:disc;
 	list-style-position:inside;
 	padding-left:40px;
-}
-
-form.cmxform em {
-	font-style:normal;
 }
 
 a.dp-choose-date {

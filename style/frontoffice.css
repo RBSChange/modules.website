@@ -208,12 +208,10 @@ ul.mini-navigation {
 	margin-left: 5px
 }
 
-.highlight,
-.modules-solrsearch ol.document-list em {
+.highlight {
 	color: #000000;
 	background: #ffff00;
 	padding: 1px 4px;
-	margin: 0 -2px;
 	font-weight: bold;
 }
 
