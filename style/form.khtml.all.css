@@ -16,9 +16,8 @@ input[type="radio"],
 input[type="checkbox"] {
 	vertical-align: bottom;
 }
-
-label.nocmx input[type="radio"],
-label.nocmx input[type="checkbox"] {
+label input[type="radio"],
+label input[type="checkbox"] {
 	vertical-align: baseline;
 }
 
