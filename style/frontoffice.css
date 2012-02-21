@@ -74,6 +74,7 @@ div.normal,
 ul.mini-navigation,
 .pagination,
 .document-list,
+.inline-items,
 .normal-margin {
 	margin-bottom: 20px;
 }
@@ -103,6 +104,7 @@ div.normal:last-child,
 ul.mini-navigation:last-child,
 .pagination:last-child,
 .document-list:last-child,
+.inline-items:last-child,
 .normal-margin:last-child {
 	margin-bottom: 0;
 }
@@ -126,6 +128,7 @@ ul.messages + .cleaner:last-child,
 .mini-navigation + .cleaner:last-child,
 .pagination + .cleaner:last-child,
 .document-list + .cleaner:last-child,
+.inline-items + .cleaner:last-child,
 .normal-margin + .cleaner:last-child {
 	margin-top: -20px;
 }
@@ -262,12 +265,23 @@ ol.cloud-list li {
 	padding-right: 5px;
 }
 
-dl.document-infos dt {
+dl.normal > dt {
+	font-weight: bold;
+}
+dl.normal > dd {
+	margin-bottom: 8px;
+}
+
+dl.inline-items > dt {
+	font-weight: bold;
 	float: left;
 	margin-right: 4px;
 }
-dl.document-infos dd {
-	margin-bottom: 3px;
+dl.inline-items > dt:after {
+	content: " :";
+}
+dl.inline-items > dd {
+	margin-bottom: 8px;
 }
 
 @import url(/modules/website/style/form.css);

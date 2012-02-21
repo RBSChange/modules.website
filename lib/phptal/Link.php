@@ -224,7 +224,7 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 				}
 				$url .= '#'.$anchor;
 			}
-			return $url;
+			return f_util_HtmlUtils::textToHtml($url);
 		}
 		catch (Exception  $e)
 		{
@@ -268,7 +268,7 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 			}
 			$url .= '#'.$anchor;
 		}
-		return $url;
+		return f_util_HtmlUtils::textToHtml($url);
 	}
 
 	/**
@@ -319,7 +319,7 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 				}
 				$url .= '#'.$anchor;
 			}
-			return $url;
+			return f_util_HtmlUtils::textToHtml($url);
 		}
 		catch (Exception $e)
 		{

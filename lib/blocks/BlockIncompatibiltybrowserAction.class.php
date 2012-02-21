@@ -19,12 +19,12 @@ class website_BlockIncompatibiltybrowserAction extends website_BlockAction
 			return website_BlockView::NONE;
 		}
 		
-		$requestContextInstance = RequestContext::getInstance();
-		$browserType = $requestContextInstance->getUserAgentType();
-		$browserVersion = $requestContextInstance->getUserAgentTypeVersion();
-		if ($browserType == 'trident' && $browserVersion !== 'all' && intval($browserVersion) <= 4)
+		$rc = RequestContext::getInstance();
+		$browserVersion = $rc->getUserAgentTypeVersion();
+		if ($rc->getUserAgentType() == 'trident' && $browserVersion !== 'all' && intval($browserVersion) <= 4)
 		{
 			return website_BlockView::SUCCESS;
 		}
+		return website_BlockView::NONE;
 	}
 }

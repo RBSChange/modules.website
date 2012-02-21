@@ -30,6 +30,10 @@ form.cmxform label {
 	line-height: 1.6;
 	font-size: 1em;	
 }
+fieldset.inline-set li.option {
+	display: inline-block;
+	margin: 0;
+}
 
 form.cmxform label {
 	display: block;
@@ -221,7 +225,6 @@ form.cmxform ul.errors {
 form.cmxform ul.errors li {
 	list-style-type:disc;
 	list-style-position:inside;
-	padding-left:40px;
 }
 
 a.dp-choose-date {

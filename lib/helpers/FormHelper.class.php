@@ -199,7 +199,11 @@ class website_FormHelper
 		{
 			return $action."#".self::$formId;
 		}
-		return $action;
+		if (f_util_StringUtils::isNotEmpty($action))
+		{
+			return $action;
+		}
+		return "#";
 	}
 
 	/**
@@ -1402,7 +1406,7 @@ jQuery(document).ready(function() {
 
 		if (!$context->hasAttribute($ctxKey))
 		{
-			return "";
+			return '';
 		}
 		self::setDefaultValue('mode', 'block', $params);
 
@@ -1410,19 +1414,11 @@ jQuery(document).ready(function() {
 		{
 			$ctxKey .= "_relative";
 		}
-
 		$blockErrors = $context->getAttribute($ctxKey, array());
-		ob_start();
-		echo '<ul class="'.$className.'">';
-		
+	
 		// Do not use the local variables to be able to work outside from a change:form.
 		if ($controller->getRequest() != null && $params['mode'] == 'block')
 		{
-			$currentBlockId = $controller->getProcessedAction()->getBlockId();
-			if (isset($params['relKey']))
-			{
-				$currentBlockId .= "_".$params['relKey'];
-			}
 			if (isset($params['fields']))
 			{
 				$fields = explode(",", $params['fields']);
@@ -1435,27 +1431,40 @@ jQuery(document).ready(function() {
 						$errors[] = $fieldError;
 					}
 				}
-			} else
+			}
+			else
 			{
+				$currentBlockId = $controller->getProcessedAction()->getBlockId();
+				if (isset($params['relKey']))
+				{
+					$currentBlockId .= '_'.$params['relKey'];
+				}
 				$errors = isset($blockErrors[$currentBlockId]) ? $blockErrors[$currentBlockId] : array();
 			}
-			$errorsCount = count($errors);
+		}
+		else
+		{
+			foreach ($blockErrors as $errorsArray)
+			{
+				$errorsCount = count($errors);
+				if ($errorsCount)
+				{
+					$errors = array_merge($errors, $errorsArray);
+				}
+			}
+		}
+		
+		ob_start();
+		$errorsCount = count($errors);
+		if ($errorsCount)
+		{
+			echo '<ul class="'.$className.'">';
 			for ($i = 0; $i < $errorsCount; $i++)
 			{
 				echo self::buildListItem($errors[$i], $i == 0, $i == $errorsCount - 1);
 			}
-		} else
-		{
-			foreach ($blockErrors as $errors)
-			{
-				$errorsCount = count($errors);
-				for ($i = 0; $i < $errorsCount; $i++)
-				{
-					echo self::buildListItem($errors[$i], $i == 0, $i == $errorsCount - 1);
-				}
-			}
+			echo "</ul>";
 		}
-		echo "</ul>";
 		return ob_get_clean();
 	}
 

@@ -7,12 +7,12 @@
 		${scriptlibrary}
 		${scriptInclusion}
 		<script type="text/javascript"><![CDATA[
-	var pageData = {
-      id: ${PAGEID},
-      lang: "${PAGELANG}",
-      path: "${PAGEPATH}",
-      documentversion: ${PAGEVERSION}
-    };
+			var pageData = {
+				id: ${PAGEID},
+				lang: "${PAGELANG}",
+				path: "${PAGEPATH}",
+				documentversion: ${PAGEVERSION}
+			};
 		]]></script>
 		<cpageditor id="mainEditor" editorType="${editorType}">${pageContent}</cpageditor>
 	</window>

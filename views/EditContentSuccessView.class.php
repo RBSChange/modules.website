@@ -1,7 +1,6 @@
 <?php
 class website_EditContentSuccessView extends f_view_BaseView
 {
-	
 	/**
 	 * @param Context $context
 	 * @param Request $request
@@ -33,8 +32,7 @@ class website_EditContentSuccessView extends f_view_BaseView
 		$link = LinkHelper::getUIChromeActionLink('uixul', 'GetAdminJavascripts')
 			->setArgSeparator(f_web_HttpLink::ESCAPE_SEPARATOR);
 			$this->setAttribute('scriptlibrary', '<script type="application/x-javascript" src="' . $link->getUrl() . '"/>');
-		
-		
+				
 		$this->setAttribute('PAGEID', $document->getId());
 		$this->setAttribute('PAGELANG', RequestContext::getInstance()->getLang());	
 		$this->setAttribute('PAGEVERSION', $document->getDocumentversion());
@@ -48,19 +46,15 @@ class website_EditContentSuccessView extends f_view_BaseView
 			array_pop($ancestors);
 		}
 		
-		$ancestors = array_reverse($ancestors);
-		
-		array_pop($ancestors);
-		
+		$ancestors = array_reverse($ancestors);		
+		array_pop($ancestors);		
 		foreach ($ancestors as $ancestor)
 		{
 			$path = ' > ' . f_Locale::translate($ancestor->getLabel()) . $path;
-		}
-		
+		}		
 		$path .= ' > ' . $document->getLabel();
 		
-		$this->setAttribute('PAGEPATH', f_util_StringUtils::quoteDouble(trim($path)));
-		
+		$this->setAttribute('PAGEPATH', f_util_StringUtils::quoteDouble(trim($path)));		
 		$this->setAttribute('pageName', f_util_StringUtils::quoteDouble($document->getLabel()));
 	}
 	

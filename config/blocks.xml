@@ -116,10 +116,9 @@
 	</block>
 	<block type="modules_website_iframe" icon="iframe" label="&amp;modules.website.bo.blocks.Iframe;" cache="true">
 		<parameters>
-			<parameter name="title" type="String" min-occurs="1" />
 			<parameter name="url" type="String" min-occurs="1" default-value="about:blank" />
-			<parameter name="frameWidth" type="Integer" default-value="640" min-occurs="1" />
-			<parameter name="frameHeight" type="Integer" default-value="480" min-occurs="1" />
+			<parameter name="frameWidth" type="String" fieldtype="size" allowunits="px %" default-value="100%" min-occurs="1" />
+			<parameter name="frameHeight" type="String" fieldtype="size" allowunits="px" default-value="480px" min-occurs="1" />
 			<parameter name="scrolling" type="String" from-list="modules_website/iframescrolling" min-occurs="1" default-value="auto" />
 			<parameter name="text" type="LongString" default-value="" cols="46" rows="4" />
 		</parameters>
