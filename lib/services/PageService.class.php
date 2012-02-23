@@ -1470,7 +1470,8 @@ class website_PageService extends f_persistentdocument_DocumentService
 			}
 			else
 			{
-				if (f_util_StringUtils::isEmpty(f_util_StringUtils::htmlToText($html)))
+				// Il the block has no text content and contains no image, show the block's name.
+				if (f_util_StringUtils::isEmpty(f_util_StringUtils::htmlToText($html)) && strpos($html, '<img') === false)
 				{
 					$html = "<strong>" . $this->getBlockLabelFromBlockType($block['type']) . "</strong>";
 				}
