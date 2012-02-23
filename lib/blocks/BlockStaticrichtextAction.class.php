@@ -49,20 +49,32 @@ class website_BlockStaticrichtextAction extends website_BlockAction
 		}
 		
 		if (isset($attrs["cmpref"]))
-		{	
-			$rc = RequestContext::getInstance();
-			$lang = (isset($attrs["lang"]) ? $attrs["lang"] : $rc->getLang());
-			$media = DocumentHelper::getDocumentInstance($attrs["cmpref"]);
-			if (isset($attrs['format']) && !empty($attrs['format']))
-	        {
-	            list($stylesheet, $formatName) = explode('/', $attrs['format']);
-				$formatInfo = MediaHelper::getFormatProperties($stylesheet, $formatName);
-	        }
-	        if (!$media->isLangAvailable($lang) || $media->getFilenameForLang($lang) === null)
-	        {
-	        	$lang = $media->getLang();
-	        }
-			$attrs["src"] = LinkHelper::getDocumentUrl($media, $lang, $formatInfo);
+		{
+			try 
+			{
+				$rc = RequestContext::getInstance();
+				$lang = (isset($attrs["lang"]) ? $attrs["lang"] : $rc->getLang());
+				$media = DocumentHelper::getDocumentInstance($attrs["cmpref"]);
+				if (isset($attrs['format']) && !empty($attrs['format']))
+		        {
+		            list($stylesheet, $formatName) = explode('/', $attrs['format']);
+					$formatInfo = MediaHelper::getFormatProperties($stylesheet, $formatName);
+		        }
+		        if (!$media->isLangAvailable($lang) || $media->getFilenameForLang($lang) === null)
+		        {
+		        	$lang = $media->getLang();
+		        }
+				$attrs["src"] = LinkHelper::getDocumentUrl($media, $lang, $formatInfo);
+			}
+			catch (Exception $e)
+			{
+				Framework::exception($e);
+				$attrs["class"] = 'image-broken';
+				$attrs["src"] = MediaHelper::getIcon('unknown', 'normal');
+				$alt = LocaleService::getInstance()->transFO('m.media.frontoffice.broken-image', array('ucf'));
+				$attrs["title"] = $alt;
+				$attrs["alt"] = $alt;
+			}
 			$imgStr = "<img";
 			foreach ($attrs as $key => $value)
 			{
