@@ -285,6 +285,13 @@ dl.inline-items > dd {
 	margin-bottom: 8px;
 }
 
+/* BBCodes */
+.small{
+	font-size: 0.7em;
+}
+.big{
+	font-size: 1.4em;
+}
+
 @import url(/modules/website/style/form.css);
-@import url(/modules/website/style/bbcode.css);
 @import url(/modules/website/style/bench.css);

@@ -699,8 +699,8 @@ class website_BBCodeProfile
 		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoBig());
 		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoSmall());
 		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoAlign());
-		$bbcodeParser->addTagInfo(new website_BBCodeTagInfo('list', 'ul', 'richtext/unordered-list'));
-		$bbcodeParser->addTagInfo(new website_BBCodeTagInfo('item', 'li', 'richtext/list-item'));
+		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoList());
+		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoListItem());
 		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoQuote());
 		$bbcodeParser->addTagInfo(new website_BBCodeTagInfo('code', 'pre', 'richtext/code', false, true));
 		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoNoBB());
@@ -1038,7 +1038,7 @@ class website_BBCodeTagInfoU extends website_BBCodeTagInfo
 	 */
 	public function normalizeXml($xmlElement)
 	{
-		$xmlElement->setAttribute('style', 'text-decoration: underline;');
+		$xmlElement->setAttribute('class', 'underline');
 	}
 
 	/**
@@ -1051,7 +1051,7 @@ class website_BBCodeTagInfoU extends website_BBCodeTagInfo
 		$elem = parent::toHtml($xmlElement, $xhtmlParent);
 		if ($elem)
 		{
-			$elem->setAttribute('style', 'text-decoration: underline;');
+			$elem->setAttribute('class', 'underline');
 		}
 		return $elem;
 	}
@@ -1154,6 +1154,7 @@ class website_BBCodeTagInfoImg extends website_BBCodeTagInfo
 		$alt = $xmlElement->textContent;
 		$elem->setAttribute('src', $src);
 		$elem->setAttribute('alt', $alt);
+		$elem->setAttribute('class', 'image');
 		if ($alt) {$elem->setAttribute('title', $alt);}
 		return null;
 	}
@@ -1383,7 +1384,7 @@ class website_BBCodeTagInfoAlign extends website_BBCodeTagInfo
 	public function toHtml($xmlElement, $xhtmlParent)
 	{
 		$elem = parent::toHtml($xmlElement, $xhtmlParent);
-		$elem->setAttribute('class', 'align-' . $this->getTagAttribute($xmlElement));
+		$elem->setAttribute('class', 'text-align-' . $this->getTagAttribute($xmlElement));
 		return $elem;
 	}
 
@@ -1567,6 +1568,46 @@ class website_BBCodeTagInfoColor extends website_BBCodeTagInfo
 		$infos = f_util_ArrayUtils::firstElement(parent::getInfosForJS());
 		$infos['paramColor'] = '${trans:m.website.bbeditor.param-color,ucf}';
 		return array($infos);
+	}
+}
+
+class website_BBCodeTagInfoList extends website_BBCodeTagInfo
+{
+	public function __construct()
+	{
+		parent::__construct('list', 'ul', 'richtext/unordered-list');
+	}
+	
+	/**
+	 * @param DOMElement $xmlElement
+	 * @param DOMElement $xhtmlParent
+	 * @return DOMElement Xhtml parent for content
+	 */
+	public function toHtml($xmlElement, $xhtmlParent)
+	{
+		$elem = parent::toHtml($xmlElement, $xhtmlParent);
+		$elem->setAttribute('class', 'normal');
+		return $elem;
+	}
+}
+
+class website_BBCodeTagInfoListItem extends website_BBCodeTagInfo
+{
+	public function __construct()
+	{
+		parent::__construct('item', 'li', 'richtext/list-item');
+	}
+	
+	/**
+	 * @param DOMElement $xmlElement
+	 * @param DOMElement $xhtmlParent
+	 * @return DOMElement Xhtml parent for content
+	 */
+	public function toHtml($xmlElement, $xhtmlParent)
+	{
+		$elem = parent::toHtml($xmlElement, $xhtmlParent);
+		$elem->setAttribute('class', 'normal');
+		return $elem;
 	}
 }
 
