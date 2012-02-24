@@ -39,8 +39,7 @@ form.cmxform label {
 	display: block;
 	float: left;
 }
-
-form.cmxform label.form-validation.error {
+form.cmxform label.form-validation {
 	margin-left: 33%;
 	padding-left: 8px;
 	text-align: left;
@@ -207,24 +206,21 @@ form.cmxform .help-text {
 }
 
 /* Erreurs */
-.error,
 .errors,
 .requiredsymbol {
-	color:#ff0000;
+	color: #ff0000;
 }
-.warning {
-	color:orange;
+.warnings {
+	color: orange;
 }
-.success {
-	color:green;
+.messages {
+	color: green;
 }
-
-form.cmxform ul.errors {
-
-}
-form.cmxform ul.errors li {
-	list-style-type:disc;
-	list-style-position:inside;
+ul.errors > li,
+ul.warnings > li,
+ul.messages > li {
+	list-style-type: disc;
+	list-style-position: inside;
 }
 
 a.dp-choose-date {
@@ -233,17 +229,13 @@ a.dp-choose-date {
 
 /* Commentaires */
 .jTagEditor .textfield-label {
-	width:33%;
-	display:block;
-	float:left;
-	margin-right:8px;
+	width: 33%;
+	display: block;
+	float: left;
+	margin-right: 8px;
 }
 
-
-/*
-	http://html5boilerplate.com/
-*/
-
+/* http://html5boilerplate.com/ */
 input,
 select {
 	vertical-align: middle;
