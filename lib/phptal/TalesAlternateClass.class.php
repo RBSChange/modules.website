@@ -9,6 +9,6 @@ class website_TalesAlternateClass implements PHPTAL_Tales
 	 */
 	static public function alternateclass($varName)
 	{
-		return '++$ctx->'.$varName.' %2 == 1 ? "odd" : "even"';
+		return '++$glb->'.$varName.' %2 == 1 ? "odd" : "even"';
 	}
 }
