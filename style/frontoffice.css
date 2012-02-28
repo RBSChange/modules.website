@@ -236,20 +236,13 @@ ol.document-list > li {
 	border-bottom-style: dotted;
 	padding: 6px;		
 }
-.document-list img.document-visual {
-	float: left;
-	margin-right: 5px;
-}
 .document-list > .odd, 
 .document-list > .even {
 	margin: 0;
 }
 
-.inline-list dt {
-	margin-right: 4px;
-}
 .inline-list dt:after {
-	content: " :";
+	content: " : ";
 }
 .inline-list dt,
 .inline-list dd,
@@ -272,6 +265,9 @@ ol.cloud-list li {
 dl.normal > dt {
 	font-weight: bold;
 }
+dl.normal > dt:after {
+	content: " : ";
+}
 dl.normal > dd {
 	margin-bottom: 8px;
 }
@@ -282,10 +278,10 @@ dl.inline-items > dt {
 	margin-right: 4px;
 }
 dl.inline-items > dt:after {
-	content: " :";
+	content: " : ";
 }
 dl.inline-items > dd {
-	margin-bottom: 8px;
+	margin-bottom: 4px;
 }
 
 /* BBCodes */
