@@ -250,7 +250,16 @@ class website_PageService extends f_persistentdocument_DocumentService
 
 		// Process new page content
 		$xpath = $this->getXPathInstance($contentDOM);
-		foreach (theme_PagetemplateService::getInstance()->getChangeContentIds($document->getTemplate()) as $id)
+		try 
+		{
+			$ids = theme_PagetemplateService::getInstance()->getChangeContentIds($document->getTemplate());
+		}
+		catch (TemplateNotFoundException $e)
+		{
+			Framework::exception($e);
+			$ids = array();
+		}
+		foreach ($ids as $id)
 		{
 			$blockNodes = $xpath->query('//change:content[@id="' . $id . '"]//change:block');
 			foreach ($blockNodes as $blockNode)
