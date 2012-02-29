@@ -58,7 +58,7 @@ class website_GenerateStyleSheetAction extends f_action_BaseAction
 			$version = $parameters[4];
 			if ($nbParameters == 7)
 			{
-				$template = DocumentHelper::getDocumentInstance($parameters[5], "modules_theme/pagetemplate");
+				$template = theme_persistentdocument_pagetemplate::getInstanceById($parameters[5]);
 				$stylesheet = substr($parameters[6], 0 , strrpos($parameters[6], '.'));
 			}
 			else

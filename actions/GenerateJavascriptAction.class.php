@@ -54,7 +54,7 @@ class website_GenerateJavascriptAction extends f_action_BaseAction
 			
 			if (intval($parameters[3]) > 0)
 			{
-				$template = DocumentHelper::getDocumentInstance(intval($parameters[3]), "modules_theme/pagetemplate");
+				$template = theme_persistentdocument_pagetemplate::getInstanceById(intval($parameters[3]));
 				$frontofficeScripts = $template->getScriptIds();
 			}
 			else

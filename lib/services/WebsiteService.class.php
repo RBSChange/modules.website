@@ -107,11 +107,11 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 		
 		if ($document->getTemplate())
 		{
-			$document->addAllowedpagetemplate(DocumentHelper::getDocumentInstance($document->getTemplate(), 'modules_theme/pagetemplate'));
+			$document->addAllowedpagetemplate(theme_persistentdocument_pagetemplate::getInstanceById($document->getTemplate()));
 		}
 		if ($document->getTemplateHome())
 		{
-			$document->addAllowedpagetemplate(DocumentHelper::getDocumentInstance($document->getTemplateHome(), 'modules_theme/pagetemplate'));
+			$document->addAllowedpagetemplate(theme_persistentdocument_pagetemplate::getInstanceById($document->getTemplateHome()));
 		}
 	}
 
@@ -164,11 +164,11 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	 */
 	private function generateDefaultStructure($website, $initScript)
 	{
-		$template = DocumentHelper::getDocumentInstance($website->getTemplate(), 'modules_theme/pagetemplate')->getCodename();
+		$template = theme_persistentdocument_pagetemplate::getInstanceById($website->getTemplate())->getCodename();
 		$attributes['template'] = $template;
 		if ($website->getTemplateHome())
 		{
-			$attributes['templateHome'] = DocumentHelper::getDocumentInstance($website->getTemplateHome(), 'modules_theme/pagetemplate')->getCodename();
+			$attributes['templateHome'] = theme_persistentdocument_pagetemplate::getInstanceById($website->getTemplateHome())->getCodename();
 		}
 		else 
 		{
