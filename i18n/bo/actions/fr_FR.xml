@@ -64,4 +64,9 @@
   <key id="editreferencebutton">éditer le document associé</key>
   <key id="addtomenuactionsuccess">Document ajouté au menu "{menulabel}" : {label}</key>
   <key id="add-to-menu">ajout au menu</key>
+  <key id="unknown-structure-initialization-script">Script d'initialisation "{script}" inconnu.</key>
+	<key id="invalid-website">Le conteneur doit être un site web.</key>
+	<key id="invalid-topic">Le conteneur doit être une rubrique.</key>
+	<key id="invalid-website-or-topic">Le conteneur doit être un site web ou une rubrique.</key>
+	<key id="some-pages-already-initialized">Certaines pages de la structure ont déjà été initialisées.</key>
 </i18n>
