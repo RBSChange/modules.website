@@ -285,11 +285,14 @@ dl.inline-items > dd {
 }
 
 /* BBCodes */
-.small{
+.small {
 	font-size: 0.7em;
 }
-.big{
+.big {
 	font-size: 1.4em;
+}
+.smile {
+	vertical-align: text-bottom;
 }
 
 @import url(/modules/website/style/form.css);
