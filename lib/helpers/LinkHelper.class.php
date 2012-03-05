@@ -366,32 +366,6 @@ class LinkHelper
 	    return self::_buildLink($document, $lang, $class, $title, false, $attributes);
 	}
 
-
-	/**
-	 * Build a full POPUP link (<a/> element) for the given document.
-	 *
-	 * @param f_persistentdocument_PersistentDocument $document
-	 * @param string $lang
-	 * @param string $class
-	 * @param string $title
-	 * @return string
-	 */
-	public static function getPopupLink($document, $lang = null, $class = 'link', $title = '', $attributes = null, $width = null, $height = null)
-	{
-		if ( ! is_null($width) || ! is_null($height) )
-		{
-			$popup = array();
-			if ( ! is_null($width) ) $popup['width'] = $width;
-			if ( ! is_null($height) ) $popup['height'] = $height;
-		}
-		else
-		{
-			$popup = true;
-		}
-		return self::_buildLink($document, $lang, $class, $title, $popup, $attributes);
-	}
-
-
 	/**
 	 * Build a full link (<a/> element) for the given document.
 	 *
@@ -439,34 +413,10 @@ class LinkHelper
 
 		if ($popup !== false)
 		{
-			$onclick = ' onclick="return accessiblePopup(this';
-			if (is_array($popup))
+			$onclick = ' onclick="return accessiblePopup(this);"';
+			if (is_array($attributes))
 			{
-				if (isset($popup['width']) && is_numeric($popup['width']))
-				{
-					$onclick .= ','.$popup['width'];
-					if (isset($popup['height']) && is_numeric($popup['height']))
-					{
-						$onclick .= ','.$popup['height'];
-					}
-				}
-				else if (isset($popup['height']) && is_numeric($popup['height']))
-				{
-					$onclick .= ',null,'.$popup['height'];
-				}
-
-			}
-			$onclick .= ')"';
-			if ( is_array($attributes) )
-			{
-				if (isset($attributes['class']))
-				{
-					$attributes['class'] .= ' popup';
-				}
-				else
-				{
-					$attributes['class'] = 'popup';
-				}
+				$attributes['class'] = (isset($attributes['class'])) ? ($attributes['class'] . ' popup') : 'popup';
 			}
 			else
 			{
@@ -720,15 +670,15 @@ class LinkHelper
 		return $currentLink->getUrl();
 	}
 	
+	// Deprecated.
+	
 	/**
-	 * @deprecated
+	 * @deprecated (will be removed in 4.0)
 	 */
 	public static function getCurrentUrlComplete($extraAttributes = array())
 	{
 		return self::getCurrentUrl($extraAttributes);
 	}
-	
-	// Deprecated.
 	
 	/**
 	 * @deprecated (will be removed in 4.0) use LinkHelper::getDocumentUrl or LinkHelper::getActionUrl
@@ -762,5 +712,13 @@ class LinkHelper
 			return self::getActionUrl($args[0], $args[1], $args[2]);
 		}
 		return '';
+	}
+	
+	/**
+	 * @deprecated (will be removed in 4.0)
+	 */
+	public static function getPopupLink($document, $lang = null, $class = 'link', $title = '', $attributes = null, $width = null, $height = null)
+	{
+		return self::_buildLink($document, $lang, $class, $title, true, $attributes);
 	}
 }

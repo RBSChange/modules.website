@@ -40,7 +40,6 @@ class website_PHPTAL_CHANGE
 		
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeSurround('link', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeSurround('paginator', 30));
-		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeSurround('popup', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('richtext', 30));
 		
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('chart', 30));

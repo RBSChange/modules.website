@@ -70,7 +70,6 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 						break;
 					case 'popup':
 						$popup = true;
-						$popupParameters = PHPTAL_Php_Attribute_CHANGE_popup::parsePopupArg($value);
 						break;
 					case 'tag':
 						$tag = $value;
@@ -150,7 +149,7 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 		{
 			$classes[] = 'popup';
 			self::addLocaleToTitle($title, '&modules.website.frontoffice.in-a-new-window;');
-			$this->tag->attributes['onclick'] = '<?php echo PHPTAL_Php_Attribute_CHANGE_popup::getOnClick('.var_export($popupParameters, true).'); ?>';
+			$this->tag->attributes['onclick'] = 'return accessiblePopup(this);';
 		}
 
 		if ($title !== null)
