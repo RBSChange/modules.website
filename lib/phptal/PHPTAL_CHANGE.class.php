@@ -15,6 +15,7 @@ class website_PHPTAL_CHANGE
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('textinput', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('hiddeninput', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('dateinput', 30));
+		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('datecombo', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('booleaninput', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('radioinput', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('checkboxinput', 30));
