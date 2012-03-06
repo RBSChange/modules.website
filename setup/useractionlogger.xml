@@ -90,4 +90,7 @@
   <actiondef modulename="website" actionname="saveredirectinfo.topic" label="m.website.bo.useractionlogger.saveredirectinfo-topic"/>
   <actiondef modulename="website" actionname="savepermissions.website" label="m.website.bo.useractionlogger.savepermissions-website"/>
   <actiondef modulename="website" actionname="updatetranslation.menu" label="m.website.bo.useractionlogger.updatetranslation-menu"/>
+  <actiondef modulename="website" actionname="deletelocalization.menuitemdocument" label="m.website.bo.useractionlogger.deletelocalization-menuitemdocument"/>
+  <actiondef modulename="website" actionname="savepermissions.page" label="m.website.bo.useractionlogger.savepermissions-page"/>
+  <actiondef modulename="website" actionname="saveredirectinfo.pageexternal" label="m.website.bo.useractionlogger.saveredirectinfo-pageexternal"/>
 </script>
