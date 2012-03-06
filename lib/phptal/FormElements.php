@@ -93,6 +93,20 @@ class PHPTAL_Php_Attribute_CHANGE_dateinput extends FormElement
 }
 
 /**
+ * Use in HTML: <anytag change:dateinput="name toto; label &modules.tutu.tata.titiLabel; format dd/yy/uu"/>
+ */
+class PHPTAL_Php_Attribute_CHANGE_datecombo extends PHPTAL_Php_Attribute_CHANGE_dateinput
+{
+	/**
+	 * @return String
+	 */
+	protected function getRenderMethodName()
+	{
+		return 'renderDateCombo';
+	}
+}
+
+/**
  * Use in HTML: <anytag change:errors="[key myKey]"/>
  */
 class PHPTAL_Php_Attribute_CHANGE_errors extends FormElement

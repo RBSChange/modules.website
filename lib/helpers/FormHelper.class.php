@@ -2363,13 +2363,13 @@ jQuery(document).ready(function() {
 
 		$thisYear = date_Calendar::now()->getYear();
 		$years = array();
-		for ($i = $thisYear;$i >= 1901; $i-- )
+		for ($i = $thisYear; $i >= 1900; $i--)
 		{
 			$years[$i] = $i;
 		}
 		
 		$days = array();
-		for ($i = 1; $i <= 31; $i++ )
+		for ($i = 1; $i <= 31; $i++)
 		{
 			$days[$i] = $i;
 		}
@@ -2418,7 +2418,7 @@ jQuery(document).ready(function() {
 				var date = new Date(jQuery("#'.  $baseId . '_year").val(), jQuery("#'.  $baseId . '_month").val(), jQuery("#'.  $baseId . '_day").val());
 				jQuery("#'.  $baseId . '").val(date.asString());
 			});
-		//]]></script>';
+		//]]></script> ';
 		return implode('', $result);
 	}
 
