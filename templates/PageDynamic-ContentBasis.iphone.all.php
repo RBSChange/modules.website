@@ -10,6 +10,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" ?>
 		<meta name="language" content="<?php echo $this->getLang(); ?>" />
 		<meta name="description" <?php echo f_util_HtmlUtils::buildAttribute("content", $this->getDescription()); ?> />
 		<meta name="keywords" <?php echo f_util_HtmlUtils::buildAttribute("content", $this->getKeywords()); ?> />
+		<meta name="generator" content="RBS Change <?php echo Framework::getVersion(); ?>" />
 		<?php echo $this->getMetas(); ?>
         <?php echo $this->getStylesheetInclusions(); ?>
 		<?php echo $this->getStyles(); ?>
