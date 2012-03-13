@@ -915,7 +915,11 @@ class website_UrlRewritingService extends website_BaseRewritingService
 	 */
 	private function getRedirectAction($website, $lang, $path, $redirectType, $request)
 	{
-		$request->setParameter('location', $this->getRewriteLink($website, $lang, $path)->getUrl());
+		$uri = RequestContext::getInstance()->getPathURI();
+		$queryParams = array();
+		$queryParamsPos = strpos($uri, '?');
+		if ($queryParamsPos) {parse_str(substr($uri, $queryParamsPos + 1), $queryParams);}
+		$request->setParameter('location', $this->getRewriteLink($website, $lang, $path, $queryParams)->getUrl());
 		$request->setParameter('redirectType', $redirectType);
 		return array('website', 'Redirect');
 	}
