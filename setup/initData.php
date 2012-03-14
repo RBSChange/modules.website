@@ -38,7 +38,21 @@ class website_Setup extends object_InitDataSetup
 		// Fix #721: import the new workflow first, so it will be activated by
 		// default, instead of the old one.
 		$this->executeModuleScript('workflow2.xml');
+		
 		//$this->executeModuleScript('workflow1.xml');		
 		$this->executeModuleScript('iframe.xml');	
+		
+
+		$tasks = task_PlannedtaskService::getInstance()->getBySystemtaskclassname('website_CleanCSSAndJSCacheTask');
+		if (count($tasks) == 0)
+		{
+			$task = task_PlannedtaskService::getInstance()->getNewDocumentInstance();
+			$task->setSystemtaskclassname('website_CleanCSSAndJSCacheTask');
+			$task->setLabel('website_CleanCSSAndJSCacheTask');
+			$task->setMaxduration(5);
+			$task->setMinute(-1);
+			$task->setHour(-1);
+			$task->save(ModuleService::getInstance()->getSystemFolderId('task', 'website'));
+		}
 	}
 }
