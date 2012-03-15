@@ -167,30 +167,15 @@ class website_MenuitemdocumentService extends website_MenuitemService
 	 */
 	public function addTreeAttributes($document, $moduleName, $treeType, &$nodeAttributes)
 	{
-		try 
-        {
-			$breadcrumb = website_WebsiteModuleService::getInstance()->getBreadcrumb($document->getDocument());
-			$nodeAttributes['refers-to'] = $breadcrumb->renderAsText();
-        }
-        catch (Exception $e)
-        {
-        	$nodeAttributes['refers-to'] = 'ERROR: '.$e->getMessage();
-        }
-		if ($document->getPopup())
+		$nodeAttributes['refers-to'] = '';
+		$doc = $document->getDocument();
+		if ($doc)
 		{
-			$nodeAttributes['popup'] = LocaleService::getInstance()->transBO('m.generic.backoffice.yes');
-			$params = $document->getPopupParametersArray();
-			if ($params['width'] && $params['height'])
-			{
-				$nodeAttributes['popup'] .= ' (' . $params['width'] . ' x ' . $params['height'] . ')';
-			}
+			$originalDoc = DocumentHelper::getByCorrection($doc);
+			$nodeAttributes['refers-to'] = $originalDoc->getDocumentService()->getPathOf($originalDoc)
+			 . ' (' . LocaleService::getInstance()->transBO($originalDoc->getPersistentModel()->getLabelKey()) . ')';	
 		}
-		else
-		{
-			$nodeAttributes['popup'] = LocaleService::getInstance()->transBO('m.generic.backoffice.no');
-		}
-		// This tree attribute is used by wBaseModule to prevent a document from being translated
-		$nodeAttributes['isTranslatable'] = "false";
+        $nodeAttributes['popup'] = LocaleService::getInstance()->transBO('m.generic.backoffice.' . ($document->getPopup() ? 'yes' : 'no'));
 	}
 	
 	/**

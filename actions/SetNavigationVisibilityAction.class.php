@@ -10,13 +10,13 @@ class website_SetNavigationVisibilityAction extends f_action_BaseAction
 		$docArray   = $this->getDocumentInstanceArrayFromRequest($request);
 		$visibility = $request->getParameter('v');
 
-		if ($visibility != WebsiteConstants::VISIBILITY_HIDDEN
-		&& $visibility != WebsiteConstants::VISIBILITY_VISIBLE
-		&& $visibility != WebsiteConstants::VISIBILITY_HIDDEN_IN_MENU_ONLY
-		&& $visibility != WebsiteConstants::VISIBILITY_HIDDEN_IN_SITEMAP_ONLY)
+		if ($visibility != website_ModuleService::HIDDEN
+		&& $visibility != website_ModuleService::VISIBLE
+		&& $visibility != website_ModuleService::HIDDEN_IN_MENU_ONLY
+		&& $visibility != website_ModuleService::HIDDEN_IN_SITEMAP_ONLY)
 		{
-			Framework::debug("website_SetVisibilityAction: 'v' parameter is invalid ('".$visibility."'): set to '".WebsiteConstants::VISIBILITY_VISIBLE."'.");
-			$visibility = WebsiteConstants::VISIBILITY_VISIBLE;
+			Framework::debug("website_SetVisibilityAction: 'v' parameter is invalid ('".$visibility."'): set to '".website_ModuleService::VISIBLE."'.");
+			$visibility = website_ModuleService::VISIBLE;
 		}
 
 		foreach ($docArray as $doc)

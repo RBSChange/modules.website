@@ -51,9 +51,10 @@ class website_persistentdocument_topic extends website_persistentdocument_topicb
 		return $this->getLabelAsHtml();
 	}
 	
+	//DEPRECATED
+	
 	/**
-	 * @see website_PublishableElement::getNavigationURL()
-	 * @return string
+	 * @deprecated
 	 */
 	public function getNavigationURL()
 	{

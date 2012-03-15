@@ -312,7 +312,7 @@ class LinkHelper
 		try
 		{
 		    $website = $ws->getCurrentWebsite();
-            $page = TagService::getInstance()->getDocumentByContextualTag(WebsiteConstants::TAG_HELP_PAGE, $website);
+            $page = TagService::getInstance()->getDocumentByContextualTag('contextual_website_website_help', $website);
             if ($page !== null)
             {
     			return self::getDocumentUrl($page);
@@ -322,7 +322,7 @@ class LinkHelper
 		{
 			Framework::exception($e);
 		}
-	    return $ws->getEmptyUrl();
+	    return '#';
 	}
 	
 	/**
@@ -363,9 +363,9 @@ class LinkHelper
 	 */
 	public static function getLink($document, $lang = null, $class = 'link', $title = '', $attributes = null)
 	{
-	    return self::_buildLink($document, $lang, $class, $title, false, $attributes);
+	    return self::buildLink($document, $lang, $class, $title, false, $attributes);
 	}
-
+	
 	/**
 	 * Build a full link (<a/> element) for the given document.
 	 *
@@ -377,7 +377,7 @@ class LinkHelper
 	 * @param array<string=>string> $attributes
 	 * @return string
 	 */
-	public static function _buildLink($document, $lang = null, $class = 'link', $title = '', $popup = false, $attributes = null)
+	private static function buildLink($document, $lang = null, $class = 'link', $title = '', $popup = false, $attributes = null)
 	{
 	    if (is_null($lang))
 	    {
@@ -392,20 +392,7 @@ class LinkHelper
         {
             $url = LinkHelper::getDocumentUrl($document, $lang);
         }
-
-        if (f_util_ClassUtils::methodExists($document, 'getNavigationtitle'))
-        {
-            $label = $document->getNavigationtitle();
-        }
-        else if (f_util_ClassUtils::methodExists($document, 'getLabelAsHtml'))
-        {
-            $label = $document->getLabelAsHtml();
-        }
-        else
-        {
-            $label = $document->getLabel();
-        }
-
+		
 		if (!empty($title))
 		{
 			$title = ' title="'.substr($title, 0, 80).'"';
@@ -450,7 +437,7 @@ class LinkHelper
 			$html .= ' class="'.$class.'"';
 		}
 		$html .= $title.$onclick.$attributesString;
-		$html .= '>'.f_Locale::translate($label, null, $lang).'</a>';
+		$html .= '>'.f_util_HtmlUtils::textToHtml($document->getDocumentService()->getNavigationtitle($document)).'</a>';
 		return $html;
 	}
 
@@ -467,10 +454,10 @@ class LinkHelper
 	{
 		try
 		{
-			$url = LinkHelper::getTagUrl(WebsiteConstants::TAG_ADD_TO_FAVORITES_PAGE);
+			$url = LinkHelper::getTagUrl('contextual_website_website_favorite');
 			if (f_util_StringUtils::isEmpty($url))
 			{
-				$url = website_WebsiteModuleService::getInstance()->getEmptyUrl();
+				$url = '#';
 			}
 		}
 		catch (Exception $e)
@@ -479,16 +466,16 @@ class LinkHelper
 			{
 				Framework::exception($e);
 			}
-			$url = website_WebsiteModuleService::getInstance()->getEmptyUrl();
+			$url = '#';
 		}
 		
 		if (is_null($label))
 		{
-			$label = f_Locale::translate('&modules.website.frontoffice.AddToFavorite;');
+			$label = LocaleService::getInstance()->transFO('m.website.frontoffice.addtofavorite', array('ucf', 'html'));
 		}
 		if (is_null($title))
 		{
-			$title = f_Locale::translate('&modules.website.frontoffice.AddToFavoriteTitle;');
+			$title = LocaleService::getInstance()->transFO('m.website.frontoffice.addtofavoritetitle', array('ucf', 'attr'));
 		}
 		if (is_string($class))
 		{
@@ -513,10 +500,10 @@ class LinkHelper
 	{
 		try
 		{
-			$url = LinkHelper::getTagUrl(WebsiteConstants::TAG_PRINT_PAGE);
+			$url = LinkHelper::getTagUrl('contextual_website_website_print');
 			if (f_util_StringUtils::isEmpty($url))
 			{
-				$url = website_WebsiteModuleService::getInstance()->getEmptyUrl();
+				$url = '#';
 			}
 		}
 		catch (Exception $e)
@@ -525,16 +512,16 @@ class LinkHelper
 			{
 				Framework::exception($e);
 			}
-			$url = website_WebsiteModuleService::getInstance()->getEmptyUrl();
+			$url = '#';
 		}		
 
 		if (is_null($label))
 		{
-			$label = f_Locale::translate('&modules.website.frontoffice.Print;');
+			$label = LocaleService::getInstance()->transFO('m.website.frontoffice.print', array('ucf', 'html'));
 		}
 		if (is_null($title))
 		{
-			$title = f_Locale::translate('&modules.website.frontoffice.PrintTitle;');
+			$title = LocaleService::getInstance()->transFO('m.website.frontoffice.printtitle', array('ucf', 'attr'));
 		}
 		if (is_string($class))
 		{
@@ -559,10 +546,10 @@ class LinkHelper
 	{
 		try
 		{
-			$url = LinkHelper::getTagUrl(WebsiteConstants::TAG_HELP_PAGE);
+			$url = LinkHelper::getTagUrl('contextual_website_website_help');
 			if (f_util_StringUtils::isEmpty($url))
 			{
-				$url = website_WebsiteModuleService::getInstance()->getEmptyUrl();
+				$url = '#';
 			}
 		}
 		catch (Exception $e)
@@ -571,16 +558,16 @@ class LinkHelper
 			{
 				Framework::exception($e);
 			}
-			$url = website_WebsiteModuleService::getInstance()->getEmptyUrl();
+			$url = '#';
 		}	
 		
 		if (is_null($label))
 		{
-			$label = f_Locale::translate('&modules.website.frontoffice.Help;');
+			$label = LocaleService::getInstance()->transFO('m.website.frontoffice.help', array('ucf', 'html'));
 		}
 		if (is_null($title))
 		{
-			$title = f_Locale::translate('&modules.website.frontoffice.HelpTitle;');
+			$title = LocaleService::getInstance()->transFO('m.website.frontoffice.helptitle', array('ucf', 'attr'));
 		}
 		if (is_string($class))
 		{
@@ -603,10 +590,10 @@ class LinkHelper
 		
 		try
 		{
-			$url = LinkHelper::getTagUrl(WebsiteConstants::TAG_LEGAL_NOTICE_PAGE);
+			$url = LinkHelper::getTagUrl('contextual_website_website_legal');
 			if (f_util_StringUtils::isEmpty($url))
 			{
-				$url = website_WebsiteModuleService::getInstance()->getEmptyUrl();
+				$url = '#';
 			}
 		}
 		catch (Exception $e)
@@ -615,16 +602,16 @@ class LinkHelper
 			{
 				Framework::exception($e);
 			}
-			$url = website_WebsiteModuleService::getInstance()->getEmptyUrl();
+			$url = '#';
 		}	
 
 		if (is_null($label))
 		{
-			$label = f_Locale::translate('&modules.website.frontoffice.LegalNotice;');
+			$label = LocaleService::getInstance()->transFO('m.website.frontoffice.legalnotice', array('ucf', 'html'));
 		}
 		if (is_null($title))
 		{
-			$title = f_Locale::translate('&modules.website.frontoffice.LegalNoticeTitle;');
+			$title =  LocaleService::getInstance()->transFO('m.website.frontoffice.legalnoticetitle', array('ucf', 'attr'));
 		}
 		if (is_string($class))
 		{
@@ -719,6 +706,14 @@ class LinkHelper
 	 */
 	public static function getPopupLink($document, $lang = null, $class = 'link', $title = '', $attributes = null, $width = null, $height = null)
 	{
-		return self::_buildLink($document, $lang, $class, $title, true, $attributes);
+		return self::buildLink($document, $lang, $class, $title, true, $attributes);
+	}
+	
+	/**
+	 * @deprecated
+	 */
+	public static function _buildLink($document, $lang = null, $class = 'link', $title = '', $popup = false, $attributes = null)
+	{
+		return self::buildLink($document, $lang, $class, $title, $popup, $attributes);
 	}
 }

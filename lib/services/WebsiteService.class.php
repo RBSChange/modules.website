@@ -137,7 +137,7 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	 */
 	protected function postInsert($document, $parentNodeId)
 	{
-		$query = $this->createQuery()->add(Restrictions::hasTag(WebsiteConstants::TAG_DEFAULT_WEBSITE));
+		$query = $this->createQuery()->add(Restrictions::hasTag('default_modules_website_default-website'));
 
 		// If we are creating the first website document, set it as the default
 		// website.

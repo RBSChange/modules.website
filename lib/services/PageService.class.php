@@ -163,7 +163,15 @@ class website_PageService extends f_persistentdocument_DocumentService
 		return DocumentHelper::getByCorrection($document);
 	}
 	
-
+	/**
+	 * @param website_persistentdocument_page $document
+	 * @return string|null
+	 */
+	public function getNavigationtitle($document)
+	{
+		return $document->getNavigationtitle();
+	}
+	
 	/**
 	 * Public for patch 304. Do not call ; private use.
 	 * @param website_persistentdocument_page $document
@@ -1519,7 +1527,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	}
 
 	/**
-	 * @param websitePage $pageContext
+	 * @param website_Page $pageContext
 	 * @return website_Breadcrumb
 	 */
 	function getDefaultBreadcrumb($pageContext)
@@ -1527,46 +1535,72 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$pageDocument = $pageContext->getPersistentPage();
 		
 		$breadcrumb = new website_Breadcrumb();
+		$lastAncestorPage = null;
 		
-		if (! $pageDocument->getIsHomePage())
+		foreach ($pageContext->getAncestorIds() as $ancestorId)
 		{
-			foreach ($pageContext->getAncestorIds() as $ancestorId)
+			$ancestor = DocumentHelper::getDocumentInstance($ancestorId);
+			if (! $ancestor->isPublished())
 			{
-				$ancestor = DocumentHelper::getDocumentInstance($ancestorId);
-				if (! $ancestor->isPublished())
-				{
-					continue;
-				}
+				continue;
+			}
 
-				if ($ancestor instanceof website_persistentdocument_website)
+			if ($ancestor instanceof website_persistentdocument_website)
+			{
+				$lastAncestorPage = $ancestor->getIndexPage();
+				if ($lastAncestorPage)
 				{
-					$siteUrl = LinkHelper::getDocumentUrl($ancestor);
-					$homeTitle = f_Locale::translate('&modules.website.frontoffice.thread.Homepage-href-name;');
-						
-					$breadcrumb->addElement($homeTitle, $siteUrl);
-					$pageContext->addLink("home", "text/html", $siteUrl, $homeTitle);
-				}
-				else if ($ancestor instanceof website_persistentdocument_topic)
-				{
-					if ($ancestor->getNavigationVisibility() == WebsiteConstants::VISIBILITY_VISIBLE || $ancestor->getNavigationVisibility() == WebsiteConstants::VISIBILITY_HIDDEN_IN_SITEMAP_ONLY)
+					$navigationtitle = $lastAncestorPage->getNavigationtitle();
+					$href = $lastAncestorPage !== $pageDocument ? LinkHelper::getDocumentUrl($ancestor) : null;
+					$breadcrumb->addElement($navigationtitle, $href);
+					if ($href)
 					{
-						$breadcrumb->addElement($ancestor->getLabel(), ($ancestor->getIndexPage()) ? LinkHelper::getDocumentUrl($ancestor) : null);
+						$pageContext->addLink("home", "text/html", $href, $navigationtitle);
+					}
+				}
+			}
+			else if ($ancestor instanceof website_persistentdocument_topic)
+			{
+				if ($ancestor->getNavigationVisibility() != website_ModuleService::HIDDEN)
+				{
+					$lastAncestorPage = $ancestor->getIndexPage();
+					$navigationtitle = $ancestor->getLabel();	
+					if ($navigationtitle)
+					{
+						$href = ($lastAncestorPage && $lastAncestorPage !== $pageDocument) ? LinkHelper::getDocumentUrl($ancestor) : null;
+						$breadcrumb->addElement($navigationtitle, $href);
 					}
 				}
 			}
 		}
-
-		if ($pageDocument->getNavigationVisibility() == WebsiteConstants::VISIBILITY_VISIBLE || $pageDocument->getNavigationVisibility() == WebsiteConstants::VISIBILITY_HIDDEN_IN_SITEMAP_ONLY)
-		{
-			// current page is visible and then the last element of breadcrumb
-			$breadcrumb->addElement($pageContext->getNavigationtitle());
-		}
-		else if ($pageDocument->getIsIndexPage())
-		{
-			$lastElem = $breadcrumb->getLastElement();
-			$lastElem->href = null;
-		}
 		
+		if ($lastAncestorPage !== $pageDocument)
+		{
+			if ($pageDocument->getNavigationVisibility() == website_ModuleService::HIDDEN)
+			{
+				$params = HttpController::getInstance()->getContext()->getRequest()->getParameters();
+				
+				if (isset($params['wemod'])
+					&& isset($params[$params['wemod'].'Param'])
+					&& is_array($params[$params['wemod'].'Param'])
+					&& isset($params[$params['wemod'].'Param']['cmpref']))
+				{
+					$detail = DocumentHelper::getDocumentInstanceIfExists(intval($params[$params['wemod'].'Param']['cmpref']));
+					if ($detail)
+					{
+						$navigationtitle = $detail->getDocumentService()->getNavigationtitle($detail);
+						if ($navigationtitle)
+						{
+							$breadcrumb->addElement($navigationtitle);
+						}
+					}
+				}
+			}
+			else
+			{
+				$breadcrumb->addElement($pageContext->getNavigationtitle());
+			}
+		}
 		return $breadcrumb;
 	}
 
@@ -2036,7 +2070,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		return $this->pp->createQuery($modelName, false)->add(Restrictions::published())
 					->add(Restrictions::descendentOf($website->getId()))
-					->add(Restrictions::ne('navigationVisibility',  WebsiteConstants::VISIBILITY_HIDDEN))
+					->add(Restrictions::ne('navigationVisibility',  website_ModuleService::HIDDEN))
 					->addOrder(Order::asc('id'))
 					->setMaxResults($chunkSize)
 					->setFirstResult($offset)
@@ -2122,7 +2156,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	public function getMenuEntry($document)
 	{
 		$visibility = $document->getNavigationVisibility();
-		if ($visibility == WebsiteConstants::VISIBILITY_HIDDEN || $visibility == WebsiteConstants::VISIBILITY_HIDDEN_IN_MENU_ONLY)
+		if ($visibility == website_ModuleService::HIDDEN || $visibility == website_ModuleService::HIDDEN_IN_MENU_ONLY)
 		{
 			return null;
 		}
@@ -2136,7 +2170,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	public function getSitemapEntry($document)
 	{
 		$visibility = $document->getNavigationVisibility();
-		if ($visibility == WebsiteConstants::VISIBILITY_HIDDEN || $visibility == WebsiteConstants::VISIBILITY_HIDDEN_IN_SITEMAP_ONLY)
+		if ($visibility == website_ModuleService::HIDDEN || $visibility == website_ModuleService::HIDDEN_IN_SITEMAP_ONLY)
 		{
 			return null;
 		}

@@ -5,6 +5,11 @@
  */
 class website_ModuleService extends ModuleBaseService
 {
+	
+	const HIDDEN              = 0;
+	const VISIBLE             = 1;
+	const HIDDEN_IN_MENU_ONLY = 2;
+	const HIDDEN_IN_SITEMAP_ONLY = 4;
 	/**
 	 * Singleton
 	 * @var website_ModuleService

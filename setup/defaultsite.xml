@@ -7,7 +7,7 @@
 	<attribute name="localizebypath" default="true">true</attribute>
 
 	<website byDocumentId-attr="" label-attr="" protocol-attr="" localizebypath-attr="" id="defwebsite">
-		<page label="Page d'accueil" isHomePage="true" template-attr="templateHome" id="homepage" />
+		<page label="Accueil" isHomePage="true" template-attr="templateHome" id="homepage" />
 
 		<topic label="Outils">
 			<page label="Plan du site" id="sitemap" indexingstatus="false">

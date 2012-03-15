@@ -22,7 +22,7 @@
 	<pagetemplate byCodename-attr="template" id="tplTwo" />
 	
 	<website id="website" byDocumentId-attr="" label-attr="" protocol-attr="" localizebypath-attr="" allowedpagetemplate-refids="tplOne,tplTwo">
-		<page id="homepage" label="Page d'accueil" isHomePage="true" template-attr="templateHome" >
+		<page id="homepage" label="Accueil" isHomePage="true" template-attr="templateHome" >
 			<changecontent for="content-block">
 				<changeblock type="richtext">
 					<![CDATA[<h2>Bienvenue</h2><p>...</p>]]>
@@ -135,7 +135,7 @@
 		
 	<i18n lang="en">
 	<website byRefid="website" label-attr="labelen" >
-		<page byRefid="homepage" label="Homepage">
+		<page byRefid="homepage" label="Home">
 			<changecontent for="content-block">
 				<changeblock type="richtext">
 					<![CDATA[<h2>Welcome</h2><p>...</p>]]>

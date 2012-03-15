@@ -8,7 +8,11 @@
 	</block>
 	<block type="modules_website_exception" icon="bug" label="&amp;modules.website.bo.blocks.Exception;" />
 	<block type="modules_website_thread" icon="breadcrumb" afterAll="true" cache="true" cache-key="page"
-		cache-deps="[modules_website/page],[modules_website/topic],modules_website/website" />
+		cache-deps="[modules_website/page],[modules_website/topic],modules_website/website">
+		<parameters>
+			<parameter name="separator" type="String" default-value="/" />
+		</parameters>
+	</block>
 	<block type="modules_website_ConfigurableMenu" icon="menu" dropModels="[modules_website/menu]" cache="true" cache-key="page,cmpref"
 		cache-deps="modules_website/menu,[modules_website/menuitem],[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
 		<parameters>

@@ -155,17 +155,7 @@ class website_persistentdocument_page extends website_persistentdocument_pagebas
 	{
 		return $this->getDocumentService()->getSkinId($this);
 	}
-	
-	/**
-	 * @see website_PublishableElement::getNavigationURL()
-	 *
-	 * @return string
-	 */
-	public function getNavigationURL()
-	{
-		return LinkHelper::getDocumentUrl($this);
-	}
-	
+		
 	/**
 	 * @var string
 	 */
@@ -185,5 +175,15 @@ class website_persistentdocument_page extends website_persistentdocument_pagebas
 	public function getFromlang()
 	{
 		return $this->fromlang;
+	}
+	
+	//DEPRECATED
+	
+	/**
+	 * @deprecated
+	 */
+	public function getNavigationURL()
+	{
+		return LinkHelper::getDocumentUrl($this);
 	}
 }

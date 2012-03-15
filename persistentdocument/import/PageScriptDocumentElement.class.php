@@ -79,15 +79,15 @@ class website_PageScriptDocumentElement extends import_ScriptDocumentElement
 		{
 			if ($properties['navigationVisibility'] == 'visible')
 			{
-				$properties['navigationVisibility'] = WebsiteConstants::VISIBILITY_VISIBLE;
+				$properties['navigationVisibility'] = website_ModuleService::VISIBLE;
 			}
 			elseif ($properties['navigationVisibility'] == 'hidden')
 			{
-				$properties['navigationVisibility'] = WebsiteConstants::VISIBILITY_HIDDEN;
+				$properties['navigationVisibility'] = website_ModuleService::HIDDEN;
 			}
 			else
 			{
-				$properties['navigationVisibility'] = WebsiteConstants::VISIBILITY_HIDDEN_IN_MENU_ONLY;
+				$properties['navigationVisibility'] = website_ModuleService::HIDDEN_IN_MENU_ONLY;
 			}
 		}
 		

@@ -5,9 +5,12 @@
  */
 class website_persistentdocument_pageexternal extends website_persistentdocument_pageexternalbase implements website_PublishableElement
 {
+	
+	
+	//DEPRECATED
+	
 	/**
-	 * @see website_PublishableElement::getNavigationURL()
-	 * @return string
+	 * @deprecated
 	 */
 	public function getNavigationURL()
 	{
