@@ -211,7 +211,7 @@ form.cmxform .help-text {
 	color: #ff0000;
 }
 .warnings {
-	color: orange;
+	color: #dc8401;
 }
 .messages {
 	color: green;

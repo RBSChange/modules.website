@@ -28,7 +28,7 @@
 		<body>
 			<xsl:copy-of select="@id" />
 			<xsl:copy-of select="@class" />
-				<xsl:apply-templates />
+			<xsl:apply-templates />
 		</body>
 	</xsl:template>
 
@@ -39,66 +39,32 @@
 		</div>
 	</xsl:template>
 	
-	<xsl:template match="change:content[not(descendant::*)]">
-		<div><xsl:copy-of select="@*" />&#160;</div>
-	</xsl:template>
+	<xsl:template match="change:content[not(descendant::*)]"></xsl:template>
 
 	<xsl:template match="change:layout">
-		<xsl:apply-templates />
-		<div class="cleaner">&#160;</div>
+		<div class="cLayout">
+			<xsl:apply-templates />
+		</div>
 	</xsl:template>
 
 	<xsl:template match="change:col">
-		<div class="freeColumn">
-			<xsl:attribute name="class">
-				<xsl:choose>
-					<xsl:when test="position()=last() and position()=1">
-						<xsl:text>freeColumn</xsl:text>
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:choose>
-							<xsl:when test="position() mod 2 = 0">
-    							<xsl:text>freeColumn right</xsl:text>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:text>freeColumn left</xsl:text>
-							</xsl:otherwise>
-						</xsl:choose>
-					</xsl:otherwise>
-				</xsl:choose>			
-			</xsl:attribute>
+		<div class="cColumn">
 			<xsl:attribute name="style">
 				<xsl:choose>
-					<xsl:when test="position()=last() and position()=1">
-						<xsl:value-of select="concat('width:',string(@widthPercentage),'%')" />
+					<xsl:when test="@marginRight">
+						<xsl:value-of select="concat('width:',string(@widthPercentage),'%; padding-right:', string(@marginRight), 'px;')" />
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:choose>
-							<xsl:when test="position() mod 2 = 0">
-    							<xsl:value-of select="concat('width:',string(@widthPercentage - 0.5),'%; float:left; display:inline;')" />
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:value-of select="concat('width:',string(@widthPercentage - 0.5),'%; float:left; display:inline;')" />
-						</xsl:otherwise>
-						</xsl:choose>
+						<xsl:value-of select="concat('width:',string(@widthPercentage),'%')" />
 					</xsl:otherwise>
 				</xsl:choose>
-				
 			</xsl:attribute>
-			<!--  xsl:copy-of select="@*" /-->
-			<div class="freeMargin">
-				<xsl:if test="@marginRight">
-					<xsl:attribute name="style">
-						<xsl:value-of select="concat('margin-right:', string(@marginRight), 'px;')" />
-					</xsl:attribute>
-				</xsl:if>
 			<xsl:apply-templates />
-			</div>	
 		</div>
 	</xsl:template>
 
 	<xsl:template match="change:row">
-		<div class="freeLocation">
+		<div class="cRow">
 			<xsl:if test="@marginBottom">
 				<xsl:attribute name="style">
 					<xsl:value-of select="concat('margin-bottom:', string(@marginBottom), 'px;')" />
@@ -109,7 +75,7 @@
 	</xsl:template>
 
 	<xsl:template match="change:block">
-		<div class="freeBlock">
+		<div class="cCell">
 			<xsl:if test="@flex">
 				<xsl:attribute name="style">
     				<xsl:value-of select="concat('width:',string(@flex),'%;')" />
@@ -160,36 +126,5 @@
 
 	<xsl:template match="change:templateblock">
 		<div style="display:none"><xsl:copy-of select="@*" />&#160;</div>
-	</xsl:template>
-	
-	<xsl:template match="change:spacer">
-		<div class="freeBlock">
-			<xsl:if test="@width">
-				<xsl:attribute name="style">
-    				<xsl:value-of select="concat('width:', string(@width), ';display:inline;')" />
- 				</xsl:attribute>
-			</xsl:if>
-			<xsl:if test="@absoluteFrontofficeWidth and @absoluteFrontofficeHeight">
-				<xsl:attribute name="style">
-    				<xsl:value-of select="concat('width:',string(@absoluteFrontofficeWidth),'px; height: ', string(@absoluteFrontofficeHeight),'px;display:inline;')" />
- 				</xsl:attribute>
-			</xsl:if>
-			<xsl:if test="@absoluteFrontofficeWidth and not(@absoluteFrontofficeHeight)">
-				<xsl:attribute name="style">
-    				<xsl:value-of select="concat('width:',string(@absoluteFrontofficeWidth),'px;display:inline;')" />
- 				</xsl:attribute>
-			</xsl:if>
-			<xsl:if test="not(@absoluteFrontofficeWidth) and @absoluteFrontofficeHeight">
-				<xsl:attribute name="style">
-    				<xsl:value-of select="concat('width:',string(@relativeFrontofficeWidth),'%;','height:',string(@absoluteFrontofficeHeight),'px;display:inline;')" />
- 				</xsl:attribute>
-			</xsl:if>
-			<xsl:if test="not(@absoluteFrontofficeWidth) and not(@absoluteFrontofficeHeight) and not(@width)">
-				<xsl:attribute name="style">
-    				<xsl:value-of select="concat('width:',string(@relativeFrontofficeWidth),'%;display:inline;')" />
- 				</xsl:attribute>
-			</xsl:if>
-			<div class="empty">&#160;</div>
-		</div>
 	</xsl:template>
 </xsl:stylesheet>

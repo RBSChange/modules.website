@@ -1695,7 +1695,8 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$cachedData = $cacheItem->getValue('blocksAndHtmlBody');
 			$pageRenderInfo = unserialize($cachedData);
 			$blocks = $pageRenderInfo['blocks'];
-			$htmlBody = $pageRenderInfo['htmlBody'];
+			$pageContent = f_util_DOMUtils::fromString($pageRenderInfo['htmlBody']);
+			$pageContent->preserveWhiteSpace = false;
 			$docType = $pageRenderInfo['docType'];
 			
 			$controller = website_BlockController::getInstance();
@@ -1719,7 +1720,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$wsprs->buildBlockContainerForFrontOffice($pageContent, $blocks);
 			$this->addBenchTime('blocksContainerGenerating');
 			$pageContent->preserveWhiteSpace = false;
-			$htmlBody = $pageContent->saveXML($pageContent->documentElement);
 
 			$controller = website_BlockController::getInstance();
 			$controller->setPage($page);
@@ -1731,6 +1731,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$this->addBenchTime('pageContextInitialize');
 			if ($putInCache)
 			{
+				$htmlBody = $pageContent->saveXML($pageContent->documentElement);
 				$cacheItem->setTTL(86400);
 				$cacheItem->setValue("blocksAndHtmlBody", serialize(array("blocks" => $blocks, "htmlBody" => $htmlBody, "docType" => $docType)));
 				$dcs->writeToCache($cacheItem);
@@ -1742,16 +1743,30 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$this->populateHTMLBlocks($controller, $blocks);
 		$this->addBenchTime('blocksGenerating');
 
-		$htmlBody = preg_replace(self::$htmlBodyFrom, self::$htmlBodyTo, $htmlBody);
-
 		$strFrom = array();
 		$strTo = array();
 		foreach ($blocks as $blockId => $block)
 		{
-			$strFrom[] = '<htmlblock_'.$blockId.'/>';
-			$strTo[] = $block['html'];
+			$list = $pageContent->getElementsByTagName('htmlblock_'.$blockId);
+			if ($list->length == 1)
+			{
+				$strFrom[] = '<htmlblock_'.$blockId.'/>';
+				$node = $list->item(0);
+				if (f_util_StringUtils::isEmpty($block['html']))
+				{
+					$container = $node->parentNode;
+					$container->setAttribute('class', 'empty-' . $container->getAttribute('class'));
+					$strTo[] = '';
+				}
+				else
+				{
+					$strTo[] = $block['html'];
+				}
+			}
 		}
+		$htmlBody = $pageContent->saveXML($pageContent->documentElement);
 		$htmlBody = str_replace($strFrom, $strTo, $htmlBody);
+		
 		$this->addBenchTime('htmlGenerating');
 		$pageContext->benchTimes = $this->benchTimes;
 		$pageContext->renderHTMLBody($htmlBody, website_PageRessourceService::getInstance()->getGlobalTemplate());
@@ -1778,10 +1793,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		return 	$results;
 	}
-
-	private static $htmlBodyFrom = array('/<a([^>]+)\/>/i', '/\s*<div([^>]+)\/>\s*/i');
-	private static $htmlBodyTo = array('<a$1></a>', '<div$1>&#160;</div>');
-
 
 	/**
 	 * @param website_Page $pageContext

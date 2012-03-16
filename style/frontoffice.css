@@ -69,7 +69,8 @@ ul.errors,
 ul.messages,
 ul.warnings,
 /* GENERIC */
-.freeLocation,
+.freeColumn .cblock,
+.cLayout .cblock,
 .columns,
 div.normal,
 ul.mini-navigation,
@@ -80,6 +81,7 @@ ul.mini-navigation,
 	margin-bottom: 20px;
 }
 
+/* RICHTEXT */
 table.normal:last-child,
 p.normal:last-child,
 ul.normal:last-child,
@@ -100,7 +102,8 @@ ul.errors:last-child,
 ul.messages:last-child,
 ul.warnings:last-child,
 /* GENERIC */
-.freeLocation:last-child,
+.freeColumn:last-child .cblock,
+.cLayout:last-child .cTable:last-child .cblock,
 .columns:last-child,
 div.normal:last-child,
 ul.mini-navigation:last-child,
@@ -111,6 +114,7 @@ ul.mini-navigation:last-child,
 	margin-bottom: 0;
 }
 
+/* RICHTEXT */
 .normal + .cleaner:last-child,
 blockquote + .cleaner:last-child,
 hr + .cleaner:last-child,
@@ -126,7 +130,6 @@ ul.errors + .cleaner:last-child,
 ul.messages + .cleaner:last-child,
 ul.warnings + .cleaner:last-child,
 /* GENERIC */
-.freeLocation + .cleaner:last-child,
 .columns + .cleaner,
 .mini-navigation + .cleaner:last-child,
 .pagination + .cleaner:last-child,
