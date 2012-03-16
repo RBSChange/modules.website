@@ -134,7 +134,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 		}
 		if (!$hasLink) 
 		{
-			$switchArray = false;
+			return website_BlockView::NONE;
 		}
 		
 		$request->setAttribute('switchArray', $switchArray);

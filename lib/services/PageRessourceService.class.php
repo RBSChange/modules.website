@@ -121,7 +121,7 @@ class website_PageRessourceService extends BaseService
 		else
 		{
 			$this->templateType = "freeLayout";
-			$xslPath = FileResolver::getInstance() ->setPackageName('modules_website')
+			$xslPath = FileResolver::getInstance()->setPackageName('modules_website')
 				->setDirectory('lib')->getPath('pageRenderContentTransform.xsl');
 		}		
 		$resultXPath = new DOMXPath($DOMDocument);

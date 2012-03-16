@@ -74,7 +74,7 @@ treechildren::-moz-tree-image(modules_website_pageexternal){
 	list-style-image: url(/changeicons/small/page-external.png) ;
 }
 treechildren::-moz-tree-image(modules_website_template){
-	list-style-image: url(/changeicons/small/document_notebook.png) ;
+	list-style-image: url(/changeicons/small/template.png) ;
 }
 treechildren::-moz-tree-image(modules_website_preferences){
 	list-style-image: url(/changeicons/small/website.png) ;
