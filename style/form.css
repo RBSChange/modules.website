@@ -160,6 +160,7 @@ fieldset.inline-set {
 	padding: 0px;
 	position: relative;
 	left: 33%;
+	max-width: 66%;
 	margin: 0;	
 	margin-left: 8px;	
 }
