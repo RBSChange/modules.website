@@ -63,7 +63,7 @@ class website_BlockConfigurableSitemapAction extends website_BlockAction
 	 * @param integer[] $ancestorIds
 	 * @return website_MenuEntry|null
 	 */
-	protected function getMenuEntries($doc, $level, $maxLevel, $currentId, $ancestorIds, $deployAll)
+	protected function getMenuEntries($doc, $level, $maxLevel, $currentId, $ancestorIds)
 	{
 		if ($doc === null)
 		{
