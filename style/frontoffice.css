@@ -103,7 +103,7 @@ ul.messages:last-child,
 ul.warnings:last-child,
 /* GENERIC */
 .freeColumn:last-child .cblock,
-.cLayout:last-child .cTable:last-child .cblock,
+.cLayout:last-child .cRow:last-child .cblock,
 .columns:last-child,
 div.normal:last-child,
 ul.mini-navigation:last-child,

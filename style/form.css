@@ -172,20 +172,24 @@ li.inline-set-container {
 
 form.cmxform fieldset.inline-set,
 fieldset.inline-set {
-	border-width: 0px;
-	padding: 0px;
-	position: relative;
-	left: 33%;
-	max-width: 67%;
+	border: none;
+	padding: 0;
 	margin: 0;
+	position: relative;
+	padding-left: 33%;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
-	box-sizing: border-box;	
+	box-sizing: border-box;
 }
 fieldset.inline-set legend {
 	padding: 0;
 	position: absolute;
-	right: 100%;
+	right: 67%;
+	width: 33%;
+	padding-right: 8px;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;	
 }
 fieldset.inline-set ol {
 	margin-right: 33%;
@@ -209,7 +213,6 @@ form.cmxform .free-text {
 form.cmxform .help-text {
 	font-size: .9em;
 	margin-left: 33%;
-	padding-left: 8px;
 }
 
 /* Erreurs */
@@ -239,7 +242,10 @@ a.dp-choose-date {
 	width: 33%;
 	display: block;
 	float: left;
-	margin-right: 8px;
+	padding-right: 8px;	
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 /* http://html5boilerplate.com/ */
