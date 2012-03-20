@@ -379,68 +379,55 @@ class LinkHelper
 	 */
 	private static function buildLink($document, $lang = null, $class = 'link', $title = '', $popup = false, $attributes = null)
 	{
-	    if (is_null($lang))
-	    {
-	        $lang = RequestContext::getInstance()->getLang();
-	    }
-
-		if (f_util_ClassUtils::methodExists($document, 'getUrl'))
-        {
-            $url = $document->getUrl();
-        }
-        else
-        {
-            $url = LinkHelper::getDocumentUrl($document, $lang);
-        }
-		
-		if (!empty($title))
+		if (!is_array($attributes))
 		{
-			$title = ' title="'.substr($title, 0, 80).'"';
+			$attributes = array();
 		}
-
-		if ($popup !== false)
+		
+		if (isset($attributes['label']))
 		{
-			$onclick = ' onclick="return accessiblePopup(this);"';
-			if (is_array($attributes))
-			{
-				$attributes['class'] = (isset($attributes['class'])) ? ($attributes['class'] . ' popup') : 'popup';
-			}
-			else
-			{
-				$attributes = array('class' => 'popup');
-			}
+			$label = $attributes['label'];
+			unset($attributes['label']);
 		}
 		else
 		{
-		    $onclick = '';
+			$label = $document->getNavigationLabel();
+		}
+		if (empty($label))
+		{
+			return '';
+		}
+		
+		if ($lang === null)
+		{
+			$lang = RequestContext::getInstance()->getLang();
+		}
+		if (!isset($attributes['lang']))
+		{
+			$attributes['lang'] = $lang;
+			$attributes['xml:lang'] = $lang;
+		}		
+		$attributes['href'] = LinkHelper::getDocumentUrl($document, $lang);
+		
+		if (!empty($class))
+		{
+			$attributes['class'] = (isset($attributes['class'])) ? ($class . ' ' . $attributes['class']) : $class;
+		}
+		
+		if (!empty($title) && !isset($attributes['title']))
+		{
+			$attributes['title'] = f_util_StringUtils::shortenString($title, 80);
+		}
+		
+		// @deprecated popup parameter
+		if ($popup !== false)
+		{
+			$attributes['onclick'] = 'return accessiblePopup(this);';
+			$attributes['class'] = (isset($attributes['class'])) ? ($attributes['class'] . ' popup') : 'popup';
 		}
 
-		$attributesString = '';
-		if ( is_array($attributes) )
-		{
-			foreach ($attributes as $name => $value)
-			{
-				if ($name == 'class')
-				{
-					$class .= ' '.$value;
-				}
-				else if ($name != 'lang' && $name != 'href')
-				{
-					$attributesString .= " $name=\"".addcslashes($value, '"')."\"";
-				}
-			}
-		}
-
-		$html = '<a href="'.$url.'" lang="'.$lang.'" xml:lang="'.$lang.'"';
-		if ($class !== null)
-		{
-			$html .= ' class="'.$class.'"';
-		}
-		$html .= $title.$onclick.$attributesString;
-		$html .= '>'.f_util_HtmlUtils::textToHtml($document->getDocumentService()->getNavigationtitle($document)).'</a>';
-		return $html;
+		return '<a ' . f_util_HtmlUtils::buildAttributes($attributes) . '>' . f_util_HtmlUtils::textToHtml($label) . '</a>';
 	}
-
 
 	/**
 	 * Returns the <a/> element for the link "Add to favorites".
