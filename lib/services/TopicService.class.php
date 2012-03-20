@@ -459,7 +459,7 @@ class website_TopicService extends f_persistentdocument_DocumentService
 	{
 		$entry = website_MenuEntry::getNewInstance();
 		$entry->setDocument($document);
-		$entry->setLabel($document->getLabel());
+		$entry->setLabel($document->getNavigationLabel());
 		$entry->setVisual($document->getVisual());
 		if ($document->hasPublishedIndexPage())
 		{

@@ -151,6 +151,15 @@ class website_PageexternalService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_pageexternal $document
+	 * @return string|null
+	 */
+	public function getNavigationLabel($document)
+	{
+		return $document->getNavigationtitle();
+	}
+	
+	/**
+	 * @param website_persistentdocument_pageexternal $document
 	 * @return website_MenuEntry|null
 	 */
 	public function getMenuEntry($document)
@@ -185,7 +194,7 @@ class website_PageexternalService extends f_persistentdocument_DocumentService
 	{
 		$entry = website_MenuEntry::getNewInstance();
 		$entry->setDocument($document);
-		$entry->setLabel($document->getNavigationtitle());
+		$entry->setLabel($document->getNavigationLabel());
 		$entry->setUrl(LinkHelper::getDocumentUrl($document));
 		return $entry;
 	}

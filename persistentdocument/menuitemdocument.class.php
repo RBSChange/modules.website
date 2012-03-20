@@ -40,7 +40,7 @@ class website_persistentdocument_menuitemdocument extends website_persistentdocu
 	 */
 	public function getNavigationtitle()
 	{
-		return website_WebsiteModuleService::getNavigationTitleFor($this->getDocument());
+		return $this->getNavigationLabel();
 	}
 	
 	/**

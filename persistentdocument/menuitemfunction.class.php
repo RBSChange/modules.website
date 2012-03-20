@@ -5,13 +5,13 @@
  */
 class website_persistentdocument_menuitemfunction extends website_persistentdocument_menuitemfunctionbase
 {
+	// Deprecated.
+	
 	/**
-	 * Returns the title used in the navigation elements on the website.
-	 *
-	 * @return string
+	 * @deprecated use getNavigationLabel
 	 */
 	public function getNavigationtitle()
 	{
-		return $this->getLabel();
+		return $this->getNavigationLabel();
 	}
 }

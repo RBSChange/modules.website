@@ -25,7 +25,7 @@ class website_persistentdocument_page extends website_persistentdocument_pagebas
 		$indexedDoc = new indexer_IndexedDocument();
 		$indexedDoc->setId($this->getId());
 		$indexedDoc->setDocumentModel('modules_website/page');
-		$indexedDoc->setLabel($this->getNavigationtitle());
+		$indexedDoc->setLabel($this->getNavigationLabel());
 		$indexedDoc->setLang(RequestContext::getInstance()->getLang());
 		$indexedDoc->setText($this->getTextContent());
 

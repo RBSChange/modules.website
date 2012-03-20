@@ -140,15 +140,7 @@ class website_MenuitemdocumentService extends website_MenuitemService
 				try
 				{
 					$rc->beginI18nWork($lang);
-					if ($pageOrTopic instanceof website_persistentdocument_page)
-					{
-						$label = $pageOrTopic->getNavigationtitle();
-					}
-					else
-					{
-						$label = $pageOrTopic->getLabel();
-					}
-					$menuitem->setLabel($label);
+					$menuitem->setLabel($pageOrTopic->getNavigationLabel());
 					$rc->endI18nWork();
 				}
 				catch (Exception $e)
@@ -176,6 +168,15 @@ class website_MenuitemdocumentService extends website_MenuitemService
 			 . ' (' . LocaleService::getInstance()->transBO($originalDoc->getPersistentModel()->getLabelKey()) . ')';	
 		}
         $nodeAttributes['popup'] = LocaleService::getInstance()->transBO('m.generic.backoffice.' . ($document->getPopup() ? 'yes' : 'no'));
+	}
+	
+	/**
+	 * @param website_persistentdocument_menuitemdocument $document
+	 * @return string
+	 */
+	public function getNavigationLabel($document)
+	{
+		return $document->getDocument()->getNavigationLabel();
 	}
 	
 	/**

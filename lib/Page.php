@@ -172,7 +172,7 @@ class website_Page implements f_mvc_Context
 	 */
 	public function getNavigationtitle()
 	{
-		return $this->page->getNavigationtitle();
+		return $this->page->getNavigationLabel();
 	}
 
 	/**
