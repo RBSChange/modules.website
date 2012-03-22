@@ -298,5 +298,10 @@ dl.inline-items > dd {
 	vertical-align: text-bottom;
 }
 
+/* Use this class to hide elements when JavaScript is not actiated. */
+.js {
+	display: none !important;
+}
+
 @import url(/modules/website/style/form.css);
 @import url(/modules/website/style/bench.css);
