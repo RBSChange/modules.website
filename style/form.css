@@ -24,7 +24,7 @@ form.cmxform legend {
 fieldset.inline-set legend,
 form.cmxform label {
 	text-align: right;
-	width: 33%;
+	width: 35%;
 	font-weight: bold;
 	line-height: 1.6;
 	font-size: 1em;
@@ -42,7 +42,7 @@ form.cmxform label {
 	float: left;
 }
 form.cmxform label.form-validation {
-	margin-left: 33%;
+	margin-left: 35%;
 	text-align: left;
 	float: none;
 }
@@ -50,7 +50,7 @@ form.cmxform label.form-validation {
 span.captcha {
 	vertical-align: bottom;
 	text-align:right;
-	width: 33%;
+	width: 35%;
 	display: block;
 	float: left;
 	padding-right: 8px;	
@@ -78,12 +78,12 @@ select {
 	border-width: 1px;
 	border-style: solid;
 }
-/* The label node has total width:33% (border-box) */
+/* The label node has total width:35% (border-box) */
 form.cmxform input.textfield, 
 form.cmxform textarea, 
 form.cmxform select,
 form.cmxform .richtextfield {
-	max-width: 67%;
+	max-width: 65%;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;	
@@ -166,17 +166,13 @@ form.cmxform label.nocmx {
 	zoom: 1;	
 }
 
-li.inline-set-container {
-	overflow: hidden;
-}
-
 form.cmxform fieldset.inline-set,
 fieldset.inline-set {
 	border: none;
 	padding: 0;
 	margin: 0;
 	position: relative;
-	padding-left: 33%;
+	padding-left: 35%;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -184,15 +180,15 @@ fieldset.inline-set {
 fieldset.inline-set legend {
 	padding: 0;
 	position: absolute;
-	right: 67%;
-	width: 33%;
+	right: 65%;
+	width: 35%;
 	padding-right: 8px;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;	
 }
 fieldset.inline-set ol {
-	margin-right: 33%;
+	margin-right: 35%;
 }
 
 .buttons {
@@ -212,7 +208,7 @@ form.cmxform .free-text {
 }
 form.cmxform .help-text {
 	font-size: .9em;
-	margin-left: 33%;
+	margin-left: 35%;
 }
 
 /* Erreurs */
@@ -239,7 +235,7 @@ a.dp-choose-date {
 
 /* Commentaires */
 .jTagEditor .textfield-label {
-	width: 33%;
+	width: 35%;
 	display: block;
 	float: left;
 	padding-right: 8px;	
