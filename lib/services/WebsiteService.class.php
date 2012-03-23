@@ -36,6 +36,16 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	}
 	
 	/**
+	 * @param website_persistentdocument_website $document (Read only)
+	 * @param array $defaultSynchroConfig string : string[]
+	 * @return array string : string[]
+	 */
+	public function getI18nSynchroConfig($document, $defaultSynchroConfig)
+	{
+		return $document->getLocalizebypath() ? parent::getI18nSynchroConfig($document, $defaultSynchroConfig) : array();
+	}
+	
+	/**
 	 * @param website_persistentdocument_website $document
 	 * @param Integer $parentNodeId Parent node ID where to save the document (optionnal).
 	 * @return void
