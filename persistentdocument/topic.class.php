@@ -34,24 +34,23 @@ class website_persistentdocument_topic extends website_persistentdocument_topicb
 		return $this->getDocumentService()->getPathOf($this);
 	}
 	
+	//DEPRECATED
+	
 	/**
-	 * @see website_PublishableElement::getNavigationtitle()
-	 * @return string
+	 * @deprecated use getNavigationLabel
 	 */
 	public function getNavigationtitle()
 	{
-		return $this->getLabel();
+		return $this->getNavigationLabel();
 	}
 	
 	/**
-	 * @return string
+	 * @deprecated use getNavigationLabelAsHtml
 	 */
 	public function getNavigationtitleAsHtml()
 	{
-		return $this->getLabelAsHtml();
+		return $this->getNavigationLabelAsHtml();
 	}
-	
-	//DEPRECATED
 	
 	/**
 	 * @deprecated

@@ -3,16 +3,15 @@
  * website_persistentdocument_menuitemtext
  * @package website
  */
-class website_persistentdocument_menuitemtext
-	extends website_persistentdocument_menuitemtextbase
+class website_persistentdocument_menuitemtext extends website_persistentdocument_menuitemtextbase
 {
+	// Deprecated.
+
 	/**
-	 * Returns the title used in the navigation elements on the website.
-	 *
-	 * @return string
+	 * @deprecated use getNavigationLabel
 	 */
 	public function getNavigationtitle()
 	{
-		return $this->getLabel();
+		return $this->getNavigationLabel();
 	}
 }

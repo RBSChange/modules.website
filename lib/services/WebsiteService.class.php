@@ -354,6 +354,16 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 		}
 		return null;
 	}
+
+	/**
+	 * @param website_persistentdocument_website $document
+	 * @return string|null
+	 */
+	public function getNavigationLabel($document)
+	{
+		$page = $document->getIndexPage();
+		return ($page) ? $page->getNavigationLabel() : null;
+	}
 	
 	/**
 	 * @param website_persistentdocument_website $website
@@ -367,7 +377,7 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	{
 		return array();
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_website $document
 	 * @return website_MenuEntry|null
@@ -394,7 +404,7 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	{
 		$entry = website_MenuEntry::getNewInstance();
 		$entry->setDocument($document);
-		$entry->setLabel($document->getLabel());
+		$entry->setLabel($document->getNavigationLabel());
 		$entry->setUrl(LinkHelper::getDocumentUrl($document));
 		$entry->setContainer(true);
 		return $entry;

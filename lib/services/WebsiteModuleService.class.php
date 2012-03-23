@@ -968,22 +968,8 @@ class website_WebsiteModuleService extends f_persistentdocument_DocumentService
 	 */
 	public static function getNavigationTitleFor($document)
 	{
-		$label = null;
-		if ($document instanceof website_PublishableElement)
-		{
-			$label = f_util_HtmlUtils::textToHtml($document->getNavigationtitle());
-		}
-		if (empty($label))
-		{
-			$label = $document->getLabelAsHtml();
-		}
-		if (f_Locale::isLocaleKey($label))
-		{
-			$label = f_Locale::translate($label);
-		}
-		return $label;
+		return $document->getNavigationLabelAsHtml();
 	}
-	
 	
 	/**
 	 * @deprecated

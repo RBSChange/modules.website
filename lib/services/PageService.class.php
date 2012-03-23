@@ -167,7 +167,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 * @param website_persistentdocument_page $document
 	 * @return string|null
 	 */
-	public function getNavigationtitle($document)
+	public function getNavigationLabel($document)
 	{
 		return $document->getNavigationtitle();
 	}
@@ -1550,7 +1550,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 				$lastAncestorPage = $ancestor->getIndexPage();
 				if ($lastAncestorPage)
 				{
-					$navigationtitle = $lastAncestorPage->getNavigationtitle();
+					$navigationtitle = $lastAncestorPage->getNavigationLabel();
 					$href = $lastAncestorPage !== $pageDocument ? LinkHelper::getDocumentUrl($ancestor) : null;
 					$breadcrumb->addElement($navigationtitle, $href);
 					if ($href)
@@ -1588,7 +1588,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 					$detail = DocumentHelper::getDocumentInstanceIfExists(intval($params[$params['wemod'].'Param']['cmpref']));
 					if ($detail)
 					{
-						$navigationtitle = $detail->getDocumentService()->getNavigationtitle($detail);
+						$navigationtitle = $detail->getDocumentService()->getNavigationLabel($detail);
 						if ($navigationtitle)
 						{
 							$breadcrumb->addElement($navigationtitle);
@@ -2196,7 +2196,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		$entry = website_MenuEntry::getNewInstance();
 		$entry->setDocument($document);
-		$entry->setLabel($document->getNavigationtitle());
+		$entry->setLabel($document->getNavigationLabel());
 		$entry->setUrl(LinkHelper::getDocumentUrl($document));
 		return $entry;
 	}
