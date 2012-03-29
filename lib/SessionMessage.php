@@ -21,6 +21,10 @@ class website_SessionMessage
 		$_SESSION['website_SessionMessage']['errors'][] = array(false, $error);
 	}
 	
+	/**
+	 * @param boolean $flush
+	 * @return string[]
+	 */
 	public static function getMessages($flush = true)
 	{
 		$messages = array();
@@ -32,7 +36,7 @@ class website_SessionMessage
 				$messages[] = $message[1];
 				if (!$message[0])
 				{
-					$newMessages = $message[1];
+					$newMessages[] = $message;
 				}
 			}
 			$_SESSION['website_SessionMessage']['messages'] = $newMessages;
@@ -47,12 +51,19 @@ class website_SessionMessage
 		return $messages;
 	}
 	
+	/**
+	 * @return boolean
+	 */
 	public static function hasMessages()
 	{
 		return isset($_SESSION['website_SessionMessage']['messages'])
 			&& f_util_ArrayUtils::isNotEmpty($_SESSION['website_SessionMessage']['messages']);
 	}
 	
+	/**
+	 * @param boolean $flush
+	 * @return string[]
+	 */
 	public static function getErrors($flush = true)
 	{
 		$messages = array();
@@ -64,7 +75,7 @@ class website_SessionMessage
 				$messages[] = $message[1];
 				if (!$message[0])
 				{
-					$newMessages = $message[1];
+					$newMessages[] = $message;
 				}
 			}
 			$_SESSION['website_SessionMessage']['errors'] = $newMessages;
@@ -79,6 +90,9 @@ class website_SessionMessage
 		return $messages;
 	}
 	
+	/**
+	 * @return boolean
+	 */
 	public static function hasErrors()
 	{
 		return isset($_SESSION['website_SessionMessage']['errors'])
@@ -87,6 +101,7 @@ class website_SessionMessage
 	
 	public static function clear()
 	{
+		unset($_SESSION['website_SessionMessage']['messages']);
 		unset($_SESSION['website_SessionMessage']['errors']);
 	}
 }

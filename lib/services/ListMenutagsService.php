@@ -41,7 +41,6 @@ class website_ListMenutagsService extends BaseService implements list_ListItemsS
 			}
 			$items[] = new list_Item($label, $tag);
 		}
-		Framework::fatal(__METHOD__ . ' ' . var_export($items, true));
 		return $items;
 	}
 

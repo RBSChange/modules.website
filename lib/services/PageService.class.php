@@ -1196,7 +1196,9 @@ class website_PageService extends f_persistentdocument_DocumentService
 		return $resultXPath;
 	}
 
-
+	/**
+	 * @return task_persistentdocument_usertask[]
+	 */
 	public final function getPendingTasksForCurrentUser()
 	{
 		$pageModel = f_persistentdocument_PersistentDocumentModel::getInstance('website', 'page');
@@ -1204,7 +1206,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			return array();
 		}
-		$query = f_persistentdocument_PersistentProvider::getInstance()->createQuery('modules_task/usertask');
+		$query = task_UsertaskService::getInstance()->createQuery();
 		$query->add(Restrictions::eq('user', users_UserService::getInstance()->getCurrentUser()->getId()));
 		$query->add(Restrictions::published());
 		$query->add(Restrictions::eq('workitem.transition.taskid', $pageModel->getWorkflowStartTask()));
@@ -1213,7 +1215,8 @@ class website_PageService extends f_persistentdocument_DocumentService
 		return $query->find();
 	}
 
-	// Orphan pages related methods
+	// Orphan pages related methods.
+	
 	/**
 	 * @return website_persistentdocument_page[]
 	 */
@@ -1225,7 +1228,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 		->addOrder(Order::desc('document_modificationdate'))
 		->setMaxResults(50);
 		return $query->find();
-
 	}
 
 	/**

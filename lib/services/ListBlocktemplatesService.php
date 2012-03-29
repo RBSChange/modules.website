@@ -48,7 +48,6 @@ class website_ListBlocktemplatesService extends BaseService implements list_List
 		$blockName = $request->getParameter('blockName');
 		
 		$templatePrefix = ucfirst($blockModule) . '-Block-' . ucfirst($blockName) . '-';
-		Framework::fatal(__METHOD__ . ' $templatePrefix = ' . $templatePrefix);
 		if (!isset($this->itemArray[$templatePrefix]))
 		{
 			$ls = LocaleService::getInstance();
@@ -83,7 +82,6 @@ class website_ListBlocktemplatesService extends BaseService implements list_List
 			{
 				/* @var $theme theme_persistentdocument_theme */
 				$themeCode = $theme->getCodename();
-				Framework::fatal(__METHOD__ . ' ' . $themeCode);
 				$themesByCode[$themeCode] = $theme;
 				$paths = FileResolver::getInstance()->setPackageName('themes_' . $themeCode)->getPaths('modules'. DIRECTORY_SEPARATOR . $blockModule . DIRECTORY_SEPARATOR . 'templates');
 				foreach ($paths as $path)
@@ -98,7 +96,6 @@ class website_ListBlocktemplatesService extends BaseService implements list_List
 							{
 								continue;
 							}
-							Framework::fatal(__METHOD__ . ' ' . $themeCode . ' ' . $value);
 							$label = $ls->transBO('t.' . $themeCode . '.list.blocktemplates-' . strtolower($value), $lm) . ' (' . $theme->getLabel() . ')';
 							$this->itemArray[$templatePrefix][] = new list_Item($label, $value);
 						}
