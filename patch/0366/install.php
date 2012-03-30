@@ -17,5 +17,11 @@ class website_patch_0366 extends patch_BasePatch
 		$this->execChangeCommand('compile-db-schema');
 		
 		$this->executeLocalXmlScript('list-menutags.xml');
+		
+		foreach (website_MenufolderService::getInstance()->createQuery()->find() as $folder)
+		{
+			$folder->setLabel('m.website.bo.general.menu-folder-label');
+			$folder->save();
+		}
 	}
 }

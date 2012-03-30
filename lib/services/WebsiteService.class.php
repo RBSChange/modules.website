@@ -158,7 +158,6 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 
 		// Create the menus folder where the website's menus will be stored.
 		$menuFolder = website_MenufolderService::getInstance()->getNewDocumentInstance();
-		$menuFolder->setLabel('&modules.website.bo.general.Menu-folder-label;');
 		$menuFolder->save($document->getId());
 
 		$initScript = $document->getStructureinit();
