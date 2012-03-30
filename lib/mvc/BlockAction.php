@@ -367,6 +367,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	 * @see f_mvc_Action::getCacheKeyParameters()
 	 *
 	 * @param website_BlockActionRequest $request
+	 * @return array
 	 */
 	public function getCacheKeyParameters($request)
 	{

@@ -1,21 +1,11 @@
 <?php
 /**
- * Class where to put your custom methods for document website_persistentdocument_markerfolder
- * @package website.persistentdocument
+ * @deprecated
  */
 class website_persistentdocument_markerfolder extends website_persistentdocument_markerfolderbase 
 {
 	/**
-	 * @see f_persistentdocument_PersistentDocumentImpl::getTreeNodeLabel()
-	 * @return String
-	 */
-	function getTreeNodeLabel()
-	{
-		return f_Locale::translateUI($this->getLabel());
-	}
-	
-	/**
-	 * @return string
+	 * @deprecated
 	 */
 	public function getMarkersJSON()
 	{
@@ -23,7 +13,7 @@ class website_persistentdocument_markerfolder extends website_persistentdocument
 	}
 	
 	/**
-	 * @return Array
+	 * @deprecated
 	 */
 	public function getMarkersInfos()
 	{

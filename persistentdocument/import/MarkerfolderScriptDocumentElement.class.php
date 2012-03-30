@@ -1,12 +1,11 @@
 <?php
 /**
- * website_MarkerfolderScriptDocumentElement
- * @package modules.website.persistentdocument.import
+ * @deprecated
  */
 class website_MarkerfolderScriptDocumentElement extends import_ScriptDocumentElement
 {
     /**
-     * @return website_persistentdocument_markerfolder
+     * @deprecated
      */
     protected function initPersistentDocument()
     {
@@ -14,7 +13,7 @@ class website_MarkerfolderScriptDocumentElement extends import_ScriptDocumentEle
     }
     
     /**
-	 * @return f_persistentdocument_PersistentDocumentModel
+	 * @deprecated
 	 */
 	protected function getDocumentModel()
 	{

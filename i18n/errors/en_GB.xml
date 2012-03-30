@@ -65,7 +65,6 @@
   <key id="modules-website-loadfortranslation-page">You do not have the appropriate permissions to perform this operation: ″Translate a page″</key>
   <key id="modules-website-loadfortranslation-pageversion">You do not have the appropriate permissions to perform this operation: ″Translate a page version″</key>
   <key id="invalid-import-script">An error occurred while reading the initialisation script.</key>
-  <key id="cant-move-markerfolder-to-other-website">You cannot move the markers to another website.</key>
   <key id="cant-move-menufolder-to-other-website">you cannot move a menus folder to another website.</key>
   <key id="import-script-not-found">Could not find the initialisation script.</key>
   <key id="no-defined-website">No website defined for this document</key>
