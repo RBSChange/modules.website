@@ -155,7 +155,10 @@ class website_ChangeBlockRenderer
 			foreach (explode(",", $extensionParams['inheritedParams']) as $parameterName)
 			{
 				$trimmedParameterName = trim($parameterName);
-				$parameters[$trimmedParameterName] = $actionRequest->getParameter($trimmedParameterName);
+				if ($trimmedParameterName)
+				{
+					$parameters[$trimmedParameterName] = $actionRequest->getParameter($trimmedParameterName);
+				}
 			}
 		}
 		
