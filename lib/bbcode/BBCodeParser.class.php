@@ -74,6 +74,21 @@ class website_BBCodeParser
 	/**
 	 * @var boolean
 	 */
+	private $inUrl = false;
+	
+	/**
+	 * @var boolean
+	 */
+	private $needSpaceToStartUrl = false;
+	
+	/**
+	 * @var string
+	 */
+	private $url;
+	
+	/**
+	 * @var boolean
+	 */
 	private $escChar = false;	
 	
 	/**
@@ -143,6 +158,8 @@ class website_BBCodeParser
 			$this->clearTag();
 			$this->escChar = false;
 			$this->nobb = false;
+			$this->inUrl = false;
+			$this->needSpaceToStartUrl = false;
 			$this->startParsing();
 			
 		}
@@ -372,27 +389,48 @@ class website_BBCodeParser
 					}
 				}
 				
-				if ($char === "\r")
+				if ($char === "/" && !$this->nobb && !$this->inUrl)
 				{
-					//Ignore
+					// Detect URLs.
+					$startURL = $this->checkStartURL($this->text);
+					if ($startURL !== null)
+					{
+						$this->text = substr($this->text, 0, -strlen($startURL));
+						$this->addText();
+						$this->text = $startURL;
+						$this->inUrl = true;
+				}
+					$this->text .= $char;
+				}
+				elseif ($char === "\r")
+				{
+					// Ignore.
 				}
 				elseif ($char === "\n" && !$this->nobb)
 				{
 					$this->addText();
 					$this->tagName = 'newline';
 					$this->appendTag();
+					$this->needSpaceToStartUrl = false;
 				}
 				elseif ($char === "\t" && !$this->nobb)
 				{
 					$this->addText();
 					$this->tagName = 'tabulation';
 					$this->appendTag();
+					$this->needSpaceToStartUrl = false;
 				}
-				elseif ($char === "[")
+				elseif ($char === " " && !$this->nobb)
+				{
+					$this->addText();
+					$this->text = $char;
+				}
+				elseif ($char === "[" && !$this->inUrl)
 				{
 					$this->addText();
 					$this->tagName = '';
 					$this->text = $char;
+					$this->needSpaceToStartUrl = true;
 				}
 				else
 				{
@@ -478,12 +516,58 @@ class website_BBCodeParser
 		return $this->largerSmiles[$smile];
 	}
 	
+	/**
+	 * @var string[]
+	 */
+	private $startUrlArray = array('http:/', 'https:/');
+	
+	/**
+	 * @return string[]
+	 */
+	protected function getStartUrlArray()
+	{
+		return $this->startUrlArray;
+	}
+	
+	/**
+	 * @param string $text
+	 * @return string or null
+	 */
+	private function checkStartUrl($text)
+	{
+		foreach ($this->getStartUrlArray() as $urlStart)
+		{
+			if (!$this->needSpaceToStartUrl && ($text == $urlStart))
+			{
+				return $urlStart;
+			}
+			
+			$tempStart = ' ' . $urlStart;
+			if (substr($text, -strlen($tempStart)) == $tempStart)
+			{
+				return $urlStart;
+			}
+		}
+		return null;
+	}
+	
 	private function addText()
 	{
 		$text = $this->text;
 		if ($text !== '')
 		{
-			$this->parentElement->appendChild($this->xmlDocument->createTextNode($text));
+			if ($this->inUrl)
+			{	
+				$this->inUrl = false;
+				$tagInfo = $this->getTagInfo('url');
+				$this->openTag($tagInfo);
+				$this->parentElement->appendChild($this->xmlDocument->createTextNode($text));
+				$this->endTag($tagInfo);
+			}
+			else
+			{
+				$this->parentElement->appendChild($this->xmlDocument->createTextNode($text));
+			}
 			$this->text = '';
 		}
 		$this->clearTag();
@@ -1359,6 +1443,17 @@ class website_BBCodeTagInfoUrl extends website_BBCodeTagInfo
 			$href = $xmlElement->textContent;
 			if (empty($href)) {$href = 'about:blank';}
 			$xmlElement->setAttribute('data-bbcode-attr', $href);
+			
+			// Shorten long urls.
+			if (f_util_StringUtils::strlen($href) > 50)
+			{
+				$shortUrl = f_util_StringUtils::substr($href, 0, 20) . '.....' . f_util_StringUtils::substr($href, -20);
+				while ($xmlElement->hasChildNodes()) 
+				{
+					$xmlElement->removeChild($xmlElement->firstChild);
+		}
+				$xmlElement->appendChild($xmlElement->ownerDocument->createTextNode($shortUrl));
+			}
 		}
 		$xmlElement->setAttribute('href', $href);
 	}
