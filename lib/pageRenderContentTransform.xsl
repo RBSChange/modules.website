@@ -159,7 +159,7 @@
 	</xsl:template>
 
 	<xsl:template match="change:templateblock">
-		<div style="display:none"><xsl:copy-of select="@*" />&#160;</div>
+		<div style="display:none"><xsl:copy-of select="@*[name(.)!='editname']" />&#160;</div>
 	</xsl:template>
 	
 	<xsl:template match="change:spacer">
