@@ -17,7 +17,7 @@
 			
 			<method name="onInitialize">
 				<body><![CDATA[
-					this.autoResize(500, 200);					
+					this.autoResize(850, 400);					
 					var me = this;
 					var callBack = function(result) { me.onLoadRessources(result); };
 					var containerId = ('pageContainerId' in this.parameters) ? this.parameters.pageContainerId : this.parameters.documentId;
@@ -32,6 +32,7 @@
 					this.mInitialized = true;
 					var field = this.getElementByAnonId('template');
 					var fieldHome = this.getElementByAnonId('templateHome');
+					var fieldNosidebar = this.getElementByAnonId('templateNosidebar');
 					if (result.contents.length > 0)
 					{
 						for (var i in result.contents)
@@ -48,6 +49,11 @@
 							{
 								fieldHome.value = itemInfos.codename;
 							}
+							fieldNosidebar.appendItem(itemInfos.label, itemInfos.codename);
+							if (itemInfos.isNosidebarDefault)
+							{
+								fieldNosidebar.value = itemInfos.codename;
+							}
 						}
 					}
 					else
@@ -55,7 +61,7 @@
 						this.getElementByAnonId('form-panel').setAttribute('hidden', 'true');
 						this.getElementByAnonId('importing-panel').setAttribute('hidden', 'true');
 						this.getElementByAnonId('message-panel').removeAttribute('hidden');
-						this.appendMessage("&modules.website.bo.dialog.No-page-template;", true);
+						this.appendMessage("${transui:m.website.bo.dialog.no-page-template,ucf,js}", true);
 					}
 				]]></body>
 			</method>
@@ -76,17 +82,22 @@
 					{
 						templateHomeName = templateName
 					}
+					var templateNosidebarName = this.getElementByAnonId('templateNosidebar').value;
+					if (templateNosidebarName == '')
+					{
+						templateNosidebarName = templateName
+					}
 					try
 					{
 						this.getElementByAnonId('form-panel').setAttribute('hidden', 'true');
 						this.getElementByAnonId('importing-panel').removeAttribute('hidden');
 						this.getElementByAnonId('message-panel').setAttribute('hidden', 'true');
-						var result = this.parameters.callback({template: templateName, templateHome: templateHomeName});
+						var result = this.parameters.callback({template: templateName, templateHome: templateHomeName, templateNosidebar: templateNosidebarName});
 						this.onStructureInitialized(result);
 					}
 					catch (e)
 					{
-						wCore.error("onOk", [templateName, templateHomeName], e);
+						wCore.error("onOk", [templateName, templateHomeName, templateNosidebarName], e);
 						this.getElementByAnonId('form-panel').removeAttribute('hidden');
 						this.getElementByAnonId('importing-panel').setAttribute('hidden', 'true');
 						this.getElementByAnonId('message-panel').setAttribute('hidden', 'true');
@@ -102,7 +113,7 @@
 					this.getElementByAnonId('message-panel').removeAttribute('hidden');
 					if (result.status == 'OK')
 					{
-						this.appendMessage("&modules.website.bo.dialog.Structure-initialized;", false);
+						this.appendMessage("${transui:m.website.bo.dialog.structure-initialized,ucf,js}", false);
 					}
 					else
 					{
@@ -130,10 +141,15 @@
 			<handler event="fieldChanged"><![CDATA[
 				var templateName = event.originalTarget.value;
 				var item = this.mConfig[templateName];
-				var previewImageAnonId = (event.originalTarget.getAttribute('name') == 'template') ? 'previewimage' : 'previewimageHome';
+				switch (event.originalTarget.getAttribute('name'))
+				{
+					case 'template': var previewImageAnonId = 'previewimage'; break;
+					case 'templateNosidebar': var previewImageAnonId = 'previewimageNosidebar'; break;
+					case 'templateHome': var previewImageAnonId = 'previewimageHome'; break;
+				}
 				if (item && item.hasPreviewImage)
 				{
-					var url = wCore.buildServerUrl('theme', 'PreviewImage', {cmpref: item.id, lang:Context.W_LANG, 'max-height':100, 'max-width':150});
+					var url = wCore.buildServerUrl('theme', 'PreviewImage', {cmpref: item.id, lang:Context.W_LANG, 'max-height':200, 'max-width':250});
 					this.getElementByAnonId(previewImageAnonId).setAttribute('src', url);
 				}
 				else
@@ -157,42 +173,54 @@
 					<xul:deck anonid="deck" flex="1">
 						<xul:vbox anonid="form-panel" flex="1">
 							<xul:vbox flex="1">
+								<xul:description>${transui:m.website.bo.dialog.select-templates-help,ucf}</xul:description>
+								<xul:spacer height="20"/>
 								<xul:hbox>
-									<xul:vbox flex="1" pack="center">
+									<xul:vbox width="250" align="center">
 										<xul:description>${transui:m.website.bo.dialog.select-page-template,ucf}</xul:description>
-										<xul:spacer height="5px"/>
-										<xul:cfield anonid="template" name="template" fieldtype="dropdownlist" hidehelp="true" required="true" />
+										<xul:spacer height="5"/>
+										<xul:cfield editwidth="250" anonid="template" name="template" fieldtype="dropdownlist" hidehelp="true" required="true" />
+										<xul:spacer height="5"/>
+										<xul:vbox width="250" height="200" align="center" pack="center">
+											<xul:image anonid="previewimage" src="{IconsBase}/small/document.png" />
+										</xul:vbox>
 									</xul:vbox>
-									<xul:spacer width="5"/>
-									<xul:vbox width="150" height="100" align="center" pack="center">
-										<xul:image anonid="previewimage" src="{IconsBase}/small/document.png" />
+									<xul:spacer flex="1" />
+									<xul:vbox width="250" align="center">
+										<xul:description>${transui:m.website.bo.dialog.select-nosidebar-page-template,ucf}</xul:description>
+										<xul:spacer height="5"/>
+										<xul:cfield editwidth="250" anonid="templateNosidebar" name="templateNosidebar" fieldtype="dropdownlist" hidehelp="true" />
+										<xul:spacer height="5"/>
+										<xul:vbox width="250" height="200" align="center" pack="center">
+											<xul:image anonid="previewimageNosidebar" src="{IconsBase}/small/document.png" />
+										</xul:vbox>
 									</xul:vbox>
-								</xul:hbox>
-								<xul:hbox>
-									<xul:vbox flex="1" pack="center">
+									<xul:spacer flex="1" />
+									<xul:vbox width="250" align="center">
 										<xul:description>${transui:m.website.bo.dialog.select-home-page-template,ucf}</xul:description>
-										<xul:spacer height="5px"/>
-										<xul:cfield anonid="templateHome" name="templateHome" fieldtype="dropdownlist" hidehelp="true" />
-									</xul:vbox>
-									<xul:spacer width="5"/>
-									<xul:vbox width="150" height="100" align="center" pack="center">
-										<xul:image anonid="previewimageHome" src="{IconsBase}/small/document.png" />
+										<xul:spacer height="5"/>
+										<xul:cfield editwidth="250" anonid="templateHome" name="templateHome" fieldtype="dropdownlist" hidehelp="true" />
+										<xul:spacer height="5"/>
+										<xul:vbox width="250" height="200" pack="center">
+											<xul:image anonid="previewimageHome" src="{IconsBase}/small/document.png" />
+										</xul:vbox>
 									</xul:vbox>
 								</xul:hbox>
-								<xul:spacer height="10px" />
+								<xul:spacer height="10" />
 								<xul:hbox align="center" pack="center"><xul:button anonid="submitButton" disabled="true" image="{IconsBase}/small/check.png" 
 									label="${transui:m.website.bo.dialog.initialize,ucf,attr}" oncommand="handleSelected()" /></xul:hbox>								
 							</xul:vbox>
 						</xul:vbox>
 						<xul:vbox anonid="importing-panel" flex="1">
-							<xul:spacer height="15px" />
+							<xul:spacer flex="1" />
 							<xul:hbox pack="center">
-								<xul:image src="{HttpHost}/media/backoffice/loading_40.gif" height="40px" width="40px" />
+								<xul:image src="{HttpHost}/media/backoffice/loading_40.gif" height="40" width="40" />
 							</xul:hbox>
-							<xul:spacer height="16px" />
+							<xul:spacer height="15" />
 							<xul:hbox pack="center">
 								<xul:description style="font-size:18px" value="${transui:m.website.bo.dialog.importing-structure,ucf,attr}" />
 							</xul:hbox>
+							<xul:spacer flex="1" />							
 						</xul:vbox>
 						<xul:vbox anonid="message-panel" flex="1">
 							<xul:vbox anonid="messageBox" flex="1" />

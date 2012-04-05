@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <i18n baseKey="m.website.bo.dialog" lcid="fr_FR">
   <key id="import-structure-title">importer la structure par défaut</key>
-  <key id="select-page-template">Sélectionnez le template à associer aux pages.</key>
-  <key id="select-home-page-template">Sélectionnez le template de page d'accueil.</key>
+  <key id="select-templates-help">Sélectionnez les templates de pages à utiliser. Selon la structure importée, il se peut que tous ne soient pas réellement utilisés.</key>
+  <key id="select-page-template">template de page avec sidebar</key>
+  <key id="select-nosidebar-page-template">template de page sans sidebar</key>
+  <key id="select-home-page-template">template de page d'accueil</key>
   <key id="importing-structure">Initialisation de la structure...</key>
   <key id="structure-initialized">Structure initialisée.</key>
   <key id="no-page-template">Il n'y a aucun gabarit de page affecté au conteneur.</key>
