@@ -26,7 +26,7 @@ treechildren::-moz-tree-image(modules_website_topic notVisible){
 	list-style-image: url(/changeicons/small/index_delete.png) ;
 }
 treechildren::-moz-tree-image(modules_website_pagereference){
-	list-style-image: url(/changeicons/small/page-reference.png) ;
+	list-style-image: url(/changeicons/small/page.png) ;
 }
 treechildren::-moz-tree-cell(modules_website_pagereference){
 	background-image: url(/changeicons/small/reference.png) ;

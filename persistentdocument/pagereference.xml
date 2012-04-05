@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/static/schema/change-document/1.0.xsd" 
-	model-version="1.0" icon="page-reference" indexable="false"  
-	extend="modules_website/page" use-correction="false" backoffice-indexable="false">
-  <properties>
-    <add name="referenceofid" type="Integer" min-occurs="0" max-occurs="1" default-value="0" />
-  </properties>
-  <statuses default="PUBLICATED"/>
-  <workflow start-task="" />
-
+	xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/static/schema/change-document/1.0.xsd"
+	model-version="1.0" icon="page" indexable="false" extend="modules_website/page" use-correction="false" backoffice-indexable="false">
+	<properties>
+		<add name="referenceofid" type="Integer" min-occurs="0" max-occurs="1" default-value="0" />
+	</properties>
+	<statuses default="PUBLICATED" />
+	<workflow start-task="" />
 </document>
