@@ -26,10 +26,6 @@ li.checkbox label{
 }
 
 
-
-/*
-	http://html5boilerplate.com/
-*/
-
+/* http://html5boilerplate.com/ */
 /* Webkit browsers add a 2px margin outside the chrome of form elements */
 button, input, select, textarea { margin: 0; }
