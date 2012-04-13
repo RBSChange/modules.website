@@ -17,6 +17,20 @@ class website_TalesUrl implements PHPTAL_Tales
 	}
 	
 	/**
+	 * tagurl: modifier.
+	 */
+	static public function tagurl($src, $nothrow)
+	{
+		$parts = array_map('trim', explode(',', $src));
+		if (count($parts) < 1 || empty($parts[0])) {return "''";}
+		$tag = phptal_tales(array_shift($parts), $nothrow);
+		
+		list ($formatterStr, $parametersStr) = self::buildFormattersAndParameters($parts);
+		
+		return "website_TalesUrl::buildTagURL($tag, array(".implode(', ', $parametersStr)."), $formatterStr)";
+	}
+	
+	/**
 	 * actionurl: modifier.
 	 */
 	static public function actionurl($src, $nothrow)
@@ -131,6 +145,43 @@ class website_TalesUrl implements PHPTAL_Tales
 				$link->setArgSeparator(f_web_HttpLink::STANDARD_SEPARATOR);
 				$url = $link->getUrl();
 				
+				$url = self::formatUrl($url, $formatter, $lang);
+			}
+		}
+		catch (Exception $e)
+		{
+			Framework::exception($e);
+		}
+		return $url;
+	}	
+	
+	/**
+	 * @param string $tag
+	 * @param array $parameters
+	 * @param string $formatters
+	 */
+	public static function buildTagURL($tag, $parameters, $formatter)
+	{
+		$url = '';
+		try 
+		{
+			if (strpos($tag, 'ctx_') === 0)
+			{
+				$tag = 'contextual_website_website_modules_' . substr($tag, 4);
+			}
+			
+			if ($tag)
+			{
+				$lang = self::extractLang($parameters);
+				
+				$website = null;
+				if (isset($parameters['website']) && ($parameters['website'] instanceof website_persistentdocument_website))
+				{
+					$website = $parameters['website'];
+					unset($parameters['website']);
+				}
+				
+				$url = LinkHelper::getTagUrlForContext($tag, $website, $lang, $parameters);
 				$url = self::formatUrl($url, $formatter, $lang);
 			}
 		}

@@ -5,8 +5,6 @@
  */
 class website_patch_0365 extends patch_BasePatch
 {
-//  by default, isCodePatch() returns false.
-//  decomment the following if your patch modify code instead of the database structure or content.
     /**
      * Returns true if the patch modify code that is versionned.
      * If your patch modify code that is versionned AND database structure or content,
@@ -25,6 +23,7 @@ class website_patch_0365 extends patch_BasePatch
 	{	
 		$this->addProjectConfigurationEntry('tal/prefix/alternateclass', 'website_TalesAlternateClass');
 		$this->addProjectConfigurationEntry('tal/prefix/url', 'website_TalesUrl');
+		$this->addProjectConfigurationEntry('tal/prefix/tagurl', 'website_TalesUrl');
 		$this->addProjectConfigurationEntry('tal/prefix/actionurl', 'website_TalesUrl');
 		$this->addProjectConfigurationEntry('tal/prefix/currenturl', 'website_TalesUrl');
 		

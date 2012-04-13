@@ -5,6 +5,7 @@ class website_Setup extends object_InitDataSetup
 	{
 		$this->addProjectConfigurationEntry('tal/prefix/alternateclass', 'website_TalesAlternateClass');
 		$this->addProjectConfigurationEntry('tal/prefix/url', 'website_TalesUrl');
+		$this->addProjectConfigurationEntry('tal/prefix/tagurl', 'website_TalesUrl');
 		$this->addProjectConfigurationEntry('tal/prefix/actionurl', 'website_TalesUrl');
 		$this->addProjectConfigurationEntry('tal/prefix/currenturl', 'website_TalesUrl');
 		
