@@ -120,6 +120,16 @@ a.button {
 	background-color:#000000;
 	color:#ffffff;
 }
+input.button.secondary,
+button.button.secondary,
+a.button.secondary {
+	font-weight: normal;
+}
+input.button.primary,
+button.button.primary,
+a.button.primary {
+	font-size: 1.1em;
+}
 
 input.button {
 	padding:0 4px;
