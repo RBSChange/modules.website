@@ -301,5 +301,14 @@ dl.inline-items > dd {
 	display: none !important;
 }
 
+/* Togglable sections */
+.ctoggle > .short {
+	display: none;
+	cursor: pointer;
+}
+.ctoggle > .full {
+	cursor: pointer;
+}
+
 @import url(/modules/website/style/form.css);
 @import url(/modules/website/style/bench.css);
