@@ -1488,25 +1488,8 @@ jQuery(document).ready(function() {
 		}
 
 		self::buildNameAndId($params);
-
-		if (isset($params['trueLabel']))
-		{
-			$trueLabel = $params['trueLabel'];
-		}
-		else
-		{
-			$trueLabel = "&modules.uixul.bo.general.Yes;";
-		}
-
-		if (isset($params['falseLabel']))
-		{
-			$falseLabel = $params['falseLabel'];
-		}
-		else
-		{
-			$falseLabel = "&modules.uixul.bo.general.No;";
-		}
-
+		
+		self::setDefaultValue('withcolon', 'true', $params);
 		if (self::isLabeled($params))
 		{
 			$oldId = $params['id'];
@@ -1515,28 +1498,67 @@ jQuery(document).ready(function() {
 			$params['id'] = $oldId;
 		}
 
+		// Generate options.
+		
+		$radioParams = $params;
+		unset($radioParams['label']);
+		unset($radioParams['labeli18n']);
+		unset($radioParams['evaluatedlabel']);
 		// The labels for radio buttons must be always rendered and as not required.
-		$oldRequiredValue = (isset($params['required'])) ? $params['required'] : null;
-		$params['required'] = false;
-		$oldLabeledValue = (isset($params['labeled'])) ? $params['labeled'] : null;
-		$params['labeled'] = true;
-		$ls = LocaleService::getInstance();
-		$cKey = $ls->cleanOldKey($trueLabel);
-		if ($cKey !== false) {$trueLabel = $ls->transFO($cKey);}
-		$cKey = $ls->cleanOldKey($falseLabel);
-		if ($cKey !== false) {$falseLabel = $ls->transFO($cKey);}
-		
+		$radioParams['required'] = false;
+		$radioParams['labeled'] = true;
 		// Option labels should not have colon.
-		self::setDefaultValue('withcolon', 'true', $params);
-		$oldColonValue = $params['withcolon'];
-		$params['withcolon'] = 'false';
-		$result .= self::buildRadio("true", $trueLabel, $params, true);
-		$result .= self::buildRadio("false", $falseLabel, $params, true);
-		$params['withcolon'] = $oldColonValue;
+		$radioParams['withcolon'] = 'false';
+				
+		$ls = LocaleService::getInstance();
+		$formatters = array('html');
 		
-		if (isset($params["unknownValue"]))
+		// Generate 'true' option.
+		if (isset($params['trueLabeli18n']))
 		{
-			if (isset($params['unknownLabelKey']))
+			$trueLabel = $ls->transFO($params['trueLabeli18n'], $formatters);
+		}
+		elseif (isset($params['trueLabel']))
+		{
+			$trueLabel = $params['trueLabel'];
+			$cKey = $ls->cleanOldKey($trueLabel);
+			if ($cKey !== false) {
+				$trueLabel = $ls->transFO($cKey, $formatters);
+			}
+		}
+		else
+		{
+			$trueLabel = $ls->transFO('m.uixul.bo.general.yes', $formatters);
+		}
+		$result .= self::buildRadio('true', $trueLabel, $radioParams, true);
+		
+		// Generate 'false' option.
+		if (isset($params['falseLabeli18n']))
+		{
+			$falseLabel = $ls->transFO($params['falseLabeli18n'], $formatters);
+		}
+		elseif (isset($params['falseLabel']))
+		{
+			$falseLabel = $params['falseLabel'];
+			$cKey = $ls->cleanOldKey($falseLabel);
+			if ($cKey !== false) {
+				$falseLabel = $ls->transFO($cKey, $formatters);
+			}
+		}
+		else
+		{
+			$falseLabel = $ls->transFO('m.uixul.bo.general.no', $formatters);
+		}
+		$result .= self::buildRadio('false', $falseLabel, $radioParams, true);
+		
+		// Generate 'unknown' option.
+		if (isset($params['unknownValue']))
+		{
+			if (isset($params['unknownLabeli18n']))
+			{
+				$unknownLabel = $ls->transFO($params['unknownLabeli18n'], $formatters);
+			}
+			elseif (isset($params['unknownLabelKey'])) // For compatibility...
 			{
 				$unknownLabel = $params['unknownLabel'];
 			}
@@ -1546,26 +1568,9 @@ jQuery(document).ready(function() {
 			}
 			else
 			{
-				$unknownLabel = $ls->transFO("m.uixul.bo.general.unknown", array('ucf'));
+				$unknownLabel = $ls->transFO('m.uixul.bo.general.unknown', array('ucf'));
 			}
-			$result .= self::buildRadio('', $unknownLabel, $params);
-		}
-		
-		if ($oldRequiredValue === null)
-		{
-			unset($params['required']);
-		}
-		else
-		{
-			$params['required'] = $oldRequiredValue;
-		}
-		if ($oldLabeledValue === null)
-		{
-			unset($params['labeled']);
-		}
-		else
-		{
-			$params['labeled'] = $oldLabeledValue;
+			$result .= self::buildRadio('', $unknownLabel, $radioParams);
 		}
 
 		return $result;
@@ -1912,7 +1917,9 @@ jQuery(document).ready(function() {
 	}
 
 	// TODO: includeAttributes by type !
-	private static $includeAttributes = array("readonly" => true , "rows" => true , "cols" => true , "size" => true , "maxlength" => true , "minlength" => true , "value" => true , "label" => true , "labeli18n" => true, "checked" => true , "selected" => true , "for" => true , "type" => true , "name" => true , "id" => true , "class" => true , "hidden" => true , "disabled" => true , "onclick" => true, "style" => true, "onchange" => true, "multiple" => true, "title" => true);
+	private static $includeAttributes = array("readonly" => true , "rows" => true , "cols" => true , "size" => true , "maxlength" => true , "minlength" => true , "value" => true , "label" => true , "labeli18n" => true, "checked" => true , "selected" => true , "for" => true , "type" => true , "name" => true , "id" => true , "class" => true , "hidden" => true , "disabled" => true , "onclick" => true, "style" => true, "onchange" => true, "multiple" => true, "title" => true, 
+		// New HTML5 attributes.
+		"autocomplete" => true, "autocorrect" => true, "autocapitalize" => true);
 
 	/**
 	 * @param Array $params
