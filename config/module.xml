@@ -14,7 +14,7 @@
 		</sample>
 		<entry name="jquery-ui-theme">south-street</entry>
 		<entry name="highlighter">website_MinimalHighlighter</entry>
-		<entry name="forms-use-qtip-help">true</entry>
-		<entry name="forms-use-qtip-error">true</entry>
+		<entry name="forms-use-qtip-help">false</entry>
+		<entry name="forms-use-qtip-error">false</entry>
 	</project>
 </config>
