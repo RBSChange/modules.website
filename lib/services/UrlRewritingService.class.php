@@ -500,6 +500,10 @@ class website_UrlRewritingService extends website_BaseRewritingService
 		try 
 		{
 			$path = $this->initCurrrentWebsite($host, $urlToForward);
+			if (is_array($path))
+			{
+				return $path;
+			}
 			$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
 
 			if ($path === '/')
@@ -710,7 +714,12 @@ class website_UrlRewritingService extends website_BaseRewritingService
 			$matches = null;
 			if (!preg_match($pattern, $urlToForward, $matches))
 			{
-				throw new Exception('Invalid lang [' . implode(',', $websiteInfo['langs']) . '] in path: ' . $urlToForward);
+				$request = Controller::getInstance()->getContext()->getRequest();
+				$lang = $websiteInfo['langs'][0];
+				$path = f_util_ArrayUtils::firstElement(explode('?', $urlToForward));
+				$redirectType = 301;
+				$website = website_persistentdocument_website::getInstanceById($websiteInfo['id']);
+				return $this->getRedirectAction($website, $lang, $path, $redirectType, $request);	
 			}
 			$lang = $matches[1];
 			$urlToForward = substr($urlToForward, strlen($lang) + 1);
