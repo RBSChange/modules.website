@@ -93,4 +93,6 @@
   <actiondef modulename="website" actionname="deletelocalization.menuitemdocument" label="m.website.bo.useractionlogger.deletelocalization-menuitemdocument"/>
   <actiondef modulename="website" actionname="savepermissions.page" label="m.website.bo.useractionlogger.savepermissions-page"/>
   <actiondef modulename="website" actionname="saveredirectinfo.pageexternal" label="m.website.bo.useractionlogger.saveredirectinfo-pageexternal"/>
+  <actiondef modulename="website" actionname="deletelocalization.menuitemfunction" label="m.website.bo.useractionlogger.deletelocalization-menuitemfunction"/>
+  <actiondef modulename="website" actionname="delete.menuitemfunction" label="m.website.bo.useractionlogger.delete-menuitemfunction"/>
 </script>

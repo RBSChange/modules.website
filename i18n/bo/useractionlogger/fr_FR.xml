@@ -180,4 +180,8 @@
   <key id="log-savepermissions-page">log savepermissions page</key>
   <key id="saveredirectinfo-pageexternal">saveredirectinfo.pageexternal {lang} {documentlabel} {path}</key>
   <key id="log-saveredirectinfo-pageexternal">log saveredirectinfo pageexternal</key>
+  <key id="deletelocalization-menuitemfunction">deletelocalization.menuitemfunction {documentlabel} {lang}</key>
+  <key id="log-deletelocalization-menuitemfunction">log deletelocalization menuitemfunction</key>
+  <key id="delete-menuitemfunction">delete.menuitemfunction {documentlabel} {lang}</key>
+  <key id="log-delete-menuitemfunction">log delete menuitemfunction</key>
 </i18n>
