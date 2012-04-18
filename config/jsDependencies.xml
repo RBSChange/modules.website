@@ -209,8 +209,12 @@
 	<script noreplacement="true" name="modules.website.lib.js.jquery-ui-datepicker">
 		<dependencies>
 			<dependency name="modules.website.lib.js.jquery-ui" />
+			<dependency name="modules.website.lib.js.jquery-ui-datepicker-i18n" />
 		</dependencies>
 	</script>
+	
+	<script name="modules.website.lib.js.jquery-ui-datepicker-i18n" />
+	
 	<script noreplacement="true" name="modules.website.lib.js.jquery-ui-progressbar">
 		<dependencies>
 			<dependency name="modules.website.lib.js.jquery-ui" />

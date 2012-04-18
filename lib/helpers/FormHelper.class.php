@@ -1259,29 +1259,34 @@ jQuery(document).ready(function() {
 	{
 		$params['size'] = 10;
 		$params['maxlength'] = 10;
-		$params['class'] = 'textfield date-picker';
+		if (!isset($params['class']))
+		{
+			$params['class'] = 'textfield';
+		}
+		$params['class'] = 'date-picker ' . $params['class'];
 		// TODO: unifiy
 		$ls = LocaleService::getInstance();
-		$format = $ls->transFO("m.form.frontoffice.datepicker.format");
-		$dateFormat = date_DateFormat::getDateFormatForLang(RequestContext::getInstance()->getLang());
+		
+		$dateFormat = $ls->transFO("f.date.short");
 		if (!isset($params['startdate']))
 		{
 			$params['startdate'] = "1901-01-01";
 		}
 
-		$params['startdate'] = date_DateFormat::format(date_Calendar::getInstance($params['startdate']), $dateFormat);
+		$params['startdate'] = date_Formatter::format(date_Calendar::getInstance($params['startdate']), $dateFormat);
 
 		self::addDatePickerScript();
-		$datePickerParam = '{startDate:"' . $params['startdate'] . '"';
+		$datePickerParam = '{minDate:"' . $params['startdate'] . '"';
 		if (isset($params['enddate']))
 		{
-			$datePickerParam .= ', endDate:"' . date_DateFormat::format(date_Calendar::getInstance($params['enddate']), $dateFormat) . '"';
+			$datePickerParam .= ', maxDate:"' . date_DateFormat::format(date_Calendar::getInstance($params['enddate']), $dateFormat) . '"';
 
 		}
 		$datePickerParam .= '}';
 		
+		$format = $ls->transFO("f.date.human-format");
 		$dateFormatTitle = $ls->transFO('m.form.frontoffice.datepicker.format-help', array('ucf', 'attr'));
-		return self::renderInputByType("text", $params) . ' <span class="date-format" title="(' . $dateFormatTitle . ')">' . $format . "</span><script type=\"text/javascript\">//<![CDATA[\njQuery(document).ready(function(){jQuery('[id=" . $params['id'] . "]').datePicker($datePickerParam);});\n//]]></script>";
+		return self::renderInputByType("text", $params) . '<span class="date-format nojs" title="(' . $dateFormatTitle . ')">' . $format . "</span><script type=\"text/javascript\">//<![CDATA[\njQuery(document).ready(function(){jQuery('[id=" . $params['id'] . "]').datepicker($datePickerParam);});\n//]]></script>";
 	}
 
 	/**

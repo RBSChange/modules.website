@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.navigation" lcid="en_GB">
+  <key id="next">next</key>
+  <key id="end">end</key>
+  <key id="previous">previous</key>
+  <key id="begin">begin</key>
+  <key id="open">open</key>
+  <key id="close">close</key>
+  <key id="cancel">cancel</key>
+  <key id="ok">ok</key>
+</i18n>
