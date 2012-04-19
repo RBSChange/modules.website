@@ -27,6 +27,16 @@ class website_GenerateJavascriptAction extends f_action_BaseAction
 		{
 			controller_ChangeController::setNoCache();
 		}
+		else
+		{
+			header('Pragma:');
+			header('Expires:');
+			header('Cache-Control:');
+		}
+		if (Framework::isInfoEnabled())
+		{
+			Framework::info(__METHOD__ . ' ' . $request->getParameter("param"));
+		}
 		$parameters = explode("/", $request->getParameter("param"));
 		$nbParameters = count($parameters);
 		try 

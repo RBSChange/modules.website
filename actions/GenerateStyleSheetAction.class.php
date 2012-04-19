@@ -25,6 +25,13 @@ class website_GenerateStyleSheetAction extends f_action_BaseAction
 		{
 			controller_ChangeController::setNoCache();
 		}
+		else
+		{
+			header('Pragma:');
+			header('Expires:');
+			header('Cache-Control:');
+		}
+		
 		if (Framework::isInfoEnabled())
 		{
 			Framework::info(__METHOD__ . ' ' . $request->getParameter("param"));
