@@ -86,6 +86,9 @@ form.cmxform .richtextfield {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;	
 }
+form.cmxform textarea {
+	width: 65%;
+}
 form.cmxform input.textfield:not([size]) {
 	min-width: 35%;
 }

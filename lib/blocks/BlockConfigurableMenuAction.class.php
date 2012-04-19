@@ -50,7 +50,7 @@ class website_BlockConfigurableMenuAction extends website_BlockAction
 		// Handle title configuration.
 		if ($config->getShowTitle())
 		{
-		$title = $config->getBlockTitle();
+			$title = $config->getBlockTitle();
 			if ($title)
 			{
 				$title = str_replace('{ROOT_LABEL}', $root->getLabel(), $title);

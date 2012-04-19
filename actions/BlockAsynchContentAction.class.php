@@ -39,8 +39,6 @@ class website_BlockAsynchContentAction extends f_action_BaseAction
 		return View::NONE;
 	}
 	
-	
-	
 	/**
 	 * @return boolean Always false.
 	 */
