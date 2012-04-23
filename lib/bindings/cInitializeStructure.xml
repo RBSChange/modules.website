@@ -149,7 +149,7 @@
 				}
 				if (item && item.hasPreviewImage)
 				{
-					var url = wCore.buildServerUrl('theme', 'PreviewImage', {cmpref: item.id, lang:Context.W_LANG, 'max-height':200, 'max-width':250});
+					var url = wCore.buildServerUrl('theme', 'PreviewImage', {cmpref: item.id, lang: Context.W_LANG, 'max-height': 200, 'max-width': 250});
 					this.getElementByAnonId(previewImageAnonId).setAttribute('src', url);
 				}
 				else

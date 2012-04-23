@@ -310,5 +310,10 @@ dl.inline-items > dd {
 	cursor: pointer;
 }
 
+/* Hide section preserving space and selectable by jQuery */
+.visibility-hidden {
+	visibility: hidden;
+}
+
 @import url(/modules/website/style/form.css);
 @import url(/modules/website/style/bench.css);
