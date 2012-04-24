@@ -76,6 +76,7 @@ select {
 	border-width: 1px;
 	border-style: solid;
 }
+
 /* The label node has total width:35% (border-box) */
 form.cmxform input.textfield, 
 form.cmxform textarea, 

@@ -1282,7 +1282,7 @@ jQuery(document).ready(function() {
 			$datePickerParam .= ', maxDate:"' . date_DateFormat::format(date_Calendar::getInstance($params['enddate']), $dateFormat) . '"';
 
 		}
-		$datePickerParam .= '}';
+		$datePickerParam .= ', changeMonth: true, changeYear: true}';
 		
 		$format = $ls->transFO("f.date.human-format");
 		$dateFormatTitle = $ls->transFO('m.form.frontoffice.datepicker.format-help', array('ucf', 'attr'));
