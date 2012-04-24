@@ -12,7 +12,7 @@ class website_RewriteUrlAction extends f_action_BaseAction
 	public function _execute($context, $request)
     {
     	$requestedUrl = $request->getParameter(K::URL_REWRITE_PAGE_NAME_ACCESSOR);
-		Framework::fatal('Compatibility RewriteUrl: ' . $requestedUrl);
+		Framework::error('Compatibility RewriteUrl: ' . $requestedUrl);
 		
     	// TODO: enhance. Remove parameters from get for future URL (re)generation "from scratch"
     	$request->removeParameter(K::URL_REWRITE_PAGE_NAME_ACCESSOR);

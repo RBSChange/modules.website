@@ -310,8 +310,6 @@ class website_UrlRewritingService extends website_BaseRewritingService
 		{
 			$moduleName = $document->getPersistentModel()->getModulename();
 		}
-		//Framework::fatal(__METHOD__ . "($path, $documentId, $websiteId, $lang, $moduleName, $actionName, $origine)");
-		
 		//rule_id, origine, modulename, actionname, document_id, website_lang, website_id, from_url, to_url, redirect_type
 		$oldInfo = $this->getPersistentProvider()->getUrlRewritingDocument($documentId, $lang, $websiteId);
 		foreach ($oldInfo as $row) 
@@ -382,8 +380,7 @@ class website_UrlRewritingService extends website_BaseRewritingService
 		$websiteId = ($website === null || $website->isNew()) ? 0 : $website->getId();
 		if ($moduleName === null) {$moduleName = $document->getPersistentModel()->getModulename();}
 		if ($redirectType != 302) {$redirectType = 301;}	
-		//Framework::fatal(__METHOD__ . "($path, $redirectType, $documentId, $websiteId, $lang, $moduleName, $actionName, $origine)");
-		
+	
 		//rule_id, origine, modulename, actionname, document_id, website_lang, website_id, from_url, to_url, redirect_type
 		$oldInfo = $this->getPersistentProvider()->getUrlRewritingDocument($documentId, $lang, $websiteId);
 		$to_url = $this->getDocumentDefaultPath($document, $lang);
