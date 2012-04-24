@@ -25,19 +25,8 @@ class website_BlockDashboardLastModifiedPagesAction extends  dashboard_BlockDash
 		$ms = ModuleService::getInstance();
 		
 		foreach ($lastModifiedPages as $page)
-		{		
-			$lastModification = date_Calendar::getInstance($page->getModificationdate());
-			if ($lastModification->isToday())
-			{
-				$status = f_Locale::translateUI('&modules.uixul.bo.datePicker.Calendar.today;') . date_DateFormat::format(date_Converter::convertDateToLocal($lastModification), ', H:i');
-			}
-			else
-			{
-				$status = date_DateFormat::format(date_Converter::convertDateToLocal($lastModification), 'l j F Y, H:i');
-			}
-
-			$style = '';
-
+		{
+			/* @var $page website_persistentdocument_page */
 			if ($page->getIshomepage())
 			{
 				$icon = MediaHelper::getIcon('page-home', MediaHelper::SMALL);
@@ -53,7 +42,6 @@ class website_BlockDashboardLastModifiedPagesAction extends  dashboard_BlockDash
 
 			if ($ps->hasPermission($user, 'modules_'.$moduleName.'.Enabled', $ms->getRootFolderId($moduleName)))
 			{
-				
 				$locate = "openActionUri('website,locateDocument,". str_replace('/', '_', $page->getDocumentModelName()) .",". $page->getId() . "');";
 			}
 			else
@@ -80,8 +68,8 @@ class website_BlockDashboardLastModifiedPagesAction extends  dashboard_BlockDash
 				'edit' => $edit,
 				'label' => $page->getLabelAsHtml(),
 				'thread' => f_util_HtmlUtils::textToHtml($page->getDocumentService()->getPathOf($page)),
-				'status' => ucfirst($status),
-				'style' => $style,
+				'status' => date_Formatter::toDefaultDateTimeBO($page->getUIModificationdate()),
+				'style' => '',
 				'icon' => $icon,
 				'link' => $link
 			);

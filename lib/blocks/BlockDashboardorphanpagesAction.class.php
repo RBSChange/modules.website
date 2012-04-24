@@ -42,22 +42,13 @@ class website_BlockDashboardorphanpagesAction extends  dashboard_BlockDashboardA
 			$orphanAttr = array();
 			foreach ($orphanPages as $page)
 			{
-				$lastModification = date_Calendar::getInstance($page->getModificationdate());
-				if ($lastModification->isToday())
-				{
-					$modificationDate = f_Locale::translateUI('&modules.uixul.bo.datePicker.Calendar.today;') . date_DateFormat::format(date_Converter::convertDateToLocal($lastModification), ', H:i');
-				}
-				else
-				{
-					$modificationDate = date_DateFormat::format(date_Converter::convertDateToLocal($lastModification), 'l j F Y, H:i');
-				}
 				$link = LinkHelper::getUIActionLink('website', 'BoDisplay')
-						->setQueryParameter('cmpref', $page->getId())
-						->setQueryParameter('lang', $page->getlang())
-						->getUrl();
+					->setQueryParameter('cmpref', $page->getId())
+					->setQueryParameter('lang', $page->getlang())
+					->getUrl();
 				
 				$attr = array(
-					'modificationDate' => ucfirst($modificationDate), 
+					'modificationDate' => date_Formatter::toDefaultDateTimeBO($page->getUIModificationdate()),
 					'id' => $page->getId(), 
 					'label' => $page->getLabelAsHtml(), 
 					'thread' => f_util_HtmlUtils::textToHtml($page->getDocumentService()->getPathOf($page)), 

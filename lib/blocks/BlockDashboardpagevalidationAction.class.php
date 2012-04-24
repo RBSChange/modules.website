@@ -19,22 +19,12 @@ class website_BlockDashboardpagevalidationAction extends dashboard_BlockDashboar
 			foreach ($tasks as $task)
 			{
 				$document = DocumentHelper::getDocumentInstance($task->getWorkitem()->getDocumentid());			
-				$lastModification = date_Calendar::getInstance($task->getCreationdate());
-				
-				if ($lastModification->isToday())
-				{
-					$status = f_Locale::translateUI('&modules.uixul.bo.datePicker.Calendar.today;') . date_DateFormat::format(date_Converter::convertDateToLocal($lastModification), ', H:i');
-				}
-				else
-				{
-					$status = date_DateFormat::format(date_Converter::convertDateToLocal($lastModification), 'l j F Y, H:i');
-				}
 				$attr = array(
 					'id' => $task->getId(),
-					'taskLabel' => f_Locale::translateUI('&modules.website.bo.dashboard.Task-label-validate;', array('author' => $task->getDescriptionAsHtml())),
+					'taskLabel' => LocaleService::getInstance()->transBO('m.website.bo.dashboard.task-label-validate', array('ucf'), array('author' => $task->getDescriptionAsHtml())),
 					'dialog' => $task->getDialogName(),
 					'module' => $task->getModule(),
-					'status' => ucfirst($status),
+					'status' => date_Formatter::toDefaultDateTimeBO($task->getUICreationdate()),
 					'documentId' => $document->getId(),
 				    'documentLabel' => f_util_HtmlUtils::textToHtml($document->getPersistentModel()->isLocalized() ? $document->getLabelForLang($task->getLang()) : $document->getLabel()),
 					'documentThread' => f_util_HtmlUtils::textToHtml($document->getDocumentService()->getPathOf($document)),
