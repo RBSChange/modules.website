@@ -326,7 +326,3 @@ class website_MenuEntry
 		return 'level' . strval($this->level);
 	}
 }
-
-class website_MenuRoot extends website_MenuEntry
-{
-}
