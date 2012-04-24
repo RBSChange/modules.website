@@ -22,6 +22,8 @@ class PHPTAL_Php_Attribute_CHANGE_block extends ChangeTalAttribute
 
 class website_ChangeBlockRenderer
 {
+	private static $lastIds = array();
+	
 	private $moduleName;
 	private $actionName;
 	
@@ -39,11 +41,12 @@ class website_ChangeBlockRenderer
 		
 		$controller = website_BlockController::getInstance();
 		$callingAction = $controller->getProcessedAction();
-		
+
 		if ($callingAction === null)
 		{
 			throw new Exception(__METHOD__ . " Can not call change:block outside of controller execution!");
 		}
+		
 		
 		$this->actionName = $params['name'];
 		
@@ -57,12 +60,16 @@ class website_ChangeBlockRenderer
 		}
 		
 		// getConfigParameters() has to be called before getRequestParameters()
-		$configParameters = $this->getConfigParameters($params);
+		$configParameters = $this->getConfigParameters($params);	
+		$cbid = $callingAction->getBlockId();
+		self::$lastIds[$cbid] = isset(self::$lastIds[$cbid]) ? self::$lastIds[$cbid] + 1 : 0;
+		$configParameters[website_BlockAction::BLOCK_ID_PARAMETER_NAME] = $cbid . '_' . self::$lastIds[$cbid];
 		
+		//Framework::fatal(__METHOD__ . $this->moduleName . '/' . $this->actionName.  ' ID: ' . $cbid . '_' . self::$lastIds[$cbid]);
+	
 		$callingActionCached = $callingAction->getConfiguration()->isCacheEnabled();
-		if (isset($params["outside"]) || $callingActionCached)
+		if ($callingActionCached)
 		{
-			//echo "Render ".$this->moduleName."_".$this->actionName." outside ";
 			$inheritedParamNames = isset($params['inheritedParams']) ? explode(",", $params['inheritedParams']) : null;
 			$forcedParameters = array();
 			foreach ($params as $paramName => $paramValue)
@@ -96,8 +103,7 @@ class website_ChangeBlockRenderer
 		}
 		else
 		{
-			$useCache = (isset($params["useCache"]) && $params["useCache"] == "true") || !$callingActionCached;
-			//echo "Render inside";
+			$useCache = !isset($params["useCache"]) || $params["useCache"] == "true";
 			if (isset($params['container']))
 			{
 				if (f_util_StringUtils::isEmpty($params['container']))
@@ -178,7 +184,7 @@ class website_ChangeBlockRenderer
 		$controller = website_BlockController::getInstance();
 		try
 		{
-			$controller->processByName($this->moduleName, $this->actionName, new f_mvc_FakeHttpRequest($parameters), $configParameters, $useCache);
+			$controller->processByName($this->moduleName, $this->actionName, new f_mvc_FakeHttpRequest($parameters), $configParameters, $useCache);		
 		}
 		catch (Exception $e)
 		{

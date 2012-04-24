@@ -1717,6 +1717,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$this->addBenchTime('templateFill');
 
 			$blocks = $this->generateBlocks($pageContent);
+
 			$this->addBenchTime('blocksParsing');
 
 			$wsprs->buildBlockContainerForFrontOffice($pageContent, $blocks);
@@ -1747,6 +1748,8 @@ class website_PageService extends f_persistentdocument_DocumentService
 
 		$strFrom = array();
 		$strTo = array();
+		
+		
 		foreach ($blocks as $blockId => $block)
 		{
 			$list = $pageContent->getElementsByTagName('htmlblock_'.$blockId);
@@ -1935,7 +1938,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		$traceBlockAction = Framework::inDevelopmentMode() && Framework::isDebugEnabled();
 		$bs = block_BlockService::getInstance();
-
+		$nbBlocks = count($blocks);
 		foreach ($blocks as $blockId => &$block)
 		{
 			$blocType = $block['type'];			
@@ -1973,7 +1976,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 				$classInstance->setConfigurationParameter(website_BlockAction::BLOCK_ID_PARAMETER_NAME, $idPName);
 
 				$block['blockaction'] = $classInstance;
-				$blockPriorities[$blockId] = $classInstance->getOrder();
+				$blockPriorities[$blockId] = ($nbBlocks - $blockId) + ($classInstance->getOrder() * 10);
 			}
 			else
 			{
@@ -1981,12 +1984,11 @@ class website_PageService extends f_persistentdocument_DocumentService
 				$classInstance->setSpecificationsArray($block);
 				$classInstance->initialize($controller);
 				$block['blockaction'] = $classInstance;
-				$blockPriorities[$blockId] = $classInstance->getOrder();
+				$blockPriorities[$blockId] = ($nbBlocks - $blockId) + ($classInstance->getOrder() * 10);
 			}
-		}
-
+		}		
 		asort($blockPriorities);
-		$blockPriorities = array_reverse($blockPriorities, true);
+		$blockPriorities = array_reverse($blockPriorities, true);		
 		$httpRequest = f_mvc_HTTPRequest::getInstance();
 		$traceBlockAction = Framework::inDevelopmentMode() && Framework::isDebugEnabled();
 		foreach (array_keys($blockPriorities) as $blockId)
