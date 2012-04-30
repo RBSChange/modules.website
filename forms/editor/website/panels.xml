@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <panels>
-	<panel name="resume" />
-	<panel name="properties" />
-	<panel name="publication" />
-	<panel name="localization" />
-	<panel name="markers" icon="marker-folder" labeli18n="m.website.bo.doceditor.tab.markers" />
-	<panel name="permission" />
-	<panel name="history" />
-	<panel name="create" />
-	<xul>
-		<javascript>
-			<constructor><![CDATA[
+  <panel name="resume"/>
+  <panel name="properties"/>
+  <panel name="localization"/>
+  <panel name="markers" icon="marker-folder" labeli18n="m.website.bo.doceditor.tab.markers"/>
+  <panel name="publication"/>
+  <panel name="permission"/>
+  <panel name="history"/>
+  <panel name="create"/>
+  <xul>
+    <javascript>
+      <constructor><![CDATA[
 				if (getController().checkModuleVersion('twitterconnect', '3.0.3'))
 				{
 					this.addTab('tweets', "&modules.twitterconnect.bo.doceditor.tab.Tweets;", 'tweet');
 				}
 			]]></constructor>
-		</javascript>
-	</xul>
+    </javascript>
+  </xul>
 </panels>
