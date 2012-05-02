@@ -84,23 +84,26 @@ class website_ListBlocktemplatesService extends BaseService implements list_List
 				$themeCode = $theme->getCodename();
 				$themesByCode[$themeCode] = $theme;
 				$paths = FileResolver::getInstance()->setPackageName('themes_' . $themeCode)->getPaths('modules'. DIRECTORY_SEPARATOR . $blockModule . DIRECTORY_SEPARATOR . 'templates');
-				foreach ($paths as $path)
+				if (is_array($paths))
 				{
-					$dir = dir($path);
-					while (false !== ($entry = $dir->read()))
+					foreach ($paths as $path)
 					{
-						if (f_util_StringUtils::beginsWith($entry, $templatePrefix, f_util_StringUtils::CASE_SENSITIVE) && f_util_StringUtils::endsWith($entry, '.all.all.html', f_util_StringUtils::CASE_SENSITIVE))
+						$dir = dir($path);
+						while (false !== ($entry = $dir->read()))
 						{
-							$value = str_replace($templatePrefix, '', str_replace('.all.all.html', '', $entry));
-							if (in_array($value, $namesToIgnore))
+							if (f_util_StringUtils::beginsWith($entry, $templatePrefix, f_util_StringUtils::CASE_SENSITIVE) && f_util_StringUtils::endsWith($entry, '.all.all.html', f_util_StringUtils::CASE_SENSITIVE))
 							{
-								continue;
+								$value = str_replace($templatePrefix, '', str_replace('.all.all.html', '', $entry));
+								if (in_array($value, $namesToIgnore))
+								{
+									continue;
+								}
+								$label = $ls->transBO('t.' . $themeCode . '.list.blocktemplates-' . strtolower($value), $lm) . ' (' . $theme->getLabel() . ')';
+								$this->itemArray[$templatePrefix][] = new list_Item($label, $value);
 							}
-							$label = $ls->transBO('t.' . $themeCode . '.list.blocktemplates-' . strtolower($value), $lm) . ' (' . $theme->getLabel() . ')';
-							$this->itemArray[$templatePrefix][] = new list_Item($label, $value);
 						}
+						$dir->close();
 					}
-					$dir->close();
 				}
 			}
 		}
