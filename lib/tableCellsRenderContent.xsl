@@ -39,7 +39,9 @@
 		</div>
 	</xsl:template>
 	
-	<xsl:template match="change:content[not(descendant::*)]"></xsl:template>
+	<xsl:template match="change:content[not(descendant::*)]">
+		<div><xsl:copy-of select="@*" />&#160;</div>
+	</xsl:template>
 
 	<xsl:template match="change:layout">
 		<div class="cLayout">
