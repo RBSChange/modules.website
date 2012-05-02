@@ -155,7 +155,7 @@ class website_BlockView
 		$template = $this->templateObject;
 		$model = array_merge($request->getParameters(), f_mvc_HTTPRequest::getInstance()->getSession()->getAttributes(), $request->getAttributes());
 		$model["context"] = $request->getContext();
-		$model["website_page"] = $request->getContext()->getAttribute("website_page");
+		$model["website_page"] = $request->getContext();
 		$template->importAttributes($model);
 		self::pushTemplate($template);
 		try

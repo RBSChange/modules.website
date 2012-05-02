@@ -64,9 +64,7 @@ class website_ChangeBlockRenderer
 		$cbid = $callingAction->getBlockId();
 		self::$lastIds[$cbid] = isset(self::$lastIds[$cbid]) ? self::$lastIds[$cbid] + 1 : 0;
 		$configParameters[website_BlockAction::BLOCK_ID_PARAMETER_NAME] = $cbid . '_' . self::$lastIds[$cbid];
-		
-		//Framework::fatal(__METHOD__ . $this->moduleName . '/' . $this->actionName.  ' ID: ' . $cbid . '_' . self::$lastIds[$cbid]);
-	
+			
 		$callingActionCached = $callingAction->getConfiguration()->isCacheEnabled();
 		if ($callingActionCached)
 		{

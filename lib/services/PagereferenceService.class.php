@@ -38,6 +38,8 @@ class website_PagereferenceService extends website_PageService
 	{
 		return $this->pp->createQuery('modules_website/pagereference');
 	}
+	
+	
 
 	/**
 	 * @param website_persistentdocument_pagereference $pageReference
@@ -46,85 +48,67 @@ class website_PagereferenceService extends website_PageService
 	 */
 	public function updatePageReference($pageReference, $page, $topicId)
 	{
-		$requestContext = RequestContext::getInstance();
-		$vo = $page->getLang();
-
-		$pageReference->setReferenceofid($page->getId());
+		$exludedNames = array('id', 'model', 'lang', 'documentversion', 'referenceofid', 'metastring', 'isIndexPage', 'isHomePage');
+		$propsNames = array();
+		$i18nPropsNames = array();
+		foreach ($page->getPersistentModel()->getPropertiesInfos() as $propertyInfos)
+		{
+			/* @var $propertyInfos propertyInfo */
+			$name = $propertyInfos->getName();
+			if (in_array($name, $exludedNames)) {continue;}
+			$propsNames[] = $name;
+			if ($propertyInfos->isLocalized()) {$i18nPropsNames[] = $name;};
+		}
+		
 		try
 		{
-			$this->tm->beginTransaction();
-			
-			$isIndexPage = $pageReference->getIsIndexPage();
-			$isHomePage = $pageReference->getIsHomePage();
-			
-			//Update VO
-			try
-			{
-				$requestContext->beginI18nWork($vo);
-				if ($pageReference->hasMeta('f_tags'))
-				{
-					$existingTags = $pageReference->getMeta('f_tags');
-				}
-				else 
-				{
-					$existingTags = null;
-				}
-				$page->copyPropertiesTo($pageReference, true);
-				
-				// TODO: use TagService::clearTagsMeta()
-				$pageReference->setMeta("f_tags", $existingTags);
-				$requestContext->endI18nWork();
-			}
-			catch (Exception $e)
-			{
-				$requestContext->endI18nWork($e);
-			}
+			$this->getTransactionManager()->beginTransaction();
 
-			//Update localized
-			foreach ($requestContext->getSupportedLanguages() as $lang)
+			$rc = RequestContext::getInstance();
+			$useI18nSynchro = $rc->hasI18nSynchro();
+			if ($useI18nSynchro)
 			{
-				if ($lang == $vo)
-				{
-					continue;
-				}
-
+				$data = LocaleService::getInstance()->getI18nSynchroForDocument($page);
+				$i18nSynchroStates = $data['states'];
+			}
+			
+			$vo = $page->getLang();
+									
+			foreach ($page->getI18nInfo()->getLangs()  as $lang)
+			{
 				try
 				{
-					$requestContext->beginI18nWork($lang);
-					if ($page->isContextLangAvailable())
+					$rc->beginI18nWork($lang);
+					if ($useI18nSynchro && (!isset($i18nSynchroStates[$lang]) || $i18nSynchroStates[$lang]['status'] == LocaleService::SYNCHRO_SYNCHRONIZED))
 					{
-						$page->copyPropertiesTo($pageReference, false);
+						continue;
 					}
-					$requestContext->endI18nWork();
+					
+					if ($vo === $lang)
+					{
+						$pageReference->setReferenceofid($page->getId());
+						$page->copyPropertiesListTo($pageReference, $propsNames, true);
+					}
+					else
+					{
+						$page->copyPropertiesListTo($pageReference, $i18nPropsNames, false);
+					}	
+										
+					$this->save($pageReference, $topicId);
+					$rc->endI18nWork();
 				}
 				catch (Exception $e)
 				{
-					$requestContext->endI18nWork($e);
+					$rc->endI18nWork($e);
 				}
 			}
-
-			$pageReference->setIsIndexPage($isIndexPage);
-			$pageReference->setIsHomePage($isHomePage);
-				
-			try 
-			{
-				$requestContext->beginI18nWork($vo);
-				$this->save($pageReference, $topicId);
-				$requestContext->endI18nWork();
-			}
-			catch (Exception $e)
-			{
-				$requestContext->endI18nWork($e);
-			}
 			
-			//Update tag
 			$this->updateTags($pageReference, $page);
-			$this->tm->commit();
-
+			$this->getTransactionManager()->commit();	
 		}
 		catch (Exception $e)
 		{
-			$this->tm->rollBack($e);
+			$this->getTransactionManager()->rollBack($e);
 		}
 	}
 	
@@ -148,8 +132,6 @@ class website_PagereferenceService extends website_PageService
 		$pageTags = $tagService->getTags($page);
 		$refTags = $tagService->getTags($pageReference);
 		
-		//Framework::debug(__METHOD__." ".$pageReference->getId()." ".$page->getId()." ".var_export($refTags, true)." ".var_export($pageTags, true)." ".ProcessUtils::getBackTrace());
-
 		//Ajout des tags manquants
 		foreach ($pageTags as $tag)
 		{

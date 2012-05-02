@@ -123,7 +123,9 @@ class block_RequestRecorder extends framework_FunctionCallRecorder
 
 class block_ContextRecorder extends framework_FunctionCallRecorder
 {
-	private static $recordedMethodNames = array("setAttribute", "setMetatitle", "setKeywords", "setDescription", "setNavigationtitle", "appendToDescription", "addKeyword", "addScript", "addLink");
+	private static $recordedMethodNames = array("setAttribute", "setDoctype", "setPlainHeadMarker", "setPlainHeadMarker", "setNavigationtitle",
+			"appendToPlainHeadMarker", "setPlainMarker", 
+			"addScript", "addLink", "addMeta", "addRssFeed", "addBlockMeta", "addCanonicalParam");
 
 	/**
 	 * @param block_BlockContext $context
