@@ -10,6 +10,12 @@
 		<property name="editMenuitemDocument" labeli18n="modules.website.bo.doceditor.property.Menuitemdocument" />
 	</section>
 
+	<section name="localization"
+		labeli18n="modules.uixul.bo.doceditor.section.Localization" 
+		image="{IconsBase}/small/translate.png">
+		<property name="languages" type="langs" labeli18n="modules.uixul.bo.doceditor.property.Languages"/>
+	</section>	
+
 	<section name="publication" labeli18n="modules.uixul.bo.doceditor.section.Status" image="{IconsBase}/small/status.png">
 		<property name="status" labeli18n="modules.uixul.bo.doceditor.property.Status" />
 	</section>
