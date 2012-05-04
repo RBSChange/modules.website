@@ -38,7 +38,6 @@ html {
 /* Site Font Color */
 /* FORM */
 legend,
-form.cmxform input.date-picker,
 input.textfield,
 textarea,
 select,
@@ -164,10 +163,9 @@ hr {
 }
 
 blockquote,
-blockquote:before,
-abbr, acronym,
+abbr,
+acronym,
 fieldset,
-form.cmxform input.date-picker,
 input.textfield,
 textarea,
 select,
