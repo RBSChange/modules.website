@@ -35,7 +35,10 @@ class website_PopInAction extends f_action_BaseAction
 		controller_ChangeController::setNoCache();
 		$this->setContentType('text/html');
 		$pageId = $this->getDocumentIdFromRequest($request);
-		RequestContext::getInstance()->setAjaxMode(true, $_SERVER['HTTP_REFERER']);
+		if (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'])
+		{
+			RequestContext::getInstance()->setAjaxMode(true, $_SERVER['HTTP_REFERER']);
+		}
 		try
 		{
 			$page = website_persistentdocument_page::getInstanceById($pageId);		
