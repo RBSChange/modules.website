@@ -7,7 +7,7 @@ class website_BlockThreadAction extends website_BlockAction
 	 */
 	public function getCacheKeyParameters($request)
 	{
-		return array("context->label" => $this->getContext()->getNavigationtitle());
+		return array("context->title" => $this->getContext()->getTitle());
 	}
 
 	/**
