@@ -864,7 +864,7 @@ class website_UrlRewritingService extends website_BaseRewritingService
 					$offset = 0;
 					do
 					{
-						$result = f_util_System::execHTTPScript($batchPath, array($website->getId(), $lang, $modelName, $offset));
+						$result = f_util_System::execScript($batchPath, array($website->getId(), $lang, $modelName, $offset));
 						if (is_numeric($result))
 						{
 							$offset = intval($result);
