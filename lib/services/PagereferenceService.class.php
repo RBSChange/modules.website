@@ -76,14 +76,13 @@ class website_PagereferenceService extends website_PageService
 									
 			foreach ($page->getI18nInfo()->getLangs()  as $lang)
 			{
+				if ($useI18nSynchro && (!isset($i18nSynchroStates[$lang]) || $i18nSynchroStates[$lang]['status'] == LocaleService::SYNCHRO_SYNCHRONIZED))
+				{
+					continue;
+				}
 				try
 				{
 					$rc->beginI18nWork($lang);
-					if ($useI18nSynchro && (!isset($i18nSynchroStates[$lang]) || $i18nSynchroStates[$lang]['status'] == LocaleService::SYNCHRO_SYNCHRONIZED))
-					{
-						continue;
-					}
-					
 					if ($vo === $lang)
 					{
 						$pageReference->setReferenceofid($page->getId());

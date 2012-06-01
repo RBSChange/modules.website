@@ -202,10 +202,6 @@ class website_TopicService extends f_persistentdocument_DocumentService
 	 */
 	private function synchronizeFunctionalPage($topic)
 	{
-		if (Framework::isDebugEnabled())
-		{
-			Framework::debug(__METHOD__.'('.$topic->__toString().')');
-		}
 		$topicNode = TreeService::getInstance()->getInstanceByDocument($topic);
 		$parentNode = $topicNode->getParent();
 
