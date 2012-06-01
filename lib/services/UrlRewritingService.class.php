@@ -86,7 +86,7 @@ class website_UrlRewritingService extends BaseService
 	public function encodePathString($str)
 	{
 		if (empty($str)) {return '';};
-		$str = f_util_StringUtils::strip_accents($str);
+		$str = f_util_StringUtils::stripAccents($str);
 		$str = preg_replace(array('/[^a-zA-Z0-9_\-]+/', '/\-+/'), array('-', '-'), $str);
 		$str = trim($str, '-');
 		return $str;

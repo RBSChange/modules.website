@@ -2,27 +2,27 @@
 class website_CSSRule
 {
 	/**
-	 * @var String
+	 * @var string
 	 */
 	private $engine = "all.all";
 	
 	/**
-	 * @var String
+	 * @var string
 	 */
 	private $label;
 	
 	/**
-	 * @var String
+	 * @var string
 	 */
 	private $description;
 	
 	/**
-	 * @var String
+	 * @var string
 	 */
 	private $selectorText;
 	
 	/**
-	 * @var String
+	 * @var string
 	 */
 	private $declarationBlock;
 	
@@ -50,7 +50,7 @@ class website_CSSRule
 	}
 	
 	/**
-	 * @return String
+	 * @return string
 	 */
 	public function getSelectorText()
 	{
@@ -58,13 +58,16 @@ class website_CSSRule
 	}
 	
 	/**
-	 * @param String $selectorText
+	 * @param string $selectorText
 	 */
 	public function setSelectorText($selectorText)
 	{
 		$this->selectorText = $selectorText;
 	}
 	
+	/**
+	 * @param string[] $comments
+	 */
 	public function setComments($comments)
 	{
 		$this->comments = $comments;
@@ -142,18 +145,19 @@ class website_CSSRule
 	}
 
 	/**
-	 * @param String $fullEngine
+	 * @param string $fullEngine
 	 * @param website_CSSVariables $skin
-	 * @return String | null
+	 * @param website_CSSStylesheet $stylesheet
+	 * @return string | null
 	 */
-	public function getAsCSS($fullEngine, $skin)
+	public function getAsCSS($fullEngine, $skin, $stylesheet)
 	{
 		if ($this->isCompatibleWithEngine($fullEngine))
 		{
 			$declarations = array();
 			foreach ($this->getDeclarations() as $declaration) 
 			{	
-				$cssText = $declaration->getAsCSS($fullEngine, $skin);
+				$cssText = $declaration->getAsCSS($fullEngine, $skin, $stylesheet);
 				if ($cssText !== null)
 				{
 					$declarations[] = $cssText;
@@ -185,7 +189,7 @@ class website_CSSRule
 	}
 	
 	/**
-	 * @param String $fullEngine
+	 * @param string $fullEngine
 	 * @return CSSDeclaration[]
 	 */
 	function getSpecializedDeclarations($fullEngine)
@@ -203,7 +207,7 @@ class website_CSSRule
 	}
 	
 	/**
-	 * @param String $fullEngine
+	 * @param string $fullEngine
 	 * @return CSSDeclaration[]
 	 */
 	function getNonSpecializedDeclarations()
@@ -236,14 +240,14 @@ class website_CSSRule
 	
 
 	/**
-	 * @return String
+	 * @return string
 	 */
 	function __toString()
 	{
 		return $this->getCommentedCSS();
 	}
 	/**
-	 * @return String
+	 * @return string
 	 */
 	public function getDescription()
 	{
@@ -251,7 +255,7 @@ class website_CSSRule
 	}
 	
 	/**
-	 * @return String
+	 * @return string
 	 */
 	public function getLabel()
 	{
@@ -259,7 +263,7 @@ class website_CSSRule
 	}
 	
 	/**
-	 * @param String $description
+	 * @param string $description
 	 */
 	public function setDescription($description)
 	{
@@ -267,7 +271,7 @@ class website_CSSRule
 	}
 	
 	/**
-	 * @param String $label
+	 * @param string $label
 	 */
 	public function setLabel($label)
 	{
@@ -275,7 +279,7 @@ class website_CSSRule
 	}
 
 	/**
-     * @var sString 
+     * @var string 
      */
     private $atSelector;
     

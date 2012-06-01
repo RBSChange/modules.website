@@ -3,12 +3,17 @@
 class website_CSSStylesheet
 {
 	/**
-	 * @var String
+	 * @var string
 	 */
 	private $cssRules = array();
 
 	/**
-	 * @var String
+	 * @var website_CSSVarDeclaration[]
+	 */
+	private $varDeclarations = array();
+	
+	/**
+	 * @var string
 	 */
 	private $id;
 
@@ -21,7 +26,7 @@ class website_CSSStylesheet
 	}
 
 	/**
-	 * @return String
+	 * @return string
 	 */
 	public function __toString()
 	{
@@ -29,8 +34,8 @@ class website_CSSStylesheet
 	}
 
 	/**
-	 * @param String $fullEngine
-	 * @return String
+	 * @param string $fullEngine
+	 * @return string
 	 */
 	public function getCSSForEngine($fullEngine)
 	{
@@ -43,7 +48,7 @@ class website_CSSStylesheet
 	}
 
 	/**
-	 * @return String
+	 * @return string
 	 */
 	public function getCommentedCSS()
 	{
@@ -56,7 +61,7 @@ class website_CSSStylesheet
 	}
 
 	/**
-	 * @param String $fullEngine
+	 * @param string $fullEngine
 	 * @param website_CSSVariables $skin
 	 * @return string | null
 	 */
@@ -67,7 +72,8 @@ class website_CSSStylesheet
 		$atLevel = 0;
 		foreach ($this->cssRules as $rule)
 		{
-			$ruleText = $rule->getAsCSS($fullEngine, $skin);
+			/* @var $rule website_CSSRule */
+			$ruleText = $rule->getAsCSS($fullEngine, $skin, $this);
 			$currentAtLevel = $rule->getAtLevel();
 			$currentAtSelector = $rule->getAtSelector();
 			if ($currentAtLevel != $atLevel || $currentAtSelector != $atSelectors[$atLevel])
@@ -109,7 +115,7 @@ class website_CSSStylesheet
 	}
 
 	/**
-	 * @param String $filePath
+	 * @param string $filePath
 	 * @return website_CSSStylesheet
 	 */
 	public static function getInstanceFromFile($filePath)
@@ -117,11 +123,7 @@ class website_CSSStylesheet
 		$sheet = new website_CSSStylesheet();
 		if (strpos($filePath, '.xml') === strlen($filePath) - 4)
 		{
-			if (Framework::isInfoEnabled())
-			{
-				Framework::info(__METHOD__ . ' OBSOLETE XML CSS ' . $filePath);
-			}
-			$sheet->loadXML(file_get_contents($filePath));
+			Framework::error(__METHOD__ . ' OBSOLETE XML CSS ' . $filePath);
 		}
 		else
 		{
@@ -130,247 +132,16 @@ class website_CSSStylesheet
 		return $sheet;
 	}
 
-	private function addForAttribute(&$writer, &$element)
-	{
-		$forEngine = $element->getEngine();
-		if ($forEngine !== null)
-		{
-			list($type, $version) = explode('.', $forEngine);
-			if ($version == "all" && $type == "all")
-			{
-				return;
-			}
-
-			if ($version == "all")
-			{
-				$forEngine = $type;
-			}
-			else
-			{
-				$forEngine = $type . ":" . $version;
-			}
-			if ($type == "xul")
-			{
-				$writer->writeAttribute('ctype', $type);
-			}
-			else if ($type == "!xul")
-			{
-				$writer->writeAttribute('ctype', 'html');
-			}
-			else
-			{
-				$writer->writeAttribute('for', $forEngine);
-			}
-		}
-	}
-
 	/**
-	 * @param XMLWriter $xmlWriter
-	 * @param String $textContent
-	 * @param String $type
-	 */
-	private function addSelectorElement(&$xmlWriter, $textContent, $type)
-	{
-		$xmlWriter->startElement("selector");
-		$classPos = strpos($textContent, '.');
-		if ($classPos !== false)
-		{
-			$xmlWriter->writeAttribute('class', substr($textContent, $classPos + 1));
-			$textContent = substr($textContent, 0, $classPos);
-		}
-		else
-		{
-			$idPos = strpos($textContent, '#');
-			if ($idPos !== false)
-			{
-				$xmlWriter->writeAttribute('id', substr($textContent, $idPos + 1));
-				$textContent = substr($textContent, 0, $idPos);
-			}
-
-		}
-
-		$pseudoElementPos = strpos($textContent, '::');
-		if ($pseudoElementPos !== false)
-		{
-			$xmlWriter->writeAttribute('pseudoelement', substr($textContent, $pseudoElementPos + 2));
-			$textContent = substr($textContent, 0, $pseudoElementPos);
-		}
-		else
-		{
-			$pseudoClassPos = strpos($textContent, ':');
-			if ($pseudoClassPos !== false)
-			{
-				$xmlWriter->writeAttribute('pseudoclass', substr($textContent, $pseudoClassPos + 1));
-				$textContent = substr($textContent, 0, $pseudoClassPos);
-			}
-		}
-
-
-		if ($type !== null)
-		{
-			$xmlWriter->writeAttribute('type', $type);
-		}
-		$xmlWriter->text($textContent);
-		$xmlWriter->endElement('selector');
-	}
-
-
-	/**
-	 * Enter description here...
-	 *
-	 * @param XMLWriter $xmlWriter
-	 * @param String $selectorText
-	 */
-	private function buildXMLSelector(&$xmlWriter, $selectorText)
-	{
-		$selectorTextLength = strlen($selectorText);
-		$i = 0;
-		$inComment = false;
-		$currentSelector = "";
-		while ($i < $selectorTextLength)
-		{
-			if ($selectorText[$i] === '/' && (isset($selectorText[$i + 1]) && $selectorText[$i + 1] === '*'))
-			{
-				$inComment = true;
-				++$i;
-			}
-			else if ($selectorText[$i] === '*' && (isset($selectorText[$i + 1]) && $selectorText[$i + 1] === '/'))
-			{
-				if (!$inComment)
-				{
-					throw new Exception("Unexpected end of comment");
-				}
-				$inComment = false;
-				++$i;
-			}
-			else if ($selectorText[$i] === ' ')
-			{
-				if (!f_util_StringUtils::isEmpty($currentSelector))
-				{
-					$this->addSelectorElement($xmlWriter, $currentSelector, 'descendant');
-					$currentSelector = "";
-				}
-			}
-			else if ($selectorText[$i] === ',')
-			{
-				if (!f_util_StringUtils::isEmpty($currentSelector))
-				{
-					$this->addSelectorElement($xmlWriter, $currentSelector, null);
-					$currentSelector = "";
-				}
-			}
-			else if ($selectorText[$i] === '>')
-			{
-				if (!f_util_StringUtils::isEmpty($currentSelector))
-				{
-					$this->addSelectorElement($xmlWriter, $currentSelector, "child");
-					$currentSelector = "";
-				}
-			}
-			else if ($selectorText[$i] === '+')
-			{
-				if (!f_util_StringUtils::isEmpty($currentSelector))
-				{
-					$this->addSelectorElement($xmlWriter, $currentSelector, "adjacent");
-					$currentSelector = "";
-				}
-			}
-			else
-			{
-				if (!$inComment)
-				{
-					$currentSelector .= $selectorText[$i];
-				}
-			}
-			$i++;
-		}
-		if (!f_util_StringUtils::isEmpty($currentSelector))
-		{
-			$this->addSelectorElement($xmlWriter, $currentSelector, null);
-		}
-	}
-	/**
-	 * @param XMLWriter $xmlWriter
-	 * @param website_CSSDeclaration $declaration
-	 */
-	private function addDeclaration(&$xmlWriter, $declaration)
-	{
-		$xmlWriter->startElement('declaration');
-		$this->addForAttribute($xmlWriter, $declaration);
-		$xmlWriter->writeAttribute('property', $declaration->getPropertyName());
-		if ($declaration->isImportant())
-		{
-			$xmlWriter->writeAttribute('important', 'true');
-		}
-
-		$propertyValue = $declaration->getPropertyValue();
-		$matches = array();
-		if (preg_match('/url\(([^\)]*)\)/', $propertyValue, $matches))
-		{
-			$url = $matches[1];
-			if (strpos($url, '/media/') === 0)
-			{
-				$imageAttr = null;
-				if (strpos($url, '/media/frontoffice/') === 0)
-				{
-					$imageAttr = 'front/' . substr($url, 19);
-				}
-				else if (strpos($url, '/media/backoffice/') === 0)
-				{
-					$imageAttr = 'back/' . substr($url, 18);
-				}
-				if ($imageAttr !== null)
-				{
-					$propertyValue = preg_replace('/url\(([^\)]*)\)/', '', $propertyValue);
-					$xmlWriter->writeAttribute('image', $imageAttr);
-				}
-			}
-		}
-		$skinRef = $declaration->getSkinRef();
-		if ($skinRef !== null)
-		{
-			$xmlWriter->writeAttribute('skin-ref', $skinRef);
-		}
-		$xmlWriter->text($propertyValue);
-		$xmlWriter->endElement();
-	}
-
-	public function getAsXML()
-	{
-		$xmlWriter = new XMLWriter();
-
-		$xmlWriter->openMemory();
-
-		$xmlWriter->startDocument('1.0', 'UTF-8');
-		$xmlWriter->setIndent(true);
-		$xmlWriter->setIndentString("\t");
-		$xmlWriter->startElement('stylesheet');
-		foreach ($this->cssRules as $rule)
-		{
-			$xmlWriter->startElement('style');
-			$this->addForAttribute($xmlWriter, $rule);
-			$this->buildXMLSelector($xmlWriter, $rule->getSelectorText());
-			foreach ($rule->getDeclarations() as $declaration)
-			{
-				$this->addDeclaration($xmlWriter, $declaration);
-
-			}
-			$xmlWriter->endElement();
-		}
-		$xmlWriter->endElement();
-		$xmlWriter->endDocument();
-		return $xmlWriter->flush();
-	}
-
-	/**
-	 * @param String $cssText
+	 * @param string $cssText
 	 */
 	public function loadCSS($cssText, $currentEngine = null)
 	{
-
 		$i = 0;
 		$cssTextLength = strlen($cssText);
 		$inComment = false;
+		$inSimpleQuotedString = false;
+		$inDoubleQuotedString = false;
 		$inParenthesis = false;
 		$inDeclarationBlock = false;
 		$inSelector = true;
@@ -396,9 +167,24 @@ class website_CSSStylesheet
 					$inParenthesis = false;
 				}
 			}
-			// handle @import
-			if ($cssText[$i] === '@' && $inSelector && substr($cssText, $i, 7) === '@import' && !$inComment)
+			// handle special chars in strings (for exemple in content: declarations)
+			if ($cssText[$i] === "'" && $inDeclarationBlock && !$inComment)
 			{
+				$inSimpleQuotedString = !($inSimpleQuotedString && $cssText[$i-1] != '\\');
+				$declarationText .= $cssText[$i];
+			}
+			else if ($cssText[$i] === '"' && $inDeclarationBlock && !$inComment)
+			{
+				$inDoubleQuotedString = !($inDoubleQuotedString && $cssText[$i-1] != '\\');
+				$declarationText .= $cssText[$i];
+			}
+			else if ($inSimpleQuotedString || $inDoubleQuotedString)
+			{
+				$declarationText .= $cssText[$i];
+			}
+			// handle @import
+		    else if ($cssText[$i] === '@' && $inSelector && substr($cssText, $i, 7) === '@import' && !$inComment)
+		    {
 				$idx = strpos($cssText, ";", $i);
 				if (!$idx)
 				{
@@ -415,24 +201,24 @@ class website_CSSStylesheet
 					throw new Exception('Invalid directive @import syntax');
 				}
 				$i = $idx;
-			}
-			// handle @-rules
-			// Rules like @xxx ...; //@charset, @namespace, @phonetic-alphabet
-			// -> These @-rules are not very used, so we choose to ignore them here: using these rules will cause an error!
-			else if ($cssText[$i] === '@' && $inSelector && !$inComment && (substr($cssText, $i, 8) === '@charset' || substr($cssText, $i, 10) === '@namespace' || substr($cssText, $i, 18) === '@phonetic-alphabet'))
-			{
-				throw new Exception('@charset, @namespace and @phonetic-alphabet are not handeled.');
-			}
-			// Rules like @xxx { ... }; //@page, @font-face
+		    }
+		    // handle @-rules
+		    // Rules like @xxx ...; //@charset, @namespace, @phonetic-alphabet
+		    // -> These @-rules are not very used, so we choose to ignore them here: using these rules will cause an error!
+		    else if ($cssText[$i] === '@' && $inSelector && !$inComment && (substr($cssText, $i, 8) === '@charset' || substr($cssText, $i, 10) === '@namespace' || substr($cssText, $i, 18) === '@phonetic-alphabet'))
+		    {
+		    	throw new Exception('@charset, @namespace and @phonetic-alphabet are not handeled.');
+		    }
+		    // Rules like @xxx { ... }; //@page, @font-face
 			// -> These @-rules work like selectors, so nothing specific to do.
-			// Rules like @xxx { yyy { ... } ... }; //@media, @document, @support, @keyframes
-			// -> These @-rules wil containt selectors or maybe nested @-rules, handle them specifically.
+		    // Rules like @xxx { yyy { ... } ... }; //@media, @document, @support, @keyframes
+		    // -> These @-rules wil containt selectors or maybe nested @-rules, handle them specifically.
 			else if ($cssText[$i] === '@' && $inSelector && !$inComment && substr($cssText, $i, 5) !== '@page' && substr($cssText, $i, 10) !== '@font-face')
 			{
 				$inAtSelector = true;
 				$atLevel++;
 				$atSelectors[$atLevel] = '@';
-			}
+		    }
 			else if ($cssText[$i] === '/' && $cssText[$i + 1] === '*' && !$inComment)
 			{
 				$inComment = true;
@@ -463,8 +249,16 @@ class website_CSSStylesheet
 							$currentRule->addDeclaration($lastDeclaration);
 							$lastDeclaration = null;
 						}
-						$lastDeclaration = new website_CSSDeclaration();
-						$lastDeclaration->setCssText(trim($declarationText));
+						$declarationText = trim($declarationText);
+						if (trim($selectorText) === ':root' && f_util_StringUtils::beginsWith($declarationText, 'var-'))
+						{
+							$lastDeclaration = new website_CSSVarDeclaration();
+						}
+						else
+						{
+							$lastDeclaration = new website_CSSDeclaration();
+						}
+						$lastDeclaration->setCssText($declarationText);
 						if (f_util_ArrayUtils::isNotEmpty($comments))
 						{
 							$lastDeclaration->setComments($comments);
@@ -472,19 +266,19 @@ class website_CSSStylesheet
 						}
 						$declarationText = "";
 					}
-
+					
 					// End of declarations
 					$inSelector = true;
 
 					$inDeclarationBlock = false;
 					$selectorText = "";
-				}
+				}								
 				else if ($atLevel > 0)
 				{
 					unset($atSelectors[$atLevel]);
 					$atLevel--;
 				}
-
+				
 				if ($currentRule)
 				{
 					if ($lastDeclaration !== null)
@@ -498,10 +292,10 @@ class website_CSSStylesheet
 			}
 			else if ($cssText[$i] === '{' && !$inComment)
 			{
-				if ($inAtSelector)
-				{
+			    if ($inAtSelector)
+			    {
 					$inAtSelector = false;
-				}
+			    }
 				else
 				{
 					// Beginning of declarations
@@ -545,8 +339,16 @@ class website_CSSStylesheet
 						$currentRule->addDeclaration($lastDeclaration);
 						$lastDeclaration = null;
 					}
-					$lastDeclaration = new website_CSSDeclaration();
-					$lastDeclaration->setCssText(trim($declarationText));
+					$declarationText = trim($declarationText);
+					if (trim($selectorText) === ':root' && f_util_StringUtils::beginsWith($declarationText, 'var-'))
+					{
+						$lastDeclaration = new website_CSSVarDeclaration();
+					}
+					else
+					{
+						$lastDeclaration = new website_CSSDeclaration();
+					}
+					$lastDeclaration->setCssText($declarationText);
 					if (f_util_ArrayUtils::isNotEmpty($comments))
 					{
 						$lastDeclaration->setComments($comments);
@@ -578,6 +380,10 @@ class website_CSSStylesheet
 		}
 	}
 
+	/**
+	 * @param string $url
+	 * @throws Exception
+	 */
 	private function importCSS($url)
 	{
 		$parts = explode('/', $url);
@@ -605,314 +411,7 @@ class website_CSSStylesheet
 	}
 
 	/**
-	 * Parses a change formatted xml stylesheet
-	 *
-	 * @param String $xmlText
-	 */
-	public function loadXML($xmlText)
-	{
-		$domCss = new DOMDocument();
-		$loadResult = $domCss->loadXML($xmlText);
-		if ($loadResult === false)
-		{
-			Framework::error(__METHOD__ . '$xmlText must be a valid xml');
-			return;
-		}
-		if ($domCss->documentElement->hasAttribute('id'))
-		{
-			$this->setId($domCss->documentElement->getAttribute('id'));
-		}
-		else
-		{
-			$this->setId("");
-		}
-
-		$ss = website_StyleService::getInstance();
-		foreach ($domCss->getElementsByTagName('import') as $import)
-		{
-			$stylename = $import->getAttribute("id");
-			$path = $ss->getSourceLocation($stylename);
-			if ($path)
-			{
-				$this->loadXML(file_get_contents($path));
-			}
-		}
-
-		foreach ($domCss->getElementsByTagName('style') as $style)
-		{
-			$currentRule = new website_CSSRule();
-			$currentRule->setSelectorText($this->buildSelectorStringForStyle($style, $currentRule));
-			if ($style->hasAttribute("label"))
-			{
-				$currentRule->setLabel($style->getAttribute("label"));
-			}
-			$this->buildEngineCommentForCSSElement($style, $currentRule);
-			foreach ($style->getElementsByTagName('declaration') as $xmlDeclaration)
-			{
-
-				$declaration = $this->buildDeclaration($xmlDeclaration);
-				$this->buildEngineCommentForCSSElement($xmlDeclaration, $declaration);
-				$currentRule->addDeclaration($declaration);
-			}
-			$this->cssRules[] = $currentRule;
-		}
-	}
-
-	/**
-	 * @param DOMNode $style
-	 * @param String $stylesheetId
-	 * @return String
-	 */
-	private function buildSelectorStringForStyle(&$style, &$rule)
-	{
-		$stylesheetId = $this->getId();
-		$selectorString = "";
-		$selectors = $style->getElementsByTagName('selector');
-		$selectorsCount = $selectors->length;
-		for ($i = 0; $i < $selectorsCount; ++$i)
-		{
-			$selector = $selectors->item($i);
-			$selectorString .= trim($selector->textContent);
-			// TODO: remove this convention
-			if ($selector->hasAttribute("label"))
-			{
-				$rule->setLabel($selector->getAttribute("label"));
-			}
-
-			if ($selector->hasAttribute("attribute"))
-			{
-				$selectorString .= '[' . $selector->getAttribute("attribute");
-				if ($selector->hasAttribute("value"))
-				{
-					$selectorString .= '="' . $selector->getAttribute("value") . '"';
-				}
-				$selectorString .= ']';
-			}
-
-			if ($selector->hasAttribute("attributes"))
-			{
-				$attributes = f_util_StringUtils::parse_assoc_string($selector->getAttribute("attributes"));
-				foreach ($attributes as $attributeName => $attributeValue)
-				{
-					if ($attributeName)
-					{
-						$selectorString .= '[' . $attributeName;
-						if ($attributeValue)
-						{
-							$selectorString .= '="' . $attributeValue . '"';
-						}
-						$selectorString .= ']';
-					}
-				}
-			}
-
-			if ($selector->hasAttribute("class"))
-			{
-				$class = $selector->getAttribute("class");
-				if (f_util_StringUtils::isEmpty($class))
-				{
-					$selectorString .= '.' . $stylesheetId;
-				}
-				else
-				{
-					$selectorString .= '.' . $class;
-				}
-			}
-			else if ($selector->hasAttribute("id"))
-			{
-				$id = $selector->getAttribute("id");
-				if (f_util_StringUtils::isEmpty($id))
-				{
-					$selectorString .= '#' . $stylesheetId;
-				}
-				else
-				{
-					$selectorString .= '#' . $id;
-				}
-			}
-
-			if ($selector->hasAttribute("pseudoclass"))
-			{
-				$selectorString .= ':' . $selector->getAttribute("pseudoclass");
-			}
-
-			if ($selector->hasAttribute("pseudoelement"))
-			{
-				$selectorString .= '::' . $selector->getAttribute("pseudoelement");
-			}
-
-			if ($i != $selectorsCount - 1)
-			{
-				$selectorString .= $this->buildSelectorSeparatorForSelector($selector);
-			}
-		}
-		return $selectorString;
-	}
-
-	/**
-	 * @param DOMNode $selector
-	 * @return String
-	 */
-	private function buildSelectorSeparatorForSelector(&$selector)
-	{
-		switch ($selector->getAttribute("type"))
-		{
-			case 'descendant':
-				return ' ';
-			case 'child':
-				return '>';
-			case 'adjacent':
-				return '+';
-			default:
-				return ',';
-		}
-	}
-
-	/**
-	 * @param DOMNode $style
-	 * @param website_CSSRule $rule
-	 */
-	private function buildEngineCommentForCSSElement(&$node, &$element)
-	{
-		if ($node->hasAttribute("for"))
-		{
-			$for = $node->getAttribute("for");
-			if (strpos($for, ':') === false)
-			{
-				$for .= ".all";
-			}
-			else
-			{
-				$for = str_replace(':', '.', $for);
-			}
-			$element->setEngine($for);
-
-		}
-
-		if ($node->hasAttribute("ctype"))
-		{
-			$ctype = $node->getAttribute("ctype");
-			if ($ctype == "xul" && substr($element->getEngine(), 0, 3) !== "xul")
-			{
-				$element->setEngine("xul.all");
-			}
-			if ($ctype == "html" && $element->getEngine() === 'all.all')
-			{
-				$element->setEngine("!xul.all");
-			}
-		}
-	}
-
-	/**
-	 * @param DOMNode $xmlDeclaration
-	 * @return website_CSSDeclaration
-	 */
-	private function buildDeclaration($xmlDeclaration)
-	{
-		$declaration = new website_CSSDeclaration();
-		$declaration->setPropertyName($xmlDeclaration->getAttribute("property"));
-		if ($xmlDeclaration->hasAttribute("binding"))
-		{
-			$this->buildBindingDeclaration($declaration, $xmlDeclaration->getAttribute("binding"));
-		}
-		else if ($xmlDeclaration->hasAttribute("image"))
-		{
-			$this->buildImageProperty($declaration, $xmlDeclaration->getAttribute("image"), trim($xmlDeclaration->textContent));
-		}
-		else if ($xmlDeclaration->hasAttribute("icon"))
-		{
-			$this->buildIconProperty($declaration, $xmlDeclaration->getAttribute("icon"), trim($xmlDeclaration->textContent));
-		}
-		else
-		{
-			$declaration->setPropertyValue(trim($xmlDeclaration->textContent));
-		}
-
-		if ($xmlDeclaration->hasAttribute("skin-ref"))
-		{
-			$declaration->setSkinRef($xmlDeclaration->getAttribute("skin-ref"));
-		}
-
-		if ($xmlDeclaration->hasAttribute("important"))
-		{
-			$declaration->setImportant($xmlDeclaration->getAttribute("important") === "true");
-		}
-		return $declaration;
-	}
-
-	/**
-	 * @param website_CSSDeclaration $declaration
-	 * @param string $binding
-	 */
-	private function buildBindingDeclaration($declaration, $binding)
-	{
-		$declaration->setPropertyName('-moz-binding');
-		$declaration->setPropertyValue('url(binding:' . $binding . ')');
-	}
-
-	private function buildImageProperty($declaration, $imageData, $textContent)
-	{
-		if (is_numeric($imageData))
-		{
-			//TODO inthause : peut etre une image de la mediathèque ?
-			Framework::error(__METHOD__ . ' Invalid image name :' . $imageData);
-			$imageSrc = null;
-		}
-		else
-		{
-			$imageSrc = MediaHelper::getStaticUrl($imageData);
-			$imageSrc = substr($imageSrc, strpos($imageSrc, '/', 8));
-
-		}
-
-		if ($imageSrc != null)
-		{
-			$declaration->setPropertyValue("url($imageSrc) " . $textContent);
-		}
-	}
-
-	private function buildIconProperty($declaration, $rawIconData, $textContent)
-	{
-		$iconData = explode('.', $rawIconData);
-		$iconLayout = '';
-
-		if (count($iconData) == 3)
-		{
-			list($iconName, $iconFormat, $iconSize) = $iconData;
-
-			if ($iconSize == 'shadow')
-			{
-				$iconLayout = MediaHelper::LAYOUT_SHADOW;
-				$iconSize = $iconFormat;
-				$iconFormat = null;
-			}
-			else
-			{
-				$iconFormat = '.' . $iconFormat;
-			}
-		}
-		else
-		{
-			list($iconName, $iconInfo) = $iconData;
-
-			if (($iconInfo == MediaHelper::IMAGE_PNG) || ($iconInfo == MediaHelper::IMAGE_GIF))
-			{
-				$iconSize = null;
-				$iconFormat = '.' . $iconInfo;
-			}
-			else
-			{
-				$iconSize = $iconInfo;
-				$iconFormat = null;
-			}
-		}
-		$imageSrc = MediaHelper::getIcon($iconName, $iconSize, $iconFormat, $iconLayout);
-		$imageSrc = substr($imageSrc, strpos($imageSrc, '/', 8));
-		$declaration->setPropertyValue('url(' . $imageSrc . ') ' . $textContent);
-	}
-
-	/**
-	 * @return String
+	 * @return string
 	 */
 	public function getId()
 	{
@@ -920,13 +419,16 @@ class website_CSSStylesheet
 	}
 
 	/**
-	 * @param String $id
+	 * @param string $id
 	 */
 	public function setId($id)
 	{
 		$this->id = $id;
 	}
 
+	/**
+	 * @return string[]
+	 */
 	public function getAllEngine()
 	{
 		$engines = array();
@@ -939,5 +441,27 @@ class website_CSSStylesheet
 			}
 		}
 		return array_keys($engines);
+	}
+	
+	/**
+	 * @param website_CSSVarDeclaration $varDeclaration
+	 */
+	public function addVar($varName, $varValue)
+	{
+		$this->varDeclarations[$varName] = $varValue;
+	}
+	
+	/**
+	 * @param string[] $matches
+	 * @return string
+	 */
+	public function replaceMatchingVar($matches)
+	{
+		if (isset($this->varDeclarations[$matches[1]]))
+		{
+			return $this->varDeclarations[$matches[1]];
+		}
+		Framework::warn(__METHOD__ . ' Unknown var name: ' . $matches[1]);
+		return $matches[0];
 	}
 }

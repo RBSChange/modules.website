@@ -2,12 +2,12 @@
 class website_CSSDeclaration
 {
 	/**
-	 * @var String
+	 * @var string
 	 */
 	private $skinRef;
 	
 	/**
-	 * @var String
+	 * @var string
 	 */
 	private $engine = "all.all";
 	
@@ -17,22 +17,22 @@ class website_CSSDeclaration
 	private $important = false;
 	
 	/**
-	 * @var String
+	 * @var string
 	 */
 	private $cssText;
 	
 	/**
-	 * @var String
+	 * @var string
 	 */
 	private $propertyName;
 	
 	/**
-	 * @var String
+	 * @var string
 	 */
 	private $propertyValue;
 
 	/**
-	 * @return String
+	 * @return string
 	 */
 	public function getSkinRef()
 	{
@@ -40,7 +40,7 @@ class website_CSSDeclaration
 	}
 	
 	/**
-	 * @param String $skinRef
+	 * @param string $skinRef
 	 */
 	public function setSkinRef($skinRef)
 	{
@@ -48,16 +48,15 @@ class website_CSSDeclaration
 	}
 	
 	/**
-	 * @return String
+	 * @return string
 	 */
 	public function getCssText()
 	{
 		return $this->cssText;
 	}
 	
-
 	/**
-	 * @param String $cssText
+	 * @param string $cssText
 	 */
 	public function setCssText($cssText)
 	{
@@ -74,7 +73,7 @@ class website_CSSDeclaration
 	}
 	
 	/**
-	 * @return String
+	 * @return string
 	 */
 	public function getPropertyName()
 	{
@@ -82,7 +81,7 @@ class website_CSSDeclaration
 	}
 	
 	/**
-	 * @return String
+	 * @return string
 	 */
 	public function getPropertyValue()
 	{
@@ -90,18 +89,25 @@ class website_CSSDeclaration
 	}
 	
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	public function isImportant()
 	{
 		return $this->important;
 	}
 	
+	/**
+	 * @param boolean $important
+	 */	
 	public function setImportant($important)
 	{
 		$this->important = $important;
 	}	
 	
+	/**
+	 * 
+	 * @param string[] $comments
+	 */
 	public function setComments($comments)
 	{
 		foreach ($comments as $comment)
@@ -114,7 +120,7 @@ class website_CSSDeclaration
 	}
 	
 	/**
-	 * @return unknown
+	 * @return string
 	 */
 	public function getEngine()
 	{
@@ -122,18 +128,26 @@ class website_CSSDeclaration
 	}
 	
 	/**
-	 * @param unknown_type $forEngine
+	 * @param string $forEngine
 	 */
 	public function setEngine($forEngine)
 	{
 		$this->engine = $forEngine;
 	}
 	
+	/**
+	 * @return string
+	 */
 	function getCSS()
 	{
 		return $this->renderCSS(true);
 	}
 	
+	/**
+	 * 
+	 * @param boolean $ignoreComments
+	 * @return string
+	 */
 	private function renderCSS($ignoreComments)
 	{
 		$cssText = "\t" . $this->getPropertyName() . ': ' . $this->getPropertyValue();
@@ -149,6 +163,9 @@ class website_CSSDeclaration
 		return $cssText . ";";
 	}
 	
+	/**
+	 * @return string
+	 */
 	public function getCommentedCSS()
 	{
 		return $this->renderCSS(false);
@@ -156,14 +173,14 @@ class website_CSSDeclaration
 	
 	
 	/**
-	 * @return String
+	 * @return string
 	 */
 	function __toString()
 	{
 		return $this->getCommentedCSS();
 	}
 	/**
-	 * @param String $propertyName
+	 * @param string $propertyName
 	 */
 	public function setPropertyName($propertyName)
 	{
@@ -178,7 +195,20 @@ class website_CSSDeclaration
 		$this->propertyValue = $propertyValue;
 	}
 	
-	private function isCompatibleWithEngine($engine)
+	/**
+	 * @param string $engine
+	 * @return boolean
+	 */
+	protected function engineHandlesVars($engine)
+	{
+		return false;
+	}
+	
+	/**
+	 * @param string $engine
+	 * @return boolean
+	 */
+	protected function isCompatibleWithEngine($engine)
 	{
 		if ($this->engine === "all.all" || $this->engine === "image.all" || $this->engine === $engine) {return true;}
 		
@@ -200,21 +230,16 @@ class website_CSSDeclaration
 	/**
 	 * @param String $fullEngine
 	 * @param website_CSSVariables $skin
+	 * @param website_CSSStylesheet $stylesheet
 	 * @return String | null
 	 */
-	public function getAsCSS($fullEngine, $skin)
+	public function getAsCSS($fullEngine, $skin, $stylesheet)
 	{
 		if ($this->isCompatibleWithEngine($fullEngine))
 		{
-			if ($this->skinRef !== null && $skin !== null)
-			{	
-				$value = $skin->getCSSValue($this->skinRef, $this->getPropertyValue());
-			}
-			else
-			{
-				$value = $this->getPropertyValue();			
-			}
+			$value = $this->calculateValue($this->getPropertyValue(), $fullEngine, $skin, $stylesheet);
 			if ($value === '') {return null;}
+			
 			if ($this->getPropertyName() === '-moz-binding')
 			{
 				$matches = array();
@@ -245,5 +270,67 @@ class website_CSSDeclaration
 			return $cssText . ';';			
 		}
 		return null;
+	}
+	
+	/**
+	 * @param String $fullEngine
+	 * @param website_CSSVariables $skin
+	 * @param website_CSSStylesheet $stylesheet
+	 * @return String | null
+	 */
+	protected function calculateValue($value, $fullEngine, $skin, $stylesheet)
+	{
+		if ($this->getSkinRef() !== null && $skin instanceof website_CSSVariables)
+		{
+			if (!($this instanceof website_CSSVarDeclaration))
+			{
+				Framework::warn(__METHOD__ . ' Skin vars are deprecated out of css var declaration: ' . $this->getSkinRef());
+			}
+			$value = $skin->getCSSValue($this->getSkinRef(), $value);
+		}
+		if ($value !== '' && !$this->engineHandlesVars($fullEngine))
+		{
+			$value = preg_replace_callback('#var\(([a-z\-]+)\)#', array($stylesheet, 'replaceMatchingVar'), $value);
+		}
+		return $value;
+	}
+}
+
+class website_CSSVarDeclaration extends website_CSSDeclaration
+{
+	/**
+	 * @param String $fullEngine
+	 * @param website_CSSVariables $skin
+	 * @param website_CSSStylesheet $stylesheet
+	 * @return String | null
+	 */
+	public function getAsCSS($fullEngine, $skin, $stylesheet)
+	{
+		if ($this->engineHandlesVars($fullEngine))
+		{
+			return parent::getAsCSS($fullEngine, $skin, $stylesheet);
+		}
+		if ($this->isCompatibleWithEngine($fullEngine))
+		{
+			$value = $this->calculateValue($this->getPropertyValue(), $fullEngine, $skin, $stylesheet);
+			$stylesheet->addVar($this->getVarName(), $value);
+		}
+		return null;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getVarName()
+	{
+		return substr($this->getPropertyName(), 4);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getVarValue()
+	{
+		return substr($this->getPropertyName(), 4);
 	}
 }

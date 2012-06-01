@@ -34,7 +34,8 @@ class f_mvc_BufferedWriter implements f_mvc_Writer
 	{
 		if (!$this->isCapturing)
 		{
-			$this->startCapturing();
+			ob_start();
+			$this->isCapturing = true;
 		}
 		echo $text;
 	}
@@ -48,9 +49,8 @@ class f_mvc_BufferedWriter implements f_mvc_Writer
 		{
 			return "";
 		}
-		$result = ob_get_clean();
 		$this->isCapturing = false;
-		return $result;
+		return ob_get_clean();
 	}
 	
 	function peek()
@@ -60,14 +60,5 @@ class f_mvc_BufferedWriter implements f_mvc_Writer
 			return "";
 		}
 		return ob_get_contents();
-	}
-	
-	private function startCapturing()
-	{
-		if (!$this->isCapturing)
-		{
-			ob_start();
-			$this->isCapturing = true;
-		}
 	}
 }
