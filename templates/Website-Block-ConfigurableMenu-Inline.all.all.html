@@ -1,11 +1,11 @@
 <div class="inline" tal:attributes="class menuClass">
 	<ul tal:condition="root/hasChildren" class="level${root/getChildrenLevel}">
-		<li tal:condition="configuration/getShowTitle"><strong>${root/getLabelAsHtml}</strong><span class="separator"> : </span></li>
+		<li tal:condition="configuration/getShowTitle"><strong>${root/getLabel}</strong><span class="separator"> : </span></li>
 		<li tal:repeat="entry root/getChildren" tal:attributes="class entry/getNavigationClass">
-			<strong tal:condition="entry/isCurrent">${entry/getLabelAsHtml}</strong>
+			<strong tal:condition="entry/isCurrent">${entry/getLabel}</strong>
 			<tal:block tal:condition="not:entry/isCurrent">
-				<a tal:condition="entry/hasUrl" href="${entry/getUrl}" tal:attributes="onclick entry/getOnClick" class="link">${entry/getLabelAsHtml}</a>
-				<span tal:condition="not: entry/hasUrl">${entry/getLabelAsHtml}</span>
+				<a tal:condition="entry/hasUrl" href="${entry/getUrl}" tal:attributes="onclick entry/getOnClick" class="link">${entry/getLabel}</a>
+				<span tal:condition="not: entry/hasUrl">${entry/getLabel}</span>
 			</tal:block>
 			<span class="separator" tal:condition="not:repeat/entry/end"> | </span>
 		</li>
