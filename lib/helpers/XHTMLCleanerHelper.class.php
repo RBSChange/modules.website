@@ -134,7 +134,6 @@ class website_XHTMLCleanerHelper
 			{
 				Framework::exception($e);
 				$src = "/changeicons/normal/unknown.png";
-				$element->removeAttribute('cmpref');
 				$alt = $element->getAttribute('alt');
 				$element->setAttribute('alt', $alt . ' (Invalid media document # '. $elementId . ')');
 			}

@@ -63,7 +63,6 @@ class PHPTAL_Php_Attribute_CHANGE_Link extends PHPTAL_Php_Attribute
 						break;
 					case 'popup':
 						$popup = true;
-						$popupParameters = PHPTAL_Php_Attribute_CHANGE_Popup::parsePopupArg($value);
 						break;
 					case 'tag':
 						$tag = $value;
@@ -143,8 +142,7 @@ class PHPTAL_Php_Attribute_CHANGE_Link extends PHPTAL_Php_Attribute
 		{
 			$classes[] = 'popup';
 			self::addLocaleToTitle($title, 'm.website.frontoffice.in-a-new-window');
-			$this->phpelement->getOrCreateAttributeNode('onclick')
-				->setValueEscaped('<?php echo PHPTAL_Php_Attribute_CHANGE_Popup::getOnClick('.var_export($popupParameters, true).'); ?>');
+			$this->phpelement->getOrCreateAttributeNode('onclick')->setValueEscaped('return accessiblePopup(this);');
 		}
 
 		if ($title !== null)
@@ -237,7 +235,7 @@ class PHPTAL_Php_Attribute_CHANGE_Link extends PHPTAL_Php_Attribute
 				}
 				$url .= '#'.$anchor;
 			}
-			return $url;
+			return f_util_HtmlUtils::textToHtml($url);
 		}
 		catch (Exception  $e)
 		{
@@ -281,7 +279,7 @@ class PHPTAL_Php_Attribute_CHANGE_Link extends PHPTAL_Php_Attribute
 			}
 			$url .= '#'.$anchor;
 		}
-		return $url;
+		return f_util_HtmlUtils::textToHtml($url);
 	}
 
 	/**
@@ -332,7 +330,7 @@ class PHPTAL_Php_Attribute_CHANGE_Link extends PHPTAL_Php_Attribute
 				}
 				$url .= '#'.$anchor;
 			}
-			return $url;
+			return f_util_HtmlUtils::textToHtml($url);
 		}
 		catch (Exception $e)
 		{

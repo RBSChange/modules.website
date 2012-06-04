@@ -71,8 +71,6 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 	
 	/**
-	 * @see f_mvc_Action::execute()
-	 *
 	 * @param f_mvc_Request $request
 	 * @param f_mvc_Response $response
 	 * @return String
@@ -220,7 +218,6 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 	
 	/**
-	 * @example 'All' for all content
 	 * @return string | null
 	 */
 	protected function getRefreshSectionName()
@@ -244,7 +241,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 		}
 		if (is_numeric($value) && $value > 0)
 		{
-			return $value;
+			return intval($value);
 		}
 		if ($required)
 		{
@@ -373,40 +370,12 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @see f_mvc_Action::getCacheKeyParameters()
-	 *
 	 * @param website_BlockActionRequest $request
+	 * @return array
 	 */
 	public function getCacheKeyParameters($request)
 	{
-		$cfg = $this->getConfiguration();
-		$page = $this->getContext();
-		$rc = RequestContext::getInstance();
-	
-		list($theme, $template) = explode('/', $page->getPersistentPage()->getTemplate());
-		$params = array("_lang" => $page->getLang(),
-			"_website" => $page->getWebsite()->getId(),
-			"_theme" =>  $theme,
-			"_https" => $rc->inHTTPS()
-		);
-		foreach ($cfg->getConfiguredCacheKeys() as $configuredCacheKey)
-		{
-			switch ($configuredCacheKey)
-			{
-				case "page":
-					$params["_page"] = $page->getId();
-					break;
-				case "cmpref":
-					$params["_cmpref"] = $request->getParameter("cmpref");
-					break;
-				case "nav":
-					$params["_nav"] = $rc->getUserAgentType().".".$rc->getUserAgentTypeVersion();
-					break;
-			}
-		}
-		$params = array_merge($params , $cfg->getConfigurationParameters());
-		
-		return $params;
+		return array();
 	}
 
 	/**
@@ -418,8 +387,6 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @see f_mvc_Action::forward()
-	 *
 	 * @param String $moduleName
 	 * @param String $actionName
 	 */
@@ -429,8 +396,6 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @see f_mvc_Action::redirect()
-	 *
 	 * @param String $moduleName
 	 * @param String $actionName
 	 * @param Array<String, String> $moduleParams
@@ -699,7 +664,6 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @example $this->getTemplate('Success');
 	 * @param String $viewName
 	 * @return TemplateObject
 	 */
@@ -710,9 +674,8 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @example $this->getTemplateByFullName('modules_website', 'Website-Block-Taggedmenu-Footer');
-	 * @param String $packageName
-	 * @param String $templateName
+	 * @param String $packageName For example: 'modules_website'
+	 * @param String $templateName For example: 'Website-Block-Taggedmenu-Footer'
 	 * @param String $subDirectory
 	 * @return TemplateObject
 	 */

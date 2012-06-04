@@ -1,3 +1,5 @@
-<h2 change:h="" tal:content="trans:m.website.bo.blocks.missing.title,ucf"></h2>
+<h2 change:h="">${trans:m.website.bo.blocks.missing.title,ucf}</h2>
 
-<p tal:content="trans:m.website.bo.blocks.missing.description,ucf,originalClassName=originalClassName"></p>
+<ul class="errors">
+	<li>${trans:m.website.bo.blocks.missing.description,originalClassName=originalClassName}</li>
+</ul>

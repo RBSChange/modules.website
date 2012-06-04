@@ -110,13 +110,13 @@ class website_PageRessourceService extends BaseService
 		if ($DOMDocument->documentElement->hasAttribute('templateType'))
 		{
 			$this->templateType = $DOMDocument->documentElement->getAttribute('templateType');
-			$xslPath = FileResolver::getInstance() ->setPackageName('modules_website')
+			$xslPath = FileResolver::getInstance()->setPackageName('modules_website')
 				->setDirectory('lib')->getPath($this->templateType . 'RenderContent.xsl');
 		}
 		else
 		{
 			$this->templateType = "freeLayout";
-			$xslPath = FileResolver::getInstance() ->setPackageName('modules_website')
+			$xslPath = FileResolver::getInstance()->setPackageName('modules_website')
 				->setDirectory('lib')->getPath('pageRenderContentTransform.xsl');
 		}		
 		$resultXPath = new DOMXPath($DOMDocument);
@@ -142,7 +142,7 @@ class website_PageRessourceService extends BaseService
 		else
 		{
 			$this->templateType = "freeLayout";
-			$xslPath = FileResolver::getInstance() ->setPackageName('modules_website')
+			$xslPath = FileResolver::getInstance()->setPackageName('modules_website')
 				->setDirectory('lib')->getPath('pageEditContentTransform.xsl');
 		}
 				

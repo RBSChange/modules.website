@@ -27,6 +27,16 @@ class website_GenerateJavascriptAction extends change_Action
 		{
 			change_Controller::setNoCache();
 		}
+		else
+		{
+			header('Pragma:');
+			header('Expires:');
+			header('Cache-Control:');
+		}
+		if (Framework::isInfoEnabled())
+		{
+			Framework::info(__METHOD__ . ' ' . $request->getParameter("param"));
+		}
 		$parameters = explode("/", $request->getParameter("param"));
 		$nbParameters = count($parameters);
 		try 
@@ -54,7 +64,7 @@ class website_GenerateJavascriptAction extends change_Action
 			
 			if (intval($parameters[3]) > 0)
 			{
-				$template = DocumentHelper::getDocumentInstance(intval($parameters[3]), "modules_theme/pagetemplate");
+				$template = theme_persistentdocument_pagetemplate::getInstanceById(intval($parameters[3]));
 				$frontofficeScripts = $template->getScriptIds();
 			}
 			else

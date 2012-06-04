@@ -1,5 +1,5 @@
-<ul class="normal">
+<ul class="menu-list">
     <li tal:repeat="bookmark bookmarks">
-        <a class="link" tal:attributes="href bookmark/href">${bookmark/content}</a>
+        <a class="link" href="${bookmark/href}">${bookmark/content}</a>
     </li>
 </ul>

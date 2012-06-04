@@ -9,7 +9,7 @@ class website_MenuitemfunctionScriptDocumentElement extends import_ScriptDocumen
         return website_MenuitemfunctionService::getInstance()->getNewDocumentInstance();
     } 
     
-    protected function getDocumentProperties ()
+    protected function getDocumentProperties()
     {
         $properties = parent::getDocumentProperties();
         if (isset($properties['function']))

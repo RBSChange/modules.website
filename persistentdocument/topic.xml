@@ -9,6 +9,7 @@
     <property name="skin" type="modules_skin/skin"/>
     <property name="advancedreferencing" type="XHTMLFragment" localized="true"/>
     <property name="allowedpagetemplate" type="modules_theme/pagetemplate" max-occurs="-1"/>
+    <property name="visual" type="modules_media/media"/>
   </properties>
   <children>
     <child name="topics" type="modules_website/topic"/>

@@ -20,9 +20,9 @@ class website_RichtextConfigSuccessView extends change_View
 				$ls = LocaleService::getInstance();
 				foreach ($richtextConf as $style)
 				{
-					$label = $style->hasAttribute('labeli18n') ? $ls->transFO($style->getAttribute('labeli18n'), array('ucf')) : $style->getAttribute('label');
-					echo "<Style name=\"".$label."\" element=\"".$style["tag"]."\">";
-					echo "<Attribute name=\"class\" value=\"".$style["class"]."\" />";
+					$label = $style->hasAttribute('labeli18n') ? $ls->trans($style->getAttribute('labeli18n'), array('ucf')) : $style->getAttribute('label');
+					echo "<Style name=\"" . $label . "\" element=\"" . $style["tag"] . "\">";
+					echo "<Attribute name=\"class\" value=\"" . $style["class"] . "\" />";
 					if (!$style["block"])
 					{
 						echo "<Attribute name=\"block\" value=\"false\" />";
@@ -31,7 +31,7 @@ class website_RichtextConfigSuccessView extends change_View
 				}
 				echo "</Styles>";
 				$xml = ob_get_clean();
-				header("Content-Length:".strlen($xml));
+				header("Content-Length:" . strlen($xml));
 				echo $xml;
 				die();
 				break;

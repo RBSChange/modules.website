@@ -105,8 +105,6 @@ class PHPTAL_Php_Attribute_CHANGE_Tabs extends ChangeTalAttribute
 		if (!self::$called)
 		{
 			$pageContext = website_BlockController::getInstance()->getContext()->getPage();
-			$theme = Framework::getConfigurationValue("modules/website/jquery-ui-theme", "south-street");
-			$pageContext->addStyle("modules.website.jquery-ui.$theme");
 			$pageContext->addScript("modules.website.lib.js.jquery-ui-tabs");
 			self::$called = true;
 		}

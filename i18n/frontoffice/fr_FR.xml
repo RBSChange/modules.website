@@ -33,11 +33,12 @@
   <key id="this-field-is-mandatory">Ce champ est obligatoire</key>
   <key id="append-title-separator"> - </key>
   <key id="this-page-in-mylang">Cette page en Français</key>
+  <key id="version-in-lang">Version française</key>
   <key id="this-is-the-correction-of">Vous visualisez la correction de {documentLabel}</key>
   <key id="there-is-a-correction">Une correction existe pour ce document</key>
   <key id="are-you-sure-you-want-js">Êtes-vous sûr(e) de vouloir {action} ?</key>
   <key id="viewcorrection-document">Voir la correction</key>
-  <key id="powered-by-change">réalisé avec RBS | Change</key>
+  <key id="powered-by-change" format="html"><![CDATA[propulsé par <a href="http://www.rbschange.fr" class="link">RBS Change</a>]]></key>
   <key id="copyright">copyright ©</key>
   <key id="exception-thrown">une exception a été lancée : {message}</key>
   <key id="for-more-information-view-logs">Pour plus d'information, veuillez consulter les logs de l'application.</key>
@@ -50,4 +51,7 @@
   <key id="incompatibiltybrowser-titlesafari">Télécharger une version récente de Safari</key>
   <key id="incompatibiltybrowser-titlegchrome">Télécharger une version récente de Chrome</key>
   <key id="incompatibiltybrowser-titleopera">Télécharger une version récente d'Opera</key>
+  <key id="click-to-view-full-description">cliquez ici pour voir la description complète</key>
+  <key id="click-to-hide-full-description">cliquez ici pour masquer la description complète</key>
+  <key id="loading">chargement en cours</key>
 </i18n>

@@ -1,7 +1,6 @@
 <?php
 interface f_mvc_Context
 {
-
 	/**
 	 * @param String $name
 	 * @param mixed $value
@@ -196,7 +195,6 @@ class website_Page implements f_mvc_Context
 
 	/**
 	 * @see block_Context::addScript($string)
-	 * @example addScript("modules.website.lib.js.jquery")
 	 */
 	public function addScript($string)
 	{
@@ -212,7 +210,7 @@ class website_Page implements f_mvc_Context
 	 */
 	public function getNavigationtitle()
 	{
-		return $this->page->getNavigationtitle();
+		return $this->page->getNavigationLabel();
 	}
 
 	/**
@@ -399,9 +397,9 @@ class website_Page implements f_mvc_Context
 	 * @param string $marker
 	 * @return website_Page
 	 */
-	public function setPlainMarker($marker)
+	public function setPlainMarker($marker, $position = 'bottom')
 	{
-		$this->attributes['plainmarker'] = $marker;
+		$this->attributes['plainmarker-' . $position] = $marker;
 		return $this;
 	}
 
@@ -409,15 +407,16 @@ class website_Page implements f_mvc_Context
 	 * @param string $marker
 	 * @return website_Page
 	 */
-	public function appendToPlainMarker($marker)
+	public function appendToPlainMarker($marker, $position = 'bottom')
 	{
-		if (!isset($this->attributes['plainmarker']))
+		$key = 'plainmarker-' . $position;
+		if (!isset($this->attributes[$key]))
 		{
-			$this->setPlainMarker($marker);
+			$this->setPlainMarker($marker, $position);
 		}
 		else
 		{
-			$this->attributes['plainmarker'] .= "\n" . $marker;
+			$this->attributes[$key] .= "\n" . $marker;
 		}
 		return $this;
 	}
@@ -425,9 +424,10 @@ class website_Page implements f_mvc_Context
 	/**
 	 * @return string
 	 */
-	public function getPlainMarker()
+	public function getPlainMarker($position = 'bottom')
 	{
-		return isset($this->attributes['plainmarker']) ? $this->attributes['plainmarker'] : '';
+		$key = 'plainmarker-' . $position;
+		return isset($this->attributes[$key]) ? $this->attributes[$key] : '';
 	}
 
 	/**
@@ -471,10 +471,17 @@ class website_Page implements f_mvc_Context
 	 */
 	public function renderHTMLBody($htmlBody, $templatePath)
 	{
-		$bodyMarker = $this->getPlainMarker();
-		if ($bodyMarker !== '' && website_PageRessourceService::getInstance()->getUseMarkers())
+		$openingBodyMarker = $this->getPlainMarker('top');
+		if ($openingBodyMarker !== '' && website_PageRessourceService::getInstance()->getUseMarkers())
 		{
-			$htmlBody = str_replace('</body>', $bodyMarker . PHP_EOL . '</body>', $htmlBody);
+			$openingBodyTagEnd = strpos($htmlBody, '>');
+			$htmlBody = substr_replace($htmlBody, $openingBodyMarker, $openingBodyTagEnd+1, 0);
+		}
+		
+		$closingBodyMarker = $this->getPlainMarker('bottom');
+		if ($closingBodyMarker !== '' && website_PageRessourceService::getInstance()->getUseMarkers())
+		{
+			$htmlBody = str_replace('</body>', $closingBodyMarker . K::CRLF . '</body>', $htmlBody);
 		}
 		$this->htmlBody = $htmlBody;
 		include($templatePath);

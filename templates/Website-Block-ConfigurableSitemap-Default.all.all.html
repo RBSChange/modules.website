@@ -1,0 +1,16 @@
+<tal:block metal:define-macro="menuLevel">
+	<ul tal:condition="parent/hasChildren" class="normal level${parent/getChildrenLevel}">
+		<li tal:repeat="entry parent/getChildren" tal:attributes="class entry/getNavigationClass">
+			<strong tal:condition="entry/isCurrent">${entry/getLabelAsHtml}</strong>
+			<tal:block tal:condition="not:entry/isCurrent">
+				<a tal:condition="entry/hasUrl" href="${entry/getUrl}" tal:attributes="onclick entry/getOnClick" class="link">${entry/getLabelAsHtml}</a>
+				<span tal:condition="not: entry/hasUrl">${entry/getLabelAsHtml}</span>
+			</tal:block>
+			<tal:block tal:define="parent entry" metal:use-macro="menuLevel" />
+		</li>
+	</ul>
+</tal:block>
+<div class="default" tal:attributes="class menuClass">
+	<h1 change:h="" tal:condition="configuration/getShowTitle">${root/getLabelAsHtml}</h1>
+	<tal:block tal:define="parent root" metal:use-macro="menuLevel" />
+</div>

@@ -1,9 +1,9 @@
 <tal:block tal:condition="exception">
-	<h3 change:h="" tal:condition="not: exception/getLocaleMessage" tal:content="trans:m.website.frontoffice.exception-thrown,ucf,message=exception/getMessage"></h3>
-	<h3 change:h="" tal:condition="exception/getLocaleMessage" tal:content="trans:m.website.frontoffice.exception-thrown,ucf,message=exception/getLocaleMessage"></h3>
+	<h1 change:h="" tal:condition="not: exception/getLocaleMessage">${trans:m.website.frontoffice.exception-thrown,ucf,message=exception/getMessage}</h1>
+	<h1 change:h="" tal:condition="exception/getLocaleMessage">${trans:m.website.frontoffice.exception-thrown,ucf,message=exception/getLocaleMessage}</h1>
 	<tal:block tal:condition="devMode">
 		<pre style="overflow: auto">${exception/getTraceAsString}</pre>
-		<p class="normal" tal:content="trans:m.website.frontoffice.for-more-information-view-logs,ucf"></p>
+		<p class="normal">${trans:m.website.frontoffice.for-more-information-view-logs,ucf}</p>
 	</tal:block>
 </tal:block>
-<p tal:condition="not: exception" class="normal" tal:content="trans:m.website.frontoffice.no-exception,ucf"></p>
+<p tal:condition="not: exception" class="normal">${trans:m.website.frontoffice.no-exception,ucf}</p>

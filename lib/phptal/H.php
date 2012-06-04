@@ -6,9 +6,9 @@
  *   <li>level, default use current tag level, evaluated : the level of heading element to generate (i.e.: the X value in &lt;HX/&gt;)</li>
  *   <li>class, default auto, evaluated : the value of class attribute</li>
  * </ul>
+ * Example:
+ *   <hX change:h="level 3;class 'auto'">Title</hX> => <h3 class="heading-three">label</h3>
  * @package website.lib.phptal
- * @example <hX change:h="level 3;class 'auto'">Title</hX>
- * @example => <h3 class="heading-three">label</h3>
  */
 class PHPTAL_Php_Attribute_CHANGE_H extends ChangeTalAttribute
 {

@@ -39,8 +39,6 @@ class website_BlockAsynchContentAction extends change_Action
 		return change_View::NONE;
 	}
 	
-	
-	
 	/**
 	 * @return boolean Always false.
 	 */

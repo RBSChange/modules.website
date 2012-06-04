@@ -18,6 +18,10 @@
 		</div>
 	</xsl:template>
 
+	<xsl:template match="div[not(descendant::*)]">
+		<div><xsl:copy-of select="@*[not(name() = 'orient' or name() = 'flex')]"/>&#160;</div>
+	</xsl:template>
+
 	<xsl:template match="change:templates"><xsl:apply-templates /></xsl:template>
 
 	<xsl:template match="change:template">
@@ -35,11 +39,13 @@
 		</div>
 	</xsl:template>
 
+	<xsl:template match="change:content[not(descendant::*)]">
+		<div><xsl:copy-of select="@*" />&#160;</div>
+	</xsl:template>
+
 	<xsl:template match="change:layout">
-		<div>
-			<xsl:apply-templates />
-		</div>
-		<div class="cleaner"/>
+		<xsl:apply-templates />
+		<div class="cleaner">&#160;</div>
 	</xsl:template>
 
 	<xsl:template match="change:col">
@@ -93,15 +99,12 @@
 
 	<xsl:template match="change:row">
 		<div class="freeLocation">
-			<xsl:apply-templates />
 			<xsl:if test="@marginBottom">
-				<div class="freeBlock">
-					<xsl:attribute name="style">
-						<xsl:value-of select="concat('width:100%;height:', string(@marginBottom), 'px;')" />
-					</xsl:attribute>
-				</div>
+				<xsl:attribute name="style">
+					<xsl:value-of select="concat('margin-bottom:', string(@marginBottom), 'px;')" />
+				</xsl:attribute>
 			</xsl:if>
-			<!-- <xsl:copy-of select="@*" /> -->		
+			<xsl:apply-templates />	
 		</div>
 	</xsl:template>
 
@@ -156,9 +159,7 @@
 	</xsl:template>
 
 	<xsl:template match="change:templateblock">
-		<div style="display:none">
-			<xsl:copy-of select="@*" />
-		</div>
+		<div style="display:none"><xsl:copy-of select="@*[name(.)!='editname']" />&#160;</div>
 	</xsl:template>
 	
 	<xsl:template match="change:spacer">
@@ -188,7 +189,7 @@
     				<xsl:value-of select="concat('width:',string(@relativeFrontofficeWidth),'%;display:inline;')" />
  				</xsl:attribute>
 			</xsl:if>
-			<div class="empty" />
+			<div class="empty">&#160;</div>
 		</div>
 	</xsl:template>
 </xsl:stylesheet>

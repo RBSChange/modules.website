@@ -7,7 +7,6 @@ class commands_website_CompileBbcodes extends c_ChangescriptCommand
 {
 	/**
 	 * @return String
-	 * @example "<moduleName> <name>"
 	 */
 	public function getUsage()
 	{
@@ -16,7 +15,6 @@ class commands_website_CompileBbcodes extends c_ChangescriptCommand
 
 	/**
 	 * @return String
-	 * @example "initialize a document"
 	 */
 	public function getDescription()
 	{

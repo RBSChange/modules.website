@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.bo.blocks.switchlanguage" lcid="fr_FR">
+	<key id="displaymode">mode de rendu</key>
+	<key id="displaymode-help">Mode de rendu du bloc.</key>
+	<key id="viewall">Voir toutes les langues</key>
+	<key id="viewall-help">Voir toutes les langues du site si oui, ou seulement celle de la page si non.</key>
+	<key id="showflag">librairie des drapeaux</key>
+	<key id="showflag-help">Laisser vide pour ne pas afficher les îcones des drapeaux, ou utiliser 'flags' pour la librarie par défaut.</key>
+	<key id="currentfirst">Langue courante en 1er</key>
+	<key id="currentfirst-help">Affiche la langue courante en 1er position.</key>
+	<key id="displaymode">gabarit</key>
+</i18n>

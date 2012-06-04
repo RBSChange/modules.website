@@ -1,10 +1,8 @@
 <?php
-
 class PHPTAL_Php_Attribute_CHANGE_Block extends ChangeTalAttribute
 {
 	/**
 	 * @see ChangeTalAttribute::evaluateAll()
-	 *
 	 * @return Boolean
 	 */
 	protected function evaluateAll()
@@ -19,9 +17,10 @@ class PHPTAL_Php_Attribute_CHANGE_Block extends ChangeTalAttribute
 	}
 }
 
-
 class website_ChangeBlockRenderer
 {
+	private static $lastIds = array();
+	
 	private $moduleName;
 	private $actionName;
 	
@@ -58,11 +57,13 @@ class website_ChangeBlockRenderer
 		
 		// getConfigParameters() has to be called before getRequestParameters()
 		$configParameters = $this->getConfigParameters($params);
-		
+		$cbid = $callingAction->getBlockId();
+		self::$lastIds[$cbid] = isset(self::$lastIds[$cbid]) ? self::$lastIds[$cbid] + 1 : 0;
+		$configParameters[website_BlockAction::BLOCK_ID_PARAMETER_NAME] = $cbid . '_' . self::$lastIds[$cbid];
+
 		$callingActionCached = $callingAction->getConfiguration()->isCacheEnabled();
-		if (isset($params["outside"]) || $callingActionCached)
+		if ($callingActionCached)
 		{
-			//echo "Render ".$this->moduleName."_".$this->actionName." outside ";
 			$inheritedParamNames = isset($params['inheritedParams']) ? explode(",", $params['inheritedParams']) : null;
 			$forcedParameters = array();
 			foreach ($params as $paramName => $paramValue)
@@ -96,8 +97,7 @@ class website_ChangeBlockRenderer
 		}
 		else
 		{
-			$useCache = (isset($params["useCache"]) && $params["useCache"] == "true") || !$callingActionCached;
-			//echo "Render inside";
+			$useCache = !isset($params["useCache"]) || $params["useCache"] == "true";
 			if (isset($params['container']))
 			{
 				if (f_util_StringUtils::isEmpty($params['container']))
@@ -155,7 +155,10 @@ class website_ChangeBlockRenderer
 			foreach (explode(",", $extensionParams['inheritedParams']) as $parameterName)
 			{
 				$trimmedParameterName = trim($parameterName);
-				$parameters[$trimmedParameterName] = $actionRequest->getParameter($trimmedParameterName);
+				if ($trimmedParameterName)
+				{
+					$parameters[$trimmedParameterName] = $actionRequest->getParameter($trimmedParameterName);
+				}
 			}
 		}
 		

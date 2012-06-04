@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.bo.blocks.configurablemenu" lcid="fr_FR">
+	<key id="title">menu</key>
+	<key id="depth">profondeur</key>
+	<key id="depth-help">Profondeur maximale du menu généré.</key>
+	<key id="displaymode">gabarit</key>
+	<key id="mode">type de menu</key>
+	<key id="mode-help">Mode de construction du menu.</key>
+	<key id="cmpref">document</key>
+	<key id="cmpref-help">Document racine du menu.</key>
+	<key id="tag">tag du menu</key>
+	<key id="tag-help">Tag identifiant me document menu à rendre.</key>
+	<key id="startlevel">niveau de départ</key>
+	<key id="startlevel-help">Niveau à partir duquel on génère le menu.</key>
+	<key id="deployall">tout déployer</key>
+	<key id="deployall-help">Choissez "oui" pour déployer l'ensemble de menu, "non" pour ne déployer que le chemin contenant la page courante.</key>
+	<key id="mode-document">document</key>
+	<key id="mode-tag">menu tagué</key>
+	<key id="mode-contextual">contextuel</key>
+	<key id="showtitle">afficher le titre du bloc</key>
+	<key id="showtitle-help">Afficher ou non le titre du bloc.</key>
+	<key id="blocktitle">titre du bloc</key>
+	<key id="blocktitle-help">Titre du bloc sur le site. Si laissé vide, il sera généré automatiquement. Pour intégrer le libellé du document racine, utiliser le paramètre de remplacement "{ROOT_LABEL}".</key>
+</i18n>

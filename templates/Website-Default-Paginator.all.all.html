@@ -1,21 +1,44 @@
 <div class="pagination" tal:condition="paginator/shouldRender">
-	<span class="detail">${trans:m.website.paginator.detail,ucf,currentPage=paginator/getCurrentPageNumber,pageCount=paginator/getPageCount,listName=paginator/getListName}</span>
-	<ul>
-		<li tal:condition="paginator/getFirstPageItem">
-			<a change:link="href paginator/getFirstPageItem/getUrl; class-add first-page" title="${trans:m.website.paginator.first-title,ucf,listName=paginator/getListName}">${trans:m.website.paginator.first,ucf}</a>
-		</li>
-		<li tal:condition="paginator/getPreviousPageItem">
-			<a change:link="href paginator/getPreviousPageItem/getUrl; class-add previous-page" title="${trans:m.website.paginator.previous-title,ucf,listName=paginator/getListName}">${trans:m.website.paginator.previous,ucf}</a>
-		</li>
-		<li tal:repeat="item paginator/getItems">
-			<strong tal:condition="item/isCurrent" title="${trans:m.website.paginator.page-title,ucf,listName=paginator/getListName,pageNumber=item/getLabel}">${item/getLabel}</strong>
-			<a tal:condition="not: item/isCurrent" change:link="href item/getUrl" title="${trans:m.website.paginator.page-title,ucf,listName=paginator/getListName,pageNumber=item/getLabel}">${item/getLabel}</a>
-		</li>
-		<li tal:condition="paginator/getNextPageItem">
-			<a change:link="href paginator/getNextPageItem/getUrl; class-add next-page link" title="${trans:m.website.paginator.next-title,ucf,listName=paginator/getListName}">${trans:m.website.paginator.next,ucf}</a>
-		</li>
-		<li tal:condition="paginator/getLastPageItem">
-			<a change:link="href paginator/getLastPageItem/getUrl; class-add last-page" title="${trans:m.website.paginator.last-title,ucf,listName=paginator/getListName}">${trans:m.website.paginator.last,ucf}</a>
-		</li>
-	</ul>
+	<tal:block tal:condition="paginator/getListName">
+		<span class="detail">${trans:m.website.paginator.detail,ucf,currentPage=paginator/getCurrentPageNumber,pageCount=paginator/getPageCount,listName=paginator/getListName}</span>
+		<ul>
+			<li tal:condition="paginator/getFirstPageItem">
+				<a change:link="href paginator/getFirstPageItem/getUrl; class-add first-page" title="${trans:m.website.paginator.first-title,ucf,listName=paginator/getListName}">${trans:m.website.paginator.first,ucf}</a>
+			</li>
+			<li tal:condition="paginator/getPreviousPageItem">
+				<a change:link="href paginator/getPreviousPageItem/getUrl; class-add previous-page" title="${trans:m.website.paginator.previous-title,ucf,listName=paginator/getListName}">${trans:m.website.paginator.previous,ucf}</a>
+			</li>
+			<li tal:repeat="item paginator/getItems">
+				<strong tal:condition="item/isCurrent" title="${trans:m.website.paginator.page-title,ucf,listName=paginator/getListName,pageNumber=item/getLabel}">${item/getLabel}</strong>
+				<a tal:condition="not: item/isCurrent" change:link="href item/getUrl" title="${trans:m.website.paginator.page-title,ucf,listName=paginator/getListName,pageNumber=item/getLabel}">${item/getLabel}</a>
+			</li>
+			<li tal:condition="paginator/getNextPageItem">
+				<a change:link="href paginator/getNextPageItem/getUrl; class-add next-page link" title="${trans:m.website.paginator.next-title,ucf,listName=paginator/getListName}">${trans:m.website.paginator.next,ucf}</a>
+			</li>
+			<li tal:condition="paginator/getLastPageItem">
+				<a change:link="href paginator/getLastPageItem/getUrl; class-add last-page" title="${trans:m.website.paginator.last-title,ucf,listName=paginator/getListName}">${trans:m.website.paginator.last,ucf}</a>
+			</li>
+		</ul>
+	</tal:block>
+	<tal:block tal:condition="not:paginator/getListName">
+		<span class="detail">${trans:m.website.paginator.detail-no-name,ucf,currentPage=paginator/getCurrentPageNumber,pageCount=paginator/getPageCount}</span>
+		<ul>
+			<li tal:condition="paginator/getFirstPageItem">
+				<a change:link="href paginator/getFirstPageItem/getUrl; class-add first-page" title="${trans:m.website.paginator.first-title-no-name,ucf}">${trans:m.website.paginator.first,ucf}</a>
+			</li>
+			<li tal:condition="paginator/getPreviousPageItem">
+				<a change:link="href paginator/getPreviousPageItem/getUrl; class-add previous-page" title="${trans:m.website.paginator.previous-title-no-name,ucf}">${trans:m.website.paginator.previous,ucf}</a>
+			</li>
+			<li tal:repeat="item paginator/getItems">
+				<strong tal:condition="item/isCurrent" title="${trans:m.website.paginator.page-title-no-name,ucf,pageNumber=item/getLabel}">${item/getLabel}</strong>
+				<a tal:condition="not: item/isCurrent" change:link="href item/getUrl" title="${trans:m.website.paginator.page-title-no-name,ucf,pageNumber=item/getLabel}">${item/getLabel}</a>
+			</li>
+			<li tal:condition="paginator/getNextPageItem">
+				<a change:link="href paginator/getNextPageItem/getUrl; class-add next-page link" title="${trans:m.website.paginator.next-title-no-name,ucf}">${trans:m.website.paginator.next,ucf}</a>
+			</li>
+			<li tal:condition="paginator/getLastPageItem">
+				<a change:link="href paginator/getLastPageItem/getUrl; class-add last-page" title="${trans:m.website.paginator.last-title-no-name,ucf}">${trans:m.website.paginator.last,ucf}</a>
+			</li>
+		</ul>
+	</tal:block>
 </div>

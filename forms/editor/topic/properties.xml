@@ -4,8 +4,9 @@
 		<field name="label" />
 		<field name="navigationVisibility" />
 		<field name="description" hidehelp="true" />
-		<field name="allowedpagetemplate" />
+		<field name="allowedpagetemplate" allow="[modules_theme/pagetemplate]" />
 		<field name="skin" />
 		<field name="stylesheet" emptylabel="" />
+		<field name="visual" allowfile="true" mediafoldername="Topics inbox" />
 	</section>
 </panel>

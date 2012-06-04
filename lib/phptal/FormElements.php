@@ -24,7 +24,7 @@ class FormElement extends ChangeTalAttribute
 }
 
 /**
- * @example <anytag change:submit="name toto"/>
+ * Use in HTML: <anytag change:submit="name toto"/>
  */
 class PHPTAL_Php_Attribute_CHANGE_Submit extends FormElement
 {
@@ -32,7 +32,7 @@ class PHPTAL_Php_Attribute_CHANGE_Submit extends FormElement
 }
 
 /**
- * @example <anytag change:textinput="name toto; label &modules.tutu.tata.titiLabel"/>
+ * Use in HTML: <anytag change:textinput="name toto; label &modules.tutu.tata.titiLabel"/>
  */
 class PHPTAL_Php_Attribute_CHANGE_Textinput extends FormElement
 {
@@ -74,7 +74,7 @@ class PHPTAL_Php_Attribute_CHANGE_Listmultifield extends FormElement
 }
 
 /**
- * @example <anytag change:dateinput="name toto; label &modules.tutu.tata.titiLabel; format dd/yy/uu"/>
+ * Use in HTML: <anytag change:dateinput="name toto; label &modules.tutu.tata.titiLabel; format dd/yy/uu"/>
  */
 class PHPTAL_Php_Attribute_CHANGE_Dateinput extends FormElement
 {
@@ -92,8 +92,19 @@ class PHPTAL_Php_Attribute_CHANGE_Dateinput extends FormElement
 	}
 }
 
+class PHPTAL_Php_Attribute_CHANGE_datecombo extends PHPTAL_Php_Attribute_CHANGE_dateinput
+{
+	/**
+	 * @return String
+	 */
+	protected function getRenderMethodName()
+	{
+		return 'renderDateCombo';
+	}
+}
+
 /**
- * @example <anytag change:errors="[key myKey]"/>
+ * Use in HTML: <anytag change:errors="[key myKey]"/>
  */
 class PHPTAL_Php_Attribute_CHANGE_Errors extends FormElement
 {
@@ -101,7 +112,7 @@ class PHPTAL_Php_Attribute_CHANGE_Errors extends FormElement
 }
 
 /**
- * @example <anytag change:messages="[key myKey]"/>
+ * Use in HTML: <anytag change:messages="[key myKey]"/>
  */
 class PHPTAL_Php_Attribute_CHANGE_Messages extends FormElement
 {
@@ -109,7 +120,7 @@ class PHPTAL_Php_Attribute_CHANGE_Messages extends FormElement
 }
 
 /**
- * @example <anytag change:hiddeninput="name toto;"/>
+ * Use in HTML: <anytag change:hiddeninput="name toto;"/>
  */
 class PHPTAL_Php_Attribute_CHANGE_Hiddeninput extends FormElement
 {
@@ -135,7 +146,6 @@ class PHPTAL_Php_Attribute_CHANGE_Selectinput extends FormElement
 {
 	/**
 	 * @see FormElement::getEvaluatedParameters()
-	 *
 	 * @return array
 	 */
 	protected function getEvaluatedParameters()
@@ -147,14 +157,12 @@ class PHPTAL_Php_Attribute_CHANGE_Selectinput extends FormElement
 }
 
 /**
- * @example <anytag change:field="name toto;"/>
+ * Use in HTML: <anytag change:field="name toto;"/>
  */
 class PHPTAL_Php_Attribute_CHANGE_Field extends FormElement
 {
-	
 	/**
 	 * @see FormElement::getEvaluatedParameters()
-	 *
 	 * @return array
 	 */
 	protected function getEvaluatedParameters()
@@ -164,11 +172,10 @@ class PHPTAL_Php_Attribute_CHANGE_Field extends FormElement
 		$evaluatedParameters[] = 'enddate';
 		return $evaluatedParameters;
 	}
-
 }
 
 /**
- * @example <anytag change:textarea="name toto;"/>
+ * Use in HTML: <anytag change:textarea="name toto;"/>
  */
 class PHPTAL_Php_Attribute_CHANGE_Textarea extends FormElement
 {
@@ -202,14 +209,13 @@ class PHPTAL_Php_Attribute_CHANGE_Label extends FormElement
 }
 
 /**
- * @example <anytag change:form="method get">[...]</anytag>
+ * Use in HTML: <anytag change:form="method get">[...]</anytag>
  */
 class PHPTAL_Php_Attribute_CHANGE_Form extends FormElement
 {
 		
 	/**
 	 * @see ChangeTalAttribute::getDefaultValues()
-	 *
 	 * @return String[]
 	 */
 	protected function getDefaultValues()
@@ -228,7 +234,6 @@ class PHPTAL_Php_Attribute_CHANGE_Form extends FormElement
 	
 	/**
 	 * @see ChangeTalAttribute::getRenderMethodName()
-	 *
 	 * @return String
 	 */
 	protected function getRenderMethodName()

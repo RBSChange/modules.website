@@ -3,7 +3,7 @@
  * website_persistentdocument_page
  * @package website
  */
-class website_persistentdocument_page extends website_persistentdocument_pagebase implements website_PublishableElement
+class website_persistentdocument_page extends website_persistentdocument_pagebase
 {
 	/**
 	 * transient property, setted by PageService on insert success
@@ -117,16 +117,6 @@ class website_persistentdocument_page extends website_persistentdocument_pagebas
 	public final function getSkinId()
 	{
 		return $this->getDocumentService()->getSkinId($this);
-	}
-	
-	/**
-	 * @see website_PublishableElement::getNavigationURL()
-	 *
-	 * @return string
-	 */
-	public function getNavigationURL()
-	{
-		return LinkHelper::getDocumentUrl($this);
 	}
 	
 	/**

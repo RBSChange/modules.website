@@ -1,7 +1,7 @@
 <div class="dashboard-widget" tal:omit-tag="refresh" refreshURL="${refreshURL}" title="${title}" icon="${icon}">
 	<tal:block tal:condition="forEdition">
 		<div class="title-bar" ><img src="${icon}" /> ${title}</div>
-		<div class="content-block"><div class="content" tal:content="trans:m.dashboard.dashboard.dummycontent,ucf">...</div></div>
+		<div class="content-block"><div class="content">${trans:m.dashboard.dashboard.dummycontent,ucf}</div></div>
 	</tal:block>
 	<tal:block tal:condition="not:forEdition">
 		<div style="max-height: 200px; overflow: auto;">
@@ -15,12 +15,12 @@
 					<a class="contextual-action" href="#" tal:attributes="onclick task/locate" title="${trans:m.uixul.bo.general.locateinmodule,ucf,etc,attr}"><img change:img="icon/small/search.png"/></a>
 					<tal:block tal:condition="configuration/getShowComments">
 						<tal:block tal:condition="task/comment">
-							<br /><small><strong tal:content="trans:m.task.bo.general.author-comment,ucf,lab,author=task/author"></strong> ${task/comment}</small>
+							<br /><small><strong>${trans:m.task.bo.general.author-comment,ucf,lab,author=task/author}</strong> ${task/comment}</small>
 						</tal:block>
 					</tal:block>
 				</li>
 			</ul>
-			<p tal:condition="not:tasks" tal:content="trans:m.dashboard.dashboard.no-information-to-display,ucf"></p>
+			<p tal:condition="not:tasks">${trans:m.dashboard.dashboard.no-information-to-display,ucf}</p>
 		</div>
 	</tal:block>
 </div>

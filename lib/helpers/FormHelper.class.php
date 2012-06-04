@@ -199,7 +199,11 @@ class website_FormHelper
 		{
 			return $action."#".self::$formId;
 		}
-		return $action;
+		if (f_util_StringUtils::isNotEmpty($action))
+		{
+			return $action;
+		}
+		return "#";
 	}
 
 	/**
@@ -226,30 +230,28 @@ class website_FormHelper
 	 */
 	public static function renderFieldlabel($params)
 	{
-		$propertyName = $params['name'];
-		if (!self::$hasBean)
+		if (!isset($params['name']))
 		{
-			if (Framework::isDebugEnabled())
+			throw new Exception('Use change:label or set name attribute');
+		}
+		
+		$pn = $params['name'];
+		if (self::$bean && BeanUtils::hasProperty(self::$bean, $pn))
+		{
+			$beanPropertyInfo = BeanUtils::getPropertyInfo(self::$bean, $pn);
+			if ($beanPropertyInfo->isRequired())
 			{
-				return "<strong>change:labelfield for property $propertyName has no attached bean</strong>";
+				self::setDefaultValue("required", true, $params);
 			}
-			return "";
+			self::setDefaultValue('label', $beanPropertyInfo->getLabelKey(), $params);
 		}
-
-		if (!BeanUtils::hasProperty(self::$bean, $propertyName))
-		{
-			return "<strong>bean '".BeanUtils::getClassName(self::$bean)."' has no property $propertyName</strong>";
-		}
-		$beanPropertyInfo = BeanUtils::getPropertyInfo(self::$bean, $propertyName);
-		if ($beanPropertyInfo->isRequired())
-		{
-			self::setDefaultValue("required", true, $params);
-		}
-		self::setDefaultValue('label', self::getLabelizedLocale($beanPropertyInfo->getLabelKey()), $params);
-		self::setDefaultValue("id", self::buildFieldId($params['name']), $params);
+		self::setDefaultValue("id", self::buildFieldId($pn), $params);	
 		return self::buildLabel($params);
 	}
 	
+	/**
+	 * @var array
+	 */
 	private static $labelParams;
 	
 	/**
@@ -259,25 +261,47 @@ class website_FormHelper
 	 */
 	public static function renderLabel($params)
 	{
-		self::setDefaultValue("id", self::buildFieldId($params['name']), $params);
+		if (isset($params['for']))
+		{
+			self::setDefaultValue("id", $params['for'], $params);
+		}
+		elseif (isset($params['name']))
+		{
+			self::setDefaultValue("id", self::buildFieldId($params['name']), $params);
+			
+			if (self::$bean && BeanUtils::hasProperty(self::$bean, $params['name']))
+			{	
+				$beanPropertyInfo = BeanUtils::getPropertyInfo(self::$bean, $params['name']);
+				if ($beanPropertyInfo->isRequired())
+				{
+					self::setDefaultValue("required", true, $params);
+				}
+				self::setDefaultValue('label', $beanPropertyInfo->getLabelKey(), $params);
+			}
+		}
 		$labelCode = self::buildLabel($params, false);
 		self::$labelParams = $params; 
 		return $labelCode;
 	}
 	
+	/**
+	 * @return string
+	 */
 	public static function endLabel()
 	{
-		$result = "";
-		if (isset(self::$labelParams['required']) && self::$labelParams['required'] == true)
+		$withcolon = (!isset(self::$labelParams['withcolon']) || self::$labelParams['withcolon'] == 'true');
+		self::$labelParams = null;	
+		if ($withcolon)
 		{
-			$title = LocaleService::getInstance()->transFo("&modules.website.frontoffice.this-field-is-mandatory;");
-			$result .= ' <span class="requiredsymbol" '.f_util_HtmlUtils::buildAttribute("title", $title).'>*</span>';
+			return LocaleService::getInstance()->transformLab('', RequestContext::getInstance()->getLang()).'</label>';
 		}
-		self::$labelParams = null;
-		
-		return $result."</label>";
+		return '</label>';
 	}
 
+	/**
+	 * @param string $fieldName
+	 * @return string
+	 */
 	private static function getParameterName($fieldName)
 	{
 		$index = strpos($fieldName, "[");
@@ -557,12 +581,11 @@ class website_FormHelper
 		$editor->Value = $params['value'];
 		$editor->Width = $params['width'];
 		$editor->Height = $params['height'];
-		return $editor->CreateHtml();
+		return '<div class="richtextfield">' . $editor->CreateHtml() . '</div>';
 	}
 
 	/**
-	 * @param array $params
-	 * @return String
+	 * @deprecated (will be removed in 4.0) use change:bbcodeinput instead of change:richtextinput="mode 'bbcode'"
 	 */
 	private function buildBBeditorinput($params)
 	{
@@ -608,7 +631,7 @@ class website_FormHelper
 				throw new Exception("Unsupported document type ".$beanPropertyInfo->getDocumentType());
 		}
 
-		self::setDefaultValue('label', self::getLabelizedLocale($beanPropertyInfo->getLabelKey()), $params);
+		self::setDefaultValue('label', $beanPropertyInfo->getLabelKey(), $params);
 		self::setDefaultValue('required', $beanPropertyInfo->isRequired(), $params);
 		self::setDefaultValue('help', $beanPropertyInfo->getHelpKey(), $params);
 		// END TODO: refactor with renderField
@@ -864,7 +887,7 @@ jQuery(document).ready(function() {
 		self::setDefaultValue("labeled", true, $params);
 		if ($params["labeled"])
 		{
-			self::setDefaultValue('label', self::getLabelizedLocale($beanPropertyInfo->getLabelKey()), $params);
+			self::setDefaultValue('label', $beanPropertyInfo->getLabelKey(), $params);
 		}
 		self::setDefaultValue('required', $beanPropertyInfo->isRequired(), $params);
 		self::setDefaultValue('help', $beanPropertyInfo->getHelpKey(), $params);
@@ -947,7 +970,7 @@ jQuery(document).ready(function() {
 		self::setDefaultValue("labeled", true, $params);
 		if ($params["labeled"])
 		{
-			self::setDefaultValue('label', self::getLabelizedLocale($beanPropertyInfo->getLabelKey()), $params);
+			self::setDefaultValue('label', $beanPropertyInfo->getLabelKey(), $params);
 		}
 		self::setDefaultValue('help', $beanPropertyInfo->getHelpKey(), $params);
 		$params["onchange"] = "Change_UploadField_FileChanged(this, '".($name."_add")."');";
@@ -1237,29 +1260,35 @@ jQuery(document).ready(function() {
 	 */
 	public static function renderDateinput($params)
 	{
-		self::addDatePickerScript();
 		$params['size'] = 10;
 		$params['maxlength'] = 10;
-		$params['class'] = 'textfield date-picker';
-		
-		$ls = LocaleService::getInstance();
-		$paramFormat = 'Y-m-d';
-		$jsFormat = $ls->transFO("f.date.date.default-date-format");
+		if (!isset($params['class']))
+		{
+			$params['class'] = 'textfield';
+		}
+		$params['class'] = 'date-picker ' . $params['class'];
+
+		$ls = LocaleService::getInstance();		
+		$dateFormat = $ls->trans("f.date.short");
 		if (!isset($params['startdate']))
 		{
 			$params['startdate'] = "1901-01-01";
 		}
-		$params['startdate'] = date_Formatter::format(date_Calendar::getInstanceFromFormat($params['startdate'], $paramFormat), $jsFormat);
-		$datePickerParam = '{startDate:"' . $params['startdate'] . '"';
-		
+
+		$params['startdate'] = date_Formatter::format(date_Calendar::getInstance($params['startdate']), $dateFormat);
+
+		self::addDatePickerScript();
+		$datePickerParam = '{minDate:"' . $params['startdate'] . '"';
 		if (isset($params['enddate']))
 		{
-			$datePickerParam .= ', endDate:"' . date_Formatter::format(date_Calendar::getInstanceFromFormat($params['enddate'], $paramFormat), $jsFormat) . '"';
+			$datePickerParam .= ', maxDate:"' . date_DateFormat::format(date_Calendar::getInstance($params['enddate']), $dateFormat) . '"';
+
 		}
-		$datePickerParam .= '}';
-		
-		$format = $ls->transFO("m.form.frontoffice.datepicker.format");
-		return self::renderInputByType("text", $params) . '<span>' . $format . "</span><script type=\"text/javascript\">//<![CDATA[\njQuery(document).ready(function(){jQuery('[id=" . $params['id'] . "]').datePicker($datePickerParam);});\n//]]></script>";
+		$datePickerParam .= ', changeMonth: true, changeYear: true}';
+				
+		$format = $ls->trans("f.date.human-format");
+		$dateFormatTitle = $ls->trans('m.form.frontoffice.datepicker.format-help', array('ucf', 'attr'));
+		return self::renderInputByType("text", $params) . '<span class="date-format nojs" title="(' . $dateFormatTitle . ')">' . $format . "</span><script type=\"text/javascript\">//<![CDATA[\njQuery(document).ready(function(){jQuery('[id=" . $params['id'] . "]').datepicker($datePickerParam);});\n//]]></script>";
 	}
 
 	/**
@@ -1291,9 +1320,11 @@ jQuery(document).ready(function() {
 		{
 			$propName = trim($beanProperty);
 			$beanPropertyInfo = BeanUtils::getPropertyInfo(self::$bean, $propName);
-			$params['label'] = self::getLabelizedLocale($beanPropertyInfo->getLabelKey());
+			$params['label'] = $beanPropertyInfo->getLabelKey();
 			$params['required'] = $beanPropertyInfo->isRequired();
 			$params['useFor'] = false;
+			$params['class'] = 'nocmx';
+			$params['withcolon'] = 'false';
 			echo '<tr class="row' . ($i % 2) . '">';
 			echo '<th scope="row">' . self::buildLabel($params) . '</th>';
 			foreach ($listItems as $item)
@@ -1382,7 +1413,7 @@ jQuery(document).ready(function() {
 
 		if (!$context->hasAttribute($ctxKey))
 		{
-			return "";
+			return '';
 		}
 		self::setDefaultValue('mode', 'block', $params);
 
@@ -1392,17 +1423,10 @@ jQuery(document).ready(function() {
 		}
 
 		$blockErrors = $context->getAttribute($ctxKey, array());
-		ob_start();
-		echo '<ul class="'.$className.'">';
 		
 		// Do not use the local variables to be able to work outside from a change:form.
 		if ($controller->getRequest() != null && $params['mode'] == 'block')
 		{
-			$currentBlockId = $controller->getProcessedAction()->getBlockId();
-			if (isset($params['relKey']))
-			{
-				$currentBlockId .= "_".$params['relKey'];
-			}
 			if (isset($params['fields']))
 			{
 				$fields = explode(",", $params['fields']);
@@ -1415,27 +1439,40 @@ jQuery(document).ready(function() {
 						$errors[] = $fieldError;
 					}
 				}
-			} else
+			}
+			else
 			{
+				$currentBlockId = $controller->getProcessedAction()->getBlockId();
+				if (isset($params['relKey']))
+				{
+					$currentBlockId .= '_'.$params['relKey'];
+				}
 				$errors = isset($blockErrors[$currentBlockId]) ? $blockErrors[$currentBlockId] : array();
 			}
-			$errorsCount = count($errors);
+		}
+		else
+		{
+			foreach ($blockErrors as $errorsArray)
+			{
+				$errorsCount = count($errors);
+				if ($errorsCount)
+				{
+					$errors = array_merge($errors, $errorsArray);
+				}
+			}
+		}
+		
+		ob_start();
+		$errorsCount = count($errors);
+		if ($errorsCount)
+		{
+			echo '<ul class="'.$className.'">';
 			for ($i = 0; $i < $errorsCount; $i++)
 			{
 				echo self::buildListItem($errors[$i], $i == 0, $i == $errorsCount - 1);
 			}
-		} else
-		{
-			foreach ($blockErrors as $errors)
-			{
-				$errorsCount = count($errors);
-				for ($i = 0; $i < $errorsCount; $i++)
-				{
-					echo self::buildListItem($errors[$i], $i == 0, $i == $errorsCount - 1);
-				}
-			}
+			echo "</ul>";
 		}
-		echo "</ul>";
 		return ob_get_clean();
 	}
 
@@ -1460,24 +1497,8 @@ jQuery(document).ready(function() {
 
 		self::buildNameAndId($params);
 
-		if (isset($params['trueLabel']))
-		{
-			$trueLabel = $params['trueLabel'];
-		}
-		else
-		{
-			$trueLabel = "&modules.uixul.bo.general.Yes;";
-		}
-
-		if (isset($params['falseLabel']))
-		{
-			$falseLabel = $params['falseLabel'];
-		}
-		else
-		{
-			$falseLabel = "&modules.uixul.bo.general.No;";
-		}
-
+		self::setDefaultValue('withcolon', 'true', $params);
+		
 		if (self::isLabeled($params))
 		{
 			$oldId = $params['id'];
@@ -1486,22 +1507,67 @@ jQuery(document).ready(function() {
 			$params['id'] = $oldId;
 		}
 
-		// The labels for radio buttons must be always rendernd ans as not required.
-		$oldRequiredValue = (isset($params['required'])) ? $params['required'] : null;
-		$params['required'] = false;
-		$oldLabeledValue = (isset($params['labeled'])) ? $params['labeled'] : null;
-		$params['labeled'] = true;
-		$ls = LocaleService::getInstance();
-		$cKey = $ls->cleanOldKey($trueLabel);
-		if ($cKey !== false) {$trueLabel = $ls->transFO($cKey);}
-		$cKey = $ls->cleanOldKey($falseLabel);
-		if ($cKey !== false) {$falseLabel = $ls->transFO($cKey);}
+		// Generate options.
 		
-		$result .= self::buildRadio("true", $trueLabel, $params, true);
-		$result .= self::buildRadio("false", $falseLabel, $params, true);
-		if (isset($params["unknownValue"]))
+		$radioParams = $params;
+		unset($radioParams['label']);
+		unset($radioParams['labeli18n']);
+		unset($radioParams['evaluatedlabel']);
+		// The labels for radio buttons must be always rendered and as not required.
+		$radioParams['required'] = false;
+		$radioParams['labeled'] = true;
+		// Option labels should not have colon.
+		$radioParams['withcolon'] = 'false';
+				
+		$ls = LocaleService::getInstance();
+		$formatters = array('html');
+		
+		// Generate 'true' option.
+		if (isset($params['trueLabeli18n']))
 		{
-			if (isset($params['unknownLabelKey']))
+			$trueLabel = $ls->trans($params['trueLabeli18n'], $formatters);
+		}
+		elseif (isset($params['trueLabel']))
+		{
+			$trueLabel = $params['trueLabel'];
+			$cKey = $ls->cleanOldKey($trueLabel);
+			if ($cKey !== false) {
+				$trueLabel = $ls->trans($cKey, $formatters);
+			}
+		}
+		else
+		{
+			$trueLabel = $ls->trans('m.uixul.bo.general.yes', $formatters);
+		}
+		$result .= self::buildRadio('true', $trueLabel, $radioParams, true);
+		
+		// Generate 'false' option.
+		if (isset($params['falseLabeli18n']))
+		{
+			$falseLabel = $ls->trans($params['falseLabeli18n'], $formatters);
+		}
+		elseif (isset($params['falseLabel']))
+		{
+			$falseLabel = $params['falseLabel'];
+			$cKey = $ls->cleanOldKey($falseLabel);
+			if ($cKey !== false) {
+				$falseLabel = $ls->trans($cKey, $formatters);
+			}
+		}
+		else
+		{
+			$falseLabel = $ls->trans('m.uixul.bo.general.no', $formatters);
+		}
+		$result .= self::buildRadio('false', $falseLabel, $radioParams, true);
+		
+		// Generate 'unknown' option.
+		if (isset($params['unknownValue']))
+		{
+			if (isset($params['unknownLabeli18n']))
+			{
+				$unknownLabel = $ls->trans($params['unknownLabeli18n'], $formatters);
+			}
+			elseif (isset($params['unknownLabelKey'])) // For compatibility...
 			{
 				$unknownLabel = $params['unknownLabel'];
 			}
@@ -1511,26 +1577,9 @@ jQuery(document).ready(function() {
 			}
 			else
 			{
-				$unknownLabel = $ls->transFO("m.uixul.bo.general.unknown", array('ucf'));
+				$unknownLabel = $ls->trans('m.uixul.bo.general.unknown', array('ucf'));
 			}
-			$result .= self::buildRadio('', $unknownLabel, $params);
-		}
-		
-		if ($oldRequiredValue === null)
-		{
-			unset($params['required']);
-		}
-		else
-		{
-			$params['required'] = $oldRequiredValue;
-		}
-		if ($oldLabeledValue === null)
-		{
-			unset($params['labeled']);
-		}
-		else
-		{
-			$params['labeled'] = $oldLabeledValue;
+			$result .= self::buildRadio('', $unknownLabel, $radioParams);
 		}
 
 		return $result;
@@ -1549,7 +1598,7 @@ jQuery(document).ready(function() {
 	public static function renderCheckboxInput($params)
 	{
 		$name = self::buildNameAndId($params);
-		$radioValue = $params["value"];
+		$radioValue = $params['value'];
 		if (strpos($name, '[]') !== false)
 		{
 			$value = self::getFieldValue(substr($name, 0, -2));
@@ -1594,7 +1643,7 @@ jQuery(document).ready(function() {
 		{
 			$params['class'] = "option-label";
 		}
-		return self::renderInputByType('radio', $params);
+		return self::renderOptionInputByType('radio', $params);
 	}
 	
 	/**
@@ -1621,13 +1670,37 @@ jQuery(document).ready(function() {
 		}
 		$params['ignoreErrors'] = $ignoreErrors;
 		$params['label'] = $radioLabel;
-		$params['id'] .= "_".$radioValue;
-		$params['value'] = $radioValue;
-		if (!isset($params['class']))
+		
+		$standalone = false;
+		if (isset($params['standalone']))
 		{
-			$params['class'] = "option-label";
+			$standalone = ($params['standalone'] == 'true');
+			unset($params['standalone']);
 		}
-		return self::renderInputByType('checkbox', $params);
+		
+		if (!$standalone)
+		{
+			$params['id'] .= "_" . $radioValue;
+			if (!isset($params['class']))
+			{
+				$params['class'] = "option-label";
+			}
+		}
+		else if (!isset($params['class']))
+		{
+			$params['class'] = "standalone-checkbox";
+		}
+		
+		$params['value'] = $radioValue;
+				
+		if ($standalone)
+		{
+			return self::renderInputByType('checkbox', $params);
+		}
+		else
+		{
+			return self::renderOptionInputByType('checkbox', $params);
+		}
 	}
 
 	/**
@@ -1659,22 +1732,7 @@ jQuery(document).ready(function() {
 		}
 		return $string . $msg . '</li>';
 	}
-
-	/**
-	 * @param String $localeKey
-	 * @return String
-	 */
-	private function getLabelizedLocale($localeKey)
-	{
-		$ls = LocaleService::getInstance();
-		$cleanKey = $ls->cleanOldKey($localeKey);
-		if ($cleanKey !== false)
-		{
-			return $ls->transFO($cleanKey, array('ucf','lab','html'));
-		}
-		return $localeKey;
-	}
-
+	
 	/**
 	 * Add the required scripts for the date picker
 	 */
@@ -1689,9 +1747,9 @@ jQuery(document).ready(function() {
 	}
 
 	/**
-	 * @param unknown_type $type
-	 * @param unknown_type $params
-	 * @return unknown
+	 * @param string $type
+	 * @param array $params
+	 * @return string
 	 */
 	private static function renderInputByType($type, &$params)
 	{
@@ -1713,6 +1771,31 @@ jQuery(document).ready(function() {
 		return self::renderInputCode($params);
 	}
 
+	/**
+	 * @param string $type
+	 * @param array $params
+	 * @return string
+	 */
+	private static function renderOptionInputByType($type, &$params)
+	{
+		$name = self::buildNameAndId($params);
+		$params["type"] = $type;
+		if (!array_key_exists('value', $params))
+		{
+			$value = self::getFieldValue($name);
+			if ($value === null && isset($params['default-value']))
+			{
+				$value = $params['default-value'];
+			}
+			$params['value'] = $value;
+		}
+		if (self::isLabeled($params))
+		{
+			return self::buildLabel($params, true, self::renderInputCode($params) . ' ');
+		}
+		return self::renderInputCode($params);
+	}
+	
 	/**
 	 * @param String $name
 	 * @param Boolean $isAbsoluteName
@@ -1758,7 +1841,7 @@ jQuery(document).ready(function() {
 		}
 		else if (isset($params['labeli18n']))
 		{
-			$value = LocaleService::getInstance()->transFO($params['labeli18n'], array('ucf', 'lab', 'html'));
+			$value = LocaleService::getInstance()->transFO($params['labeli18n'], array('ucf', 'html'));
 			if ($unsetWhenDone)
 			{
 				unset($params['labeli18n']);
@@ -1768,7 +1851,7 @@ jQuery(document).ready(function() {
 		{
 			$ls = LocaleService::getInstance();
 			$cKey = $ls->cleanOldKey($params['label']);
-			$value = ($cKey === false) ? $params['label'] : $ls->transFO($cKey, array('ucf', 'lab', 'html'));
+			$value = ($cKey === false) ? $params['label'] : $ls->transFO($cKey, array('ucf', 'html'));
 			if ($unsetWhenDone)
 			{
 				unset($params['label']);
@@ -1784,7 +1867,7 @@ jQuery(document).ready(function() {
 				$ckey = $ls->cleanOldKey($key);
 				if ($ckey !== false)
 				{
-					$value = $ls->transFO($ckey, array('ucf', 'lab', 'html'));
+					$value = $ls->transFO($ckey, array('ucf', 'html'));
 				}
 			}
 		}
@@ -1842,8 +1925,10 @@ jQuery(document).ready(function() {
 	}
 
 	// TODO: includeAttributes by type !
-	private static $includeAttributes = array("readonly" => true , "rows" => true , "cols" => true , "size" => true , "maxlength" => true , "minlength" => true , "value" => true , "label" => true , "labeli18n" => true, "checked" => true , "selected" => true , "for" => true , "type" => true , "name" => true , "id" => true , "class" => true , "hidden" => true , "disabled" => true , "onclick" => true, "style" => true, "onchange" => true, "multiple" => true, "title" => true);
-
+	private static $includeAttributes = array("readonly" => true , "rows" => true , "cols" => true , "size" => true , "maxlength" => true , "minlength" => true , "value" => true , "label" => true , "labeli18n" => true, "checked" => true , "selected" => true , "for" => true , "type" => true , "name" => true , "id" => true , "class" => true , "hidden" => true , "disabled" => true , "onclick" => true, "style" => true, "onchange" => true, "multiple" => true, "title" => true, 
+		// New HTML5 attributes.
+		"autocomplete" => true, "autocorrect" => true, "autocapitalize" => true);
+	
 	/**
 	 * @param Array $params
 	 * @return String
@@ -1942,9 +2027,10 @@ jQuery(document).ready(function() {
 	 * @param Boolean $close
 	 * @return String
 	 */
-	private function buildLabel($params, $close = true)
+	private function buildLabel($params, $close = true, $contentPrefix = '')
 	{
-		self::setDefaultValue('useFor', true, $params);
+		$ls = LocaleService::getInstance();
+		self::setDefaultValue('useFor', isset($params["id"]), $params);
 		$label = self::getLabelFromParameters($params);
 		$result = '<label ';
 		if ($params['useFor'])
@@ -1967,10 +2053,6 @@ jQuery(document).ready(function() {
 		if (!isset($params["ignoreErrors"]))
 		{
 			$propErrors = self::getErrorsForProperty($name);
-			/*if (isset($params['relatedname']))
-			{
-				$propErrors = array_merge($propErrors, self::getErrorsForProperty($params['relatedname']));
-			}*/
 			if (f_util_ArrayUtils::isNotEmpty($propErrors))
 			{
 				$classes[] = "error";
@@ -1995,12 +2077,9 @@ jQuery(document).ready(function() {
 		if (isset($params['required']) && $params['required'] == true)
 		{
 			$classes[] = "required";
-			$result .= ' class="' . join(" ", $classes) . '">' . $label;
-			if ($close)
-			{
-				$title = LocaleService::getInstance()->transFO('m.website.frontoffice.this-field-is-mandatory');
-				$result .= ' <span class="requiredsymbol" '.f_util_HtmlUtils::buildAttribute("title", $title).'>*</span>';
-			}
+			$result .= ' class="' . join(" ", $classes) . '">' . $contentPrefix;
+			$title = '(' . $ls->transFO('m.website.frontoffice.this-field-is-mandatory') . ')';
+			$result .= ' <em class="requiredsymbol" '.f_util_HtmlUtils::buildAttribute("title", $title).'>*</em> ';
 		}
 		else
 		{
@@ -2008,12 +2087,26 @@ jQuery(document).ready(function() {
 			{
 				$result .= ' class="' . join(" ", $classes) . '"';
 			}
-			$result .= '>' . $label;
+			$result .= '>' . $contentPrefix;
 		}
 		
+		$withcolon =  (!isset($params['withcolon']) || $params['withcolon'] == 'true');
 		if ($close)
 		{
+			if ($withcolon)
+			{
+				$lang = RequestContext::getInstance()->getLang();
+				$result .= $ls->transformLab($label, $lang);
+			}
+			else
+			{
+				$result .= $label;
+			}
 			$result .= '</label> ';
+		}
+		else
+		{
+			$result .= $label;
 		}
 		return $result;
 	}
@@ -2284,13 +2377,13 @@ jQuery(document).ready(function() {
 
 		$thisYear = date_Calendar::now()->getYear();
 		$years = array();
-		for ($i = $thisYear;$i >= 1901; $i-- )
+		for ($i = $thisYear;$i >= 1901; $i--)
 		{
 			$years[$i] = $i;
 		}
 		
 		$days = array();
-		for ($i = 1; $i <= 31; $i++ )
+		for ($i = 1; $i <= 31; $i++)
 		{
 			$days[$i] = $i;
 		}
@@ -2553,6 +2646,10 @@ jQuery(document).ready(function() {
 	 */
 	private static function hasErrorsForProperty($propertyName)
 	{
+		if (!self::$context)
+		{
+			return false;
+		}
 		$ctxKey = website_BlockAction::BLOCK_PER_PROPERTY_ERRORS_ATTRIBUTE_KEY;
 		if (self::$relKey !== null)
 		{

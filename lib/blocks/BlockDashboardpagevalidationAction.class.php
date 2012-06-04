@@ -17,11 +17,8 @@ class website_BlockDashboardpagevalidationAction extends dashboard_BlockDashboar
 		$taskAttr = array();
 		foreach ($tasks as $task)
 		{
-			try 
-			{
-				$document = DocumentHelper::getDocumentInstance($task->getWorkitem()->getDocumentid());
-			}
-			catch (Exception $e)
+			$document = DocumentHelper::getDocumentInstanceIfExists($task->getWorkitem()->getDocumentid());
+			if (!$document)
 			{
 				Framework::warn(__METHOD__ . ' no document found with id ' . $task->getWorkitem()->getDocumentid() .  ' for the task with id ' . $task->getId());
 				continue;

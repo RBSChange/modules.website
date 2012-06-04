@@ -3,14 +3,6 @@
 class LinkHelper
 {	
 	/**
-	 * @return string '#'
-	 */
-	public static function getEmptyUrl()
-	{
-		return '#';
-	}
-	
-	/**
 	 * @param array $queryParams
 	 * @param website_persistentdocument_website $website
 	 * @return f_web_ParametrizedLink
@@ -321,7 +313,7 @@ class LinkHelper
 		try
 		{
 		    $website = website_WebsiteService::getInstance()->getCurrentWebsite();
-            $page = TagService::getInstance()->getDocumentByContextualTag(WebsiteConstants::TAG_HELP_PAGE, $website);
+                       $page = TagService::getInstance()->getDocumentByContextualTag('contextual_website_website_help', $website);
             if ($page !== null)
             {
     			return self::getDocumentUrl($page);
@@ -331,7 +323,7 @@ class LinkHelper
 		{
 			Framework::exception($e);
 		}
-	    return self::getEmptyUrl();
+	    return '#';
 	}
 	
 	/**
@@ -372,34 +364,8 @@ class LinkHelper
 	 */
 	public static function getLink($document, $lang = null, $class = 'link', $title = '', $attributes = null)
 	{
-	    return self::_buildLink($document, $lang, $class, $title, false, $attributes);
+	    return self::buildLink($document, $lang, $class, $title, false, $attributes);
 	}
-
-
-	/**
-	 * Build a full POPUP link (<a/> element) for the given document.
-	 *
-	 * @param f_persistentdocument_PersistentDocument $document
-	 * @param string $lang
-	 * @param string $class
-	 * @param string $title
-	 * @return string
-	 */
-	public static function getPopupLink($document, $lang = null, $class = 'link', $title = '', $attributes = null, $width = null, $height = null)
-	{
-		if ( ! is_null($width) || ! is_null($height) )
-		{
-			$popup = array();
-			if ( ! is_null($width) ) $popup['width'] = $width;
-			if ( ! is_null($height) ) $popup['height'] = $height;
-		}
-		else
-		{
-			$popup = true;
-		}
-		return self::_buildLink($document, $lang, $class, $title, $popup, $attributes);
-	}
-
 
 	/**
 	 * Build a full link (<a/> element) for the given document.
@@ -412,105 +378,49 @@ class LinkHelper
 	 * @param array<string=>string> $attributes
 	 * @return string
 	 */
-	public static function _buildLink($document, $lang = null, $class = 'link', $title = '', $popup = false, $attributes = null)
+	public static function buildLink($document, $lang = null, $class = 'link', $title = '', $popup = false, $attributes = null)
 	{
-	    if (is_null($lang))
-	    {
-	        $lang = RequestContext::getInstance()->getLang();
-	    }
-
-		if (f_util_ClassUtils::methodExists($document, 'getUrl'))
-        {
-            $url = $document->getUrl();
-        }
-        else
-        {
-            $url = LinkHelper::getDocumentUrl($document, $lang);
-        }
-
-        if (f_util_ClassUtils::methodExists($document, 'getNavigationtitle'))
-        {
-            $label = $document->getNavigationtitle();
-        }
-        else if (f_util_ClassUtils::methodExists($document, 'getLabelAsHtml'))
-        {
-            $label = $document->getLabelAsHtml();
-        }
-        else
-        {
-            $label = $document->getLabel();
-        }
-
-		if (!empty($title))
+		if (!is_array($attributes))
 		{
-			$title = ' title="'.substr($title, 0, 80).'"';
+			$attributes = array();
 		}
-
-		if ($popup !== false)
+		
+		if (isset($attributes['label']))
 		{
-			$onclick = ' onclick="return accessiblePopup(this';
-			if (is_array($popup))
-			{
-				if (isset($popup['width']) && is_numeric($popup['width']))
-				{
-					$onclick .= ','.$popup['width'];
-					if (isset($popup['height']) && is_numeric($popup['height']))
-					{
-						$onclick .= ','.$popup['height'];
-					}
-				}
-				else if (isset($popup['height']) && is_numeric($popup['height']))
-				{
-					$onclick .= ',null,'.$popup['height'];
-				}
-
-			}
-			$onclick .= ')"';
-			if ( is_array($attributes) )
-			{
-				if (isset($attributes['class']))
-				{
-					$attributes['class'] .= ' popup';
-				}
-				else
-				{
-					$attributes['class'] = 'popup';
-				}
-			}
-			else
-			{
-				$attributes = array('class' => 'popup');
-			}
+			$label = $attributes['label'];
+			unset($attributes['label']);
 		}
 		else
 		{
-		    $onclick = '';
+			$label = $document->getNavigationLabel();
+		}
+		if (empty($label))
+		{
+			return '';
+		}
+		
+		if ($lang === null)
+		{
+			$lang = RequestContext::getInstance()->getLang();
+		}
+		if (!isset($attributes['lang']))
+		{
+			$attributes['lang'] = $lang;
+			$attributes['xml:lang'] = $lang;
+		}		
+		$attributes['href'] = LinkHelper::getDocumentUrl($document, $lang);
+		
+		if (!empty($class))
+		{
+			$attributes['class'] = (isset($attributes['class'])) ? ($class . ' ' . $attributes['class']) : $class;
+		}
+		
+		if (!empty($title) && !isset($attributes['title']))
+		{
+			$attributes['title'] = f_util_StringUtils::shortenString($title, 80);
 		}
 
-		$attributesString = '';
-		if ( is_array($attributes) )
-		{
-			foreach ($attributes as $name => $value)
-			{
-				if ($name == 'class')
-				{
-					$class .= ' '.$value;
-				}
-				else if ($name != 'lang' && $name != 'href')
-				{
-					$attributesString .= " $name=\"".addcslashes($value, '"')."\"";
-				}
-			}
-		}
-
-		$html = '<a href="'.$url.'" lang="'.$lang.'" xml:lang="'.$lang.'"';
-		if ($class !== null)
-		{
-			$html .= ' class="'.$class.'"';
-		}
-		$html .= $title.$onclick.$attributesString;
-		$html .= '>'.f_Locale::translate($label, null, $lang).'</a>';
-		return $html;
+		return '<a ' . f_util_HtmlUtils::buildAttributes($attributes) . '>' . f_util_HtmlUtils::textToHtml($label) . '</a>';
 	}
 
 
@@ -529,7 +439,7 @@ class LinkHelper
 			$url = LinkHelper::getTagUrl(WebsiteConstants::TAG_ADD_TO_FAVORITES_PAGE);
 			if (f_util_StringUtils::isEmpty($url))
 			{
-				$url = self::getEmptyUrl();
+				$url = '#';
 			}
 		}
 		catch (Exception $e)
@@ -538,16 +448,16 @@ class LinkHelper
 			{
 				Framework::exception($e);
 			}
-			$url = self::getEmptyUrl();
+			$url = '#';
 		}
 		
 		if (is_null($label))
 		{
-			$label = f_Locale::translate('&modules.website.frontoffice.AddToFavorite;');
+			$label = LocaleService::getInstance()->trans('m.website.frontoffice.addtofavorite', array('ucf', 'html'));
 		}
 		if (is_null($title))
 		{
-			$title = f_Locale::translate('&modules.website.frontoffice.AddToFavoriteTitle;');
+			$title = LocaleService::getInstance()->trans('m.website.frontoffice.addtofavoritetitle', array('ucf', 'attr'));
 		}
 		if (is_string($class))
 		{
@@ -556,7 +466,7 @@ class LinkHelper
 		return sprintf(
 			'<a href="%s" title="%s"%s onclick="accessibleAddToFavorite(this); return false;">%s</a>',
 			$url, $title, $class, $label
-			);
+		);
 	}
 
 
@@ -572,10 +482,10 @@ class LinkHelper
 	{
 		try
 		{
-			$url = LinkHelper::getTagUrl(WebsiteConstants::TAG_PRINT_PAGE);
+			$url = LinkHelper::getTagUrl('contextual_website_website_print');
 			if (f_util_StringUtils::isEmpty($url))
 			{
-				$url = self::getEmptyUrl();
+				$url = '#';
 			}
 		}
 		catch (Exception $e)
@@ -584,16 +494,16 @@ class LinkHelper
 			{
 				Framework::exception($e);
 			}
-			$url = self::getEmptyUrl();
+			$url = '#';
 		}		
 
 		if (is_null($label))
 		{
-			$label = f_Locale::translate('&modules.website.frontoffice.Print;');
+			$label = LocaleService::getInstance()->trans('m.website.frontoffice.print', array('ucf', 'html'));
 		}
 		if (is_null($title))
 		{
-			$title = f_Locale::translate('&modules.website.frontoffice.PrintTitle;');
+			$title = LocaleService::getInstance()->trans('m.website.frontoffice.printtitle', array('ucf', 'attr'));
 		}
 		if (is_string($class))
 		{
@@ -618,10 +528,10 @@ class LinkHelper
 	{
 		try
 		{
-			$url = LinkHelper::getTagUrl(WebsiteConstants::TAG_HELP_PAGE);
+			$url = LinkHelper::getTagUrl('contextual_website_website_help');
 			if (f_util_StringUtils::isEmpty($url))
 			{
-				$url = self::getEmptyUrl();
+				$url = '#';
 			}
 		}
 		catch (Exception $e)
@@ -630,16 +540,16 @@ class LinkHelper
 			{
 				Framework::exception($e);
 			}
-			$url = self::getEmptyUrl();
+			$url = '#';
 		}	
 		
 		if (is_null($label))
 		{
-			$label = f_Locale::translate('&modules.website.frontoffice.Help;');
+			$label = LocaleService::getInstance()->trans('m.website.frontoffice.help', array('ucf', 'html'));
 		}
 		if (is_null($title))
 		{
-			$title = f_Locale::translate('&modules.website.frontoffice.HelpTitle;');
+			$title = LocaleService::getInstance()->trans('m.website.frontoffice.helptitle', array('ucf', 'attr'));
 		}
 		if (is_string($class))
 		{
@@ -662,10 +572,10 @@ class LinkHelper
 		
 		try
 		{
-			$url = LinkHelper::getTagUrl(WebsiteConstants::TAG_LEGAL_NOTICE_PAGE);
+			$url = LinkHelper::getTagUrl('contextual_website_website_legal');
 			if (f_util_StringUtils::isEmpty($url))
 			{
-				$url = self::getEmptyUrl();
+				$url = '#';
 			}
 		}
 		catch (Exception $e)
@@ -674,16 +584,16 @@ class LinkHelper
 			{
 				Framework::exception($e);
 			}
-			$url = self::getEmptyUrl();
+			$url = '#';
 		}	
 
 		if (is_null($label))
 		{
-			$label = f_Locale::translate('&modules.website.frontoffice.LegalNotice;');
+			$label = LocaleService::getInstance()->transFO('m.website.frontoffice.legalnotice', array('ucf', 'html'));
 		}
 		if (is_null($title))
 		{
-			$title = f_Locale::translate('&modules.website.frontoffice.LegalNoticeTitle;');
+			$title =  LocaleService::getInstance()->transFO('m.website.frontoffice.legalnoticetitle', array('ucf', 'attr'));
 		}
 		if (is_string($class))
 		{

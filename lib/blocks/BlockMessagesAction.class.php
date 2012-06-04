@@ -2,13 +2,11 @@
 class website_BlockMessagesAction extends website_BlockAction
 {
 	/**
-	 * @see website_BlockAction::execute()
-	 *
 	 * @param website_BlockActionRequest $request
 	 * @param website_BlockActionResponse $response
 	 * @return String
 	 */
-	function execute($request, $response)
+	public function execute($request, $response)
 	{
 		$cfg = $this->getConfiguration();
 		$flush = $cfg->getFlush();
@@ -31,7 +29,6 @@ class website_BlockMessagesAction extends website_BlockAction
 						$this->addMessage($msg);
 					}	
 				}
-				$request->setAttribute("messages", website_SessionMessage::getMessages($flush));
 				break;
 			case "all":
 				if (website_SessionMessage::hasMessages())

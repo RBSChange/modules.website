@@ -13,4 +13,5 @@
   <key id="usecache">Activer le cache</key>
   <key id="usecache-help">Ce bloc gère un cache, vous pouvez le désactiver</key>
   <key id="contextualmenu">Menu contextuel</key>
+  <key id="switchlanguage">Selecteur de langue</key>
 </i18n>

@@ -17,6 +17,7 @@ class website_PHPTAL_CHANGE
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('textinput', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('hiddeninput', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('dateinput', 30));
+		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('datecombo', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('booleaninput', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('radioinput', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('checkboxinput', 30));
@@ -42,10 +43,7 @@ class website_PHPTAL_CHANGE
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeSurround('tab', 32));
 		
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeSurround('link', 30));
-		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeSurround('menu', 9));
-		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeSurround('menuitem', 9));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeSurround('paginator', 30));
-		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeSurround('popup', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('richtext', 30));
 		
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('chart', 30));

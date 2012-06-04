@@ -5,8 +5,7 @@ class block_BlockService extends BaseService
 	 * @var block_BlockService
 	 */
 	private static $instance;
-
-
+	
 	/**
 	 * @return block_BlockService
 	 */
@@ -22,7 +21,7 @@ class block_BlockService extends BaseService
 	/**
 	 * @var array
 	 */
-	protected $blockActionClassByType;	
+	protected $blockActionClassByType;
 	protected $editorGridBlocType;
 	protected $editorDropModelBlocType;
 	protected $editorInsertBlocType;
@@ -61,8 +60,8 @@ class block_BlockService extends BaseService
 			}
 			include $filePath;
 		}
-	}	
-
+	}
+	
 	/**
 	 * @param string $blockType
 	 * @return string
@@ -78,7 +77,7 @@ class block_BlockService extends BaseService
 			{
 				return $className;
 			}
-			Framework::error(__METHOD__ . ' Class ' . $className .' not found for: ' . $blockType);
+			Framework::error(__METHOD__ . ' Class ' . $className . ' not found for: ' . $blockType);
 		}
 		else if (!$this->isSpecialBlock($blockType))
 		{
@@ -90,7 +89,7 @@ class block_BlockService extends BaseService
 					Framework::info(__METHOD__ . ' Please add block configuration for: ' . $blockType);
 				}
 				return $className;
-			}			
+		}
 		}
 		Framework::error(__METHOD__ . ' Undefined block type: ' . $blockType);
 		if (Framework::isInfoEnabled())
@@ -99,8 +98,6 @@ class block_BlockService extends BaseService
 		}
 		return null;
 	}
-	
-
 	
 	/**
 	 * @param string $blockType
@@ -112,8 +109,8 @@ class block_BlockService extends BaseService
 		$this->loadBlockActionClassByType();
 		if (isset($this->blockActionClassByType[$key]))
 		{
-			list(,$moduleName,$name) = explode('_', $blockType);
-			return $moduleName.'_Block'.ucfirst($name).'Configuration';
+			list (, $moduleName, $name) = explode('_', $blockType);
+			return $moduleName . '_Block' . ucfirst($name) . 'Configuration';
 		}
 		if (Framework::isInfoEnabled())
 		{
@@ -123,7 +120,7 @@ class block_BlockService extends BaseService
 	}
 	
 	const BLOCK_TYPE_RICHTEXT = 'richtext';
-	const BLOCK_TYPE_LAYOUT= 'layout';
+	const BLOCK_TYPE_LAYOUT = 'layout';
 	
 	/**
 	 * @param String $blockName
@@ -132,11 +129,9 @@ class block_BlockService extends BaseService
 	public function isSpecialBlock($blockName)
 	{
 		$blockName = strtolower($blockName);
-		return false
-			|| self::BLOCK_TYPE_RICHTEXT === $blockName
-			|| self::BLOCK_TYPE_LAYOUT === $blockName;
+		return false || self::BLOCK_TYPE_RICHTEXT === $blockName || self::BLOCK_TYPE_LAYOUT === $blockName;
 	}
-
+	
 	/**
 	 * @param String $blockName
 	 * @param String $packageName
@@ -146,8 +141,8 @@ class block_BlockService extends BaseService
 	{
 		if (!$this->isSpecialBlock($blockName))
 		{
-			list(,$moduleName,$name) = explode('_', $blockName);
-			$className = $moduleName.'_Block'.ucfirst($name).'Info';
+			list (, $moduleName, $name) = explode('_', $blockName);
+			$className = $moduleName . '_Block' . ucfirst($name) . 'Info';
 			if ($className !== null && f_util_ClassUtils::classExists($className))
 			{
 				return f_util_ClassUtils::callMethod($className, 'getInstance');
@@ -157,11 +152,11 @@ class block_BlockService extends BaseService
 		}
 		else if ($blockName === self::BLOCK_TYPE_RICHTEXT)
 		{
-			 return new block_BlockInfo(array('type' => 'richtext', 'icon' => 'richtext', 'label' => '&modules.uixul.bo.layout.RichTextBlock'));
+			return website_BlockRichtextInfo::getInstance();
 		}
 		else if ($blockName === self::BLOCK_TYPE_LAYOUT)
 		{
-			 return new block_BlockInfo(array('type' => 'layout', 'columns' => 2, 'icon' => 'layout-2-columns', 'label' => '&modules.website.bo.blocks.Two-col'));
+			return website_BlockLayoutInfo::getInstance();
 		}
 		return null;
 	}
@@ -174,8 +169,7 @@ class block_BlockService extends BaseService
 		$this->loadEditorBlocType();
 		return  $this->editorGridBlocType;
 	}
-
-
+	
 	/**
 	 * @return string[]
 	 */
@@ -192,12 +186,13 @@ class block_BlockService extends BaseService
 	{
 		$this->loadEditorBlocType();
 		return  $this->editorDropModelBlocType;
-	}	
+	}
 	
 	//
 	// Blocks compilation methods.
 	//
 	
+
 	/**
 	 * @return void
 	 */
@@ -227,7 +222,6 @@ class block_BlockService extends BaseService
 		$this->computeInjection($blocLists);
 		$this->computeAttribute($blocLists);
 		
-		
 		$this->buildBlockActionClassByType($blocLists);
 		
 		$this->buildBlockEditorInfos($blocLists);
@@ -244,24 +238,24 @@ class block_BlockService extends BaseService
 		$attributes = array();
 		$parameters = array();
 		$metas = array();
-		foreach ($blocLists as $blockType => $blockInfos) 
+		foreach ($blocLists as $blockType => $blockInfos)
 		{
-			foreach ($blockInfos as $pn => $val) 
+			foreach ($blockInfos as $pn => $val)
 			{
 				if ($pn === 'parameters')
 				{
-					foreach ($val as $n => $v) 
+					foreach ($val as $n => $v)
 					{
-						foreach ($v as $n1 => $v1) 
+						foreach ($v as $n1 => $v1)
 						$parameters[$n1] = isset($parameters[$n1]) ? $parameters[$n1] + 1 : 1;
 					}
 				}
 				else if ($pn === 'metas')
 				{
-					foreach ($val as $n => $v) 
+					foreach ($val as $n => $v)
 					{
 						$metas[$n] = isset($metas[$n]) ? $metas[$n] + 1 : 1;
-					}					
+				}
 				}
 				else
 				{
@@ -271,15 +265,15 @@ class block_BlockService extends BaseService
 		}
 		print_r($attributes);
 		print_r($parameters);
-		print_r($metas);		
+		print_r($metas);
 	}
 	
 	private function loadBlockXMLConfig($packageName, &$blocLists)
 	{
 		$moduleName = substr($packageName, 0, 8) == 'modules_' ? substr($packageName, 8) : $packageName;
 		$blockInfoArray = array();
-		$blockFiles = FileResolver::getInstance()->setPackageName('modules_' . $moduleName)->getPaths('config/blocks.xml');	
-		if ($blockFiles === NULL) 
+		$blockFiles = FileResolver::getInstance()->setPackageName('modules_' . $moduleName)->getPaths('config/blocks.xml');
+		if ($blockFiles === NULL)
 		{
 			return;
 		}
@@ -300,10 +294,10 @@ class block_BlockService extends BaseService
 		$domDoc = f_util_DOMUtils::fromPath($blockFile);
 		$blockDomList = $domDoc->find('/blocks/block');
 		$reservedParameterNames = array("type", "flex", "width", "cusecache");
-		for ($blockIdx=0; $blockIdx < $blockDomList->length ; $blockIdx++)
+		for ($blockIdx = 0; $blockIdx < $blockDomList->length; $blockIdx++)
 		{
 			$blockElm = $blockDomList->item($blockIdx);
-			if (!$blockElm->hasAttribute('type') )
+			if (!$blockElm->hasAttribute('type'))
 			{
 				throw new BlockException("Invalid block definition: required attribute \"type\" is missing.");
 			}
@@ -316,7 +310,7 @@ class block_BlockService extends BaseService
 			}
 			else if (count($blockNameParts) === 3)
 			{
-				list(, $blockModuleName, $blockShortName) = $blockNameParts;
+				list (, $blockModuleName, $blockShortName) = $blockNameParts;
 				$blockId = $blockType;
 			}
 			else
@@ -324,11 +318,9 @@ class block_BlockService extends BaseService
 				throw new BlockException("Invalid block type: $blockType.");
 			}
 			
-			if (!isset($blockInfoArray[$blockId]) )
+			if (!isset($blockInfoArray[$blockId]))
 			{
-				$blockInfoArray[$blockId] = array('type' => $blockType, 
-					'section' => $defaultSection,
-					'parameters' => array(), 
+				$blockInfoArray[$blockId] = array('type' => $blockType, 'section' => $defaultSection, 'parameters' => array(), 
 					'metas' => array());
 			}
 			
@@ -366,9 +358,8 @@ class block_BlockService extends BaseService
 					
 					if ($cacheTime !== null)
 					{
-						$blockInfoArray[$blockId]['parameters']['cusecache'] = array('name' => 'cusecache',
-		      				'type' => 'Boolean', 'default-value' => true,
-							'label' => '&modules.website.bo.blocks.Usecache;',
+						$blockInfoArray[$blockId]['parameters']['cusecache'] = array('name' => 'cusecache', 'type' => 'Boolean', 
+							'default-value' => true, 'label' => '&modules.website.bo.blocks.Usecache;', 
 							'helptext' => '&modules.website.bo.blocks.Usecache-help;');
 					}
 				}
@@ -379,18 +370,18 @@ class block_BlockService extends BaseService
 			// If no label is explicitely set, generate it from the block type.
 			if (!isset($blockInfoArray[$blockId]['label']) && !isset($blockInfoArray[$blockId]['labeli18n']))
 			{
-				list(, $moduleName, $blockName) = explode('_', strtolower($blockType));
+				list (, $moduleName, $blockName) = explode('_', strtolower($blockType));
 				$blockInfoArray[$blockId]['labeli18n'] = strtolower("m.$moduleName.bo.blocks.$blockName.title");
 			}
 			
 			$nodeParamList = $domDoc->find('parameters/parameter', $blockElm);
-			for ($paramIdx=0; $paramIdx < $nodeParamList->length; $paramIdx++)
+			for ($paramIdx = 0; $paramIdx < $nodeParamList->length; $paramIdx++)
 			{
 				$paramElm = $nodeParamList->item($paramIdx);
-				$paramName = $paramElm->getAttribute('name');				
+				$paramName = $paramElm->getAttribute('name');
 				if (in_array(strtolower($paramName), $reservedParameterNames))
 				{
-					throw new BlockException("'$paramName' is a reserved block parameter name (block ".$blockType.")");  
+					throw new BlockException("'$paramName' is a reserved block parameter name (block " . $blockType . ")");
 				}
 	
 				if (!isset($blockInfoArray[$blockId]['parameters'][$paramName]))
@@ -401,13 +392,16 @@ class block_BlockService extends BaseService
 				{
 					$blockInfoArray[$blockId]['parameters'][$paramName]['default-value'] = $blockInfoArray[$blockId]['__' . $paramName];
 					unset($blockInfoArray[$blockId]['__' . $paramName]);
-				}	
+				}
 				$attributes = $paramElm->attributes;
 				$length = $attributes->length;
 				for ($j = 0; $j < $length; ++$j)
 				{
 					$attName = $attributes->item($j)->name;
-					if ($attName === 'list-id') {$attName = 'from-list';}
+					if ($attName === 'list-id')
+					{
+						$attName = 'from-list';
+					}
 					
 					$attVal = $paramElm->getAttribute($attName);
 					if ($attVal === 'false')
@@ -431,24 +425,23 @@ class block_BlockService extends BaseService
 				$blockInfoArray[$blockId]['metas'][$metaName] = $metaVal;
 				if (!isset($blockInfoArray[$blockId]['parameters']['enablemetas']))
 				{
-					$blockInfoArray[$blockId]['parameters']['enablemetas'] = array(
-					    'name' => 'enablemetas',
-						'type' => 'Boolean',
-						'label' => '&modules.website.bo.blocks.Enablemetas;',
-					    'helptext' => '&modules.website.bo.blocks.Enablemetas-help;',
-					    'default-value' => true
-					);
+					$blockInfoArray[$blockId]['parameters']['enablemetas'] = array('name' => 'enablemetas', 'type' => 'Boolean', 
+						'label' => '&modules.website.bo.blocks.Enablemetas;', 
+						'helptext' => '&modules.website.bo.blocks.Enablemetas-help;', 'default-value' => true);
 				}
 			}
 		}
 	}
-
+	
 	private function computeInjection(&$blocLists)
 	{
 		$injections = array();
 		foreach ($blocLists as $blockType => $blockInfos)
 		{
-			if (!isset($blockInfos['inject'])) {continue;}
+			if (!isset($blockInfos['inject']))
+			{
+				continue;
+			}
 			$injectedType = $blockInfos['inject'];
 			$injections[] = $blockType;
 			if (!isset($blocLists[$injectedType]))
@@ -457,7 +450,7 @@ class block_BlockService extends BaseService
 			}
 			$blocLists[$injectedType] = $this->mergeBloc($blocLists[$injectedType], $blockInfos);
 		}
-		foreach ($injections as $injection) 
+		foreach ($injections as $injection)
 		{
 			unset($blocLists[$injection]);
 		}
@@ -469,27 +462,27 @@ class block_BlockService extends BaseService
 	 */
 	private function mergeBloc($original, $override)
 	{
-		foreach ($override as $key => $value) 
+		foreach ($override as $key => $value)
 		{
-			switch ($key) 
+			switch ($key)
 			{
-				case 'type': 
+				case 'type' :
 					$original['injectedBy'] = $value;
 					break;
-				case 'phpBlockClass': 
+				case 'phpBlockClass' :
 					break;
-				case 'inject': 
+				case 'inject' :
 					if (isset($original['phpBlockClass']))
 					{
 						throw new Exception($original["type"] . " Already inject : " . $original['phpBlockClass']);
 					}
 					$original['phpBlockClass'] = $this->buildDefaultPhpBlockClass($override['type']);
 					break;
-				case 'metas':
+				case 'metas' :
 					$original['metas'] = array_merge($original['metas'], $value);
 					break;
-				case 'parameters':
-					foreach ($value as $pname => $pinfo) 
+				case 'parameters' :
+					foreach ($value as $pname => $pinfo)
 					{
 						if (isset($original['parameters'][$pname]))
 						{
@@ -501,8 +494,8 @@ class block_BlockService extends BaseService
 						}
 					}
 					break;
-				default: 
-					$original[$key] = $value; 
+				default :
+					$original[$key] = $value;
 					break;
 			}
 		}
@@ -511,8 +504,8 @@ class block_BlockService extends BaseService
 	
 	private function buildDefaultPhpBlockClass($blockType)
 	{
-		list( ,$moduleName, $name) = explode('_', $blockType);
-		return $moduleName.'_Block'.ucfirst($name).'Action';
+		list (, $moduleName, $name) = explode('_', $blockType);
+		return $moduleName . '_Block' . ucfirst($name) . 'Action';
 	}
 	
 	private function computeAttribute(&$blocLists)
@@ -520,9 +513,12 @@ class block_BlockService extends BaseService
 		foreach ($blocLists as $blockType => $blockInfos)
 		{
 			$blockTypeParts = explode('_', $blockType);
-			if (count($blockTypeParts) != 3) {continue;}
+			if (count($blockTypeParts) != 3)
+			{
+				continue;
+			}
 			
-			list( ,$defaultModuleName, $name) = $blockTypeParts;
+			list (, $defaultModuleName, $name) = $blockTypeParts;
 			if (!isset($blockInfos['phpBlockClass']))
 			{
 				$blocLists[$blockType]['phpBlockClass'] = $this->buildDefaultPhpBlockClass($blockType);
@@ -538,7 +534,7 @@ class block_BlockService extends BaseService
 			if (!isset($blockInfos['dropModels']))
 			{
 				$needle = 'modules_' . $defaultModuleName . '/' . $name;
-				$modelNames =ModuleService::getInstance()->getDefinedDocumentModelNames($defaultModuleName);
+				$modelNames = ModuleService::getInstance()->getDefinedDocumentModelNames($defaultModuleName);
 				if (in_array($needle, $modelNames))
 				{
 					$blocLists[$blockType]['dropModels'] = $needle;
@@ -562,8 +558,7 @@ class block_BlockService extends BaseService
 				$array[strtolower($blockType)] = $blockInfos['phpBlockClass'];
 			}
 		}
-		$php = '<?php //Auto Generated at ' . date_Calendar::getInstance()->toString() . "\n" .
-			'	$this->blockActionClassByType = ' . var_export($array, true) . ';';
+		$php = '<?php //Auto Generated at ' . date_Calendar::getInstance()->toString() . "\n" . '	$this->blockActionClassByType = ' . var_export($array, true) . ';';
 		f_util_FileUtils::writeAndCreateContainer($filePath, $php, f_util_FileUtils::OVERRIDE);
 	}
 	
@@ -576,11 +571,14 @@ class block_BlockService extends BaseService
 		$filePath = f_util_FileUtils::buildChangeBuildPath('BlockEditorInfos.inc');
 		foreach ($blocLists as $blockType => $blockInfos)
 		{
-			if (!isset($blockInfos['phpBlockClass'])) {continue;}
+			if (!isset($blockInfos['phpBlockClass']))
+			{
+				continue;
+			}
 			$dropModels = DocumentHelper::expandModelList($blockInfos['dropModels']);
 			if (count($dropModels))
 			{
-				foreach ($dropModels as $dropModel) 
+				foreach ($dropModels as $dropModel)
 				{
 					$dropModelsBlocType[$dropModel][] = $blockType;
 				}
@@ -592,7 +590,7 @@ class block_BlockService extends BaseService
 			
 			if (count($blockInfos['parameters']))
 			{
-				foreach ($blockInfos['parameters'] as $params) 
+				foreach ($blockInfos['parameters'] as $params)
 				{
 					if (!isset($params['hidden']) || !$params['hidden'])
 					{
@@ -602,10 +600,7 @@ class block_BlockService extends BaseService
 				}
 			}
 		}
-		$php = '<?php //Auto Generated at ' . date_Calendar::getInstance()->toString() . "\n" .
-			'	$this->editorGridBlocType = ' . var_export($propertyGridBlocType, true) . ";\n" .
-			'	$this->editorDropModelBlocType = ' . var_export($dropModelsBlocType, true) . ";\n" .
-			'	$this->editorInsertBlocType = ' . var_export($insertBlocType, true) . ";";
+		$php = '<?php //Auto Generated at ' . date_Calendar::getInstance()->toString() . "\n" . '	$this->editorGridBlocType = ' . var_export($propertyGridBlocType, true) . ";\n" . '	$this->editorDropModelBlocType = ' . var_export($dropModelsBlocType, true) . ";\n" . '	$this->editorInsertBlocType = ' . var_export($insertBlocType, true) . ";";
 		
 		f_util_FileUtils::writeAndCreateContainer($filePath, $php, f_util_FileUtils::OVERRIDE);
 	}
@@ -614,12 +609,15 @@ class block_BlockService extends BaseService
 	{
 		$templateDir = f_util_FileUtils::buildWebeditPath("modules", "website", "templates", "builder", "blocks");
 		$blocWrapper = new block_blockInfoBuilder($this);
-		$author = 'Auto Generated at '. date_Calendar::getInstance()->toString();
-		foreach ($blocLists as $blockType => $blockInfos) 
+		$author = 'Auto Generated at ' . date_Calendar::getInstance()->toString();
+		foreach ($blocLists as $blockType => $blockInfos)
 		{
-			if (!isset($blockInfos['phpBlockClass'])) {continue;}
-			list(,$moduleName,$name) = explode('_', $blockType);
-			$configClassName = $moduleName.'_Block'.ucfirst($name).'Configuration';
+			if (!isset($blockInfos['phpBlockClass']))
+			{
+				continue;
+			}
+			list (, $moduleName, $name) = explode('_', $blockType);
+			$configClassName = $moduleName . '_Block' . ucfirst($name) . 'Configuration';
 			$destFilePath = f_util_FileUtils::buildChangeBuildPath('modules', $moduleName, 'blocks', $configClassName . '.class.php');
 			f_util_FileUtils::mkdir(dirname($destFilePath));
 			$generator = new builder_Generator();
@@ -637,7 +635,7 @@ class block_BlockService extends BaseService
 				$value = trim($value);
 				if (!in_array($value, $allowedKeyCacheName))
 				{
-					throw new Exception("Unknown cache-key attribute value ".$value);
+					throw new Exception("Unknown cache-key attribute value " . $value);
 				}
 			}
 			$generator->assign('configuredCacheKeys', var_export($configuredCacheKeys, true));
@@ -670,12 +668,15 @@ class block_BlockService extends BaseService
 	{
 		$templateDir = f_util_FileUtils::buildWebeditPath("modules", "website", "templates", "builder", "blocks");
 		$blocWrapper = new block_blockInfoBuilder($this);
-		$author = 'Auto Generated at '. date_Calendar::getInstance()->toString();
-		foreach ($blocLists as $blockType => $blockInfos) 
+		$author = 'Auto Generated at ' . date_Calendar::getInstance()->toString();
+		foreach ($blocLists as $blockType => $blockInfos)
 		{
-			if (!isset($blockInfos['phpBlockClass'])) {continue;}	
-			list(,$moduleName,$name) = explode('_', $blockType);
-			$infoClassName = $moduleName.'_Block'.ucfirst($name).'Info';
+			if (!isset($blockInfos['phpBlockClass']))
+			{
+				continue;
+			}
+			list (, $moduleName, $name) = explode('_', $blockType);
+			$infoClassName = $moduleName . '_Block' . ucfirst($name) . 'Info';
 			$destFilePath = f_util_FileUtils::buildChangeBuildPath('modules', $moduleName, 'blocks', $infoClassName . '.class.php');
 			f_util_FileUtils::mkdir(dirname($destFilePath));
 		
@@ -693,6 +694,7 @@ class block_BlockService extends BaseService
 		
 	//DEPRECATED
 		
+
 	/**
 	 * @deprecated
 	 */
@@ -700,7 +702,7 @@ class block_BlockService extends BaseService
 	{
 		return $this->getBlockAttribute($blockName, 'label');
 	}
-
+	
 	/**
 	 * @deprecated
 	 */
@@ -731,7 +733,7 @@ class block_blockInfoBuilder
 	
 	public function __construct($bs)
 	{
-		$this->bs = $bs;	
+		$this->bs = $bs;
 	}
 	
 	/**
@@ -748,7 +750,7 @@ class block_blockInfoBuilder
 	{
 		return $this->blockInfos['requestModule'];
 	}
-
+	
 	public function getTemplateModule()
 	{
 		return $this->blockInfos['templateModule'];
@@ -772,13 +774,13 @@ class block_blockInfoBuilder
 	public function getBeforeAll()
 	{
 		return isset($this->blockInfos['beforeAll']) ? $this->blockInfos['beforeAll'] : false;
-	}	
-
+	}
+	
 	public function getAfterAll()
 	{
 		return isset($this->blockInfos['afterAll']) ? $this->blockInfos['afterAll'] : false;
 	}
-
+	
 	public function getBlockActionClassName()
 	{
 		return $this->blockInfos['phpBlockClass'];
@@ -787,7 +789,7 @@ class block_blockInfoBuilder
 	public function getVarExportInfo()
 	{
 		$array = array();
-		foreach ($this->blockInfos as $name => $value) 
+		foreach ($this->blockInfos as $name => $value)
 		{
 			if ($name !== 'parameters' && $name !== 'metas')
 			{
@@ -801,7 +803,7 @@ class block_blockInfoBuilder
 	public function getParametersInfoArray()
 	{
 		$array = array();
-		foreach ($this->blockInfos['parameters'] as $propertyInfoArray) 
+		foreach ($this->blockInfos['parameters'] as $propertyInfoArray)
 		{
 			$array[] = new block_blockInfoParameterBuilder($propertyInfoArray);
 		}
@@ -811,17 +813,17 @@ class block_blockInfoBuilder
 	public function getAttributes()
 	{
 		$array = array();
-		foreach ($this->blockInfos['parameters'] as $name => $propertyInfoArray) 
+		foreach ($this->blockInfos['parameters'] as $name => $propertyInfoArray)
 		{
 			if (isset($propertyInfoArray['default-value']))
 			{
 				if (is_bool($propertyInfoArray['default-value']))
 				{
-					$array['__'.$name] = $propertyInfoArray['default-value'] ? 'true' : 'false';
+					$array['__' . $name] = $propertyInfoArray['default-value'] ? 'true' : 'false';
 				}
 				else
 				{
-					$array['__'.$name] = $propertyInfoArray['default-value'];
+					$array['__' . $name] = $propertyInfoArray['default-value'];
 				}
 			}
 		}
@@ -838,18 +840,24 @@ class block_blockInfoBuilder
 		$array = array();
 		foreach ($this->blockInfos['metas'] as $name => $allow)
 		{
-			if ($allow === true || strpos($allow, 'title') !== false) {$array[] = $name;}
-		} 
+			if ($allow === true || strpos($allow, 'title') !== false)
+			{
+				$array[] = $name;
+			}
+		}
 		return serialize($array);
-	}	
-
+	}
+	
 	public function getSerializedDescriptionMetas()
 	{
 		$array = array();
 		foreach ($this->blockInfos['metas'] as $name => $allow)
 		{
-			if ($allow === true || strpos($allow, 'description') !== false) {$array[] = $name;}
-		} 
+			if ($allow === true || strpos($allow, 'description') !== false)
+			{
+				$array[] = $name;
+			}
+		}
 		return serialize($array);
 	}
 	
@@ -858,8 +866,11 @@ class block_blockInfoBuilder
 		$array = array();
 		foreach ($this->blockInfos['metas'] as $name => $allow)
 		{
-			if ($allow === true || strpos($allow, 'keywords') !== false) {$array[] = $name;}
-		} 
+			if ($allow === true || strpos($allow, 'keywords') !== false)
+			{
+				$array[] = $name;
+			}
+		}
 		return serialize($array);
 	}
 }
@@ -871,7 +882,10 @@ class block_blockInfoParameterBuilder
 	public function __construct($propertyInfoArray)
 	{
 		$this->propertyInfoArray = $propertyInfoArray;
-		if (!isset($this->propertyInfoArray['type'])) {$this->propertyInfoArray['type'] = 'String';}
+		if (!isset($this->propertyInfoArray['type']))
+		{
+			$this->propertyInfoArray['type'] = 'String';
+	}
 	}
 	
 	public function getName()
@@ -886,7 +900,7 @@ class block_blockInfoParameterBuilder
 	
 	public function getPhpGetter()
 	{
-		return 'get' .ucfirst($this->getName());
+		return 'get' . ucfirst($this->getName());
 	}
 	
 	public function hasDefaultValue()

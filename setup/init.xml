@@ -1,66 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <script>
 	<binding fileName="modules/website/persistentdocument/import/website_binding.xml" />
-	
+
 	<binding fileName="modules/list/persistentdocument/import/list_binding.xml" />
 	<binding fileName="modules/notification/persistentdocument/import/notification_binding.xml" />
 	<binding fileName="modules/workflow/persistentdocument/import/workflow_binding.xml" />
-	
+
 	<rootfolder module="preferences">
 		<websitepreferences />
 	</rootfolder>
-	
+
 	<systemfolder module="list" relatedmodule="website">
-		<dynamiclist listid="modules_website/templates"
-			label="Liste des templates" description="Liste des templates">
+		<dynamiclist listid="modules_website/templates" label="Liste des templates" description="Liste des templates">
 		</dynamiclist>
-		
-		<dynamiclist listid="modules_website/stylesheets"
-			label="Liste des feuilles de styles" description="Liste des feuilles de styles">
+
+		<dynamiclist listid="modules_website/stylesheets" label="Liste des feuilles de styles" description="Liste des feuilles de styles">
 		</dynamiclist>
-		
-		<dynamiclist listid="modules_website/availablelangsforwebsite"
-			label="Liste des langues du site" description="Liste des langues du site">
+
+		<dynamiclist listid="modules_website/availablelangsforwebsite" label="Liste des langues du site"
+			description="Liste des langues du site">
 		</dynamiclist>
-		
-		<staticlist listid="modules_website/robotsmeta"
-			label="Gestion des robots" description="Gestion du comportements des robots d'indexation">
-				<staticitem label="&amp;modules.website.document.page.robotsmeta.index-follow;" value="index,follow"/>
-				<staticitem label="&amp;modules.website.document.page.robotsmeta.noindex-follow;" value="noindex,follow"/>
-				<staticitem label="&amp;modules.website.document.page.robotsmeta.index-nofollow;" value="index,nofollow"/>
-				<staticitem label="&amp;modules.website.document.page.robotsmeta.noindex-nofollow;" value="noindex,nofollow"/>
-		</staticlist>
-								
-		<staticlist listid="modules_website/navigationvisibility"
-			label="Visibilité des pages dans la navigation" description="Visibilité des pages dans la navigation">
-				<staticitem label="&amp;modules.website.bo.general.visibility.Visible;" value="1"/>
-				<staticitem label="&amp;modules.website.bo.general.visibility.Hidden-in-menu-only;" value="2"/>
-				<staticitem label="&amp;modules.website.bo.general.visibility.Hidden-in-sitemap-only;" value="4"/>
-				<staticitem label="&amp;modules.website.bo.general.visibility.Hidden;" value="0"/>
+
+		<staticlist listid="modules_website/robotsmeta" label="Gestion des robots"
+			description="Gestion du comportements des robots d'indexation">
+			<staticitem label="m.website.document.page.robotsmeta.index-follow" value="index,follow" />
+			<staticitem label="m.website.document.page.robotsmeta.noindex-follow" value="noindex,follow" />
+			<staticitem label="m.website.document.page.robotsmeta.index-nofollow" value="index,nofollow" />
+			<staticitem label="m.website.document.page.robotsmeta.noindex-nofollow" value="noindex,nofollow" />
 		</staticlist>
 
-		<staticlist listid="modules_website/menuitemfunctionlist"
-			label="Items de menu fonctionnels" description="Items de menu fonctionnels">
-				<staticitem label="&amp;modules.website.bo.general.menuitemfunction.Print;" value="function:print"/>
-				<staticitem label="&amp;modules.website.bo.general.menuitemfunction.Add-to-favorites;" value="function:addToFavorite"/>
-				<staticitem label="&amp;modules.website.bo.general.menuitemfunction.View-as-pdf;" value="function:viewAsPDF"/>
-				<staticitem label="&amp;modules.website.bo.general.menuitemfunction.Top-of-page;" value="#top"/>
-				<staticitem label="&amp;modules.website.bo.general.menuitemfunction.To-content;" value="#content"/>
-				<staticitem label="&amp;modules.website.bo.general.menuitemfunction.To-main-menu;" value="#mainMenu"/>
-				<staticitem label="&amp;modules.website.bo.general.menuitemfunction.To-secondary-menu;" value="#secondaryMenu"/>
-				<staticitem label="&amp;modules.website.bo.general.menuitemfunction.To-search;" value="#search"/>
+		<staticlist listid="modules_website/navigationvisibility" label="Visibilité des pages dans la navigation"
+			description="Visibilité des pages dans la navigation">
+			<staticitem label="m.website.bo.general.visibility.visible" value="1" />
+			<staticitem label="m.website.bo.general.visibility.hidden-in-menu-only" value="2" />
+			<staticitem label="m.website.bo.general.visibility.hidden-in-sitemap-only" value="4" />
+			<staticitem label="m.website.bo.general.visibility.hidden" value="0" />
 		</staticlist>
-		
-		<staticlist listid="modules_website/protocol"
-			label="Protocol des sites web" description="Protocol des sites web">
-				<staticitem label="&amp;modules.website.bo.general.protocol.Http;" value="http"/>
-				<staticitem label="&amp;modules.website.bo.general.protocol.Https;" value="https"/>
-		</staticlist>	
-		
-		<staticlist listid="modules_website/defaultstructure"
-			label="Structure par défaut">
-				<staticitem label="&amp;modules.website.bo.general.structure.Default;" value="defaultsite.xml"/>
-				<staticitem label="&amp;modules.website.bo.general.structure.Sample;" value="sample.xml"/>
+
+		<staticlist listid="modules_website/menuitemfunctionlist" label="Items de menu fonctionnels"
+			description="Items de menu fonctionnels">
+			<staticitem label="m.website.bo.general.menuitemfunction.print" value="function:print" />
+			<staticitem label="m.website.bo.general.menuitemfunction.add-to-favorites" value="function:addToFavorite" />
+			<staticitem label="m.website.bo.general.menuitemfunction.view-as-pdf" value="function:viewAsPDF" />
+			<staticitem label="m.website.bo.general.menuitemfunction.top-of-page" value="#top" />
+			<staticitem label="m.website.bo.general.menuitemfunction.to-content" value="#content" />
+			<staticitem label="m.website.bo.general.menuitemfunction.to-main-menu" value="#mainMenu" />
+			<staticitem label="m.website.bo.general.menuitemfunction.to-secondary-menu" value="#secondaryMenu" />
+			<staticitem label="m.website.bo.general.menuitemfunction.to-search" value="#search" />
+		</staticlist>
+
+		<staticlist listid="modules_website/protocol" label="Protocol des sites web" description="Protocol des sites web">
+			<staticitem label="m.website.bo.general.protocol.http" value="http" />
+			<staticitem label="m.website.bo.general.protocol.https" value="https" />
+		</staticlist>
+
+		<staticlist listid="modules_website/defaultstructure" label="Structure par défaut">
+			<staticitem label="m.website.bo.general.structure.default" value="defaultsite.xml" />
+			<staticitem label="m.website.bo.general.structure.sample" value="sample.xml" />
 		</staticlist>
 
 		<staticlist listid="modules_website/linkspositions" label="m.website.list.linkspositions-label"
@@ -70,8 +66,11 @@
 			<staticitem label="m.website.list.linkspositions-bottom" value="bottom" />
 			<staticitem label="m.website.list.linkspositions-none" value="none" />
 		</staticlist>
-		
+
 		<dynamiclist listid="modules_website/blocktemplates" label="m.website.list.blocktemplates-label"
 			description="m.website.list.blocktemplates-description" />
+
+		<dynamiclist listid="modules_website/menutags" label="m.website.list.menutags-label"
+			description="m.website.list.menutags-description" />
 	</systemfolder>
 </script>

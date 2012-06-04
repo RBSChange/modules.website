@@ -146,4 +146,54 @@ class website_PageexternalService extends f_persistentdocument_DocumentService
 	{
 		return $document;
 	}
+	
+	/**
+	 * @param website_persistentdocument_pageexternal $document
+	 * @return string|null
+	 */
+	public function getNavigationLabel($document)
+	{
+		return $document->getNavigationtitle();
+	}
+	
+	/**
+	 * @param website_persistentdocument_pageexternal $document
+	 * @return website_MenuEntry|null
+	 */
+	public function getMenuEntry($document)
+	{
+		$visibility = $document->getNavigationVisibility();
+		if ($visibility == website_ModuleService::VISIBILITY_HIDDEN || $visibility == website_ModuleService::VISIBILITY_HIDDEN_IN_MENU_ONLY)
+		{
+			return null;
+		}
+		return $this->doGetMenuEntry($document);
+	}
+	
+	/**
+	 * @param website_persistentdocument_pageexternal $document
+	 * @return website_MenuEntry|null
+	 */
+	public function getSitemapEntry($document)
+	{
+		$visibility = $document->getNavigationVisibility();
+		if ($visibility == website_ModuleService::VISIBILITY_HIDDEN || $visibility == website_ModuleService::VISIBILITY_HIDDEN_IN_SITEMAP_ONLY)
+		{
+			return null;
+		}
+		return $this->doGetMenuEntry($document);
+	}
+	
+	/**
+	 * @param website_persistentdocument_pageexternal $document
+	 * @return website_MenuEntry|null
+	 */
+	protected function doGetMenuEntry($document)
+	{
+		$entry = website_MenuEntry::getNewInstance();
+		$entry->setDocument($document);
+		$entry->setLabel($document->getNavigationLabel());
+		$entry->setUrl(LinkHelper::getDocumentUrl($document));
+		return $entry;
+	}
 }

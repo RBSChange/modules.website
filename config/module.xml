@@ -7,13 +7,15 @@
 	</module>
 	<project>
 		<sample>
-			<entry name="defaultPageTemplate">webfactory/tplTwo</entry>
-			<entry name="defaultHomeTemplate">webfactory/tplOne</entry>
+			<entry name="defaultPageTemplate">default/sidebarpage</entry>
+			<entry name="defaultNosidebarTemplate">default/nosidebarpage</entry>
+			<entry name="defaultHomeTemplate">default/nosidebarpage</entry>
+			<entry name="defaultPopinTemplate">default/popin</entry>
 		</sample>
 		<entry name="jquery-ui-theme">south-street</entry>
 		<entry name="highlighter">website_MinimalHighlighter</entry>
-		<entry name="forms-use-qtip-help">true</entry>
-		<entry name="forms-use-qtip-error">true</entry>
+		<entry name="forms-use-qtip-help">false</entry>
+		<entry name="forms-use-qtip-error">false</entry>
 		<entry name="shortenerClassName">Zend_Service_ShortUrl_TinyUrlCom</entry>
 	</project>
 </config>

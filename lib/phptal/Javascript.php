@@ -36,7 +36,7 @@ class PHPTAL_Php_Attribute_CHANGE_Javascript extends PHPTAL_Php_Attribute
 					break;
             	case 'head':
             		$src = $codewriter->evaluateExpression($value);
-            		$code = '$wp = $ctx->__get("website_page");if ($wp !== null) {$wp->addScript('.$src.');} else {website_JsService::getInstance()->registerScript('.$src.');};';
+            		$code = '$wp = $ctx->website_page;if ($wp !== null) {$wp->addScript('.$src.');} else {website_JsService::getInstance()->registerScript('.$src.');};';
 					$codewriter->pushCode($code);
 					break;
             	default:

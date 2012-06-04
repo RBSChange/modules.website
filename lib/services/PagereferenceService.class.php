@@ -9,7 +9,7 @@ class website_PagereferenceService extends website_PageService
 	 * @var website_PagereferenceService
 	 */
 	private static $instance;
-
+	
 	/**
 	 * @return website_PagereferenceService
 	 */
@@ -21,7 +21,7 @@ class website_PagereferenceService extends website_PageService
 		}
 		return self::$instance;
 	}
-
+	
 	/**
 	 * @return website_persistentdocument_pagereference
 	 */
@@ -29,7 +29,7 @@ class website_PagereferenceService extends website_PageService
 	{
 		return $this->getNewDocumentInstanceByModelName('modules_website/pagereference');
 	}
-
+	
 	/**
 	 * Create a query based on 'modules_website/pagereference' model
 	 * @return f_persistentdocument_criteria_Query
@@ -38,7 +38,7 @@ class website_PagereferenceService extends website_PageService
 	{
 		return $this->pp->createQuery('modules_website/pagereference');
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_pagereference $pageReference
 	 * @param website_persistentdocument_page $page
@@ -46,85 +46,75 @@ class website_PagereferenceService extends website_PageService
 	 */
 	public function updatePageReference($pageReference, $page, $topicId)
 	{
-		$requestContext = RequestContext::getInstance();
-		$vo = $page->getLang();
-
-		$pageReference->setReferenceofid($page->getId());
+		$exludedNames = array('id', 'model', 'lang', 'documentversion', 'referenceofid', 'metastring', 'isIndexPage', 
+			'isHomePage');
+		$propsNames = array();
+		$i18nPropsNames = array();
+		foreach ($page->getPersistentModel()->getPropertiesInfos() as $propertyInfos)
+		{
+			/* @var $propertyInfos propertyInfo */
+			$name = $propertyInfos->getName();
+			if (in_array($name, $exludedNames))
+			{
+				continue;
+			}
+			$propsNames[] = $name;
+			if ($propertyInfos->isLocalized())
+			{
+				$i18nPropsNames[] = $name;
+			}
+			;
+		}
+		
 		try
 		{
-			$this->tm->beginTransaction();
+			$this->getTransactionManager()->beginTransaction();
 			
-			$isIndexPage = $pageReference->getIsIndexPage();
-			$isHomePage = $pageReference->getIsHomePage();
+			$rc = RequestContext::getInstance();
+			$useI18nSynchro = $rc->hasI18nSynchro();
+			if ($useI18nSynchro)
+			{
+				$data = LocaleService::getInstance()->getI18nSynchroForDocument($page);
+				$i18nSynchroStates = $data['states'];
+			}
 			
-			//Update VO
-			try
+			$vo = $page->getLang();
+			
+			foreach ($page->getI18nInfo()->getLangs() as $lang)
 			{
-				$requestContext->beginI18nWork($vo);
-				if ($pageReference->hasMeta('f_tags'))
-				{
-					$existingTags = $pageReference->getMeta('f_tags');
-				}
-				else 
-				{
-					$existingTags = null;
-				}
-				$page->copyPropertiesTo($pageReference, true);
-				
-				// TODO: use TagService::clearTagsMeta()
-				$pageReference->setMeta("f_tags", $existingTags);
-				$requestContext->endI18nWork();
-			}
-			catch (Exception $e)
-			{
-				$requestContext->endI18nWork($e);
-			}
-
-			//Update localized
-			foreach ($requestContext->getSupportedLanguages() as $lang)
-			{
-				if ($lang == $vo)
-				{
-					continue;
-				}
-
 				try
 				{
-					$requestContext->beginI18nWork($lang);
-					if ($page->isContextLangAvailable())
+					$rc->beginI18nWork($lang);
+					if ($useI18nSynchro && (!isset($i18nSynchroStates[$lang]) || $i18nSynchroStates[$lang]['status'] == LocaleService::SYNCHRO_SYNCHRONIZED))
 					{
-						$page->copyPropertiesTo($pageReference, false);
+						continue;
 					}
-					$requestContext->endI18nWork();
+					
+					if ($vo === $lang)
+					{
+						$pageReference->setReferenceofid($page->getId());
+						$page->copyPropertiesListTo($pageReference, $propsNames, true);
+					}
+					else
+					{
+						$page->copyPropertiesListTo($pageReference, $i18nPropsNames, false);
+					}
+					
+					$this->save($pageReference, $topicId);
+					$rc->endI18nWork();
 				}
 				catch (Exception $e)
 				{
-					$requestContext->endI18nWork($e);
+					$rc->endI18nWork($e);
 				}
 			}
-
-			$pageReference->setIsIndexPage($isIndexPage);
-			$pageReference->setIsHomePage($isHomePage);
-				
-			try 
-			{
-				$requestContext->beginI18nWork($vo);
-				$this->save($pageReference, $topicId);
-				$requestContext->endI18nWork();
-			}
-			catch (Exception $e)
-			{
-				$requestContext->endI18nWork($e);
-			}
 			
-			//Update tag
 			$this->updateTags($pageReference, $page);
-			$this->tm->commit();
-
+			$this->getTransactionManager()->commit();
 		}
 		catch (Exception $e)
 		{
-			$this->tm->rollBack($e);
+			$this->getTransactionManager()->rollBack($e);
 		}
 	}
 	
@@ -135,7 +125,7 @@ class website_PagereferenceService extends website_PageService
 	{
 		return;
 	}
-
+	
 	/**
 	 * Synchronisation des tags de $pageReference en fonction des tags de $page
 	 * @param website_persistentdocument_pagereference $pageReference
@@ -144,13 +134,11 @@ class website_PagereferenceService extends website_PageService
 	private function updateTags($pageReference, $page)
 	{
 		$tagService = TagService::getInstance();
-
+		
 		$pageTags = $tagService->getTags($page);
 		$refTags = $tagService->getTags($pageReference);
-		
-		//Framework::debug(__METHOD__." ".$pageReference->getId()." ".$page->getId()." ".var_export($refTags, true)." ".var_export($pageTags, true)." ".ProcessUtils::getBackTrace());
 
-		//Ajout des tags manquants
+		// Add missing tags.
 		foreach ($pageTags as $tag)
 		{
 			if ($tagService->isFunctionalTag($tag) && array_search($tag, $refTags) === false)
@@ -158,17 +146,17 @@ class website_PagereferenceService extends website_PageService
 				$tagService->addTag($pageReference, $tag);
 			}
 		}
-
+		
 		foreach ($refTags as $tag)
 		{
 			if (array_search($tag, $pageTags) === false)
 			{
-				//Ne pas envoyer les evenements on passe par le provider
+				// Ne pas envoyer les evenements on passe par le provider.
 				$tagService->removeTag($pageReference, $tag);
 			}
 		}
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_pagereference $document
 	 * @param String $tag
@@ -178,7 +166,7 @@ class website_PagereferenceService extends website_PageService
 	{
 		return;
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_pagereference $document
 	 * @param String $tag
@@ -188,7 +176,7 @@ class website_PagereferenceService extends website_PageService
 	{
 		return;
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_pagereference $fromDocument
 	 * @param website_persistentdocument_pagereference $toDocument
@@ -199,7 +187,7 @@ class website_PagereferenceService extends website_PageService
 	{
 		return;
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_pagereference $newDocument
 	 * @param website_persistentdocument_pagereference $originalDocument
@@ -222,25 +210,24 @@ class website_PagereferenceService extends website_PageService
 	/**
 	 * @param website_persistentdocument_page $page
 	 * @return array<website_persistentdocument_pagereference>
-	 */	
+	 */
 	public function getPagesReferenceByPage($page)
 	{
-		$query = $this->createQuery()->add(Restrictions::eq('referenceofid', $page->getId()));				
+		$query = $this->createQuery()->add(Restrictions::eq('referenceofid', $page->getId()));
 		return $query->find();
 	}
 	
 	/**
 	 * @param website_persistentdocument_page $page
 	 * @return integer
-	 */	
+	 */
 	public function getCountPagesReferenceByPage($page)
 	{
 		$results = $this->createQuery()->add(Restrictions::eq('referenceofid', $page->getId()))
-			->setProjection(Projections::rowCount('count'))
-			->findColumn('count');
+			->setProjection(Projections::rowCount('count'))->findColumn('count');
 		return (count($results) == 1) ? $results[0] : 0;
 	}
-		
+	
 	/**
 	 * @param website_persistentdocument_pagereference $document
 	 * @param String $oldPublicationStatus
@@ -254,11 +241,12 @@ class website_PagereferenceService extends website_PageService
 		{
 			if ($parentDocument->isPublished() != $document->isPublished())
 			{
-				website_TopicService::getInstance()->publishDocumentIfPossible($parentDocument, array('childrenPublicationStatusChanged' => $document));
+				website_TopicService::getInstance()->publishDocumentIfPossible($parentDocument, array(
+					'childrenPublicationStatusChanged' => $document));
 			}
 		}
 	}
-		
+	
 	/**
 	 * @param website_persistentdocument_pagereference $document
 	 * @param array<string, string> $attributes

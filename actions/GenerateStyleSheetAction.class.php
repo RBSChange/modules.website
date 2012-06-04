@@ -25,6 +25,13 @@ class website_GenerateStyleSheetAction extends change_Action
 		{
 			change_Controller::setNoCache();
 		}
+		else
+		{
+			header('Pragma:');
+			header('Expires:');
+			header('Cache-Control:');
+		}
+		
 		if (Framework::isInfoEnabled())
 		{
 			Framework::info(__METHOD__ . ' ' . $request->getParameter("param"));
@@ -58,7 +65,7 @@ class website_GenerateStyleSheetAction extends change_Action
 			$version = $parameters[4];
 			if ($nbParameters == 7)
 			{
-				$template = DocumentHelper::getDocumentInstance($parameters[5], "modules_theme/pagetemplate");
+				$template = theme_persistentdocument_pagetemplate::getInstanceById($parameters[5]);
 				$stylesheet = substr($parameters[6], 0 , strrpos($parameters[6], '.'));
 			}
 			else

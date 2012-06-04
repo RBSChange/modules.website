@@ -163,6 +163,14 @@ class website_PageService extends f_persistentdocument_DocumentService
 		return DocumentHelper::getByCorrection($document);
 	}
 	
+	/**
+	 * @param website_persistentdocument_page $document
+	 * @return string|null
+	 */
+	public function getNavigationLabel($document)
+	{
+		return $document->getNavigationtitle();
+	}
 
 	/**
 	 * Public for patch 304. Do not call ; private use.
@@ -250,7 +258,16 @@ class website_PageService extends f_persistentdocument_DocumentService
 
 		// Process new page content
 		$xpath = $this->getXPathInstance($contentDOM);
-		foreach (theme_PagetemplateService::getInstance()->getChangeContentIds($document->getTemplate()) as $id)
+		try 
+		{
+			$ids = theme_PagetemplateService::getInstance()->getChangeContentIds($document->getTemplate());
+		}
+		catch (TemplateNotFoundException $e)
+		{
+			Framework::exception($e);
+			$ids = array();
+		}
+		foreach ($ids as $id)
 		{
 			$blockNodes = $xpath->query('//change:content[@id="' . $id . '"]//change:block');
 			foreach ($blockNodes as $blockNode)
@@ -1310,7 +1327,9 @@ class website_PageService extends f_persistentdocument_DocumentService
 		return $resultXPath;
 	}
 
-
+	/**
+	 * @return task_persistentdocument_usertask[]
+	 */
 	public final function getPendingTasksForCurrentUser()
 	{
 		$pageModel = f_persistentdocument_PersistentDocumentModel::getInstance('website', 'page');
@@ -1318,7 +1337,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			return array();
 		}
-		$query = f_persistentdocument_PersistentProvider::getInstance()->createQuery('modules_task/usertask');
+		$query = task_UsertaskService::getInstance()->createQuery();
 		$query->add(Restrictions::eq('user', users_UserService::getInstance()->getCurrentUser()->getId()));
 		$query->add(Restrictions::published());
 		$query->add(Restrictions::eq('workitem.transition.taskid', $pageModel->getWorkflowStartTask()));
@@ -1327,7 +1346,8 @@ class website_PageService extends f_persistentdocument_DocumentService
 		return $query->find();
 	}
 
-	// Orphan pages related methods
+	// Orphan pages related methods.
+	
 	/**
 	 * @return website_persistentdocument_page[]
 	 */
@@ -1601,7 +1621,8 @@ class website_PageService extends f_persistentdocument_DocumentService
 			}
 			else
 			{
-				if (f_util_StringUtils::isEmpty(f_util_HtmlUtils::htmlToText($html)))
+				// If the block has no text content and contains no image, show the block's name.
+				if (f_util_StringUtils::isEmpty(f_util_HtmlUtils::htmlToText($html)) && strpos($html, '<img') === false)
 				{
 					$html = "<strong>" . $this->getBlockLabelFromBlockType($block['type']) . "</strong>";
 				}
@@ -1648,9 +1669,8 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$pageDocument = $pageContext->getPersistentPage();
 		
 		$breadcrumb = new website_Breadcrumb();
+		$lastAncestorPage = null;
 		
-		if (! $pageDocument->getIsHomePage())
-		{
 			foreach ($pageContext->getAncestorIds() as $ancestorId)
 			{
 				$ancestor = DocumentHelper::getDocumentInstance($ancestorId);
@@ -1661,31 +1681,59 @@ class website_PageService extends f_persistentdocument_DocumentService
 
 				if ($ancestor instanceof website_persistentdocument_website)
 				{
-					$siteUrl = LinkHelper::getDocumentUrl($ancestor);
-					$homeTitle = f_Locale::translate('&modules.website.frontoffice.thread.Homepage-href-name;');
-						
-					$breadcrumb->addElement($homeTitle, $siteUrl);
-					$pageContext->addLink("home", "text/html", $siteUrl, $homeTitle);
+				$lastAncestorPage = $ancestor->getIndexPage();
+				if ($lastAncestorPage)
+				{
+					$navigationtitle = $lastAncestorPage->getNavigationLabel();
+					$href = $lastAncestorPage !== $pageDocument ? LinkHelper::getDocumentUrl($ancestor) : null;
+					$breadcrumb->addElement($navigationtitle, $href);
+					if ($href)
+					{
+						$pageContext->addLink("home", "text/html", $href, $navigationtitle);
 				}
+				}
+			}
 				else if ($ancestor instanceof website_persistentdocument_topic)
 				{
-					if ($ancestor->getNavigationVisibility() == WebsiteConstants::VISIBILITY_VISIBLE || $ancestor->getNavigationVisibility() == WebsiteConstants::VISIBILITY_HIDDEN_IN_SITEMAP_ONLY)
+				if ($ancestor->getNavigationVisibility() != website_ModuleService::HIDDEN)
 					{
-						$breadcrumb->addElement($ancestor->getLabel(), ($ancestor->getIndexPage()) ? LinkHelper::getDocumentUrl($ancestor) : null);
+					$lastAncestorPage = $ancestor->getIndexPage();
+					$navigationtitle = $ancestor->getLabel();	
+					if ($navigationtitle)
+					{
+						$href = ($lastAncestorPage && $lastAncestorPage !== $pageDocument) ? LinkHelper::getDocumentUrl($ancestor) : null;
+						$breadcrumb->addElement($navigationtitle, $href);
 					}
 				}
 			}
 		}
 
-		if ($pageDocument->getNavigationVisibility() == WebsiteConstants::VISIBILITY_VISIBLE || $pageDocument->getNavigationVisibility() == WebsiteConstants::VISIBILITY_HIDDEN_IN_SITEMAP_ONLY)
+		if ($lastAncestorPage !== $pageDocument)
 		{
-			// current page is visible and then the last element of breadcrumb
-			$breadcrumb->addElement($pageContext->getNavigationtitle());
+			if ($pageDocument->getNavigationVisibility() == website_ModuleService::HIDDEN)
+			{
+				$params = HttpController::getInstance()->getContext()->getRequest()->getParameters();
+				
+				if (isset($params['wemod'])
+					&& isset($params[$params['wemod'].'Param'])
+					&& is_array($params[$params['wemod'].'Param'])
+					&& isset($params[$params['wemod'].'Param']['cmpref']))
+				{
+					$detail = DocumentHelper::getDocumentInstanceIfExists(intval($params[$params['wemod'].'Param']['cmpref']));
+					if ($detail)
+					{
+						$navigationtitle = $detail->getDocumentService()->getNavigationLabel($detail);
+						if ($navigationtitle)
+						{
+							$breadcrumb->addElement($navigationtitle);
 		}
-		else if ($pageDocument->getIsIndexPage())
+					}
+				}
+			}
+			else
 		{
-			$lastElem = $breadcrumb->getLastElement();
-			$lastElem->href = null;
+				$breadcrumb->addElement($pageContext->getNavigationtitle());
+		}
 		}
 		
 		return $breadcrumb;
@@ -1713,7 +1761,8 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		else
 		{
-			if (f_util_StringUtils::isEmpty(f_util_HtmlUtils::htmlToText($html)))
+			// If the block has no text content and contains no image, show the block's name.
+			if (f_util_StringUtils::isEmpty(f_util_HtmlUtils::htmlToText($html)) && strpos($html, '<img') === false)
 			{
 				$html = "<strong>" . $this->getBlockLabelFromBlockType($block['type']) . "</strong>";
 			}
@@ -1781,7 +1830,8 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$cachedData = $cacheItem->getValue('blocksAndHtmlBody');
 			$pageRenderInfo = unserialize($cachedData);
 			$blocks = $pageRenderInfo['blocks'];
-			$htmlBody = $pageRenderInfo['htmlBody'];
+			$pageContent = f_util_DOMUtils::fromString($pageRenderInfo['htmlBody']);
+			$pageContent->preserveWhiteSpace = false;
 			$docType = $pageRenderInfo['docType'];
 			
 			$controller = website_BlockController::getInstance();
@@ -1805,7 +1855,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$wsprs->buildBlockContainerForFrontOffice($pageContent, $blocks);
 			$this->addBenchTime('blocksContainerGenerating');
 			$pageContent->preserveWhiteSpace = false;
-			$htmlBody = $pageContent->saveXML($pageContent->documentElement);
 
 			$controller = website_BlockController::getInstance();
 			$controller->setPage($page);
@@ -1817,6 +1866,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$this->addBenchTime('pageContextInitialize');
 			if ($putInCache)
 			{
+				$htmlBody = $pageContent->saveXML($pageContent->documentElement);
 				$cacheItem->setTTL(86400);
 				$cacheItem->setValue("blocksAndHtmlBody", serialize(array("blocks" => $blocks, "htmlBody" => $htmlBody, "docType" => $docType)));
 				$dcs->writeToCache($cacheItem);
@@ -1828,16 +1878,31 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$this->populateHTMLBlocks($controller, $blocks);
 		$this->addBenchTime('blocksGenerating');
 
-		$htmlBody = preg_replace(self::$htmlBodyFrom, self::$htmlBodyTo, $htmlBody);
-
 		$strFrom = array();
 		$strTo = array();
+		
 		foreach ($blocks as $blockId => $block)
 		{
+			$list = $pageContent->getElementsByTagName('htmlblock_'.$blockId);
+			if ($list->length == 1)
+			{
 			$strFrom[] = '<htmlblock_'.$blockId.'/>';
+				$node = $list->item(0);
+				if (f_util_StringUtils::isEmpty($block['html']))
+				{
+					$container = $node->parentNode;
+					$container->setAttribute('class', 'empty-' . $container->getAttribute('class'));
+					$strTo[] = '';
+				}
+				else
+				{
 			$strTo[] = $block['html'];
 		}
+			}
+		}
+		$htmlBody = $pageContent->saveXML($pageContent->documentElement);
 		$htmlBody = str_replace($strFrom, $strTo, $htmlBody);
+		
 		$this->addBenchTime('htmlGenerating');
 		$pageContext->benchTimes = $this->benchTimes;
 		$pageContext->renderHTMLBody($htmlBody, website_PageRessourceService::getInstance()->getGlobalTemplate());
@@ -1864,10 +1929,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		return 	$results;
 	}
-
-	private static $htmlBodyFrom = array('/<a([^>]+)\/>/i', '/\s*<div([^>]+)\/>\s*/i');
-	private static $htmlBodyTo = array('<a$1></a>', '<div$1>&#160;</div>');
-
 
 	/**
 	 * @param website_Page $pageContext
@@ -2008,7 +2069,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		$traceBlockAction = Framework::inDevelopmentMode() && Framework::isDebugEnabled();
 		$bs = block_BlockService::getInstance();
-
+		$nbBlocks = count($blocks);
 		foreach ($blocks as $blockId => &$block)
 		{
 			$blocType = $block['type'];			
@@ -2045,7 +2106,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$classInstance->setConfigurationParameter(website_BlockAction::BLOCK_ID_PARAMETER_NAME, $idPName);
 
 			$block['blockaction'] = $classInstance;
-			$blockPriorities[$blockId] = $classInstance->getOrder();
+			$blockPriorities[$blockId] = ($nbBlocks - $blockId) + ($classInstance->getOrder() * 10);
 		}
 
 		asort($blockPriorities);
@@ -2062,8 +2123,16 @@ class website_PageService extends f_persistentdocument_DocumentService
 
 			// Begin capturing. TODO: make a dedicated method instead of write()
 			$controller->getResponse()->getWriter()->write("");
+			try
+			{
 			$controller->process($blockInstance, $httpRequest);
 			$html .= $controller->getResponse()->getWriter()->getContent();
+			} 
+			catch (TemplateNotFoundException $e) 
+			{
+				Framework::exception($e);
+				$html .= $e->getMessage();
+			}
 				
 			$blockData['html'] = $html;
 		
@@ -2130,7 +2199,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		return $this->getPersistentProvider()->createQuery($modelName, false)->add(Restrictions::published())
 					->add(Restrictions::descendentOf($website->getId()))
-					->add(Restrictions::ne('navigationVisibility',  WebsiteConstants::VISIBILITY_HIDDEN))
+					->add(Restrictions::ne('navigationVisibility',  website_ModuleService::VISIBILITY_HIDDEN))
 					->addOrder(Order::asc('id'))
 					->setMaxResults($chunkSize)
 					->setFirstResult($offset)
@@ -2206,7 +2275,48 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			$indexedDocument->foIndexable(false);
 		}
-		$indexedDocument->setLabel($document->getNavigationtitle());
+		$indexedDocument->setLabel($document->getNavigationLabel());		
 		$indexedDocument->setText($this->getFullTextContent($document));
+	}
+	
+	/**
+	 * @param website_persistentdocument_page $document
+	 * @return website_MenuEntry|null
+	 */
+	public function getMenuEntry($document)
+	{
+		$visibility = $document->getNavigationVisibility();
+		if ($visibility == website_ModuleService::VISIBILITY_HIDDEN || $visibility == website_ModuleService::VISIBILITY_HIDDEN_IN_MENU_ONLY)
+		{
+			return null;
+		}
+		return $this->doGetMenuEntry($document);
+	}
+	
+	/**
+	 * @param website_persistentdocument_page $document
+	 * @return website_MenuEntry|null
+	 */
+	public function getSitemapEntry($document)
+	{
+		$visibility = $document->getNavigationVisibility();
+		if ($visibility == website_ModuleService::VISIBILITY_HIDDEN || $visibility == website_ModuleService::VISIBILITY_HIDDEN_IN_SITEMAP_ONLY)
+		{
+			return null;
+		}
+		return $this->doGetMenuEntry($document);
+	}
+	
+	/**
+	 * @param website_persistentdocument_page $document
+	 * @return website_MenuEntry|null
+	 */
+	protected function doGetMenuEntry($document)
+	{
+		$entry = website_MenuEntry::getNewInstance();
+		$entry->setDocument($document);
+		$entry->setLabel($document->getNavigationLabel());
+		$entry->setUrl(LinkHelper::getDocumentUrl($document));
+		return $entry;
 	}
 }

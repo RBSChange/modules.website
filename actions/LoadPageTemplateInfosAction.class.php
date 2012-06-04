@@ -18,6 +18,7 @@ class website_LoadPageTemplatesInfosByContainerAction extends change_JSONAction
 		
 		$pageTemplateDefault = Framework::getConfigurationValue('modules/website/sample/defaultPageTemplate');
 		$homeTemplateDefault = Framework::getConfigurationValue('modules/website/sample/defaultHomeTemplate');
+		$nosidebarTemplateDefault = Framework::getConfigurationValue('modules/website/sample/defaultNosidebarTemplate');
 		$result = array();
 		foreach ($templates as $template)
 		{
@@ -26,6 +27,7 @@ class website_LoadPageTemplatesInfosByContainerAction extends change_JSONAction
 				'codename' => $template->getCodename(),
 				'isPageDefault' => $template->getCodename() === $pageTemplateDefault,
 				'isHomeDefault' => $template->getCodename() === $homeTemplateDefault,
+				'isNosidebarDefault' => $template->getCodename() === $nosidebarTemplateDefault,
 				'id' => $template->getId(),
 				'hasPreviewImage' => ($template->getThumbnail() !== null)
 			);

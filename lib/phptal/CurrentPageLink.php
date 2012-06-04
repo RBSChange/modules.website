@@ -1,10 +1,11 @@
 <?php
 /**
+ * Examples:
+ *	<a change:currentpagelink="extraParamArray">...</a>
+ *	<form change:currentpagelink="extraParamArray">...</form>
+ *	<a change:currentpagelink="extraParamName 'extraParamValue'">...</a>
+ *	<a change:currentpagelink="" extraParamName="extraParamValue">...</a>
  * @package phptal.php.attribute
- * @example <a change:currentpagelink="extraParamArray">...</a>
- * @example <form change:currentpagelink="extraParamArray">...</form>
- * @example <a change:currentpagelink="extraParamName 'extraParamValue'">...</a>
- * @example <a change:currentpagelink="" extraParamName="extraParamValue">...</a>
  */
 class PHPTAL_Php_Attribute_CHANGE_Currentpagelink extends ChangeTalAttribute
 {

@@ -110,8 +110,8 @@
 	<script noreplacement="true" name="modules.website.lib.js.jquery-ui-dropable">
 		<dependencies>
 			<dependency name="modules.website.lib.js.jquery-ui" />
-			<dependency name="modules.website.lib.js.jquery-ui-mouse" />
 			<dependency name="modules.website.lib.js.jquery-ui-widget" />
+			<dependency name="modules.website.lib.js.jquery-ui-mouse" />
 			<dependency name="modules.website.lib.js.jquery-ui-draggable" />
 		</dependencies>
 	</script>
@@ -209,8 +209,12 @@
 	<script noreplacement="true" name="modules.website.lib.js.jquery-ui-datepicker">
 		<dependencies>
 			<dependency name="modules.website.lib.js.jquery-ui" />
+			<dependency name="modules.website.lib.js.jquery-ui-datepicker-i18n" />
 		</dependencies>
 	</script>
+		
+	<script name="modules.website.lib.js.jquery-ui-datepicker-i18n" />
+	
 	<script noreplacement="true" name="modules.website.lib.js.jquery-ui-progressbar">
 		<dependencies>
 			<dependency name="modules.website.lib.js.jquery-ui" />
@@ -232,6 +236,7 @@
 			<dependency name="modules.website.lib.js.jquery-ui-effects-clip" />
 			<dependency name="modules.website.lib.js.jquery-ui-effects-drop" />
 			<dependency name="modules.website.lib.js.jquery-ui-effects-explode" />
+			<dependency name="modules.website.lib.js.jquery-ui-effects-fade" />
 			<dependency name="modules.website.lib.js.jquery-ui-effects-fold" />
 			<dependency name="modules.website.lib.js.jquery-ui-effects-highlight" />
 			<dependency name="modules.website.lib.js.jquery-ui-effects-pulsate" />
@@ -262,6 +267,11 @@
 		</dependencies>
 	</script>
 	<script noreplacement="true" name="modules.website.lib.js.jquery-ui-effects-explode">
+		<dependencies>
+			<dependency name="modules.website.lib.js.jquery-ui-effects" />
+		</dependencies>
+	</script>
+	<script noreplacement="true" name="modules.website.lib.js.jquery-ui-effects-fade">
 		<dependencies>
 			<dependency name="modules.website.lib.js.jquery-ui-effects" />
 		</dependencies>

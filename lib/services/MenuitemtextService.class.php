@@ -38,4 +38,16 @@ class website_MenuitemtextService extends website_MenuitemService
 	{
 		return $this->pp->createQuery('modules_website/menuitemtext');
 	}
+	
+	/**
+	 * @param website_persistentdocument_menuitemtext $document
+	 * @return website_MenuEntry|null
+	 */
+	public function getMenuEntry($document)
+	{
+		$entry = website_MenuEntry::getNewInstance();
+		$entry->setDocument($document);
+		$entry->setLabel($document->getLabel());
+		return $entry;
+	}
 }

@@ -34,6 +34,16 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	{
 		return $this->getPersistentProvider()->createQuery('modules_website/website');
 	}
+
+	/**
+	 * @param website_persistentdocument_website $document (Read only)
+	 * @param array $defaultSynchroConfig string : string[]
+	 * @return array string : string[]
+	 */
+	public function getI18nSynchroConfig($document, $defaultSynchroConfig)
+	{
+		return $document->getLocalizebypath() ? parent::getI18nSynchroConfig($document, $defaultSynchroConfig) : array();
+	}
 	
 	/**
 	 * @param website_persistentdocument_website $document
@@ -124,11 +134,11 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 		
 		if ($document->getTemplate())
 		{
-			$document->addAllowedpagetemplate(DocumentHelper::getDocumentInstance($document->getTemplate(), 'modules_theme/pagetemplate'));
+			$document->addAllowedpagetemplate(theme_persistentdocument_pagetemplate::getInstanceById($document->getTemplate()));
 		}
 		if ($document->getTemplateHome())
 		{
-			$document->addAllowedpagetemplate(DocumentHelper::getDocumentInstance($document->getTemplateHome(), 'modules_theme/pagetemplate'));
+			$document->addAllowedpagetemplate(theme_persistentdocument_pagetemplate::getInstanceById($document->getTemplateHome()));
 		}
 	}
 
@@ -154,7 +164,7 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	 */
 	protected function postInsert($document, $parentNodeId)
 	{
-		$query = $this->createQuery()->add(Restrictions::hasTag(WebsiteConstants::TAG_DEFAULT_WEBSITE));
+		$query = $this->createQuery()->add(Restrictions::hasTag('default_modules_website_default-website'));
 
 		// If we are creating the first website document, set it as the default
 		// website.
@@ -165,7 +175,6 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 
 		// Create the menus folder where the website's menus will be stored.
 		$menuFolder = website_MenufolderService::getInstance()->getNewDocumentInstance();
-		$menuFolder->setLabel('&modules.website.bo.general.Menu-folder-label;');
 		$menuFolder->save($document->getId());
 
 		$initScript = $document->getStructureinit();
@@ -186,11 +195,11 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	 */
 	private function generateDefaultStructure($website, $initScript)
 	{
-		$template = DocumentHelper::getDocumentInstance($website->getTemplate(), 'modules_theme/pagetemplate')->getCodename();
+		$template = theme_persistentdocument_pagetemplate::getInstanceById($website->getTemplate())->getCodename();
 		$attributes['template'] = $template;
 		if ($website->getTemplateHome())
 		{
-			$attributes['templateHome'] = DocumentHelper::getDocumentInstance($website->getTemplateHome(), 'modules_theme/pagetemplate')->getCodename();
+			$attributes['templateHome'] = theme_persistentdocument_pagetemplate::getInstanceById($website->getTemplateHome())->getCodename();
 		}
 		else 
 		{
@@ -415,6 +424,16 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	}
 	
 	/**
+	 * @param website_persistentdocument_website $document
+	 * @return string|null
+	 */
+	public function getNavigationLabel($document)
+	{
+		$page = $document->getIndexPage();
+		return ($page) ? $page->getNavigationLabel() : null;
+	}
+	
+	/**
 	 * @param website_persistentdocument_website $website
 	 * @param string $lang
 	 * @param string $modelName
@@ -453,7 +472,7 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 		{
 			try
 			{
-				$this->defaultWebsite = TagService::getInstance()->getDocumentByExclusiveTag(WebsiteConstants::TAG_DEFAULT_WEBSITE);
+				$this->defaultWebsite = TagService::getInstance()->getDocumentByExclusiveTag('default_modules_website_default-website');
 			}
 			catch (TagException $e)
 			{
@@ -478,7 +497,7 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	 */
 	public function setDefaultWebsite($website)
 	{
-		TagService::getInstance()->setExclusiveTag($website, WebsiteConstants::TAG_DEFAULT_WEBSITE);
+		TagService::getInstance()->setExclusiveTag($website, 'default_modules_website_default-website');
 		$this->defaultWebsite = $website;
 	}
 	
@@ -684,5 +703,46 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 		{
 			$document->setMeta("websiteId", null);
 		}
+	}
+	
+	/**
+	 * @param website_persistentdocument_website $document
+	 * @return website_MenuEntry|null
+	 */
+	public function getMenuEntry($document)
+	{
+		return $this->doGetMenuEntry($document);
+	}
+	
+	/**
+	 * @param website_persistentdocument_website $document
+	 * @return website_MenuEntry|null
+	 */
+	public function getSitemapEntry($document)
+	{
+		return $this->doGetMenuEntry($document);
+	}
+	
+	/**
+	 * @param website_persistentdocument_website $document
+	 * @return website_MenuEntry|null
+	 */
+	protected function doGetMenuEntry($document)
+	{
+		$entry = website_MenuEntry::getNewInstance();
+		$entry->setDocument($document);
+		$entry->setLabel($document->getNavigationLabel());
+		$entry->setUrl(LinkHelper::getDocumentUrl($document));
+		$entry->setContainer(true);
+		return $entry;
+	}
+	
+	/**
+	 * @param website_persistentdocument_website $document
+	 * @return website_persistentdocument_menuitem[]
+	 */
+	public function getChildrenDocumentsForMenu($document)
+	{
+		return $document->getDocumentService()->getPublishedChildrenOf($document);
 	}
 }

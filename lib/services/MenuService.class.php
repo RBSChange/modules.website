@@ -79,4 +79,26 @@ class website_MenuService extends f_persistentdocument_DocumentService
 			$attributes['tagLabel'] = join(', ', $label);
 		}
 	}
+	
+	/**
+	 * @param website_persistentdocument_menu $document
+	 * @return website_MenuEntry|null
+	 */
+	public function getMenuEntry($document)
+	{
+		$entry = website_MenuEntry::getNewInstance();
+		$entry->setDocument($document);
+		$entry->setLabel($document->getLabel());
+		$entry->setContainer(true);
+		return $entry;
+	}
+	
+	/**
+	 * @param website_persistentdocument_menu $document
+	 * @return website_persistentdocument_menuitem[]
+	 */
+	public function getChildrenDocumentsForMenu($document)
+	{
+		return $document->getPublishedMenuItemArray();
+	}
 }

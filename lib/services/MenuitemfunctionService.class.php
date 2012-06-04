@@ -53,4 +53,30 @@ class website_MenuitemfunctionService extends website_MenuitemService
 			$attributes['popup'] = LocaleService::getInstance()->trans('m.generic.backoffice.no', array('ucf'));
 		}
 	}
+	
+	/**
+	 * @param website_persistentdocument_menuitemfunction $document
+	 * @return website_MenuEntry|null
+	 */
+	public function getMenuEntry($document)
+	{
+		$entry = website_MenuEntry::getNewInstance();
+		$entry->setDocument($document);
+		$entry->setLabel($document->getLabel());
+		
+		$url = $document->getUrl();
+		if (f_util_StringUtils::beginsWith($url, 'function:'))
+		{
+			$menuFunctionClass = 'website_MenuItem' . ucfirst(substr($url, 9)) . 'Function';
+			if (f_util_ClassUtils::classExists($menuFunctionClass))
+			{
+				f_util_ClassUtils::callMethodArgs($menuFunctionClass, 'execute', array($entry));
+			}
+		}
+		else
+		{
+			$entry->setUrl($url);
+		}
+		return $entry;
+	}
 }

@@ -74,6 +74,21 @@ class website_BBCodeParser
 	/**
 	 * @var boolean
 	 */
+	private $inUrl = false;
+	
+	/**
+	 * @var boolean
+	 */
+	private $needSpaceToStartUrl = false;
+	
+	/**
+	 * @var string
+	 */
+	private $url;
+	
+	/**
+	 * @var boolean
+	 */
 	private $escChar = false;	
 	
 	/**
@@ -143,6 +158,8 @@ class website_BBCodeParser
 			$this->clearTag();
 			$this->escChar = false;
 			$this->nobb = false;
+			$this->inUrl = false;
+			$this->needSpaceToStartUrl = false;
 			$this->startParsing();
 			
 		}
@@ -156,7 +173,18 @@ class website_BBCodeParser
 	protected function parseXml($xmlString)
 	{
 		$dom = new DOMDocument('1.0', 'UTF-8');
-		$dom->loadXML($xmlString);
+		if ($dom->loadXML($xmlString) === true)
+		{
+			return $dom;
+		}
+		
+		if (Framework::isWarnEnabled())
+		{
+			Framework::warn(__METHOD__ . ' Invalid xml string.');
+			Framework::warn(f_util_ProcessUtils::getBackTrace());
+		}
+		$dom = $this->parseBBCode($xmlString);
+		$dom->documentElement->setAttribute('class', 'error');
 		return $dom;
 	}
 	
@@ -335,40 +363,74 @@ class website_BBCodeParser
 					$smile = $this->checkSmile($this->text, $char);
 					if ($smile)
 					{
-						//Add part of $this->text
-						$this->text = substr($this->text, 0, 1 - strlen($smile));
+						$convert = true;
+						foreach ($this->checkLargerSmiles($smile) as $smileEnd)
+						{
+							if ($smileEnd === substr($this->bbcode, $this->offset+1, strlen($smileEnd)))
+							{
+								$convert = false;
+								break;
+							}
+						}
 						
-						$this->addText();
-						$this->tagName = 'smile';
-						$this->tagAttribute = $smile;
-						$this->appendTag();
-						
-						$this->offset ++;
-						continue;
+						if ($convert)
+						{
+							// Add part of $this->text.
+							$this->text = substr($this->text, 0, 1 - strlen($smile));
+							
+							$this->addText();
+							$this->tagName = 'smile';
+							$this->tagAttribute = $smile;
+							$this->appendTag();
+							
+							$this->offset ++;
+							continue;
+						}
 					}
 				}
-				
-				if ($char === "\r")
+								
+				if ($char === "/" && !$this->nobb && !$this->inUrl)
 				{
-					//Ignore
+					// Detect URLs.
+					$startURL = $this->checkStartURL($this->text);
+					if ($startURL !== null)
+					{
+						$this->text = substr($this->text, 0, -strlen($startURL));
+						$this->addText();
+						$this->text = $startURL;
+						$this->inUrl = true;
+				}
+					$this->text .= $char;
+				}
+				elseif ($char === "\r")
+				{
+					// Ignore.
 				}
 				elseif ($char === "\n" && !$this->nobb)
 				{
 					$this->addText();
 					$this->tagName = 'newline';
 					$this->appendTag();
+					$this->needSpaceToStartUrl = false;
 				}
 				elseif ($char === "\t" && !$this->nobb)
 				{
 					$this->addText();
 					$this->tagName = 'tabulation';
 					$this->appendTag();
+									$this->needSpaceToStartUrl = false;
 				}
-				elseif ($char === "[")
+				elseif ($char === " " && !$this->nobb)
+				{
+					$this->addText();
+					$this->text = $char;
+				}
+				elseif ($char === "[" && !$this->inUrl)
 				{
 					$this->addText();
 					$this->tagName = '';
 					$this->text = $char;
+					$this->needSpaceToStartUrl = true;
 				}
 				else
 				{
@@ -384,6 +446,9 @@ class website_BBCodeParser
 		}
 	}
 	
+	/**
+	 * @return array
+	 */
 	private function getSmiles()
 	{
 		if ($this->smileList === null)
@@ -409,7 +474,6 @@ class website_BBCodeParser
 	 */
 	private function checkSmile($text, $endChar)
 	{
-		
 		$smiles = $this->getSmiles();
 		if (isset($smiles[$endChar]))
 		{
@@ -424,12 +488,86 @@ class website_BBCodeParser
 		return null;
 	}
 	
+	/**
+	 * @return string[]
+	 */
+	private $largerSmiles = array();
+	
+	/**
+	 * @param string $smile
+	 * @return string[]
+	 */
+	private function checkLargerSmiles($smile)
+	{
+		if (!array_key_exists($smile, $this->largerSmiles))
+		{
+			$this->largerSmiles[$smile] = array();
+			foreach ($this->getSmiles() as $smiles)
+			{
+				foreach ($smiles as $asmile)
+				{
+					if (f_util_StringUtils::beginsWith($asmile, $smile, f_util_StringUtils::CASE_SENSITIVE))
+					{
+						$this->largerSmiles[$smile][] = substr($asmile, strlen($smile));
+					}
+				}
+			}
+		}
+		return $this->largerSmiles[$smile];
+	}
+	
+	/**
+	 * @var string[]
+	 */
+	private $startUrlArray = array('http:/', 'https:/');
+	
+	/**
+	 * @return string[]
+	 */
+	protected function getStartUrlArray()
+	{
+		return $this->startUrlArray;
+	}
+	
+	/**
+	 * @param string $text
+	 * @return string or null
+	 */
+	private function checkStartUrl($text)
+	{
+		foreach ($this->getStartUrlArray() as $urlStart)
+		{
+			if (!$this->needSpaceToStartUrl && ($text == $urlStart))
+			{
+				return $urlStart;
+			}
+				
+			$tempStart = ' ' . $urlStart;
+			if (substr($text, -strlen($tempStart)) == $tempStart)
+			{
+				return $urlStart;
+			}
+		}
+		return null;
+	}
+	
 	private function addText()
 	{
 		$text = $this->text;
 		if ($text !== '')
 		{
-			$this->parentElement->appendChild($this->xmlDocument->createTextNode($text));
+			if ($this->inUrl)
+			{	
+				$this->inUrl = false;
+				$tagInfo = $this->getTagInfo('url');
+				$this->openTag($tagInfo);
+				$this->parentElement->appendChild($this->xmlDocument->createTextNode($text));
+				$this->endTag($tagInfo);
+			}
+			else
+			{
+				$this->parentElement->appendChild($this->xmlDocument->createTextNode($text));
+			}
 			$this->text = '';
 		}
 		$this->clearTag();
@@ -598,8 +736,13 @@ class website_BBCodeParser
 		$this->xmlDocument = $document;
 		$this->parentElement = $this->xmlDocument->documentElement;
 		$this->setProfile($this->parentElement->getAttribute('data-profile'));
+		$classes = array('bbcode', $this->profile->getName());
+		if ($this->parentElement->hasAttribute('class'))
+		{
+			$classes[] = $this->parentElement->getAttribute('class');
+		}
 		$xhtmlDoc = new DOMDocument('1.0', 'UTF-8');
-		$xhtmlDoc->loadXML('<div class="bbcode ' . $this->profile->getName() . '"></div>');
+		$xhtmlDoc->loadXML('<div class="' . implode(' ', $classes) . '"></div>');
 		foreach ($this->parentElement->childNodes as $node) 
 		{
 			$this->convertNodeToHtml($node, $xhtmlDoc->documentElement, $xhtmlDoc);
@@ -747,8 +890,8 @@ class website_BBCodeProfile
 		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoBig());
 		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoSmall());
 		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoAlign());
-		$bbcodeParser->addTagInfo(new website_BBCodeTagInfo('list', 'ul', 'richtext/unordered-list'));
-		$bbcodeParser->addTagInfo(new website_BBCodeTagInfo('item', 'li', 'richtext/list-item'));
+		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoList());
+		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoListItem());
 		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoQuote());
 		$bbcodeParser->addTagInfo(new website_BBCodeTagInfo('code', 'pre', 'richtext/code', false, true));
 		$bbcodeParser->addTagInfo(new website_BBCodeTagInfoNoBB());
@@ -1028,12 +1171,12 @@ class website_BBCodeTagInfoSmile extends website_BBCodeTagInfo
 	{
 		parent::__construct('smile', 'img', null, true);
 	}
-	
+
 	public function getSmileCodes()
 	{
 		return array(':D', ';)', ':p', ':(',  ':)');
 	}
-	
+
 	/**
 	 * @param DOMElement $xmlElement
 	 * @param string $beginStr
@@ -1044,7 +1187,7 @@ class website_BBCodeTagInfoSmile extends website_BBCodeTagInfo
 		$beginStr = $this->getTagAttribute($xmlElement);
 		$endStr = '';
 	}
-	
+
 	/**
 	 * @param DOMElement $xmlElement
 	 */
@@ -1055,7 +1198,7 @@ class website_BBCodeTagInfoSmile extends website_BBCodeTagInfo
 		$filename = (is_numeric($key)) ? 'smile/' . ($key +1) . '.gif' : $key;
 		$xmlElement->setAttribute('filename', $filename);
 	}
-	
+
 	/**
 	 * @param DOMElement $xmlElement
 	 * @param DOMElement $xhtmlParent
@@ -1067,10 +1210,10 @@ class website_BBCodeTagInfoSmile extends website_BBCodeTagInfo
 		$smile = $this->getTagAttribute($xmlElement);
 		$elem->setAttribute('src', MediaHelper::getFrontofficeStaticUrl($xmlElement->getAttribute('filename')));
 		$elem->setAttribute('alt', $smile);
-		$elem->setAttribute('class', 'smile');
+		$elem->setAttribute('class', 'image smile');
 		return null;
 	}
-	
+
 	public function getInfosForJS()
 	{
 		return array();
@@ -1143,7 +1286,7 @@ class website_BBCodeTagInfoU extends website_BBCodeTagInfo
 	 */
 	public function normalizeXml($xmlElement)
 	{
-		$xmlElement->setAttribute('style', 'text-decoration: underline;');
+		$xmlElement->setAttribute('class', 'underline');
 	}
 
 	/**
@@ -1156,7 +1299,7 @@ class website_BBCodeTagInfoU extends website_BBCodeTagInfo
 		$elem = parent::toHtml($xmlElement, $xhtmlParent);
 		if ($elem)
 		{
-			$elem->setAttribute('style', 'text-decoration: underline;');
+			$elem->setAttribute('class', 'underline');
 		}
 		return $elem;
 	}
@@ -1260,6 +1403,7 @@ class website_BBCodeTagInfoImg extends website_BBCodeTagInfo
 		$alt = $xmlElement->textContent;
 		$elem->setAttribute('src', $src);
 		$elem->setAttribute('alt', $alt);
+		$elem->setAttribute('class', 'image');
 		if ($alt) {$elem->setAttribute('title', $alt);}
 		return null;
 	}
@@ -1301,6 +1445,17 @@ class website_BBCodeTagInfoUrl extends website_BBCodeTagInfo
 			$href = $xmlElement->textContent;
 			if (empty($href)) {$href = 'about:blank';}
 			$xmlElement->setAttribute('data-bbcode-attr', $href);
+			
+			// Shorten long urls.
+			if (f_util_StringUtils::strlen($href) > 50)
+			{
+				$shortUrl = f_util_StringUtils::substr($href, 0, 20) . '.....' . f_util_StringUtils::substr($href, -20);
+				while ($xmlElement->hasChildNodes())
+				{
+					$xmlElement->removeChild($xmlElement->firstChild);
+				}
+				$xmlElement->appendChild($xmlElement->ownerDocument->createTextNode($shortUrl));
+			}
 		}
 		$xmlElement->setAttribute('href', $href);
 	}
@@ -1489,7 +1644,7 @@ class website_BBCodeTagInfoAlign extends website_BBCodeTagInfo
 	public function toHtml($xmlElement, $xhtmlParent)
 	{
 		$elem = parent::toHtml($xmlElement, $xhtmlParent);
-		$elem->setAttribute('class', 'align-' . $this->getTagAttribute($xmlElement));
+		$elem->setAttribute('class', 'text-align-' . $this->getTagAttribute($xmlElement));
 		return $elem;
 	}
 
@@ -1673,6 +1828,46 @@ class website_BBCodeTagInfoColor extends website_BBCodeTagInfo
 		$infos = f_util_ArrayUtils::firstElement(parent::getInfosForJS());
 		$infos['paramColor'] = '${trans:m.website.bbeditor.param-color,ucf}';
 		return array($infos);
+	}
+}
+
+class website_BBCodeTagInfoList extends website_BBCodeTagInfo
+{
+	public function __construct()
+	{
+		parent::__construct('list', 'ul', 'richtext/unordered-list');
+	}
+
+	/**
+	 * @param DOMElement $xmlElement
+	 * @param DOMElement $xhtmlParent
+	 * @return DOMElement Xhtml parent for content
+	 */
+	public function toHtml($xmlElement, $xhtmlParent)
+	{
+		$elem = parent::toHtml($xmlElement, $xhtmlParent);
+		$elem->setAttribute('class', 'normal');
+		return $elem;
+	}
+}
+
+class website_BBCodeTagInfoListItem extends website_BBCodeTagInfo
+{
+	public function __construct()
+	{
+		parent::__construct('item', 'li', 'richtext/list-item');
+	}
+
+	/**
+	 * @param DOMElement $xmlElement
+	 * @param DOMElement $xhtmlParent
+	 * @return DOMElement Xhtml parent for content
+	 */
+	public function toHtml($xmlElement, $xhtmlParent)
+	{
+		$elem = parent::toHtml($xmlElement, $xhtmlParent);
+		$elem->setAttribute('class', 'normal');
+		return $elem;
 	}
 }
 

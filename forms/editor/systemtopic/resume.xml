@@ -8,23 +8,23 @@
 		<property name="reference" labeli18n="m.website.bo.doceditor.property.reference" />
 	</section>
 	
-	<section name="publication"	labeli18n="m.uixul.bo.doceditor.section.status" 
-		image="{IconsBase}/small/status.png">
-		<property name="status" labeli18n="m.uixul.bo.doceditor.property.status"/>
-	</section>
+	<section name="localization" linkedtab="localization" labeli18n="modules.uixul.bo.doceditor.section.Localization" 
+		image="{IconsBase}/small/translate.png">
+		<property name="languages" type="langs" labeli18n="modules.uixul.bo.doceditor.property.Languages"/>
+	</section>	
 		
-	<section name="history" linkedtab="history" actiontexti18n="m.uixul.bo.doceditor.section.action.view"
-		labeli18n="m.uixul.bo.doceditor.section.history" image="{IconsBase}/small/history.png">
-		<property name="modificationdate" labeli18n="m.uixul.bo.doceditor.property.modificationdate"/>
+	<section name="publication" linkedtab="publication" labeli18n="modules.uixul.bo.doceditor.section.Status" 
+		image="{IconsBase}/small/status.png">
+		<property name="status" labeli18n="modules.uixul.bo.doceditor.property.Status"/>
 	</section>
 	
-	<section name="localization" linkedtab="localization" labeli18n="m.uixul.bo.doceditor.section.localization" 
-		image="{IconsBase}/small/translate.png">
-		<property name="languages" type="langs" labeli18n="m.uixul.bo.doceditor.property.languages"/>
-	</section>	
-					
-	<section flex="1" name="urlrewriting" labeli18n="m.uixul.bo.doceditor.section.urlrewriting" 
+	<section name="urlrewriting" labeli18n="modules.uixul.bo.doceditor.section.Urlrewriting" 
 		image="{IconsBase}/small/urlrewriting.png">
-		<property name="currenturl" labeli18n="m.uixul.bo.doceditor.property.currenturl" class="link" />
-	</section>				
+		<property name="currenturl" labeli18n="modules.uixul.bo.doceditor.property.Currenturl" class="link" />
+	</section>
+	
+	<section flex="1" name="history" linkedtab="history" actiontexti18n="modules.uixul.bo.doceditor.section.action.View"
+		labeli18n="modules.uixul.bo.doceditor.section.History" image="{IconsBase}/small/history.png">
+		<property name="modificationdate" labeli18n="modules.uixul.bo.doceditor.property.Modificationdate"/>
+	</section>						
 </panel>

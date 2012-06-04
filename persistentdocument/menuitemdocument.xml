@@ -3,6 +3,7 @@
   <properties>
     <property name="document" type="modules_generic/Document" min-occurs="1"/>
     <property name="popup" type="Boolean" default-value="false"/>
+    <!-- @deprecated (will be removed in 4.0) -->
     <property name="popupParameters" type="LongString"/>
   </properties>
 </document>

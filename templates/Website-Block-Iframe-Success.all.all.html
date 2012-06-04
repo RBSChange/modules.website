@@ -1,1 +1,3 @@
-<iframe tal:attributes="title configuration/getTitle; src configuration/getUrl; width configuration/getFrameWidth; height configuration/getFrameHeight; scrolling configuration/getScrolling" frameborder="0">${configuration/getText}</iframe>
+<iframe src="${configuration/getUrlAsHtml}" style="overflow: ${overflow}; width: ${width}; height: ${height}">
+	${configuration/getTextAsHtml}
+</iframe>

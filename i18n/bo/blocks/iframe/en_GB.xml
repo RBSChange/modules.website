@@ -5,10 +5,10 @@
   <key id="url-help">complete address URL (with ″http://″) of the page to show in the iframe</key>
   <key id="text">alternative text</key>
   <key id="text-help">alternative text displayed when the browser cannot display the iframe</key>
-  <key id="frameHeight">height</key>
-  <key id="frameHeight-help">iframe height in pixels</key>
-  <key id="frameWidth">width</key>
-  <key id="frameWidth-help">iframe width in pixels</key>
+  <key id="frameheight">height</key>
+  <key id="frameheight-help">iframe height in pixels</key>
+  <key id="framewidth">width</key>
+  <key id="framewidth-help">iframe width in pixels</key>
   <key id="scrolling">show scroll bars</key>
   <key id="scrolling-help">scroll bars can show up when the page contents displayed in the iframe is bigger than the size allowed to the iframe</key>
   <key id="scroll-auto">Auto</key>

@@ -71,10 +71,8 @@ class website_BlockView
 	}
 
 	/**
-	 * @example website_BlockView::parseHandlerArgs('arg1Value, arg2Value')
-	 * @example website_BlockView::parseHandlerArgs('arg1Name : arg1Value, arg2Name : arg2Value')
-	 * @param String $args
-	 * @return array<String, String>
+	 * @param string $args For example: 'arg1Value, arg2Value' or 'arg1Name : arg1Value, arg2Name : arg2Value'
+	 * @return array<string, string>
 	 */
 	public static function parseHandlerArgs($args)
 	{
@@ -158,7 +156,7 @@ class website_BlockView
 		$model = array_merge($request->getParameters(), $request->getAttributes());
 		$model["session_Attributes"] = change_Controller::getInstance()->getStorage()->readAll();
 		$model["context"] = $request->getContext();
-		$model["website_page"] = $request->getContext()->getAttribute("website_page");
+		$model["website_page"] = $request->getContext();
 		$template->importAttributes($model);
 		$response->getWriter()->write($template->execute());
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.bo.blocks.configurablesitemap" lcid="fr_FR">
+	<key id="title">plan du site</key>
+	<key id="depth">profondeur</key>
+	<key id="depth-help">Profondeur maximale du menu généré.</key>
+	<key id="displaymode">gabarit</key>
+	<key id="showtitle">afficher le titre du bloc</key>
+	<key id="showtitle-help">Afficher ou non le titre du bloc.</key>
+	<key id="blocktitle">titre du bloc</key>
+	<key id="blocktitle-help">Titre du bloc sur le site. Si laissé vide, il sera généré automatiquement. Pour intégrer le libellé du document racine, utiliser le paramètre de remplacement "{ROOT_LABEL}".</key>
+</i18n>

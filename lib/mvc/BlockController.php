@@ -418,6 +418,7 @@ class website_BlockController implements f_mvc_Controller
 					"_theme" =>  $theme,
 					"_https" => $rc->inHTTPS()
 				);
+				$usebid = false;
 				foreach ($cfg->getConfiguredCacheKeys() as $configuredCacheKey)
 				{
 					switch ($configuredCacheKey)
@@ -431,9 +432,17 @@ class website_BlockController implements f_mvc_Controller
 						case "nav":
 							$baseParams["_nav"] = $rc->getUserAgentType().".".$rc->getUserAgentTypeVersion();
 							break;
+						case "blockid":
+							$usebid = true;
+							break;
 					}
 				}
 				$keyParameters = array_merge($baseParams, $cfg->getConfigurationParameters());
+				if (!$usebid)
+				{
+					unset($keyParameters['blockId']);
+				}				
+				
 				$actionKeyParameters = $this->action->getCacheKeyParameters($this->actionRequest);
 				if ($actionKeyParameters !== null)
 				{
@@ -452,6 +461,10 @@ class website_BlockController implements f_mvc_Controller
 				
 				if ($this->isActionInCache($cacheItem))
 				{
+					if (Framework::isInfoEnabled())
+					{
+						Framework::info(__METHOD__ . ' FROM CACHE: ' . get_class($this->action));
+					}
 					$this->processActionFromCache($cacheItem);
 					$this->endProcessing($cacheItem);
 					return;
@@ -491,8 +504,7 @@ class website_BlockController implements f_mvc_Controller
 		
 		if ($this->isRecording() && $this->isCacheEnabled() && $this->action->isCacheEnabled())
 		{
-			f_util_ArrayUtils::lastElement($this->pageContextRecorderStack)
-				->addSubBlock($moduleName, $actionName, $configParams, $inheritedParamNames, $forcedParams);
+			f_util_ArrayUtils::lastElement($this->pageContextRecorderStack)->addSubBlock($moduleName, $actionName, $configParams, $inheritedParamNames, $forcedParams);
 		}
 		return $id;
 	}
@@ -533,7 +545,7 @@ class website_BlockController implements f_mvc_Controller
 	 */
 	private function endProcessing($cacheItem = null, $e = null)
 	{
-		if ($this->isCacheEnabled() && $this->action->isCacheEnabled() && $this->isRecording())
+		if ($cacheItem !== null && $this->isRecording())
 		{
 			if ($e == null)
 			{
@@ -581,7 +593,8 @@ class website_BlockController implements f_mvc_Controller
 	 */
 	private function putActionInCache($cacheItem)
 	{
-		$cacheItem->setValue(self::HTML_CACHE_PATH, $this->getResponse()->getWriter()->peek());
+		$html = $this->getResponse()->getWriter()->peek();
+		$cacheItem->setValue(self::HTML_CACHE_PATH, $html);
 		$code = implode('', f_util_ArrayUtils::lastElement($this->pageContextRecorderStack)->getRecords());
 		if ($code != "")
 		{
@@ -694,10 +707,13 @@ class website_BlockController implements f_mvc_Controller
 					{
 						$context = $this->getContext();
 						$metas = $this->action->$getMetaMethodName();
-						$metaPrefix = $this->action->getModuleName()."_".$this->action->getName();
-						foreach ($metas as $metaName => $metaValue)
+						if (is_array($metas) && count($metas))
 						{
-							$context->addBlockMeta($metaPrefix.".".$metaName, $metaValue);
+							$metaPrefix = $this->action->getModuleName()."_".$this->action->getName();
+							foreach ($metas as $metaName => $metaValue)
+							{
+								$context->addBlockMeta($metaPrefix.".".$metaName, $metaValue);
+							}
 						}
 					}
 				}
@@ -950,7 +966,6 @@ class website_BlockController implements f_mvc_Controller
 	 */
 	private function pushAction($action)
 	{
-		//echo "Push ".$action->getName();
 		$this->responseStack[] = new website_BlockActionResponse();
 		$this->actionStack[] = $action;
 		$this->subBlocks[] = array();
@@ -980,7 +995,6 @@ class website_BlockController implements f_mvc_Controller
 		$subBlocks = array_pop($this->subBlocks);
 		if ($subBlocks !== null && count($subBlocks) > 0)
 		{
-			//echo "Has subBlocks";
 			$from = array();
 			$to = array();
 			$globalRequest = change_Controller::getInstance()->getContext()->getRequest();
@@ -1010,13 +1024,11 @@ class website_BlockController implements f_mvc_Controller
 				$request = new $classes['change_Request'];
 				$request->setParameters(array($moduleName.'Param' => $parameters));
 				
-				$this->processByName($moduleName, $subBlock["actionName"],
-					$request, $subBlock["configParams"], true);
+				$this->processByName($moduleName, $subBlock["actionName"], $request, $subBlock["configParams"], true);
 				
 				$from[] = "{_BLOCK_".$subBlockIndex."_}";
 				$to[] = $subWriter->getContent();
 			}
-			array_pop($this->responseStack);
 			$subResponseContent = str_replace($from, $to, $subResponseContent);
 		}
 		$this->subBlocksIndex--;

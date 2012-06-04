@@ -37,6 +37,10 @@ class website_SessionMessage
 		$storage->write('website_SessionMessage', $sm);	
 	}
 	
+	/**
+	 * @param boolean $flush
+	 * @return string[]
+	 */
 	public static function getMessages($flush = true)
 	{
 		$storage = change_Controller::getInstance()->getStorage();
@@ -52,7 +56,7 @@ class website_SessionMessage
 				$messages[] = $message[1];
 				if (!$message[0])
 				{
-					$newMessages = $message[1];
+					$newMessages[] = $message[1];
 				}
 			}
 			$sm['messages'] = $newMessages;
@@ -68,13 +72,20 @@ class website_SessionMessage
 		return $messages;
 	}
 	
+	/**
+	 * @return boolean
+	 */
 	public static function hasMessages()
 	{
 		$storage = change_Controller::getInstance()->getStorage();
 		$sm = $storage->read('website_SessionMessage');
 		return (is_array($sm) && isset($sm['messages']) && count($sm['errors']));
 	}
-	
+
+	/**
+	 * @param boolean $flush
+	 * @return string[]
+	 */
 	public static function getErrors($flush = true)
 	{
 		$storage = change_Controller::getInstance()->getStorage();
@@ -90,7 +101,7 @@ class website_SessionMessage
 				$messages[] = $message[1];
 				if (!$message[0])
 				{
-					$newMessages = $message[1];
+					$newMessages[] = $message[1];
 				}
 			}
 			$sm['errors'] = $newMessages;
@@ -106,6 +117,9 @@ class website_SessionMessage
 		return $messages;
 	}
 	
+	/**
+	 * @return boolean
+	 */
 	public static function hasErrors()
 	{
 		$storage = change_Controller::getInstance()->getStorage();

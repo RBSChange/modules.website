@@ -140,15 +140,7 @@ class website_MenuitemdocumentService extends website_MenuitemService
 				try
 				{
 					$rc->beginI18nWork($lang);
-					if ($pageOrTopic instanceof website_persistentdocument_page)
-					{
-						$label = $pageOrTopic->getNavigationtitle();
-					}
-					else
-					{
-						$label = $pageOrTopic->getLabel();
-					}
-					$menuitem->setLabel($label);
+					$menuitem->setLabel($pageOrTopic->getNavigationLabel());
 					$rc->endI18nWork();
 				}
 				catch (Exception $e)
@@ -169,28 +161,40 @@ class website_MenuitemdocumentService extends website_MenuitemService
 	{
 		if ($mode & DocumentHelper::MODE_CUSTOM)
 		{
-			try 
-	        {
-				$breadcrumb = website_WebsiteModuleService::getInstance()->getBreadcrumb($document->getDocument());
-				$attributes['refers-to'] = $breadcrumb->renderAsText();
-	        }
-	        catch (Exception $e)
-	        {
-	        	$attributes['refers-to'] = 'ERROR: ' . $e->getMessage();
-	        }
-			if ($document->getPopup())
+			$nodeAttributes['refers-to'] = '';
+			$doc = $document->getDocument();
+			if ($doc)
 			{
-				$attributes['popup'] = LocaleService::getInstance()->trans('m.generic.backoffice.yes', array('ucf'));
-				$params = $document->getPopupParametersArray();
-				if (isset($params['width']) && isset($params['height']))
-				{
-					$attributes['popup'] .= ' (' . $params['width'] . ' x ' . $params['height'] . ')';
-				}
+				$originalDoc = DocumentHelper::getByCorrection($doc);
+				$nodeAttributes['refers-to'] = $originalDoc->getDocumentService()->getPathOf($originalDoc)
+					. ' (' . LocaleService::getInstance()->trans($originalDoc->getPersistentModel()->getLabelKey()) . ')';
 			}
-			else
-			{
-				$attributes['popup'] = LocaleService::getInstance()->trans('m.generic.backoffice.no', array('ucf'));
-			}
+			$nodeAttributes['popup'] = LocaleService::getInstance()->trans('m.generic.backoffice.' . ($document->getPopup() ? 'yes' : 'no'));
 		}
+	}
+	
+	/**
+	 * @param website_persistentdocument_menuitemdocument $document
+	 * @return string
+	 */
+	public function getNavigationLabel($document)
+	{
+		return $document->getDocument()->getNavigationLabel();
+	}
+	
+	/**
+	 * @param website_persistentdocument_menuitemdocument $document
+	 * @return website_MenuEntry|null
+	 */
+	public function getMenuEntry($document)
+	{
+		$linkedDoc = $document->getDocument();
+		$entry = $linkedDoc->getDocumentService()->getMenuEntry($linkedDoc);
+		if ($entry == null)
+		{
+			return null;
+		}
+		$entry->setPopup($document->getPopup());
+		return $entry;
 	}
 }

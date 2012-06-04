@@ -25,7 +25,7 @@
 					</page>
 				</topic>
 			</topic>
-			<page label="page test" template-attr="templateHome">
+			<page label="page test" template-attr="templateNosidebar">
 				<changecontent for="content-block">
 					<changeblock type="richtext">
 						<![CDATA[

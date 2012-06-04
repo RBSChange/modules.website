@@ -8,5 +8,12 @@
 	<key id="linkspositions-none">nulle part</key>
 	<key id="blocktemplates-label">templates disponibles</key>
 	<key id="blocktemplates-description">Liste des templates disponibles pour un bloc donné.</key>
+	<key id="blocktemplates-default">par défaut</key>
 	<key id="blocktemplates-success">par défaut</key>
+	<key id="blocktemplates-scroll">déroulant</key>
+	<key id="blocktemplates-giant">géant</key>
+	<key id="blocktemplates-inline">en ligne</key>
+	<key id="blocktemplates-contextual">contextuel</key>
+	<key id="menutags-label">tags de menus</key>
+	<key id="menutags-description">List des tags de menus pour le bloc de menu configurable.</key>
 </i18n>

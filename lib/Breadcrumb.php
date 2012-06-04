@@ -87,6 +87,9 @@ class website_BreadcrumbElement
 		return $this;
 	}
 	
+	/**
+	 * @return string
+	 */
 	function getNavigationtitleAsHtml()
 	{
 		return f_util_HtmlUtils::textToHtml($this->navigationtitle);
@@ -106,6 +109,7 @@ class website_BreadcrumbElement
 	 */
 	function setOnlyImage()
 	{
+		$this->onlyImage = true;
 		return $this;
 	}
 }

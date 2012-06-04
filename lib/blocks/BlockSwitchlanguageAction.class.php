@@ -126,7 +126,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 		}
 		if (!$hasLink) 
 		{
-			$switchArray = false;
+			return website_BlockView::NONE;
 		}
 		
 		$request->setAttribute('switchArray', $switchArray);
@@ -135,42 +135,18 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 	
 	private function getLangLabel($lang)
 	{
-		// TODO locale
-		if (Framework::hasConfiguration('languages/' . $lang . '/label'))
+		$key = 'm.website.frontoffice.version-in-lang';
+		$text = LocaleService::getInstance()->formatKey($lang, $key, array('ucf'));
+		if ($key != $text)
 		{
-			return Framework::getConfiguration('languages/' . $lang . '/label');
-		}
-		
-		switch ($lang)
-		{
-			case 'fr' : return 'Version française';
-			case 'en' : return 'English version';
-			case 'de' : return 'Deutsche Version';
-			case 'it' : return 'Versione italiana';
-			case 'pt' : return 'Versão Português';
-			case 'nl' : return 'Dutsch versie';
-			case 'es' : return 'Versión en español';
+			return $text;
 		}
 		return strtoupper($lang);
 	}
 	
 	private function getFlagIcon($lang)
 	{
-		if (Framework::hasConfiguration('languages/' . $lang . '/flag'))
-		{
-			return Framework::getConfiguration('languages/' . $lang . '/flag');
-		}
-		switch ($lang)
-		{
-			case 'fr' : return 'flag_france';
-			case 'en' : return 'flag_great_britain';
-			case 'de' : return 'flag_germany';
-			case 'it' : return 'flag_italy';
-			case 'pt' : return 'flag_portugal';
-			case 'nl' : return 'flag_netherlands';
-			case 'es' : return 'flag_spain';
-		}
-		return 'flag_generic';
+		return 'flags/' . $lang;
 	}
 	
 	/**

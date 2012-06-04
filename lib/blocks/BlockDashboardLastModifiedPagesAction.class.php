@@ -25,6 +25,7 @@ class website_BlockDashboardLastModifiedPagesAction extends  dashboard_BlockDash
 		$ms = ModuleService::getInstance();
 		foreach ($lastModifiedPages as $page)
 		{
+			/* @var $page website_persistentdocument_page */
 			$attributes = array();
 			DocumentHelper::completeBOAttributes($page, $attributes, DocumentHelper::MODE_ICON);
 			$icon = MediaHelper::getIcon($attributes['icon'], MediaHelper::SMALL);

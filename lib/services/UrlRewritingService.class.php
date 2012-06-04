@@ -48,13 +48,13 @@ class website_UrlRewritingService extends BaseService
 		$targetWebsite = $website;
 		if ($targetWebsite === null)
 		{
-			if ($websiteIds === null)
+			$targetWebsite = website_WebsiteModuleService::getInstance()->getCurrentWebsite();			
+			if ($websiteIds !== null)
 			{
-				$targetWebsite = website_WebsiteService::getInstance()->getCurrentWebsite();
-			}
-			else
-			{
-				$targetWebsite = DocumentHelper::getDocumentInstance(f_util_ArrayUtils::firstElement($websiteIds));
+				if (!in_array($targetWebsite->getId(), $websiteIds))
+				{
+					$targetWebsite = DocumentHelper::getDocumentInstance(f_util_ArrayUtils::firstElement($websiteIds));
+				}
 			}
 		}
 		else if (is_array($websiteIds) && !in_array($targetWebsite->getId(), $websiteIds))
@@ -502,6 +502,10 @@ class website_UrlRewritingService extends BaseService
 		try 
 		{
 			$path = $this->initCurrrentWebsite($host, $urlToForward);
+			if (is_array($path))
+			{
+				return $path;
+			}
 			$website = website_WebsiteService::getInstance()->getCurrentWebsite();
 
 			if ($path === '/')
@@ -715,7 +719,12 @@ class website_UrlRewritingService extends BaseService
 			$matches = null;
 			if (!preg_match($pattern, $urlToForward, $matches))
 			{
-				throw new Exception('Invalid lang [' . implode(',', $websiteInfo['langs']) . '] in path: ' . $urlToForward);
+				$request = Change_Controller::getInstance()->getContext()->getRequest();
+				$lang = $websiteInfo['langs'][0];
+				$path = f_util_ArrayUtils::firstElement(explode('?', $urlToForward));
+				$redirectType = 301;
+				$website = website_persistentdocument_website::getInstanceById($websiteInfo['id']);
+				return $this->getRedirectAction($website, $lang, $path, $redirectType, $request);	
 			}
 			$lang = $matches[1];
 			$urlToForward = substr($urlToForward, strlen($lang) + 1);
@@ -920,7 +929,14 @@ class website_UrlRewritingService extends BaseService
 	 */
 	private function getRedirectAction($website, $lang, $path, $redirectType, $request)
 	{
-		$request->setParameter('location', $this->getRewriteLink($website, $lang, $path)->getUrl());
+		$uri = RequestContext::getInstance()->getPathURI();
+		$queryParams = array();
+		$queryParamsPos = strpos($uri, '?');
+		if ($queryParamsPos)
+		{
+			parse_str(substr($uri, $queryParamsPos + 1), $queryParams);
+		}
+		$request->setParameter('location', $this->getRewriteLink($website, $lang, $path, $queryParams)->getUrl());
 		$request->setParameter('redirectType', $redirectType);
 		return array('website', 'Redirect');
 	}
