@@ -5,7 +5,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 * @var website_PageService
 	 */
 	private static $instance;
-
+	
 	/**
 	 * @return website_PageService
 	 */
@@ -17,7 +17,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		return self::$instance;
 	}
-
+	
 	/**
 	 * @param String $templateName
 	 * @return website_persistentdocument_page[]
@@ -26,7 +26,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		return $this->createQuery()->add(Restrictions::eq("template", $templateName))->find();
 	}
-
+	
 	/**
 	 * @return website_persistentdocument_page
 	 */
@@ -34,8 +34,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		return $this->getNewDocumentInstanceByModelName('modules_website/page');
 	}
-
-
+	
 	/**
 	 * Create a query based on 'modules_modules_website/page' model
 	 * @return f_persistentdocument_criteria_Query
@@ -44,7 +43,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		return $this->getPersistentProvider()->createQuery('modules_website/page');
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $page
 	 */
@@ -55,9 +54,9 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			$query = $this->getPersistentProvider()->createQuery('modules_website/pagereference')->add(Restrictions::eq('referenceofid', $page->getId()));
 			$pagesReference = $query->find();
-
+			
 			$copyToVo = $page->getLang() == RequestContext::getInstance()->getLang();
-
+			
 			foreach ($pagesReference as $pageReference)
 			{
 				$isIndex = $pageReference->getIsIndexPage();
@@ -72,7 +71,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			}
 		}
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $document
 	 * @param String $oldPublicationStatus
@@ -86,10 +85,11 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			if ($parentDocument->isPublished() != $document->isPublished())
 			{
-				website_TopicService::getInstance()->publishDocumentIfPossible($parentDocument, array('childrenPublicationStatusChanged' => $document));
+				website_TopicService::getInstance()->publishDocumentIfPossible($parentDocument, array(
+					'childrenPublicationStatusChanged' => $document));
 			}
 		}
-
+		
 		if ("CORRECTION" == $oldPublicationStatus && isset($params["cause"]) && "activate" == $params["cause"])
 		{
 			$correction = DocumentHelper::getDocumentInstance($params["correctionId"]);
@@ -99,8 +99,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		$this->synchronizeReferences($document);
 	}
-
-
+	
 	/**
 	 * @param website_persistentdocument_page $document
 	 * @param integer $parentNodeId
@@ -118,14 +117,14 @@ class website_PageService extends f_persistentdocument_DocumentService
 				$document->setMetatitle($document->getNavigationtitle());
 			}
 		}
-
+		
 		if ($document->getContent() === null)
 		{
 			$this->initContent($document);
 		}
 		website_WebsiteService::getInstance()->setWebsiteMetaFromParentId($document, $parentNodeId);
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $document
 	 * @param integer $parentNodeId
@@ -145,7 +144,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			}
 		}
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $document
 	 * @param Integer $parentNodeId
@@ -171,7 +170,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		return $document->getNavigationtitle();
 	}
-
+	
 	/**
 	 * Public for patch 304. Do not call ; private use.
 	 * @param website_persistentdocument_page $document
@@ -180,18 +179,18 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		$lang = RequestContext::getInstance()->getLang();
 		$content = $document->getContent();
-
+		
 		if (f_util_StringUtils::isEmpty($content))
 		{
 			return;
 		}
-
+		
 		$contentDOM = new DOMDocument('1.0', 'UTF-8');
 		if ($contentDOM->loadXML($content) === false)
 		{
 			throw new Exception("Unable to load page content");
 		}
-
+		
 		$richtextCount = 0;
 		$wordCount = 0;
 		$blockCount = 0;
@@ -203,7 +202,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			foreach ($blockNodes as $blockNode)
 			{
 				$type = $blockNode->getAttribute("type");
-
+				
 				if ($type == "richtext")
 				{
 					$richtextCount++;
@@ -215,7 +214,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 				}
 			}
 		}
-
+		
 		if ($document->hasMeta('blockInfos'))
 		{
 			$blockInfosMeta = $document->getMetaMultiple('blockInfos');
@@ -224,7 +223,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			$blockInfosMeta = array();
 		}
-
+		
 		if (!isset($blockInfosMeta[$lang]))
 		{
 			$blockInfosMeta[$lang] = array();
@@ -232,10 +231,10 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$blockInfosMeta[$lang]['dynamicBlockCount'] = $blockCount;
 		$blockInfosMeta[$lang]['richtextBlockCount'] = $richtextCount;
 		$blockInfosMeta[$lang]['wordCount'] = $wordCount;
-
+		
 		$document->setMetaMultiple('blockInfos', $blockInfosMeta);
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $document
 	 */
@@ -243,22 +242,22 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		$metasAvailable = array("title" => array(), "description" => array(), "keywords" => array());
 		$content = $document->getContent();
-
+		
 		if (f_util_StringUtils::isEmpty($content))
 		{
 			return $metasAvailable;
 		}
-
+		
 		$contentDOM = new DOMDocument('1.0', 'UTF-8');
 		if ($contentDOM->loadXML($content) === false)
 		{
 			throw new Exception("Unable to load page content");
 		}
 		$bs = block_BlockService::getInstance();
-
+		
 		// Process new page content
 		$xpath = $this->getXPathInstance($contentDOM);
-		try 
+		try
 		{
 			$ids = theme_PagetemplateService::getInstance()->getChangeContentIds($document->getTemplate());
 		}
@@ -273,7 +272,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			foreach ($blockNodes as $blockNode)
 			{
 				$type = $blockNode->getAttribute("type");
-
+				
 				if ($type != "richtext")
 				{
 					$blockInfoArray = $this->buildBlockInfo($type, $this->parseBlockParameters($blockNode), $blockNode->getAttribute('lang'), $blockNode->getAttribute('blockwidth'), $blockNode->getAttribute('editable') != 'false', $blockNode);
@@ -288,36 +287,36 @@ class website_PageService extends f_persistentdocument_DocumentService
 					{
 						$blockAction->setLang($blockInfoArray['lang']);
 					}
-	
+					
 					foreach ($blockInfoArray['parameters'] as $name => $value)
 					{
 						$blockAction->setConfigurationParameter($name, $value);
 					}
 					$blockConfig = $blockAction->getConfiguration();
-					$blockInfo = block_BlockService::getInstance()->getBlockInfo($blockInfoArray["package"]."_".$blockInfoArray["name"]);
+					$blockInfo = block_BlockService::getInstance()->getBlockInfo($blockInfoArray["package"] . "_" . $blockInfoArray["name"]);
 					if ($blockInfo === null)
 					{
 						Framework::warn(__METHOD__ . " This block has no block info. You should declare it in the blocks.xml config file and hide it if you need to.");
 					}
 					else if ($blockInfo->hasMeta() && $blockConfig->getEnablemetas())
 					{
-						list(, $moduleName) = explode('_', $blockInfoArray["package"]);
-						$metaPrefix = $moduleName."_".f_util_StringUtils::lcfirst($blockInfoArray["name"]).".";
-	
+						list (, $moduleName) = explode('_', $blockInfoArray["package"]);
+						$metaPrefix = $moduleName . "_" . f_util_StringUtils::lcfirst($blockInfoArray["name"]) . ".";
+						
 						$newMetas = array();
 						foreach ($blockInfo->getTitleMetas() as $meta)
 						{
 							$newMetas[] = $metaPrefix . $meta;
 						}
 						$metasAvailable["title"] = array_merge($metasAvailable["title"], $newMetas);
-	
+						
 						$newMetas = array();
 						foreach ($blockInfo->getDescriptionMetas() as $meta)
 						{
 							$newMetas[] = $metaPrefix . $meta;
 						}
 						$metasAvailable["description"] = array_merge($metasAvailable["description"], $newMetas);
-	
+						
 						$newMetas = array();
 						foreach ($blockInfo->getKeywordsMetas() as $meta)
 						{
@@ -330,7 +329,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		return $metasAvailable;
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $document
 	 * @param Integer $parentNodeId
@@ -351,7 +350,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		website_MenuitemdocumentService::getInstance()->removeTranslationForRelatedMenuItems($document);
 	}
-
+	
 	/**
 	 * Returns TRUE if the given Page is publishable.
 	 *
@@ -362,7 +361,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		return !f_util_StringUtils::isEmpty($page->getContent()) && parent::isPublishable($page);
 	}
-
+	
 	/**
 	 * Returns the full name of the page's template.
 	 *
@@ -378,7 +377,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		return $document->getTemplate();
 	}
-
+	
 	/**
 	 * @see f_persistentdocument_DocumentService::getWebsiteId()
 	 *
@@ -389,7 +388,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		return intval($document->getMeta("websiteId"));
 	}
-	
 	
 	/**
 	 * @param website_UrlRewritingService $urlRewritingService
@@ -408,7 +406,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		return null;
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $page
 	 * @return website_persistentdocument_page
@@ -419,10 +417,10 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			return $page;
 		}
-
+		
 		throw new Exception('Invalid ancestor Id for pageversion' . $page->getId());
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $page
 	 * @param Boolean $isIndexPage
@@ -461,12 +459,9 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	public function getFirstPublished($parent)
 	{
-		return $this->createQuery()->add(Restrictions::published())
-			->add(Restrictions::childOf($parent->getId()))
-			->setMaxResults(1)
-			->findUnique();	
+		return $this->createQuery()->add(Restrictions::published())->add(Restrictions::childOf($parent->getId()))->setMaxResults(1)->findUnique();
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $page
 	 * @param Boolean $isHomePage
@@ -491,7 +486,8 @@ class website_PageService extends f_persistentdocument_DocumentService
 				}
 			}
 			$this->getTransactionManager()->commit();
-		} catch (Exception $e)
+		}
+		catch (Exception $e)
 		{
 			$this->getTransactionManager()->rollBack($e);
 		}
@@ -507,10 +503,10 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$indexPage = DocumentHelper::getByCorrection($page);
 		
 		$website = website_WebsiteService::getInstance()->getByDocument($indexPage);
-        if ($website)
-        {
-    		$website->getDocumentService()->setHomePage($website, $indexPage);
-        }
+		if ($website)
+		{
+			$website->getDocumentService()->setHomePage($website, $indexPage);
+		}
 	}
 	
 	/**
@@ -533,7 +529,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			if ($parent instanceof website_persistentdocument_website)
 			{
 				$parent->getDocumentService()->setHomePage($parent, $indexPage);
-			}	
+			}
 		}
 	}
 	
@@ -543,13 +539,13 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	public function removeIndexPage($page, $userSetting = false)
 	{
-        $topic = website_TopicService::getInstance()->getParentByPage($page);
+		$topic = website_TopicService::getInstance()->getParentByPage($page);
 		if ($topic)
 		{
 			website_TopicService::getInstance()->setIndexPage($topic, null, $userSetting);
 		}
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $document The document to move.
 	 * @param integer $destId ID of the destination node.
@@ -561,21 +557,21 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			throw new BaseException('Unable to move this document in this state', 'modules.website.errors.unable-to-move-document');
 		}
-
+		
 		$currentParent = $this->getParentOf($document);
 		if ($currentParent !== null && $currentParent->getId() === $destId)
 		{
 			// If the parent doesn't change there's nothing to do...
 			return;
 		}
-
+		
 		// Remove index page
 		if ($document instanceof website_persistentdocument_page && $document->getIsIndexPage())
 		{
 			// TODO: document the precise use of the second argument of removeIndexPage ???
 			$document->getDocumentService()->removeIndexPage($document, true);
 		}
-
+		
 		$ts = TagService::getInstance();
 		foreach ($ts->getTags($document) as $tag)
 		{
@@ -585,7 +581,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			}
 		}
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $document
 	 * @param Integer $destId
@@ -607,7 +603,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$document->setMeta("websiteId", $newWebsiteId);
 			$document->saveMeta();
 		}
-
+		
 		// When a page is moved from a topic to another, reindex it.
 		$is = indexer_IndexService::getInstance();
 		if (!is_null($is))
@@ -617,7 +613,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		// Regenerate the page cache
 		$this->synchronizeReferences($document);
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $page
 	 */
@@ -627,23 +623,24 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			Framework::debug(__METHOD__ . '(' . $page->__toString() . ')');
 		}
-
+		
 		if ($page instanceof website_persistentdocument_pagereference)
 		{
 			$basePage = DocumentHelper::getDocumentInstance($page->getReferenceofid());
-		} else
+		}
+		else
 		{
 			$basePage = $page;
 		}
-
+		
 		if (Framework::isDebugEnabled())
 		{
 			Framework::debug(__METHOD__ . '(' . $page->__toString() . ') -> original page :' . $basePage->__toString());
 		}
-
+		
 		$pageTreeNode = TreeService::getInstance()->getInstanceByDocument($page);
 		$parentTreeNode = $pageTreeNode->getParent();
-
+		
 		$query = $this->getPersistentProvider()->createQuery('modules_website/topic')->add(Restrictions::descendentOf($parentTreeNode->getId()));
 		$topics = $query->find();
 		foreach ($topics as $topic)
@@ -651,24 +648,25 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$this->setPageReferenceInTopics($topic, $basePage);
 		}
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_topic $topic
 	 * @param website_persistentdocument_page $page
 	 * @return website_persistentdocument_page
 	 */
 	public function createPageReference($topic, $page)
-	{		
+	{
 		if ($page instanceof website_persistentdocument_pagereference)
 		{
 			$basePage = $this->getDocumentInstance($page->getReferenceofid());
-		} else
+		}
+		else
 		{
 			$basePage = $page;
 		}
 		return $this->setPageReferenceInTopics($topic, $basePage);
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_topic $topic
 	 * @param website_persistentdocument_page $page
@@ -676,10 +674,8 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	private function setPageReferenceInTopics($topic, $page)
 	{
-		$query = $this->getPersistentProvider()->createQuery('modules_website/pagereference')
-			->add(Restrictions::childOf($topic->getId()))
-			->add(Restrictions::eq('referenceofid', $page->getId()));
-
+		$query = $this->getPersistentProvider()->createQuery('modules_website/pagereference')->add(Restrictions::childOf($topic->getId()))->add(Restrictions::eq('referenceofid', $page->getId()));
+		
 		$pageReference = $query->findUnique();
 		$setAsIndex = false;
 		
@@ -691,13 +687,9 @@ class website_PageService extends f_persistentdocument_DocumentService
 			}
 			
 			$pageReference = website_PagereferenceService::getInstance()->getNewDocumentInstance();
-			$parentContainer = $topic->getDocumentService()->getParentOf($topic);	
-			$index = website_PagereferenceService::getInstance()->createQuery()
-				->setProjection(Projections::property('isIndexPage', 'isIndexPage'))
-				->add(Restrictions::childOf($parentContainer->getId()))
-				->add(Restrictions::eq('referenceofid', $page->getId()))
-				->findUnique();
-				
+			$parentContainer = $topic->getDocumentService()->getParentOf($topic);
+			$index = website_PagereferenceService::getInstance()->createQuery()->setProjection(Projections::property('isIndexPage', 'isIndexPage'))->add(Restrictions::childOf($parentContainer->getId()))->add(Restrictions::eq('referenceofid', $page->getId()))->findUnique();
+			
 			if ($index)
 			{
 				$setAsIndex = ($index['isIndexPage'] == true);
@@ -716,7 +708,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		return $pageReference;
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $page
 	 */
@@ -731,38 +723,39 @@ class website_PageService extends f_persistentdocument_DocumentService
 				Framework::debug(__METHOD__ . '(' . $page->__toString() . ') -> Canceled not in tree');
 				return;
 			}
-
+			
 			if ($page instanceof website_persistentdocument_pagereference)
 			{
 				$pageId = $page->getReferenceofid();
 				$deletePage = true;
-			} else
+			}
+			else
 			{
 				$pageId = $page->getId();
 				$deletePage = false;
 			}
 			$parentTreeNode = $pageTreeNode->getParent();
 			$query = $this->getPersistentProvider()->createQuery('modules_website/pagereference')->add(Restrictions::eq('referenceofid', $pageId));
-
+			
 			//Tag deplacer d'une page reference on ne prend que les descendants de rubrique
 			if ($deletePage)
 			{
 				$query->add(Restrictions::descendentOf($parentTreeNode->getId()));
 			}
-
+			
 			$pagesReference = $query->find();
 			$pgrefService = website_PagereferenceService::getInstance();
-
+			
 			foreach ($pagesReference as $pageReference)
 			{
 				$pgrefService->purgeDocument($pageReference);
 			}
-
+			
 			if ($deletePage)
 			{
 				$pgrefService->purgeDocument($page);
 			}
-		} 
+		}
 		else
 		{
 			if (Framework::isDebugEnabled())
@@ -771,7 +764,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			}
 		}
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $document
 	 * @param String $tag
@@ -784,7 +777,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$this->createFunctionalPage($document);
 		}
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $document
 	 * @param String $tag
@@ -793,7 +786,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	public function tagRemoved($document, $tag)
 	{
 		$tagService = TagService::getInstance();
-
+		
 		if ($tagService->isFunctionalTag($tag))
 		{
 			$this->removeFunctionalPage($document);
@@ -801,33 +794,32 @@ class website_PageService extends f_persistentdocument_DocumentService
 			{
 				Framework::debug('FUNCTIONAL TAG');
 			}
-
+			
 			$pageNode = TreeService::getInstance()->getInstanceByDocument($document);
 			if (is_null($pageNode))
 			{
 				return;
 			}
-
+			
 			$ancestors = $pageNode->getAncestors();
 			if (Framework::isDebugEnabled())
 			{
 				Framework::debug('COUNT ANCESTORS : ' . count($ancestors));
 			}
-
+			
 			$topic = array_pop($ancestors)->getPersistentDocument();
 			if (Framework::isDebugEnabled())
 			{
 				Framework::debug('TOPIC ' . $topic->__toString());
 			}
-
+			
 			if (!$topic instanceof website_persistentdocument_topic)
 			{
 				return;
 			}
-
+			
 			$pageRefs = $this->getPersistentProvider()->createQuery('modules_website/pagereference')->add(Restrictions::eq('referenceofid', $document->getId()))->find();
-
-
+			
 			foreach ($pageRefs as $pageRef)
 			{
 				if (Framework::isDebugEnabled())
@@ -836,40 +828,40 @@ class website_PageService extends f_persistentdocument_DocumentService
 				}
 				$tagService->removeTag($pageRef, $tag);
 			}
-
+			
 			$parentTopic = array_pop($ancestors)->getPersistentDocument();
 			if (Framework::isDebugEnabled())
 			{
 				Framework::debug('PARENTTOPIC ' . $parentTopic->__toString());
 			}
-
+			
 			if (!$parentTopic instanceof website_persistentdocument_topic)
 			{
 				return;
 			}
-
+			
 			$query = $this->getPersistentProvider()->createQuery('modules_website/page')->add(Restrictions::descendentOf($parentTopic->getId(), 1))->add(Restrictions::hasTag($tag));
 			$page = $query->findUnique();
-
+			
 			if (Framework::isDebugEnabled())
 			{
 				Framework::debug('PAGE ' . $page);
 			}
-
+			
 			if (is_null($page))
 			{
 				return;
 			}
-
+			
 			if ($page instanceof website_persistentdocument_pagereference)
 			{
 				$page = DocumentHelper::getDocumentInstance($page->getReferenceofid());
 			}
-
+			
 			$this->setPageReferenceInTopics($topic, $page);
-
+			
 			$query = $this->getPersistentProvider()->createQuery('modules_website/topic')->add(Restrictions::descendentOf($topic->getId()));
-
+			
 			$topics = $query->find();
 			foreach ($topics as $topic)
 			{
@@ -877,7 +869,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			}
 		}
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $fromDocument
 	 * @param website_persistentdocument_page $toDocument
@@ -890,13 +882,13 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			Framework::debug(__METHOD__ . '(' . $fromDocument->__toString() . ',' . $tag . ')');
 		}
-
+		
 		if (TagService::getInstance()->isFunctionalTag($tag))
 		{
 			$this->removeFunctionalPage($fromDocument);
 		}
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $fromDocument
 	 * @param website_persistentdocument_page $toDocument
@@ -909,25 +901,20 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			Framework::debug(__METHOD__ . '(' . $toDocument->__toString() . ',' . $tag . ')');
 		}
-
+		
 		if (TagService::getInstance()->isFunctionalTag($tag))
 		{
 			$this->createFunctionalPage($toDocument);
 		}
 	}
-
+	
 	/**
 	 * @param Integer $pageCount
 	 * @return array<website_persistentdocument_page>
 	 */
 	public function getLastModified($pageCount = 5)
 	{
-		$query = $this->createQuery()
-			->add(Restrictions::ne('model', 'modules_website/pagereference'))
-			->add(Restrictions::ne('model', 'modules_website/pagegroup'))
-			->add(Restrictions::ne('publicationstatus', 'DEPRECATED'))
-			->addOrder(Order::desc('document_modificationdate'))
-			->setMaxResults($pageCount);
+		$query = $this->createQuery()->add(Restrictions::ne('model', 'modules_website/pagereference'))->add(Restrictions::ne('model', 'modules_website/pagegroup'))->add(Restrictions::ne('publicationstatus', 'DEPRECATED'))->addOrder(Order::desc('document_modificationdate'))->setMaxResults($pageCount);
 		$pageModel = f_persistentdocument_PersistentDocumentModel::getInstanceFromDocumentModelName('modules_website/page');
 		if ($pageModel->useCorrection())
 		{
@@ -935,7 +922,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		return $query->find();
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $newDocument
 	 * @param website_persistentdocument_page $originalDocument
@@ -946,7 +933,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$newDocument->setIsIndexPage(false);
 		$newDocument->setIsHomePage(false);
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $page
 	 */
@@ -954,7 +941,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		$page->setContent('<change:contents xmlns:change="' . self::CHANGE_PAGE_EDITOR_NS . '" />');
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $page
 	 */
@@ -998,17 +985,17 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			if ($document instanceof website_persistentdocument_website)
 			{
-			    $this->currentPageAncestors[] = $document;
+				$this->currentPageAncestors[] = $document;
 				$this->currentPageAncestorsIds[] = $document->getId();
 				website_WebsiteService::getInstance()->setCurrentWebsite($document);
 			}
 			elseif ($document instanceof website_persistentdocument_topic)
 			{
-			    $this->currentPageAncestors[] = $document;
-			    $this->currentPageAncestorsIds[] = $document->getId();
+				$this->currentPageAncestors[] = $document;
+				$this->currentPageAncestorsIds[] = $document->getId();
 			}
 		}
-	}	
+	}
 	
 	/**
 	 * @return integer
@@ -1017,14 +1004,14 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		return $this->currentPageId;
 	}
-
+	
 	/**
 	 * @return website_persistentdocument_page
 	 */
 	function getCurrentPage()
 	{
 		return $this->getDocumentInstance($this->currentPageId, "modules_website/page");
-	}	
+	}
 	
 	/**
 	 * @return array the current page ancestors ids
@@ -1033,25 +1020,19 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		return $this->currentPageAncestorsIds;
 	}
-
+	
 	/**
 	 * @return array the current page ancestors
 	 */
 	public function getCurrentPageAncestors()
 	{
 		return $this->currentPageAncestors;
-	}	
+	}
 	
-	
-	
-	
-	
-	
-
 	const CHANGE_PAGE_EDITOR_NS = "http://www.rbs.fr/change/1.0/schema";
 	const CHANGE_TEMPLATE_TYPE_HTML = "html";
 	const CHANGE_TEMPLATE_TYPE_XUL = "xul";
-
+	
 	/**
 	 * Extract the page's "full text" , that is the static richtexts
 	 * inside the XML's page content.
@@ -1063,8 +1044,11 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		$result = "";
 		$pageContent = $page->getContent();
-		if ($pageContent === null) { return $result; }
-
+		if ($pageContent === null)
+		{
+			return $result;
+		}
+		
 		$contentDOM = new DOMDocument('1.0', 'UTF-8');
 		if ($contentDOM->loadXML($pageContent) == false)
 		{
@@ -1075,7 +1059,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$xpath = $this->getXPathInstance($contentDOM);
 		foreach (theme_PagetemplateService::getInstance()->getChangeContentIds($page->getTemplate()) as $id)
 		{
-			$newRichtextNodes = $xpath->query('//change:content[@id="'. $id .'"]//change:richtextcontent');
+			$newRichtextNodes = $xpath->query('//change:content[@id="' . $id . '"]//change:richtextcontent');
 			foreach ($newRichtextNodes as $richtTextNode)
 			{
 				$result .= ' ' . $richtTextNode->nodeValue;
@@ -1083,7 +1067,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		return f_util_HtmlUtils::htmlToText($result, false);
 	}
-
+	
 	/**
 	 * Update the content of the page
 	 *
@@ -1095,7 +1079,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$newContentDOM = new DOMDocument('1.0', 'UTF-8');
 		$newContentDOM->loadXML($content);
 		$this->cleanRichTextContent($newContentDOM);
-
+		
 		//change:richtextcontent
 		$existingContent = $page->getContent();
 		if (f_util_StringUtils::isEmpty($existingContent))
@@ -1106,9 +1090,9 @@ class website_PageService extends f_persistentdocument_DocumentService
 		// Load the existing content
 		$existingContentDOM = $this->getDomFromPageContent($page);
 		$existingContentXPath = $this->getXPathInstance($existingContentDOM);
-
+		
 		$this->doBlockCallbacks($page, $existingContentDOM, $newContentDOM);
-
+		
 		$contentNodes = $newContentDOM->getElementsByTagNameNS(self::CHANGE_PAGE_EDITOR_NS, 'content');
 		foreach ($contentNodes as $contentNode)
 		{
@@ -1127,10 +1111,10 @@ class website_PageService extends f_persistentdocument_DocumentService
 				$existingContentDOM->documentElement->appendChild($importedNode);
 			}
 		}
-
+		
 		$page->setContent($existingContentDOM->saveXML());
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $page
 	 * @return DOMDocument | null
@@ -1145,27 +1129,30 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		return $doc;
 	}
-
+	
 	private function hasBlockInOtherLangs($page, $type, &$otherLangsBlocks)
 	{
 		$rq = RequestContext::getInstance();
 		$contextLang = $rq->getLang();
 		foreach ($page->getI18nInfo()->getLangs() as $lang)
 		{
-			if ($lang === $contextLang) {continue;}	
+			if ($lang === $contextLang)
+			{
+				continue;
+			}
 			if (isset($otherLangsBlocks[$lang]))
 			{
 				$otherLangBlocks = $otherLangsBlocks[$lang];
 			}
 			else
 			{
-				try 
+				try
 				{
 					$rq->beginI18nWork($lang);
 					if (f_util_StringUtils::isNotEmpty($page->getContent()))
 					{
 						$otherLangDom = f_util_DOMUtils::fromString($page->getContent());
-						$otherLangBlocks = $this->getBlocksFromDom($otherLangDom);					
+						$otherLangBlocks = $this->getBlocksFromDom($otherLangDom);
 						$otherLangsBlocks[$lang] = $otherLangBlocks;
 					}
 					else
@@ -1188,7 +1175,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		return false;
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $page
 	 * @param DOMDocument $oldPageContentDom
@@ -1198,9 +1185,9 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		$oldBlocks = $this->getBlocksFromDom($oldPageContentDom);
 		$newBlocks = $this->getBlocksFromDom($newPageContentDom);
-
+		
 		$otherLangsBlocks = array();
-
+		
 		foreach ($newBlocks as $type => $newBlock)
 		{
 			if (!isset($oldBlocks[$type]))
@@ -1218,7 +1205,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			}
 		}
 	}
-
+	
 	/**
 	 * @param DOMDocument $dom
 	 * @return array<String, website_BlockAction>
@@ -1233,7 +1220,10 @@ class website_PageService extends f_persistentdocument_DocumentService
 			foreach ($blockElems as $blockElem)
 			{
 				$type = $blockElem->getAttribute("type");
-				if ($bs->isSpecialBlock($type)) {continue;}
+				if ($bs->isSpecialBlock($type))
+				{
+					continue;
+				}
 				if (!isset($blocks[$type]))
 				{
 					$blockClassName = $bs->getBlockActionClassNameByType($type);
@@ -1243,23 +1233,18 @@ class website_PageService extends f_persistentdocument_DocumentService
 						if ($class->implementsInterface("website_PageBlock"))
 						{
 							$block = $class->newInstance($type);
-							$blockInfo = $this->buildBlockInfo($type,
-							$this->parseBlockParameters($blockElem),
-							$blockElem->getAttribute('lang'),
-							$blockElem->getAttribute('blockwidth'),
-							$blockElem->getAttribute('editable') != 'false',
-							$blockElem);
-
+							$blockInfo = $this->buildBlockInfo($type, $this->parseBlockParameters($blockElem), $blockElem->getAttribute('lang'), $blockElem->getAttribute('blockwidth'), $blockElem->getAttribute('editable') != 'false', $blockElem);
+							
 							if (isset($blockInfo['lang']))
 							{
 								$block->setLang($blockInfo['lang']);
 							}
-
+							
 							foreach ($blockInfo['parameters'] as $name => $value)
 							{
 								$block->setConfigurationParameter($name, $value);
 							}
-
+							
 							$blocks[$type] = $block;
 						}
 					}
@@ -1268,14 +1253,14 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		return $blocks;
 	}
-
+	
 	private function getBlockClassNameFromType($type)
 	{
 		$typeInfo = explode("_", $type);
 		if (count($typeInfo) == 3)
 		{
-			$className = $typeInfo[1].'_Block'.ucfirst($typeInfo[2]).'Action';
-			if (f_util_ClassUtils::classExists($className))
+			$className = $typeInfo[1] . '_Block' . ucfirst($typeInfo[2]) . 'Action';
+			if (class_exists($className))
 			{
 				return $className;
 			}
@@ -1286,7 +1271,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		return null;
 	}
-
+	
 	/**
 	 * @param String $textContent
 	 * @return String
@@ -1298,7 +1283,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$this->cleanRichTextContent($contentDOM);
 		return $contentDOM->saveXML();
 	}
-
+	
 	/**
 	 * @param DOMDocument $domContent
 	 */
@@ -1315,7 +1300,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			}
 		}
 	}
-
+	
 	/**
 	 * @param DOMDocument $DOMDocument
 	 * @return DOMXPath
@@ -1326,7 +1311,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$resultXPath->registerNameSpace('change', self::CHANGE_PAGE_EDITOR_NS);
 		return $resultXPath;
 	}
-
+	
 	/**
 	 * @return task_persistentdocument_usertask[]
 	 */
@@ -1345,78 +1330,58 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$query->setMaxResults(50);
 		return $query->find();
 	}
-
+	
 	// Orphan pages related methods.
 	
+
 	/**
 	 * @return website_persistentdocument_page[]
 	 */
 	public final function getOrphanPages()
 	{
-		$query = $this->createQuery()
-		->add(Restrictions::published())
-		->add(Restrictions::eq('isorphan',true))
-		->addOrder(Order::desc('document_modificationdate'))
-		->setMaxResults(50);
+		$query = $this->createQuery()->add(Restrictions::published())->add(Restrictions::eq('isorphan', true))->addOrder(Order::desc('document_modificationdate'))->setMaxResults(50);
 		return $query->find();
-
+	
 	}
-
+	
 	/**
 	 * @return website_persistentdocument_page[]
 	 */
 	public final function getOrphanPagesForWebsiteId($websiteId)
 	{
-		$query = $this->createQuery()
-		->add(Restrictions::published())
-		->add(Restrictions::eq('isorphan',true))
-		->addOrder(Order::desc('document_modificationdate'))
-		->add(Restrictions::descendentOf($websiteId))->setMaxResults(50);
+		$query = $this->createQuery()->add(Restrictions::published())->add(Restrictions::eq('isorphan', true))->addOrder(Order::desc('document_modificationdate'))->add(Restrictions::descendentOf($websiteId))->setMaxResults(50);
 		return $query->find();
-
+	
 	}
-
+	
 	/**
 	 * @return Integer
 	 */
 	public final function getOrphanPagesCount()
 	{
-		$query = $this->createQuery()
-		->add(Restrictions::published())
-		->add(Restrictions::eq('isorphan',true))
-		->addOrder(Order::desc('document_creationdate'))
-		->setProjection(Projections::rowCount('count'));
+		$query = $this->createQuery()->add(Restrictions::published())->add(Restrictions::eq('isorphan', true))->addOrder(Order::desc('document_creationdate'))->setProjection(Projections::rowCount('count'));
 		$result = $query->find();
 		return $result[0]['count'];
-
+	
 	}
-
+	
 	/**
 	 * @return Integer
 	 */
 	public final function getOrphanPagesCountForWebsiteId($websiteId)
 	{
-		$query = $this->createQuery()
-		->add(Restrictions::published())
-		->add(Restrictions::eq('isorphan',true))
-		->addOrder(Order::desc('document_creationdate'))
-		->add(Restrictions::descendentOf($websiteId))
-		->setProjection(Projections::rowCount('count'));
+		$query = $this->createQuery()->add(Restrictions::published())->add(Restrictions::eq('isorphan', true))->addOrder(Order::desc('document_creationdate'))->add(Restrictions::descendentOf($websiteId))->setProjection(Projections::rowCount('count'));
 		$result = $query->find();
 		return $result[0]['count'];
-
+	
 	}
-
+	
 	/**
 	 * @return Integer[]
 	 */
 	public function getTaggedPageIds()
 	{
-		$query = $this->createQuery()
-		->add(Restrictions::published())
-		->add(Restrictions::isTagged())
-		->add(Restrictions::eq('model', 'modules_website/page'))
-		->setProjection(Projections::property('id', 'id'));
+		$query = $this->createQuery()->add(Restrictions::published())->add(Restrictions::isTagged())->add(Restrictions::eq('model', 'modules_website/page'))->setProjection(Projections::property('id', 'id'));
 		$result = array();
 		foreach ($query->find() as $row)
 		{
@@ -1424,7 +1389,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		return $result;
 	}
-
+	
 	/**
 	 * Add custom log informations
 	 * @param f_persistentdocument_PersistentDocument $document
@@ -1450,7 +1415,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		$info['path'] = implode(' / ', $path);
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $page
 	 * @return Integer
@@ -1461,13 +1426,12 @@ class website_PageService extends f_persistentdocument_DocumentService
 		return ($skin !== null) ? $skin->getId() : null;
 	}
 	
-	
 	/**
 	 * @param website_persistentdocument_page $page
 	 * @return skin_persistentdocument_skin
 	 */
 	public function getSkin($page)
-	{		
+	{
 		$skin = $page->getSkin();
 		if ($skin !== null && $skin->isPublished())
 		{
@@ -1487,7 +1451,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		return null;
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $document
 	 * @param string $forModuleName
@@ -1497,7 +1461,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	public function getResume($document, $forModuleName, $allowedSections = null)
 	{
 		$data = parent::getResume($document, $forModuleName, $allowedSections);
-
+		
 		if ($document->isContextLangAvailable())
 		{
 			$lang = RequestContext::getInstance()->getLang();
@@ -1507,7 +1471,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$lang = $document->getLang();
 		}
 		$blockCount = $richtextCount = $wordCount = 0;
-
+		
 		if ($document->hasMeta('blockInfos'))
 		{
 			$blockInfos = $document->getMetaMultiple('blockInfos');
@@ -1518,11 +1482,11 @@ class website_PageService extends f_persistentdocument_DocumentService
 				$wordCount = $blockInfos[$lang]['wordCount'];
 			}
 		}
-
+		
 		$contentData = array(
-			'pagecomposition' => f_Locale::translateUI('&modules.website.bo.doceditor.Current-page-composition;', array("blockCount" => $blockCount, "richtextCount" => $richtextCount))
-		);
-
+			'pagecomposition' => f_Locale::translateUI('&modules.website.bo.doceditor.Current-page-composition;', array(
+				"blockCount" => $blockCount, "richtextCount" => $richtextCount)));
+		
 		if ($wordCount == 0)
 		{
 			$contentData['freecontent'] = f_Locale::translateUI('&modules.website.bo.doceditor.Current-word-count-empty;');
@@ -1533,25 +1497,26 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		else
 		{
-			$contentData['freecontent'] = f_Locale::translateUI('&modules.website.bo.doceditor.Current-word-count;', array('wordCount' => $wordCount));
+			$contentData['freecontent'] = f_Locale::translateUI('&modules.website.bo.doceditor.Current-word-count;', array(
+				'wordCount' => $wordCount));
 		}
 		$data['content'] = $contentData;
 		return $data;
 	}
-
+	
 	/**
 	 * Remove spacer
 	 * @param DOMDocument $pageContent
 	 */
 	private function patchOldPageContent($pageContent)
 	{
-		$spacers = array();	
+		$spacers = array();
 		foreach ($pageContent->getElementsByTagName('cblock') as $spacer)
 		{
 			$spacers[] = $spacer;
 		}
 		
-		foreach ($spacers as $spacer) 
+		foreach ($spacers as $spacer)
 		{
 			$rowNode = $spacer->parentNode;
 			
@@ -1597,18 +1562,18 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$wsprs = website_PageRessourceService::getInstance();
 		$pageContent = $wsprs->getBackpagetemplateAsDOMDocument($page);
 		$this->patchOldPageContent($pageContent);
-
+		
 		$blocks = $this->generateBlocks($pageContent);
 		$wsprs->buildBlockContainerForBackOffice($pageContent, $blocks);
 		
 		$pageContent->preserveWhiteSpace = false;
 		$xulContent = $pageContent->saveXML($pageContent->documentElement);
-
+		
 		$controller = website_BlockController::getInstance();
 		$controller->setPage($page);
 		$controller->getContext()->setAttribute(website_BlockAction::BLOCK_BO_MODE_ATTRIBUTE, true);
 		$this->populateHTMLBlocks($controller, $blocks);
-
+		
 		foreach ($blocks as $blockId => $block)
 		{
 			$html = $block['html'];
@@ -1630,7 +1595,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 				{
 					$html = f_util_HtmlUtils::cleanHtmlForBackofficeEdition($html);
 				}
-				$tmpDoc->loadXML('<div xmlns="http://www.w3.org/1999/xhtml" style="' . $baseStyle . '" class="'.$block['class'].'">' . $html . '</div>');
+				$tmpDoc->loadXML('<div xmlns="http://www.w3.org/1999/xhtml" style="' . $baseStyle . '" class="' . $block['class'] . '">' . $html . '</div>');
 			}
 			if ($tmpDoc->documentElement)
 			{
@@ -1640,13 +1605,13 @@ class website_PageService extends f_persistentdocument_DocumentService
 			{
 				Framework::warn(__METHOD__ . ' ' . $block['type'] . ' html: ' . $html);
 				$class = str_replace('_', '-', $block['type'] . ' ' . $block['package']);
-				$xmlContent = '<div xmlns="http://www.w3.org/1999/xhtml" style="' . $baseStyle . '" class="'.$class.'"><strong style="color:red;">' . $this->getBlockLabelFromBlockType($block['type'])  . ' : Invalid XML</strong></div>';
+				$xmlContent = '<div xmlns="http://www.w3.org/1999/xhtml" style="' . $baseStyle . '" class="' . $class . '"><strong style="color:red;">' . $this->getBlockLabelFromBlockType($block['type']) . ' : Invalid XML</strong></div>';
 			}
-			$xulContent = str_replace('<htmlblock_'.$blockId.'/>', $xmlContent , $xulContent);
+			$xulContent = str_replace('<htmlblock_' . $blockId . '/>', $xmlContent, $xulContent);
 		}
 		return $xulContent;
 	}
-
+	
 	private function getBlockLabelFromBlockType($blockType)
 	{
 		try
@@ -1659,7 +1624,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		return $blockType;
 	}
-
+	
 	/**
 	 * @param websitePage $pageContext
 	 * @return website_Breadcrumb
@@ -1671,34 +1636,37 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$breadcrumb = new website_Breadcrumb();
 		$lastAncestorPage = null;
 		
-			foreach ($pageContext->getAncestorIds() as $ancestorId)
+		foreach ($pageContext->getAncestorIds() as $ancestorId)
+		{
+			$ancestor = DocumentHelper::getDocumentInstance($ancestorId);
+			if (!$ancestor->isPublished())
 			{
-				$ancestor = DocumentHelper::getDocumentInstance($ancestorId);
-				if (! $ancestor->isPublished())
-				{
-					continue;
-				}
-
-				if ($ancestor instanceof website_persistentdocument_website)
-				{
+				continue;
+			}
+			
+			if ($ancestor instanceof website_persistentdocument_website)
+			{
 				$lastAncestorPage = $ancestor->getIndexPage();
 				if ($lastAncestorPage)
 				{
 					$navigationtitle = $lastAncestorPage->getNavigationLabel();
 					$href = $lastAncestorPage !== $pageDocument ? LinkHelper::getDocumentUrl($ancestor) : null;
-					$breadcrumb->addElement($navigationtitle, $href);
-					if ($href)
+					if ($navigationtitle)
 					{
-						$pageContext->addLink("home", "text/html", $href, $navigationtitle);
-				}
+						$breadcrumb->addElement($navigationtitle, $href);
+						if ($href)
+						{
+							$pageContext->addLink("home", "text/html", $href, $navigationtitle);
+						}
+					}
 				}
 			}
-				else if ($ancestor instanceof website_persistentdocument_topic)
-				{
+			else if ($ancestor instanceof website_persistentdocument_topic)
+			{
 				if ($ancestor->getNavigationVisibility() != website_ModuleService::HIDDEN)
-					{
+				{
 					$lastAncestorPage = $ancestor->getIndexPage();
-					$navigationtitle = $ancestor->getLabel();	
+					$navigationtitle = $ancestor->getLabel();
 					if ($navigationtitle)
 					{
 						$href = ($lastAncestorPage && $lastAncestorPage !== $pageDocument) ? LinkHelper::getDocumentUrl($ancestor) : null;
@@ -1707,38 +1675,34 @@ class website_PageService extends f_persistentdocument_DocumentService
 				}
 			}
 		}
-
+		
 		if ($lastAncestorPage !== $pageDocument)
 		{
 			if ($pageDocument->getNavigationVisibility() == website_ModuleService::HIDDEN)
 			{
 				$params = change_Controller::getInstance()->getContext()->getRequest()->getParameters();
-				
-				if (isset($params['wemod'])
-					&& isset($params[$params['wemod'].'Param'])
-					&& is_array($params[$params['wemod'].'Param'])
-					&& isset($params[$params['wemod'].'Param']['cmpref']))
+				if (isset($params['wemod']) && isset($params[$params['wemod'] . 'Param']) && is_array($params[$params['wemod'] . 'Param']) && isset($params[$params['wemod'] . 'Param']['cmpref']))
 				{
-					$detail = DocumentHelper::getDocumentInstanceIfExists(intval($params[$params['wemod'].'Param']['cmpref']));
+					$detail = DocumentHelper::getDocumentInstanceIfExists(intval($params[$params['wemod'] . 'Param']['cmpref']));
 					if ($detail)
 					{
 						$navigationtitle = $detail->getDocumentService()->getNavigationLabel($detail);
 						if ($navigationtitle)
 						{
 							$breadcrumb->addElement($navigationtitle);
-		}
+						}
 					}
 				}
 			}
 			else
-		{
+			{
 				$breadcrumb->addElement($pageContext->getNavigationtitle());
-		}
+			}
 		}
 		
 		return $breadcrumb;
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $page
 	 * @param array $blockInfo
@@ -1751,7 +1715,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$controller->setPage($page);
 		$controller->getContext()->setAttribute(website_BlockAction::BLOCK_BO_MODE_ATTRIBUTE, true);
 		$this->populateHTMLBlocks($controller, $blocks);
-
+		
 		$block = $blocks[1];
 		$html = $block['html'];
 		$tmpDoc = new DOMDocument('1.0', 'UTF-8');
@@ -1770,8 +1734,8 @@ class website_PageService extends f_persistentdocument_DocumentService
 			{
 				$html = f_util_HtmlUtils::cleanHtmlForBackofficeEdition($html);
 			}
-			$class = str_replace('_', '-', $block['type'] . ' ' . $block['package']);	
-			$tmpDoc->loadXML('<div xmlns="http://www.w3.org/1999/xhtml" class="'.$class.'">' . $html . '</div>');
+			$class = str_replace('_', '-', $block['type'] . ' ' . $block['package']);
+			$tmpDoc->loadXML('<div xmlns="http://www.w3.org/1999/xhtml" class="' . $class . '">' . $html . '</div>');
 		}
 		if ($tmpDoc->documentElement)
 		{
@@ -1779,12 +1743,12 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		else
 		{
-			return '<div xmlns="http://www.w3.org/1999/xhtml" class="'.$class.'"><strong style="color:red;">' . $this->getBlockLabelFromBlockType($block['type']) . ' : Invalid XML</strong></div>';
+			return '<div xmlns="http://www.w3.org/1999/xhtml" class="' . $class . '"><strong style="color:red;">' . $this->getBlockLabelFromBlockType($block['type']) . ' : Invalid XML</strong></div>';
 		}
 	}
-
+	
 	private $benchTimes = null;
-
+	
 	private function addBenchTime($key)
 	{
 		if ($this->benchTimes !== null)
@@ -1801,7 +1765,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$this->benchTimes['c'] = $current;
 		}
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_page $page
 	 */
@@ -1821,10 +1785,11 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		else if ($dcs->isEnabled())
 		{
-			$cacheItem = $dcs->readFromCache(__METHOD__, array($page->getId(), RequestContext::getInstance()->getLang()), array($page->getId(), 'modules_theme/pagetemplate'));
+			$cacheItem = $dcs->readFromCache(__METHOD__, array($page->getId(), RequestContext::getInstance()->getLang()), array(
+				$page->getId(), 'modules_theme/pagetemplate'));
 			$putInCache = true;
 		}
-
+		
 		if ($cacheItem !== null && $cacheItem->isValid())
 		{
 			$cachedData = $cacheItem->getValue('blocksAndHtmlBody');
@@ -1836,7 +1801,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			
 			$controller = website_BlockController::getInstance();
 			$controller->setPage($page);
-
+			
 			$pageContext = $controller->getContext();
 			$this->addFavIconInfo($pageContext);
 			$pageContext->addContainerStylesheet();
@@ -1848,45 +1813,46 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$pageContent = $wsprs->getPagetemplateAsDOMDocument($page);
 			
 			$this->addBenchTime('templateFill');
-
+			
 			$blocks = $this->generateBlocks($pageContent);
 			$this->addBenchTime('blocksParsing');
-
+			
 			$wsprs->buildBlockContainerForFrontOffice($pageContent, $blocks);
 			$this->addBenchTime('blocksContainerGenerating');
 			$pageContent->preserveWhiteSpace = false;
-
+			
 			$controller = website_BlockController::getInstance();
 			$controller->setPage($page);
-
+			
 			$pageContext = $controller->getContext();
 			$this->addFavIconInfo($pageContext);
 			$pageContext->addContainerStylesheet();
-
+			
 			$this->addBenchTime('pageContextInitialize');
 			if ($putInCache)
 			{
 				$htmlBody = $pageContent->saveXML($pageContent->documentElement);
 				$cacheItem->setTTL(86400);
-				$cacheItem->setValue("blocksAndHtmlBody", serialize(array("blocks" => $blocks, "htmlBody" => $htmlBody, "docType" => $docType)));
+				$cacheItem->setValue("blocksAndHtmlBody", serialize(array("blocks" => $blocks, "htmlBody" => $htmlBody, 
+					"docType" => $docType)));
 				$dcs->writeToCache($cacheItem);
 			}
 		}
-
+		
 		$pageContext->setDoctype($docType);
 		
 		$this->populateHTMLBlocks($controller, $blocks);
 		$this->addBenchTime('blocksGenerating');
-
+		
 		$strFrom = array();
 		$strTo = array();
 		
 		foreach ($blocks as $blockId => $block)
 		{
-			$list = $pageContent->getElementsByTagName('htmlblock_'.$blockId);
+			$list = $pageContent->getElementsByTagName('htmlblock_' . $blockId);
 			if ($list->length == 1)
 			{
-			$strFrom[] = '<htmlblock_'.$blockId.'/>';
+				$strFrom[] = '<htmlblock_' . $blockId . '/>';
 				$node = $list->item(0);
 				if (f_util_StringUtils::isEmpty($block['html']))
 				{
@@ -1896,8 +1862,8 @@ class website_PageService extends f_persistentdocument_DocumentService
 				}
 				else
 				{
-			$strTo[] = $block['html'];
-		}
+					$strTo[] = $block['html'];
+				}
 			}
 		}
 		$htmlBody = $pageContent->saveXML($pageContent->documentElement);
@@ -1910,7 +1876,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_page $page
-	 */	
+	 */
 	public function getRenderedBlock($page)
 	{
 		$wsprs = website_PageRessourceService::getInstance();
@@ -1927,9 +1893,9 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$key = isset($block['id']) ? $block['id'] : 'b_' . $blockId;
 			$results[$key] = $block['html'];
 		}
-		return 	$results;
+		return $results;
 	}
-
+	
 	/**
 	 * @param website_Page $pageContext
 	 */
@@ -1953,12 +1919,12 @@ class website_PageService extends f_persistentdocument_DocumentService
 				$url = $favicon->getDocumentService()->generateAbsoluteUrl($favicon, null, array());
 				RequestContext::getInstance()->endI18nWork();
 			}
-
+			
 			$pageContext->addLink('icon', $type, $url);
 			$pageContext->addLink('shortcut icon', $type, $url);
 		}
 	}
-
+	
 	/**
 	 * Generate the compiled blocks for the given page.
 	 * <changeblock type="modules_xxx_zzz" blockwidth="" editable="false" 
@@ -1973,25 +1939,26 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$blockIndex = 0;
 		foreach ($blocks as $block)
 		{
-			$blockIndex ++;
-			if (! $block->hasAttribute('type')) {continue;}
+			$blockIndex++;
+			if (!$block->hasAttribute('type'))
+			{
+				continue;
+			}
 			$type = $block->getAttribute('type');
-			$result[$blockIndex] = $this->buildBlockInfo($type,
-				$this->parseBlockParameters($block),
-				$block->getAttribute('lang'),
-				$block->getAttribute('blockwidth'),
-				$block->getAttribute('editable') != 'false',
-				$block);
+			$result[$blockIndex] = $this->buildBlockInfo($type, $this->parseBlockParameters($block), $block->getAttribute('lang'), $block->getAttribute('blockwidth'), $block->getAttribute('editable') != 'false', $block);
 		}
 		return $result;
 	}
-
+	
 	public function buildBlockInfo($type, $parameters = array(), $lang = null, $blockwidth = null, $editable = true, $DomNode = null)
 	{
 		$blockInfos = array('type' => $type);
 		$package = explode('_', $type);
 		$packageName = $package[0] . '_' . $package[1];
-		if ($lang) {$blockInfos['lang'] = $lang;}
+		if ($lang)
+		{
+			$blockInfos['lang'] = $lang;
+		}
 		$blockInfos['package'] = $packageName;
 		$blockInfos['name'] = $package[2];
 		$blockInfos['editable'] = $editable;
@@ -2003,7 +1970,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$class .= ' ' . $blockInfos['parameters']['class'];
 		}
 		$blockInfos['class'] = $class . ' ' . str_replace('_', '-', $packageName);
-
+		
 		$blockInfos['DomNode'] = $DomNode;
 		
 		if ($DomNode !== null)
@@ -2021,20 +1988,20 @@ class website_PageService extends f_persistentdocument_DocumentService
 				$blockInfos["flex"] = $DomNode->getAttribute("flex");
 			}
 		}
-
+		
 		return $blockInfos;
 	}
-
+	
 	/**
 	 * @param DOMElement $block
 	 * @return array
 	 */
 	private function parseBlockParameters($block)
-	{		
+	{
 		$parameters = array();
 		foreach ($block->attributes as $attrName => $attrNode)
 		{
-			if (substr($attrName, 0 ,2) === '__')
+			if (substr($attrName, 0, 2) === '__')
 			{
 				$parameters[substr($attrName, 2)] = $attrNode->nodeValue;
 			}
@@ -2054,7 +2021,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		return $parameters;
 	}
-
+	
 	/**
 	 * @param website_BlockController $controller
 	 * @param unknown_type $blocks
@@ -2072,7 +2039,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$nbBlocks = count($blocks);
 		foreach ($blocks as $blockId => &$block)
 		{
-			$blocType = $block['type'];			
+			$blocType = $block['type'];
 			$className = $bs->getBlockActionClassNameByType($block['type']);
 			if ($className === null)
 			{
@@ -2095,47 +2062,50 @@ class website_PageService extends f_persistentdocument_DocumentService
 			{
 				$classInstance->setOriginalClassName($originalClassName);
 			}
-
+			
 			foreach ($block['parameters'] as $name => $value)
 			{
 				$classInstance->setConfigurationParameter($name, $value);
 			}
-			$idPName = isset($block['id']) ? $block['id'] : 'b_'.$blockId;
+			$idPName = isset($block['id']) ? $block['id'] : 'b_' . $blockId;
 			
 			// This parameter can be used to identify this block inside the page.
 			$classInstance->setConfigurationParameter(website_BlockAction::BLOCK_ID_PARAMETER_NAME, $idPName);
-
+			
 			$block['blockaction'] = $classInstance;
 			$blockPriorities[$blockId] = ($nbBlocks - $blockId) + ($classInstance->getOrder() * 10);
 		}
-
+		
 		asort($blockPriorities);
 		$blockPriorities = array_reverse($blockPriorities, true);
 		$httpRequest = change_Controller::getInstance()->getRequest();
 		$traceBlockAction = Framework::inDevelopmentMode() && Framework::isDebugEnabled();
 		foreach (array_keys($blockPriorities) as $blockId)
 		{
-			if ($bench) {$start = microtime(true);}
+			if ($bench)
+			{
+				$start = microtime(true);
+			}
 			
 			$blockData = &$blocks[$blockId];
-			$html = ($traceBlockAction) ? "<!-- Generated by ".$blockData['file']." -->" : "";
+			$html = ($traceBlockAction) ? "<!-- Generated by " . $blockData['file'] . " -->" : "";
 			$blockInstance = $blockData['blockaction'];
-
+			
 			// Begin capturing. TODO: make a dedicated method instead of write()
 			$controller->getResponse()->getWriter()->write("");
 			try
 			{
-			$controller->process($blockInstance, $httpRequest);
-			$html .= $controller->getResponse()->getWriter()->getContent();
-			} 
-			catch (TemplateNotFoundException $e) 
+				$controller->process($blockInstance, $httpRequest);
+				$html .= $controller->getResponse()->getWriter()->getContent();
+			}
+			catch (TemplateNotFoundException $e)
 			{
 				Framework::exception($e);
 				$html .= $e->getMessage();
 			}
-				
+			
 			$blockData['html'] = $html;
-		
+			
 			if ($bench)
 			{
 				if (isset($blocks[$blockId]['id']))
@@ -2144,22 +2114,22 @@ class website_PageService extends f_persistentdocument_DocumentService
 				}
 				else
 				{
-					$benchId = 'b_'.$blockId;
+					$benchId = 'b_' . $blockId;
 				}
 				$this->benchTimes['blocks'][$benchId]['rendering'] = microtime(true) - $start;
 			}
-
+			
 			unset($blocks[$blockId]['blockaction']);
 		}
 	}
-
+	
 	/**
 	 * @param array $specs
 	 * @return String
 	 */
 	private function getBlockClassNameForSpecs($specs)
 	{
-		return substr($specs['package'], 8) . '_Block'.ucfirst($specs['name']).'Action';
+		return substr($specs['package'], 8) . '_Block' . ucfirst($specs['name']) . 'Action';
 	}
 	
 	/**
@@ -2169,16 +2139,10 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	public function getReplacementsForTweet($document, $websiteId)
 	{
-		$label = array(
-			'name' => 'label',
-			'label' => f_Locale::translateUI('&modules.website.document.page.Label;'),
-			'maxLength' => 80
-		);
-		$shortUrl = array(
-			'name' => 'shortUrl', 
-			'label' => f_Locale::translateUI('&modules.twitterconnect.bo.general.Short-url;'),
-			'maxLength' => 30
-		);
+		$label = array('name' => 'label', 'label' => f_Locale::translateUI('&modules.website.document.page.Label;'), 
+			'maxLength' => 80);
+		$shortUrl = array('name' => 'shortUrl', 'label' => f_Locale::translateUI('&modules.twitterconnect.bo.general.Short-url;'), 
+			'maxLength' => 30);
 		if ($document !== null)
 		{
 			$label['value'] = f_util_StringUtils::shortenString($document->getLabel(), 80);
@@ -2186,7 +2150,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		return array($label, $shortUrl);
 	}
-		
+	
 	/**
 	 * @param website_persistentdocument_website $website
 	 * @param string $lang
@@ -2197,15 +2161,8 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	public function getDocumentForSitemap($website, $lang, $modelName, $offset, $chunkSize)
 	{
-		return $this->getPersistentProvider()->createQuery($modelName, false)->add(Restrictions::published())
-					->add(Restrictions::descendentOf($website->getId()))
-					->add(Restrictions::ne('navigationVisibility',  website_ModuleService::HIDDEN))
-					->addOrder(Order::asc('id'))
-					->setMaxResults($chunkSize)
-					->setFirstResult($offset)
-					->find();
+		return $this->getPersistentProvider()->createQuery($modelName, false)->add(Restrictions::published())->add(Restrictions::descendentOf($website->getId()))->add(Restrictions::ne('navigationVisibility', website_ModuleService::HIDDEN))->addOrder(Order::asc('id'))->setMaxResults($chunkSize)->setFirstResult($offset)->find();
 	}
-
 	
 	/**
 	 * @param website_persistentdocument_menuitemfunction $document
@@ -2219,15 +2176,14 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			$attributes['icon'] = 'page-home';
 			$attributes['isHomePage'] = true;
-		} 
+		}
 		elseif ($document->getIsIndexPage())
 		{
 			$attributes['icon'] = 'page-index';
 			$attributes['isIndexPage'] = true;
 		}
 		
-		if (!($document instanceof website_persistentdocument_pagereference) && 
-			!($document instanceof website_persistentdocument_pageversion))
+		if (!($document instanceof website_persistentdocument_pagereference) && !($document instanceof website_persistentdocument_pageversion))
 		{
 			$countRef = website_PagereferenceService::getInstance()->getCountPagesReferenceByPage($document);
 			if ($countRef > 0)
@@ -2258,10 +2214,11 @@ class website_PageService extends f_persistentdocument_DocumentService
 				$blockName = $dummyInfo2[1];
 				
 				$ls = LocaleService::getInstance();
-				$jsonMeta[$zone][] = array("value" => "{".$meta."}", "label" => $ls->transBO("m.$moduleName.bo.blocks.$blockName.metas.$shortMetaName"));
+				$jsonMeta[$zone][] = array("value" => "{" . $meta . "}", 
+					"label" => $ls->transBO("m.$moduleName.bo.blocks.$blockName.metas.$shortMetaName"));
 			}
 		}
-		$formProperties["metainfo"] = $jsonMeta; 		
+		$formProperties["metainfo"] = $jsonMeta;
 	}
 	
 	/**
@@ -2275,7 +2232,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			$indexedDocument->foIndexable(false);
 		}
-		$indexedDocument->setLabel($document->getNavigationLabel());		
+		$indexedDocument->setLabel($document->getNavigationLabel());
 		$indexedDocument->setText($this->getFullTextContent($document));
 	}
 	

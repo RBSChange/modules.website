@@ -90,6 +90,14 @@ class website_BreadcrumbElement
 	/**
 	 * @return string
 	 */
+	function getNavigationtitle()
+	{
+		return $this->navigationtitle;
+	}
+	
+	/**
+	 * @return string
+	 */
 	function getNavigationtitleAsHtml()
 	{
 		return f_util_HtmlUtils::textToHtml($this->navigationtitle);
