@@ -91,8 +91,6 @@ class LinkHelper
 	    return $link;
 	}	
 	
-
-	
 	/**
 	 * @param string $ressourceName
 	 * @return f_web_ResourceLink
@@ -423,7 +421,6 @@ class LinkHelper
 		return '<a ' . f_util_HtmlUtils::buildAttributes($attributes) . '>' . f_util_HtmlUtils::textToHtml($label) . '</a>';
 	}
 
-
 	/**
 	 * Returns the <a/> element for the link "Add to favorites".
 	 *
@@ -436,7 +433,7 @@ class LinkHelper
 	{
 		try
 		{
-			$url = LinkHelper::getTagUrl(WebsiteConstants::TAG_ADD_TO_FAVORITES_PAGE);
+			$url = LinkHelper::getTagUrl('contextual_website_website_favorite');
 			if (f_util_StringUtils::isEmpty($url))
 			{
 				$url = '#';
@@ -468,7 +465,6 @@ class LinkHelper
 			$url, $title, $class, $label
 		);
 	}
-
 
 	/**
 	 * Returns the <a/> element for the link "Print this page".
@@ -515,7 +511,6 @@ class LinkHelper
 			);
 	}
 
-
 	/**
 	 * Returns the <a/> element for the link to the help page.
 	 *
@@ -557,7 +552,6 @@ class LinkHelper
 		}
 		return sprintf('<a href="%s" title="%s"%s>%s</a>', $url, $title, $class, $label);
 	}
-
 
 	/**
 	 * Returns the <a/> element for the link to the legal notice page.

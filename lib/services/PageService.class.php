@@ -1712,7 +1712,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			if ($pageDocument->getNavigationVisibility() == website_ModuleService::HIDDEN)
 			{
-				$params = HttpController::getInstance()->getContext()->getRequest()->getParameters();
+				$params = change_Controller::getInstance()->getContext()->getRequest()->getParameters();
 				
 				if (isset($params['wemod'])
 					&& isset($params[$params['wemod'].'Param'])

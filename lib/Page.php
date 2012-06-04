@@ -481,7 +481,7 @@ class website_Page implements f_mvc_Context
 		$closingBodyMarker = $this->getPlainMarker('bottom');
 		if ($closingBodyMarker !== '' && website_PageRessourceService::getInstance()->getUseMarkers())
 		{
-			$htmlBody = str_replace('</body>', $closingBodyMarker . K::CRLF . '</body>', $htmlBody);
+			$htmlBody = str_replace('</body>', $closingBodyMarker . PHP_EOL . '</body>', $htmlBody);
 		}
 		$this->htmlBody = $htmlBody;
 		include($templatePath);

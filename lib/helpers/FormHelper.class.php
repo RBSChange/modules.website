@@ -2560,7 +2560,7 @@ jQuery(document).ready(function() {
 
 		if (isset($params['beanClass']) && $beanInstance === null)
 		{
-			if (f_util_ClassUtils::classExists($params['beanClass']))
+			if (class_exists($params['beanClass']))
 			{
 				$beanClassName = $params['beanClass'];
 				$index = strrpos($beanClassName, '_');
