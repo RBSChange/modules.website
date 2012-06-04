@@ -199,7 +199,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 				if ($type == "richtext")
 				{
 					$richtextCount++;
-					$wordCount += count(explode(' ', f_util_StringUtils::htmlToText($blockNode->textContent, false, true)));
+					$wordCount += count(explode(' ', f_util_HtmlUtils::htmlToText($blockNode->textContent, false, true)));
 				}
 				else
 				{
@@ -1064,7 +1064,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 				$result .= ' ' . $richtTextNode->nodeValue;
 			}
 		}
-		return f_util_StringUtils::htmlToText($result, false);
+		return f_util_HtmlUtils::htmlToText($result, false);
 	}
 
 	/**
@@ -1601,7 +1601,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			}
 			else
 			{
-				if (f_util_StringUtils::isEmpty(f_util_StringUtils::htmlToText($html)))
+				if (f_util_StringUtils::isEmpty(f_util_HtmlUtils::htmlToText($html)))
 				{
 					$html = "<strong>" . $this->getBlockLabelFromBlockType($block['type']) . "</strong>";
 				}
@@ -1713,7 +1713,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		else
 		{
-			if (f_util_StringUtils::isEmpty(f_util_StringUtils::htmlToText($html)))
+			if (f_util_StringUtils::isEmpty(f_util_HtmlUtils::htmlToText($html)))
 			{
 				$html = "<strong>" . $this->getBlockLabelFromBlockType($block['type']) . "</strong>";
 			}

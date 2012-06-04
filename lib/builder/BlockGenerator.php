@@ -94,7 +94,7 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 		{
 			echo "$blockactionFile already exists\n";
 		}
-		ClassResolver::getInstance()->appendFile($blockactionFile);
+		AutoloadBuilder::getInstance()->appendFile($blockactionFile);
 
 		$blocktemplateFile = f_util_FileUtils::buildWebeditPath('modules', $this->name, 'templates', ucfirst($this->name).'-Block-'.$blockName.'-Success.all.all.html');
 		if(!file_exists($blocktemplateFile))
