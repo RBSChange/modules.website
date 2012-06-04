@@ -475,7 +475,7 @@ class website_TopicService extends f_persistentdocument_DocumentService
 	public function getMenuEntry($document)
 	{
 		$visibility = $document->getNavigationVisibility();
-		if ($visibility == website_ModuleService::VISIBILITY_HIDDEN || $visibility == website_ModuleService::VISIBILITY_HIDDEN_IN_MENU_ONLY)
+		if ($visibility == website_ModuleService::HIDDEN || $visibility == website_ModuleService::HIDDEN_IN_MENU_ONLY)
 		{
 			return null;
 		}
@@ -489,7 +489,7 @@ class website_TopicService extends f_persistentdocument_DocumentService
 	public function getSitemapEntry($document)
 	{
 		$visibility = $document->getNavigationVisibility();
-		if ($visibility == website_ModuleService::VISIBILITY_HIDDEN || $visibility == website_ModuleService::VISIBILITY_HIDDEN_IN_SITEMAP_ONLY)
+		if ($visibility == website_ModuleService::HIDDEN || $visibility == website_ModuleService::HIDDEN_IN_SITEMAP_ONLY)
 		{
 			return null;
 		}

@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <i18n baseKey="m.website.bo.blocks" lcid="de_DE">
-  <key id="sitemap">Sitemap</key>
-  <key id="bookmarksblock">Bookmark</key>
   <key id="emptybookmarksmessage">Block enthält kein Bookmark.</key>
   <key id="one-col">Seitenlayout einer Spalte</key>
   <key id="two-col">Seitenlayout zweier Spalten</key>
-  <key id="exception">Ausnahme</key>
-  <key id="iframe">Iframe</key>
 </i18n>

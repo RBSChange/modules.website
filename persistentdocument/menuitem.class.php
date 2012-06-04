@@ -6,10 +6,10 @@
 class website_persistentdocument_menuitem extends website_persistentdocument_menuitembase
 {
 	/**
-	 * @return website_ModuleService::VISIBILITY_VISIBLE
+	 * @return website_ModuleService::VISIBLE
 	 */
 	public function getNavigationVisibility()
 	{
-		return website_ModuleService::VISIBILITY_VISIBLE;
+		return website_ModuleService::VISIBLE;
 	}
 }

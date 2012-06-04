@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<i18n baseKey="m.website.bo.blocks.menu" lcid="de_DE">
-  <key id="depth">Tiefe</key>
-  <key id="depth-help">maximale Tiefe, die das Menu anzeigen kann</key>
-  <key id="template">Template</key>
-  <key id="template-help">das Suffix des zu nutzenden Templatenamens</key>
-  <key id="deployonlycurrentpath">ausschliesslich den Browserweg entwickeln</key>
-  <key id="deployonlycurrentpath-help">Es wird ausschliesslich der Weg entwickelt, der zu dieser Seite führt</key>
-</i18n>

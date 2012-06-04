@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <blocks>
 	<block type="modules_website_staticrichtext" hidden="true" />
-	<block type="modules_website_bookmarks" icon="bookmark" labeli18n="m.website.bo.blocks.bookmarksblock">
+	<block type="modules_website_bookmarks" icon="bookmark">
 		<parameters>
 			<parameter name="cmpref" type="String" />
 		</parameters>
 	</block>
-	<block type="modules_website_exception" icon="bug" labeli18n="m.website.bo.blocks.exception" />
+	<block type="modules_website_exception" icon="bug" />
 	<block type="modules_website_thread" icon="breadcrumb" afterAll="true" 
 		cache-deps="[modules_website/page],[modules_website/topic],modules_website/website">
 		<parameters>
@@ -102,8 +102,7 @@
 			</javascript>
 		</xul>
 	</block>
-	<block type="modules_website_switchlanguage" label="&amp;modules.website.bo.blocks.SwitchLanguage;"
-		cache-deps="[modules_website/page],modules_website/website">
+	<block type="modules_website_switchlanguage" cache-deps="[modules_website/page],modules_website/website">
 		<parameters>
 			<parameter name="displayMode" type="String" min-occurs="1" default-value="Success" fieldtype="dropdownlist" hidehelp="true" />
 			<parameter name="viewall" type="Boolean" default-value="true" />
@@ -118,7 +117,7 @@
 			</javascript>
 		</xul>
 	</block>
-	<block type="modules_website_iframe" icon="iframe" labeli18n="m.website.bo.blocks.iframe" cache="true">
+	<block type="modules_website_iframe" icon="iframe" cache="true">
 		<parameters>
 			<parameter name="url" type="String" min-occurs="1" default-value="about:blank" />
 			<parameter name="frameWidth" type="String" fieldtype="size" allowunits="px %" default-value="100%" min-occurs="1" />
@@ -151,7 +150,7 @@
 	<block type="modules_website_Incompatibiltybrowser" icon="warning" />
 
 	<!-- Dashboard blocks -->
-	<block type="modules_website_dashboardpagevalidation" icon="task" dashboard="true" labeli18n="m.website.bo.dashboard.page-validation">
+	<block type="modules_website_dashboardpagevalidation" icon="task" dashboard="true">
 		<parameters>
 			<parameter name="showComments" type="Boolean" default-value="true" />
 		</parameters>

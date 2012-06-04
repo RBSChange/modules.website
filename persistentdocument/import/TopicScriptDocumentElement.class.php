@@ -34,15 +34,15 @@ class website_TopicScriptDocumentElement extends import_ScriptDocumentElement
 		{
 			if ($properties['navigationVisibility'] == 'visible')
 			{
-				$properties['navigationVisibility'] = website_ModuleService::VISIBILITY_VISIBLE;
+				$properties['navigationVisibility'] = website_ModuleService::VISIBLE;
 			}
 			elseif ($properties['navigationVisibility'] == 'hidden')
 			{
-				$properties['navigationVisibility'] = website_ModuleService::VISIBILITY_HIDDEN;
+				$properties['navigationVisibility'] = website_ModuleService::HIDDEN;
 			}
 			else
 			{
-				$properties['navigationVisibility'] = website_ModuleService::VISIBILITY_HIDDEN_IN_MENU_ONLY;
+				$properties['navigationVisibility'] = website_ModuleService::HIDDEN_IN_MENU_ONLY;
 			}
 		}
 		

@@ -2199,7 +2199,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		return $this->getPersistentProvider()->createQuery($modelName, false)->add(Restrictions::published())
 					->add(Restrictions::descendentOf($website->getId()))
-					->add(Restrictions::ne('navigationVisibility',  website_ModuleService::VISIBILITY_HIDDEN))
+					->add(Restrictions::ne('navigationVisibility',  website_ModuleService::HIDDEN))
 					->addOrder(Order::asc('id'))
 					->setMaxResults($chunkSize)
 					->setFirstResult($offset)
@@ -2286,7 +2286,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	public function getMenuEntry($document)
 	{
 		$visibility = $document->getNavigationVisibility();
-		if ($visibility == website_ModuleService::VISIBILITY_HIDDEN || $visibility == website_ModuleService::VISIBILITY_HIDDEN_IN_MENU_ONLY)
+		if ($visibility == website_ModuleService::HIDDEN || $visibility == website_ModuleService::HIDDEN_IN_MENU_ONLY)
 		{
 			return null;
 		}
@@ -2300,7 +2300,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	public function getSitemapEntry($document)
 	{
 		$visibility = $document->getNavigationVisibility();
-		if ($visibility == website_ModuleService::VISIBILITY_HIDDEN || $visibility == website_ModuleService::VISIBILITY_HIDDEN_IN_SITEMAP_ONLY)
+		if ($visibility == website_ModuleService::HIDDEN || $visibility == website_ModuleService::HIDDEN_IN_SITEMAP_ONLY)
 		{
 			return null;
 		}
