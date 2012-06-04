@@ -61,7 +61,7 @@ class website_TopicService extends f_persistentdocument_DocumentService
 				return true;
 			}
 		}
-		$this->setActivePublicationStatusInfo($document, '&modules.website.document.systemtopic.publication.no-published-page-or-subtopic;');
+		$this->setActivePublicationStatusInfo($document, 'm.website.document.systemtopic.publication.no-published-page-or-subtopic');
 		return false;
 	}
 	
