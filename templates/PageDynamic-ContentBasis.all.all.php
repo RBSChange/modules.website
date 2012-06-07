@@ -12,13 +12,13 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" ?>
 		<meta name="keywords" <?php echo f_util_HtmlUtils::buildAttribute("content", $this->getKeywords()); ?> />
 		<meta name="generator" content="RBS Change <?php echo Framework::getVersion(); ?>" />
 		<?php echo $this->getMetas(); ?>
+		<script type="text/javascript">var pageHandler = <?php echo $this->getJSONHandler(); ?></script>
+		<?php echo $this->getPlainHeadMarker(); ?>
 		<?php echo $this->getStylesheetInclusions(); ?>
 		<?php echo $this->getStyles(); ?>
+		<?php echo $this->getScripts(); ?>
 		<?php echo $this->getLinkTags(); ?>
-        <script type="text/javascript">var pageHandler = <?php echo $this->getJSONHandler(); ?></script>
-        <?php echo $this->getScripts(); ?>
-        <?php echo $this->getPlainHeadMarker(); ?>
 	</head>
-    <?php echo $this->htmlBody; ?>
+	<?php echo $this->htmlBody; ?>
 	<?php $this->renderBenchTimes(); ?>
 </html>
