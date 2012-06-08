@@ -573,7 +573,7 @@ class website_FormHelper
 		$name = $params['name'];
 		if (self::$context !== null && self::$context->hasAttribute(website_BlockAction::BLOCK_BO_MODE_ATTRIBUTE, false))
 		{
-			return '<div style="background-color:#EEE;border:1px solid #CCC;width:' . $params['width'] . ';height:' . $params['height'] . '"><p>' . LocaleService::getInstance()->transFO('m.website.frontoffice.form.richtext') . '</p></div>';
+			return '<div style="background-color:#EEE;border:1px solid #CCC;width:' . $params['width'] . ';height:' . $params['height'] . '"><p>' . LocaleService::getInstance()->trans('m.website.frontoffice.form.richtext') . '</p></div>';
 		}
 		$editor = new FCKeditor($name);
 		$editor->ToolbarSet = 'Change';
@@ -666,7 +666,7 @@ function SetUrl(fileUrl, width, height, fileAlt, fileKey, fileLabel, property)
 	var removeLink = document.createElement('a');
 	removeLink.setAttribute('href', '#');
 	removeLink.className = 'button';
-	removeLink.appendChild(document.createTextNode('".$ls->transFO("m.website.frontoffice.picker.remove")."'));
+	removeLink.appendChild(document.createTextNode('".$ls->trans("m.website.frontoffice.picker.remove")."'));
 	
 	var newElem = document.createElement('li');
 	newElem.appendChild(previewLink);
@@ -729,7 +729,7 @@ function SetUrl(fileUrl, width, height, fileAlt, fileKey, fileLabel, property)
 
 function Documentpicker_removeFromPicker(property, id)
 {
-	if (!confirm('".$ls->transFO("m.website.frontoffice.picker.remove-confirm")."'))
+	if (!confirm('".$ls->trans("m.website.frontoffice.picker.remove-confirm")."'))
 	{
 		return;
 	}
@@ -815,7 +815,7 @@ jQuery(document).ready(function() {
 		// The "choose" button
 		$currentWebsite = website_WebsiteService::getInstance()->getCurrentWebsite();
 		$url = 'http://'.$currentWebsite->getDomain(). '/fckeditorbrowser/browser.html?Type='.$chooserType.'&Connector=%2Findex.php%3Fmodule%3Dwebsite%26action%3DRichtextConnector&property='.urlencode($params['id']);
-		$html .= "<a id=\"".$params["id"]."_choose\" class=\"iframe picker-choose button\" href=\"".$url."\">".$ls->transFO("m.website.frontoffice.picker.choose")."</a>";
+		$html .= "<a id=\"".$params["id"]."_choose\" class=\"iframe picker-choose button\" href=\"".$url."\">".$ls->trans("m.website.frontoffice.picker.choose")."</a>";
 
 		// Ul for currently associated document(s)
 		$multiple = $beanPropertyInfo->getCardinality() != 1;
@@ -850,7 +850,7 @@ jQuery(document).ready(function() {
 		$ls = LocaleService::getInstance();
 		$onclick = "Documentpicker_removeFromPicker('".$propertyId."', ".$document->getId()."); return false;";
 		return "<li><a href=\"".LinkHelper::getDocumentUrl($document)."\" ".f_util_HtmlUtils::buildAttribute("title", $document->getLabel())." class=\"iframe document-preview link\">".$document->getLabel()."</a> "
-		."<a href=\"#\" class=\"button\" ".f_util_HtmlUtils::buildAttribute("onclick", $onclick).">".$ls->transFO("m.website.frontoffice.picker.remove")."</a></li>";
+		."<a href=\"#\" class=\"button\" ".f_util_HtmlUtils::buildAttribute("onclick", $onclick).">".$ls->trans("m.website.frontoffice.picker.remove")."</a></li>";
 	}
 
 	/**
@@ -1001,8 +1001,8 @@ jQuery(document).ready(function() {
 			}
 			
 			$addInputParams = array("name" => $params["action"], 
-				"value" => $ls->transFO("m.website.frontoffice.addupload", array('ucf')), 
-				"title" => $ls->transFO("m.website.frontoffice.addupload-help", array('ucf')), 
+				"value" => $ls->trans("m.website.frontoffice.addupload", array('ucf')), 
+				"title" => $ls->trans("m.website.frontoffice.addupload-help", array('ucf')), 
 				"id" => $name."_add");
 
 			// Class attribute
@@ -1073,7 +1073,7 @@ jQuery(document).ready(function() {
 	  			
 	  			function Change_UploadField_RemoveElem(checkboxInput)
 	  			{
-	  				if (!confirm('".$ls->transFO("m.website.frontoffice.upload.remove-confirm")."'))
+	  				if (!confirm('".$ls->trans("m.website.frontoffice.upload.remove-confirm")."'))
 	  				{
 	  					return;
 	  				}
@@ -1101,8 +1101,8 @@ jQuery(document).ready(function() {
 			{
 				$value = $values;
 				$code .= '<ul class="uploads" id="'.($name."_uploads").'">';
-				$deleteLocale = $ls->transFO("m.website.frontoffice.deleteUpload", array('ucf'));
-				$deleteHelpLocale = $ls->transFO("m.website.frontoffice.deleteUpload-help", array('ucf'));
+				$deleteLocale = $ls->trans("m.website.frontoffice.deleteUpload", array('ucf'));
+				$deleteHelpLocale = $ls->trans("m.website.frontoffice.deleteUpload-help", array('ucf'));
 				$deleteName = $name."_delete";
 
 				$document = DocumentHelper::getDocumentInstance($value);
@@ -1120,8 +1120,8 @@ jQuery(document).ready(function() {
 		elseif (f_util_ArrayUtils::isNotEmpty($values))
 		{
 			$code .= '<ul class="uploads">';
-			$deleteLocale = $ls->transFO("m.website.frontoffice.deleteUpload", array('ucf'));
-			$deleteHelpLocale = $ls->transFO("m.modules.website.frontoffice.deleteUpload-help", array('ucf'));
+			$deleteLocale = $ls->trans("m.website.frontoffice.deleteUpload", array('ucf'));
+			$deleteHelpLocale = $ls->trans("m.modules.website.frontoffice.deleteUpload-help", array('ucf'));
 			$index = 0;
 
 			foreach ($values as $value)
@@ -1841,7 +1841,7 @@ jQuery(document).ready(function() {
 		}
 		else if (isset($params['labeli18n']))
 		{
-			$value = LocaleService::getInstance()->transFO($params['labeli18n'], array('ucf', 'html'));
+			$value = LocaleService::getInstance()->trans($params['labeli18n'], array('ucf', 'html'));
 			if ($unsetWhenDone)
 			{
 				unset($params['labeli18n']);
@@ -1851,7 +1851,7 @@ jQuery(document).ready(function() {
 		{
 			$ls = LocaleService::getInstance();
 			$cKey = $ls->cleanOldKey($params['label']);
-			$value = ($cKey === false) ? $params['label'] : $ls->transFO($cKey, array('ucf', 'html'));
+			$value = ($cKey === false) ? $params['label'] : $ls->trans($cKey, array('ucf', 'html'));
 			if ($unsetWhenDone)
 			{
 				unset($params['label']);
@@ -1867,7 +1867,7 @@ jQuery(document).ready(function() {
 				$ckey = $ls->cleanOldKey($key);
 				if ($ckey !== false)
 				{
-					$value = $ls->transFO($ckey, array('ucf', 'html'));
+					$value = $ls->trans($ckey, array('ucf', 'html'));
 				}
 			}
 		}
@@ -1888,7 +1888,7 @@ jQuery(document).ready(function() {
 		}
 		else if (isset($params['labeli18n']))
 		{
-			$value = LocaleService::getInstance()->transFO($params['labeli18n'], array('ucf', 'attr', 'html'));
+			$value = LocaleService::getInstance()->trans($params['labeli18n'], array('ucf', 'attr', 'html'));
 			if ($unsetWhenDone)
 			{
 				unset($params['labeli18n']);
@@ -1898,7 +1898,7 @@ jQuery(document).ready(function() {
 		{
 			$ls = LocaleService::getInstance();
 			$cKey = $ls->cleanOldKey($params['label']);
-			$value = ($cKey === false) ? $params['label'] : $ls->transFO($cKey, array('ucf', 'attr', 'html'));
+			$value = ($cKey === false) ? $params['label'] : $ls->trans($cKey, array('ucf', 'attr', 'html'));
 			if ($unsetWhenDone)
 			{
 				unset($params['label']);
@@ -1951,7 +1951,7 @@ jQuery(document).ready(function() {
 			$ckey = $ls->cleanOldKey($key);
 			if ($ckey !== false)
 			{
-				$title = $ls->transFO($ckey);
+				$title = $ls->trans($ckey);
 				if ($title !== $ckey)
 				{
 					$params['title'] = $title;
@@ -2078,7 +2078,7 @@ jQuery(document).ready(function() {
 		{
 			$classes[] = "required";
 			$result .= ' class="' . join(" ", $classes) . '">' . $contentPrefix;
-			$title = '(' . $ls->transFO('m.website.frontoffice.this-field-is-mandatory') . ')';
+			$title = '(' . $ls->trans('m.website.frontoffice.this-field-is-mandatory') . ')';
 			$result .= ' <em class="requiredsymbol" '.f_util_HtmlUtils::buildAttribute("title", $title).'>*</em> ';
 		}
 		else
@@ -2361,18 +2361,18 @@ jQuery(document).ready(function() {
 		self::addDatePickerScript();
 		$ls = LocaleService::getInstance();
 
-		$months = array("1 (".$ls->transFO("f.date.date.abbr.january").")",
-						"2 (".$ls->transFO("f.date.date.abbr.february").")",
-						"3 (".$ls->transFO("f.date.date.abbr.march").")",
-						"4 (".$ls->transFO("f.date.date.abbr.april").")",
-						"5 (".$ls->transFO("f.date.date.abbr.may").")",
-						"6 (".$ls->transFO("f.date.date.abbr.june").")",
-						"7 (".$ls->transFO("f.date.date.abbr.july").")",
-						"8 (".$ls->transFO("f.date.date.abbr.august").")",
-						"9 (".$ls->transFO("f.date.date.abbr.september").")",
-						"10 (".$ls->transFO("f.date.date.abbr.october").")",
-						"11 (".$ls->transFO("f.date.date.abbr.november").")",
-						"12 (".$ls->transFO("f.date.date.abbr.december").")"
+		$months = array("1 (".$ls->trans("f.date.date.abbr.january").")",
+						"2 (".$ls->trans("f.date.date.abbr.february").")",
+						"3 (".$ls->trans("f.date.date.abbr.march").")",
+						"4 (".$ls->trans("f.date.date.abbr.april").")",
+						"5 (".$ls->trans("f.date.date.abbr.may").")",
+						"6 (".$ls->trans("f.date.date.abbr.june").")",
+						"7 (".$ls->trans("f.date.date.abbr.july").")",
+						"8 (".$ls->trans("f.date.date.abbr.august").")",
+						"9 (".$ls->trans("f.date.date.abbr.september").")",
+						"10 (".$ls->trans("f.date.date.abbr.october").")",
+						"11 (".$ls->trans("f.date.date.abbr.november").")",
+						"12 (".$ls->trans("f.date.date.abbr.december").")"
 						);
 
 		$thisYear = date_Calendar::now()->getYear();
@@ -2388,30 +2388,40 @@ jQuery(document).ready(function() {
 			$days[$i] = $i;
 		}
 		
-		self::buildNameAndId($params);
-		$params['id'] = str_replace('.', '', $params['id']);
+			self::buildNameAndId($params);
+		$baseId = str_replace('.', '', $params['id']);
+		$params['id'] = $baseId;
 		$html = array(
 			self::renderInputByType("text", $params),
-			self::buildSelectInputForDateCombo('day', $days, $params['id']),
-			self::buildSelectInputForDateCombo('month',$months, $params['id']),
-			self::buildSelectInputForDateCombo('year', $years, $params['id']),
-			'<script type="text/javascript">
+			self::buildSelectInputForDateCombo('day', $days, $baseId),
+			self::buildSelectInputForDateCombo('month',$months, $baseId),
+			self::buildSelectInputForDateCombo('year', $years, $baseId),
+			'<script type="text/javascript">//<![CDATA[ 
      			 jQuery(document).ready(function() {
-     			 
-     			 		var dateStr = jQuery("#'.  $params['id'] . '").val();
-     			 		if (dateStr.length > 0)
-     			 		{
-	         				var date = Date.fromString(dateStr);
-	         				jQuery("#'.  $params['id'] . '_year").val(date.getFullYear());
-	         				jQuery("#'.  $params['id'] . '_month").val(date.getMonth());
-	         				jQuery("#'.  $params['id'] . '_day").val(date.getDate());
-	         			}
-	         			jQuery("#'.  $params['id'] . '_year").show();
-	         			jQuery("#'.  $params['id'] . '_month").show();
-	         			jQuery("#'.  $params['id'] . '_day").show();
-	         			jQuery("#'.  $params['id'] . '").hide();
-      			});
-			</script>'
+					var format = "'.$ls->trans('f.date.date.default-date-format-for-jquery-datepicker').'";			 
+     			 	var dateStr = jQuery("#'.  $params['id'] . '").val();
+     			 	if (dateStr.length > 0)
+     			 	{
+						var iY = format.indexOf("yyyy"); if (iY > -1) {jQuery("#'. $baseId . '_year").val(Number(dateStr.substr(iY, 4)));};
+						var iD = format.indexOf("dd"); if (iD > -1) {jQuery("#'. $baseId . '_day").val(Number(dateStr.substr(iD, 2)));};
+						var iM = format.indexOf("mm"); if (iM > -1) {jQuery("#'. $baseId . '_month").val(Number(dateStr.substr(iM, 2)) - 1);};						
+	         		}
+	         		jQuery("#'. $baseId . '_year").show();
+	         		jQuery("#'. $baseId . '_month").show();
+	         		jQuery("#'. $baseId . '_day").show();
+	         		jQuery("#'. $baseId . '").hide();
+			
+					var _zeroPad = function(num) {var s = "0"+num; return s.substring(s.length-2);};
+					var updHidden = function() {
+						var date = new Date(jQuery("#'.  $baseId . '_year").val(), jQuery("#'.  $baseId . '_month").val(), jQuery("#'.  $baseId . '_day").val());	
+						var ds = format.split("yyyy").join(date.getFullYear()).split("mm").join(_zeroPad(date.getMonth()+1)).split("dd").join(_zeroPad(date.getDate()));
+						jQuery("#'.  $baseId . '").val(ds);
+					}
+					jQuery("#' . $baseId . '_day").change(updHidden); 
+					jQuery("#' . $baseId . '_month").change(updHidden); 
+					jQuery("#' . $baseId . '_year").change(updHidden);
+      			});				
+			//]]></script> '
 			);
 			
 		return implode("", $html);
@@ -2421,18 +2431,12 @@ jQuery(document).ready(function() {
 	{
 		$selectId = $baseId . "_" .$name;
 		$result = array();
-		$result[] = '<select name="'.$name.'" id="' . $selectId.'" style="display:none"><option value=""></option>';
-			
-			foreach ($optionsArray as $key => $option)
-			{
-				$result[] = '<option value="'.$key.'">'.$option.'</option>';
-			}
-		$result[] = '</select><script type="text/javascript">//<![CDATA[ 
-			jQuery("#' . $selectId . '").change(function() {
-				var date = new Date(jQuery("#'.  $baseId . '_year").val(), jQuery("#'.  $baseId . '_month").val(), jQuery("#'.  $baseId . '_day").val());
-				jQuery("#'.  $baseId . '").val(date.asString());
-			});
-		//]]></script>';
+		$result[] = '<select name="'.$name.'" id="' . $selectId.'" style="display:none"><option value=""></option>';		
+		foreach ($optionsArray as $key => $option)
+		{
+			$result[] = '<option value="'.$key.'">'.$option.'</option>';
+		}
+		$result[] = '</select>';
 		return implode('', $result);
 	}
 
