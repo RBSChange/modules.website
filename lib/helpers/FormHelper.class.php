@@ -2387,29 +2387,39 @@ jQuery(document).ready(function() {
 		}
 		
 		self::buildNameAndId($params);
-		$params['id'] = str_replace('.', '', $params['id']);
+		$baseId = str_replace('.', '', $params['id']);
+		$params['id'] = $baseId;
 		$html = array(
 			self::renderInputByType("text", $params),
-			self::buildSelectInputForDateCombo('day', $days, $params['id']),
-			self::buildSelectInputForDateCombo('month',$months, $params['id']),
-			self::buildSelectInputForDateCombo('year', $years, $params['id']),
-			'<script type="text/javascript">
+			self::buildSelectInputForDateCombo('day', $days, $baseId),
+			self::buildSelectInputForDateCombo('month',$months, $baseId),
+			self::buildSelectInputForDateCombo('year', $years, $baseId),
+			'<script type="text/javascript">//<![CDATA[ 
      			 jQuery(document).ready(function() {
-     			 
-     			 		var dateStr = jQuery("#'.  $params['id'] . '").val();
-     			 		if (dateStr.length > 0)
-     			 		{
-	         				var date = Date.fromString(dateStr);
-	         				jQuery("#'.  $params['id'] . '_year").val(date.getFullYear());
-	         				jQuery("#'.  $params['id'] . '_month").val(date.getMonth());
-	         				jQuery("#'.  $params['id'] . '_day").val(date.getDate());
-	         			}
-	         			jQuery("#'.  $params['id'] . '_year").show();
-	         			jQuery("#'.  $params['id'] . '_month").show();
-	         			jQuery("#'.  $params['id'] . '_day").show();
-	         			jQuery("#'.  $params['id'] . '").hide();
-      			});
-			</script>'
+					var format = "'.LocaleService::getInstance()->transFO('f.date.date.default-date-format-for-jquery-datepicker').'";			 
+     			 	var dateStr = jQuery("#'.  $params['id'] . '").val();
+     			 	if (dateStr.length > 0)
+     			 	{
+						var iY = format.indexOf("yyyy"); if (iY > -1) {jQuery("#'. $baseId . '_year").val(Number(dateStr.substr(iY, 4)));};
+						var iD = format.indexOf("dd"); if (iD > -1) {jQuery("#'. $baseId . '_day").val(Number(dateStr.substr(iD, 2)));};
+						var iM = format.indexOf("mm"); if (iM > -1) {jQuery("#'. $baseId . '_month").val(Number(dateStr.substr(iM, 2)) - 1);};						
+	         		}
+	         		jQuery("#'. $baseId . '_year").show();
+	         		jQuery("#'. $baseId . '_month").show();
+	         		jQuery("#'. $baseId . '_day").show();
+	         		jQuery("#'. $baseId . '").hide();
+			
+					var _zeroPad = function(num) {var s = "0"+num; return s.substring(s.length-2);};
+					var updHidden = function() {
+						var date = new Date(jQuery("#'.  $baseId . '_year").val(), jQuery("#'.  $baseId . '_month").val(), jQuery("#'.  $baseId . '_day").val());	
+						var ds = format.split("yyyy").join(date.getFullYear()).split("mm").join(_zeroPad(date.getMonth()+1)).split("dd").join(_zeroPad(date.getDate()));
+						jQuery("#'.  $baseId . '").val(ds);
+					}
+					jQuery("#' . $baseId . '_day").change(updHidden); 
+					jQuery("#' . $baseId . '_month").change(updHidden); 
+					jQuery("#' . $baseId . '_year").change(updHidden);
+      			});				
+			//]]></script> '
 			);
 			
 		return implode("", $html);
@@ -2419,18 +2429,12 @@ jQuery(document).ready(function() {
 	{
 		$selectId = $baseId . "_" .$name;
 		$result = array();
-		$result[] = '<select name="'.$name.'" id="' . $selectId.'" style="display:none"><option value=""></option>';
-			
-			foreach ($optionsArray as $key => $option)
-			{
-				$result[] = '<option value="'.$key.'">'.$option.'</option>';
-			}
-		$result[] = '</select><script type="text/javascript">//<![CDATA[ 
-			jQuery("#' . $selectId . '").change(function() {
-				var date = new Date(jQuery("#'.  $baseId . '_year").val(), jQuery("#'.  $baseId . '_month").val(), jQuery("#'.  $baseId . '_day").val());
-				jQuery("#'.  $baseId . '").val(date.asString());
-			});
-		//]]></script> ';
+		$result[] = '<select name="'.$name.'" id="' . $selectId.'" style="display:none"><option value=""></option>';		
+		foreach ($optionsArray as $key => $option)
+		{
+			$result[] = '<option value="'.$key.'">'.$option.'</option>';
+		}
+		$result[] = '<select>';
 		return implode('', $result);
 	}
 
