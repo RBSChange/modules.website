@@ -2434,7 +2434,7 @@ jQuery(document).ready(function() {
 		{
 			$result[] = '<option value="'.$key.'">'.$option.'</option>';
 		}
-		$result[] = '<select>';
+		$result[] = '</select>';
 		return implode('', $result);
 	}
 
