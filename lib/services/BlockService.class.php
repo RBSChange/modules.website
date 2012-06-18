@@ -660,7 +660,7 @@ class block_BlockService extends BaseService
 			$generator->assign('configuredCacheDeps', var_export($computedCacheDeps, true));
 			
 			f_util_FileUtils::write($destFilePath, $generator->fetch('BlockConfiguration.class.php.tpl'), f_util_FileUtils::OVERRIDE);
-			AutoloadBuilder::getInstance()->appendFile($destFilePath);	
+			change_AutoloadBuilder::getInstance()->appendFile($destFilePath);	
 		}
 	}
 	
@@ -688,7 +688,7 @@ class block_BlockService extends BaseService
 			$generator->assign_by_ref('blockInfo', $blocWrapper->setBlocInfoArray($blockInfos));
 			
 			f_util_FileUtils::write($destFilePath, $generator->fetch('BlockInfo.class.php.tpl'), f_util_FileUtils::OVERRIDE);
-			AutoloadBuilder::getInstance()->appendFile($destFilePath);
+			change_AutoloadBuilder::getInstance()->appendFile($destFilePath);
 		}
 	}
 		
