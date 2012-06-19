@@ -1,27 +1,10 @@
 <?php
 /**
- * @date Thu, 12 Jul 2007 12:23:48 +0200
- * @author intbonjf
+ * @package modules.website
+ * @method website_MenuitemtextService getInstance()
  */
 class website_MenuitemtextService extends website_MenuitemService
 {
-	/**
-	 * @var website_MenuitemtextService
-	 */
-	//private static $instance;
-
-	/**
-	 * @return website_MenuitemtextService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-
 	/**
 	 * @return website_persistentdocument_menuitemtext
 	 */

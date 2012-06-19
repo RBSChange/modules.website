@@ -1,7 +1,7 @@
 <?php
 /**
  * @package modules.website
- * @method website_PagereferenceService getInstance()
+ * @method website_PagegroupService getInstance()
  */
 class website_PagegroupService extends website_PageService
 {
