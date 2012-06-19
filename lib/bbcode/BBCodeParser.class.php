@@ -1871,7 +1871,7 @@ class website_BBCodeTagInfoListItem extends website_BBCodeTagInfo
 	}
 }
 
-class website_BBCodeEditor extends BaseService
+class website_BBCodeEditor extends change_BaseService
 {
 	/**
 	 * @var website_BBCodeEditor

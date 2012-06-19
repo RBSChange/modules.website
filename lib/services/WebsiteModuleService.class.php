@@ -1,5 +1,5 @@
 <?php
-class website_WebsiteModuleService extends BaseService
+class website_WebsiteModuleService extends change_BaseService
 {
 	/**
 	 * @var website_WebsiteModuleService

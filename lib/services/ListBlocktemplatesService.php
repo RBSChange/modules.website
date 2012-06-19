@@ -3,7 +3,7 @@
  * website_ListBlocktemplatesService
  * @package modules.website.lib.services
  */
-class website_ListBlocktemplatesService extends BaseService implements list_ListItemsService
+class website_ListBlocktemplatesService extends change_BaseService implements list_ListItemsService
 {
 	/**
 	 * @var website_ListBlocktemplatesService

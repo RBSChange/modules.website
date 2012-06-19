@@ -1,27 +1,10 @@
 <?php
 /**
- * website_ListMenutagsService
- * @package modules.website.lib.services
+ * @package modules.website
+ * @method website_ListMenutagsService getInstance()
  */
-class website_ListMenutagsService extends BaseService implements list_ListItemsService
+class website_ListMenutagsService extends change_BaseService implements list_ListItemsService
 {
-	/**
-	 * @var website_ListMenutagsService
-	 */
-	private static $instance;
-
-	/**
-	 * @return website_ListMenutagsService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = self::getServiceClassInstance(get_class());
-		}
-		return self::$instance;
-	}
-
 	/**
 	 * @see list_persistentdocument_dynamiclist::getItems()
 	 * @return list_Item[]

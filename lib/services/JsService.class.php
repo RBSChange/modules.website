@@ -1,5 +1,5 @@
 <?php
-class website_JsService extends BaseService
+class website_JsService extends change_BaseService
 {
 	/**
 	 * JS Cache Location (must be browsable).

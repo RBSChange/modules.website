@@ -1,5 +1,5 @@
 <?php
-class website_PageRessourceService extends BaseService
+class website_PageRessourceService extends change_BaseService
 {
 	const GLOBAL_SCREEN_NAME = 'screen';
 	const GLOBAL_PRINT_NAME = 'print';

@@ -1,5 +1,5 @@
 <?php
-class website_ListAvailablelangsforwebsiteService extends BaseService implements list_ListItemsService
+class website_ListAvailablelangsforwebsiteService extends change_BaseService implements list_ListItemsService
 {
 	/**
 	 * @var website_ListAvailablelangsforwebsiteService

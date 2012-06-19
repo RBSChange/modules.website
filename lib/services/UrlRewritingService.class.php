@@ -1,5 +1,5 @@
 <?php
-class website_UrlRewritingService extends BaseService
+class website_UrlRewritingService extends change_BaseService
 {
 	/**
 	 * @var website_UrlRewritingService

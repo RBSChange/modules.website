@@ -1,5 +1,5 @@
 <?php
-class website_ListStylesheetsService extends BaseService implements list_ListItemsService
+class website_ListStylesheetsService extends change_BaseService implements list_ListItemsService
 {
 	/**
 	 * @var website_ListStylesheetsService

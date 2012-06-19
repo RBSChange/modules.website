@@ -2,7 +2,7 @@
 /**
  * @package modules.website.service
  */
-class website_StyleService extends BaseService
+class website_StyleService extends change_BaseService
 {
     /**
      * Media name for "screen".

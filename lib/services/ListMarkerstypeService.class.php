@@ -1,5 +1,5 @@
 <?php
-class website_ListMarkerstypeService extends BaseService implements list_ListItemsService
+class website_ListMarkerstypeService extends change_BaseService implements list_ListItemsService
 {
 	/**
 	 * @var website_ListMarkerstypeService

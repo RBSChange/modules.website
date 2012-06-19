@@ -1,5 +1,5 @@
 <?php
-class website_PagegroupPublicatedChooser extends BaseService
+class website_PagegroupPublicatedChooser extends change_BaseService
 {
 	/**
 	 * @var website_PagegroupPublicatedChooser

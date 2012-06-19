@@ -1,5 +1,5 @@
 <?php
-class block_BlockService extends BaseService
+class block_BlockService extends change_BaseService
 {
 	/**
 	 * @var block_BlockService

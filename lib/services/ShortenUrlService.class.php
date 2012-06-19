@@ -3,7 +3,7 @@
  * website_ShortenUrlService
  * @package modules.website.lib.services
  */
-class website_ShortenUrlService extends BaseService
+class website_ShortenUrlService extends change_BaseService
 {
 	/**
 	 * Singleton
