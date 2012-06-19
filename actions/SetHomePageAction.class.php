@@ -10,8 +10,8 @@ class website_SetHomePageAction extends change_JSONAction
 		$page = $this->getDocumentInstanceFromRequest($request);
 		try
 		{
-		    website_PageService::getInstance()->makeHomePage($page);
-		    $this->logAction($page);
+			website_PageService::getInstance()->makeHomePage($page);
+			$this->logAction($page);
 		}
 		catch (Exception  $e)
 		{

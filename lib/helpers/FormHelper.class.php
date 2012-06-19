@@ -180,9 +180,9 @@ class website_FormHelper
 	}
 
 	/**
-	 * @param String $idParam
+	 * @param string $idParam
 	 * @param array<String, String> $params
-	 * @return String
+	 * @return string
 	 */
 	private static function getCurrentFormAction($idParam = null, $params)
 	{
@@ -207,7 +207,7 @@ class website_FormHelper
 	}
 
 	/**
-	 * @return String
+	 * @return string
 	 */
 	private static function getCurrentFormId($idParam = null)
 	{
@@ -226,7 +226,7 @@ class website_FormHelper
 
 	/**
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	public static function renderFieldlabel($params)
 	{
@@ -257,7 +257,7 @@ class website_FormHelper
 	/**
 	 * Warning: change:label is a surrounder => renderLabel does close label element
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	public static function renderLabel($params)
 	{
@@ -315,7 +315,7 @@ class website_FormHelper
 	/**
 	 * TODO: refactor with buildSelectProperty
 	 * @param Array $params
-	 * @return String
+	 * @return string
 	 */
 	public static function renderSelectinput($params, $ctx)
 	{
@@ -452,7 +452,7 @@ class website_FormHelper
 	}
 
 	/**
-	 * @param String $name
+	 * @param string $name
 	 * @param PHPTAL_Context $ctx
 	 * @return mixed
 	 */
@@ -474,7 +474,7 @@ class website_FormHelper
 	}
 
 	/**
-	 * @param String $name
+	 * @param string $name
 	 * @param PHPTAL_Context $ctx
 	 * @return mixed
 	 */
@@ -493,7 +493,7 @@ class website_FormHelper
 
 	/**
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	public static function renderRichtextinput($params)
 	{
@@ -533,7 +533,7 @@ class website_FormHelper
 	
 	/**
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	public static function renderBbcodeinput($params)
 	{
@@ -566,7 +566,7 @@ class website_FormHelper
 
 	/**
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	private function buildRichtextinput($params)
 	{
@@ -597,7 +597,7 @@ class website_FormHelper
 	/**
 	 * @param array<String, mixed> $params
 	 * @param PHPTAL_Context $ctx
-	 * @return String the XHTML output
+	 * @return string the XHTML output
 	 */
 	public static function renderDocumentpicker($params, $ctx)
 	{
@@ -842,8 +842,8 @@ jQuery(document).ready(function() {
 
 	/**
 	 * @param f_persistentdocument_PersistentDocument $document
-	 * @param String $propertyId
-	 * @return String
+	 * @param string $propertyId
+	 * @return string
 	 */
 	private static function getDocumentPickerElem($document, $propertyId)
 	{
@@ -857,7 +857,7 @@ jQuery(document).ready(function() {
 	 * Render a change:field attached to a given document model
 	 *
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	public static function renderField($params, $ctx)
 	{
@@ -928,7 +928,7 @@ jQuery(document).ready(function() {
 
 	/**
 	 * @param array $params
-	 * @param String $class
+	 * @param string $class
 	 */
 	private static function addClassParam(&$params, $class)
 	{
@@ -949,7 +949,7 @@ jQuery(document).ready(function() {
 
 	/**
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	public static function renderUploadfield($params)
 	{
@@ -1147,7 +1147,7 @@ jQuery(document).ready(function() {
 
 	/**
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	public static function renderTextinput($params)
 	{
@@ -1212,7 +1212,7 @@ jQuery(document).ready(function() {
 
 	/**
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	public static function renderPasswordinput($params)
 	{
@@ -1222,7 +1222,7 @@ jQuery(document).ready(function() {
 
 	/**
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	public static function renderFileinput($params)
 	{
@@ -1231,7 +1231,7 @@ jQuery(document).ready(function() {
 
 	/**
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	public static function renderHiddeninput($params)
 	{
@@ -1245,7 +1245,7 @@ jQuery(document).ready(function() {
 
 	/**
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	public static function renderTextarea($params)
 	{
@@ -1256,7 +1256,7 @@ jQuery(document).ready(function() {
 
 	/**
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	public static function renderDateinput($params)
 	{
@@ -1357,7 +1357,7 @@ jQuery(document).ready(function() {
 
 	/**
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	public static function renderSubmit($params)
 	{
@@ -1478,7 +1478,7 @@ jQuery(document).ready(function() {
 
 	/**
 	 * @param Array $params
-	 * @return String
+	 * @return string
 	 */
 	public static function renderBooleaninput($params)
 	{
@@ -1614,10 +1614,10 @@ jQuery(document).ready(function() {
 	}
 
 	/**
-	 * @param String $radioValue
-	 * @param String $radioLabel
+	 * @param string $radioValue
+	 * @param string $radioLabel
 	 * @param array<String, String> $params
-	 * @return String
+	 * @return string
 	 */
 	private static function buildRadio($radioValue, $radioLabel, $params, $ignoreErrors = false)
 	{
@@ -1647,10 +1647,10 @@ jQuery(document).ready(function() {
 	}
 	
 	/**
-	 * @param String $radioValue
-	 * @param String $radioLabel
+	 * @param string $radioValue
+	 * @param string $radioLabel
 	 * @param array<String, String> $params
-	 * @return String
+	 * @return string
 	 */
 	private static function buildCheckbox($radioValue, $radioLabel, $params, $ignoreErrors = false)
 	{
@@ -1704,10 +1704,10 @@ jQuery(document).ready(function() {
 	}
 
 	/**
-	 * @param String $msg
-	 * @param Boolean $isFirst
-	 * @param Boolean $isLast
-	 * @return String
+	 * @param string $msg
+	 * @param boolean $isFirst
+	 * @param boolean $isLast
+	 * @return string
 	 */
 	private function buildListItem($msg, $isFirst = false, $isLast = false)
 	{
@@ -1797,8 +1797,8 @@ jQuery(document).ready(function() {
 	}
 	
 	/**
-	 * @param String $name
-	 * @param Boolean $isAbsoluteName
+	 * @param string $name
+	 * @param boolean $isAbsoluteName
 	 */
 	private static function buildInputName($name, $isAbsoluteName = false)
 	{
@@ -1815,8 +1815,8 @@ jQuery(document).ready(function() {
 	}
 
 	/**
-	 * @param String $name
-	 * @return String
+	 * @param string $name
+	 * @return string
 	 */
 	private static function buildFieldId($name)
 	{
@@ -1829,8 +1829,8 @@ jQuery(document).ready(function() {
 
 	/**
 	 * @param Array $params
-	 * @param Boolean $unsetWhenDone
-	 * @return String
+	 * @param boolean $unsetWhenDone
+	 * @return string
 	 */
 	private static function getLabelFromParameters(&$params, $unsetWhenDone = true)
 	{
@@ -1876,8 +1876,8 @@ jQuery(document).ready(function() {
 
 	/**
 	 * @param Array $params
-	 * @param Boolean $unsetWhenDone
-	 * @return String
+	 * @param boolean $unsetWhenDone
+	 * @return string
 	 */
 	private static function getSubmitLabelFromParameters(&$params, $unsetWhenDone = true)
 	{
@@ -1908,7 +1908,7 @@ jQuery(document).ready(function() {
 	}
 
 	/**
-	 * @param String $name the property name
+	 * @param string $name the property name
 	 * @return Mixed
 	 */
 	private static function getFieldValue($name)
@@ -1931,7 +1931,7 @@ jQuery(document).ready(function() {
 	
 	/**
 	 * @param Array $params
-	 * @return String
+	 * @return string
 	 */
 	private function renderInputCode($params)
 	{
@@ -1993,7 +1993,7 @@ jQuery(document).ready(function() {
 
 	/**
 	 * @param Array $params
-	 * @return String
+	 * @return string
 	 */
 	private static function buildFieldErrors($params)
 	{
@@ -2024,8 +2024,8 @@ jQuery(document).ready(function() {
 
 	/**
 	 * @param Array $params
-	 * @param Boolean $close
-	 * @return String
+	 * @param boolean $close
+	 * @return string
 	 */
 	private function buildLabel($params, $close = true, $contentPrefix = '')
 	{
@@ -2112,8 +2112,8 @@ jQuery(document).ready(function() {
 	}
 
 	/**
-	 * @param String $propertyName
-	 * @return String
+	 * @param string $propertyName
+	 * @return string
 	 */
 	private static function buildPropertyValue($propertyName)
 	{
@@ -2149,10 +2149,10 @@ jQuery(document).ready(function() {
 
 	/**
 	 * TODO: refactor with renderSelectInput
-	 * @param String $propertyName
+	 * @param string $propertyName
 	 * @param list_Item[] $listItems
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	private function buildSelectProperty($propertyName, $listItems, &$params)
 	{
@@ -2200,7 +2200,7 @@ jQuery(document).ready(function() {
 
 	/**
 	 * @param Array $params
-	 * @return String
+	 * @return string
 	 */
 	private function buildNameAndId(&$params, $defaultValue = 'defaultFieldName')
 	{
@@ -2236,7 +2236,7 @@ jQuery(document).ready(function() {
 	}
 
 	/**
-	 * @param String $listId
+	 * @param string $listId
 	 * @return Array
 	 */
 	private function getListItems($listId)
@@ -2252,7 +2252,7 @@ jQuery(document).ready(function() {
 	/**
 	 * @param Mixed $listItems
 	 * @param Mixed $value
-	 * @return String
+	 * @return string
 	 */
 	private function buildArrayOptions($listItems, $value)
 	{
@@ -2286,8 +2286,8 @@ jQuery(document).ready(function() {
 	}
 
 	/**
-	 * @param String $text
-	 * @return String
+	 * @param string $text
+	 * @return string
 	 */
 	private static function escapeText($text)
 	{
@@ -2297,7 +2297,7 @@ jQuery(document).ready(function() {
 	/**
 	 * @param Array $listItems
 	 * @param Mixed $value
-	 * @return String
+	 * @return string
 	 */
 	private static function buildOptions($listItems, $value)
 	{
@@ -2420,7 +2420,7 @@ jQuery(document).ready(function() {
 					jQuery("#' . $baseId . '_day").change(updHidden); 
 					jQuery("#' . $baseId . '_month").change(updHidden); 
 					jQuery("#' . $baseId . '_year").change(updHidden);
-      			});				
+				});
 			//]]></script> '
 			);
 			
@@ -2443,7 +2443,7 @@ jQuery(document).ready(function() {
 	/**
 	 * @param PropertyInfo $property
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	private static function buildInputProperty($propertyName, &$params, $ctx)
 	{
@@ -2613,7 +2613,7 @@ jQuery(document).ready(function() {
 	}
 
 	/**
-	 * @param String $beanName
+	 * @param string $beanName
 	 * @return f_mvc_Bean
 	 */
 	private static function getBeanByName($beanName)
@@ -2631,7 +2631,7 @@ jQuery(document).ready(function() {
 	}
 
 	/**
-	 * @param String $name
+	 * @param string $name
 	 * @return Mixed
 	 */
 	private static function getParameterValue($name)
@@ -2645,8 +2645,8 @@ jQuery(document).ready(function() {
 	}
 
 	/**
-	 * @param String $propertyName
-	 * @return Boolean
+	 * @param string $propertyName
+	 * @return boolean
 	 */
 	private static function hasErrorsForProperty($propertyName)
 	{
@@ -2665,7 +2665,7 @@ jQuery(document).ready(function() {
 	}
 
 	/**
-	 * @param String $propertyName
+	 * @param string $propertyName
 	 * @return Array()
 	 */
 	private static function getErrorsForProperty($propertyName)
@@ -2679,10 +2679,10 @@ jQuery(document).ready(function() {
 	}
 
 	/**
-	 * @param String $property
+	 * @param string $property
 	 * @param list_Item[] $listItems
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	private function buildCheckboxProperty($propertyName, $listItems, &$params)
 	{

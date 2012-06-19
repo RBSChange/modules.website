@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/static/schema/change-document/4.0.xsd" model-version="2.0" icon="page" indexable="true">
-  <properties>
-    <property name="startpublicationdate" localized="true"/>
-    <property name="endpublicationdate" localized="true"/>
-    <property name="publicationstatus" localized="true"/>
-    <property name="navigationtitle" type="String" min-occurs="1" localized="true" db-size="80"/>
-    <property name="metatitle" type="LongString" localized="true"/>
-    <property name="description" type="LongString" localized="true"/>
-    <property name="keywords" type="LongString" localized="true"/>
-    <property name="robotsmeta" type="String" db-size="20" from-list="modules_website/robotsmeta" default-value="index,follow" indexed="none"/>
-    <property name="indexingstatus" type="Boolean" default-value="true"/>
-    <property name="template" type="String" min-occurs="1" indexed="none"/>
-    <property name="content" type="XHTMLFragment" localized="true" indexed="description"/>
-    <property name="skin" type="modules_skin/skin"/>
-    <property name="navigationVisibility" type="Integer" min-occurs="1" from-list="modules_website/navigationvisibility" default-value="1" localized="true"/>
-    <property name="isIndexPage" type="Boolean" min-occurs="1" default-value="false"/>
-    <property name="isHomePage" type="Boolean" min-occurs="1" default-value="false"/>
-    <property name="advancedreferencing" type="XHTMLFragment" localized="true"/>
-    <property name="isorphan" type="Boolean" default-value="false"/>
-    <property name="usehttps" type="Boolean" default-value="false"/>
-  </properties>
-  <serializedproperties>
-    <property name="isIndexPageForSubTopics" type="Boolean" default-value="false"/>
-  </serializedproperties>
-  <statuses default="DRAFT"/>
-  <workflow start-task="VALIDATIONPAGE">
-    <parameter name="AFFECT_TASKS_TO_SUPER_ADMIN">true</parameter>
-    <parameter name="NOTIFICATION_ACTIVATION">modules_website/sendactivatetoauthor</parameter>
-    <parameter name="NOTIFICATION_ERROR">modules_website/sendcanceltoauthor</parameter>
-  </workflow>
+	<properties>
+		<property name="startpublicationdate" localized="true" />
+		<property name="endpublicationdate" localized="true" />
+		<property name="publicationstatus" localized="true" />
+		<property name="navigationtitle" type="String" min-occurs="1" localized="true" db-size="80" />
+		<property name="metatitle" type="LongString" localized="true" />
+		<property name="description" type="LongString" localized="true" />
+		<property name="keywords" type="LongString" localized="true" />
+		<property name="robotsmeta" type="String" db-size="20" from-list="modules_website/robotsmeta" default-value="index,follow" indexed="none" />
+		<property name="indexingstatus" type="Boolean" default-value="true" />
+		<property name="template" type="String" min-occurs="1" indexed="none" />
+		<property name="content" type="XHTMLFragment" localized="true" indexed="description" />
+		<property name="skin" type="modules_skin/skin" />
+		<property name="navigationVisibility" type="Integer" min-occurs="1" from-list="modules_website/navigationvisibility" default-value="1" localized="true" />
+		<property name="isIndexPage" type="Boolean" min-occurs="1" default-value="false" />
+		<property name="isHomePage" type="Boolean" min-occurs="1" default-value="false" />
+		<property name="advancedreferencing" type="XHTMLFragment" localized="true" />
+		<property name="isorphan" type="Boolean" default-value="false" />
+		<property name="usehttps" type="Boolean" default-value="false" />
+	</properties>
+	<serializedproperties>
+		<property name="isIndexPageForSubTopics" type="Boolean" default-value="false" />
+	</serializedproperties>
+	<statuses default="DRAFT" />
+	<workflow start-task="VALIDATIONPAGE">
+		<parameter name="AFFECT_TASKS_TO_SUPER_ADMIN">true</parameter>
+		<parameter name="NOTIFICATION_ACTIVATION">modules_website/sendactivatetoauthor</parameter>
+		<parameter name="NOTIFICATION_ERROR">modules_website/sendcanceltoauthor</parameter>
+	</workflow>
 </document>

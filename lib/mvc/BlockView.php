@@ -35,8 +35,8 @@ class website_BlockView
 	private $loadHandlers = array();
 
 	/**
-	 * @param String $relativeNameOrTemplate
-	 * @param String $templateModuleName
+	 * @param string $relativeNameOrTemplate
+	 * @param string $templateModuleName
 	 */
 	public function __construct($relativeNameOrTemplate, $templateModuleName = null)
 	{
@@ -53,7 +53,7 @@ class website_BlockView
 	
 	/**
 	 * @param website_BlockActionRequest $request
-	 * @return String
+	 * @return string
 	 */
 	private function getName($request)
 	{
@@ -61,8 +61,8 @@ class website_BlockView
 	}
 
 	/**
-	 * @param String $className
-	 * @param String $paramsString
+	 * @param string $className
+	 * @param string $paramsString
 	 */
 	protected final function addLoadHandler($className, $paramsString = null)
 	{

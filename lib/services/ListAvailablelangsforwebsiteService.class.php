@@ -1,23 +1,10 @@
 <?php
+/**
+ * @package modules.website
+ * @method website_ListAvailablelangsforwebsiteService getInstance()
+ */
 class website_ListAvailablelangsforwebsiteService extends change_BaseService implements list_ListItemsService
 {
-	/**
-	 * @var website_ListAvailablelangsforwebsiteService
-	 */
-	private static $instance;
-
-	/**
-	 * @return website_ListAvailablelangsforwebsiteService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-
 	/**
 	 * Returns an array of available stylesheets for the website module.
 	 *

@@ -87,7 +87,7 @@ class website_DisplayAction extends change_Action
 		return change_View::NONE;
 	}
 	/**
-	 * @param Integer $pageId
+	 * @param integer $pageId
 	 * @param PageException $e
 	 * @param change_Context $context
 	 * @param change_Request $request
@@ -115,9 +115,9 @@ class website_DisplayAction extends change_Action
 	/**
 	 * Traitement absence de permission
 	 *
-	 * @param String $login
-	 * @param String $permission
-	 * @param Integer $nodeId
+	 * @param string $login
+	 * @param string $permission
+	 * @param integer $nodeId
 	 */
 	protected function onMissingPermission($login, $permission, $nodeId)
 	{
@@ -131,7 +131,7 @@ class website_DisplayAction extends change_Action
 	}
 	
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	protected function isDocumentAction()
 	{

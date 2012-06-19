@@ -22,7 +22,7 @@ class website_AddToMenuAction extends change_JSONAction
 			$menuItemDoc->save($menuObject->getId());
 		}
 
-		return $this->sendJSON(array('message' => LocaleService::getInstance()->transBO('m.website.bo.actions.addtomenuactionsuccess', 
+		return $this->sendJSON(array('message' => LocaleService::getInstance()->trans('m.website.bo.actions.addtomenuactionsuccess', 
 			array(), 
 			array('label' => implode("\n  ", $label), 'menulabel' => $menulabel))));
 	}

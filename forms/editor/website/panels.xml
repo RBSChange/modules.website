@@ -13,7 +13,7 @@
 			<constructor><![CDATA[
 				if (getController().hasModule('twitterconnect'))
 				{
-					this.addTab('tweets', "${transui:m.twitterconnect.bo.doceditor.tab.tweets,js,ucf}", 'tweet');
+					this.addTab('tweets', "${trans:m.twitterconnect.bo.doceditor.tab.tweets,js,ucf}", 'tweet');
 				}
 			]]></constructor>
 		</javascript>

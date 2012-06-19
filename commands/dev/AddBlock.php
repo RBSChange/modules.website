@@ -2,7 +2,7 @@
 class commands_AddBlock extends c_ChangescriptCommand
 {
 	/**
-	 * @return String
+	 * @return string
 	 */
 	function getUsage()
 	{
@@ -17,7 +17,7 @@ where options in:
 	}
 
 	/**
-	 * @return String
+	 * @return string
 	 */
 	function getDescription()
 	{
@@ -25,7 +25,7 @@ where options in:
 	}
 
 	/**
-	 * @param String[] $params
+	 * @param string[] $params
 	 * @param array<String, String> $options where the option array key is the option name, the potential option value or true
 	 */
 	protected function validateArgs($params, $options)
@@ -34,10 +34,10 @@ where options in:
 	}
 
 	/**
-	 * @param Integer $completeParamCount the parameters that are already complete in the command line
-	 * @param String[] $params
+	 * @param integer $completeParamCount the parameters that are already complete in the command line
+	 * @param string[] $params
 	 * @param array<String, String> $options where the option array key is the option name, the potential option value or true
-	 * @return String[] or null
+	 * @return string[] or null
 	 */
 	function getParameters($completeParamCount, $params, $options, $current)
 	{
@@ -54,7 +54,7 @@ where options in:
 	}
 
 	/**
-	 * @param String[] $params
+	 * @param string[] $params
 	 * @param array<String, String> $options where the option array key is the option name, the potential option value or true
 	 * @see c_ChangescriptCommand::parseArgs($args)
 	 */

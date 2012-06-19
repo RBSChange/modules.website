@@ -1,31 +1,14 @@
 <?php
 /**
- * website_ListBlocktemplatesService
- * @package modules.website.lib.services
+ * @package modules.website
+ * @method website_ListBlocktemplatesService getInstance()
  */
 class website_ListBlocktemplatesService extends change_BaseService implements list_ListItemsService
 {
 	/**
-	 * @var website_ListBlocktemplatesService
-	 */
-	private static $instance;
-
-	/**
 	 * @var array<list_Item>
 	 */
 	private $itemArray = array();
-	
-	/**
-	 * @return website_ListBlocktemplatesService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
 
 	/**
 	 * @see list_persistentdocument_dynamiclist::getItems()
@@ -69,7 +52,7 @@ class website_ListBlocktemplatesService extends change_BaseService implements li
 						{
 							continue;
 						}
-						$label = $ls->transBO('m.' . $blockModule . '.list.blocktemplates-' . strtolower($value), $lm);
+						$label = $ls->trans('m.' . $blockModule . '.list.blocktemplates-' . strtolower($value), $lm);
 						$this->itemArray[$templatePrefix][$value] = new list_Item($label, $value);
 						$namesToIgnore[] = $value;
 					}
@@ -98,7 +81,7 @@ class website_ListBlocktemplatesService extends change_BaseService implements li
 								{
 									continue;
 								}
-								$label = $ls->transBO('t.' . $themeCode . '.list.blocktemplates-' . strtolower($value), $lm) . ' (' . $theme->getLabel() . ')';
+								$label = $ls->trans('t.' . $themeCode . '.list.blocktemplates-' . strtolower($value), $lm) . ' (' . $theme->getLabel() . ')';
 								$this->itemArray[$templatePrefix][] = new list_Item($label, $value);
 							}
 						}

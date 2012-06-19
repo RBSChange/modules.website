@@ -5,19 +5,16 @@
 		<field name="skin" />
 		<field name="navigationVisibility" />
 		<field name="stylesheet" emptylabel="" />
-		<field name="referenceURI" type="hidden"/>
+		<field name="referenceURI" type="hidden" />
 	</section>
-	
 	<xul>
 		<javascript>
 			<field name="mEditReferenceButton">null</field>
-			
 			<constructor><![CDATA[
-				this.mEditReferenceButton = this.addActionButton("${transui:m.website.bo.actions.editreferencebutton,js,ucf}", wToolkit.getIcon('edit', 'small'));
+				this.mEditReferenceButton = this.addActionButton("${trans:m.website.bo.actions.editreferencebutton,js,ucf}", wToolkit.getIcon('edit', 'small'));
 				var me = this;
 				this.mEditReferenceButton.addEventListener('command', function(event) {me.onEditReference();}, true);	
 			]]></constructor>
-			
 			<method name="onEditReference">
 				<parameter name="event" />
 				<body><![CDATA[
@@ -29,5 +26,5 @@
 				]]></body>
 			</method>
 		</javascript>
-	</xul>	
+	</xul>
 </panel>

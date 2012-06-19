@@ -7,7 +7,7 @@ class PHPTAL_Php_Attribute_CHANGE_Cache extends ChangeTalAttribute
 	/**
 	 * @see ChangeTalAttribute::evaluateAll()
 	 *
-	 * @return Boolean
+	 * @return boolean
 	 */
 	protected function evaluateAll()
 	{
@@ -15,19 +15,19 @@ class PHPTAL_Php_Attribute_CHANGE_Cache extends ChangeTalAttribute
 	}
 	
 		/**
-     * Called before element printing.
-     */
-    public function before(PHPTAL_Php_CodeWriter $codewriter)
-    {
+	 * Called before element printing.
+	 */
+	public function before(PHPTAL_Php_CodeWriter $codewriter)
+	{
 		parent::before($codewriter);
 		$codewriter->pushCode('if (' . $this->getRenderClassName() . '::isNotInCache()) { //');
 	}
 	
 	/**
-     * Called after element printing.
-     */
-    public function after(PHPTAL_Php_CodeWriter $codewriter)
-    {
+	 * Called after element printing.
+	 */
+	public function after(PHPTAL_Php_CodeWriter $codewriter)
+	{
 		parent::after($codewriter);
 		$codewriter->doEcho($this->getRenderClassName() . "::putInCache()");
 		$codewriter->pushCode('}');
@@ -37,7 +37,7 @@ class PHPTAL_Php_Attribute_CHANGE_Cache extends ChangeTalAttribute
 	/**
 	 * @see ChangeTalAttribute::getRenderClassName()
 	 *
-	 * @return String
+	 * @return string
 	 */
 	protected function getRenderClassName()
 	{
@@ -47,7 +47,7 @@ class PHPTAL_Php_Attribute_CHANGE_Cache extends ChangeTalAttribute
 	/**
 	 * @see ChangeTalAttribute::getRenderMethodName()
 	 *
-	 * @return String
+	 * @return string
 	 */
 	protected function getRenderMethodName()
 	{

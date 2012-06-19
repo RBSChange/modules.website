@@ -1,25 +1,12 @@
 <?php
+/**
+ * @package modules.website
+ * @method website_PageService getInstance()
+ */
 class website_PageService extends f_persistentdocument_DocumentService
 {
 	/**
-	 * @var website_PageService
-	 */
-	private static $instance;
-	
-	/**
-	 * @return website_PageService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-	
-	/**
-	 * @param String $templateName
+	 * @param string $templateName
 	 * @return website_persistentdocument_page[]
 	 */
 	function getByTemplate($templateName)
@@ -74,7 +61,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_page $document
-	 * @param String $oldPublicationStatus
+	 * @param string $oldPublicationStatus
 	 * @param array $params
 	 * @return void
 	 */
@@ -147,7 +134,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_page $document
-	 * @param Integer $parentNodeId
+	 * @param integer $parentNodeId
 	 */
 	protected function preSave($document, $parentNodeId)
 	{
@@ -332,7 +319,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_page $document
-	 * @param Integer $parentNodeId
+	 * @param integer $parentNodeId
 	 */
 	protected function postSave($document, $parentNodeId)
 	{
@@ -423,8 +410,8 @@ class website_PageService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_page $page
-	 * @param Boolean $isIndexPage
-	 * @param Boolean $userSetting
+	 * @param boolean $isIndexPage
+	 * @param boolean $userSetting
 	 */
 	public function setIsIndexPage($page, $isIndexPage, $userSetting = false)
 	{
@@ -464,7 +451,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_page $page
-	 * @param Boolean $isHomePage
+	 * @param boolean $isHomePage
 	 */
 	public function setIsHomePage($page, $isHomePage)
 	{
@@ -513,7 +500,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 * Sets the index page for a topic.
 	 *
 	 * @param website_persistentdocument_page $page
-	 * @param Boolean $userSetting
+	 * @param boolean $userSetting
 	 */
 	public function makeIndexPage($page, $userSetting = false)
 	{
@@ -584,7 +571,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_page $document
-	 * @param Integer $destId
+	 * @param integer $destId
 	 */
 	protected function onDocumentMoved($document, $destId)
 	{
@@ -767,7 +754,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_page $document
-	 * @param String $tag
+	 * @param string $tag
 	 * @return void
 	 */
 	public function tagAdded($document, $tag)
@@ -780,7 +767,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_page $document
-	 * @param String $tag
+	 * @param string $tag
 	 * @return void
 	 */
 	public function tagRemoved($document, $tag)
@@ -873,7 +860,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	/**
 	 * @param website_persistentdocument_page $fromDocument
 	 * @param website_persistentdocument_page $toDocument
-	 * @param String $tag
+	 * @param string $tag
 	 * @return void
 	 */
 	public function tagMovedFrom($fromDocument, $toDocument, $tag)
@@ -892,7 +879,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	/**
 	 * @param website_persistentdocument_page $fromDocument
 	 * @param website_persistentdocument_page $toDocument
-	 * @param String $tag
+	 * @param string $tag
 	 * @return void
 	 */
 	public function tagMovedTo($fromDocument, $toDocument, $tag)
@@ -909,7 +896,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	}
 	
 	/**
-	 * @param Integer $pageCount
+	 * @param integer $pageCount
 	 * @return array<website_persistentdocument_page>
 	 */
 	public function getLastModified($pageCount = 5)
@@ -926,7 +913,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	/**
 	 * @param website_persistentdocument_page $newDocument
 	 * @param website_persistentdocument_page $originalDocument
-	 * @param Integer $parentNodeId
+	 * @param integer $parentNodeId
 	 */
 	protected function preDuplicate($newDocument, $originalDocument, $parentNodeId)
 	{
@@ -968,7 +955,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 * This function set the currentPageId and calculate :
 	 * 	- currentPageAncestors[Ids]
 	 *  - currentWebsite
-	 * @param Integer $currentPageId
+	 * @param integer $currentPageId
 	 */
 	public function setCurrentPageId($currentPageId)
 	{
@@ -1273,8 +1260,8 @@ class website_PageService extends f_persistentdocument_DocumentService
 	}
 	
 	/**
-	 * @param String $textContent
-	 * @return String
+	 * @param string $textContent
+	 * @return string
 	 */
 	public function getCleanContent($textContent)
 	{
@@ -1355,7 +1342,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	}
 	
 	/**
-	 * @return Integer
+	 * @return integer
 	 */
 	public final function getOrphanPagesCount()
 	{
@@ -1366,7 +1353,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	}
 	
 	/**
-	 * @return Integer
+	 * @return integer
 	 */
 	public final function getOrphanPagesCountForWebsiteId($websiteId)
 	{
@@ -1377,7 +1364,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	}
 	
 	/**
-	 * @return Integer[]
+	 * @return integer[]
 	 */
 	public function getTaggedPageIds()
 	{
@@ -1418,7 +1405,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_page $page
-	 * @return Integer
+	 * @return integer
 	 */
 	public function getSkinId($page)
 	{
@@ -1555,7 +1542,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 * Returns the content of the page ready to be use by the backoffice editor.
 	 *
 	 * @param website_persistentdocument_page $page
-	 * @return String
+	 * @return string
 	 */
 	public function getContentForEdition($page, &$editorType = null)
 	{
@@ -1706,7 +1693,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	/**
 	 * @param website_persistentdocument_page $page
 	 * @param array $blockInfo
-	 * @return String
+	 * @return string
 	 */
 	public function getBlockContentForEdition($page, $blockInfo)
 	{
@@ -2125,7 +2112,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param array $specs
-	 * @return String
+	 * @return string
 	 */
 	private function getBlockClassNameForSpecs($specs)
 	{
@@ -2215,7 +2202,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 				
 				$ls = LocaleService::getInstance();
 				$jsonMeta[$zone][] = array("value" => "{" . $meta . "}", 
-					"label" => $ls->transBO("m.$moduleName.bo.blocks.$blockName.metas.$shortMetaName"));
+					"label" => $ls->trans("m.$moduleName.bo.blocks.$blockName.metas.$shortMetaName"));
 			}
 		}
 		$formProperties["metainfo"] = $jsonMeta;

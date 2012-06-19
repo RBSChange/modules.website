@@ -15,7 +15,7 @@ class PHPTAL_Php_Attribute_CHANGE_Currentpagelink extends ChangeTalAttribute
 	private $attrName = 'href';
 	
 	/**
-	 * @return String
+	 * @return string
 	 */
 	protected function getDefaultParameterName()
 	{
@@ -23,7 +23,7 @@ class PHPTAL_Php_Attribute_CHANGE_Currentpagelink extends ChangeTalAttribute
 	}
 	
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	protected function evaluateAll()
 	{
@@ -55,10 +55,10 @@ class PHPTAL_Php_Attribute_CHANGE_Currentpagelink extends ChangeTalAttribute
 	}
 	
 	 /**
-     * Called before element printing.
-     */
-    public function before(PHPTAL_Php_CodeWriter $codewriter)
-    {
+	 * Called before element printing.
+	 */
+	public function before(PHPTAL_Php_CodeWriter $codewriter)
+	{
 		$tagName = strtolower($this->phpelement->getLocalName());
 		if ($tagName == 'form')
 		{

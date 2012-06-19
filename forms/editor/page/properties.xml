@@ -9,7 +9,7 @@
 		<field name="isIndexPageForSubTopics" />
 	</section>
 	<section labeli18n="m.website.document.page.layoutinformations">
-		<field name="template" type="dropdownlist" nocache="true"/>
+		<field name="template" type="dropdownlist" nocache="true" />
 		<field name="skin" />
 	</section>
 	<section labeli18n="m.website.document.page.dateinformations">
@@ -25,29 +25,25 @@
 	<xul>
 		<javascript>
 			<field name="mEditContentButton">null</field>
-
 			<constructor><![CDATA[
-				this.mEditContentButton = this.addActionButton("${transui:m.website.bo.actions.editcontent,js,ucf}", wToolkit.getIcon('edit-page-content', 'small'));
+				this.mEditContentButton = this.addActionButton("${trans:m.website.bo.actions.editcontent,js,ucf}", wToolkit.getIcon('edit-page-content', 'small'));
 				var me = this;
 				this.mEditContentButton.addEventListener('command', function(event) {me.onEditContent();}, true);			
 				this.extendMethod("updateCommandsUI", this.updateEditContentUI);
 				this.extendMethod("fireInitializeComplete", this.initializeCompletePageExtent);
 			]]></constructor>
-
 			<method name="updateEditContentUI">
 				<parameter name="event" />
 				<body><![CDATA[
 					this.mEditContentButton.disabled = this.modified;
 				]]></body>
 			</method>
-
 			<method name="onEditContent">
 				<parameter name="event" />
 				<body><![CDATA[
 					this.documentEditor.module.editPageContentFromDocument(this.mDocumentId, this.mLang);
 				]]></body>
 			</method>
-			
 			<method name="initializeCompletePageExtent">
 				<parameter name="result" />
 				<body><![CDATA[
@@ -72,7 +68,6 @@
 				}
 				]]></body>
 			</method>
-			
 			<method name="setMenuItems">
 				<parameter name="metas" />
 				<parameter name="field" />

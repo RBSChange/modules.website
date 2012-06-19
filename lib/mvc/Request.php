@@ -2,9 +2,9 @@
 interface f_mvc_Request
 {
 	/**
-	 * @param String $name
-	 * @param String $defaultValue
-	 * @return String the value of the parameter or $defaultValue
+	 * @param string $name
+	 * @param string $defaultValue
+	 * @return string the value of the parameter or $defaultValue
 	 */
 	function getParameter($name, $defaultValue = null);
 	
@@ -14,25 +14,25 @@ interface f_mvc_Request
 	function getParameters();
 	
 	/**
-	 * @param String $name
-	 * @return Boolean
+	 * @param string $name
+	 * @return boolean
 	 */
 	function hasParameter($name);
 	
 	/**
-	 * @param String $name
-	 * @return Boolean
+	 * @param string $name
+	 * @return boolean
 	 */
 	function hasNonEmptyParameter($name);
 	
 	/**
-	 * @param String $name
+	 * @param string $name
 	 * @param mixed $value
 	 */
 	function setAttribute($name, $value);
 	
 	/**
-	 * @param String $name
+	 * @param string $name
 	 * @param mixed $defaultValue
 	 * @return mixed
 	 */
@@ -44,8 +44,8 @@ interface f_mvc_Request
 	function getAttributes();
 	
 	/**
-	 * @param String $name
-	 * @return Boolean
+	 * @param string $name
+	 * @return boolean
 	 */
 	function hasAttribute($name);
 }

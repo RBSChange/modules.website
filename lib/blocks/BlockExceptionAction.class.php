@@ -6,7 +6,7 @@ class website_BlockExceptionAction extends website_BlockAction
 	 *
 	 * @param website_BlockActionRequest $request
 	 * @param website_BlockActionResponse $response
-	 * @return String
+	 * @return string
 	 */
 	function execute($request, $response)
 	{

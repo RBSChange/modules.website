@@ -1,27 +1,10 @@
 <?php
 /**
- * website_SystemtopicService
- * @package website
+ * @package modules.website
+ * @method website_SystemtopicService getInstance()
  */
 class website_SystemtopicService extends website_TopicService
 {
-	/**
-	 * @var website_SystemtopicService
-	 */
-	private static $instance;
-
-	/**
-	 * @return website_SystemtopicService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-
 	/**
 	 * @return website_persistentdocument_systemtopic
 	 */
@@ -38,7 +21,7 @@ class website_SystemtopicService extends website_TopicService
 	 */
 	public function createQuery()
 	{
-		return $this->pp->createQuery('modules_website/systemtopic');
+		return $this->getPersistentProvider()->createQuery('modules_website/systemtopic');
 	}
 	
 	/**
@@ -49,7 +32,7 @@ class website_SystemtopicService extends website_TopicService
 	 */
 	public function createStrictQuery()
 	{
-		return $this->pp->createQuery('modules_website/systemtopic', false);
+		return $this->getPersistentProvider()->createQuery('modules_website/systemtopic', false);
 	}
 	
 	/**
@@ -151,7 +134,7 @@ class website_SystemtopicService extends website_TopicService
 	
 	/**
 	 * @param website_persistentdocument_systemtopic $document
-	 * @return Boolean
+	 * @return boolean
 	 */
 	public function isPublishable($document)
 	{

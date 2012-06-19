@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <panels>
 	<panel name="resume" />
 	<panel name="properties" />
@@ -12,7 +12,7 @@
 			<constructor><![CDATA[
 				if (getController().hasModule('twitterconnect'))
 				{
-					this.addTab('tweets', "${transui:m.twitterconnect.bo.doceditor.tab.tweets,js,ucf}", 'tweet');
+					this.addTab('tweets', "${trans:m.twitterconnect.bo.doceditor.tab.tweets,js,ucf}", 'tweet');
 				}
 			]]></constructor>
 		</javascript>

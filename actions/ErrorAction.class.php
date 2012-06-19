@@ -38,7 +38,7 @@ abstract class website_ErrorAction extends change_Action
 	}
 
 	/**
-	 * @return Integer
+	 * @return integer
 	 */
 	abstract protected function getStatus();
 

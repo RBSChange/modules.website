@@ -1,27 +1,10 @@
 <?php
 /**
- * website_MarkerService
- * @package website
+ * @package modules.website
+ * @method website_MarkerService getInstance()
  */
 class website_MarkerService extends f_persistentdocument_DocumentService
 {
-	/**
-	 * @var website_MarkerService
-	 */
-	private static $instance;
-	
-	/**
-	 * @return website_MarkerService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-	
 	/**
 	 * @return website_persistentdocument_marker
 	 */
@@ -38,7 +21,7 @@ class website_MarkerService extends f_persistentdocument_DocumentService
 	 */
 	public function createQuery()
 	{
-		return $this->pp->createQuery('modules_website/marker');
+		return $this->getPersistentProvider()->createQuery('modules_website/marker');
 	}
 	
 	/**
@@ -49,13 +32,13 @@ class website_MarkerService extends f_persistentdocument_DocumentService
 	 */
 	public function createStrictQuery()
 	{
-		return $this->pp->createQuery('modules_website/marker', false);
+		return $this->getPersistentProvider()->createQuery('modules_website/marker', false);
 	}
 	
 	/**
 	 * This function return the HTML to add the marker
 	 * @param website_persistentdocument_website $website
-	 * @return String
+	 * @return string
 	 */
 	public function getHtmlMarker($website)
 	{
@@ -116,7 +99,7 @@ class website_MarkerService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * Return the list of type of markers
-	 * @return String[]
+	 * @return string[]
 	 */
 	public function getMarkerTypeList()
 	{
@@ -126,7 +109,7 @@ class website_MarkerService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_website $website
-	 * @param String $lang
+	 * @param string $lang
 	 * @return website_persistentdocument_marker[]
 	 */
 	public function getByWebsiteAndLang($website, $lang)
@@ -191,7 +174,7 @@ class website_MarkerService extends f_persistentdocument_DocumentService
 			'model' => $marker->getDocumentModelName(),
 			'status' => $statusSrc,
 			'websiteid' => $marker->getWebsite() ? $marker->getWebsite()->getId() : null,
-		    'typename' => LocaleService::getInstance()->transBO('m.' . $model->getModuleName() . '.bo.general.markertype', array('ucf')),
+			'typename' => LocaleService::getInstance()->trans('m.' . $model->getModuleName() . '.bo.general.markertype', array('ucf')),
 			'label' => $marker->getLabel(),
 			'account' => $marker->getAccount(),
 			'langs' => str_replace(',', ', ', $marker->getLangs())

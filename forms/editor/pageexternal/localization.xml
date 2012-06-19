@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <panel>
 	<section labeli18n="m.website.document.page.titleinformations">
-		<field name="label"/>
-		<field name="navigationtitle"/>
+		<field name="label" />
+		<field name="navigationtitle" />
 	</section>
 	<section labeli18n="m.website.document.page.indexinginformations">
-		<field name="navigationVisibility"/>
-	</section>		
+		<field name="navigationVisibility" />
+	</section>
 </panel>

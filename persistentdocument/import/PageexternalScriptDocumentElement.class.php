@@ -5,11 +5,11 @@
  */
 class website_PageexternalScriptDocumentElement extends import_ScriptDocumentElement
 {
-    /**
-     * @return website_persistentdocument_pageexternal
-     */
-    protected function initPersistentDocument()
-    {
-    	return website_PageexternalService::getInstance()->getNewDocumentInstance();
-    }
+	/**
+	 * @return website_persistentdocument_pageexternal
+	 */
+	protected function initPersistentDocument()
+	{
+		return website_PageexternalService::getInstance()->getNewDocumentInstance();
+	}
 }

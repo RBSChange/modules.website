@@ -1,23 +1,10 @@
 <?php
+/**
+ * @package modules.website
+ * @method website_PageexternalService getInstance()
+ */
 class website_PageexternalService extends f_persistentdocument_DocumentService
 {
-	/**
-	 * @var website_PageexternalService
-	 */
-	private static $instance;
-
-	/**
-	 * @return website_PageexternalService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-
 	/**
 	 * @return website_persistentdocument_pageexternal
 	 */
@@ -32,7 +19,7 @@ class website_PageexternalService extends f_persistentdocument_DocumentService
 	 */
 	public function createQuery()
 	{
-		return $this->pp->createQuery('modules_website/pageexternal');
+		return $this->getPersistentProvider()->createQuery('modules_website/pageexternal');
 	}
 
 	/**
@@ -43,12 +30,12 @@ class website_PageexternalService extends f_persistentdocument_DocumentService
 	 */
 	public function isPublishable($page)
 	{
-	    return $page->getUrl() && parent::isPublishable($page);
+		return $page->getUrl() && parent::isPublishable($page);
 	}
 
 	/**
 	 * @param website_persistentdocument_pageexternal $document
-	 * @param Integer $destId
+	 * @param integer $destId
 	 */
 	public function onMoveToStart($document, $destId)
 	{
@@ -65,7 +52,7 @@ class website_PageexternalService extends f_persistentdocument_DocumentService
 	 */
 	public function removeIndexPage($page, $userSetting = false)
 	{
-        $topic = website_TopicService::getInstance()->getParentByPage($page);
+		$topic = website_TopicService::getInstance()->getParentByPage($page);
 		if ($topic)
 		{
 			website_TopicService::getInstance()->setIndexPage($topic, null, $userSetting);
@@ -74,24 +61,24 @@ class website_PageexternalService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_pageexternal $pageExternal
-	 * @param Boolean $isIndexPage
-	 * @param Boolean $userSetting
+	 * @param boolean $isIndexPage
+	 * @param boolean $userSetting
 	 */
 	public function setIsIndexPage($pageExternal, $isIndexPage, $userSetting = false)
 	{
 		try
 		{
-			$this->tm->beginTransaction();
-			$pageExternal->setIsIndexPage($isIndexPage);    
-	    	if ($pageExternal->isModified())
+			$this->getTransactionManager()->beginTransaction();
+			$pageExternal->setIsIndexPage($isIndexPage);	
+			if ($pageExternal->isModified())
 			{
-				$this->pp->updateDocument($pageExternal);
+				$this->getPersistentProvider()->updateDocument($pageExternal);
 			}
-			$this->tm->commit();
+			$this->getTransactionManager()->commit();
 		}
 		catch (Exception $e)
 		{
-			$this->tm->rollBack($e);
+			$this->getTransactionManager()->rollBack($e);
 		}
 	}
 	

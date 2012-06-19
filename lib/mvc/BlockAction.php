@@ -73,7 +73,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	/**
 	 * @param f_mvc_Request $request
 	 * @param f_mvc_Response $response
-	 * @return String
+	 * @return string
 	 */
 	function execute($request, $response)
 	{
@@ -94,7 +94,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @return Integer
+	 * @return integer
 	 */
 	final function getOrder()
 	{
@@ -119,8 +119,8 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @param String $parameterName
-	 * @param String $defaultValue
+	 * @param string $parameterName
+	 * @param string $defaultValue
 	 * @return mixed
 	 */
 	protected function findLocalParameterValue($parameterName, $defaultValue = null)
@@ -150,8 +150,8 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @param String $paramName
-	 * @return Integer | null
+	 * @param string $paramName
+	 * @return integer | null
 	 * @see website_BlockAction::_getDocumentIdParameter()
 	 */
 	protected function getDocumentIdParameter($paramName = change_Request::DOCUMENT_ID)
@@ -160,8 +160,8 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @param String $paramName
-	 * @return Integer | null
+	 * @param string $paramName
+	 * @return integer | null
 	 * @see website_BlockAction::_getDocumentIdParameter()
 	 */
 	protected function getRequiredDocumentIdParameter($paramName = change_Request::DOCUMENT_ID)
@@ -170,8 +170,8 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @param String $paramName
-	 * @param String $className
+	 * @param string $paramName
+	 * @param string $className
 	 * @return f_persistentdocument_PersistentDocument | null
 	 * @see website_BlockAction::_getDocumentParameter()
 	 */
@@ -181,8 +181,8 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @param String $paramName
-	 * @param String $expectedClassName the class the document must be an instance of
+	 * @param string $paramName
+	 * @param string $expectedClassName the class the document must be an instance of
 	 * @return f_persistentdocument_PersistentDocument
 	 * @throws Exception if no document could be founded or it is not an instance of the expected
 	 * @see website_BlockAction::_getDocumentParameter()
@@ -193,9 +193,9 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @param String $paramName
-	 * @param Boolean $required
-	 * @param String $expectedClassName the class the document must be an instance of
+	 * @param string $paramName
+	 * @param boolean $required
+	 * @param string $expectedClassName the class the document must be an instance of
 	 * @return f_persistentdocument_PersistentDocument
 	 * @throws Exception if required and no document could be founded
 	 */
@@ -227,9 +227,9 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @param String $paramName
-	 * @param Boolean $required
-	 * @return Integer
+	 * @param string $paramName
+	 * @param boolean $required
+	 * @return integer
 	 * @throws Exception if required and no document could be founded
 	 */
 	private function _getDocumentIdParameter($paramName = change_Request::DOCUMENT_ID, $required)
@@ -275,7 +275,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 		}
 
 	/**
-	 * @return String[]
+	 * @return string[]
 	 * @see f_mvc_Action::getInputValidationRules()
 	 */
 	function getInputValidationRules($request, $bean)
@@ -286,7 +286,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	/**
 	 * @see f_mvc_Action::getModuleName()
 	 *
-	 * @return String
+	 * @return string
 	 */
 	final function getModuleName()
 	{
@@ -294,7 +294,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @return String
+	 * @return string
 	 * @see f_mvc_Action::getName()
 	 */
 	final function getName()
@@ -324,7 +324,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	/**
 	 * @see f_mvc_Action::getInputViewName()
 	 *
-	 * @return String
+	 * @return string
 	 */
 	function getInputViewName()
 	{
@@ -387,8 +387,8 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @param String $moduleName
-	 * @param String $actionName
+	 * @param string $moduleName
+	 * @param string $actionName
 	 */
 	public final function forward($moduleName, $actionName)
 	{
@@ -396,8 +396,8 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @param String $moduleName
-	 * @param String $actionName
+	 * @param string $moduleName
+	 * @param string $actionName
 	 * @param Array<String, String> $moduleParams
 	 * @param Array<String, String> $absParams
 	 */
@@ -409,7 +409,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	/**
 	 * @see f_mvc_Request::addError()
 	 *
-	 * @param String $msg
+	 * @param string $msg
 	 */
 	public final function addError($msg, $relKey = null)
 	{
@@ -419,7 +419,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	/**
 	 * @see f_mvc_Request::addMessage()
 	 *
-	 * @param String $msg
+	 * @param string $msg
 	 */
 	public final function addMessage($msg, $relKey = null)
 	{
@@ -449,7 +449,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	/**
 	 * @see f_mvc_Request::hasErrors()
 	 *
-	 * @return Boolean
+	 * @return boolean
 	 */
 	public final function hasErrors()
 	{
@@ -459,7 +459,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	/**
 	 * @see f_mvc_Request::hasMessages()
 	 *
-	 * @return Boolean
+	 * @return boolean
 	 */
 	public final function hasMessages()
 	{
@@ -467,7 +467,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @param String $name
+	 * @param string $name
 	 * @param array $arguments
 	 */
 	final function __call($name, $arguments)
@@ -492,9 +492,9 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	/**
 	 * @param website_BlockActionRequest $request
 	 * @param Mixed $bean
-	 * @param String $executePart
-	 * @param String $relKey
-	 * @return Boolean
+	 * @param string $executePart
+	 * @param string $relKey
+	 * @return boolean
 	 */
 	protected final function processValidation($executePart, $request, $bean = null, $relKey = null)
 	{
@@ -507,7 +507,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @return String
+	 * @return string
 	 */
 	public final function getBlockId()
 	{
@@ -526,7 +526,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	/**
 	 * Called when the block is inserted into a page content
 	 * @param website_persistentdocument_Page $page
-	 * @param Boolean $absolute true if block was introduced considering all versions (langs) of the page. Default value only for compatibility with old interface
+	 * @param boolean $absolute true if block was introduced considering all versions (langs) of the page. Default value only for compatibility with old interface
 	 */
 	function onPageInsertion($page, $absolute = false)
 	{
@@ -540,7 +540,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	/**
 	 * Called when the block is removed from a page content
 	 * @param website_persistentdocument_Page $page
-	 * @param Boolean $absolute true if block was removed considering all versions (langs) of the page. Default value only for compatibility with old interface
+	 * @param boolean $absolute true if block was removed considering all versions (langs) of the page. Default value only for compatibility with old interface
 	 */
 	function onPageRemoval($page, $absolute = false)
 	{
@@ -554,11 +554,11 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	// protected methods
 
 	/**
-	 * @param String $validationRules
+	 * @param string $validationRules
 	 * @param website_BlockActionRequest $request
 	 * @param f_mvc_Bean|null $bean
-	 * @param String $relKey
-	 * @return Boolean
+	 * @param string $relKey
+	 * @return boolean
 	 */
 	protected final function processValidationRules($validationRules, $request, $bean, $relKey = null)
 	{
@@ -640,7 +640,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	protected final function isInBackoffice()
 	{
@@ -648,7 +648,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 	
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	protected final function isInBackofficeEdition()
 	{
@@ -656,7 +656,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 	
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	protected final function isInBackofficePreview()
 	{
@@ -664,7 +664,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @param String $viewName
+	 * @param string $viewName
 	 * @return TemplateObject
 	 */
 	protected function getTemplate($viewName)
@@ -674,9 +674,9 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @param String $packageName For example: 'modules_website'
-	 * @param String $templateName For example: 'Website-Block-Taggedmenu-Footer'
-	 * @param String $subDirectory
+	 * @param string $packageName For example: 'modules_website'
+	 * @param string $templateName For example: 'Website-Block-Taggedmenu-Footer'
+	 * @param string $subDirectory
 	 * @return TemplateObject
 	 */
 	protected function getTemplateByFullName($packageName, $templateName, $subDirectory = null)
@@ -706,25 +706,25 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 
 
 	/**
-	 * @param String $propertyName
+	 * @param string $propertyName
 	 * @param Mixed $bean
-	 * @return String
+	 * @return string
 	 */
 	private function getPropertyLabelFromBean($propertyName, $bean)
 	{
 		if ($bean === null || !BeanUtils::hasProperty($bean, $propertyName))
 		{
-			return LocaleService::getInstance()->transFO("m.".$this->getModuleName().".fo.blocks.".$this->getName().".".$propertyName);
+			return LocaleService::getInstance()->trans("m.".$this->getModuleName().".fo.blocks.".$this->getName().".".$propertyName);
 		}
 
 		return f_Locale::translate(BeanUtils::getBeanPropertyInfo($bean, $propertyName)->getLabelKey());
 	}
 
 	/**
-	 * @param String $validationRuleDeclaration
-	 * @param String $propertyName
-	 * @param String $rule
-	 * @return Boolean
+	 * @param string $validationRuleDeclaration
+	 * @param string $propertyName
+	 * @param string $rule
+	 * @return boolean
 	 */
 	private function isPropertyRule($validationRuleDeclaration, &$propertyName, &$rule)
 	{
@@ -744,10 +744,10 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @param String $validationRuleDeclaration
-	 * @param String $propertyName
-	 * @param String $rule
-	 * @return Boolean
+	 * @param string $validationRuleDeclaration
+	 * @param string $propertyName
+	 * @param string $rule
+	 * @return boolean
 	 */
 	private function isBeanRule($validationRuleDeclaration)
 	{
@@ -760,7 +760,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @return String
+	 * @return string
 	 */
 	private function getModuleNameFromClassName()
 	{
@@ -769,7 +769,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @return String
+	 * @return string
 	 */
 	private function getNameFromClassName()
 	{
@@ -779,8 +779,8 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @param String $propertyName
-	 * @param String[] $errors
+	 * @param string $propertyName
+	 * @param string[] $errors
 	 */
 	protected final function setErrorsForProperty($propertyName, $errors)
 	{
@@ -797,9 +797,9 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @param String $propertyName
-	 * @param String $error
-	 * @param String $relKey
+	 * @param string $propertyName
+	 * @param string $error
+	 * @param string $relKey
 	 */
 	protected final function addErrorForProperty($propertyName, $error, $relKey = null)
 	{
@@ -844,9 +844,9 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 	
 	/**
-	 * @param String $propertyName
-	 * @param String[] $errors
-	 * @param String[] $relKey
+	 * @param string $propertyName
+	 * @param string[] $errors
+	 * @param string[] $relKey
 	 */
 	protected final function addErrorsForProperty($propertyName, $errors, $relKey = null)
 	{
@@ -857,8 +857,8 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	}
 
 	/**
-	 * @param String $msg
-	 * @param String $key
+	 * @param string $msg
+	 * @param string $key
 	 */
 	private function addAttributeWithKey($msg, $key, $relKey = null)
 	{
@@ -933,7 +933,7 @@ abstract class f_mvc_Action
 	/**
 	 * @param f_mvc_Request $request
 	 * @param f_mvc_Response $response
-	 * @return String
+	 * @return string
 	 */
 	function execute($request, $response)
 	{
@@ -977,7 +977,7 @@ abstract class f_mvc_Action
 	}
 
 	/**
-	 * @param String $parameterName
+	 * @param string $parameterName
 	 * @param Mixed $defaultValue
 	 * @return Mixed
 	 */
@@ -987,8 +987,8 @@ abstract class f_mvc_Action
 	}
 
 	/**
-	 * @param String $parameterName
-	 * @return Boolean
+	 * @param string $parameterName
+	 * @return boolean
 	 */
 	public final function hasConfigurationParameter($parameterName)
 	{
@@ -996,8 +996,8 @@ abstract class f_mvc_Action
 	}
 
 	/**
-	 * @param String $parameterName
-	 * @return Boolean
+	 * @param string $parameterName
+	 * @return boolean
 	 */
 	public final function hasNonEmptyConfigurationParameter($parameterName)
 	{
@@ -1005,7 +1005,7 @@ abstract class f_mvc_Action
 	}
 
 	/**
-	 * @return String
+	 * @return string
 	 */
 	public final function getLang()
 	{
@@ -1013,7 +1013,7 @@ abstract class f_mvc_Action
 	}
 
 	/**
-	 * @param String $lang
+	 * @param string $lang
 	 */
 	public final function setLang($lang)
 	{
@@ -1023,7 +1023,7 @@ abstract class f_mvc_Action
 	protected $cacheEnabled;
 
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	public function isCacheEnabled()
 	{
@@ -1093,17 +1093,17 @@ abstract class f_mvc_Action
 	abstract function onValidateInputFailed($request);
 
 	/**
-	 * @return String
+	 * @return string
 	 */
 	abstract function getModuleName();
 
 	/**
-	 * @return String
+	 * @return string
 	 */
 	abstract function getName();
 
 	/**
-	 * @return String
+	 * @return string
 	 */
 	abstract function getInputViewName();
 	
@@ -1113,14 +1113,14 @@ abstract class f_mvc_Action
 	abstract public function getContext();
 
 	/**
-	 * @param String $moduleName
-	 * @param String $actionName
+	 * @param string $moduleName
+	 * @param string $actionName
 	 */
 	abstract public function forward($moduleName, $actionName);
 
 	/**
-	 * @param String $moduleName
-	 * @param String $actionName
+	 * @param string $moduleName
+	 * @param string $actionName
 	 * @param Array $moduleParams
 	 * @param Array $absParams
 	 */
@@ -1137,7 +1137,7 @@ abstract class f_mvc_Action
 	}
 
 	/**
-	 * @param String $parameterName
+	 * @param string $parameterName
 	 */
 	abstract protected function findParameterValue($parameterName);
 	

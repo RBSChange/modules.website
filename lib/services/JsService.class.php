@@ -1,4 +1,8 @@
 <?php
+/**
+ * @package modules.website
+ * @method website_JsService getInstance()
+ */
 class website_JsService extends change_BaseService
 {
 	/**
@@ -24,31 +28,14 @@ class website_JsService extends change_BaseService
 	private $registery = array();
 
 	/**
-	 * website_JsService instance.
-	 * @var website_JsService
-	 */
-	private static $instance = null;
-
-	/**
-	 * Gets the website_JsService instance.
-	 * @return website_JsService
-	 */
-	public static function getInstance()
-	{
-		if (is_null(self::$instance))
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-	
-	/**
 	 * Gets a website_JsService instance.
 	 * @return website_JsService
 	 */
 	public static function newInstance()
 	{
-		return new self();
+		$className = get_called_class();
+		self::clearInstanceByClassName($className);
+		return self::getInstanceByClassName($className);
 	}
 
 	/**
@@ -123,8 +110,9 @@ class website_JsService extends change_BaseService
 		else
 		{
 			// Only the Frontoffice ones :
-			$dir = $baseJSCacheDir;		
-			if ($dh = opendir($dir))
+			$dir = $baseJSCacheDir;
+			$dh = opendir($dir);
+			if ($dh)
 			{
 				while (($file = readdir($dh)) !== false)
 				{
@@ -381,6 +369,9 @@ class website_JsService extends change_BaseService
 			{
 				throw new Exception("$jsDepsPath does not exists, please run change compile-js-dependencies");
 			}
+			$orderedScripts = null;
+			$noReplacementScripts = null;
+			$localizedScripts = null;
 			include_once ($jsDepsPath);
 			self::$orderedScripts = $orderedScripts;
 			self::$noReplacementScripts = $noReplacementScripts;
@@ -389,7 +380,7 @@ class website_JsService extends change_BaseService
 	}
 
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	private function isSignedMode()
 	{
@@ -641,7 +632,7 @@ class website_JsService extends change_BaseService
 	 * @return string 
 	 */
 	private function makeSystemPath($dotPathPath)
-    {
+	{
 		return str_replace(array('.', '/', '\\'), DIRECTORY_SEPARATOR, $dotPathPath);
-    }
+	}
 }

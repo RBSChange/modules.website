@@ -2,14 +2,14 @@
 interface f_mvc_Context
 {
 	/**
-	 * @param String $name
+	 * @param string $name
 	 * @param mixed $value
 	 */
 	function setAttribute($name, $value);
 	
 	/**
-	 * @param String $name
-	 * @param String $defaultValue
+	 * @param string $name
+	 * @param string $defaultValue
 	 * @return mixed
 	 */
 	function getAttribute($name, $defaultValue = null);
@@ -20,19 +20,19 @@ interface f_mvc_Context
 	function getAttributes();
 	
 	/**
-	 * @param String $name
+	 * @param string $name
 	 */
 	function removeAttribute($name);
 	
 	/**
-	 * @param String $name
-	 * @return Boolean
+	 * @param string $name
+	 * @return boolean
 	 */
 	function hasAttribute($name);
 	
 	/**
-	 * @param String $name
-	 * @return Boolean
+	 * @param string $name
+	 * @return boolean
 	 */
 	function hasNonEmptyAttribute($name);
 }
@@ -44,8 +44,8 @@ class website_Page implements f_mvc_Context
 	/**
 	 * @see f_mvc_Context::getAttribute()
 	 *
-	 * @param String $name
-	 * @param String $defaultValue
+	 * @param string $name
+	 * @param string $defaultValue
 	 * @return mixed
 	 */
 	function getAttribute($name, $defaultValue = null)
@@ -79,8 +79,8 @@ class website_Page implements f_mvc_Context
 	/**
 	 * @see f_mvc_Context::hasAttribute()
 	 *
-	 * @param String $name
-	 * @return Boolean
+	 * @param string $name
+	 * @return boolean
 	 */
 	function hasAttribute($name)
 	{
@@ -90,8 +90,8 @@ class website_Page implements f_mvc_Context
 	/**
 	 * @see f_mvc_Context::hasNonEmptyAttribute()
 	 *
-	 * @param String $name
-	 * @return Boolean
+	 * @param string $name
+	 * @return boolean
 	 */
 	function hasNonEmptyAttribute($name)
 	{
@@ -101,7 +101,7 @@ class website_Page implements f_mvc_Context
 	/**
 	 * @see f_mvc_Context::removeAttribute()
 	 *
-	 * @param String $name
+	 * @param string $name
 	 */
 	function removeAttribute($name)
 	{
@@ -186,7 +186,7 @@ class website_Page implements f_mvc_Context
 	}
 
 	/**
-	 * @return String
+	 * @return string
 	 */
 	public function getTitle()
 	{
@@ -269,10 +269,10 @@ class website_Page implements f_mvc_Context
 
 	/**
 	 *
-	 * @param String $name
-	 * @param String $content
-	 * @param String $scheme
-	 * @param Boolean $isHttpEquiv
+	 * @param string $name
+	 * @param string $content
+	 * @param string $scheme
+	 * @param boolean $isHttpEquiv
 	 */
 	public function addMeta($name, $content, $scheme = null, $isHttpEquiv = false)
 	{
@@ -304,8 +304,8 @@ class website_Page implements f_mvc_Context
 	private $metaReplaceTo = array();
 
 	/**
-	 * @param String $name
-	 * @param String $value
+	 * @param string $name
+	 * @param string $value
 	 */
 	public function addBlockMeta($name, $value)
 	{
@@ -314,8 +314,8 @@ class website_Page implements f_mvc_Context
 	}
 
 	/**
-	 * @param String $title
-	 * @param String $href
+	 * @param string $title
+	 * @param string $href
 	 */
 	public function addRssFeed($title, $href)
 	{
@@ -344,11 +344,11 @@ class website_Page implements f_mvc_Context
 	}
 
 	/**
-	 * @param String $relation
-	 * @param String $type
-	 * @param String $href
-	 * @param String $title
-	 * @param String $lang
+	 * @param string $relation
+	 * @param string $type
+	 * @param string $href
+	 * @param string $title
+	 * @param string $lang
 	 */
 	public function addLink($relation, $type, $href, $title = null, $lang = null)
 	{
@@ -542,7 +542,7 @@ class website_Page implements f_mvc_Context
 	/**
 	 * Inclusion of all "default" styles...
 	 *
-	 * @return String
+	 * @return string
 	 */
 	protected function getStylesheetInclusions()
 	{

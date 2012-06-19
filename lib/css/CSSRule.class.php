@@ -279,44 +279,44 @@ class website_CSSRule
 	}
 
 	/**
-     * @var string 
-     */
-    private $atSelector;
-    
-    /**
-     * @return string 
-     */
-    public function getAtSelector() 
-    {
+	 * @var string 
+	 */
+	private $atSelector;
+	
+	/**
+	 * @return string 
+	 */
+	public function getAtSelector() 
+	{
 		return $this->atSelector;
-    }
+	}
 
-    /**
-     * @param string $selector 
-     */
-    public function setAtSelector($selector) 
-    {
+	/**
+	 * @param string $selector 
+	 */
+	public function setAtSelector($selector) 
+	{
 		$this->atSelector = $selector;
-    }
-    
-    /**
-     * @var integer 
-     */
-    private $atLevel;
-    
-    /**
-     * @return intger 
-     */
-    public function getAtLevel() 
-    {
+	}
+	
+	/**
+	 * @var integer 
+	 */
+	private $atLevel;
+	
+	/**
+	 * @return intger 
+	 */
+	public function getAtLevel() 
+	{
 		return $this->atLevel;
-    }
+	}
 
-    /**
-     * @param integer $level
-     */
-    public function setAtLevel($level) 
-    {
+	/**
+	 * @param integer $level
+	 */
+	public function setAtLevel($level) 
+	{
 		$this->atLevel = $level;
-    }
+	}
 }

@@ -1,27 +1,10 @@
 <?php
 /**
- * @date Wed Feb 28 12:25:05 CET 2007
- * @author INTbonjF
+ * @package modules.website
+ * @method website_MenuService getInstance()
  */
 class website_MenuService extends f_persistentdocument_DocumentService
 {
-	/**
-	 * @var website_MenuService
-	 */
-	private static $instance;
-
-	/**
-	 * @return website_MenuService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-
 	/**
 	 * @return website_persistentdocument_menu
 	 */
@@ -36,13 +19,13 @@ class website_MenuService extends f_persistentdocument_DocumentService
 	 */
 	public function createQuery()
 	{
-		return $this->pp->createQuery('modules_website/menu');
+		return $this->getPersistentProvider()->createQuery('modules_website/menu');
 	}
 
 
 	/**
 	 * @param website_persistentdocument_menu $document
-	 * @param Integer $parentNodeId Parent node ID where to save the document (optionnal).
+	 * @param integer $parentNodeId Parent node ID where to save the document (optionnal).
 	 * @return void
 	 */
 	protected function preInsert($document, $parentNodeId)

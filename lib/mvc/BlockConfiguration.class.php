@@ -28,7 +28,7 @@ class block_BlockConfiguration
 	}
 	
 	/**
-	 * @param String $parameterName
+	 * @param string $parameterName
 	 * @param Mixed $defaultValue
 	 * @return Mixed
 	 */
@@ -42,8 +42,8 @@ class block_BlockConfiguration
 	}
 	
 	/**
-	 * @param String $parameterName
-	 * @return Boolean
+	 * @param string $parameterName
+	 * @return boolean
 	 */
 	public final function hasConfigurationParameter($parameterName)
 	{
@@ -51,8 +51,8 @@ class block_BlockConfiguration
 	}
 	
 	/**
-	 * @param String $parameterName
-	 * @return Boolean
+	 * @param string $parameterName
+	 * @return boolean
 	 */
 	public final function hasNonEmptyConfigurationParameter($parameterName)
 	{

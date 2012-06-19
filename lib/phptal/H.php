@@ -13,19 +13,19 @@
 class PHPTAL_Php_Attribute_CHANGE_H extends ChangeTalAttribute
 {
 	/**
-     * Called before element printing.
-     */
-    public function before(PHPTAL_Php_CodeWriter $codewriter)
-    {
+	 * Called before element printing.
+	 */
+	public function before(PHPTAL_Php_CodeWriter $codewriter)
+	{
 		$this->phpelement->headFootDisabled = true;
 		parent::before($codewriter);
 	}
 	
 	/**
-     * Called after element printing.
-     */
-    public function after(PHPTAL_Php_CodeWriter $codewriter)
-    {
+	 * Called after element printing.
+	 */
+	public function after(PHPTAL_Php_CodeWriter $codewriter)
+	{
 		$parameters = array();
 		$parameters[] =	'"tagname" =>' . var_export($this->phpelement->getLocalName(), true);
 		if ($this->hasParameter('level'))
@@ -39,7 +39,7 @@ class PHPTAL_Php_Attribute_CHANGE_H extends ChangeTalAttribute
 	/**
 	 * @see ChangeTalAttribute::getEvaluatedParameters()
 	 *
-	 * @return String[]
+	 * @return string[]
 	 */
 	protected function getEvaluatedParameters()
 	{
@@ -49,7 +49,7 @@ class PHPTAL_Php_Attribute_CHANGE_H extends ChangeTalAttribute
 	/**
 	 * @see ChangeTalAttribute::getDefaultValues()
 	 *
-	 * @return String[]
+	 * @return string[]
 	 */
 	protected function getDefaultValues()
 	{
@@ -68,7 +68,7 @@ class PHPTAL_Php_Attribute_CHANGE_H extends ChangeTalAttribute
 	
 	/**
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	public static function renderH($params)
 	{
@@ -118,8 +118,8 @@ class PHPTAL_Php_Attribute_CHANGE_H extends ChangeTalAttribute
 		6 => "heading-six");
 	
 	/**
-	 * @param Integer $level
-	 * @return String
+	 * @param integer $level
+	 * @return string
 	 */
 	public static function getClassByLevel($level)
 	{

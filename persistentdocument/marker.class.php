@@ -6,7 +6,7 @@
 class website_persistentdocument_marker extends website_persistentdocument_markerbase
 {	
 	/**
-	 * @return String[]
+	 * @return string[]
 	 */
 	public function getLangsArray()
 	{
@@ -14,7 +14,7 @@ class website_persistentdocument_marker extends website_persistentdocument_marke
 	}
 	
 	/**
-	 * @param String[] $array
+	 * @param string[] $array
 	 */
 	public function setLangsArray($array)
 	{
@@ -22,7 +22,7 @@ class website_persistentdocument_marker extends website_persistentdocument_marke
 	}
 		
 	/**
-	 * @return String
+	 * @return string
 	 */
 	public function getMarkerType()
 	{

@@ -9,18 +9,18 @@ class website_GetEditContentStylesheetsAction extends change_Action
 	{
 		header("Expires: " . gmdate("D, d M Y H:i:s", time()+28800) . " GMT");
 		header('Content-type: text/css');
-	    $rq = RequestContext::getInstance();
-        $rq->beginI18nWork($rq->getUILang());
-        $pageId = $this->getDocumentIdFromRequest($request);
-        if (intval($pageId) > 0)
-        {
-        	change_Controller::getInstance()->setNoCache();
+		$rq = RequestContext::getInstance();
+		$rq->beginI18nWork($rq->getUILang());
+		$pageId = $this->getDocumentIdFromRequest($request);
+		if (intval($pageId) > 0)
+		{
+			change_Controller::getInstance()->setNoCache();
 			$this->renderStylesheets(DocumentHelper::getDocumentInstance($pageId));
-        }
-        else
-        {
-        	$this->renderBindings();
-        }
+		}
+		else
+		{
+			$this->renderBindings();
+		}
 		$rq->endI18nWork();		
 		return change_View::NONE;
 	}

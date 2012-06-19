@@ -4,32 +4,32 @@ interface f_mvc_Response
 	/**
 	 * Set the HTTP header $name to value $value
 	 * 
-	 * @param String $name
-	 * @param String $value
+	 * @param string $name
+	 * @param string $value
 	 */
 	function setHeader($name, $value);
 	
 	/**
 	 * Set the HTTP status to value
 	 * 
-	 * @param String $value
+	 * @param string $value
 	 */
 	function setStatus($value);
 	
 	/**
-	 * @param String $value
+	 * @param string $value
 	 */
 	function setContentType($value);
 	
 	/**
-	 * @return String
+	 * @return string
 	 */
 	function getContentType();
 	
 	/**
 	 * tells wether or not the response has been committed
 	 * 
-	 * @return Boolean
+	 * @return boolean
 	 */
 	function isCommitted();
 	
@@ -44,7 +44,7 @@ interface f_mvc_Response
 	function getWriter();
 	
 	/**
-	 * @param String
+	 * @param string
 	 */
 	function write($string);
 }
@@ -105,7 +105,7 @@ class website_BlockActionResponse implements f_mvc_Response
 	/**
 	 * @see f_mvc_Response::getContentType()
 	 *
-	 * @return String
+	 * @return string
 	 */
 	function getContentType()
 	{
@@ -115,7 +115,7 @@ class website_BlockActionResponse implements f_mvc_Response
 	/**
 	 * @see f_mvc_Response::isCommitted()
 	 *
-	 * @return Boolean
+	 * @return boolean
 	 */
 	function isCommitted()
 	{
@@ -133,7 +133,7 @@ class website_BlockActionResponse implements f_mvc_Response
 	/**
 	 * @see f_mvc_Response::write()
 	 *
-	 * @param String $string
+	 * @param string $string
 	 */
 	function write($string)
 	{

@@ -16,7 +16,7 @@ class website_ListMenutagsService extends change_BaseService implements list_Lis
 		{
 			if ($tagInfos['labeli18n'])
 			{
-				$label = LocaleService::getInstance()->transBO($tagInfos['labeli18n'], array('ucf'));
+				$label = LocaleService::getInstance()->trans($tagInfos['labeli18n'], array('ucf'));
 			}
 			else
 			{

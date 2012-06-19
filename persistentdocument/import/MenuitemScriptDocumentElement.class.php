@@ -5,11 +5,11 @@
  */
 class website_MenuitemScriptDocumentElement extends import_ScriptDocumentElement
 {
-    /**
-     * @return website_persistentdocument_menuitem
-     */
-    protected function initPersistentDocument()
-    {
-    	return website_MenuitemService::getInstance()->getNewDocumentInstance();
-    }
+	/**
+	 * @return website_persistentdocument_menuitem
+	 */
+	protected function initPersistentDocument()
+	{
+		return website_MenuitemService::getInstance()->getNewDocumentInstance();
+	}
 }

@@ -3,7 +3,7 @@ class website_ScriptChangeBlockElement extends import_ScriptBaseElement
 {
 	/**
 	 * @param DOMDocument $document
-	 * @param Integer $width
+	 * @param integer $width
 	 */
 	public function generateBlock($document, $width = 100)
 	{
@@ -93,7 +93,7 @@ class website_ScriptChangeBlockElement extends import_ScriptBaseElement
 	
 	/**
 	 * @param Array $matches
-	 * @return Integer
+	 * @return integer
 	 */
 	public function getDocumentIdCallback($matches)
 	{

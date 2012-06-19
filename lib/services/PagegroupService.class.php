@@ -1,26 +1,15 @@
 <?php
+/**
+ * @package modules.website
+ * @method website_PagereferenceService getInstance()
+ */
 class website_PagegroupService extends website_PageService
 {
 	/**
-	 * @var website_PagegroupService
+	 * @var string[]
 	 */
-	private static $instance;
-	
 	private static $propertiesNames = array('label', 'author', 'creationdate', 'publicationstatus', 'modelversion', 'startpublicationdate', 'endpublicationdate', 'navigationtitle', 'metatitle', 'description', 'keywords', 'indexingstatus', 'template', 'content', 'skin', 'navigationVisibility', 'isIndexPage', 'isHomePage', 'advancedreferencing', 'robotsmeta');
-	
-	
-	/**
-	 * @return website_PagegroupService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-	
+
 	/**
 	 * @return website_persistentdocument_pagegroup
 	 */
@@ -35,13 +24,13 @@ class website_PagegroupService extends website_PageService
 	 */
 	public function createQuery()
 	{
-		return $this->pp->createQuery('modules_website/pagegroup');
+		return $this->getPersistentProvider()->createQuery('modules_website/pagegroup');
 	}
 	
 	/**
 	 * @param website_persistentdocument_pagegroup $newDocument
 	 * @param website_persistentdocument_pagegroup $originalDocument
-	 * @param Integer $parentNodeId
+	 * @param integer $parentNodeId
 	 */
 	protected function preDuplicate($newDocument, $originalDocument, $parentNodeId)
 	{
@@ -70,7 +59,7 @@ class website_PagegroupService extends website_PageService
 	
 	/**
 	 * @param website_persistentdocument_pagegroup $pagegroup
-	 * @param Integer $versionId
+	 * @param integer $versionId
 	 */
 	public function setCurrentVersion($pagegroup, $chooserName = 'publicated')
 	{
@@ -128,7 +117,7 @@ class website_PagegroupService extends website_PageService
 				$requestContext->endI18nWork($e);
 			}
 		}
-		$this->pp->updateDocument($pagegroup);
+		$this->getPersistentProvider()->updateDocument($pagegroup);
 		
 		$page = $this->transform($pagegroup, 'modules_website/page');
 		$page->getDocumentService()->publishDocumentIfPossible($page, array('cause' => 'DELETE'));
@@ -169,16 +158,16 @@ class website_PagegroupService extends website_PageService
 				}
 				try
 				{
-					$this->tm->beginTransaction();
+					$this->getTransactionManager()->beginTransaction();
 
-					$this->pp->updateDocument($pagegroup);
+					$this->getPersistentProvider()->updateDocument($pagegroup);
 
 					$this->synchronizeReferences($pagegroup);
 
-					$this->tm->commit();
+					$this->getTransactionManager()->commit();
 				} catch (Exception $e)
 				{
-					$this->tm->rollBack($e);
+					$this->getTransactionManager()->rollBack($e);
 				}
 
 				$newPublicationStatus = $pagegroup->getPublicationstatus();

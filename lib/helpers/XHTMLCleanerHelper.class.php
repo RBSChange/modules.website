@@ -4,8 +4,8 @@ class website_XHTMLCleanerHelper
 	private static $xsltCleanerCachePath;
 
 	/**
-	 * @param String $XHTMLFragment
-	 * @return String
+	 * @param string $XHTMLFragment
+	 * @return string
 	 */
 	public static function clean($XHTMLFragment)
 	{

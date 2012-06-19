@@ -11,7 +11,7 @@ class PHPTAL_Php_Attribute_CHANGE_Tab extends ChangeTalAttribute
 	}
 	
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	protected function evaluateAll()
 	{
@@ -19,25 +19,25 @@ class PHPTAL_Php_Attribute_CHANGE_Tab extends ChangeTalAttribute
 	}
 	
 	/**
-     * Called before element printing.
-     */
-    public function before(PHPTAL_Php_CodeWriter $codewriter)
-    {
+	 * Called before element printing.
+	 */
+	public function before(PHPTAL_Php_CodeWriter $codewriter)
+	{
 		$this->phpelement->headFootDisabled = true;
 		parent::before($codewriter);
 	}
 		
 	/**
-     * Called after element printing.
-     */
-    public function after(PHPTAL_Php_CodeWriter $codewriter)
-    {
+	 * Called after element printing.
+	 */
+	public function after(PHPTAL_Php_CodeWriter $codewriter)
+	{
 		$codewriter->doEchoRaw('PHPTAL_Php_Attribute_CHANGE_Tab::renderEndTag()');
 	}
 
 	/**
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	public static function renderTab($params)
 	{
@@ -45,7 +45,7 @@ class PHPTAL_Php_Attribute_CHANGE_Tab extends ChangeTalAttribute
 		$id = $currentTabsId."_".$params["name"];
 		if (isset($params["labeli18n"]))
 		{
-			$label = LocaleService::getInstance()->transFO($params["labeli18n"], array('ucf', 'html'));
+			$label = LocaleService::getInstance()->trans($params["labeli18n"], array('ucf', 'html'));
 		}
 		else if (isset($params["label"]))
 		{

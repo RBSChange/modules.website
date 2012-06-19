@@ -1,27 +1,10 @@
 <?php
 /**
- * @date Mon, 11 Jun 2007 15:30:34 +0200
- * @author intbonjf
+ * @package modules.website
+ * @method website_MenuitemService getInstance()
  */
 class website_MenuitemService extends f_persistentdocument_DocumentService
 {
-	/**
-	 * @var website_MenuitemService
-	 */
-	private static $instance;
-
-	/**
-	 * @return website_MenuitemService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-
 	/**
 	 * @return website_persistentdocument_menuitem
 	 */
@@ -36,6 +19,6 @@ class website_MenuitemService extends f_persistentdocument_DocumentService
 	 */
 	public function createQuery()
 	{
-		return $this->pp->createQuery('modules_website/menuitem');
+		return $this->getPersistentProvider()->createQuery('modules_website/menuitem');
 	}
 }

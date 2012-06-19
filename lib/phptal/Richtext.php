@@ -5,10 +5,10 @@
 class PHPTAL_Php_Attribute_CHANGE_Richtext extends PHPTAL_Php_Attribute
 {
 	/**
-     * Called before element printing.
-     */
-    public function before(PHPTAL_Php_CodeWriter $codewriter)
-    {
+	 * Called before element printing.
+	 */
+	public function before(PHPTAL_Php_CodeWriter $codewriter)
+	{
 		$this->expression = $this->extractEchoType($this->expression);
 		$expressions = $codewriter->splitExpression($this->expression);
 		$text = "''";

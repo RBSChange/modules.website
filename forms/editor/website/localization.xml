@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <panel>
 	<section labeli18n="m.uixul.bo.doceditor.fieldsgroup.title">
-		<field name="label"/>
-		<field name="domain"/>
-		<field name="localizebypath" type="hidden"/>
-		<field name="description"/>
+		<field name="label" />
+		<field name="domain" />
+		<field name="localizebypath" type="hidden" />
+		<field name="description" />
 	</section>
 	<xul>
 		<javascript>
@@ -12,7 +12,6 @@
 				var me = this
 				this.addEventListener('panelInitializeComplete', function (event) {me.updateDomain(event);}, true);
 			]]></constructor>
-			
 			<method name="updateDomain">
 				<parameter name="event" />
 				<body><![CDATA[
@@ -20,7 +19,7 @@
 					this.fields['domain'].disabled = disabeld;
 					//this.fields['domain'].collapsed = disabeld;
 				]]></body>
-			</method>	
+			</method>
 		</javascript>
-	</xul>	
+	</xul>
 </panel>

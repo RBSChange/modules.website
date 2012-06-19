@@ -2,12 +2,12 @@
 interface f_mvc_Writer
 {
 	/**
-	 * @param String $text
+	 * @param string $text
 	 */
 	function write($text);
 	
 	/**
-	 * @return String
+	 * @return string
 	 */
 	function flush();
 }
@@ -28,7 +28,7 @@ class f_mvc_BufferedWriter implements f_mvc_Writer
 	/**
 	 * @see f_mvc_Writer::write()
 	 *
-	 * @param String $text
+	 * @param string $text
 	 */
 	function write($text)
 	{
@@ -41,7 +41,7 @@ class f_mvc_BufferedWriter implements f_mvc_Writer
 	}
 	
 	/**
-	 * @return String
+	 * @return string
 	 */
 	function getContent()
 	{

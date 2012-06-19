@@ -1,25 +1,10 @@
 <?php
+/**
+ * @package modules.website
+ * @method website_ListTemplatesService getInstance()
+ */
 class website_ListTemplatesService extends change_BaseService implements list_ListItemsService
 {
-	/**
-	 * @var website_ListTemplatesService
-	 */
-	private static $instance;
-	
-
-	/**
-	 * @return website_ListTemplatesService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-	
-
 	/**
 	 * Returns an array of available templates for the website module.
 	 * @return array

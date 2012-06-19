@@ -7,7 +7,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 	/**
 	 * @see f_mvc_Action::getCacheDependencies()
 	 *
-	 * @return String[string]
+	 * @return string[string]
 	 */ 
 	public function getCacheDependencies()
 	{
@@ -54,7 +54,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 	 *
 	 * @param website_BlockActionRequest $request
 	 * @param website_BlockActionResponse $response
-	 * @return String
+	 * @return string
 	 */
 	function execute($request, $response)
 	{

@@ -28,14 +28,14 @@ class website_PagegroupPublicatedChooser extends change_BaseService
 		{
 			Framework::debug(__METHOD__ . ' versions count ' . count($elements));
 		}
-	    $selected = null;
-	    $lastSelected = null;
-	    if (count($elements) != 0)
-	    {
-    	    foreach ($elements as $element)
-    	    {
-    	    	if ($element->isContextLangAvailable())
-    	    	{
+		$selected = null;
+		$lastSelected = null;
+		if (count($elements) != 0)
+		{
+			foreach ($elements as $element)
+			{
+				if ($element->isContextLangAvailable())
+				{
 					$lastSelected = $element;
 					if ($element->isPublished())
 					{
@@ -48,19 +48,19 @@ class website_PagegroupPublicatedChooser extends change_BaseService
 							$selected = $element;
 						}
 					}
-    	    	}
-    	    }
+				}
+			}
 
-    	    if (is_null($selected) && !is_null($lastSelected))
-    	    {
-    	    	$selected = $lastSelected;
-    	    }
-	    }
+			if (is_null($selected) && !is_null($lastSelected))
+			{
+				$selected = $lastSelected;
+			}
+		}
 
 		if (Framework::isDebugEnabled() && $selected !== null)
 		{
 			Framework::debug(__METHOD__ . ' selection ' . $selected->__toString());
 		}
-	    return $selected;
+		return $selected;
 	}
 }

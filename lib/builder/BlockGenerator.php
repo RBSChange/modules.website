@@ -3,10 +3,10 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 {
 	/**
 	 * Generate a block : blocks.xml, blockAction, success template, tag, locales.
-	 * @param String $blockName
-	 * @param Boolean $genTag
-	 * @param String $icon
-	 * @return String the path of the generated PHP file
+	 * @param string $blockName
+	 * @param boolean $genTag
+	 * @param string $icon
+	 * @return string the path of the generated PHP file
 	 */
 	public function generateBlock($blockName, $genTag, $icon)
 	{
@@ -56,7 +56,7 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 	}
 
 	/**
-	 * @return String[] [$folder, $tplName]
+	 * @return string[] [$folder, $tplName]
 	 */
 	protected function getBlockTemplateInfo()
 	{
@@ -64,7 +64,7 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 	}
 
 	/**
-	 * @return String[] [$folder, $tplName]
+	 * @return string[] [$folder, $tplName]
 	 */
 	protected function getBlockSuccessViewInfo()
 	{
@@ -72,8 +72,8 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 	}
 
 	/**
-	 * @param String $blockName
-	 * @return String the path of the generated PHP file
+	 * @param string $blockName
+	 * @return string the path of the generated PHP file
 	 */
 	protected function _generateBlockAction($blockName)
 	{

@@ -4,7 +4,7 @@ class PHPTAL_Php_Attribute_CHANGE_Paginator extends ChangeTalAttribute
 	/**
 	 * @see ChangeTalAttribute::evaluateAll()
 	 *
-	 * @return Boolean
+	 * @return boolean
 	 */
 	protected function evaluateAll()
 	{
@@ -14,7 +14,7 @@ class PHPTAL_Php_Attribute_CHANGE_Paginator extends ChangeTalAttribute
 	/**
 	 * @see ChangeTalAttribute::getDefaultParameterName()
 	 *
-	 * @return String
+	 * @return string
 	 */
 	protected function getDefaultParameterName()
 	{

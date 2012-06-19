@@ -6,7 +6,7 @@ class website_BlockStaticrichtextAction extends website_BlockAction
 	 *
 	 * @param website_BlockActionRequest $request
 	 * @param website_BlockActionResponse $response
-	 * @return String
+	 * @return string
 	 */
 	function execute($request, $response)
 	{
@@ -56,14 +56,14 @@ class website_BlockStaticrichtextAction extends website_BlockAction
 				$lang = (isset($attrs["lang"]) ? $attrs["lang"] : $rc->getLang());
 				$media = DocumentHelper::getDocumentInstance($attrs["cmpref"]);
 				if (isset($attrs['format']) && !empty($attrs['format']))
-		        {
-		            list($stylesheet, $formatName) = explode('/', $attrs['format']);
+				{
+					list($stylesheet, $formatName) = explode('/', $attrs['format']);
 					$formatInfo = MediaHelper::getFormatProperties($stylesheet, $formatName);
-		        }
-		        if (!$media->isLangAvailable($lang) || $media->getFilenameForLang($lang) === null)
-		        {
-		        	$lang = $media->getLang();
-		        }
+				}
+				if (!$media->isLangAvailable($lang) || $media->getFilenameForLang($lang) === null)
+				{
+					$lang = $media->getLang();
+				}
 				$attrs["src"] = LinkHelper::getDocumentUrl($media, $lang, $formatInfo);
 			}
 			catch (Exception $e)

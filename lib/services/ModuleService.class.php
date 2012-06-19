@@ -1,7 +1,7 @@
 <?php
 /**
- * website_ModuleService
- * @package modules.website.lib.services
+ * @package modules.website
+ * @method website_ModuleService getInstance()
  */
 class website_ModuleService extends ModuleBaseService
 {
@@ -11,27 +11,9 @@ class website_ModuleService extends ModuleBaseService
 	const HIDDEN_IN_SITEMAP_ONLY = 4;
 	
 	/**
-	 * Singleton
-	 * @var website_ModuleService
-	 */
-	private static $instance = null;
-
-	/**
-	 * @return website_ModuleService
-	 */
-	public static function getInstance()
-	{
-		if (is_null(self::$instance))
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-	
-	/**
 	 * @see ModuleBaseService::getParentNodeForPermissions()
 	 *
-	 * @param Integer $documentId
+	 * @param integer $documentId
 	 * @return f_persistentdocument_PersistentTreeNode
 	 */
 	public function getParentNodeForPermissions($documentId)

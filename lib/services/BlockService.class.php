@@ -1,23 +1,10 @@
 <?php
+/**
+ * @package modules.website
+ * @method website_ListBlocktemplatesService getInstance()
+ */
 class block_BlockService extends change_BaseService
 {
-	/**
-	 * @var block_BlockService
-	 */
-	private static $instance;
-	
-	/**
-	 * @return block_BlockService
-	 */
-	public static function getInstance()
-	{
-		if (is_null(self::$instance))
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-	
 	/**
 	 * @var array
 	 */
@@ -123,8 +110,8 @@ class block_BlockService extends change_BaseService
 	const BLOCK_TYPE_LAYOUT = 'layout';
 	
 	/**
-	 * @param String $blockName
-	 * @return Boolean
+	 * @param string $blockName
+	 * @return boolean
 	 */
 	public function isSpecialBlock($blockName)
 	{
@@ -133,8 +120,8 @@ class block_BlockService extends change_BaseService
 	}
 	
 	/**
-	 * @param String $blockName
-	 * @param String $packageName
+	 * @param string $blockName
+	 * @param string $packageName
 	 * @return block_BlockInfo
 	 */
 	public function getBlockInfo($blockName, $packageName = null)
@@ -285,8 +272,8 @@ class block_BlockService extends change_BaseService
 	}
 	
 	/**
-	 * @param String $defaultSection
-	 * @param String $blockFile
+	 * @param string $defaultSection
+	 * @param string $blockFile
 	 * @param array $blockPropertyInfoArray
 	 */
 	private function parseXmlBlockFile($defaultSection, $blockFile, &$blockInfoArray)

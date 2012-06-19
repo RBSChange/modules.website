@@ -1,23 +1,10 @@
 <?php
+/**
+ * @package modules.website
+ * @method website_PageversionService getInstance()
+ */
 class website_PageversionService extends website_PageService
 {
-	/**
-	 * @var website_PageversionService
-	 */
-	private static $instance;
-
-	/**
-	 * @return website_PageversionService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-
 	/**
 	 * @return website_persistentdocument_pageversion
 	 */
@@ -32,12 +19,12 @@ class website_PageversionService extends website_PageService
 	 */
 	public function createQuery()
 	{
-		return $this->pp->createQuery('modules_website/pageversion');
+		return $this->getPersistentProvider()->createQuery('modules_website/pageversion');
 	}
 
 	/**
 	 * @param website_persistentdocument_pageversion $document
-	 * @param Integer $parentNodeId Parent node ID where to save the document (optionnal => can be null !).
+	 * @param integer $parentNodeId Parent node ID where to save the document (optionnal => can be null !).
 	 * @return void
 	 */
 	protected function preInsert($document, $parentNodeId = null)
@@ -54,7 +41,7 @@ class website_PageversionService extends website_PageService
 
 	/**
 	 * @param website_persistentdocument_pageversion $document
-	 * @param Integer $parentNodeId
+	 * @param integer $parentNodeId
 	 */
 	protected function postSave($document, $parentNodeId = null)
 	{
@@ -142,7 +129,7 @@ class website_PageversionService extends website_PageService
 	
 	/**
 	 * @param website_persistentdocument_pageversion $document
-	 * @param String $oldPublicationStatus
+	 * @param string $oldPublicationStatus
 	 * @param array $params
 	 * @return void
 	 */
@@ -186,13 +173,13 @@ class website_PageversionService extends website_PageService
 	public function duplicatePageContent($originalPage, $duplicatedPage)
 	{
 		$duplicatedPage->setTemplate($originalPage->getTemplate());
-        $duplicatedPage->setContent($originalPage->getContent());
+		$duplicatedPage->setContent($originalPage->getContent());
 	}
 
 
 	/**
 	 * @param website_persistentdocument_pageversion $version
-	 * @param Integer $parentId
+	 * @param integer $parentId
 	 * @return website_persistentdocument_page versionOf
 	 */
 	public function addNewVersion($version, $parentId)
@@ -224,7 +211,7 @@ class website_PageversionService extends website_PageService
 		}
 		try
 		{
-			$this->tm->beginTransaction();
+			$this->getTransactionManager()->beginTransaction();
 			$pagegroup = $this->transform($page, 'modules_website/pagegroup');
 		
 			$version = $this->getNewDocumentInstance();
@@ -241,12 +228,12 @@ class website_PageversionService extends website_PageService
 						$pagegroup->copyPropertiesTo($version, $lang == $pagegroup->getLang());
 						if ($useCorrection)
 						{
-						    $correctionId = $pagegroup->getCorrectionid();
-						    if ($correctionId > 0)
-						    {
-						        $correctionIds[] = $correctionId;
-						        $pagegroup->setCorrectionid(null);
-						    }
+							$correctionId = $pagegroup->getCorrectionid();
+							if ($correctionId > 0)
+							{
+								$correctionIds[] = $correctionId;
+								$pagegroup->setCorrectionid(null);
+							}
 						}
 					}
 					$rc->endI18nWork();
@@ -260,20 +247,20 @@ class website_PageversionService extends website_PageService
 			$version->setVersionofid($pagegroup->getId());
 
 			$ts = TreeService::getInstance();
-            $pageNode = $ts->getInstanceByDocument($pagegroup);
-			$this->pp->insertDocument($version);
+			$pageNode = $ts->getInstanceByDocument($pagegroup);
+			$this->getPersistentProvider()->insertDocument($version);
 			$ts->newLastChildForNode($pageNode, $version->getId());
 						
-            if (count($correctionIds) > 0)
-            {
-                $this->pp->updateDocument($pagegroup);
-                $this->mutateCorrections($version, $correctionIds);			
-            }
-			$this->tm->commit();
+			if (count($correctionIds) > 0)
+			{
+				$this->getPersistentProvider()->updateDocument($pagegroup);
+				$this->mutateCorrections($version, $correctionIds);			
+			}
+			$this->getTransactionManager()->commit();
 		}
 		catch (Exception $e)
 		{
-			$this->tm->rollBack($e);
+			$this->getTransactionManager()->rollBack($e);
 		}
 		
 		f_event_EventManager::dispatchEvent('persistentDocumentCreated', $this, array("document" => $version));
@@ -287,39 +274,39 @@ class website_PageversionService extends website_PageService
 	 */
 	private function mutateCorrections($version, $correctionIds)
 	{
-	    $rc = RequestContext::getInstance();
-	    
-        foreach ($correctionIds as $correctionId) 
-        {        
-            if (Framework::isDebugEnabled())
-            {
-                Framework::debug(__METHOD__ . '(' . $version->__toString() . ', '. $correctionId);
-            }
-            
-        	$correction = DocumentHelper::getDocumentInstance($correctionId);
-        	try 
-        	{
-         	    $rc->beginI18nWork($correction->getLang());
-        	    $mutatedCorrection = $this->transform($correction, $version->getDocumentModelName());
-        	    
-        	    $mutatedCorrection->setCorrectionofid($version->getId());
-        	    $mutatedCorrection->setVersionofid($version->getVersionofid());
-        	    $this->pp->updateDocument($mutatedCorrection);
-        	    
-        	    $rc->endI18nWork();
-        	}
-        	catch (Exception $e)
-        	{
-        	    $rc->endI18nWork($e);
-        	}
-        }
-	    $this->pp->updateDocument($version);
+		$rc = RequestContext::getInstance();
+		
+		foreach ($correctionIds as $correctionId) 
+		{		
+			if (Framework::isDebugEnabled())
+			{
+				Framework::debug(__METHOD__ . '(' . $version->__toString() . ', '. $correctionId);
+			}
+			
+			$correction = DocumentHelper::getDocumentInstance($correctionId);
+			try 
+			{
+		 		$rc->beginI18nWork($correction->getLang());
+				$mutatedCorrection = $this->transform($correction, $version->getDocumentModelName());
+				
+				$mutatedCorrection->setCorrectionofid($version->getId());
+				$mutatedCorrection->setVersionofid($version->getVersionofid());
+				$this->getPersistentProvider()->updateDocument($mutatedCorrection);
+				
+				$rc->endI18nWork();
+			}
+			catch (Exception $e)
+			{
+				$rc->endI18nWork($e);
+			}
+		}
+		$this->getPersistentProvider()->updateDocument($version);
 	}
 
 	/**
 	 * @param website_persistentdocument_pageversion $newDocument
 	 * @param website_persistentdocument_pageversion $originalDocument
-	 * @param Integer $parentNodeId
+	 * @param integer $parentNodeId
 	 */
 	protected function preDuplicate($newDocument, $originalDocument, $parentNodeId)
 	{

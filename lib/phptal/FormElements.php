@@ -5,7 +5,7 @@ class FormElement extends ChangeTalAttribute
 	/**
 	 * @see ChangeTalAttribute::getEvaluatedParameters()
 	 *
-	 * @return String[]
+	 * @return string[]
 	 */
 	protected function getEvaluatedParameters()
 	{
@@ -15,7 +15,7 @@ class FormElement extends ChangeTalAttribute
 	/**
 	 * @see ChangeTalAttribute::getRenderClassName()
 	 *
-	 * @return String
+	 * @return string
 	 */
 	protected function getRenderClassName()
 	{
@@ -95,7 +95,7 @@ class PHPTAL_Php_Attribute_CHANGE_Dateinput extends FormElement
 class PHPTAL_Php_Attribute_CHANGE_datecombo extends PHPTAL_Php_Attribute_CHANGE_dateinput
 {
 	/**
-	 * @return String
+	 * @return string
 	 */
 	protected function getRenderMethodName()
 	{
@@ -190,20 +190,20 @@ class PHPTAL_Php_Attribute_CHANGE_Fieldlabel extends FormElement
 class PHPTAL_Php_Attribute_CHANGE_Label extends FormElement
 {
 	/**
-     * Called before element printing.
-     */
-    public function before(PHPTAL_Php_CodeWriter $codewriter)
-    {
+	 * Called before element printing.
+	 */
+	public function before(PHPTAL_Php_CodeWriter $codewriter)
+	{
 		// We rewrite element
 		$this->phpelement->headFootDisabled = true;	
 		parent::before($codewriter);
 	}
 	
 	/**
-     * Called after element printing.
-     */
-    public function after(PHPTAL_Php_CodeWriter $codewriter)
-    {
+	 * Called after element printing.
+	 */
+	public function after(PHPTAL_Php_CodeWriter $codewriter)
+	{
 		$codewriter->doEchoRaw('website_FormHelper::endLabel()');
 	}
 }
@@ -216,7 +216,7 @@ class PHPTAL_Php_Attribute_CHANGE_Form extends FormElement
 		
 	/**
 	 * @see ChangeTalAttribute::getDefaultValues()
-	 * @return String[]
+	 * @return string[]
 	 */
 	protected function getDefaultValues()
 	{
@@ -224,17 +224,17 @@ class PHPTAL_Php_Attribute_CHANGE_Form extends FormElement
 	}
 	
 	/**
-     * Called before element printing.
-     */
-    public function before(PHPTAL_Php_CodeWriter $codewriter)
-    {	
+	 * Called before element printing.
+	 */
+	public function before(PHPTAL_Php_CodeWriter $codewriter)
+	{	
 		$this->phpelement->headFootDisabled = true;	
 		parent::before($codewriter);
 	}
 	
 	/**
 	 * @see ChangeTalAttribute::getRenderMethodName()
-	 * @return String
+	 * @return string
 	 */
 	protected function getRenderMethodName()
 	{
@@ -242,10 +242,10 @@ class PHPTAL_Php_Attribute_CHANGE_Form extends FormElement
 	}
 
 	/**
-     * Called after element printing.
-     */
-    public function after(PHPTAL_Php_CodeWriter $codewriter)
-    {
+	 * Called after element printing.
+	 */
+	public function after(PHPTAL_Php_CodeWriter $codewriter)
+	{
 		$codewriter->doEchoRaw('website_FormHelper::finalize()');
 	}
 }

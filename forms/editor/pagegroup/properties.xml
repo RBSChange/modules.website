@@ -6,7 +6,6 @@
 	<xul>
 		<javascript>
 			<field name="mAddNewVersionButton">null</field>
-			
 			<constructor><![CDATA[
 				var button = this.getElementByAnonId('save_properties');
 				if (button) {button.hidden = true;}
@@ -17,11 +16,10 @@
 				button = this.getElementByAnonId('next_error_property');
 				if (button) {button.hidden = true;}	
 
-				this.mAddNewVersionButton = this.addActionButton("${transui:m.website.bo.actions.addnewemptyversionbutton,js,ucf}", wToolkit.getIcon('add', 'small'));
+				this.mAddNewVersionButton = this.addActionButton("${trans:m.website.bo.actions.addnewemptyversionbutton,js,ucf}", wToolkit.getIcon('add', 'small'));
 				var me = this;
 				this.mAddNewVersionButton.addEventListener('command', function(event) {me.onAddNewVersion();}, true);
 			]]></constructor>
-
 			<method name="onAddNewVersion">
 				<parameter name="event" />
 				<body><![CDATA[
@@ -31,7 +29,6 @@
 					module.createDocumentEditor('modules_website_pageversion', this.mDocumentId);
 				]]></body>
 			</method>
-			
 			<method name="onDuplicateVersion">
 				<parameter name="id" />
 				<body><![CDATA[

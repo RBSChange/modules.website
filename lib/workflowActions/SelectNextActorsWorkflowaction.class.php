@@ -43,7 +43,7 @@ class website_SelectNextActorsWorkflowaction extends workflow_BaseWorkflowaction
 	}
 	
 	/**
-	 * @param Integer $id
+	 * @param integer $id
 	 * @param string $roleName
 	 * @param boolean $addSuperAdmin
 	 * @return array<users_persistentdocument_user>

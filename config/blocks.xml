@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <blocks>
 	<block type="modules_website_staticrichtext" hidden="true" />
 	<block type="modules_website_bookmarks" icon="bookmark">
@@ -7,14 +7,12 @@
 		</parameters>
 	</block>
 	<block type="modules_website_exception" icon="bug" />
-	<block type="modules_website_thread" icon="breadcrumb" afterAll="true" 
-		cache-deps="[modules_website/page],[modules_website/topic],modules_website/website">
+	<block type="modules_website_thread" icon="breadcrumb" afterAll="true" cache-deps="[modules_website/page],[modules_website/topic],modules_website/website">
 		<parameters>
 			<parameter name="separator" type="String" default-value="/" />
 		</parameters>
 	</block>
-	<block type="modules_website_ConfigurableMenu" icon="menu" dropModels="[modules_website/menu]"
-		cache-deps="modules_website/menu,[modules_website/menuitem],[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
+	<block type="modules_website_ConfigurableMenu" icon="menu" dropModels="[modules_website/menu]" cache-deps="modules_website/menu,[modules_website/menuitem],[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
 		<parameters>
 			<parameter name="displayMode" type="String" default-value="Default" min-occurs="1" fieldtype="dropdownlist" hidehelp="true" />
 			<parameter name="showTitle" type="Boolean" default-value="false" />
@@ -26,8 +24,7 @@
 				<fieldlistitem labeli18n="m.website.bo.blocks.configurablemenu.mode-tag" value="tag" />
 				<fieldlistitem labeli18n="m.website.bo.blocks.configurablemenu.mode-contextual" value="contextual" />
 			</parameter>
-			<parameter name="cmpref" type="modules_generic/Document" allow="[modules_website_menu],[modules_website_topic],[modules_website_website]"
-				moduleselector="website" />
+			<parameter name="cmpref" type="modules_generic/Document" allow="[modules_website_menu],[modules_website_topic],[modules_website_website]" moduleselector="website" />
 			<parameter name="tag" type="String" from-list="modules_website/menutags" />
 			<parameter name="startLevel" type="Integer" default-value="1" />
 		</parameters>
@@ -76,8 +73,7 @@
 			</javascript>
 		</xul>
 	</block>
-	<block type="modules_website_ConfigurableSitemap" icon="sitemap"
-		cache-deps="[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
+	<block type="modules_website_ConfigurableSitemap" icon="sitemap" cache-deps="[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
 		<parameters>
 			<parameter name="displayMode" type="String" default-value="Default" min-occurs="1" fieldtype="dropdownlist" hidehelp="true" />
 			<parameter name="showTitle" type="Boolean" default-value="true" />
@@ -148,7 +144,6 @@
 		</parameters>
 	</block>
 	<block type="modules_website_Incompatibiltybrowser" icon="warning" />
-
 	<!-- Dashboard blocks -->
 	<block type="modules_website_dashboardpagevalidation" icon="task" dashboard="true">
 		<parameters>

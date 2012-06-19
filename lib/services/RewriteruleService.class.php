@@ -1,27 +1,10 @@
 <?php
 /**
- * website_RewriteruleService
  * @package modules.website
+ * @method website_RewriteruleService getInstance()
  */
 class website_RewriteruleService extends f_persistentdocument_DocumentService
 {
-	/**
-	 * @var website_RewriteruleService
-	 */
-	private static $instance;
-
-	/**
-	 * @return website_RewriteruleService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-
 	/**
 	 * @return website_persistentdocument_rewriterule
 	 */
@@ -38,7 +21,7 @@ class website_RewriteruleService extends f_persistentdocument_DocumentService
 	 */
 	public function createQuery()
 	{
-		return $this->pp->createQuery('modules_website/rewriterule');
+		return $this->getPersistentProvider()->createQuery('modules_website/rewriterule');
 	}
 	
 	/**
@@ -49,7 +32,7 @@ class website_RewriteruleService extends f_persistentdocument_DocumentService
 	 */
 	public function createStrictQuery()
 	{
-		return $this->pp->createQuery('modules_website/rewriterule', false);
+		return $this->getPersistentProvider()->createQuery('modules_website/rewriterule', false);
 	}
 	
 	/**
@@ -93,7 +76,7 @@ class website_RewriteruleService extends f_persistentdocument_DocumentService
 	{
 		try 
 		{
-			$this->tm->beginTransaction();
+			$this->getTransactionManager()->beginTransaction();
 			if (isset($ruleData['model']))
 			{
 				$documentModel = $ruleData['model'];
@@ -159,17 +142,17 @@ class website_RewriteruleService extends f_persistentdocument_DocumentService
 					$rc->endI18nWork($e);
 				}
 			}
-			$this->tm->commit();
+			$this->getTransactionManager()->commit();
 		}
 		catch (Exception $e)
 		{
-			$this->tm->rollBack($e);
+			$this->getTransactionManager()->rollBack($e);
 		}
 	}
 		
 	/**
 	 * @param website_persistentdocument_rewriterule $document
-	 * @param Integer $parentNodeId Parent node ID where to save the document (optionnal => can be null !).
+	 * @param integer $parentNodeId Parent node ID where to save the document (optionnal => can be null !).
 	 * @return void
 	 */
 	protected function preSave($document, $parentNodeId)
@@ -209,7 +192,7 @@ class website_RewriteruleService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_rewriterule $document
-	 * @param Integer $parentNodeId Parent node ID where to save the document (optionnal).
+	 * @param integer $parentNodeId Parent node ID where to save the document (optionnal).
 	 * @return void
 	 */
 	protected function preUpdate($document, $parentNodeId)
@@ -307,7 +290,7 @@ class website_RewriteruleService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_rewriterule $document
-	 * @param String[] $propertiesName
+	 * @param string[] $propertiesName
 	 * @param Array $datas
 	 */
 	public function addFormProperties($document, $propertiesName, &$datas)

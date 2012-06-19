@@ -1570,7 +1570,7 @@ class website_BBCodeTagInfoDoc extends website_BBCodeTagInfo
 			$element = $xhtmlParent->ownerDocument->createElement('span');
 			$element->setAttribute('class', 'error');
 			$xhtmlParent->appendChild($element);
-			$msg = $element->ownerDocument->createTextNode(LocaleService::getInstance()->transFO('m.website.bbeditor.invalid-documentid', array('ucf'), array('id' => $documentId)));
+			$msg = $element->ownerDocument->createTextNode(LocaleService::getInstance()->trans('m.website.bbeditor.invalid-documentid', array('ucf'), array('id' => $documentId)));
 			$element->appendChild($msg);
 			return $xhtmlParent;
 		}
@@ -1706,7 +1706,7 @@ class website_BBCodeTagInfoQuote extends website_BBCodeTagInfo
 		{
 			$authorNode = $element->appendChild($xhtmlParent->ownerDocument->createElement('strong'));
 			$authorNode->setAttribute('class', 'author');
-			$authorNode->appendChild($xhtmlParent->ownerDocument->createTextNode($author . ' ' . LocaleService::getInstance()->transFO('m.website.bbeditor.someone-said', array('lab'))));
+			$authorNode->appendChild($xhtmlParent->ownerDocument->createTextNode($author . ' ' . LocaleService::getInstance()->trans('m.website.bbeditor.someone-said', array('lab'))));
 			$authorNode->appendChild($xhtmlParent->ownerDocument->createElement('br'));
 		}
 		$xhtmlParent->appendChild($element);
@@ -1898,7 +1898,7 @@ class website_BBCodeEditor extends change_BaseService
 	/**
 	 * @param array[] $params
 	 * @param website_Page $context
-	 * @return String
+	 * @return string
 	 */
 	public function buildEditor($params, $context)
 	{

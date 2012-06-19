@@ -188,7 +188,7 @@ class website_CSSDeclaration
 	}
 	
 	/**
-	 * @param String $propertyValue
+	 * @param string $propertyValue
 	 */
 	public function setPropertyValue($propertyValue)
 	{
@@ -228,10 +228,10 @@ class website_CSSDeclaration
 	}
 	
 	/**
-	 * @param String $fullEngine
+	 * @param string $fullEngine
 	 * @param website_CSSVariables $skin
 	 * @param website_CSSStylesheet $stylesheet
-	 * @return String | null
+	 * @return string | null
 	 */
 	public function getAsCSS($fullEngine, $skin, $stylesheet)
 	{
@@ -245,12 +245,12 @@ class website_CSSDeclaration
 				$matches = array();
 				if (preg_match('/url\(binding:(.*)\)/', $value, $matches))
 				{
-					$infos = explode('#', $matches[1]);	    	    
-				    $link = LinkHelper::getUIChromeActionLink('uixul', 'GetBinding')->setQueryParameter('binding', $infos[0]);
+					$infos = explode('#', $matches[1]);				
+					$link = LinkHelper::getUIChromeActionLink('uixul', 'GetBinding')->setQueryParameter('binding', $infos[0]);
 					if (isset($infos[1]))
-				    {
-				        $link->setFragment($infos[1]);
-				    }
+					{
+						$link->setFragment($infos[1]);
+					}
 					$value = 'url(' . $link->getUrl() . ')';
 				}
 			}
@@ -273,10 +273,10 @@ class website_CSSDeclaration
 	}
 	
 	/**
-	 * @param String $fullEngine
+	 * @param string $fullEngine
 	 * @param website_CSSVariables $skin
 	 * @param website_CSSStylesheet $stylesheet
-	 * @return String | null
+	 * @return string | null
 	 */
 	protected function calculateValue($value, $fullEngine, $skin, $stylesheet)
 	{
@@ -299,10 +299,10 @@ class website_CSSDeclaration
 class website_CSSVarDeclaration extends website_CSSDeclaration
 {
 	/**
-	 * @param String $fullEngine
+	 * @param string $fullEngine
 	 * @param website_CSSVariables $skin
 	 * @param website_CSSStylesheet $stylesheet
-	 * @return String | null
+	 * @return string | null
 	 */
 	public function getAsCSS($fullEngine, $skin, $stylesheet)
 	{

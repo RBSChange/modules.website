@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <tags>
 	<tag labeli18n="m.website.bo.tags.header-menu" icon="menu">contextual_website_website_menu-header</tag>
 	<tag labeli18n="m.website.bo.tags.footer-menu" icon="menu">contextual_website_website_menu-footer</tag>

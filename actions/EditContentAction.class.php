@@ -4,9 +4,9 @@ class website_EditContentAction extends change_Action
 	const FORCE_PAGE_RESET = 'force_page_reset';
 	
 	/**
-     * @param change_Context $context
-     * @param change_Request $request
-     */
+	 * @param change_Context $context
+	 * @param change_Request $request
+	 */
 	public function _execute($context, $request)
 	{
 		$document = DocumentHelper::getCorrection($this->getDocumentInstanceFromRequest($request));

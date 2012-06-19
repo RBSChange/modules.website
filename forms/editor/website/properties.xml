@@ -9,13 +9,11 @@
 		<field name="description" />
 		<field name="group" />
 	</section>
-	
 	<section labeli18n="m.website.document.website.section-advanced">
 		<field name="favicon" />
 		<field name="robottxt" />
 		<field name="stylesheet" emptylabel="" />
-	</section>	
-		
+	</section>
 	<section labeli18n="m.website.document.website.section-searchengine">
 		<section labeli18n="m.website.document.website.section-google">
 			<field name="googlefileid" />
@@ -24,9 +22,9 @@
 		<section labeli18n="m.website.document.website.section-yahoo">
 			<field name="yahoofileid" />
 			<field name="yahoofilecontent" />
-		</section>		
+		</section>
 		<section labeli18n="m.website.document.website.section-msn">
 			<field name="msnfilecontent" />
 		</section>
-	</section>	
+	</section>
 </panel>

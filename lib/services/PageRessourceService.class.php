@@ -1,4 +1,8 @@
 <?php
+/**
+ * @package modules.website
+ * @method website_PageRessourceService getInstance()
+ */
 class website_PageRessourceService extends change_BaseService
 {
 	const GLOBAL_SCREEN_NAME = 'screen';
@@ -19,23 +23,6 @@ class website_PageRessourceService extends change_BaseService
 	 * @var string
 	 */
 	private $templateType;
-
-	/**
-	 * @var website_PageRessourceService
-	 */
-	private static $instance;
-	
-	/**
-	 * @return website_PageRessourceService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
 
 	/**
 	 * @param website_CSSVariables $skin
@@ -153,7 +140,7 @@ class website_PageRessourceService extends change_BaseService
 	}
 	
 	/**
-	 * @param String $type
+	 * @param string $type
 	 * @param DOMXPath $templateXpath
 	 * @return DOMElement
 	 */
@@ -373,7 +360,7 @@ class website_PageRessourceService extends change_BaseService
 	/**
 	 * Gets the <link .../> tag for the current page's template stylesheet
 	 *
-	 * @return String
+	 * @return string
 	 */
 	public function getPageStylesheetInclusion()
 	{
@@ -395,7 +382,7 @@ class website_PageRessourceService extends change_BaseService
 	
 	/**
 	 * Gets the <style media="screen">.... tag for the current page's template stylesheet
-	 * @return String
+	 * @return string
 	 */
 	public function getPageStylesheetInLine()
 	{
@@ -485,7 +472,7 @@ class website_PageRessourceService extends change_BaseService
 	/**
 	 * Gets the <link .../> tag for the combination of all print stylesheets
 	 *
-	 * @return String
+	 * @return string
 	 */
 	public function getPagePrintStylesheetInclusion()
 	{
@@ -565,7 +552,7 @@ class website_PageRessourceService extends change_BaseService
 	/**
 	 * Returns the path of the "Global template" used to render the page
 	 *
-	 * @return String
+	 * @return string
 	 */
 	public function getGlobalTemplate()
 	{
@@ -610,7 +597,7 @@ class website_PageRessourceService extends change_BaseService
 	
 	/**
 	 *
-	 * @return Boolean 
+	 * @return boolean 
 	 */
 	public function getUseMarkers()
 	{
@@ -619,7 +606,7 @@ class website_PageRessourceService extends change_BaseService
 
 	/**
 	 *
-	 * @param Boolean $useMarkers 
+	 * @param boolean $useMarkers 
 	 */
 	public function setUseMarkers($useMarkers)
 	{
@@ -627,11 +614,11 @@ class website_PageRessourceService extends change_BaseService
 	}
 	
 	/**
-	 * @param String $name
-	 * @param String $engine
-	 * @param String $version
-	 * @param String $protocol
-	 * @return String
+	 * @param string $name
+	 * @param string $engine
+	 * @param string $version
+	 * @param string $protocol
+	 * @return string
 	 */
 	private function getStylesheetRelativePath($name, $engine, $version, $protocol = 'http')
 	{
@@ -648,8 +635,8 @@ class website_PageRessourceService extends change_BaseService
 	}
 	
 	/**
-	 * @param String $name
-	 * @return String
+	 * @param string $name
+	 * @return string
 	 */
 	private function getJavascriptRelativePath($name, $templateId)
 	{
@@ -662,9 +649,9 @@ class website_PageRessourceService extends change_BaseService
 	}
 
 	/**
-	 * @param String $styleSheetRelativePath
-	 * @param String $mediaType (screen | print)
-	 * @return String
+	 * @param string $styleSheetRelativePath
+	 * @param string $mediaType (screen | print)
+	 * @return string
 	 */
 	private function buildStylesheetInclusion($styleSheetRelativePath, $mediaType)
 	{
@@ -673,8 +660,8 @@ class website_PageRessourceService extends change_BaseService
 	}
 	
 	/**
-	 * @param String $styleSheetRelativePath
-	 * @return String
+	 * @param string $styleSheetRelativePath
+	 * @return string
 	 */
 	private function buildJavascriptInclusion($javascriptRelativePath)
 	{
@@ -695,8 +682,8 @@ class website_PageRessourceService extends change_BaseService
 
 	/**
 	 * @param Ressource $fileHandle
-	 * @param String $styleName
-	 * @param String $fullengine
+	 * @param string $styleName
+	 * @param string $fullengine
 	 */
 	private function appendStylesheetContent($fileHandle, $styleName, $fullengine)
 	{

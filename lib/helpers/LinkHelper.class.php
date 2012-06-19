@@ -9,13 +9,13 @@ class LinkHelper
 	 */
 	public static function getParametrizedLink($queryParams = array(), $website = NULL)
 	{
-	    if ($website === NULL)
-	    {
-	        $website = website_WebsiteService::getInstance()->getCurrentWebsite();
-	    }
-	    $link = new f_web_ParametrizedLink($website->getProtocol(), $website->getDomain(), f_web_HttpLink::SITE_PATH);
-	    $link->setQueryParameters($queryParams);
-	    return $link;
+		if ($website === NULL)
+		{
+			$website = website_WebsiteService::getInstance()->getCurrentWebsite();
+		}
+		$link = new f_web_ParametrizedLink($website->getProtocol(), $website->getDomain(), f_web_HttpLink::SITE_PATH);
+		$link->setQueryParameters($queryParams);
+		return $link;
 	}
 		
 	/**
@@ -24,9 +24,9 @@ class LinkHelper
 	 */
 	public static function getUIParametrizedLink($queryParams = array())
 	{
-	    $link = new f_web_ParametrizedLink(Framework::getUIProtocol(), Framework::getUIDefaultHost(), f_web_HttpLink::UI_PATH);
-	    $link->setQueryParameters($queryParams);
-	    return $link;
+		$link = new f_web_ParametrizedLink(Framework::getUIProtocol(), Framework::getUIDefaultHost(), f_web_HttpLink::UI_PATH);
+		$link->setQueryParameters($queryParams);
+		return $link;
 	}
 	
 	/**
@@ -37,13 +37,13 @@ class LinkHelper
 	 */
 	public static function getActionLink($moduleName, $actionName, $website = NULL)
 	{
-	    if ($website === NULL)
-	    {
-	        $website = website_WebsiteService::getInstance()->getCurrentWebsite();
-	    }
-	    $lang = RequestContext::getInstance()->getLang();
-	    $link = website_UrlRewritingService::getInstance()->getDefaultActionWebLink($moduleName, $actionName, $website, $lang, array());
-	    return $link;
+		if ($website === NULL)
+		{
+			$website = website_WebsiteService::getInstance()->getCurrentWebsite();
+		}
+		$lang = RequestContext::getInstance()->getLang();
+		$link = website_UrlRewritingService::getInstance()->getDefaultActionWebLink($moduleName, $actionName, $website, $lang, array());
+		return $link;
 	}
 		
 	/**
@@ -53,9 +53,9 @@ class LinkHelper
 	 */
 	public static function getUIActionLink($moduleName, $actionName)
 	{
-	    $link = new f_web_ParametrizedLink(Framework::getUIProtocol(), Framework::getUIDefaultHost(), f_web_HttpLink::UI_PATH);
-	    $link->setQueryParameters(array('module' => $moduleName, 'action' => $actionName));
-	    return $link;
+		$link = new f_web_ParametrizedLink(Framework::getUIProtocol(), Framework::getUIDefaultHost(), f_web_HttpLink::UI_PATH);
+		$link->setQueryParameters(array('module' => $moduleName, 'action' => $actionName));
+		return $link;
 	}
 	
 	/**
@@ -70,9 +70,9 @@ class LinkHelper
 		{
 			return self::getUIActionLink($moduleName, $actionName);
 		}
-	    $link = new f_web_ChromeParametrizedLink($chromeUri);
-	    $link->setQueryParameters(array('module' => $moduleName, 'action' => $actionName));
-	    return $link;
+		$link = new f_web_ChromeParametrizedLink($chromeUri);
+		$link->setQueryParameters(array('module' => $moduleName, 'action' => $actionName));
+		return $link;
 	}	
 	
 	/**
@@ -83,12 +83,12 @@ class LinkHelper
 	public static function getRessourceLink($ressourceName, $website = NULL)
 	{
 		if ($website === NULL)
-	    {
-	        $website = website_WebsiteService::getInstance()->getCurrentWebsite();
-	    }
-	    $link = new f_web_ResourceLink($website->getProtocol(), $website->getDomain());
-	    $link->setPath($ressourceName);
-	    return $link;
+		{
+			$website = website_WebsiteService::getInstance()->getCurrentWebsite();
+		}
+		$link = new f_web_ResourceLink($website->getProtocol(), $website->getDomain());
+		$link->setPath($ressourceName);
+		return $link;
 	}	
 	
 	/**
@@ -97,9 +97,9 @@ class LinkHelper
 	 */
 	public static function getUIRessourceLink($ressourceName)
 	{
-	    $link = new f_web_ResourceLink(Framework::getUIProtocol(), Framework::getUIDefaultHost());
-	    $link->setPath($ressourceName);
-	    return $link;
+		$link = new f_web_ResourceLink(Framework::getUIProtocol(), Framework::getUIDefaultHost());
+		$link->setPath($ressourceName);
+		return $link;
 	}
 	
 	/**
@@ -114,10 +114,10 @@ class LinkHelper
 			return self::getUIRessourceLink($ressourceName);
 		}
 		
-	    $link = new f_web_ChromeParametrizedLink($chromeUri);
-	    $link->setArgSeparator(f_web_HttpLink::ESCAPE_SEPARATOR);
-	    $link->setQueryParameters(array('module' => 'uixul', 'action' => 'GetChromeRessource', 'path' => $ressourceName));
-	    return $link;
+		$link = new f_web_ChromeParametrizedLink($chromeUri);
+		$link->setArgSeparator(f_web_HttpLink::ESCAPE_SEPARATOR);
+		$link->setQueryParameters(array('module' => 'uixul', 'action' => 'GetChromeRessource', 'path' => $ressourceName));
+		return $link;
 	}	
 
 	/**
@@ -296,9 +296,9 @@ class LinkHelper
 	 */
 	public static function getHomeUrl()
 	{
-	    $website = website_WebsiteService::getInstance()->getCurrentWebsite();
-	    $lang = RequestContext::getInstance()->getLang();
-        return website_UrlRewritingService::getInstance()->getRewriteLink($website, $lang, '')->getUrl();
+		$website = website_WebsiteService::getInstance()->getCurrentWebsite();
+		$lang = RequestContext::getInstance()->getLang();
+		return website_UrlRewritingService::getInstance()->getRewriteLink($website, $lang, '')->getUrl();
 	}
 
 
@@ -310,18 +310,18 @@ class LinkHelper
 	{
 		try
 		{
-		    $website = website_WebsiteService::getInstance()->getCurrentWebsite();
-                       $page = TagService::getInstance()->getDocumentByContextualTag('contextual_website_website_help', $website);
-            if ($page !== null)
-            {
-    			return self::getDocumentUrl($page);
-            }
+			$website = website_WebsiteService::getInstance()->getCurrentWebsite();
+					   $page = TagService::getInstance()->getDocumentByContextualTag('contextual_website_website_help', $website);
+			if ($page !== null)
+			{
+				return self::getDocumentUrl($page);
+			}
 		}
 		catch (Exception $e)
 		{
 			Framework::exception($e);
 		}
-	    return '#';
+		return '#';
 	}
 	
 	/**
@@ -362,7 +362,7 @@ class LinkHelper
 	 */
 	public static function getLink($document, $lang = null, $class = 'link', $title = '', $attributes = null)
 	{
-	    return self::buildLink($document, $lang, $class, $title, false, $attributes);
+		return self::buildLink($document, $lang, $class, $title, false, $attributes);
 	}
 
 	/**
@@ -583,11 +583,11 @@ class LinkHelper
 
 		if (is_null($label))
 		{
-			$label = LocaleService::getInstance()->transFO('m.website.frontoffice.legalnotice', array('ucf', 'html'));
+			$label = LocaleService::getInstance()->trans('m.website.frontoffice.legalnotice', array('ucf', 'html'));
 		}
 		if (is_null($title))
 		{
-			$title =  LocaleService::getInstance()->transFO('m.website.frontoffice.legalnoticetitle', array('ucf', 'attr'));
+			$title =  LocaleService::getInstance()->trans('m.website.frontoffice.legalnoticetitle', array('ucf', 'attr'));
 		}
 		if (is_string($class))
 		{

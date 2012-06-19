@@ -4,7 +4,7 @@ class website_BlockMessagesAction extends website_BlockAction
 	/**
 	 * @param website_BlockActionRequest $request
 	 * @param website_BlockActionResponse $response
-	 * @return String
+	 * @return string
 	 */
 	public function execute($request, $response)
 	{

@@ -3,7 +3,7 @@ class PHPTAL_Php_Attribute_CHANGE_Block extends ChangeTalAttribute
 {
 	/**
 	 * @see ChangeTalAttribute::evaluateAll()
-	 * @return Boolean
+	 * @return boolean
 	 */
 	protected function evaluateAll()
 	{
@@ -137,7 +137,7 @@ class website_ChangeBlockRenderer
 	
 	/**
 	 * @param Array $extensionParams
-	 * @param String $moduleName
+	 * @param string $moduleName
 	 * @return Array
 	 */
 	private function getRequestParameters($extensionParams, $moduleName)

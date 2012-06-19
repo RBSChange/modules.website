@@ -5,15 +5,15 @@
  */
 class website_PagegroupScriptDocumentElement extends import_ScriptDocumentElement
 {
-    /**
-     * @return website_persistentdocument_pagegroup
-     */
-    protected function initPersistentDocument()
-    {
-    	return website_PagegroupService::getInstance()->getNewDocumentInstance();
-    }
-    
-    /**
+	/**
+	 * @return website_persistentdocument_pagegroup
+	 */
+	protected function initPersistentDocument()
+	{
+		return website_PagegroupService::getInstance()->getNewDocumentInstance();
+	}
+	
+	/**
 	 * @return f_persistentdocument_PersistentDocumentModel
 	 */
 	protected function getDocumentModel()

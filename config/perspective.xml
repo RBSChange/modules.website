@@ -1,24 +1,24 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <perspective>
 	<models>
 		<model name="modules_generic/rootfolder">
 			<children>
-				<child model="modules_website/website"/>
-				<child model="modules_generic/systemfolder"/>
+				<child model="modules_website/website" />
+				<child model="modules_generic/systemfolder" />
 			</children>
 			<columns>
-				<column name="domain" labeli18n="m.website.bo.general.column.website-url" flex="2"/>
-				<column name="modificationdate" flex="1"/>
+				<column name="domain" labeli18n="m.website.bo.general.column.website-url" flex="2" />
+				<column name="modificationdate" flex="1" />
 			</columns>
 			<contextactions>
-				<contextaction name="edit"/>
-				<contextaction name="openTreeNodeOrder"/>
-				<contextaction name="createWebsite"/>
+				<contextaction name="edit" />
+				<contextaction name="openTreeNodeOrder" />
+				<contextaction name="createWebsite" />
 			</contextactions>
 		</model>
 		<model name="modules_website/website">
 			<children>
-				<child model="modules_website/menufolder"/>
+				<child model="modules_website/menufolder" />
 				<child model="modules_website/page" />
 				<child model="modules_website/pagegroup" />
 				<child model="modules_website/topic" />
@@ -26,169 +26,169 @@
 				<child model="modules_website/pageexternal" />
 			</children>
 			<drops>
-				<drop model="modules_website/page" action="move"/>
-				<drop model="modules_website/pagegroup" action="move"/>
-				<drop model="modules_website/topic" action="move"/>
-				<drop model="modules_website/pageexternal" action="move"/>
-				<drop model="modules_website/menufolder" action="move"/>
+				<drop model="modules_website/page" action="move" />
+				<drop model="modules_website/pagegroup" action="move" />
+				<drop model="modules_website/topic" action="move" />
+				<drop model="modules_website/pageexternal" action="move" />
+				<drop model="modules_website/menufolder" action="move" />
 			</drops>
 			<columns>
-				<column name="modificationdate" flex="1"/>
+				<column name="modificationdate" flex="1" />
 			</columns>
 			<contextactions>
-				<contextaction name="edit"/>
+				<contextaction name="edit" />
 				<contextaction name="deactivated" />
 				<contextaction name="reactivate" />
 				<contextaction name="delete" />
-				<contextaction name="openTags"/>
+				<contextaction name="openTags" />
 				<groupactions name="websitecreate_">
-					<contextaction name="createPage"/>
-					<contextaction name="createTopic"/>
-					<contextaction name="createExternalPage"/>
-					<contextaction name="initDefaultStruct"/>
+					<contextaction name="createPage" />
+					<contextaction name="createTopic" />
+					<contextaction name="createExternalPage" />
+					<contextaction name="initDefaultStruct" />
 				</groupactions>
-				<contextaction name="openTreeNodeOrder"/>
-				<contextaction name="openFolder"/>
+				<contextaction name="openTreeNodeOrder" />
+				<contextaction name="openFolder" />
 			</contextactions>
-		</model>		
+		</model>
 		<model name="modules_website/topic">
 			<children>
-				<child model="modules_website/page"/>
-				<child model="modules_website/pagegroup"/>
-				<child model="modules_website/pagereference"/>
-				<child model="modules_website/topic"/>
-				<child model="modules_website/systemtopic"/>
-				<child model="modules_website/pageexternal"/>
+				<child model="modules_website/page" />
+				<child model="modules_website/pagegroup" />
+				<child model="modules_website/pagereference" />
+				<child model="modules_website/topic" />
+				<child model="modules_website/systemtopic" />
+				<child model="modules_website/pageexternal" />
 			</children>
 			<drops>
-				<drop model="modules_website/page" action="move"/>
-				<drop model="modules_website/pagegroup" action="move"/>
-				<drop model="modules_website/topic" action="move"/>
-				<drop model="modules_website/pageexternal" action="move"/>
+				<drop model="modules_website/page" action="move" />
+				<drop model="modules_website/pagegroup" action="move" />
+				<drop model="modules_website/topic" action="move" />
+				<drop model="modules_website/pageexternal" action="move" />
 			</drops>
 			<columns>
-				<column name="modificationdate" flex="1"/>
+				<column name="modificationdate" flex="1" />
 			</columns>
 			<contextactions>
-				<contextaction name="edit"/>
-				<contextaction name="delete"/>
+				<contextaction name="edit" />
+				<contextaction name="delete" />
 				<groupactions name="topiccreate_">
-					<contextaction name="createTopic"/>
-					<contextaction name="createPage"/>
-					<contextaction name="createExternalPage"/>
+					<contextaction name="createTopic" />
+					<contextaction name="createPage" />
+					<contextaction name="createExternalPage" />
 				</groupactions>
-				<contextaction name="openTreeNodeOrder"/>
-				<contextaction name="removeFromMenu"/>
-				<contextaction name="openFolder"/>
+				<contextaction name="openTreeNodeOrder" />
+				<contextaction name="removeFromMenu" />
+				<contextaction name="openFolder" />
 			</contextactions>
 		</model>
 		<model name="modules_website/systemtopic">
 			<children>
-				<child model="modules_website/page"/>
-				<child model="modules_website/pagegroup"/>
-				<child model="modules_website/pagereference"/>
-				<child model="modules_website/systemtopic"/>
-				<child model="modules_website/pageexternal"/>
-				<child model="modules_website/topic"/>
+				<child model="modules_website/page" />
+				<child model="modules_website/pagegroup" />
+				<child model="modules_website/pagereference" />
+				<child model="modules_website/systemtopic" />
+				<child model="modules_website/pageexternal" />
+				<child model="modules_website/topic" />
 			</children>
 			<drops>
-				<drop model="modules_website/page" action="move"/>
-				<drop model="modules_website/pagegroup" action="move"/>
-				<drop model="modules_website/pageexternal" action="move"/>
-				<drop model="modules_website/topic" action="move"/>
+				<drop model="modules_website/page" action="move" />
+				<drop model="modules_website/pagegroup" action="move" />
+				<drop model="modules_website/pageexternal" action="move" />
+				<drop model="modules_website/topic" action="move" />
 			</drops>
 			<columns>
-				<column name="modificationdate" flex="1"/>
+				<column name="modificationdate" flex="1" />
 			</columns>
 			<contextactions>
-				<contextaction name="edit"/>
+				<contextaction name="edit" />
 				<groupactions name="systemtopiccreate_">
-					<contextaction name="createTopic"/>
-					<contextaction name="createPage"/>
-					<contextaction name="createExternalPage"/>
+					<contextaction name="createTopic" />
+					<contextaction name="createPage" />
+					<contextaction name="createExternalPage" />
 				</groupactions>
-				<contextaction name="openTreeNodeOrder"/>
-				<contextaction name="removeFromMenu"/>
-				<contextaction name="openFolder"/>
+				<contextaction name="openTreeNodeOrder" />
+				<contextaction name="removeFromMenu" />
+				<contextaction name="openFolder" />
 			</contextactions>
 		</model>
 		<model name="modules_website/page">
 			<contextactions>
-				<contextaction name="edit"/>
-				<contextaction name="duplicate"/>
-				<contextaction name="delete"/>
-				<contextaction name="openPage"/>
-				<contextaction name="editPageContent"/>
-				<contextaction name="setAsIndexPage"/>
-				<contextaction name="setAsIndexPageRef"/>
-				<contextaction name="removeIndexPage"/>
-				<contextaction name="setAsHomePage"/>
-				<contextaction name="openTags"/>
-				<contextaction name="activate"/>	
-				<contextaction name="deactivated"/>
-				<contextaction name="reactivate"/>
-				<contextaction name="createEmptyPageVersionFromPage"/>
-				<contextaction name="createPageVersionFromPage"/>
-				<contextaction name="openUrlRewritingPanel"/>
-				<contextaction name="removeFromMenu"/>
+				<contextaction name="edit" />
+				<contextaction name="duplicate" />
+				<contextaction name="delete" />
+				<contextaction name="openPage" />
+				<contextaction name="editPageContent" />
+				<contextaction name="setAsIndexPage" />
+				<contextaction name="setAsIndexPageRef" />
+				<contextaction name="removeIndexPage" />
+				<contextaction name="setAsHomePage" />
+				<contextaction name="openTags" />
+				<contextaction name="activate" />
+				<contextaction name="deactivated" />
+				<contextaction name="reactivate" />
+				<contextaction name="createEmptyPageVersionFromPage" />
+				<contextaction name="createPageVersionFromPage" />
+				<contextaction name="openUrlRewritingPanel" />
+				<contextaction name="removeFromMenu" />
 			</contextactions>
 		</model>
 		<model name="modules_website/pagereference">
 			<contextactions>
-				<contextaction name="edit"/>
-				<contextaction name="openPage"/>
-				<contextaction name="setAsIndexPage"/>
-				<contextaction name="removeIndexPage"/>
+				<contextaction name="edit" />
+				<contextaction name="openPage" />
+				<contextaction name="setAsIndexPage" />
+				<contextaction name="removeIndexPage" />
 			</contextactions>
 		</model>
 		<model name="modules_website/pagegroup">
 			<contextactions>
-				<contextaction name="edit"/>
-				<contextaction name="delete"/>
-				<contextaction name="setAsIndexPage"/>
-				<contextaction name="setAsIndexPageRef"/>
-				<contextaction name="removeIndexPage"/>
-				<contextaction name="setAsHomePage"/>
-				<contextaction name="openTags"/>
-				<contextaction name="openPage"/>
-				<contextaction name="openUrlRewritingPanel"/>
-				<contextaction name="removeFromMenu"/>
+				<contextaction name="edit" />
+				<contextaction name="delete" />
+				<contextaction name="setAsIndexPage" />
+				<contextaction name="setAsIndexPageRef" />
+				<contextaction name="removeIndexPage" />
+				<contextaction name="setAsHomePage" />
+				<contextaction name="openTags" />
+				<contextaction name="openPage" />
+				<contextaction name="openUrlRewritingPanel" />
+				<contextaction name="removeFromMenu" />
 			</contextactions>
 		</model>
 		<model name="modules_website/pageversion">
 			<contextactions>
-				<contextaction name="edit"/>
-				<contextaction name="openPage"/>
-				<contextaction name="editPageContent"/>
-				<contextaction name="activate"/>
-				<contextaction name="deactivated"/>
-				<contextaction name="reactivate"/>
-				<contextaction name="createEmptyPageVersionFromPage"/>
-				<contextaction name="createPageVersionFromPage"/>
+				<contextaction name="edit" />
+				<contextaction name="openPage" />
+				<contextaction name="editPageContent" />
+				<contextaction name="activate" />
+				<contextaction name="deactivated" />
+				<contextaction name="reactivate" />
+				<contextaction name="createEmptyPageVersionFromPage" />
+				<contextaction name="createPageVersionFromPage" />
 			</contextactions>
 		</model>
 		<model name="modules_website/pageexternal">
 			<contextactions>
-				<contextaction name="edit"/>
+				<contextaction name="edit" />
 				<contextaction name="delete" />
-				<contextaction name="openTags"/>
-				<contextaction name="openPage"/>
-				<contextaction name="removeFromMenu"/>
+				<contextaction name="openTags" />
+				<contextaction name="openPage" />
+				<contextaction name="removeFromMenu" />
 			</contextactions>
 		</model>
 		<model name="modules_website/menufolder">
 			<children>
-				<child model="modules_website/menu"/>
+				<child model="modules_website/menu" />
 			</children>
 			<columns>
-				<column name="tagLabel" labeli18n="m.website.bo.general.column.menu-tag" flex="2"/>
-				<column name="modificationdate" flex="1"/>
+				<column name="tagLabel" labeli18n="m.website.bo.general.column.menu-tag" flex="2" />
+				<column name="modificationdate" flex="1" />
 			</columns>
 			<contextactions>
-				<contextaction name="openFolder"/>
-				<contextaction name="createMenu"/>
+				<contextaction name="openFolder" />
+				<contextaction name="createMenu" />
 			</contextactions>
-		</model>		
+		</model>
 		<model name="modules_website/menu">
 			<children>
 				<child model="modules_website/menuitemdocument" from="menuItem" />
@@ -196,48 +196,48 @@
 				<child model="modules_website/menuitemtext" from="menuItem" />
 			</children>
 			<drops>
-				<drop model="modules_website/page" action="addToMenu"/>
-				<drop model="modules_website/topic" action="addToMenu"/>
-				<drop model="modules_website/systemtopic" action="addToMenu"/>
-				<drop model="modules_website/pagegroup" action="addToMenu"/>
-				<drop model="modules_website/pageexternal" action="addToMenu"/>
+				<drop model="modules_website/page" action="addToMenu" />
+				<drop model="modules_website/topic" action="addToMenu" />
+				<drop model="modules_website/systemtopic" action="addToMenu" />
+				<drop model="modules_website/pagegroup" action="addToMenu" />
+				<drop model="modules_website/pageexternal" action="addToMenu" />
 			</drops>
 			<columns>
-				<column name="refers-to" labeli18n="m.website.bo.general.column.menuitem-refers-to" flex="5"/>
-				<column name="popup" labeli18n="m.website.bo.general.column.menuitem-popup" flex="1"/>
-				<column name="modificationdate" flex="1"/>
+				<column name="refers-to" labeli18n="m.website.bo.general.column.menuitem-refers-to" flex="5" />
+				<column name="popup" labeli18n="m.website.bo.general.column.menuitem-popup" flex="1" />
+				<column name="modificationdate" flex="1" />
 			</columns>
 			<contextactions>
-				<contextaction name="edit"/>
-				<contextaction name="delete"/>
-				<contextaction name="openTags"/>
-				<contextaction name="orderMenuItems"/>
+				<contextaction name="edit" />
+				<contextaction name="delete" />
+				<contextaction name="openTags" />
+				<contextaction name="orderMenuItems" />
 				<groupactions name="menucreate_">
-					<contextaction name="createMenuitemfunction"/>
-					<contextaction name="createMenuitemtext"/>
-					<contextaction name="createMenuitemdocument"/>
+					<contextaction name="createMenuitemfunction" />
+					<contextaction name="createMenuitemtext" />
+					<contextaction name="createMenuitemdocument" />
 				</groupactions>
-				<contextaction name="openFolder"/>
+				<contextaction name="openFolder" />
 			</contextactions>
 		</model>
 		<model name="modules_website/menuitemdocument">
 			<contextactions>
-				<contextaction name="edit"/>
-				<contextaction name="delete"/>
+				<contextaction name="edit" />
+				<contextaction name="delete" />
 			</contextactions>
 		</model>
 		<model name="modules_website/menuitemfunction">
 			<contextactions>
-				<contextaction name="edit"/>
-				<contextaction name="delete"/>
-				<contextaction name="deactivated"/>
-				<contextaction name="reactivate"/>
+				<contextaction name="edit" />
+				<contextaction name="delete" />
+				<contextaction name="deactivated" />
+				<contextaction name="reactivate" />
 			</contextactions>
 		</model>
 		<model name="modules_website/menuitemtext">
 			<contextactions>
-				<contextaction name="edit"/>
-				<contextaction name="delete"/>
+				<contextaction name="edit" />
+				<contextaction name="delete" />
 			</contextactions>
 		</model>
 		<model name="modules_generic/systemfolder">
@@ -253,57 +253,57 @@
 		</model>
 		<model name="modules_website/template">
 			<contextactions>
-				<contextaction name="edit"/>
+				<contextaction name="edit" />
 				<contextaction name="delete" />
 			</contextactions>
 		</model>
 	</models>
 	<toolbar>
-		<toolbarbutton name="edit"/>
-		<toolbarbutton name="duplicate"/>	
-		<toolbarbutton name="delete"/>
-		<toolbarbutton name="activate"/>
-		<toolbarbutton name="deactivated"/>
-		<toolbarbutton name="reactivate"/>
-		<toolbarbutton name="editPageContent"/>
-		<toolbarbutton name="openPage"/>
+		<toolbarbutton name="edit" />
+		<toolbarbutton name="duplicate" />
+		<toolbarbutton name="delete" />
+		<toolbarbutton name="activate" />
+		<toolbarbutton name="deactivated" />
+		<toolbarbutton name="reactivate" />
+		<toolbarbutton name="editPageContent" />
+		<toolbarbutton name="openPage" />
 	</toolbar>
 	<actions>
-		<action name="refresh" single="true" icon="refresh" labeli18n="m.uixul.bo.actions.refresh"/>
-		<action name="delete" permission="Delete" icon="delete" labeli18n="m.uixul.bo.actions.delete"/>
-		<action name="edit" single="true" permission="Load" icon="edit" labeli18n="m.uixul.bo.actions.edit"/>
-		<action name="openFolder" single="true" icon="open-folder" labeli18n="m.uixul.bo.actions.openfolder"/>
-		<action name="createPage" single="true" permission="Insert_page" group="topiccreate_" icon="add" labeli18n="m.website.bo.actions.create-page"/>
-		<action name="createExternalPage" single="true" permission="Insert_pageexternal" group="topiccreate_" icon="add" labeli18n="m.website.bo.actions.create-external-page"/>
-		<action name="topiccreate_" single="true" actions="createPage,createTopic,createExternalPage" icon="add"/>
-		<action name="systemtopiccreate_" single="true" actions="createPage,createExternalPage" icon="add"/>
-		<action name="createTopic" single="true" permission="Insert_topic" group="topiccreate_" icon="add" labeli18n="m.website.bo.actions.create-topic"/>
-		<action name="openTreeNodeOrder" single="true" permission="Order" icon="sort" labeli18n="m.uixul.bo.actions.set-children-order"/>
-		<action name="move" permission="Move" icon="up_down" labeli18n="m.uixul.bo.actions.move"/>
-		<action name="openTags" single="true" permission="LoadTags" icon="edit-tags" labeli18n="m.uixul.bo.actions.open-tags-panel"/>
-		<action name="createMenu" single="true" permission="Insert_menu" icon="add" labeli18n="m.website.bo.actions.create-menu"/>
-		<action name="orderMenuItems" single="true" icon="sort" labeli18n="m.uixul.bo.actions.set-children-order"/>
-		<action name="menucreate_" single="true" actions="createMenuitemfunction,createMenuitemtext,createMenuitemdocument" icon="add"/>
-		<action name="createMenuitemfunction" single="true" permission="Insert_menuitemfunction" group="menucreate_" labeli18n="m.website.bo.actions.create-menuitemfunction"/>
-		<action name="createMenuitemtext" single="true" permission="Insert_menuitemtext" group="menucreate_" labeli18n="m.website.bo.actions.create-menuitemtext"/>
-		<action name="createMenuitemdocument" single="true" permission="Insert_menuitemdocument" group="menucreate_" labeli18n="m.website.bo.actions.create-menuitemdocument"/>
-		<action name="addToMenu" permission="AddToMenu" icon="add" labeli18n="m.website.bo.actions.add-to-menu"/>
-		<action name="websitecreate_" single="true" actions="createPage,createTopic,createExternalPage,initDefaultStruct" icon="add"/>
-		<action name="initDefaultStruct" single="true" permission="InitDefaultStruct" group="websitecreate_" icon="add" labeli18n="m.website.bo.actions.init-default-struct"/>
-		<action name="duplicate" single="true" permission="Duplicate" icon="duplicate" labeli18n="m.uixul.bo.actions.duplicate"/>
-		<action name="openPage" single="true" icon="preview" labeli18n="m.website.bo.actions.openpage"/>
-		<action name="editPageContent" single="true" permission="EditContent" icon="edit-page-content" labeli18n="m.website.bo.actions.editcontent"/>
-		<action name="setAsIndexPage" single="true" permission="SetTopicIndexPage" icon="page-index" labeli18n="m.website.bo.actions.set-as-index-page"/>
-		<action name="setAsIndexPageRef" single="true" permission="SetTopicIndexPage" icon="page-index" labeli18n="m.website.bo.actions.set-as-index-page-ref"/>
-		<action name="removeIndexPage" single="true" permission="RemoveIndexPage" icon="document" labeli18n="m.website.bo.actions.remove-index-page"/>
-		<action name="setAsHomePage" single="true" permission="SetHomePage" icon="page-home" labeli18n="m.website.bo.actions.set-as-home-page"/>
-		<action name="activate" single="true" permission="Activate" icon="activate" labeli18n="m.uixul.bo.actions.activate"/>
-		<action name="deactivated" permission="Deactivated" icon="deactivated" labeli18n="m.uixul.bo.actions.deactivate"/>
-		<action name="reactivate" permission="ReActivate" icon="reactivate" labeli18n="m.uixul.bo.actions.reactivate"/>
-		<action name="createEmptyPageVersionFromPage" single="true" permission="InitEmptyPageVersion" icon="new-empty-version" labeli18n="m.website.bo.actions.create-empty-page-version"/>
-		<action name="createPageVersionFromPage" single="true" permission="InitDuplicatePageVersion" icon="new-version" labeli18n="m.website.bo.actions.create-page-version"/>
-		<action name="openUrlRewritingPanel" single="true" permission="LoadRedirectInfo" icon="urlrewriting" labeli18n="m.uixul.bo.actions.url-rewriting"/>
-		<action name="removeFromMenu" single="true" permission="RemoveFromMenu" icon="remove" labeli18n="m.website.bo.actions.remove-from-menu"/>
-		<action name="createWebsite" single="true" permission="Insert_website" icon="add" labeli18n="m.website.bo.actions.create-website"/>
+		<action name="refresh" single="true" icon="refresh" labeli18n="m.uixul.bo.actions.refresh" />
+		<action name="delete" permission="Delete" icon="delete" labeli18n="m.uixul.bo.actions.delete" />
+		<action name="edit" single="true" permission="Load" icon="edit" labeli18n="m.uixul.bo.actions.edit" />
+		<action name="openFolder" single="true" icon="open-folder" labeli18n="m.uixul.bo.actions.openfolder" />
+		<action name="createPage" single="true" permission="Insert_page" group="topiccreate_" icon="add" labeli18n="m.website.bo.actions.create-page" />
+		<action name="createExternalPage" single="true" permission="Insert_pageexternal" group="topiccreate_" icon="add" labeli18n="m.website.bo.actions.create-external-page" />
+		<action name="topiccreate_" single="true" actions="createPage,createTopic,createExternalPage" icon="add" />
+		<action name="systemtopiccreate_" single="true" actions="createPage,createExternalPage" icon="add" />
+		<action name="createTopic" single="true" permission="Insert_topic" group="topiccreate_" icon="add" labeli18n="m.website.bo.actions.create-topic" />
+		<action name="openTreeNodeOrder" single="true" permission="Order" icon="sort" labeli18n="m.uixul.bo.actions.set-children-order" />
+		<action name="move" permission="Move" icon="up_down" labeli18n="m.uixul.bo.actions.move" />
+		<action name="openTags" single="true" permission="LoadTags" icon="edit-tags" labeli18n="m.uixul.bo.actions.open-tags-panel" />
+		<action name="createMenu" single="true" permission="Insert_menu" icon="add" labeli18n="m.website.bo.actions.create-menu" />
+		<action name="orderMenuItems" single="true" icon="sort" labeli18n="m.uixul.bo.actions.set-children-order" />
+		<action name="menucreate_" single="true" actions="createMenuitemfunction,createMenuitemtext,createMenuitemdocument" icon="add" />
+		<action name="createMenuitemfunction" single="true" permission="Insert_menuitemfunction" group="menucreate_" labeli18n="m.website.bo.actions.create-menuitemfunction" />
+		<action name="createMenuitemtext" single="true" permission="Insert_menuitemtext" group="menucreate_" labeli18n="m.website.bo.actions.create-menuitemtext" />
+		<action name="createMenuitemdocument" single="true" permission="Insert_menuitemdocument" group="menucreate_" labeli18n="m.website.bo.actions.create-menuitemdocument" />
+		<action name="addToMenu" permission="AddToMenu" icon="add" labeli18n="m.website.bo.actions.add-to-menu" />
+		<action name="websitecreate_" single="true" actions="createPage,createTopic,createExternalPage,initDefaultStruct" icon="add" />
+		<action name="initDefaultStruct" single="true" permission="InitDefaultStruct" group="websitecreate_" icon="add" labeli18n="m.website.bo.actions.init-default-struct" />
+		<action name="duplicate" single="true" permission="Duplicate" icon="duplicate" labeli18n="m.uixul.bo.actions.duplicate" />
+		<action name="openPage" single="true" icon="preview" labeli18n="m.website.bo.actions.openpage" />
+		<action name="editPageContent" single="true" permission="EditContent" icon="edit-page-content" labeli18n="m.website.bo.actions.editcontent" />
+		<action name="setAsIndexPage" single="true" permission="SetTopicIndexPage" icon="page-index" labeli18n="m.website.bo.actions.set-as-index-page" />
+		<action name="setAsIndexPageRef" single="true" permission="SetTopicIndexPage" icon="page-index" labeli18n="m.website.bo.actions.set-as-index-page-ref" />
+		<action name="removeIndexPage" single="true" permission="RemoveIndexPage" icon="document" labeli18n="m.website.bo.actions.remove-index-page" />
+		<action name="setAsHomePage" single="true" permission="SetHomePage" icon="page-home" labeli18n="m.website.bo.actions.set-as-home-page" />
+		<action name="activate" single="true" permission="Activate" icon="activate" labeli18n="m.uixul.bo.actions.activate" />
+		<action name="deactivated" permission="Deactivated" icon="deactivated" labeli18n="m.uixul.bo.actions.deactivate" />
+		<action name="reactivate" permission="ReActivate" icon="reactivate" labeli18n="m.uixul.bo.actions.reactivate" />
+		<action name="createEmptyPageVersionFromPage" single="true" permission="InitEmptyPageVersion" icon="new-empty-version" labeli18n="m.website.bo.actions.create-empty-page-version" />
+		<action name="createPageVersionFromPage" single="true" permission="InitDuplicatePageVersion" icon="new-version" labeli18n="m.website.bo.actions.create-page-version" />
+		<action name="openUrlRewritingPanel" single="true" permission="LoadRedirectInfo" icon="urlrewriting" labeli18n="m.uixul.bo.actions.url-rewriting" />
+		<action name="removeFromMenu" single="true" permission="RemoveFromMenu" icon="remove" labeli18n="m.website.bo.actions.remove-from-menu" />
+		<action name="createWebsite" single="true" permission="Insert_website" icon="add" labeli18n="m.website.bo.actions.create-website" />
 	</actions>
 </perspective>

@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <panel>
 	<section labeli18n="m.website.document.page.titleinformations">
-		<field name="navigationtitle"/>
-		<field name="defaultContent" type="dropdownlist" required="true" 
-			label="Gabarit de la page" nocache="true"></field>
+		<field name="navigationtitle" />
+		<field name="defaultContent" type="dropdownlist" required="true" label="Gabarit de la page" nocache="true" />
 	</section>
 	<xul>
 		<javascript>
 			<constructor><![CDATA[
 				this.extendMethod('fireInitializeComplete', this.fireInitializeCompleteExtend);
 			]]></constructor>
-									
 			<method name="fireInitializeCompleteExtend">
 				<parameter name="result" />
 				<body><![CDATA[
@@ -26,9 +24,7 @@
 						wCore.error("page.createpanel.fireInitializeCompleteExtend", [result], e);
 					}
 				]]></body>
-			</method>	
-			
-			
+			</method>
 			<method name="preparePropertiesValues">
 				<parameter name="values" />
 				<body><![CDATA[
@@ -36,7 +32,7 @@
 					values.metatitle = values.navigationtitle;
 					values.documentproperties += ',label,metatitle';
 				]]></body>
-			</method>		
+			</method>
 		</javascript>
-	</xul> 		
+	</xul>
 </panel>

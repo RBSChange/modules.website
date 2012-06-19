@@ -1,23 +1,10 @@
 <?php
+/**
+ * @package modules.website
+ * @method website_WebsiteService getInstance()
+ */
 class website_WebsiteService extends f_persistentdocument_DocumentService
 {
-	/**
-	 * @var website_WebsiteService
-	 */
-	private static $instance;
-
-	/**
-	 * @return website_WebsiteService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-
 	/**
 	 * @return website_persistentdocument_website
 	 */
@@ -47,63 +34,63 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_website $document
-	 * @param Integer $parentNodeId Parent node ID where to save the document (optionnal).
+	 * @param integer $parentNodeId Parent node ID where to save the document (optionnal).
 	 * @return void
 	 */
-    protected function preSave($document, $parentNodeId)
-    {     
-        $document->setProtocol('http');
-        $protocol = $document->getProtocol() . '://';
-        $masterdomain = $document->getVoDomain();
-        $localizebypath = $document->getLocalizebypath();
-        $rc = RequestContext::getInstance(); 
-        $voLang = $document->getLang();
-        foreach ($document->getI18nInfo()->getLangs() as $lang) 
-        {
-        	try 
-        	{
-        		$rc->beginI18nWork($lang);       		 
-	        	if ($localizebypath)
-	        	{
-	        		$document->setDomain($masterdomain);
-	        		$document->setUrl($protocol.$masterdomain);
-	        	}
-	        	else if ($voLang !== $lang)
-	        	{
-	        		$subDomain = $document->getDomain();
-	        		if ($masterdomain == $subDomain)
-	        		{
-	        			$subDomain = preg_replace('/\.' . $voLang . '$/', '.'.$lang, $subDomain);
-	        		} 	        		
-	        		if ($masterdomain == $subDomain)
-	        		{
-	        			$subDomain = $masterdomain . '.' . $lang;	
-	        		}        		
-	        		$document->setDomain($subDomain);		
-        			$document->setUrl($protocol.$subDomain);
-	        	}
-	        	else
-	        	{
-	        		$document->setUrl($protocol.$masterdomain);
-	        	}
-        		$rc->endI18nWork();
-        	}
-        	catch (Exception $e)
-        	{
-        		 $rc->endI18nWork($e);
-        	}
-        }
-        
-        $group = $document->getGroup();
-        if ($group === null)
-        {
-        	$group = $this->createAuthenticationGroup($document);
-        }
-    }
+	protected function preSave($document, $parentNodeId)
+	{	 
+		$document->setProtocol('http');
+		$protocol = $document->getProtocol() . '://';
+		$masterdomain = $document->getVoDomain();
+		$localizebypath = $document->getLocalizebypath();
+		$rc = RequestContext::getInstance(); 
+		$voLang = $document->getLang();
+		foreach ($document->getI18nInfo()->getLangs() as $lang) 
+		{
+			try 
+			{
+				$rc->beginI18nWork($lang);	   		 
+				if ($localizebypath)
+				{
+					$document->setDomain($masterdomain);
+					$document->setUrl($protocol.$masterdomain);
+				}
+				else if ($voLang !== $lang)
+				{
+					$subDomain = $document->getDomain();
+					if ($masterdomain == $subDomain)
+					{
+						$subDomain = preg_replace('/\.' . $voLang . '$/', '.'.$lang, $subDomain);
+					} 					
+					if ($masterdomain == $subDomain)
+					{
+						$subDomain = $masterdomain . '.' . $lang;	
+					}				
+					$document->setDomain($subDomain);		
+					$document->setUrl($protocol.$subDomain);
+				}
+				else
+				{
+					$document->setUrl($protocol.$masterdomain);
+				}
+				$rc->endI18nWork();
+			}
+			catch (Exception $e)
+			{
+				 $rc->endI18nWork($e);
+			}
+		}
+		
+		$group = $document->getGroup();
+		if ($group === null)
+		{
+			$group = $this->createAuthenticationGroup($document);
+		}
+	}
 	
-    /**
-     * @param website_persistentdocument_website $document
-     */
+	/**
+	 * @param website_persistentdocument_website $document
+	 */
 	protected function createAuthenticationGroup($document)
 	{
 		$grp = users_GroupService::getInstance()->getNewDocumentInstance();
@@ -115,7 +102,7 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_website $document
-	 * @param Integer $parentNodeId Parent node ID where to save the document (optionnal).
+	 * @param integer $parentNodeId Parent node ID where to save the document (optionnal).
 	 * @return void
 	 */
 	protected function preInsert($document, $parentNodeId = null)
@@ -144,7 +131,7 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 
 	/**
 	 * @param website_persistentdocument_website $document
-	 * @param Integer $parentNodeId Parent node ID where to save the document (optionnal).
+	 * @param integer $parentNodeId Parent node ID where to save the document (optionnal).
 	 * @return void
 	 */
 	protected function postUpdate($document, $parentNodeId = null)
@@ -159,7 +146,7 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 
 	/**
 	 * @param website_persistentdocument_website $document
-	 * @param Integer $parentNodeId Parent node ID where to save the document (optionnal).
+	 * @param integer $parentNodeId Parent node ID where to save the document (optionnal).
 	 * @return void
 	 */
 	protected function postInsert($document, $parentNodeId)
@@ -263,43 +250,43 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	 */
 	public function setHomePage($website, $newHomePage)
 	{
-	    if (!$website instanceof website_persistentdocument_website) 
-	    {
-	    	throw new IllegalArgumentException('website', 'website_persistentdocument_website');
-	    }  
+		if (!$website instanceof website_persistentdocument_website) 
+		{
+			throw new IllegalArgumentException('website', 'website_persistentdocument_website');
+		}  
 		try
 		{
-		    $this->getTransactionManager()->beginTransaction();
-		    
-            $oldPage = $website->getIndexPage();
-      
-            if ($oldPage !== null)
-            {
-               $oldPage->getDocumentService()->setIsHomePage($oldPage, false);
-            }
-            if ($newHomePage !== null)
-            {
-               $newHomePage->getDocumentService()->setIsHomePage($newHomePage, true);
-            }
-            
-            $website->setIndexPage($newHomePage);
-            $requestContext = RequestContext::getInstance();
+			$this->getTransactionManager()->beginTransaction();
+			
+			$oldPage = $website->getIndexPage();
+	  
+			if ($oldPage !== null)
+			{
+			   $oldPage->getDocumentService()->setIsHomePage($oldPage, false);
+			}
+			if ($newHomePage !== null)
+			{
+			   $newHomePage->getDocumentService()->setIsHomePage($newHomePage, true);
+			}
+			
+			$website->setIndexPage($newHomePage);
+			$requestContext = RequestContext::getInstance();
 			try 
-            {
-               	$requestContext->beginI18nWork($website->getLang());
-               	$website->save();
-               	$requestContext->endI18nWork();
-            }
-            catch (Exception $e)
-            {
-              	$requestContext->endI18nWork($e);
-            }
-            $this->getTransactionManager()->commit();
-	    }
+			{
+			   	$requestContext->beginI18nWork($website->getLang());
+			   	$website->save();
+			   	$requestContext->endI18nWork();
+			}
+			catch (Exception $e)
+			{
+			  	$requestContext->endI18nWork($e);
+			}
+			$this->getTransactionManager()->commit();
+		}
 		catch (Exception $e)
 		{
 			$this->getTransactionManager()->rollBack($e);
-		}          
+		}		  
 	}
 	
 	/**
@@ -342,7 +329,7 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	}
 	
 	/**
-	 * @param Integer $descendentId
+	 * @param integer $descendentId
 	 * @return website_persistentdocument_website
 	 */
 	public function getByDescendentId($descendentId)
@@ -478,7 +465,7 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 			{
 				if (Framework::isDebugEnabled())
 				{
-			    	Framework::exception($e);
+					Framework::exception($e);
 				}
 
 				$this->defaultWebsite = $this->getNewDocumentInstance();
@@ -513,13 +500,13 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 
 			if (isset($_SERVER['HTTP_HOST']))
 			{
-		    	$host = $_SERVER['HTTP_HOST'];
+				$host = $_SERVER['HTTP_HOST'];
 				$currentWebsite = $this->getByUrl($host, $setLang);
 			}
 
 			if ($currentWebsite === null)
 			{
-			    $currentWebsite = $this->getDefaultWebsite();
+				$currentWebsite = $this->getDefaultWebsite();
 				if ($setLang)
 				{
 					RequestContext::getInstance()->setLang($currentWebsite->getLang());
@@ -548,18 +535,18 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	public function setCurrentWebsite($website)
 	{
 		if (RequestContext::getInstance()->inHTTPS())
-	    {
-	        $website->setProtocol('https');
-	    }
-	    
-	    $cu = users_UserService::getInstance()->getCurrentUser();
-	    if ($cu === null)
-	    {
-	    	users_GroupService::getInstance()->setDefaultGroup($website->getGroup());
-	    	users_ProfileService::getInstance()->initCurrent();
-	    }
-	    
-	    $this->currentWebsite = $website;
+		{
+			$website->setProtocol('https');
+		}
+		
+		$cu = users_UserService::getInstance()->getCurrentUser();
+		if ($cu === null)
+		{
+			users_GroupService::getInstance()->setDefaultGroup($website->getGroup());
+			users_ProfileService::getInstance()->initCurrent();
+		}
+		
+		$this->currentWebsite = $website;
 	}
 	
 	/**
@@ -569,18 +556,18 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	 */
 	public function getByUrl($domaine, $setLang = false)
 	{
-	    $domaines = $this->getWebsitesDomain();
-	    if (isset($domaines[$domaine]))
-	    {
-	        $data = $domaines[$domaine];
-	        if ($setLang)
-	        {
-	            RequestContext::getInstance()->setLang($data['langs'][0]);
-	        }
+		$domaines = $this->getWebsitesDomain();
+		if (isset($domaines[$domaine]))
+		{
+			$data = $domaines[$domaine];
+			if ($setLang)
+			{
+				RequestContext::getInstance()->setLang($data['langs'][0]);
+			}
 
-	        return $this->getDocumentInstance($data['id'], "modules_website/website");
-	    }
-	    return null;
+			return $this->getDocumentInstance($data['id'], "modules_website/website");
+		}
+		return null;
 	}
 	
 	/**
@@ -601,59 +588,59 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	/**
 	 * @return array<>
 	 */
-    private function getWebsitesDomain()
-    {
-            $isCacheEnabled = (f_DataCacheService::getInstance()->isEnabled());
-            if ($isCacheEnabled)
-            {
-                $simpleCache = f_DataCacheService::getInstance();
-                $cacheItem = $simpleCache->readFromCache(__CLASS__, array('domaines'), array('modules_website/website'));
-                
-                if ($cacheItem !== null && $cacheItem->isValid())
-                {
-                    return unserialize($cacheItem->getValue('sites'));
-                }
-            }
+	private function getWebsitesDomain()
+	{
+			$isCacheEnabled = (f_DataCacheService::getInstance()->isEnabled());
+			if ($isCacheEnabled)
+			{
+				$simpleCache = f_DataCacheService::getInstance();
+				$cacheItem = $simpleCache->readFromCache(__CLASS__, array('domaines'), array('modules_website/website'));
+				
+				if ($cacheItem !== null && $cacheItem->isValid())
+				{
+					return unserialize($cacheItem->getValue('sites'));
+				}
+			}
 
-            $domaines = $this->compileWebsitesDomain();
+			$domaines = $this->compileWebsitesDomain();
 
-            if ($isCacheEnabled)
-            {
-            	$cacheItem->setValue('sites', serialize($domaines));
-            	$simpleCache->writeToCache($cacheItem);
-            }
+			if ($isCacheEnabled)
+			{
+				$cacheItem->setValue('sites', serialize($domaines));
+				$simpleCache->writeToCache($cacheItem);
+			}
 
-            return $domaines;
-    }
+			return $domaines;
+	}
 
-    private function compileWebsitesDomain()
-    {
-    	$rc = RequestContext::getInstance();
-        $domaines = array();
+	private function compileWebsitesDomain()
+	{
+		$rc = RequestContext::getInstance();
+		$domaines = array();
 
-        $websites = $this->getAll();
+		$websites = $this->getAll();
 
-        $supportedLanguages = $rc->getSupportedLanguages();
-        foreach ($websites as $website)
-        {
-        	$localizebypath = $website->getLocalizebypath();
-        	$domaineInfo = array('id' => $website->getId(), 'localizebypath' => $localizebypath, 'langs' => array());
-        	foreach ($supportedLanguages as $supportedLanguage)
-        	{
-        		if ($website->isLangAvailable($supportedLanguage))
-        		{
-        		   $domaine = $website->getDomainForLang($supportedLanguage);
-        		   if (!isset($domaines[$domaine]))
-        		   {
-        		   		$domaines[$domaine] = $domaineInfo;
-        		   }
-        		   $domaines[$domaine]['langs'][] = $supportedLanguage;
-        		}
-        	}
-        }
-    	return $domaines;
-    }
-    
+		$supportedLanguages = $rc->getSupportedLanguages();
+		foreach ($websites as $website)
+		{
+			$localizebypath = $website->getLocalizebypath();
+			$domaineInfo = array('id' => $website->getId(), 'localizebypath' => $localizebypath, 'langs' => array());
+			foreach ($supportedLanguages as $supportedLanguage)
+			{
+				if ($website->isLangAvailable($supportedLanguage))
+				{
+				   $domaine = $website->getDomainForLang($supportedLanguage);
+				   if (!isset($domaines[$domaine]))
+				   {
+				   		$domaines[$domaine] = $domaineInfo;
+				   }
+				   $domaines[$domaine]['langs'][] = $supportedLanguage;
+				}
+			}
+		}
+		return $domaines;
+	}
+	
 	/**
 	 * Returns the parent website document for $document or null if no website
 	 * document is a parent of $document.
@@ -675,7 +662,7 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	 * Set the meta websiteId on the given document, using the parent document one.
 	 * Warning: the document has to be persisted.
 	 * @param f_persistentdocument_PersistentDocument $document
-	 * @param Integer $parentId
+	 * @param integer $parentId
 	 */
 	public function setWebsiteMetaFromParentId($document, $parentId)
 	{

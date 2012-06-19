@@ -33,7 +33,7 @@ class website_ScriptChangeContentElement extends import_ScriptBaseElement
 	
 	/**
 	 * @param website_persistentdocument_page $page
-	 * @return String
+	 * @return string
 	 */
 	private function getContentZoneId($page)
 	{
@@ -54,7 +54,7 @@ class website_ScriptChangeContentElement extends import_ScriptBaseElement
 	}
 	
 	/**
-	 * @param String $id
+	 * @param string $id
 	 * @param DOMDocument $document
 	 * @return DOMElement
 	 */

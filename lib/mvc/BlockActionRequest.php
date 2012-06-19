@@ -34,8 +34,8 @@ class website_BlockActionRequest implements f_mvc_Request
 	
 	/**
 	 * @param array $parameters
-	 * @param String $moduleName
-	 * @param String $actionName
+	 * @param string $moduleName
+	 * @param string $actionName
 	 */
 	public function __construct($parameters, $moduleName, $actionName)
 	{
@@ -58,7 +58,7 @@ class website_BlockActionRequest implements f_mvc_Request
 	}
 	
 	/**
-	 * @return String
+	 * @return string
 	 */
 	public final function getModuleName()
 	{
@@ -66,8 +66,8 @@ class website_BlockActionRequest implements f_mvc_Request
 	}
 	
 	/**
-	 * @param String $paramName
-	 * @return Boolean
+	 * @param string $paramName
+	 * @return boolean
 	 */
 	public function hasFile($paramName)
 	{
@@ -81,7 +81,7 @@ class website_BlockActionRequest implements f_mvc_Request
 	private $fileInstances;
 	
 	/**
-	 * @param String $paramName
+	 * @param string $paramName
 	 * @return media_persistentdocument_file
 	 */
 	function getFile($paramName)
@@ -123,7 +123,7 @@ class website_BlockActionRequest implements f_mvc_Request
 	}
 	
 	/**
-	 * @return String
+	 * @return string
 	 */
 	public final function getActionName()
 	{
@@ -131,9 +131,9 @@ class website_BlockActionRequest implements f_mvc_Request
 	}
 	
 	/**
-	 * @param String $name
-	 * @param String $defaultValue
-	 * @return String the value of the parameter or $defaultValue
+	 * @param string $name
+	 * @param string $defaultValue
+	 * @return string the value of the parameter or $defaultValue
 	 */
 	function getParameter($name, $defaultValue = null)
 	{
@@ -145,8 +145,8 @@ class website_BlockActionRequest implements f_mvc_Request
 	}
 	
 	/**
-	 * @param String $name
-	 * @return Boolean
+	 * @param string $name
+	 * @return boolean
 	 */
 	function hasNonEmptyParameter($name)
 	{
@@ -173,7 +173,7 @@ class website_BlockActionRequest implements f_mvc_Request
 	}
 	
 	/**
-	 * @param String $name
+	 * @param string $name
 	 * @param mixed $value
 	 */
 	function setAttribute($name, $value)
@@ -190,7 +190,7 @@ class website_BlockActionRequest implements f_mvc_Request
 	}
 	
 	/**
-	 * @param String $name
+	 * @param string $name
 	 * @param mixed $defaultValue
 	 * @return mixed
 	 */
@@ -212,8 +212,8 @@ class website_BlockActionRequest implements f_mvc_Request
 	}
 	
 	/**
-	 * @param String $name
-	 * @return Boolean 
+	 * @param string $name
+	 * @return boolean 
 	 */
 	function hasParameter($name)
 	{
@@ -221,8 +221,8 @@ class website_BlockActionRequest implements f_mvc_Request
 	}
 	
 	/**
-	 * @param String $name
-	 * @return Boolean
+	 * @param string $name
+	 * @return boolean
 	 */
 	function hasAttribute($name)
 	{

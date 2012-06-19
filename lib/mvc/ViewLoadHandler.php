@@ -2,7 +2,7 @@
 interface website_ViewLoadHandler
 {
 	/**
-	 * @param String[] $params
+	 * @param string[] $params
 	 */ 
 	function setParameters($params);
 	

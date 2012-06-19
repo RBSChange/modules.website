@@ -3,7 +3,7 @@ class PHPTAL_Php_Attribute_CHANGE_Chart extends ChangeTalAttribute
 {
 	/**
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	public static function renderChart($params, $ctx)
 	{
@@ -18,7 +18,7 @@ class PHPTAL_Php_Attribute_CHANGE_Chart extends ChangeTalAttribute
 	}
 
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	protected function evaluateAll()
 	{
@@ -84,7 +84,7 @@ class PHPTAL_Php_Attribute_CHANGE_Piechart extends PHPTAL_Php_Attribute_CHANGE_C
 {
 	/**
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	public static function renderPiechart($params, $ctx)
 	{
@@ -95,7 +95,7 @@ class PHPTAL_Php_Attribute_CHANGE_Piechart extends PHPTAL_Php_Attribute_CHANGE_C
 	}
 
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	protected function evaluateAll()
 	{
@@ -106,7 +106,7 @@ class PHPTAL_Php_Attribute_CHANGE_Linechart extends PHPTAL_Php_Attribute_CHANGE_
 {
 	/**
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	public static function renderLinechart($params, $ctx)
 	{
@@ -117,7 +117,7 @@ class PHPTAL_Php_Attribute_CHANGE_Linechart extends PHPTAL_Php_Attribute_CHANGE_
 	}
 
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	protected function evaluateAll()
 	{
@@ -128,7 +128,7 @@ class PHPTAL_Php_Attribute_CHANGE_Barchart extends PHPTAL_Php_Attribute_CHANGE_C
 {
 	/**
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	public static function renderBarchart($params, $ctx)
 	{
@@ -139,7 +139,7 @@ class PHPTAL_Php_Attribute_CHANGE_Barchart extends PHPTAL_Php_Attribute_CHANGE_C
 	}
 
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	protected function evaluateAll()
 	{
@@ -150,7 +150,7 @@ class PHPTAL_Php_Attribute_CHANGE_Datatable extends PHPTAL_Php_Attribute_CHANGE_
 {
 	/**
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	public static function renderDatatable($params, $ctx)
 	{
@@ -178,7 +178,7 @@ class PHPTAL_Php_Attribute_CHANGE_Datatable extends PHPTAL_Php_Attribute_CHANGE_
 	}
 
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	protected function evaluateAll()
 	{
@@ -189,7 +189,7 @@ class PHPTAL_Php_Attribute_CHANGE_Producer extends ChangeTalAttribute
 {
 	/**
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	public static function renderProducer($params, $ctx)
 	{
@@ -197,7 +197,7 @@ class PHPTAL_Php_Attribute_CHANGE_Producer extends ChangeTalAttribute
 	}
 
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	protected function evaluateAll()
 	{

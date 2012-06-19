@@ -54,7 +54,7 @@ class block_BlockPropertyInfo extends PropertyInfo
 	}
 		
 	/**
-	 * @param String $value
+	 * @param string $value
 	 * @return block_BlockPropertyInfo
 	 */
 	public function setLabel($value)
@@ -64,7 +64,7 @@ class block_BlockPropertyInfo extends PropertyInfo
 	}
 
 	/**
-	 * @return String
+	 * @return string
 	 */
 	public function getLabel()
 	{
@@ -72,7 +72,7 @@ class block_BlockPropertyInfo extends PropertyInfo
 	}
 
 	/**
-	 * @param String $value
+	 * @param string $value
 	 * @return block_BlockPropertyInfo
 	 */
 	public function setHelpText($value)
@@ -82,7 +82,7 @@ class block_BlockPropertyInfo extends PropertyInfo
 	}
 
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	public function hasHelpText()
 	{
@@ -90,7 +90,7 @@ class block_BlockPropertyInfo extends PropertyInfo
 	}
 
 	/**
-	 * @return String
+	 * @return string
 	 */
 	public function getHelpText()
 	{
@@ -98,7 +98,7 @@ class block_BlockPropertyInfo extends PropertyInfo
 	}
 
 	/**
-	 * @param String $value
+	 * @param string $value
 	 * @return block_BlockPropertyInfo
 	 */
 	public function setListId($value)
@@ -108,7 +108,7 @@ class block_BlockPropertyInfo extends PropertyInfo
 	}
 
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	public function hasListId()
 	{
@@ -116,7 +116,7 @@ class block_BlockPropertyInfo extends PropertyInfo
 	}
 
 	/**
-	 * @return String
+	 * @return string
 	 */
 	public function getListId()
 	{
@@ -141,7 +141,7 @@ class block_BlockPropertyInfo extends PropertyInfo
 	}
 
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	public function isRequired()
 	{
@@ -149,7 +149,7 @@ class block_BlockPropertyInfo extends PropertyInfo
 	}
 	
 	/**
-	 * @param Boolean $bool
+	 * @param boolean $bool
 	 * @return block_BlockPropertyInfo
 	 */
 	public function setHidden($bool)
@@ -164,7 +164,7 @@ class block_BlockPropertyInfo extends PropertyInfo
 	}
 
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	public function hasDefaultValue()
 	{
@@ -173,8 +173,8 @@ class block_BlockPropertyInfo extends PropertyInfo
 	
 	
 	/**
-	 * @param String $name
-	 * @param String $value
+	 * @param string $name
+	 * @param string $value
 	 */
 	public function setExtendedAttribute($name, $value)
 	{

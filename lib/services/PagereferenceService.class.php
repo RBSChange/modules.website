@@ -1,27 +1,10 @@
 <?php
 /**
- * @date Mon, 09 Jul 2007 10:11:58 +0200
- * @author inthause
+ * @package modules.website
+ * @method website_PagereferenceService getInstance()
  */
 class website_PagereferenceService extends website_PageService
 {
-	/**
-	 * @var website_PagereferenceService
-	 */
-	private static $instance;
-	
-	/**
-	 * @return website_PagereferenceService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-	
 	/**
 	 * @return website_persistentdocument_pagereference
 	 */
@@ -36,13 +19,13 @@ class website_PagereferenceService extends website_PageService
 	 */
 	public function createQuery()
 	{
-		return $this->pp->createQuery('modules_website/pagereference');
+		return $this->getPersistentProvider()->createQuery('modules_website/pagereference');
 	}
 	
 	/**
 	 * @param website_persistentdocument_pagereference $pageReference
 	 * @param website_persistentdocument_page $page
-	 * @param Integer $topicId
+	 * @param integer $topicId
 	 */
 	public function updatePageReference($pageReference, $page, $topicId)
 	{
@@ -159,7 +142,7 @@ class website_PagereferenceService extends website_PageService
 	
 	/**
 	 * @param website_persistentdocument_pagereference $document
-	 * @param String $tag
+	 * @param string $tag
 	 * @return void
 	 */
 	public function tagAdded($document, $tag)
@@ -169,7 +152,7 @@ class website_PagereferenceService extends website_PageService
 	
 	/**
 	 * @param website_persistentdocument_pagereference $document
-	 * @param String $tag
+	 * @param string $tag
 	 * @return void
 	 */
 	public function tagRemoved($document, $tag)
@@ -180,7 +163,7 @@ class website_PagereferenceService extends website_PageService
 	/**
 	 * @param website_persistentdocument_pagereference $fromDocument
 	 * @param website_persistentdocument_pagereference $toDocument
-	 * @param String $tag
+	 * @param string $tag
 	 * @return void
 	 */
 	public function tagMovedTo($fromDocument, $toDocument, $tag)
@@ -191,7 +174,7 @@ class website_PagereferenceService extends website_PageService
 	/**
 	 * @param website_persistentdocument_pagereference $newDocument
 	 * @param website_persistentdocument_pagereference $originalDocument
-	 * @param Integer $parentNodeId
+	 * @param integer $parentNodeId
 	 */
 	protected function preDuplicate($newDocument, $originalDocument, $parentNodeId)
 	{
@@ -230,7 +213,7 @@ class website_PagereferenceService extends website_PageService
 	
 	/**
 	 * @param website_persistentdocument_pagereference $document
-	 * @param String $oldPublicationStatus
+	 * @param string $oldPublicationStatus
 	 * @param array $params
 	 * @return void
 	 */

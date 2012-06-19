@@ -6,7 +6,7 @@
 class website_persistentdocument_menuitemdocument extends website_persistentdocument_menuitemdocumentbase
 {
 	/**
-	 * @return String
+	 * @return string
 	 */
 	public function getPublicationstatus()
 	{

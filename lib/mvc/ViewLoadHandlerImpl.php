@@ -48,7 +48,7 @@ abstract class website_ViewLoadHandlerImpl implements website_ViewLoadHandler
 	}
 
 	/**
-	 * @param String $parameterName
+	 * @param string $parameterName
 	 * @return mixed
 	 */
 	protected final function findLocalParameterValue($parameterName)

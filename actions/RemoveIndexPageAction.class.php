@@ -11,7 +11,7 @@ class website_RemoveIndexPageAction extends change_JSONAction
 		try
 		{
 			$topic->getDocumentService()->removeIndexPage($topic, true);
-		    $this->logAction($topic);
+			$this->logAction($topic);
 		}
 		catch (Exception $e)
 		{

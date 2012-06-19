@@ -12,20 +12,20 @@ class PHPTAL_Php_Attribute_CHANGE_Code extends ChangeTalAttribute
 	private $parametersString;
 
 	/**
-     * Called before element printing.
-     */
-    public function before(PHPTAL_Php_CodeWriter $codewriter)
-    {
+	 * Called before element printing.
+	 */
+	public function before(PHPTAL_Php_CodeWriter $codewriter)
+	{
 		$this->phpelement->headFootDisabled = true;
 		$this->parametersString = $this->initParams($codewriter);
 		$codewriter->pushCode('ob_start()');
 	}
 
 	/**
-     * Called after element printing.
-     */
-    public function after(PHPTAL_Php_CodeWriter $codewriter)
-    {
+	 * Called after element printing.
+	 */
+	public function after(PHPTAL_Php_CodeWriter $codewriter)
+	{
 		$codewriter->doEchoRaw('PHPTAL_Php_Attribute_CHANGE_Code::renderEndTag(ob_get_clean(), '.$this->parametersString.', $ctx)');
 	}
 
@@ -62,7 +62,7 @@ class PHPTAL_Php_Attribute_CHANGE_Code extends ChangeTalAttribute
 	// protected methods
 
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	protected function evaluateAll()
 	{

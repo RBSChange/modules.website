@@ -3,10 +3,10 @@ class PHPTAL_Php_Attribute_CHANGE_Loadhandler extends PHPTAL_Php_Attribute
 {
 
 	/**
-     * Called before element printing.
-     */
-    public function before(PHPTAL_Php_CodeWriter $codewriter)
-    {
+	 * Called before element printing.
+	 */
+	public function before(PHPTAL_Php_CodeWriter $codewriter)
+	{
 		// Block parameter
 		if (f_util_StringUtils::isEmpty($this->expression))
 		{
@@ -42,10 +42,10 @@ $loadHandler = new '.$handlerClassName.'();';
 	}
 
 	/**
-     * Called after element printing.
-     */
-    public function after(PHPTAL_Php_CodeWriter $codewriter)
-    {
+	 * Called after element printing.
+	 */
+	public function after(PHPTAL_Php_CodeWriter $codewriter)
+	{
 		// empty
 	}
 

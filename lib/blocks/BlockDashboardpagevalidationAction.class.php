@@ -31,7 +31,7 @@ class website_BlockDashboardpagevalidationAction extends dashboard_BlockDashboar
 				'module' => $task->getModule(),
 				'status' => date_Formatter::toDefaultDateTimeBO($task->getUICreationdate()),
 				'documentId' => $document->getId(),
-			    'documentLabel' => f_util_HtmlUtils::textToHtml($document->getPersistentModel()->isLocalized() ? $document->getLabelForLang($task->getLang()) : $document->getLabel()),
+				'documentLabel' => f_util_HtmlUtils::textToHtml($document->getPersistentModel()->isLocalized() ? $document->getLabelForLang($task->getLang()) : $document->getLabel()),
 				'documentThread' => f_util_HtmlUtils::textToHtml($document->getDocumentService()->getPathOf($document)),
 				'comment' => $task->getCommentaryAsHtml(),
 				'author' => ucfirst($task->getDescriptionAsHtml())

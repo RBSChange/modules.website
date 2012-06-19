@@ -26,7 +26,7 @@ class website_persistentdocument_pageversion extends website_persistentdocument_
 				'endpublicationdate' => $this->getEndpublicationdate(),
 				'publicationstatus' => $this->getPublicationstatus(),
 				'url' => $url,
-				'status' => $ls->transBO(DocumentHelper::getStatusLocaleKey($this))
+				'status' => $ls->trans(DocumentHelper::getStatusLocaleKey($this))
 			);
 			if ($correction !== null)
 			{
@@ -39,7 +39,7 @@ class website_persistentdocument_pageversion extends website_persistentdocument_
 				$data['endpublicationdate'] = $correction->getEndpublicationdate()." (".$data['endpublicationdate'].")";
 				$data['publicationstatus'] = $correction->getPublicationstatus();
 				$data['url'] = $url;
-				$data['status'] = $ls->transBO(DocumentHelper::getStatusLocaleKey($correction));
+				$data['status'] = $ls->trans(DocumentHelper::getStatusLocaleKey($correction));
 			}
 		}
 		else

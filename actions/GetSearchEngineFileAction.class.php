@@ -34,7 +34,7 @@ class website_GetSearchEngineFileAction extends change_Action
 		}
 		
 		f_web_http_Header::setStatus(404);
-    	return change_View::NONE;
+		return change_View::NONE;
 	}
 	
 	/**
@@ -76,7 +76,7 @@ class website_GetSearchEngineFileAction extends change_Action
 	}
 
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	public function isSecure()
 	{

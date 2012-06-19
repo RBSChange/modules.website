@@ -7,7 +7,6 @@
 		<field name="navigationVisibility" />
 		<field name="useurl" />
 		<field name="description" />
-
 	</section>
 	<section labeli18n="m.website.document.page.dateinformations">
 		<field name="startpublicationdate" />

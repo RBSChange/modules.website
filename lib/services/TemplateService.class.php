@@ -1,23 +1,10 @@
 <?php
+/**
+ * @package modules.website
+ * @method website_TemplateService getInstance()
+ */
 class website_TemplateService extends f_persistentdocument_DocumentService
 {
-	/**
-	 * @var website_TemplateService
-	 */
-	private static $instance;
-	
-	/**
-	 * @return website_TemplateService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-	
 	/**
 	 * @return website_persistentdocument_template
 	 */
@@ -32,6 +19,6 @@ class website_TemplateService extends f_persistentdocument_DocumentService
 	 */
 	public function createQuery()
 	{
-		return $this->pp->createQuery('modules_website/template');
+		return $this->getPersistentProvider()->createQuery('modules_website/template');
 	}
 }

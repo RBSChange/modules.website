@@ -1,39 +1,25 @@
 <?php
 /**
- * website_ShortenUrlService
- * @package modules.website.lib.services
+ * @package modules.website
+ * @method website_ShortenUrlService getInstance()
  */
 class website_ShortenUrlService extends change_BaseService
 {
 	/**
-	 * Singleton
-	 * @var website_ShortenUrlService
-	 */
-	private static $instance = null;
-	
-	/**
 	 * @var Zend_Service_ShortUrl_AbstractShortener 
 	 */
 	private $shortenerInstance;
-	/**
-	 * @return website_ShortenUrlService
-	 */
-	public static function getInstance()
-	{
-		if (is_null(self::$instance))
-		{
-			self::$instance = new self();
-			self::$instance->shortenerInstance = f_util_ClassUtils::newInstance(Framework::getConfiguration('modules/website/shortenerClassName'));
-		}
-		return self::$instance;
-	}
 	
 	/**
-	 * @param String $url
-	 * @return String
+	 * @param string $url
+	 * @return string
 	 */
 	public function shortenUrl($url)
 	{
+		if ($this->shortenerInstance == null)
+		{
+			$this->shortenerInstance = f_util_ClassUtils::newInstance(Framework::getConfiguration('modules/website/shortenerClassName'));
+		}
 		$this->shortenerInstance->setHttpClient(change_HttpClientService::getInstance()->getNewHttpClient());
 		return $this->shortenerInstance->shorten($url);
 	}

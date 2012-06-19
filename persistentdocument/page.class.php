@@ -52,7 +52,7 @@ class website_persistentdocument_page extends website_persistentdocument_pagebas
 	// private methods
 
 	/**
-	 * @return String
+	 * @return string
 	 */
 	private function getTextContent()
 	{
@@ -73,7 +73,7 @@ class website_persistentdocument_page extends website_persistentdocument_pagebas
 	}
 	
 	/**
-	 * @return Integer[]
+	 * @return integer[]
 	 */
 	private function getFrontendAccessorIds()
 	{
@@ -94,7 +94,7 @@ class website_persistentdocument_page extends website_persistentdocument_pagebas
 	/**
 	 * Transient property (which template did I match ?)
 	 *
-	 * @param String $fullUserAgent
+	 * @param string $fullUserAgent
 	 */
 	public final function setTemplateUserAgent($fullUserAgent)
 	{
@@ -103,7 +103,7 @@ class website_persistentdocument_page extends website_persistentdocument_pagebas
 	}
 	
 	/**
-	 * @return String
+	 * @return string
 	 */
 	public final function getTemplateUserAgent()
 	{
@@ -112,7 +112,7 @@ class website_persistentdocument_page extends website_persistentdocument_pagebas
 	}
 	
 	/**
-	 * @return Integer
+	 * @return integer
 	 */
 	public final function getSkinId()
 	{

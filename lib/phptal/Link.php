@@ -8,10 +8,10 @@
 class PHPTAL_Php_Attribute_CHANGE_Link extends PHPTAL_Php_Attribute
 {
 	/**
-     * Called before element printing.
-     */
-    public function before(PHPTAL_Php_CodeWriter $codewriter)
-    {
+	 * Called before element printing.
+	 */
+	public function before(PHPTAL_Php_CodeWriter $codewriter)
+	{
 		$parameters = array();
 		$lang = 'null';
 		$anchor = 'null';
@@ -170,27 +170,27 @@ class PHPTAL_Php_Attribute_CHANGE_Link extends PHPTAL_Php_Attribute
 	}
 
 	/**
-     * Called after element printing.
-     */
-    public function after(PHPTAL_Php_CodeWriter $codewriter)
-    {
+	 * Called after element printing.
+	 */
+	public function after(PHPTAL_Php_CodeWriter $codewriter)
+	{
 	}
 	
 	/**
 	 * @see PHPTAL_Php_Attribute::parseSetExpression()
 	 * Ajout des caractères [ et ] dans les nom des attributs
 	 */
-    protected function parseSetExpression($exp)
-    {
-        $exp = trim($exp);
-        // (dest) (value)
-        if (preg_match('/^([a-z0-9:\[\]\-_]+)\s+(.*?)$/si', $exp, $m)) {
-            return array($m[1], trim($m[2]));
-        }
-        // (dest)
-        return array($exp, null);
-    }
-    
+	protected function parseSetExpression($exp)
+	{
+		$exp = trim($exp);
+		// (dest) (value)
+		if (preg_match('/^([a-z0-9:\[\]\-_]+)\s+(.*?)$/si', $exp, $m)) {
+			return array($m[1], trim($m[2]));
+		}
+		// (dest)
+		return array($exp, null);
+	}
+	
 	/**
 	 * @param integer $documentId
 	 * @param string $lang
@@ -345,7 +345,7 @@ class PHPTAL_Php_Attribute_CHANGE_Link extends PHPTAL_Php_Attribute
 	 */
 	private static function addLocaleToTitle(&$title, $locale)
 	{
-		$message = "(" . LocaleService::getInstance()->transFO($locale, array('attr')).")";
+		$message = "(" . LocaleService::getInstance()->trans($locale, array('attr')).")";
 		$title .= ($title ? '' : ' ') . $message;
 	}
 

@@ -2,6 +2,6 @@
 <panel>
 	<section labeli18n="m.uixul.bo.doceditor.fieldsgroup.title">
 		<field name="document" moduleselector="website" allow="modules_website_page,modules_website_pagegroup,modules_website_pageexternal,[modules_website_topic]" />
-		<field name="popup"/>
-	</section> 
+		<field name="popup" />
+	</section>
 </panel>

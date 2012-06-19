@@ -17,7 +17,7 @@ class website_LoadValidPageDataAction extends task_LoadDataBaseAction
 		$data['navigationtitle'] = $document->getNavigationtitle();
 		$data['metatitle'] = $document->getMetatitle();
 		$data['description'] = $document->getDescription();
-		$data['indexingstatus'] = $ls->transBO('m.uixul.bo.general.' . ($document->getIndexingstatus() == 1 ? 'yes' : 'no'), array('ucf'));
+		$data['indexingstatus'] = $ls->trans('m.uixul.bo.general.' . ($document->getIndexingstatus() == 1 ? 'yes' : 'no'), array('ucf'));
 		$template = theme_PagetemplateService::getInstance()->getByCodeName($document->getTemplate());
 		$data['template'] = $template ? $template->getLabel() : '';
 		$data['skin'] = $document->getSkin() ? $document->getSkin()->getLabel() : '';
@@ -36,14 +36,14 @@ class website_LoadValidPageDataAction extends task_LoadDataBaseAction
 		switch ($document->getNavigationVisibility())
 		{
 			case 1:
-				$data['navigationVisibility'] = $ls->transBO('m.website.bo.general.visibility.visible', array('ucf'));
+				$data['navigationVisibility'] = $ls->trans('m.website.bo.general.visibility.visible', array('ucf'));
 				break;
 			case 2:
-				$data['navigationVisibility'] = $ls->transBO('m.website.bo.general.visibility.hidden-in-menu-only', array('ucf'));
+				$data['navigationVisibility'] = $ls->trans('m.website.bo.general.visibility.hidden-in-menu-only', array('ucf'));
 				break;
 			case 0:
 			default:
-				$data['navigationVisibility'] = $ls->transBO('m.website.bo.general.visibility.hidden', array('ucf'));
+				$data['navigationVisibility'] = $ls->trans('m.website.bo.general.visibility.hidden', array('ucf'));
 		}
 		return $data;
 	}

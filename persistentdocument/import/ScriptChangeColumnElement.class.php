@@ -3,7 +3,7 @@ class website_ScriptChangeColumnElement extends import_ScriptBaseElement
 {
 	/**
 	 * @param DOMDocument $document
-	 * @param Integer $width
+	 * @param integer $width
 	 */
 	public function generateColumn($document, $width = 100)
 	{
@@ -25,7 +25,7 @@ class website_ScriptChangeColumnElement extends import_ScriptBaseElement
 	}
 	
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	public function hasWidth()
 	{
@@ -33,7 +33,7 @@ class website_ScriptChangeColumnElement extends import_ScriptBaseElement
 	}
 	
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	public function getWidth()
 	{

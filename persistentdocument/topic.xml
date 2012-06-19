@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/static/schema/change-document/4.0.xsd" model-version="3.0" icon="topic" publish-on-day-change="false">
-  <properties>
-    <property name="publicationstatus" localized="true"/>
-    <property name="description" type="LongString" localized="true"/>
-    <property name="stylesheet" type="String" from-list="modules_website/stylesheets"/>
-    <property name="indexPage" type="modules_website/page"/>
-    <property name="navigationVisibility" type="Integer" min-occurs="1" from-list="modules_website/navigationvisibility" default-value="1" localized="true"/>
-    <property name="skin" type="modules_skin/skin"/>
-    <property name="advancedreferencing" type="XHTMLFragment" localized="true"/>
-    <property name="allowedpagetemplate" type="modules_theme/pagetemplate" max-occurs="-1"/>
-    <property name="visual" type="modules_media/media"/>
-  </properties>
-  <children>
-    <child name="topics" type="modules_website/topic"/>
-    <child name="pages" type="modules_website/page"/>
-    <child name="externalPages" type="modules_website/pageexternal"/>
-  </children>
-  <statuses default="ACTIVE"/>
+	<properties>
+		<property name="publicationstatus" localized="true" />
+		<property name="description" type="LongString" localized="true" />
+		<property name="stylesheet" type="String" from-list="modules_website/stylesheets" />
+		<property name="indexPage" type="modules_website/page" />
+		<property name="navigationVisibility" type="Integer" min-occurs="1" from-list="modules_website/navigationvisibility" default-value="1" localized="true" />
+		<property name="skin" type="modules_skin/skin" />
+		<property name="advancedreferencing" type="XHTMLFragment" localized="true" />
+		<property name="allowedpagetemplate" type="modules_theme/pagetemplate" max-occurs="-1" />
+		<property name="visual" type="modules_media/media" />
+	</properties>
+	<children>
+		<child name="topics" type="modules_website/topic" />
+		<child name="pages" type="modules_website/page" />
+		<child name="externalPages" type="modules_website/pageexternal" />
+	</children>
+	<statuses default="ACTIVE" />
 </document>

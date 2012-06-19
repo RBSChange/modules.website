@@ -22,7 +22,7 @@ class website_Breadcrumb
 	}
 	
 	/**
-	 * @return Integer
+	 * @return integer
 	 */
 	function getSize()
 	{

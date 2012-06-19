@@ -1,23 +1,10 @@
 <?php
+/**
+ * @package modules.website
+ * @method website_PreferencesService getInstance()
+ */
 class website_PreferencesService extends f_persistentdocument_DocumentService
 {
-	/**
-	 * @var website_PreferencesService
-	 */
-	private static $instance;
-
-	/**
-	 * @return website_PreferencesService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-
 	/**
 	 * @return website_persistentdocument_preferences
 	 */
@@ -37,7 +24,7 @@ class website_PreferencesService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_preferences $document
-	 * @param Integer $parentNodeId Parent node ID where to save the document (optionnal => can be null !).
+	 * @param integer $parentNodeId Parent node ID where to save the document (optionnal => can be null !).
 	 * @return void
 	 */
 	protected function preSave($document, $parentNodeId)

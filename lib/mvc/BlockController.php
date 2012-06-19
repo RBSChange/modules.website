@@ -13,14 +13,14 @@ interface f_mvc_Controller
 	function process($action, $request);
 	
 	/**
-	 * @param String $moduleName
-	 * @param String $actionName
+	 * @param string $moduleName
+	 * @param string $actionName
 	 */
 	function forward($moduleName, $actionName);
 	
 	/**
-	 * @param String $moduleName
-	 * @param String $actionName
+	 * @param string $moduleName
+	 * @param string $actionName
 	 * @param array $moduleParams
 	 * @param array $actionParams
 	 */
@@ -114,9 +114,9 @@ class website_BlockController implements f_mvc_Controller
 	 * @var website_BlockActionResponse
 	 */
 	private $masterResponse;
-        
-    private $useCache = true;
-        
+		
+	private $useCache = true;
+		
 	/**
 	 * @return website_BlockController
 	 */
@@ -134,8 +134,8 @@ class website_BlockController implements f_mvc_Controller
 	/**
 	 * @see f_mvc_Controller::forward()
 	 *
-	 * @param String $moduleName
-	 * @param String $actionName
+	 * @param string $moduleName
+	 * @param string $actionName
 	 */
 	function forward($moduleName, $actionName)
 	{
@@ -176,7 +176,7 @@ class website_BlockController implements f_mvc_Controller
 	 * @param $blockType
 	 * @param $lang
 	 * @param $parameters
-	 * @return String
+	 * @return string
 	 */
 	static function getBlockUrl($blockType, $lang, $parameters)
 	{
@@ -188,8 +188,8 @@ class website_BlockController implements f_mvc_Controller
 	/**
 	 * @see f_mvc_Controller::redirect()
 	 *
-	 * @param String $moduleName
-	 * @param String $actionName
+	 * @param string $moduleName
+	 * @param string $actionName
 	 * @param array $moduleParams
 	 * @param array $actionParams
 	 */
@@ -256,14 +256,14 @@ class website_BlockController implements f_mvc_Controller
 	}
 
 	/**
-	 * @param String $url
+	 * @param string $url
 	 * @return void
 	 */
 	function redirectToUrl($url)
 	{
 		header("Location: $url");
 	}
-        
+		
 	/**
 	 * @param website_BlockAction $action
 	 * @param change_Request $request
@@ -308,34 +308,34 @@ class website_BlockController implements f_mvc_Controller
 	}
 
 	/**
-	 * @param String $moduleName
-	 * @param String $actionName
+	 * @param string $moduleName
+	 * @param string $actionName
 	 * @param array $configurationParameters
 	 * @param change_Request $request
-     * @param Boolean $cache
+	 * @param boolean $cache
 	 */
 	function processByName($moduleName, $actionName, $request, $configurationParameters = null, $cache = false)
 	{
-                $oldUseCache = $this->useCache;
-                try
-                {
-                    $this->useCache = $cache;
-                    $blockAction = $this->getActionInstanceByModuleAndName($moduleName, $actionName);
-                    if ($configurationParameters !== null)
-                    {
-                            foreach ($configurationParameters as $key => $value)
-                            {
-                                    $blockAction->setConfigurationParameter($key, $value);
-                            }
-                    }
-                    $this->process($blockAction, $request);
-                }
-                catch (Exception $e)
-                {
-                    $this->useCache = $oldUseCache;
-                    throw $e;
-                }
-                $this->useCache = $oldUseCache;
+				$oldUseCache = $this->useCache;
+				try
+				{
+					$this->useCache = $cache;
+					$blockAction = $this->getActionInstanceByModuleAndName($moduleName, $actionName);
+					if ($configurationParameters !== null)
+					{
+							foreach ($configurationParameters as $key => $value)
+							{
+									$blockAction->setConfigurationParameter($key, $value);
+							}
+					}
+					$this->process($blockAction, $request);
+				}
+				catch (Exception $e)
+				{
+					$this->useCache = $oldUseCache;
+					throw $e;
+				}
+				$this->useCache = $oldUseCache;
 	}
 
 	/**
@@ -616,7 +616,7 @@ class website_BlockController implements f_mvc_Controller
 	}
 
 	/**
-	 * @param String $methodSuffix
+	 * @param string $methodSuffix
 	 */
 	private function executeAction()
 	{
@@ -750,7 +750,7 @@ class website_BlockController implements f_mvc_Controller
 
 	/**
 	 * @param ReflectionMethod $executeMethod
-	 * @param String $beanName
+	 * @param string $beanName
 	 * @return stdClass|null
 	 */
 	private function getBean(ReflectionClass $reflectionClass, $executeMethodName, $getBeanInfoMethodName, &$beanName)
@@ -876,7 +876,7 @@ class website_BlockController implements f_mvc_Controller
 	}
 
 	/**
-	 * @param String $beanName
+	 * @param string $beanName
 	 * @param Array $include
 	 * @param Array $exclude
 	 */
@@ -897,8 +897,8 @@ class website_BlockController implements f_mvc_Controller
 	}
 
 	/**
-	 * @param String $moduleName
-	 * @param String $actionName
+	 * @param string $moduleName
+	 * @param string $actionName
 	 * @return website_BlockAction
 	 */
 	public function getActionInstanceByModuleAndName($moduleName, $actionName)
@@ -936,7 +936,7 @@ class website_BlockController implements f_mvc_Controller
 
 	/**
 	 * @param f_DataCacheItem $cacheItem
-	 * @return Boolean
+	 * @return boolean
 	 */
 	private function isActionInCache($cacheItem)
 	{
@@ -1076,7 +1076,7 @@ class website_FunctionCallRecorder
 	/**
 	 * @param Object $request
 	 * @param array<String> $recordedMethodNames
-	 * @param String $wrappedObjectName
+	 * @param string $wrappedObjectName
 	 */
 	protected function __construct($wrappedObject, &$recordedMethodNames, $wrappedObjectName)
 	{
@@ -1146,7 +1146,7 @@ class website_FunctionCallRecorder
 	}
 	
 	/**
-	 * @param String $record
+	 * @param string $record
 	 */
 	protected function addRecord($record)
 	{
@@ -1154,7 +1154,7 @@ class website_FunctionCallRecorder
 	}
 
 	/**
-	 * @return String[]
+	 * @return string[]
 	 */
 	public function getRecords()
 	{

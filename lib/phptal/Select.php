@@ -3,15 +3,15 @@ class PHPTAL_Php_Attribute_CHANGE_Select extends PHPTAL_Php_Attribute
 {
 	
 	/**
-     * Called before element printing.
-     */
-    public function before(PHPTAL_Php_CodeWriter $codewriter)
-    {
+	 * Called before element printing.
+	 */
+	public function before(PHPTAL_Php_CodeWriter $codewriter)
+	{
 		$this->expression = $this->extractEchoType($this->expression);
 		$expressions = $codewriter->splitExpression($this->expression);
 		
-		$min    = 'null';
-		$max    = 'null';
+		$min	= 'null';
+		$max	= 'null';
 		$listId = 'null';
 		$name   = 'null';
 		$defaultValue = 'null';
@@ -97,13 +97,13 @@ class PHPTAL_Php_Attribute_CHANGE_Select extends PHPTAL_Php_Attribute
 		if (!is_null($firstLabel))
 		{
 			$key = $ls->cleanOldKey($firstLabel);
-			$firstLabel = ($key !== false) ? $ls->transFO($key, array('html')) : $ls->transformHtml($firstLabel, $lang);
+			$firstLabel = ($key !== false) ? $ls->trans($key, array('html')) : $ls->transformHtml($firstLabel, $lang);
 
 			$html .= '<option value="';
 			if (!is_null($firstValue))
 			{
 				$key = $ls->cleanOldKey($firstValue);
-				$firstValue = ($key !== false) ? $ls->transFO($key, array('attr')) : $ls->transformAttr($firstValue, $lang);
+				$firstValue = ($key !== false) ? $ls->trans($key, array('attr')) : $ls->transformAttr($firstValue, $lang);
 				$html .= $firstValue;
 			}
 			$html .= '">'. $firstLabel .'</option>';
@@ -141,9 +141,9 @@ class PHPTAL_Php_Attribute_CHANGE_Select extends PHPTAL_Php_Attribute
 	}
 
 	/**
-     * Called after element printing.
-     */
-    public function after(PHPTAL_Php_CodeWriter $codewriter)
-    {
+	 * Called after element printing.
+	 */
+	public function after(PHPTAL_Php_CodeWriter $codewriter)
+	{
 	}
 }

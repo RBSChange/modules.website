@@ -13,7 +13,7 @@ class PHPTAL_Php_Attribute_CHANGE_Tabs extends ChangeTalAttribute
 
 	
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	protected function evaluateAll()
 	{
@@ -26,10 +26,10 @@ class PHPTAL_Php_Attribute_CHANGE_Tabs extends ChangeTalAttribute
 	}
 	
 	/**
-     * Called before element printing.
-     */
-    public function before(PHPTAL_Php_CodeWriter $codewriter)
-    {
+	 * Called before element printing.
+	 */
+	public function before(PHPTAL_Php_CodeWriter $codewriter)
+	{
 		$this->phpelement->headFootDisabled = true;
 		$this->parametersString = $this->initParams($codewriter);
 		$codewriter->pushCode('PHPTAL_Php_Attribute_CHANGE_Tabs::startTabs('.$this->parametersString . ', $ctx);');
@@ -37,10 +37,10 @@ class PHPTAL_Php_Attribute_CHANGE_Tabs extends ChangeTalAttribute
 	}
 
 	/**
-     * Called after element printing.
-     */
-    public function after(PHPTAL_Php_CodeWriter $codewriter)
-    {
+	 * Called after element printing.
+	 */
+	public function after(PHPTAL_Php_CodeWriter $codewriter)
+	{
 		$codewriter->pushCode('$_change_tabsResult_innerContent = ob_get_clean();');
 		$this->getRenderMethodCall($codewriter, $this->parametersString);
 		$codewriter->doEchoRaw('$_change_tabsResult_innerContent');
@@ -62,8 +62,8 @@ class PHPTAL_Php_Attribute_CHANGE_Tabs extends ChangeTalAttribute
 	}
 	
 	/**
-	 * @param String $id
-	 * @param String $label
+	 * @param string $id
+	 * @param string $label
 	 * @return void
 	 */
 	static function addTab($id, $label)
@@ -80,7 +80,7 @@ class PHPTAL_Php_Attribute_CHANGE_Tabs extends ChangeTalAttribute
 
 	/**
 	 * @param array $params
-	 * @return String
+	 * @return string
 	 */
 	public static function renderTabs($params)
 	{

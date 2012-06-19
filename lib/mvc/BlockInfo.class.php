@@ -77,7 +77,7 @@ class block_BlockInfo
 	{
 		if (isset($this->attributes['labeli18n']))
 		{
-			return LocaleService::getInstance()->transBO($this->attributes['labeli18n'], array('ucf'));
+			return LocaleService::getInstance()->trans($this->attributes['labeli18n'], array('ucf'));
 		}
 		return $this->attributes['label'];
 	}
@@ -217,7 +217,7 @@ class block_BlockInfo
 	}
 
 	/**
-	 * @param String $name
+	 * @param string $name
 	 * @return block_BlockPropertyInfo
 	 */
 	public final function getParameterInfo($name)
@@ -226,8 +226,8 @@ class block_BlockInfo
 	}
 
 	/**
-	 * @param String $name
-	 * @return Boolean
+	 * @param string $name
+	 * @return boolean
 	 */
 	public final function hasParameterInfo($name)
 	{
@@ -243,7 +243,7 @@ class block_BlockInfo
 	}
 
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	public function hasMeta()
 	{
@@ -271,8 +271,8 @@ class block_BlockInfo
 	}
 
 	/**
-	 * @param String $name
-	 * @param String $value
+	 * @param string $name
+	 * @param string $value
 	 * @return block_BlockInfo
 	 */
 	public function setAttribute($name, $value)
@@ -282,8 +282,8 @@ class block_BlockInfo
 	}
 
 	/**
-	 * @param String $name
-	 * @return Boolean
+	 * @param string $name
+	 * @return boolean
 	 */
 	public function hasAttribute($name)
 	{
@@ -291,8 +291,8 @@ class block_BlockInfo
 	}
 
 	/**
-	 * @param String $name
-	 * @return String
+	 * @param string $name
+	 * @return string
 	 */
 	public function getAttribute($name)
 	{
@@ -324,7 +324,7 @@ class block_BlockInfo
 	}
 
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	public final function hasPropertyGrid()
 	{

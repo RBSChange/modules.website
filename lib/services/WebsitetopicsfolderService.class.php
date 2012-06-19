@@ -1,27 +1,10 @@
 <?php
 /**
- * website_WebsitetopicsfolderService
  * @package modules.website
+ * @method website_WebsitetopicsfolderService getInstance()
  */
 class website_WebsitetopicsfolderService extends generic_FolderService
 {
-	/**
-	 * @var website_WebsitetopicsfolderService
-	 */
-	private static $instance;
-
-	/**
-	 * @return website_WebsitetopicsfolderService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-
 	/**
 	 * @return website_persistentdocument_websitetopicsfolder
 	 */
@@ -38,7 +21,7 @@ class website_WebsitetopicsfolderService extends generic_FolderService
 	 */
 	public function createQuery()
 	{
-		return $this->pp->createQuery('modules_website/websitetopicsfolder');
+		return $this->getPersistentProvider()->createQuery('modules_website/websitetopicsfolder');
 	}
 	
 	/**
@@ -49,7 +32,7 @@ class website_WebsitetopicsfolderService extends generic_FolderService
 	 */
 	public function createStrictQuery()
 	{
-		return $this->pp->createQuery('modules_website/websitetopicsfolder', false);
+		return $this->getPersistentProvider()->createQuery('modules_website/websitetopicsfolder', false);
 	}
 	
 	/**

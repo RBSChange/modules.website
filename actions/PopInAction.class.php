@@ -75,9 +75,9 @@ class website_PopInAction extends change_Action
 	/**
 	 * Traitement absence de permission
 	 *
-	 * @param String $login
-	 * @param String $permission
-	 * @param Integer $nodeId
+	 * @param string $login
+	 * @param string $permission
+	 * @param integer $nodeId
 	 */
 	protected function onMissingPermission($login, $permission, $nodeId)
 	{
@@ -85,7 +85,7 @@ class website_PopInAction extends change_Action
 	}
 	
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
 	protected function isDocumentAction()
 	{

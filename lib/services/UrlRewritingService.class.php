@@ -1,23 +1,10 @@
 <?php
+/**
+ * @package modules.website
+ * @method website_UrlRewritingService getInstance()
+ */
 class website_UrlRewritingService extends change_BaseService
 {
-	/**
-	 * @var website_UrlRewritingService
-	 */
-	protected static $instance;
-	
-	/**
-	 * @return website_UrlRewritingService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-	
 	/**
 	 * @param f_persistentdocument_PersistentDocument $document
 	 * @param string $lang
@@ -1036,8 +1023,8 @@ class website_UrlRewritingService extends change_BaseService
 		{
 			if ($a['nb_rules'] == $b['nb_rules']) 
 			{
-	        	return 0;
-	    	}
+				return 0;
+			}
 		}
 		elseif (isset($a['vo']))
 		{
@@ -1051,7 +1038,7 @@ class website_UrlRewritingService extends change_BaseService
 		{
 			return 0;
 		}
-    	return ($a['nb_rules'] > $b['nb_rules']) ? -1 : 1;
+		return ($a['nb_rules'] > $b['nb_rules']) ? -1 : 1;
 	}
 
 	/**

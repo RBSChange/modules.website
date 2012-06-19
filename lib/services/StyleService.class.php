@@ -1,45 +1,29 @@
 <?php
 /**
- * @package modules.website.service
+ * @package modules.website
+ * @method website_SystemtopicService getInstance()
  */
 class website_StyleService extends change_BaseService
 {
-    /**
-     * Media name for "screen".
-     */
-    const MEDIA_SCREEN = 'screen';
-
-    /**
-     * Media name for "print".
-     */
-    const MEDIA_PRINT = 'print';
-
-    /**
-     * Specific media name for "XUL".
-     */
-    const MEDIA_XUL = 'xul';
+	/**
+	 * Media name for "screen".
+	 */
+	const MEDIA_SCREEN = 'screen';
 
 	/**
-     * CSS Cache Location (must be browsable).
-     */
+	 * Media name for "print".
+	 */
+	const MEDIA_PRINT = 'print';
+
+	/**
+	 * Specific media name for "XUL".
+	 */
+	const MEDIA_XUL = 'xul';
+
+	/**
+	 * CSS Cache Location (must be browsable).
+	 */
 	const CACHE_LOCATION = '/cache/www/css/';
-
-	/**
-	 * @var website_StyleService
-	 */
-	private static $instance = null;
-
-	/**
-	 * @return website_StyleService
-	 */
-	public static function getInstance()
-	{
-		if (is_null(self::$instance))
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
 
 	/**
 	 * @var array
@@ -91,12 +75,12 @@ class website_StyleService extends change_BaseService
 	 */
 	public function getStylePath($styleNames, $contentType = null, $skin = null)
 	{
-	    if (!is_array($styleNames))
-	    {
-	        $fileSystemName = $this->getFileSystemName($styleNames, $contentType, $skin);
-	        return $fileSystemName;
-	    } 
-	    else if (count($styleNames) === 0)
+		if (!is_array($styleNames))
+		{
+			$fileSystemName = $this->getFileSystemName($styleNames, $contentType, $skin);
+			return $fileSystemName;
+		} 
+		else if (count($styleNames) === 0)
 		{
 			return null;
 		}
@@ -140,8 +124,8 @@ class website_StyleService extends change_BaseService
 	}
 
 	/**
-	 * @param String $fileName
-	 * @return Boolean
+	 * @param string $fileName
+	 * @return boolean
 	 */
 	private function isFileValid($fileName)
 	{
@@ -188,7 +172,7 @@ class website_StyleService extends change_BaseService
 		$rc = RequestContext::getInstance();
 		if (!is_null($mimeContentType))
 		{
-		    $rc->setMimeContentType($mimeContentType);
+			$rc->setMimeContentType($mimeContentType);
 		}
 		$skin = $this->normalizeSkin($skin);
 		
@@ -245,9 +229,9 @@ class website_StyleService extends change_BaseService
 	}
 
 	/**
-	 * @example website_StyleService->getSourceLocation('modules.catalog.frontoffice')
-	 * @param String $id
-	 * @return String | null the path of the xml source file
+	 * For exemple website_StyleService->getSourceLocation('modules.catalog.frontoffice')
+	 * @param string $id
+	 * @return string | null the path of the xml source file
 	 */
 	public function getSourceLocation($id)
 	{
@@ -325,7 +309,7 @@ class website_StyleService extends change_BaseService
 			$fileSystemName = $protocol . '.' . $style . '.' . $engine . '.' . $lang . '.' . $this->getCurrentWebsiteId() . '.';
 			if ($skin !== null)
 			{
-			    $fileSystemName .= $skin->getIdentifier() . '.';
+				$fileSystemName .= $skin->getIdentifier() . '.';
 			}
 		}
 		return f_util_FileUtils::buildWebCachePath('css', $fileSystemName . 'css');		
@@ -368,7 +352,7 @@ class website_StyleService extends change_BaseService
 	/**
 	 * @param string $contentType (html, xul)
 	 * @return string
-	 * @example 'all.all' 'xul.all' 'gecko.3'
+	 * For exemple 'all.all' 'xul.all' 'gecko.3'
 	 */
 	public function getFullEngineName($contentType = null)
 	{
@@ -436,15 +420,15 @@ class website_StyleService extends change_BaseService
 	{
 		$ss = new website_CSSStylesheet();
 		$ss->loadCSS($css);
-	    $xml = new DOMDocument('1.0', 'utf-8');
-	    $xml->loadXML($ss->getAsXML());
-	    return $xml;
+		$xml = new DOMDocument('1.0', 'utf-8');
+		$xml->loadXML($ss->getAsXML());
+		return $xml;
 	}
 	
 	/**
-	 * @example website_StyleService->getSourceLocation('modules.catalog.frontoffice')
-	 * @param String $id
-	 * @return String | null the path of the xml source file
+	 * For exemple website_StyleService->getSourceLocation('modules.catalog.frontoffice')
+	 * @param string $id
+	 * @return string | null the path of the xml source file
 	 */
 	private function getImageSourceLocation($id)
 	{
@@ -471,7 +455,7 @@ class website_StyleService extends change_BaseService
 	}
 	
 	/**
-	 * @param String $moduleName
+	 * @param string $moduleName
 	 */
 	public function getImageFormats($stylesheetName)
 	{

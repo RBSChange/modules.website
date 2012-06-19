@@ -4,7 +4,7 @@ class PHPTAL_Php_Attribute_CHANGE_Documentpicker extends FormElement
 	/**
 	 * @see ChangeTalAttribute::getEvaluatedParameters()
 	 *
-	 * @return String[]
+	 * @return string[]
 	 */
 	protected function getEvaluatedParameters()
 	{

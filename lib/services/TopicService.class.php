@@ -1,27 +1,10 @@
 <?php
 /**
- * @date Wed Feb 28 12:25:05 CET 2007
- * @author INTbonjF
+ * @package modules.website
+ * @method website_TopicService getInstance()
  */
 class website_TopicService extends f_persistentdocument_DocumentService
 {
-	/**
-	 * @var website_TopicService
-	 */
-	private static $instance;
-
-	/**
-	 * @return website_TopicService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-
 	/**
 	 * @return website_persistentdocument_topic
 	 */
@@ -67,7 +50,7 @@ class website_TopicService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_topic $document
-	 * @return Boolean
+	 * @return boolean
 	 */
 	public final function hasPublishedTopics($document)
 	{
@@ -82,7 +65,7 @@ class website_TopicService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_topic $document
-	 * @return Boolean
+	 * @return boolean
 	 */
 	public final function hasPublishedPages($document)
 	{
@@ -108,7 +91,7 @@ class website_TopicService extends f_persistentdocument_DocumentService
 
 	/**
 	 * @param website_persistentdocument_topic $document
-	 * @param String $oldPublicationStatus
+	 * @param string $oldPublicationStatus
 	 * @param array $params
 	 * @return void
 	 */
@@ -166,7 +149,7 @@ class website_TopicService extends f_persistentdocument_DocumentService
 
 	/**
 	 * @param website_persistentdocument_topic $document
-	 * @param Integer $parentNodeId Parent node ID where to save the document (optionnal).
+	 * @param integer $parentNodeId Parent node ID where to save the document (optionnal).
 	 * @return void
 	 */
 	protected function postInsert($document, $parentNodeId = null)
@@ -179,7 +162,7 @@ class website_TopicService extends f_persistentdocument_DocumentService
 
 	/**
 	 * @param website_persistentdocument_topic $document
-	 * @param Integer $parentNodeId
+	 * @param integer $parentNodeId
 	 */
 	protected function postSave($document, $parentNodeId)
 	{
@@ -239,7 +222,7 @@ class website_TopicService extends f_persistentdocument_DocumentService
 
 	/**
 	 * @param website_persistentdocument_topic $document
-	 * @param Integer $destId
+	 * @param integer $destId
 	 */
 	protected function onMoveToStart($document, $destId)
 	{
@@ -266,7 +249,7 @@ class website_TopicService extends f_persistentdocument_DocumentService
 
 	/**
 	 * @param website_persistentdocument_topic $document
-	 * @param Integer $destId
+	 * @param integer $destId
 	 */
 	protected function onDocumentMoved($document, $destId)
 	{
@@ -324,22 +307,22 @@ class website_TopicService extends f_persistentdocument_DocumentService
 			return $indexPage->getDocumentService()->getParentOf($indexPage);
 		}
 		else if ($page instanceof website_persistentdocument_page)
-        {
-        	$indexPage = DocumentHelper::getByCorrection($page);
-        	return $indexPage->getDocumentService()->getParentOf($indexPage);
-        }
-        else if ($page instanceof website_persistentdocument_pageexternal)
-        {
-        	$indexPage = DocumentHelper::getByCorrection($page);
-        	return $indexPage->getDocumentService()->getParentOf($indexPage);
-        }
-       	return null;
+		{
+			$indexPage = DocumentHelper::getByCorrection($page);
+			return $indexPage->getDocumentService()->getParentOf($indexPage);
+		}
+		else if ($page instanceof website_persistentdocument_pageexternal)
+		{
+			$indexPage = DocumentHelper::getByCorrection($page);
+			return $indexPage->getDocumentService()->getParentOf($indexPage);
+		}
+	   	return null;
 	}
 
 	/**
 	 * @param website_persistentdocument_topic $topic
 	 * @param website_persistentdocument_page $newIndexPage
-	 * @param Boolean $userSetting
+	 * @param boolean $userSetting
 	 */
 	public function setIndexPage($topic, $newIndexPage, $userSetting = false)
 	{
@@ -391,9 +374,9 @@ class website_TopicService extends f_persistentdocument_DocumentService
 	public function removeIndexPage($topic, $userSetting = false)
 	{
 		if ($topic instanceof website_persistentdocument_topic)
-        {
-          	$this->setIndexPage($topic, null, $userSetting);
-        }
+		{
+		  	$this->setIndexPage($topic, null, $userSetting);
+		}
 	}
 	
 	/**
@@ -464,7 +447,7 @@ class website_TopicService extends f_persistentdocument_DocumentService
 	{
 		if ($mode & DocumentHelper::MODE_CUSTOM)
 		{
-	    	$attributes['thumbnailsrc'] = MediaHelper::getIcon('topic');
+			$attributes['thumbnailsrc'] = MediaHelper::getIcon('topic');
 		}
 	}
 	

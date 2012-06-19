@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <panel>
 	<section labeli18n="m.website.document.page.titleinformations">
-		<field name="navigationtitle"/>
-		<field name="url"/>
-		<field name="useurl"/>
+		<field name="navigationtitle" />
+		<field name="url" />
+		<field name="useurl" />
 	</section>
 	<xul>
-		<javascript>						
+		<javascript>
 			<method name="preparePropertiesValues">
 				<parameter name="values" />
 				<body><![CDATA[
@@ -14,7 +14,7 @@
 					values.indexingstatus = "false";
 					values.documentproperties += ',label,indexingstatus';
 				]]></body>
-			</method>			
+			</method>
 		</javascript>
-	</xul> 		
+	</xul>
 </panel>

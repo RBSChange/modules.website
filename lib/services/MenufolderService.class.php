@@ -1,23 +1,10 @@
 <?php
+/**
+ * @package modules.website
+ * @method website_MenufolderService getInstance()
+ */
 class website_MenufolderService extends f_persistentdocument_DocumentService
 {
-	/**
-	 * @var website_MenufolderService
-	 */
-	private static $instance;
-
-	/**
-	 * @return website_MenufolderService
-	 */
-	public static function getInstance()
-	{
-		if (self::$instance === null)
-		{
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-
 	/**
 	 * @return website_persistentdocument_menufolder
 	 */
@@ -32,13 +19,13 @@ class website_MenufolderService extends f_persistentdocument_DocumentService
 	 */
 	public function createQuery()
 	{
-		return $this->pp->createQuery('modules_website/menufolder');
+		return $this->getPersistentProvider()->createQuery('modules_website/menufolder');
 	}
 	
 	/**
 	 * @see f_persistentdocument_DocumentService::onMoveToStart()
 	 * @param website_persistentdocument_menufolder $document
-	 * @param Integer $destId
+	 * @param integer $destId
 	 */
 	protected function onMoveToStart($document, $destId)
 	{

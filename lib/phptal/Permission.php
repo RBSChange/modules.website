@@ -10,11 +10,11 @@
 class PHPTAL_Php_Attribute_CHANGE_Permission extends PHPTAL_Php_Attribute
 {
 	
-    /**
-     * Called before element printing.
-     */
-    public function before(PHPTAL_Php_CodeWriter $codewriter)
-    {
+	/**
+	 * Called before element printing.
+	 */
+	public function before(PHPTAL_Php_CodeWriter $codewriter)
+	{
 		$expressions = $codewriter->splitExpression($this->expression);
 		$permission = null;
 		$nodeId = null;
@@ -83,10 +83,10 @@ class PHPTAL_Php_Attribute_CHANGE_Permission extends PHPTAL_Php_Attribute
 	}
 
 	/**
-     * Called after element printing.
-     */
-    public function after(PHPTAL_Php_CodeWriter $codewriter)
-    {
+	 * Called after element printing.
+	 */
+	public function after(PHPTAL_Php_CodeWriter $codewriter)
+	{
 		$codewriter->doEnd();
 	}
 }

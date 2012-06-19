@@ -7,8 +7,7 @@
 		<field name="indexingstatus" />
 	</section>
 	<section labeli18n="m.website.document.page.layoutinformations">
-		<field name="defaultContent" type="dropdownlist" required="true" 
-			labeli18n="m.website.document.page.template" nocache="true" />
+		<field name="defaultContent" type="dropdownlist" required="true" labeli18n="m.website.document.page.template" nocache="true" />
 		<field name="skin" />
 	</section>
 	<section labeli18n="m.website.document.page.dateinformations">
@@ -22,13 +21,12 @@
 		<field name="keywords" class="template" rows="3" />
 	</section>
 	<xul>
-		<javascript>		
+		<javascript>
 			<constructor><![CDATA[
 				var me = this;
 				this.extendMethod("fireInitializeComplete", this.updateDuplicateLabel);
 				this.extendMethod("updateCommandsUI", this.checkDisableEdit);
-			]]></constructor>			
-	
+			]]></constructor>
 			<method name="updateDuplicateLabel">
 				<parameter name="result" />
 				<body><![CDATA[
@@ -54,7 +52,6 @@
 					}
 				]]></body>
 			</method>
-			
 			<method name="checkDisableEdit">
 				<parameter name="result" />
 				<body><![CDATA[
@@ -62,7 +59,6 @@
 					button.disabled = this.error;
 				]]></body>
 			</method>
-								
 			<method name="prepareInitializeValues">
 				<parameter name="values" />
 				<body><![CDATA[
@@ -73,7 +69,6 @@
 					}
 				]]></body>
 			</method>
-
 			<method name="preparePropertiesValues">
 				<parameter name="values" />
 				<body><![CDATA[

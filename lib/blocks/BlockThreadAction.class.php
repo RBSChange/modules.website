@@ -13,7 +13,7 @@ class website_BlockThreadAction extends website_BlockAction
 	/**
 	 * @param website_BlockActionRequest $request
 	 * @param website_BlockActionResponse $response
-	 * @return String
+	 * @return string
 	 */
 	public function execute($request, $response)
 	{

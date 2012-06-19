@@ -8,7 +8,7 @@ class website_MenuitemtextService extends website_MenuitemService
 	/**
 	 * @var website_MenuitemtextService
 	 */
-	private static $instance;
+	//private static $instance;
 
 	/**
 	 * @return website_MenuitemtextService
@@ -36,7 +36,7 @@ class website_MenuitemtextService extends website_MenuitemService
 	 */
 	public function createQuery()
 	{
-		return $this->pp->createQuery('modules_website/menuitemtext');
+		return $this->getPersistentProvider()->createQuery('modules_website/menuitemtext');
 	}
 	
 	/**
