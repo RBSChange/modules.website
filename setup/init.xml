@@ -72,5 +72,8 @@
 
 		<dynamiclist listid="modules_website/menutags" label="m.website.list.menutags-label"
 			description="m.website.list.menutags-description" />
+			
+		<dynamiclist listid="modules_website/markerstype" label="Liste des types de marqueur"
+			description="Liste des types de marqueur" />
 	</systemfolder>
 </script>
