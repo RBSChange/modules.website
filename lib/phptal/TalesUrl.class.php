@@ -215,7 +215,7 @@ class website_TalesUrl implements PHPTAL_Tales
 				}
 				else 
 				{
-					$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+					$website = website_WebsiteService::getInstance()->getCurrentWebsite();
 				}
 				
 				$link = website_UrlRewritingService::getInstance()->getActionLinkForWebsite($module, $action, $website, $lang, $parameters);

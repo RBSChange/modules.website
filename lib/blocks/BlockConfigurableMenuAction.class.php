@@ -26,7 +26,7 @@ class website_BlockConfigurableMenuAction extends website_BlockAction
 				break;
 				
 			case 'tag':
-				$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+				$website = website_WebsiteService::getInstance()->getCurrentWebsite();
 				$doc = TagService::getInstance()->getDocumentByContextualTag($config->getTag(), $website);
 				break;
 				
@@ -73,7 +73,7 @@ class website_BlockConfigurableMenuAction extends website_BlockAction
 	 */
 	protected function getRootMenuEntry($doc, $level, $maxLevel)
 	{
-		$wms = website_WebsiteModuleService::getInstance();
+		$wms = website_PageService::getInstance();
 		$currentId = $wms->getCurrentPageId();
 		$ancestorIds = $wms->getCurrentPageAncestorsIds();
 		$deployAll = $this->getConfiguration()->getDeployAll();

@@ -6,7 +6,7 @@ class website_MenuItemPrintFunction
 	 */
 	static function execute($entry)
 	{
-		$currentWebsite = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+		$currentWebsite = website_WebsiteService::getInstance()->getCurrentWebsite();
 		$page = TagService::getInstance()->getDocumentByContextualTag('contextual_website_website_print', $currentWebsite, false);
 		if ($page !== null)
 		{
@@ -27,7 +27,7 @@ class website_MenuItemAddToFavoriteFunction
 	 */
 	static function execute($entry)
 	{
-		$currentWebsite = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+		$currentWebsite = website_WebsiteService::getInstance()->getCurrentWebsite();
 		$page = TagService::getInstance()->getDocumentByContextualTag('contextual_website_website_favorite', $currentWebsite, false);
 		if ($page !== null)
 		{

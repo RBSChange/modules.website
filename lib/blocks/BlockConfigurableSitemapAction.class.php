@@ -18,7 +18,7 @@ class website_BlockConfigurableSitemapAction extends website_BlockAction
 		}
 	
 		$config = $this->getConfiguration();
-		$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+		$website = website_WebsiteService::getInstance()->getCurrentWebsite();
 		$root = $this->getRootMenuEntry($website, 0, $config->getDepth());
 		if ($root === null)
 		{
@@ -49,7 +49,7 @@ class website_BlockConfigurableSitemapAction extends website_BlockAction
 	 */
 	protected function getRootMenuEntry($doc, $level, $maxLevel)
 	{
-		$wms = website_WebsiteModuleService::getInstance();
+		$wms = website_PageService::getInstance();
 		$currentId = $wms->getCurrentPageId();
 		$ancestorIds = $wms->getCurrentPageAncestorsIds();
 		return $this->getMenuEntries($doc, $level, $maxLevel, $currentId, $ancestorIds);

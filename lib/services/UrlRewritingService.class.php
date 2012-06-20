@@ -35,7 +35,7 @@ class website_UrlRewritingService extends change_BaseService
 		$targetWebsite = $website;
 		if ($targetWebsite === null)
 		{
-			$targetWebsite = website_WebsiteModuleService::getInstance()->getCurrentWebsite();			
+			$targetWebsite = website_WebsiteService::getInstance()->getCurrentWebsite();			
 			if ($websiteIds !== null)
 			{
 				if (!in_array($targetWebsite->getId(), $websiteIds))
