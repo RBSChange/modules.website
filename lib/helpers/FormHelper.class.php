@@ -1074,18 +1074,9 @@ jQuery(document).ready(function() {
 	  				{
 	  					return;
 	  				}
+	  				checkboxInput.setAttribute('checked', 'checked');
 	  				var liElem = checkboxInput.parentNode;
-	  				var current = liElem;
-	  				while (current.nextSibling != null)
-	  				{
-	  					current = current.nextSibling;
-	  					jQuery(current).find('input[type = hidden]').each(function (i) {
-	  						var matches = this.getAttribute('name').match(/^(.*)\\[(.*)\\]$/);
-	  						var newName = matches[1]+'['+(parseInt(matches[2])-1)+']';
-	  						this.setAttribute('name', newName);
-	  					});
-	  				}
-	  				liElem.parentNode.removeChild(liElem);
+	  				jQuery(liElem).hide();
 	  			}
 	  			</script>";
 			self::$renderUploadfieldCalled = true;
