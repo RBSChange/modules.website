@@ -151,11 +151,15 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 	 */
 	protected function postInsert($document, $parentNodeId)
 	{
+		// Replace linked-to-root-module document model attribute.
+		if ($document->getTreeId() === null)
+		{
+			TreeService::getInstance()->newLastChild(ModuleService::getInstance()->getRootFolderId('website'), $document->getId());
+		}
+		
+		// If we are creating the first website document, set it as the default website.
 		$query = $this->createQuery()->add(Restrictions::hasTag('default_modules_website_default-website'));
-
-		// If we are creating the first website document, set it as the default
-		// website.
-		if (is_null($query->findUnique()) )
+		if ($query->findUnique() === null)
 		{	
 			$this->setDefaultWebsite($document);
 		}
