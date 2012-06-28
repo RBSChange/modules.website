@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/static/schema/change-document/4.0.xsd" model-version="1.0" icon="website" use-publication-dates="false">
+<document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/schema/persistentdocument-4.0.xsd" model-version="1.0" icon="website" use-publication-dates="false">
 	<properties>
 		<property name="publicationstatus" localized="true" />
 		<property name="description" type="LongString" localized="true" />
@@ -10,13 +10,13 @@
 			<constraint name="domain" />
 			<constraint name="unique" propertyName="domain" modelName="modules_website/website" />
 		</property>
-		<property name="indexPage" type="modules_website/page" />
+		<property name="indexPage" type="Document" document-type="modules_website/page" />
 		<property name="stylesheet" type="String" from-list="modules_website/stylesheets" />
-		<property name="skin" type="modules_skin/skin" />
+		<property name="skin" type="Document" document-type="modules_skin/skin" />
 		<property name="alwaysappendtitle" type="Boolean" default-value="true" />
-		<property name="favicon" type="modules_media/media" />
-		<property name="allowedpagetemplate" type="modules_theme/pagetemplate" max-occurs="-1" />
-		<property name="group" type="modules_users/group" inverse="true" />
+		<property name="favicon" type="Document" document-type="modules_media/media" />
+		<property name="allowedpagetemplate" type="DocumentArray" document-type="modules_theme/pagetemplate" />
+		<property name="group" type="Document" inverse="true" document-type="modules_users/group" />
 	</properties>
 	<serializedproperties>
 		<property name="robottxt" type="LongString" />

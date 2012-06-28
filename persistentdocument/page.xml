@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/static/schema/change-document/4.0.xsd" model-version="2.0" icon="page" indexable="true">
+<document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/schema/persistentdocument-4.0.xsd" model-version="2.0" icon="page" indexable="true">
 	<properties>
 		<property name="startpublicationdate" localized="true" />
 		<property name="endpublicationdate" localized="true" />
@@ -12,7 +12,7 @@
 		<property name="indexingstatus" type="Boolean" default-value="true" />
 		<property name="template" type="String" min-occurs="1" indexed="none" />
 		<property name="content" type="XHTMLFragment" localized="true" indexed="description" />
-		<property name="skin" type="modules_skin/skin" />
+		<property name="skin" type="Document" document-type="modules_skin/skin" />
 		<property name="navigationVisibility" type="Integer" min-occurs="1" from-list="modules_website/navigationvisibility" default-value="1" localized="true" />
 		<property name="isIndexPage" type="Boolean" min-occurs="1" default-value="false" />
 		<property name="isHomePage" type="Boolean" min-occurs="1" default-value="false" />
