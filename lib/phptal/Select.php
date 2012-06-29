@@ -96,14 +96,14 @@ class PHPTAL_Php_Attribute_CHANGE_Select extends PHPTAL_Php_Attribute
 		
 		if (!is_null($firstLabel))
 		{
-			$key = $ls->cleanOldKey($firstLabel);
-			$firstLabel = ($key !== false) ? $ls->trans($key, array('html')) : $ls->transformHtml($firstLabel, $lang);
+			$key =  $ls->trans($firstLabel, array('html'));
+			$firstLabel = ($key !== $firstLabel) ? $key : $ls->transformHtml($firstLabel, $lang);
 
 			$html .= '<option value="';
 			if (!is_null($firstValue))
 			{
-				$key = $ls->cleanOldKey($firstValue);
-				$firstValue = ($key !== false) ? $ls->trans($key, array('attr')) : $ls->transformAttr($firstValue, $lang);
+				$key = $ls->trans($firstValue, array('html'));
+				$firstValue = ($key !== $firstValue) ? $key : $ls->transformAttr($firstValue, $lang);
 				$html .= $firstValue;
 			}
 			$html .= '">'. $firstLabel .'</option>';

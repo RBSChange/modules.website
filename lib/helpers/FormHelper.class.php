@@ -243,7 +243,7 @@ class website_FormHelper
 			{
 				self::setDefaultValue("required", true, $params);
 			}
-			self::setDefaultValue('label', $beanPropertyInfo->getLabelKey(), $params);
+			self::setDefaultValue('labeli18n', $beanPropertyInfo->getLabelKey(), $params);
 		}
 		self::setDefaultValue("id", self::buildFieldId($pn), $params);	
 		return self::buildLabel($params);
@@ -276,7 +276,7 @@ class website_FormHelper
 				{
 					self::setDefaultValue("required", true, $params);
 				}
-				self::setDefaultValue('label', $beanPropertyInfo->getLabelKey(), $params);
+				self::setDefaultValue('labeli18n', $beanPropertyInfo->getLabelKey(), $params);
 			}
 		}
 		$labelCode = self::buildLabel($params, false);
@@ -631,9 +631,9 @@ class website_FormHelper
 				throw new Exception("Unsupported document type ".$beanPropertyInfo->getDocumentType());
 		}
 
-		self::setDefaultValue('label', $beanPropertyInfo->getLabelKey(), $params);
+		self::setDefaultValue('labeli18n', $beanPropertyInfo->getLabelKey(), $params);
 		self::setDefaultValue('required', $beanPropertyInfo->isRequired(), $params);
-		self::setDefaultValue('help', $beanPropertyInfo->getHelpKey(), $params);
+		self::setDefaultValue('helpi18n', $beanPropertyInfo->getHelpKey(), $params);
 		// END TODO: refactor with renderField
 
 		if (!array_key_exists('value', $params))
@@ -882,15 +882,16 @@ jQuery(document).ready(function() {
 		{
 			return "<strong>bean '".BeanUtils::getClassName(self::$bean)."' has no property $propertyName</strong>";
 		}
-
+		$ls = LocaleService::getInstance();
+		
 		$beanPropertyInfo = BeanUtils::getPropertyInfo(self::$bean, $propertyName);
 		self::setDefaultValue("labeled", true, $params);
 		if ($params["labeled"])
 		{
-			self::setDefaultValue('label', $beanPropertyInfo->getLabelKey(), $params);
+			self::setDefaultValue('labeli18n', $beanPropertyInfo->getLabelKey(), $params);
 		}
 		self::setDefaultValue('required', $beanPropertyInfo->isRequired(), $params);
-		self::setDefaultValue('help', $beanPropertyInfo->getHelpKey(), $params);
+		self::setDefaultValue('helpi18n', $beanPropertyInfo->getHelpKey(), $params);
 
 		if ($beanPropertyInfo->hasList())
 		{
@@ -970,9 +971,9 @@ jQuery(document).ready(function() {
 		self::setDefaultValue("labeled", true, $params);
 		if ($params["labeled"])
 		{
-			self::setDefaultValue('label', $beanPropertyInfo->getLabelKey(), $params);
+			self::setDefaultValue('labeli18n', $beanPropertyInfo->getLabelKey(), $params);
 		}
-		self::setDefaultValue('help', $beanPropertyInfo->getHelpKey(), $params);
+		self::setDefaultValue('helpi18n', $beanPropertyInfo->getHelpKey(), $params);
 		$params["onchange"] = "Change_UploadField_FileChanged(this, '".($name."_add")."');";
 		$propErrors = self::getErrorsForProperty($name);
 		if (f_util_ArrayUtils::isNotEmpty($propErrors))
@@ -1311,7 +1312,7 @@ jQuery(document).ready(function() {
 		{
 			$propName = trim($beanProperty);
 			$beanPropertyInfo = BeanUtils::getPropertyInfo(self::$bean, $propName);
-			$params['label'] = $beanPropertyInfo->getLabelKey();
+			$params['labeli18n'] = $beanPropertyInfo->getLabelKey();
 			$params['required'] = $beanPropertyInfo->isRequired();
 			$params['useFor'] = false;
 			$params['class'] = 'nocmx';
@@ -1520,11 +1521,7 @@ jQuery(document).ready(function() {
 		}
 		elseif (isset($params['trueLabel']))
 		{
-			$trueLabel = $params['trueLabel'];
-			$cKey = $ls->cleanOldKey($trueLabel);
-			if ($cKey !== false) {
-				$trueLabel = $ls->trans($cKey, $formatters);
-			}
+			$trueLabel = $ls->trans($params['trueLabel'], $formatters);
 		}
 		else
 		{
@@ -1539,11 +1536,7 @@ jQuery(document).ready(function() {
 		}
 		elseif (isset($params['falseLabel']))
 		{
-			$falseLabel = $params['falseLabel'];
-			$cKey = $ls->cleanOldKey($falseLabel);
-			if ($cKey !== false) {
-				$falseLabel = $ls->trans($cKey, $formatters);
-			}
+			$falseLabel = $ls->trans($params['falseLabel'], $formatters);
 		}
 		else
 		{
@@ -1840,9 +1833,7 @@ jQuery(document).ready(function() {
 		}
 		else if (isset($params['label']))
 		{
-			$ls = LocaleService::getInstance();
-			$cKey = $ls->cleanOldKey($params['label']);
-			$value = ($cKey === false) ? $params['label'] : $ls->trans($cKey, array('ucf', 'html'));
+			$value = LocaleService::getInstance()->trans($params['label'], array('ucf', 'html'));
 			if ($unsetWhenDone)
 			{
 				unset($params['label']);
@@ -1854,12 +1845,7 @@ jQuery(document).ready(function() {
 			$key = $propertyInfo->getLabelKey();
 			if ($key !== null)
 			{
-				$ls = LocaleService::getInstance();
-				$ckey = $ls->cleanOldKey($key);
-				if ($ckey !== false)
-				{
-					$value = $ls->trans($ckey, array('ucf', 'html'));
-				}
+				$value = LocaleService::getInstance()->trans($key, array('ucf', 'html'));
 			}
 		}
 		return $value;
@@ -1877,7 +1863,7 @@ jQuery(document).ready(function() {
 		{
 			$value = $params['evaluatedlabel'];
 		}
-		else if (isset($params['labeli18n']))
+		elseif (isset($params['labeli18n']))
 		{
 			$value = LocaleService::getInstance()->trans($params['labeli18n'], array('ucf', 'attr', 'html'));
 			if ($unsetWhenDone)
@@ -1885,11 +1871,9 @@ jQuery(document).ready(function() {
 				unset($params['labeli18n']);
 			}
 		}
-		else if (isset($params['label']))
+		elseif (isset($params['label']))
 		{
-			$ls = LocaleService::getInstance();
-			$cKey = $ls->cleanOldKey($params['label']);
-			$value = ($cKey === false) ? $params['label'] : $ls->trans($cKey, array('ucf', 'attr', 'html'));
+			$value = LocaleService::getInstance()->trans($params['label'], array('ucf', 'attr', 'html'));
 			if ($unsetWhenDone)
 			{
 				unset($params['label']);
@@ -1934,25 +1918,20 @@ jQuery(document).ready(function() {
 		{
 			unset($params['labeli18n']);
 		}
-		if (isset($params['help']))
+		if (!isset($params['title']))
 		{
-			$ls = LocaleService::getInstance();
-			$key = $params['help'];
-			unset($params['help']);
-			$ckey = $ls->cleanOldKey($key);
-			if ($ckey !== false)
+			if (isset($params['helpi18n']))
 			{
-				$title = $ls->trans($ckey);
-				if ($title !== $ckey)
-				{
-					$params['title'] = $title;
-				}
+				$params['title'] = LocaleService::getInstance()->trans($params['helpi18n']);
+				unset($params['helpi18n']);
 			}
-			else
+			elseif (isset($params['help']))
 			{
-				$params['title'] = $key;
+				$params['title'] = $params['help'];
+				unset($params['help']);
 			}
 		}
+		
 		$result = "";
 		if ($params['type'] == 'textarea')
 		{
@@ -1979,6 +1958,7 @@ jQuery(document).ready(function() {
 			}
 			$result .= '/>';
 		}
+		
 		return $result . self::buildFieldErrors($params);
 	}
 
