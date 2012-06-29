@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.bo.blocks.iframe" lcid="fr_FR">
-  <key id="title">iframe</key>
-  <key id="url">adresse (URL)</key>
-  <key id="url-help">adresse URL complète (avec http://) de la page à afficher dans l'iframe</key>
-  <key id="text">texte alternatif</key>
-  <key id="text-help">texte alternatif s'affichant lorsque le navigateur ne peut pas afficher l'iframe</key>
-  <key id="frameheight">hauteur</key>
-  <key id="frameheight-help">hauteur en pixels de l'iframe</key>
-  <key id="framewidth">largeur</key>
-  <key id="framewidth-help">largeur en pixels de l'iframe</key>
-  <key id="scrolling">affichage des ascenseurs</key>
-  <key id="scrolling-help">les ascenseurs peuvent s'afficher lorsque le contenu de la page affichée dans l'iframe prend plus de place que la place accordée à l'iframe</key>
-  <key id="scroll-auto">Auto</key>
-  <key id="scroll-yes">Oui</key>
-  <key id="scroll-no">Non</key>
+	<key id="title">iframe</key>
+	<key id="url">adresse (URL)</key>
+	<key id="url-help">adresse URL complète (avec http://) de la page à afficher dans l'iframe</key>
+	<key id="text">texte alternatif</key>
+	<key id="text-help">texte alternatif s'affichant lorsque le navigateur ne peut pas afficher l'iframe</key>
+	<key id="frameheight">hauteur</key>
+	<key id="frameheight-help">hauteur en pixels de l'iframe</key>
+	<key id="framewidth">largeur</key>
+	<key id="framewidth-help">largeur en pixels de l'iframe</key>
+	<key id="scrolling">affichage des ascenseurs</key>
+	<key id="scrolling-help">les ascenseurs peuvent s'afficher lorsque le contenu de la page affichée dans l'iframe prend plus de place que la place accordée à l'iframe</key>
+	<key id="scroll-auto">Auto</key>
+	<key id="scroll-yes">Oui</key>
+	<key id="scroll-no">Non</key>
 </i18n>

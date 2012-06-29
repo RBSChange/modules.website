@@ -114,7 +114,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 					{
 						$pageUrl = LinkHelper::getDocumentUrl($detailDoc ? $detailDoc : $page, $lang, $parameters);
 						$switchArray[$lang]['url'] = $pageUrl;
-						$this->getContext()->addLink("alternate", "text/html", $pageUrl, f_Locale::translate("&modules.website.frontoffice.this-page-in-mylang;", null, $lang), $lang);
+						$this->getContext()->addLink("alternate", "text/html", $pageUrl, LocaleService::getInstance()->trans("m.website.frontoffice.this-page-in-mylang", array(), null, $lang), $lang);
 					}
 					else
 					{

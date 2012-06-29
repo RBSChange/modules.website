@@ -115,7 +115,7 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 		
 		if ($document->getRobottxt() == null)
 		{
-			$default = f_util_FileUtils::read(f_util_FileUtils::buildWebeditPath('media', 'frontoffice', 'robots.txt'));
+			$default = f_util_FileUtils::read(f_util_FileUtils::buildProjectPath('media', 'frontoffice', 'robots.txt'));
 			$document->setRobottxt($default);
 		}
 		

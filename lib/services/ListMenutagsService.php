@@ -20,7 +20,7 @@ class website_ListMenutagsService extends change_BaseService implements list_Lis
 			}
 			else
 			{
-				$label = f_Locale::translate($tagInfos['label']);
+				$label = LocaleService::getInstance()->trans($tagInfos['label']);
 			}
 			$items[] = new list_Item($label, $tag);
 		}

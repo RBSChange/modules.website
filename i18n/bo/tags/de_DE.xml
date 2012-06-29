@@ -1,19 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.bo.tags" lcid="de_DE">
-  <key id="page-not-found">Fehler 'Seite nicht gefunden' (404)</key>
-  <key id="unauthorized-access">Nicht erlaubter Zugang (401.1)</key>
-  <key id="server-error">Allgemeiner Fehler (500)</key>
-  <key id="sales-condition">allgemeine Verkaufsbedingungen</key>
-  <key id="print">Druckmodalitäten</key>
-  <key id="help">Hilfe</key>
-  <key id="favorite">Modalitäten zu den Favoriten hinzufügen</key>
-  <key id="legal-notice">Impressum</key>
-  <key id="default-website">Standard Webseite</key>
-  <key id="footer-menu">Fußzeilenmenü</key>
-  <key id="header-menu">Kopfzeilenmenü</key>
-  <key id="contextual-menu">Kontextualmenü</key>
-  <key id="main-menu">Hauptmenü</key>
-  <key id="quicklinks-menu">Linkmenü</key>
-  <key id="copyright-menu">Copyright</key>
-  <key id="logo">Logo</key>
+	<key id="page-not-found">Fehler 'Seite nicht gefunden' (404)</key>
+	<key id="unauthorized-access">Nicht erlaubter Zugang (401.1)</key>
+	<key id="server-error">Allgemeiner Fehler (500)</key>
+	<key id="sales-condition">allgemeine Verkaufsbedingungen</key>
+	<key id="print">Druckmodalitäten</key>
+	<key id="help">Hilfe</key>
+	<key id="favorite">Modalitäten zu den Favoriten hinzufügen</key>
+	<key id="legal-notice">Impressum</key>
+	<key id="default-website">Standard Webseite</key>
+	<key id="footer-menu">Fußzeilenmenü</key>
+	<key id="header-menu">Kopfzeilenmenü</key>
+	<key id="contextual-menu">Kontextualmenü</key>
+	<key id="main-menu">Hauptmenü</key>
+	<key id="quicklinks-menu">Linkmenü</key>
+	<key id="copyright-menu">Copyright</key>
+	<key id="logo">Logo</key>
 </i18n>

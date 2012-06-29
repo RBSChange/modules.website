@@ -4,8 +4,8 @@
 
 	<binding id="cValidPageDialog" extends="modules.task.cTaskDialog#cTaskDialog">
 		<implementation>
-			<field name="title">"${transui:m.website.bo.workflow.validpage.user-task-title,ucf}"</field>
-			<field name="description">"${transui:m.website.bo.workflow.validpage.user-task-help,ucf}"</field>
+			<field name="title">"${trans:m.website.bo.workflow.validpage.user-task-title,ucf}"</field>
+			<field name="description">"${trans:m.website.bo.workflow.validpage.user-task-help,ucf}"</field>
 			<field name="loadDataModule">"website"</field>
 			<field name="loadDataAction">"LoadValidPageData"</field>
 			<field name="documentSectionClass">"cPageData"</field>
@@ -19,47 +19,47 @@
 	<binding id="cPageData">
 		<content>
 			<xul:row xbl:inherits="differs=labelDiffers">
-				<xul:label>${transui:m.website.document.page.label,ucf}</xul:label>
+				<xul:label>${trans:m.website.document.page.label,ucf}</xul:label>
 				<xul:label xbl:inherits="xbl:text=label" />
 			</xul:row>
 			<xul:row xbl:inherits="differs=navigationtitleDiffers">
-				<xul:label>${transui:m.website.document.page.navigationtitle,ucf}</xul:label>
+				<xul:label>${trans:m.website.document.page.navigationtitle,ucf}</xul:label>
 				<xul:label xbl:inherits="xbl:text=navigationtitle" />
 			</xul:row>
 			<xul:row xbl:inherits="differs=metatitleDiffers">
-				<xul:label>${transui:m.website.document.page.metatitle,ucf}</xul:label>
+				<xul:label>${trans:m.website.document.page.metatitle,ucf}</xul:label>
 				<xul:label xbl:inherits="xbl:text=metatitle" />
 			</xul:row>
 			<xul:row xbl:inherits="differs=descriptionDiffers">
-				<xul:label>${transui:m.website.document.page.description,ucf}</xul:label>
+				<xul:label>${trans:m.website.document.page.description,ucf}</xul:label>
 				<xul:label xbl:inherits="xbl:text=description" />
 			</xul:row>
 			<xul:row xbl:inherits="differs=keywordsDiffers">
-				<xul:label>${transui:m.website.document.page.keywords,ucf}</xul:label>
+				<xul:label>${trans:m.website.document.page.keywords,ucf}</xul:label>
 				<xul:label xbl:inherits="xbl:text=keywords" />
 			</xul:row>
 			<xul:row xbl:inherits="differs=indexingstatusDiffers">
-				<xul:label>${transui:m.website.document.page.indexingstatus,ucf}</xul:label>
+				<xul:label>${trans:m.website.document.page.indexingstatus,ucf}</xul:label>
 				<xul:label xbl:inherits="xbl:text=indexingstatus" />
 			</xul:row>
 			<xul:row xbl:inherits="differs=templateDiffers">
-				<xul:label>${transui:m.website.document.page.template,ucf}</xul:label>
+				<xul:label>${trans:m.website.document.page.template,ucf}</xul:label>
 				<xul:label xbl:inherits="xbl:text=template" />
 			</xul:row>
 			<xul:row xbl:inherits="differs=skinDiffers">
-				<xul:label>${transui:m.website.document.page.skin,ucf}</xul:label>
+				<xul:label>${trans:m.website.document.page.skin,ucf}</xul:label>
 				<xul:label xbl:inherits="xbl:text=skin" />
 			</xul:row>
 			<xul:row xbl:inherits="differs=navigationVisibilityDiffers">
-				<xul:label>${transui:m.website.document.page.navigationvisibility,ucf}</xul:label>
+				<xul:label>${trans:m.website.document.page.navigationvisibility,ucf}</xul:label>
 				<xul:label xbl:inherits="xbl:text=navigationVisibility" />
 			</xul:row>
 			<xul:row xbl:inherits="differs=startpublicationdateDiffers">
-				<xul:label>${transui:m.website.document.page.startpublicationdate,ucf}</xul:label>
+				<xul:label>${trans:m.website.document.page.startpublicationdate,ucf}</xul:label>
 				<xul:label xbl:inherits="xbl:text=startpublicationdate" />
 			</xul:row>
 			<xul:row xbl:inherits="differs=endpublicationdateDiffers">
-				<xul:label>${transui:m.website.document.page.endpublicationdate,ucf}</xul:label>
+				<xul:label>${trans:m.website.document.page.endpublicationdate,ucf}</xul:label>
 				<xul:label xbl:inherits="xbl:text=endpublicationdate" />
 			</xul:row>
 		</content>

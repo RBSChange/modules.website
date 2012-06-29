@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.bo.doceditor.property" lcid="en_GB">
-  <key id="page-composition">Page content</key>
-  <key id="free-content">Unrestricted content</key>
-  <key id="edit-page-content">Edit</key>
-  <key id="menuitemdocument">Linked document</key>
-  <key id="reference">reference document</key>
-  <key id="edit-menuitemdocument">Edit…</key>
+	<key id="page-composition">Page content</key>
+	<key id="free-content">Unrestricted content</key>
+	<key id="edit-page-content">Edit</key>
+	<key id="menuitemdocument">Linked document</key>
+	<key id="reference">reference document</key>
+	<key id="edit-menuitemdocument">Edit…</key>
 </i18n>

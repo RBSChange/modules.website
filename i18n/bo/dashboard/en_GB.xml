@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.bo.dashboard" lcid="en_GB">
-  <key id="orphanpageswithcount">orphan pages {websiteLabel} {count}</key>
-  <key id="orphanpages">orphan pages</key>
-  <key id="noorphanpages">there are nor orphan pages</key>
-  <key id="no-page-to-validate">there is no page to validate.</key>
-  <key id="page-validation">Pages to validate</key>
-  <key id="task-label-validate">{author} asks you to validate the page:</key>
+	<key id="orphanpageswithcount">orphan pages {websiteLabel} {count}</key>
+	<key id="orphanpages">orphan pages</key>
+	<key id="noorphanpages">there are nor orphan pages</key>
+	<key id="no-page-to-validate">there is no page to validate.</key>
+	<key id="page-validation">Pages to validate</key>
+	<key id="task-label-validate">{author} asks you to validate the page:</key>
 </i18n>

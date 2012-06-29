@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.document.template" lcid="en_GB">
-  <key id="document-name">template</key>
-  <key id="edition-form-title">template properties</key>
-  <key id="label">label</key>
-  <key id="author">author</key>
-  <key id="template">original template</key>
-  <key id="template-help">original template</key>
-  <key id="author-help">author</key>
-  <key id="content">content</key>
-  <key id="content-help">content</key>
-  <key id="description">description</key>
-  <key id="description-help">description</key>
-  <key id="label-help">label</key>
+	<key id="document-name">template</key>
+	<key id="edition-form-title">template properties</key>
+	<key id="label">label</key>
+	<key id="author">author</key>
+	<key id="template">original template</key>
+	<key id="template-help">original template</key>
+	<key id="author-help">author</key>
+	<key id="content">content</key>
+	<key id="content-help">content</key>
+	<key id="description">description</key>
+	<key id="description-help">description</key>
+	<key id="label-help">label</key>
 </i18n>

@@ -102,7 +102,7 @@ abstract class website_ViewLoadHandlerImpl implements website_ViewLoadHandler
 	 */
 	protected function getSession()
 	{
-		return f_mvc_HTTPRequest::getInstance()->getSession();
+		return change_Controller::getInstance()->getRequest()->getSession();
 	}
 	
 	/**
@@ -110,7 +110,7 @@ abstract class website_ViewLoadHandlerImpl implements website_ViewLoadHandler
 	 */
 	protected function getHTTPRequest()
 	{
-		return f_mvc_HTTPRequest::getInstance();
+		return change_Controller::getInstance()->getRequest();
 	}
 	
 }

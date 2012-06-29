@@ -20,12 +20,12 @@
 					
 					var callback = function (notif, bI) {bI.module.createDocumentEditor('modules_website_website', bI.module.mRootFolderId)};
 					var buttons = [{callback:callback, label:insertWebsiteAction.label, accessKey:"", module: this}];
-					notifZone.appendNotification("${trans:m.website.bo.general.notification.No-default-website,ucf,js}", 
+					notifZone.appendNotification("${trans:m.website.bo.general.notification.no-default-website,ucf,js}", 
 						'createwebsite', wToolkit.getIcon('website', 'small'), notifZone.PRIORITY_CRITICAL_BLOCK, buttons);
 				}
 				else
 				{
-					notifZone.appendNotification("${trans:m.website.bo.general.notification.No-default-website,ucf,js}", 
+					notifZone.appendNotification("${trans:m.website.bo.general.notification.no-default-website,ucf,js}", 
 						'nodefaultwebsite', wToolkit.getIcon('website', 'small'), notifZone.PRIORITY_WARNING_LOW, []);
 				}
 			
@@ -83,7 +83,7 @@
 		<body><![CDATA[
 			var id = listWidget.getSelectedIds()[0];
 			var lang = this.getContextLang();
-			if (confirm("${trans:m.website.bo.actions.Set-as-home-page-confirm,ucf,js}"))
+			if (confirm("${trans:m.website.bo.actions.set-as-home-page-confirm,ucf,js}"))
 			{
 				this.executeJSON("SetHomePage", {cmpref: id, lang: lang});
 			}
@@ -117,7 +117,7 @@
 			this.createDocumentEditor('modules_website_topic', listWidget.getSelectedItems()[0].id);
 		]]></body>
 	</action>
-    
+	
 	<action name="createWebsite">
 		<parameter name="listWidget"/>
 		<body><![CDATA[
@@ -202,7 +202,7 @@
 			return itemData.langAvailable;
 		]]></body>
 	</action> 
-    
+	
 	<action name="editPageContent">
 		<parameter name="listWidget"/>
 		<body><![CDATA[
@@ -229,7 +229,7 @@
 			var pageDeck = this.getElementByAnonId("pageDeck");
 			pageDeck.removeAttribute('editorLoaded');
 
-			var designFrame = this.getElementByAnonId("designFrame");    			
+			var designFrame = this.getElementByAnonId("designFrame");				
 			designFrame.setAttribute("src", editUrl);
 			pageDeck.selectedIndex = 3;
 
@@ -274,7 +274,7 @@
 			this.refresh();
 		]]></body>
 	</action>
-     
+	 
 	<action name="orderMenuItems">
 		<parameter name="listWidget"/>
 		<body><![CDATA[

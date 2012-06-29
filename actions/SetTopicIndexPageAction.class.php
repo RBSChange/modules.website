@@ -25,7 +25,7 @@ class website_SetTopicIndexPageAction extends change_JSONAction
 				catch (Exception $e)
 				{
 					Framework::exception($e);
-					return $this->sendJSONError(f_Locale::translateUI('&modules.website.bo.general.set-index-page-ref-error;', array('id' => $pageRef->getId())));
+					return $this->sendJSONError(LocaleService::getInstance()->trans('m.website.bo.general.set-index-page-ref-error', array(), array('id' => $pageRef->getId())));
 				}
 			}
 		}
@@ -39,7 +39,7 @@ class website_SetTopicIndexPageAction extends change_JSONAction
 			catch (Exception $e)
 			{
 				Framework::exception($e);
-				return $this->sendJSONError(f_Locale::translateUI('&modules.website.bo.general.set-index-page-error;'));
+				return $this->sendJSONError(LocaleService::getInstance()->trans('m.website.bo.general.set-index-page-error'));
 			}
 		}
 		

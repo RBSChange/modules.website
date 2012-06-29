@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.document.menuitemfunction" lcid="fr_FR">
-  <key id="document-name">lien prédéfini</key>
-  <key id="edition-form-title">propriétés du lien prédéfini</key>
-  <key id="label">libellé</key>
-  <key id="label-help">libellé du lien qui apparaîtra dans les menus</key>
-  <key id="url">type de lien</key>
-  <key id="url-help">permet de choisir le lien prédéfini</key>
+	<key id="document-name">lien prédéfini</key>
+	<key id="edition-form-title">propriétés du lien prédéfini</key>
+	<key id="label">libellé</key>
+	<key id="label-help">libellé du lien qui apparaîtra dans les menus</key>
+	<key id="url">type de lien</key>
+	<key id="url-help">permet de choisir le lien prédéfini</key>
 </i18n>

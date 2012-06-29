@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.bo.general.visibility" lcid="de_DE">
-  <key id="visible">sichtbar</key>
-  <key id="hidden-in-menu-only">nur in den Menüs ausgeblendet</key>
-  <key id="hidden-in-sitemap-only">ausschliesslich in der Sitemap ausgeblendet</key>
-  <key id="hidden">in den Menüs und in der Sitemap ausgeblendet</key>
+	<key id="visible">sichtbar</key>
+	<key id="hidden-in-menu-only">nur in den Menüs ausgeblendet</key>
+	<key id="hidden-in-sitemap-only">ausschliesslich in der Sitemap ausgeblendet</key>
+	<key id="hidden">in den Menüs und in der Sitemap ausgeblendet</key>
 </i18n>

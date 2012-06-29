@@ -24,7 +24,7 @@
 				<fieldlistitem labeli18n="m.website.bo.blocks.configurablemenu.mode-tag" value="tag" />
 				<fieldlistitem labeli18n="m.website.bo.blocks.configurablemenu.mode-contextual" value="contextual" />
 			</parameter>
-			<parameter name="cmpref" type="modules_generic/Document" allow="[modules_website_menu],[modules_website_topic],[modules_website_website]" moduleselector="website" />
+			<parameter name="cmpref" type="modules_generic/document" allow="[modules_website_menu],[modules_website_topic],[modules_website_website]" moduleselector="website" />
 			<parameter name="tag" type="String" from-list="modules_website/menutags" />
 			<parameter name="startLevel" type="Integer" default-value="1" />
 		</parameters>

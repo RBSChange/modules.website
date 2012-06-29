@@ -16,7 +16,7 @@ class website_SetHomePageAction extends change_JSONAction
 		catch (Exception  $e)
 		{
 			Framework::exception($e);
-			return $this->sendJSONError(f_Locale::translateUI('&modules.website.bo.general.set-home-page-error;'));
+			return $this->sendJSONError(LocaleService::getInstance()->trans('m.website.bo.general.set-home-page-error'));
 		}
 		
 		return $this->sendJSON(array('cmpref' => $page->getId(), 'documentversion' => $page->getDocumentversion()));

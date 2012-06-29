@@ -346,8 +346,8 @@ class block_BlockService extends change_BaseService
 					if ($cacheTime !== null)
 					{
 						$blockInfoArray[$blockId]['parameters']['cusecache'] = array('name' => 'cusecache', 'type' => 'Boolean', 
-							'default-value' => true, 'label' => '&modules.website.bo.blocks.Usecache;', 
-							'helptext' => '&modules.website.bo.blocks.Usecache-help;');
+							'default-value' => true, 'label' => 'm.website.bo.blocks.usecache', 
+							'helptext' => 'm.website.bo.blocks.usecache-help');
 					}
 				}
 			
@@ -413,8 +413,8 @@ class block_BlockService extends change_BaseService
 				if (!isset($blockInfoArray[$blockId]['parameters']['enablemetas']))
 				{
 					$blockInfoArray[$blockId]['parameters']['enablemetas'] = array('name' => 'enablemetas', 'type' => 'Boolean', 
-						'label' => '&modules.website.bo.blocks.Enablemetas;', 
-						'helptext' => '&modules.website.bo.blocks.Enablemetas-help;', 'default-value' => true);
+						'label' => 'm.website.bo.blocks.enablemetas', 
+						'helptext' => 'm.website.bo.blocks.enablemetas-help', 'default-value' => true);
 				}
 			}
 		}
@@ -594,7 +594,7 @@ class block_BlockService extends change_BaseService
 	
 	private function buildBlockConfiguration($blocLists)
 	{
-		$templateDir = f_util_FileUtils::buildWebeditPath("modules", "website", "templates", "builder", "blocks");
+		$templateDir = f_util_FileUtils::buildProjectPath("modules", "website", "templates", "builder", "blocks");
 		$blocWrapper = new block_blockInfoBuilder($this);
 		$author = 'Auto Generated at ' . date_Calendar::getInstance()->toString();
 		foreach ($blocLists as $blockType => $blockInfos)
@@ -653,7 +653,7 @@ class block_BlockService extends change_BaseService
 	
 	private function buildBlockInfo($blocLists)
 	{
-		$templateDir = f_util_FileUtils::buildWebeditPath("modules", "website", "templates", "builder", "blocks");
+		$templateDir = f_util_FileUtils::buildProjectPath("modules", "website", "templates", "builder", "blocks");
 		$blocWrapper = new block_blockInfoBuilder($this);
 		$author = 'Auto Generated at ' . date_Calendar::getInstance()->toString();
 		foreach ($blocLists as $blockType => $blockInfos)

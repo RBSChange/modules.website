@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.bo.general.structure" lcid="en_GB">
-  <key id="sample">Sample structure</key>
-  <key id="default">Standard structure</key>
-  <key id="no-content">Empty website</key>
+	<key id="sample">Sample structure</key>
+	<key id="default">Standard structure</key>
+	<key id="no-content">Empty website</key>
 </i18n>

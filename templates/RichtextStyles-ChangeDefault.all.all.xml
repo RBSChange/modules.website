@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Styles>
 	<!-- Block Styles -->
-    <Style name="Heading 1" element="h1" />
-    
+	<Style name="Heading 1" element="h1" />
+	
 	<Style name="Marker: Yellow" element="span">
 		<Style name="background-color" value="Yellow" />
 	</Style>

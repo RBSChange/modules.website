@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.bo.blocks" lcid="fr_FR">
-  <key id="emptybookmarksmessage">Le bloc ne contient aucun signet.</key>
-  <key id="one-col">Mise en page une colonne</key>
-  <key id="two-col">Mise en page deux colonnes</key>
-  <key id="enablemetas">Exposer les méta-données du bloc</key>
-  <key id="enablemetas-help">Ce bloc expose des méta-données utilisable pour renseignement des méta-données de la page (titre, description, mots clefs). Choisissez ″oui″ pour les rendre disponibles à la page.</key>
-  <key id="usecache">Activer le cache</key>
-  <key id="usecache-help">Ce bloc gère un cache, vous pouvez le désactiver</key>
+	<key id="emptybookmarksmessage">Le bloc ne contient aucun signet.</key>
+	<key id="one-col">Mise en page une colonne</key>
+	<key id="two-col">Mise en page deux colonnes</key>
+	<key id="enablemetas">Exposer les méta-données du bloc</key>
+	<key id="enablemetas-help">Ce bloc expose des méta-données utilisable pour renseignement des méta-données de la page (titre, description, mots clefs). Choisissez ″oui″ pour les rendre disponibles à la page.</key>
+	<key id="usecache">Activer le cache</key>
+	<key id="usecache-help">Ce bloc gère un cache, vous pouvez le désactiver</key>
 </i18n>

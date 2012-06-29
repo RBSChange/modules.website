@@ -1,20 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.bo.general.template" lcid="fr_FR">
-  <key id="tplone">N°1 - 1 colonne</key>
-  <key id="tplonetwocolumns">N°1 - 2 colonnes (gauche)</key>
-  <key id="tplonetwocolumnsright">N°1 - 2 colonnes (droite)</key>
-  <key id="tplonethreecolumns">N°1 - 3 colonnes</key>
-  <key id="tpltwo">N°2 - 2 colonnes</key>
-  <key id="tpltwothreecolumns">N°2 - 3 colonnes</key>
-  <key id="tplthree">N°3 - 3 colonnes</key>
-  <key id="tplthreetwocolumns">N°3 - 2 colonnes</key>
-  <key id="tplfour">N°4 - 2 colonnes</key>
-  <key id="tplfourthreecolumns">N°4 - 3 colonnes</key>
-  <key id="tplfive">N°5 - 2 colonnes</key>
-  <key id="tplfivethreecolumns">N°5 - 3 colonnes</key>
-  <key id="tplsix">N°6 - 1 colonne</key>
-  <key id="tplsixtwocolumns">N°6 - 2 colonnes (gauche)</key>
-  <key id="tplsixtwocolumnsright">N°6 - 2 colonnes (droite)</key>
-  <key id="tplsixthreecolumns">N°6 - 3 colonnes</key>
-  <key id="tplnewmailing">Template mailing</key>
+	<key id="tplone">N°1 - 1 colonne</key>
+	<key id="tplonetwocolumns">N°1 - 2 colonnes (gauche)</key>
+	<key id="tplonetwocolumnsright">N°1 - 2 colonnes (droite)</key>
+	<key id="tplonethreecolumns">N°1 - 3 colonnes</key>
+	<key id="tpltwo">N°2 - 2 colonnes</key>
+	<key id="tpltwothreecolumns">N°2 - 3 colonnes</key>
+	<key id="tplthree">N°3 - 3 colonnes</key>
+	<key id="tplthreetwocolumns">N°3 - 2 colonnes</key>
+	<key id="tplfour">N°4 - 2 colonnes</key>
+	<key id="tplfourthreecolumns">N°4 - 3 colonnes</key>
+	<key id="tplfive">N°5 - 2 colonnes</key>
+	<key id="tplfivethreecolumns">N°5 - 3 colonnes</key>
+	<key id="tplsix">N°6 - 1 colonne</key>
+	<key id="tplsixtwocolumns">N°6 - 2 colonnes (gauche)</key>
+	<key id="tplsixtwocolumnsright">N°6 - 2 colonnes (droite)</key>
+	<key id="tplsixthreecolumns">N°6 - 3 colonnes</key>
+	<key id="tplnewmailing">Template mailing</key>
 </i18n>

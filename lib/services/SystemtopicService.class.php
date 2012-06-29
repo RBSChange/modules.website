@@ -69,10 +69,10 @@ class website_SystemtopicService extends website_TopicService
 			$rc->beginI18nWork($lang);
 				
 			// Informations.
-			$reference = $document->getReference();
+			$reference = $document->getReferenceIdInstance();
 			if ($reference !== null)
 			{
-				$data['properties']['reference'] = $reference->getLabel() . ' (' . f_Locale::translateUI($reference->getPersistentModel()->getLabel()) . ' - ' . $reference->getId() . ')';
+				$data['properties']['reference'] = $reference->getLabel() . ' (' . LocaleService::getInstance()->trans($reference->getPersistentModel()->getLabelKey()) . ' - ' . $reference->getId() . ')';
 			}
 			else
 			{

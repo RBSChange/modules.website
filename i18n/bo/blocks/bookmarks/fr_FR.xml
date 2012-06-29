@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.bo.blocks.bookmarks" lcid="fr_FR">
-  <key id="title">signets</key>
-  <key id="cmpref">signets affichés</key>
-  <key id="availablebookmarks">signets disponibles</key>
-  <key id="add">ajouter</key>
-  <key id="remove">supprimer</key>
-  <key id="moveup">monter</key>
-  <key id="movedown">descendre</key>
+	<key id="title">signets</key>
+	<key id="cmpref">signets affichés</key>
+	<key id="availablebookmarks">signets disponibles</key>
+	<key id="add">ajouter</key>
+	<key id="remove">supprimer</key>
+	<key id="moveup">monter</key>
+	<key id="movedown">descendre</key>
 </i18n>

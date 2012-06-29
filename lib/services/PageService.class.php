@@ -1471,20 +1471,20 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		
 		$contentData = array(
-			'pagecomposition' => f_Locale::translateUI('&modules.website.bo.doceditor.Current-page-composition;', array(
+			'pagecomposition' => LocaleService::getInstance()->trans('m.website.bo.doceditor.current-page-composition', array('ucf'), array(
 				"blockCount" => $blockCount, "richtextCount" => $richtextCount)));
 		
 		if ($wordCount == 0)
 		{
-			$contentData['freecontent'] = f_Locale::translateUI('&modules.website.bo.doceditor.Current-word-count-empty;');
+			$contentData['freecontent'] = LocaleService::getInstance()->trans('m.website.bo.doceditor.current-word-count-empty', array('ucf'));
 		}
 		else if ($wordCount == 1)
 		{
-			$contentData['freecontent'] = f_Locale::translateUI('&modules.website.bo.doceditor.Current-word-count-singular;');
+			$contentData['freecontent'] = LocaleService::getInstance()->trans('m.website.bo.doceditor.current-word-count-singular', array('ucf'));
 		}
 		else
 		{
-			$contentData['freecontent'] = f_Locale::translateUI('&modules.website.bo.doceditor.Current-word-count;', array(
+			$contentData['freecontent'] = LocaleService::getInstance()->trans('m.website.bo.doceditor.current-word-count', array('ucf'), array(
 				'wordCount' => $wordCount));
 		}
 		$data['content'] = $contentData;
@@ -1603,7 +1603,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		try
 		{
-			return f_Locale::translateUI(block_BlockService::getInstance()->getBlockLabelFromBlockName($blockType));
+			return LocaleService::getInstance()->trans(block_BlockService::getInstance()->getBlockLabelFromBlockName($blockType));
 		}
 		catch (Exception $e)
 		{
@@ -2126,9 +2126,9 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	public function getReplacementsForTweet($document, $websiteId)
 	{
-		$label = array('name' => 'label', 'label' => f_Locale::translateUI('&modules.website.document.page.Label;'), 
+		$label = array('name' => 'label', 'label' => LocaleService::getInstance()->trans('m.website.document.page.label', array('ucf')), 
 			'maxLength' => 80);
-		$shortUrl = array('name' => 'shortUrl', 'label' => f_Locale::translateUI('&modules.twitterconnect.bo.general.Short-url;'), 
+		$shortUrl = array('name' => 'shortUrl', 'label' => LocaleService::getInstance()->trans('m.twitterconnect.bo.general.short-url', array('ucf')), 
 			'maxLength' => 30);
 		if ($document !== null)
 		{

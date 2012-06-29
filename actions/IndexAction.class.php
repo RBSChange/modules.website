@@ -36,7 +36,7 @@ class website_IndexAction extends change_Action
 		catch (Exception $e) 
 		{
 			Framework::exception($e);
-			require(f_util_FileUtils::buildWebeditPath("site-disabled.php"));
+			require(f_util_FileUtils::buildProjectPath("site-disabled.php"));
 		}		
 		return change_View::NONE ;
 	}

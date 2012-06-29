@@ -1,16 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.bo.blocks.iframe" lcid="de_DE">
-  <key id="url">URL Adresse</key>
-  <key id="url-help">komplette URL Adresse (mit http://) der im iframe anzuzeigenden Seite</key>
-  <key id="text">Alternativtext</key>
-  <key id="text-help">angezeigter Alternativtext, wenn der iframe im Browser nicht angezeigt werden kann</key>
-  <key id="frameHeight">Höhe</key>
-  <key id="frameHeight-help">Höhe des iframe in Pixel</key>
-  <key id="frameWidth">Breite</key>
-  <key id="frameWidth-help">Breite des iframe in Pixel</key>
-  <key id="scrolling">Scroll-Balken anzeigen</key>
-  <key id="scrolling-help">die Scroll-Balken können angezeigt werden, wenn der Inhalt der im iframe angezeigten Seite mehr Platz in Anspruch nimmt als der iframe zulässt</key>
-  <key id="scroll-auto">Auto</key>
-  <key id="scroll-yes">Ja</key>
-  <key id="scroll-no">Nein</key>
+	<key id="url">URL Adresse</key>
+	<key id="url-help">komplette URL Adresse (mit http://) der im iframe anzuzeigenden Seite</key>
+	<key id="text">Alternativtext</key>
+	<key id="text-help">angezeigter Alternativtext, wenn der iframe im Browser nicht angezeigt werden kann</key>
+	<key id="frameheight">Höhe</key>
+	<key id="frameheight-help">Höhe des iframe in Pixel</key>
+	<key id="framewidth">Breite</key>
+	<key id="framewidth-help">Breite des iframe in Pixel</key>
+	<key id="scrolling">Scroll-Balken anzeigen</key>
+	<key id="scrolling-help">die Scroll-Balken können angezeigt werden, wenn der Inhalt der im iframe angezeigten Seite mehr Platz in Anspruch nimmt als der iframe zulässt</key>
+	<key id="scroll-auto">Auto</key>
+	<key id="scroll-yes">Ja</key>
+	<key id="scroll-no">Nein</key>
 </i18n>

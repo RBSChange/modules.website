@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.bo.blocks.configurablesitemap" lcid="fr_FR">
 	<key id="title">plan du site</key>
 	<key id="depth">profondeur</key>

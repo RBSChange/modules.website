@@ -118,7 +118,7 @@ class website_BlockView
 	private function loadConfig($request)
 	{
 		$name = $this->getName($request);
-		$viewFolder = f_util_FileUtils::buildWebeditPath('modules', $request->getModuleName(), 'config', 'views');
+		$viewFolder = f_util_FileUtils::buildProjectPath('modules', $request->getModuleName(), 'config', 'views');
 		$viewConfigFile = $viewFolder.'/'.$name.".php";
 		if (file_exists($viewConfigFile))
 		{

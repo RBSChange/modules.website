@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.document.preferences" lcid="fr_FR">
-  <key id="document-name">préférences</key>
-  <key id="edition-form-title">préférences des sites et des pages</key>
-  <key id="checkersrecipient">destinataire des vérifications</key>
-  <key id="checkersrecipient-help">liste des utilisateurs recevant les notifications des processus de vérifications (liens, etc.)</key>
+	<key id="document-name">préférences</key>
+	<key id="edition-form-title">préférences des sites et des pages</key>
+	<key id="checkersrecipient">destinataire des vérifications</key>
+	<key id="checkersrecipient-help">liste des utilisateurs recevant les notifications des processus de vérifications (liens, etc.)</key>
 </i18n>

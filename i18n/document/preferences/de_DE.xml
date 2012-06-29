@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.document.preferences" lcid="de_DE">
-  <key id="document-name">Präferenzen</key>
-  <key id="edition-form-title">Webseiten und Seiten Präferenzen</key>
-  <key id="checkersrecipient">Empfänger der Prüfungen</key>
-  <key id="checkersrecipient-help">Liste der Benutzer, die die Mitteilugen der Prüfungsprozesse (Links, usw.) erhalten.</key>
+	<key id="document-name">Präferenzen</key>
+	<key id="edition-form-title">Webseiten und Seiten Präferenzen</key>
+	<key id="checkersrecipient">Empfänger der Prüfungen</key>
+	<key id="checkersrecipient-help">Liste der Benutzer, die die Mitteilugen der Prüfungsprozesse (Links, usw.) erhalten.</key>
 </i18n>

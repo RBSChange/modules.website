@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.list" lcid="fr_FR">
 	<key id="linkspositions-label">position des liens</key>
 	<key id="linkspositions-description">Position des liens de navigation dans les blocs.</key>

@@ -47,7 +47,7 @@ class commands_website_CompileBbcodes extends c_ChangescriptCommand
 		$filePath = f_util_FileUtils::buildChangeBuildPath('modules', 'website', 'lib', 'bbcode', 'BBCodeEditor.js');
 		$tagSets = website_BBCodeEditor::getInstance()->compile();
 		$generator = new builder_Generator();
-		$generator->setTemplateDir(f_util_FileUtils::buildWebeditPath('modules', 'website', 'templates', 'builder', 'bbcodes'));
+		$generator->setTemplateDir(f_util_FileUtils::buildProjectPath('modules', 'website', 'templates', 'builder', 'bbcodes'));
 		$generator->assign('tagSets', $tagSets);
 		$result = $generator->fetch('BBCodeEditor.js');
 		f_util_FileUtils::write($filePath, $result, f_util_FileUtils::OVERRIDE);

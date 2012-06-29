@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.paginator" lcid="de_DE">
-  <key id="detail">Seite {currentPage} von {pageCount} Seiten</key>
-  <key id="next">weiter</key>
-  <key id="first">« Erste</key>
-  <key id="last">letzte »</key>
+	<key id="detail">Seite {currentPage} von {pageCount} Seiten</key>
+	<key id="next">weiter</key>
+	<key id="first">« Erste</key>
+	<key id="last">letzte »</key>
 </i18n>

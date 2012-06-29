@@ -52,7 +52,7 @@ class website_EditContentSuccessView extends change_View
 		
 		foreach ($ancestors as $ancestor)
 		{
-			$path = ' > ' . f_Locale::translate($ancestor->getLabel()) . $path;
+			$path = ' > ' . LocaleService::getInstance()->trans($ancestor->getLabel()) . $path;
 		}
 		
 		$path .= ' > ' . $document->getLabel();

@@ -77,12 +77,12 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 	 */
 	protected function _generateBlockAction($blockName)
 	{
-		$dirPath = f_util_FileUtils::buildWebeditPath('modules', $this->name, 'lib', 'blocks');
+		$dirPath = f_util_FileUtils::buildProjectPath('modules', $this->name, 'lib', 'blocks');
 		if (!file_exists($dirPath))
 		{
 			f_util_FileUtils::mkdir($dirPath);
 		}
-		$blockactionFile = f_util_FileUtils::buildWebeditPath('modules', $this->name, 'lib', 'blocks', 'Block'.$blockName.'Action.class.php');
+		$blockactionFile = f_util_FileUtils::buildProjectPath('modules', $this->name, 'lib', 'blocks', 'Block'.$blockName.'Action.class.php');
 		if(!file_exists($blockactionFile))
 		{
 			list($tplFolder, $tplName) = $this->getBlockTemplateInfo();
@@ -96,7 +96,7 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 		}
 		change_AutoloadBuilder::getInstance()->appendFile($blockactionFile);
 
-		$blocktemplateFile = f_util_FileUtils::buildWebeditPath('modules', $this->name, 'templates', ucfirst($this->name).'-Block-'.$blockName.'-Success.all.all.html');
+		$blocktemplateFile = f_util_FileUtils::buildProjectPath('modules', $this->name, 'templates', ucfirst($this->name).'-Block-'.$blockName.'-Success.all.all.html');
 		if(!file_exists($blocktemplateFile))
 		{
 			list($tplFolder, $tplName) = $this->getBlockSuccessViewInfo();
@@ -118,7 +118,7 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 	 */
 	protected function _generateBlocksxml($blockName, $icon)
 	{
-		$blocksFile = f_util_FileUtils::buildWebeditPath('modules', $this->name, 'config', 'blocks.xml');
+		$blocksFile = f_util_FileUtils::buildProjectPath('modules', $this->name, 'config', 'blocks.xml');
 		$blockType = "modules_".$this->name."_".$blockName;
 		if (file_exists($blocksFile))
 		{
@@ -153,7 +153,7 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 
 	protected function _getTpl($folder, $tpl, $blockName, $icon = null, $additionalParams = null)
 	{
-		$templateDir = f_util_FileUtils::buildWebeditPath('modules', 'website', 'templates', 'builder', $folder);
+		$templateDir = f_util_FileUtils::buildProjectPath('modules', 'website', 'templates', 'builder', $folder);
 		$generator = new builder_Generator();
 		$generator->setTemplateDir($templateDir);
 		$generator->assign('blockName', $blockName);

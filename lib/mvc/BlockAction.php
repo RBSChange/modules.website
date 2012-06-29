@@ -717,7 +717,7 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 			return LocaleService::getInstance()->trans("m.".$this->getModuleName().".fo.blocks.".$this->getName().".".$propertyName);
 		}
 
-		return f_Locale::translate(BeanUtils::getBeanPropertyInfo($bean, $propertyName)->getLabelKey());
+		return LocaleService::getInstance()->trans(BeanUtils::getBeanPropertyInfo($bean, $propertyName)->getLabelKey());
 	}
 
 	/**
@@ -1147,7 +1147,7 @@ abstract class f_mvc_Action
 	 */
 	protected function getSession()
 	{
-		return f_mvc_HTTPRequest::getInstance()->getSession();
+		return change_Controller::getInstance()->getRequest()->getSession();
 	}
 	
 	/**
@@ -1155,6 +1155,6 @@ abstract class f_mvc_Action
 	 */
 	protected function getHTTPRequest()
 	{
-		return f_mvc_HTTPRequest::getInstance();
+		return change_Controller::getInstance()->getRequest();
 	}
 }

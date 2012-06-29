@@ -7,11 +7,11 @@
 			<xul:vbox flex="1">
 				<xul:cmessageinfo anonid="message" />
 				<xul:hbox anonid="action-bar">
-					<xul:button anonid="save_properties" oncommand="saveProperties()" label="${trans:m.uixul.bo.doceditor.button.Save,ucf,attr}"
+					<xul:button anonid="save_properties" oncommand="saveProperties()" label="${trans:m.uixul.bo.doceditor.button.save,ucf,attr}"
 						image="{IconsBase}/small/save.png" />
-					<xul:button anonid="reset_properties" oncommand="resetProperties()" label="${trans:m.uixul.bo.doceditor.button.Canceledit,ucf,attr}"
+					<xul:button anonid="reset_properties" oncommand="resetProperties()" label="${trans:m.uixul.bo.doceditor.button.canceledit,ucf,attr}"
 						image="{IconsBase}/small/undo.png" />
-					<xul:button anonid="next_error_property" oncommand="nextErrorProperty()" label="${trans:m.uixul.bo.doceditor.button.Nexterror,ucf,attr}"
+					<xul:button anonid="next_error_property" oncommand="nextErrorProperty()" label="${trans:m.uixul.bo.doceditor.button.nexterror,ucf,attr}"
 						image="{IconsBase}/small/next-invalid-field.png" />
 				</xul:hbox>
 				<xul:scrollbox anonid="scrollctrl" flex="1" class="editordatacontainer" orient="vertical">
@@ -19,23 +19,23 @@
 						anonid="field_markerGridJSON" fieldtype="namedgridlist" flex="1">
 					</xul:cfield>
 
-					<xul:cfieldsgroup label="${transui:m.website.bo.doceditor.markers.add-marker-section,ucf,attr}">
+					<xul:cfieldsgroup label="${trans:m.website.bo.doceditor.markers.add-marker-section,ucf,attr}">
 					
 						<xul:row anonid="row_newMarkerType">
 							<xul:clabel id="website_markers_newMarkerType_label" control="website_markers_newMarkerType"
-								value="${transui:m.website.bo.doceditor.markers.newmarkertype,ucf,attr}" />
+								value="${trans:m.website.bo.doceditor.markers.newmarkertype,ucf,attr}" />
 								
 							<xul:cfield name="newMarkerType" id="website_markers_newMarkerType" anonid="field_newMarkerType"
 								fieldtype="dropdownlist" required="true" listid="modules_website/markerstype"
-								shorthelp="${transui:m.website.bo.doceditor.markers.newmarkertype-help,ucf,attr}" />
+								shorthelp="${trans:m.website.bo.doceditor.markers.newmarkertype-help,ucf,attr}" />
 						</xul:row>
 						
 						<xul:row anonid="row_newMarkerAccount">
 							<xul:clabel id="website_markers_newMarkerAccount_label" control="website_markers_newMarkerAccount"
-								value="${transui:m.website.bo.doceditor.markers.newmarkeraccount,ucf,attr}" />
+								value="${trans:m.website.bo.doceditor.markers.newmarkeraccount,ucf,attr}" />
 							<xul:cfield name="newMarkerAccount" id="website_markers_newMarkerAccount" anonid="field_newMarkerAccount"
 								fieldtype="text" required="true" 
-								shorthelp="${transui:m.website.bo.doceditor.markers.newmarkeraccount,ucf,attr}" />	
+								shorthelp="${trans:m.website.bo.doceditor.markers.newmarkeraccount,ucf,attr}" />	
 						</xul:row>
 						
 					</xul:cfieldsgroup>
@@ -110,11 +110,11 @@
 						<xul:hbox name="status" pack="center" align="center">
 							<xul:image src="{IconsBase}/small/status-detail.png"/>
 						</xul:hbox>
-						<xul:label name="label" value="${transui:m.website.document.marker.label,ucf,attr}" sortonfield="true"/>
-						<xul:label name="typename" value="${transui:m.website.document.marker.typename,ucf,attr}" sortonfield="true"/>
-						<xul:label name="account" value="${transui:m.website.document.marker.account,ucf,attr}" sortonfield="true"/>
-						<xul:label name="langs" value="${transui:m.website.document.marker.langs,ucf,attr}" />
-						<xul:label name="actionrow" value="${transui:m.uixul.bo.doceditor.actions,ucf,attr}" />
+						<xul:label name="label" value="${trans:m.website.document.marker.label,ucf,attr}" sortonfield="true"/>
+						<xul:label name="typename" value="${trans:m.website.document.marker.typename,ucf,attr}" sortonfield="true"/>
+						<xul:label name="account" value="${trans:m.website.document.marker.account,ucf,attr}" sortonfield="true"/>
+						<xul:label name="langs" value="${trans:m.website.document.marker.langs,ucf,attr}" />
+						<xul:label name="actionrow" value="${trans:m.uixul.bo.doceditor.actions,ucf,attr}" />
 					</xul:row>
 				</xul:rows>
 			</xul:grid>
@@ -128,7 +128,7 @@
 				<xul:label value="" />
 				<xul:label value="" />
 				<xul:toolbar class="actions">
-					<xul:toolbarbutton action="edit" image="{IconsBase}/small/edit.png" tooltiptext="${transui:m.uixul.bo.actions.edit,ucf,attr}" />
+					<xul:toolbarbutton action="edit" image="{IconsBase}/small/edit.png" tooltiptext="${trans:m.uixul.bo.actions.edit,ucf,attr}" />
 				</xul:toolbar>
 			</xul:row>
 		</content>

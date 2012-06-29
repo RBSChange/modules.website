@@ -61,7 +61,7 @@
 						this.getElementByAnonId('form-panel').setAttribute('hidden', 'true');
 						this.getElementByAnonId('importing-panel').setAttribute('hidden', 'true');
 						this.getElementByAnonId('message-panel').removeAttribute('hidden');
-						this.appendMessage("${transui:m.website.bo.dialog.no-page-template,ucf,js}", true);
+						this.appendMessage("${trans:m.website.bo.dialog.no-page-template,ucf,js}", true);
 					}
 				]]></body>
 			</method>
@@ -113,7 +113,7 @@
 					this.getElementByAnonId('message-panel').removeAttribute('hidden');
 					if (result.status == 'OK')
 					{
-						this.appendMessage("${transui:m.website.bo.dialog.structure-initialized,ucf,js}", false);
+						this.appendMessage("${trans:m.website.bo.dialog.structure-initialized,ucf,js}", false);
 					}
 					else
 					{
@@ -162,22 +162,22 @@
 		<xbl:content>
 			<xul:vbox flex="1">
 				<xul:hbox class="dialog-header">
-					<xul:label value="${transui:m.website.bo.dialog.import-structure-title,ucf,attr}" class="dialog-title" />
+					<xul:label value="${trans:m.website.bo.dialog.import-structure-title,ucf,attr}" class="dialog-title" />
 					<xul:spacer flex="1" />
 					<xul:vbox pack="center">
 						<xul:toolbarbutton height="16" width="16" image="{IconsBase}/small/delete.png" oncommand="onClose()" 
-							tooltiptexts="${transui:m.uixul.bo.dialog.cancel,ucf,attr}" />
+							tooltiptexts="${trans:m.uixul.bo.dialog.cancel,ucf,attr}" />
 					</xul:vbox>
 				</xul:hbox>
 				<xul:hbox flex="1">
 					<xul:deck anonid="deck" flex="1">
 						<xul:vbox anonid="form-panel" flex="1">
 							<xul:vbox flex="1">
-								<xul:description>${transui:m.website.bo.dialog.select-templates-help,ucf}</xul:description>
+								<xul:description>${trans:m.website.bo.dialog.select-templates-help,ucf}</xul:description>
 								<xul:spacer height="20"/>
 								<xul:hbox>
 									<xul:vbox width="250" align="center">
-										<xul:description>${transui:m.website.bo.dialog.select-page-template,ucf}</xul:description>
+										<xul:description>${trans:m.website.bo.dialog.select-page-template,ucf}</xul:description>
 										<xul:spacer height="5"/>
 										<xul:cfield editwidth="250" anonid="template" name="template" fieldtype="dropdownlist" hidehelp="true" required="true" />
 										<xul:spacer height="5"/>
@@ -187,7 +187,7 @@
 									</xul:vbox>
 									<xul:spacer flex="1" />
 									<xul:vbox width="250" align="center">
-										<xul:description>${transui:m.website.bo.dialog.select-nosidebar-page-template,ucf}</xul:description>
+										<xul:description>${trans:m.website.bo.dialog.select-nosidebar-page-template,ucf}</xul:description>
 										<xul:spacer height="5"/>
 										<xul:cfield editwidth="250" anonid="templateNosidebar" name="templateNosidebar" fieldtype="dropdownlist" hidehelp="true" />
 										<xul:spacer height="5"/>
@@ -197,7 +197,7 @@
 									</xul:vbox>
 									<xul:spacer flex="1" />
 									<xul:vbox width="250" align="center">
-										<xul:description>${transui:m.website.bo.dialog.select-home-page-template,ucf}</xul:description>
+										<xul:description>${trans:m.website.bo.dialog.select-home-page-template,ucf}</xul:description>
 										<xul:spacer height="5"/>
 										<xul:cfield editwidth="250" anonid="templateHome" name="templateHome" fieldtype="dropdownlist" hidehelp="true" />
 										<xul:spacer height="5"/>
@@ -208,7 +208,7 @@
 								</xul:hbox>
 								<xul:spacer height="10" />
 								<xul:hbox align="center" pack="center"><xul:button anonid="submitButton" disabled="true" image="{IconsBase}/small/check.png" 
-									label="${transui:m.website.bo.dialog.initialize,ucf,attr}" oncommand="handleSelected()" /></xul:hbox>								
+									label="${trans:m.website.bo.dialog.initialize,ucf,attr}" oncommand="handleSelected()" /></xul:hbox>								
 							</xul:vbox>
 						</xul:vbox>
 						<xul:vbox anonid="importing-panel" flex="1">
@@ -218,7 +218,7 @@
 							</xul:hbox>
 							<xul:spacer height="15" />
 							<xul:hbox pack="center">
-								<xul:description style="font-size:18px" value="${transui:m.website.bo.dialog.importing-structure,ucf,attr}" />
+								<xul:description style="font-size:18px" value="${trans:m.website.bo.dialog.importing-structure,ucf,attr}" />
 							</xul:hbox>
 							<xul:spacer flex="1" />							
 						</xul:vbox>

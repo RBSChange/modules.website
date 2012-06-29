@@ -5,25 +5,25 @@
 	<binding id="cBookmarksField" extends="form.cField#cAbstractField">
 		<content>
 			<xul:vbox flex="1">
-                <xul:listbox anonid="displayList" onselect="handleDisplaySelect();" /> 
-                <xul:hbox>
-            
-               		<xul:button anonid="moveUp" image="{IconsBase}/small/arrow-up-blue.png"
-						label="${trans:m.website.bo.blocks.bookmarks.MoveUp,ucf,attr}" orient="vertical" 
+				<xul:listbox anonid="displayList" onselect="handleDisplaySelect();" /> 
+				<xul:hbox>
+			
+			   		<xul:button anonid="moveUp" image="{IconsBase}/small/arrow-up-blue.png"
+						label="${trans:m.website.bo.blocks.bookmarks.moveup,ucf,attr}" orient="vertical" 
 						oncommand="moveItemUp();" disabled="true" />
-                	<xul:button anonid="remove" image="{IconsBase}/small/delete.png" 
-						label="${trans:m.website.bo.blocks.bookmarks.Remove,ucf,attr}" orient="vertical" 
+					<xul:button anonid="remove" image="{IconsBase}/small/delete.png" 
+						label="${trans:m.website.bo.blocks.bookmarks.remove,ucf,attr}" orient="vertical" 
 						oncommand="removeItem();" disabled="true" />
-                    <xul:button anonid="moveDown" image="{IconsBase}/small/arrow-down-blue.png" 
-                    	label="${trans:m.website.bo.blocks.bookmarks.MoveDown,ucf,attr}" orient="vertical" 
-                    	oncommand="moveItemDown();" disabled="true" />
-                </xul:hbox>
-                
-                <xul:label value="${transui:m.website.bo.blocks.bookmarks.availablebookmarks,ucf,attr}" 
-                		   style="font-weight: bold; font-size: 12px;" />
+					<xul:button anonid="moveDown" image="{IconsBase}/small/arrow-down-blue.png" 
+						label="${trans:m.website.bo.blocks.bookmarks.movedown,ucf,attr}" orient="vertical" 
+						oncommand="moveItemDown();" disabled="true" />
+				</xul:hbox>
+				
+				<xul:label value="${trans:m.website.bo.blocks.bookmarks.availablebookmarks,ucf,attr}" 
+						   style="font-weight: bold; font-size: 12px;" />
 				<xul:listbox anonid="availableList" seltype="multiple" onselect="handleAvailableSelect();" />
-                <xul:button anonid="add" image="{IconsBase}/small/add.png" label="${trans:m.website.bo.blocks.bookmarks.Add,ucf,attr}" 
-                		orient="vertical" oncommand="addItems();" disabled="true" />
+				<xul:button anonid="add" image="{IconsBase}/small/add.png" label="${trans:m.website.bo.blocks.bookmarks.add,ucf,attr}" 
+						orient="vertical" oncommand="addItems();" disabled="true" />
 			</xul:vbox>
 		</content>	
 		<implementation>
@@ -71,15 +71,15 @@
 					var displayList = this.getElementByAnonId('displayList');
 					var marks = this.value.split(';');
 					for (var i = 0; i < marks.length; i++)
-		            {
-		                var displayedData = marks[i].split(':');
-		                if (displayedData.length == 2)
-		                {
-		                    var label = decodeURIComponent(trim(displayedData[1]));
-		                    var value = decodeURIComponent(trim(displayedData[0]));
-		                    displayList.appendItem(label, value);
-		                }
-		            }
+					{
+						var displayedData = marks[i].split(':');
+						if (displayedData.length == 2)
+						{
+							var label = decodeURIComponent(trim(displayedData[1]));
+							var value = decodeURIComponent(trim(displayedData[0]));
+							displayList.appendItem(label, value);
+						}
+					}
 				]]></body>				
 			</method>
 			
@@ -97,135 +97,135 @@
 			<method name="getAllMarks">
 				<body><![CDATA[
 					var availableList = this.getElementByAnonId('availableList');
-		            while (availableList.childNodes.length > 0)
-		            {
-		                availableList.removeItemAt(0);
-		            }
-		            					
+					while (availableList.childNodes.length > 0)
+					{
+						availableList.removeItemAt(0);
+					}
+										
 					var displayList = this.getElementByAnonId('displayList');
-		            while (displayList.childNodes.length > 0)
-		            {
-		                displayList.removeItemAt(0);
-		            }
-		            
+					while (displayList.childNodes.length > 0)
+					{
+						displayList.removeItemAt(0);
+					}
+					
  					var editor = this.getPageEditor();
-		            var pageContent = editor.getXMLContentString();   
+					var pageContent = editor.getXMLContentString();   
 		
-		            var anchorsRegExp = /<a([^>]*)>/gi;
-		            while (anchorMatch = anchorsRegExp.exec(pageContent))
-		            {
-		            	var attributes = anchorMatch[1];
-		            	try
-		            	{
-			            	var name = attributes.match(/ name="([^"]+)"/i)[1];
-			            	var title = attributes.match(/ title="([^"]+)"/i)[1];
-			                availableList.appendItem(title, name);
-			            }
-			            catch (e)
-			            {
-			            	//Normal link
-			            }
-		            }				
+					var anchorsRegExp = /<a([^>]*)>/gi;
+					while (anchorMatch = anchorsRegExp.exec(pageContent))
+					{
+						var attributes = anchorMatch[1];
+						try
+						{
+							var name = attributes.match(/ name="([^"]+)"/i)[1];
+							var title = attributes.match(/ title="([^"]+)"/i)[1];
+							availableList.appendItem(title, name);
+						}
+						catch (e)
+						{
+							//Normal link
+						}
+					}				
 				]]></body>				
 			</method>
 			
 			<method name="updateValueFromUI">
 				<body><![CDATA[
 					var displayList = this.getElementByAnonId('displayList');
-	            	var displayed = [];
-		            for(var i = 0; i < displayList.childNodes.length; i++)
-		            {
-		                displayed.push(
-		                    encodeURIComponent(displayList.childNodes[i].value)
-		                    + ': '
-		                    + encodeURIComponent(displayList.childNodes[i].label)
-		                );
-		            }
-	            	var returnValue = displayed.join('; ') + ';';
-	           		this.setAttribute("value", returnValue);
+					var displayed = [];
+					for(var i = 0; i < displayList.childNodes.length; i++)
+					{
+						displayed.push(
+							encodeURIComponent(displayList.childNodes[i].value)
+							+ ': '
+							+ encodeURIComponent(displayList.childNodes[i].label)
+						);
+					}
+					var returnValue = displayed.join('; ') + ';';
+			   		this.setAttribute("value", returnValue);
 					this.dispatchValueChanged(returnValue);
 				]]></body>				
 			</method>
 
 			<method name="handleAvailableSelect">
 				<body><![CDATA[
-		            var list = this.getElementByAnonId('availableList');
-		            this.getElementByAnonId('add').disabled  = (list.selectedCount == 0);
+					var list = this.getElementByAnonId('availableList');
+					this.getElementByAnonId('add').disabled  = (list.selectedCount == 0);
 				]]></body>				
 			</method>
 			
 			<method name="handleDisplaySelect">
 				<body><![CDATA[
-		            var list = this.getElementByAnonId('displayList');
-		            var selected = list.selectedItems[0];
-		            if (list.selectedCount > 0)
-		            {
-		                this.getElementByAnonId('moveUp').disabled = (list.getIndexOfItem(selected) == 0)
-		                this.getElementByAnonId('remove').disabled = false;                
-		                this.getElementByAnonId('moveDown').disabled = (list.getIndexOfItem(selected) == (list.getRowCount() - 1));
-		            }
-		            else
-		            {
-		            	this.getElementByAnonId('moveUp').disabled = true;
-		                this.getElementByAnonId('remove').disabled = true;
-		                this.getElementByAnonId('moveDown').disabled = true;
-		            }
+					var list = this.getElementByAnonId('displayList');
+					var selected = list.selectedItems[0];
+					if (list.selectedCount > 0)
+					{
+						this.getElementByAnonId('moveUp').disabled = (list.getIndexOfItem(selected) == 0)
+						this.getElementByAnonId('remove').disabled = false;				
+						this.getElementByAnonId('moveDown').disabled = (list.getIndexOfItem(selected) == (list.getRowCount() - 1));
+					}
+					else
+					{
+						this.getElementByAnonId('moveUp').disabled = true;
+						this.getElementByAnonId('remove').disabled = true;
+						this.getElementByAnonId('moveDown').disabled = true;
+					}
 				]]></body>				
 			</method>
 
 			<method name="addItems">
 				<body><![CDATA[
-		            var fromList = this.getElementByAnonId('availableList');
-		            var toList = this.getElementByAnonId('displayList');
-		            var selected = fromList.selectedItems;
-		            for (var i = 0; i < fromList.selectedCount; i++)
-		            {
-		                toList.appendItem(selected[i].label, selected[i].value);
-		            }
-		            this.updateValueFromUI();
+					var fromList = this.getElementByAnonId('availableList');
+					var toList = this.getElementByAnonId('displayList');
+					var selected = fromList.selectedItems;
+					for (var i = 0; i < fromList.selectedCount; i++)
+					{
+						toList.appendItem(selected[i].label, selected[i].value);
+					}
+					this.updateValueFromUI();
 				]]></body>				
 			</method>
 
 			<method name="moveItemUp">
 				<body><![CDATA[
-		            var list = this.getElementByAnonId('displayList');
-		            var selected = list.selectedItems[0];
-		            var itemIndex = list.getIndexOfItem(selected);
-		            var newItem = list.insertItemAt(itemIndex - 1, selected.label, selected.value);
-		            list.removeItemAt(itemIndex + 1);
-		            list.clearSelection();
-		            list.addItemToSelection(newItem);
-		            this.updateValueFromUI();
+					var list = this.getElementByAnonId('displayList');
+					var selected = list.selectedItems[0];
+					var itemIndex = list.getIndexOfItem(selected);
+					var newItem = list.insertItemAt(itemIndex - 1, selected.label, selected.value);
+					list.removeItemAt(itemIndex + 1);
+					list.clearSelection();
+					list.addItemToSelection(newItem);
+					this.updateValueFromUI();
 				]]></body>				
 			</method>
 
 			<method name="moveItemDown">
 				<body><![CDATA[
-	            var list = this.getElementByAnonId('displayList');
-	            var selected = list.selectedItems[0];
-	            var itemIndex = list.getIndexOfItem(selected);
-	            if (itemIndex == (list.getRowCount() - 2))
-	            {
-	                var newItem = list.appendItem(selected.label, selected.value);
-	            }
-	            else
-	            {
-	                var newItem = list.insertItemAt(itemIndex + 2, selected.label, selected.value);
-	            }
-	            list.removeItemAt(itemIndex);
-	            list.clearSelection();
-	            list.addItemToSelection(newItem);
-	            this.updateValueFromUI();
+				var list = this.getElementByAnonId('displayList');
+				var selected = list.selectedItems[0];
+				var itemIndex = list.getIndexOfItem(selected);
+				if (itemIndex == (list.getRowCount() - 2))
+				{
+					var newItem = list.appendItem(selected.label, selected.value);
+				}
+				else
+				{
+					var newItem = list.insertItemAt(itemIndex + 2, selected.label, selected.value);
+				}
+				list.removeItemAt(itemIndex);
+				list.clearSelection();
+				list.addItemToSelection(newItem);
+				this.updateValueFromUI();
 				]]></body>				
 			</method>
 
 			<method name="removeItem">
 				<body><![CDATA[
-		            var list = this.getElementByAnonId('displayList');
-		            var selected = list.selectedItems[0];
-		            var itemIndex = list.getIndexOfItem(selected);
-		            list.removeItemAt(itemIndex);
-		            this.updateValueFromUI();
+					var list = this.getElementByAnonId('displayList');
+					var selected = list.selectedItems[0];
+					var itemIndex = list.getIndexOfItem(selected);
+					list.removeItemAt(itemIndex);
+					this.updateValueFromUI();
 				]]></body>				
 			</method>
 		</implementation>	

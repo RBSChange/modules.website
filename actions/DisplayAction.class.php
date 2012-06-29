@@ -33,7 +33,7 @@ class website_DisplayAction extends change_Action
 		$website = website_WebsiteService::getInstance()->getCurrentWebsite();	
 		if (!$website->isPublished())
 		{
-			include f_util_FileUtils::buildWebeditPath('site-disabled.php');
+			include f_util_FileUtils::buildProjectPath('site-disabled.php');
 			return change_View::NONE;
 		}
 			
@@ -96,7 +96,7 @@ class website_DisplayAction extends change_Action
 	{
 		Framework::exception($e);
 		$controller = $context->getController();
-		$request->setParameter('message', f_Locale::translate('&modules.website.exception.page-' . $e->getCode() . ';', array('param' => $e->getMessage())));
+		$request->setParameter('message', LocaleService::getInstance()->trans('m.website.exception.page-' . $e->getCode(), array(), array('param' => $e->getMessage())));
 		if (Framework::isWarnEnabled())
 		{
 			Framework::warn(__METHOD__ . 'Cannot display requested Page (ID="' . $pageId . '") : ' . $request->getParameter('message'));

@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.document.template" lcid="fr_FR">
-  <key id="document-name">gabarit</key>
-  <key id="edition-form-title">propriétés du gabarit</key>
-  <key id="label">libellé</key>
-  <key id="label-help">libellé</key>
-  <key id="author">auteur</key>
-  <key id="author-help">author</key>
-  <key id="description">description</key>
-  <key id="description-help">description</key>
-  <key id="template">gabarit original</key>
-  <key id="template-help">gabarit original</key>
-  <key id="content">content</key>
-  <key id="content-help">content</key>
+	<key id="document-name">gabarit</key>
+	<key id="edition-form-title">propriétés du gabarit</key>
+	<key id="label">libellé</key>
+	<key id="label-help">libellé</key>
+	<key id="author">auteur</key>
+	<key id="author-help">author</key>
+	<key id="description">description</key>
+	<key id="description-help">description</key>
+	<key id="template">gabarit original</key>
+	<key id="template-help">gabarit original</key>
+	<key id="content">content</key>
+	<key id="content-help">content</key>
 </i18n>

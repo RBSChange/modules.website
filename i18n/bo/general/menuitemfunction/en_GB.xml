@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.bo.general.menuitemfunction" lcid="en_GB">
-  <key id="print">link to print the page</key>
-  <key id="add-to-favorites">link to add the page to the bookmarks</key>
-  <key id="view-as-pdf">PDF version of this page</key>
-  <key id="top-of-page">link to the top of the page</key>
-  <key id="to-content">link to the page contents</key>
-  <key id="to-main-menu">link to the main menu of the page</key>
-  <key id="to-search">link to the search form</key>
-  <key id="to-secondary-menu">link to the secondary menu of the page</key>
+	<key id="print">link to print the page</key>
+	<key id="add-to-favorites">link to add the page to the bookmarks</key>
+	<key id="view-as-pdf">PDF version of this page</key>
+	<key id="top-of-page">link to the top of the page</key>
+	<key id="to-content">link to the page contents</key>
+	<key id="to-main-menu">link to the main menu of the page</key>
+	<key id="to-search">link to the search form</key>
+	<key id="to-secondary-menu">link to the secondary menu of the page</key>
 </i18n>

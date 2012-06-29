@@ -1272,7 +1272,7 @@ jQuery(document).ready(function() {
 		$datePickerParam = '{minDate:"' . $params['startdate'] . '"';
 		if (isset($params['enddate']))
 		{
-			$datePickerParam .= ', maxDate:"' . date_DateFormat::format(date_Calendar::getInstance($params['enddate']), $dateFormat) . '"';
+			$datePickerParam .= ', maxDate:"' . date_Formatter::format(date_Calendar::getInstance($params['enddate']), $dateFormat) . '"';
 
 		}
 		$datePickerParam .= ', changeMonth: true, changeYear: true}';

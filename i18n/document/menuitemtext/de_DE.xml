@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.document.menuitemtext" lcid="de_DE">
-  <key id="document-name">einfacher Text-Item</key>
-  <key id="edition-form-title">Einstellungen einfacher Text-Item</key>
-  <key id="label">Name</key>
-  <key id="label-help">Name</key>
+	<key id="document-name">einfacher Text-Item</key>
+	<key id="edition-form-title">Einstellungen einfacher Text-Item</key>
+	<key id="label">Name</key>
+	<key id="label-help">Name</key>
 </i18n>

@@ -33,7 +33,7 @@
 						var pageDeck = module.getElementByAnonId("pageDeck");
 						pageDeck.removeAttribute('editorLoaded');
 
-						var designFrame = module.getElementByAnonId("designFrame");    			
+						var designFrame = module.getElementByAnonId("designFrame");				
 						designFrame.setAttribute("src", editUrl);
 						pageDeck.selectedIndex = 3;
 			
@@ -52,7 +52,7 @@
 			<xul:hbox>
 				<xul:label class="label" xbl:inherits="value=label" />
 				<xul:label class="label separator" value=":" />
-				<xul:label class="text-link" onclick="document.getBindingParent(this).editContent()" value="${trans:m.website.bo.doceditor.Edit-content-link,ucf,attr}"/>
+				<xul:label class="text-link" onclick="document.getBindingParent(this).editContent()" value="${trans:m.website.bo.doceditor.edit-content-link,ucf,attr}"/>
 			</xul:hbox>			
 		</content>
 	</binding>
@@ -83,7 +83,7 @@
 			<xul:hbox>
 				<xul:label class="label" xbl:inherits="value=label" />
 				<xul:label class="label separator" value=":" />
-				<xul:label class="text-link" onclick="document.getBindingParent(this).editDocument()" value="${trans:m.website.bo.doceditor.property.Edit-MenuitemDocument,ucf,attr}"/>
+				<xul:label class="text-link" onclick="document.getBindingParent(this).editDocument()" value="${trans:m.website.bo.doceditor.property.edit-menuitemdocument,ucf,attr}"/>
 			</xul:hbox>			
 		</content>
 	</binding>

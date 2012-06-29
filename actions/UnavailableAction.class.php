@@ -13,7 +13,7 @@ class website_UnavailableAction extends change_Action
 			Framework::info(f_util_ProcessUtils::getBackTrace());
 		}
 		f_web_http_Header::setStatus(503);
-		require(f_util_FileUtils::buildWebeditPath("site-disabled.php"));
+		require(f_util_FileUtils::buildProjectPath("site-disabled.php"));
 		return change_View::NONE;
 	}
 	

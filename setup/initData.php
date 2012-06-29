@@ -10,8 +10,8 @@ class website_Setup extends object_InitDataSetup
 		$this->addProjectConfigurationEntry('tal/prefix/currenturl', 'website_TalesUrl');
 		
 		// Make symbolic links for fckeditor.
-		$repositoryPath = f_util_FileUtils::buildWebeditPath('libs', 'fckeditor');
-		$browserPath = f_util_FileUtils::buildWebeditPath('modules', 'website',  'lib', 'fckeditor', 'browser');
+		$repositoryPath = f_util_FileUtils::buildProjectPath('libs', 'fckeditor');
+		$browserPath = f_util_FileUtils::buildProjectPath('modules', 'website',  'lib', 'fckeditor', 'browser');
 		$webappFckPath = f_util_FileUtils::buildDocumentRootPath('fckeditor');
 		$webappBrowserPath = f_util_FileUtils::buildDocumentRootPath('fckeditorbrowser');
 		

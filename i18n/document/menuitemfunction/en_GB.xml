@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.document.menuitemfunction" lcid="en_GB">
-  <key id="document-name">predefined link</key>
-  <key id="edition-form-title">predefined link properties</key>
-  <key id="label">label</key>
-  <key id="label-help">the link label that will appear in the menus</key>
-  <key id="url">link type</key>
-  <key id="url-help">permits choosing a predefined link</key>
+	<key id="document-name">predefined link</key>
+	<key id="edition-form-title">predefined link properties</key>
+	<key id="label">label</key>
+	<key id="label-help">the link label that will appear in the menus</key>
+	<key id="url">link type</key>
+	<key id="url-help">permits choosing a predefined link</key>
 </i18n>

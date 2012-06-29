@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.document.rewriterule" lcid="fr_FR">
-  <include id="m.generic.document.document"/>
-  <key id="document-name">Règle de réécriture</key>
-  <key id="modulename">Module</key>
-  <key id="modulename-help">Module de la règle</key>
-  <key id="actionname">Action réécrite</key>
-  <key id="modelname">Document réécrit</key>
-  <key id="template">Chemin de l'URL</key>
-  <key id="template-help">Format du chemin de l'URL</key>
+	<include id="m.generic.document.document" />
+	<key id="document-name">Règle de réécriture</key>
+	<key id="modulename">Module</key>
+	<key id="modulename-help">Module de la règle</key>
+	<key id="actionname">Action réécrite</key>
+	<key id="modelname">Document réécrit</key>
+	<key id="template">Chemin de l'URL</key>
+	<key id="template-help">Format du chemin de l'URL</key>
 </i18n>

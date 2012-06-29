@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.bo.general.protocol" lcid="en_GB">
-  <key id="http">No (HTTP)</key>
-  <key id="https">Yes (HTTPS)</key>
+	<key id="http">No (HTTP)</key>
+	<key id="https">Yes (HTTPS)</key>
 </i18n>

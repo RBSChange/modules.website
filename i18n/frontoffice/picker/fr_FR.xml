@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.frontoffice.picker" lcid="fr_FR">
-  <key id="choose">Parcourir le serveur...</key>
-  <key id="remove">Retirer</key>
-  <key id="remove-confirm">Êtes-vous sûr(e) de vouloir retirer ce document ?</key>
+	<key id="choose">Parcourir le serveur...</key>
+	<key id="remove">Retirer</key>
+	<key id="remove-confirm">Êtes-vous sûr(e) de vouloir retirer ce document ?</key>
 </i18n>

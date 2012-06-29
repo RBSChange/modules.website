@@ -37,14 +37,14 @@ class website_GetFaviconAction extends change_Action
 		$mimeType = ($website) ? $website->getFaviconMimeType() : 'image/x-icon';
 		
 		$this->setContentType($mimeType);
-		$path = f_util_FileUtils::buildWebeditPath('media', 'frontoffice', $_SERVER['HTTP_HOST'] . '.ico');
+		$path = f_util_FileUtils::buildProjectPath('media', 'frontoffice', $_SERVER['HTTP_HOST'] . '.ico');
 		if (file_exists($path))
 		{
 			readfile($path);	
 		}
 		else
 		{
-			readfile(f_util_FileUtils::buildWebeditPath('media', 'frontoffice', 'favicon.ico'));
+			readfile(f_util_FileUtils::buildProjectPath('media', 'frontoffice', 'favicon.ico'));
 		}	
 		return change_View::NONE;			
 	}

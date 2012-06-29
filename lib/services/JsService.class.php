@@ -618,7 +618,7 @@ class website_JsService extends change_BaseService
 		$rc = RequestContext::getInstance();
 		foreach ($rc->getSupportedLanguages() as $lang)
 		{
-			$langs[$lang] = array('label' => f_Locale::translateUI('&modules.uixul.bo.languages.'.ucfirst($lang).';'));
+			$langs[$lang] = array('label' => LocaleService::getInstance()->trans('m.uixul.bo.languages.'.strtolower($lang), array('ucf')));
 		}
 		$attributes['LANGS'] = $langs;
 		$attributes['W_LANG'] = $rc->getLang();

@@ -43,7 +43,7 @@ class website_XHTMLCleanerHelper
 	{
 		if (self::$xsltCleanerCachePath === null)
 		{
-			self::$xsltCleanerCachePath = f_util_FileUtils::buildCachePath('cleanXHTMLFragment.xsl');
+			self::$xsltCleanerCachePath = f_util_FileUtils::buildChangeCachePath('cleanXHTMLFragment.xsl');
 			if (!is_readable(self::$xsltCleanerCachePath))
 			{
 				self::generateCleanerXSLT();

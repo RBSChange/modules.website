@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.document.menuitemdocument" lcid="de_DE">
-  <key id="document-name">Menüitem (Seite oder Rubrik)</key>
-  <key id="label">Name</key>
-  <key id="label-help">Name des Links, der in den Menüs angezeigt wird</key>
-  <key id="document">Dokument</key>
-  <key id="document-help">Dokument, zu dem das Item weitergeleitet wird</key>
-  <key id="popup">in einem neuen Fenster öffnen</key>
-  <key id="popup-help">zeigt an, dass der Link in einem neuen Fenster geöffnet wird</key>
-  <key id="popupparameters">Fenstereinstellungen</key>
-  <key id="popupparameters-help">definiert die Öffnungseinstellungen des Fensters</key>
+	<key id="document-name">Menüitem (Seite oder Rubrik)</key>
+	<key id="label">Name</key>
+	<key id="label-help">Name des Links, der in den Menüs angezeigt wird</key>
+	<key id="document">Dokument</key>
+	<key id="document-help">Dokument, zu dem das Item weitergeleitet wird</key>
+	<key id="popup">in einem neuen Fenster öffnen</key>
+	<key id="popup-help">zeigt an, dass der Link in einem neuen Fenster geöffnet wird</key>
+	<key id="popupparameters">Fenstereinstellungen</key>
+	<key id="popupparameters-help">definiert die Öffnungseinstellungen des Fensters</key>
 </i18n>

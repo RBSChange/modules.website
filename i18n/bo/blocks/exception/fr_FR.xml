@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.bo.blocks.exception" lcid="fr_FR">
-  <key id="title">exception</key>
+	<key id="title">exception</key>
 </i18n>

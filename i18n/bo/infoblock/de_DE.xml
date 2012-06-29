@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.bo.infoblock" lcid="de_DE">
-  <key id="title">Informationen über den Block</key>
-  <key id="header">Informationen über den Block</key>
-  <key id="closewindow">Schliessen</key>
-  <key id="commonparam">Allgemeine Eigenschaften</key>
-  <key id="specificparam">Spezifische Konfiguration</key>
+	<key id="title">Informationen über den Block</key>
+	<key id="header">Informationen über den Block</key>
+	<key id="closewindow">Schliessen</key>
+	<key id="commonparam">Allgemeine Eigenschaften</key>
+	<key id="specificparam">Spezifische Konfiguration</key>
 </i18n>

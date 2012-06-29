@@ -27,14 +27,14 @@ class website_GetRobotsTxtAction extends change_Action
 		
 		if (f_util_StringUtils::isEmpty($contents))
 		{
-			$path = f_util_FileUtils::buildWebeditPath('media', 'frontoffice', $_SERVER['HTTP_HOST'] . '.robots.txt');
+			$path = f_util_FileUtils::buildProjectPath('media', 'frontoffice', $_SERVER['HTTP_HOST'] . '.robots.txt');
 			if (file_exists($path))
 			{
 				$contents = f_util_FileUtils::read($path);
 			}
 			else
 			{
-				$contents = f_util_FileUtils::read(f_util_FileUtils::buildWebeditPath('media', 'frontoffice', 'robots.txt'));
+				$contents = f_util_FileUtils::read(f_util_FileUtils::buildProjectPath('media', 'frontoffice', 'robots.txt'));
 			}
 		}
 	

@@ -77,7 +77,7 @@ class website_ListTemplatesService extends change_BaseService implements list_Li
 		
 		if ($currentTemplate)
 		{
-			$label = $currentTemplate->getLabel() . ' (' . f_Locale::translateUI('&modules.website.bo.general.Not-allowed;') .')';
+			$label = $currentTemplate->getLabel() . ' (' . LocaleService::getInstance()->trans('m.website.bo.general.not-allowed', array('ucf')) .')';
 			$item = new list_Item($label , $currentTemplate->getCodename());
 			array_unshift($items, $item);
 		}

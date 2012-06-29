@@ -21,6 +21,6 @@ class website_BlockRichtextInfo extends block_BlockInfo
 	
 	protected function __construct()
 	{
-		parent::__construct(array('type' => 'richtext', 'icon' => 'richtext', 'label' => '&modules.uixul.bo.layout.RichTextBlock'));
+		parent::__construct(array('type' => 'richtext', 'icon' => 'richtext', 'labeli18n' => 'm.uixul.bo.layout.richtextblock'));
 	}
 }

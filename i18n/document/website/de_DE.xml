@@ -1,21 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.document.website" lcid="de_DE">
-  <key id="document-name">Webseite</key>
-  <key id="edition-form-title">Webseiteneinstellungen</key>
-  <key id="url">HauptURL der Webseite</key>
-  <key id="url-help">HauptURL der Webseite, mit dem Protokoll (″http://″), ohne die Endung ″/″.</key>
-  <key id="label">Webseitenname</key>
-  <key id="label-help">kompletter Webseitenname</key>
-  <key id="description">kurze Webseitenbeschreibung</key>
-  <key id="description-help">kurze Webseitenbeschreibung</key>
-  <key id="skin">Skin</key>
-  <key id="skin-help">legen Sie hier einen Skin ab, der den Elementen angewendet wird</key>
-  <key id="stylesheet">Stylesheet</key>
-  <key id="stylesheet-help">Bitte wählen Sie einen Stylesheet um es dem Element anzuwenden</key>
-  <key id="localizebypath">Weglokalisierung</key>
-  <key id="localizebypath-help">Setzen Sie JA um URLs der Art http://www.rbs.de/de/... zu bekommen, oder NEIN um eine andere Domain nach der Sprache anzugeben.</key>
-  <key id="protocol">Gesichert</key>
-  <key id="protocol-help">Gesichert</key>
-  <key id="domain">Domain</key>
-  <key id="domain-help">Domainname der Webseite (z.B.: www.rbs.de)</key>
+	<key id="document-name">Webseite</key>
+	<key id="edition-form-title">Webseiteneinstellungen</key>
+	<key id="url">HauptURL der Webseite</key>
+	<key id="url-help">HauptURL der Webseite, mit dem Protokoll (″http://″), ohne die Endung ″/″.</key>
+	<key id="label">Webseitenname</key>
+	<key id="label-help">kompletter Webseitenname</key>
+	<key id="description">kurze Webseitenbeschreibung</key>
+	<key id="description-help">kurze Webseitenbeschreibung</key>
+	<key id="skin">Skin</key>
+	<key id="skin-help">legen Sie hier einen Skin ab, der den Elementen angewendet wird</key>
+	<key id="stylesheet">Stylesheet</key>
+	<key id="stylesheet-help">Bitte wählen Sie einen Stylesheet um es dem Element anzuwenden</key>
+	<key id="localizebypath">Weglokalisierung</key>
+	<key id="localizebypath-help">Setzen Sie JA um URLs der Art http://www.rbs.de/de/... zu bekommen, oder NEIN um eine andere Domain nach der Sprache anzugeben.</key>
+	<key id="protocol">Gesichert</key>
+	<key id="protocol-help">Gesichert</key>
+	<key id="domain">Domain</key>
+	<key id="domain-help">Domainname der Webseite (z.B.: www.rbs.de)</key>
 </i18n>

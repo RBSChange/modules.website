@@ -49,7 +49,7 @@ class PHPTAL_Php_Attribute_CHANGE_Tab extends ChangeTalAttribute
 		}
 		else if (isset($params["label"]))
 		{
-			$label = f_Locale::translate($params["label"]);
+			$label = LocaleService::getInstance()->trans($params["label"], array('ucf', 'html'));
 		}
 		PHPTAL_Php_Attribute_CHANGE_Tabs::addTab($id, $label);
 		$html = "<div class=\"tab\" id=\"$id\">";

@@ -1,23 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.frontoffice" lcid="de_DE">
-  <key id="addtofavorite">zu den Favoriten hinzufügen</key>
-  <key id="addtofavoritetitle">die Seite zu den Favoriten hinzufügen</key>
-  <key id="addupload">Hinzufügen</key>
-  <key id="deleteupload">Löschen</key>
-  <key id="addupload-help">Selektierte Datei hinzufügen</key>
-  <key id="deleteupload-help">Datei löschen</key>
-  <key id="print">drucken</key>
-  <key id="printtitle">Seite drucken</key>
-  <key id="help">Hilfe</key>
-  <key id="helptitle">Hilfeseite</key>
-  <key id="legalnotice">Impressum</key>
-  <key id="page-not-found">Seite nicht gefunden</key>
-  <key id="error404">Fehler 404</key>
-  <key id="not-found-long-message">Die von Ihnen gesuchte Seite wurde auf diesem Server nicht gefunden.Haben Sie die URL manuell in ihrem Browser eingegeben, bitte überprüfen Sie diese.Hat Sie ein Link auf diese Fehlerseite gebracht, bitte wenden Sie sich an den Webmaster der ursprünglichen Webseite und melden Ihm den Fehler.Wie entschuldigen uns für die Unannehmlichkeit und danken für Ihr Verständnis.</key>
-  <key id="back-to-homepage">Zurück zur Startseite</key>
-  <key id="back-to-previous-visited-page">Zurück zur letzten besuchten Seite</key>
-  <key id="selectoption">selektieren Sie ein Element</key>
-  <key id="append-title-separator"> - </key>
-  <key id="this-page-in-mylang">Deutch freigabe</key>
-  <key id="version-in-lang">Deutsche Version</key>
+	<key id="addtofavorite">zu den Favoriten hinzufügen</key>
+	<key id="addtofavoritetitle">die Seite zu den Favoriten hinzufügen</key>
+	<key id="addupload">Hinzufügen</key>
+	<key id="deleteupload">Löschen</key>
+	<key id="addupload-help">Selektierte Datei hinzufügen</key>
+	<key id="deleteupload-help">Datei löschen</key>
+	<key id="print">drucken</key>
+	<key id="printtitle">Seite drucken</key>
+	<key id="help">Hilfe</key>
+	<key id="helptitle">Hilfeseite</key>
+	<key id="legalnotice">Impressum</key>
+	<key id="page-not-found">Seite nicht gefunden</key>
+	<key id="error404">Fehler 404</key>
+	<key id="not-found-long-message">Die von Ihnen gesuchte Seite wurde auf diesem Server nicht gefunden.Haben Sie die URL manuell in ihrem Browser eingegeben, bitte überprüfen Sie diese.Hat Sie ein Link auf diese Fehlerseite gebracht, bitte wenden Sie sich an den Webmaster der ursprünglichen Webseite und melden Ihm den Fehler.Wie entschuldigen uns für die Unannehmlichkeit und danken für Ihr Verständnis.</key>
+	<key id="back-to-homepage">Zurück zur Startseite</key>
+	<key id="back-to-previous-visited-page">Zurück zur letzten besuchten Seite</key>
+	<key id="selectoption">selektieren Sie ein Element</key>
+	<key id="append-title-separator"> - </key>
+	<key id="this-page-in-mylang">Deutch freigabe</key>
+	<key id="version-in-lang">Deutsche Version</key>
 </i18n>

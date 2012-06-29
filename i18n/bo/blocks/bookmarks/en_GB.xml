@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.bo.blocks.bookmarks" lcid="en_GB">
-  <key id="cmpref">displayed bookmarks</key>
-  <key id="availablebookmarks">available bookmarks</key>
-  <key id="add">add</key>
-  <key id="remove">delete</key>
-  <key id="moveup">move up</key>
-  <key id="movedown">move down</key>
+	<key id="cmpref">displayed bookmarks</key>
+	<key id="availablebookmarks">available bookmarks</key>
+	<key id="add">add</key>
+	<key id="remove">delete</key>
+	<key id="moveup">move up</key>
+	<key id="movedown">move down</key>
 </i18n>

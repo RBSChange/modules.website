@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.bo.blocks.missing" lcid="fr_FR">
-  <key id="title">bloc introuvable</key>
-  <key id="description">bloc recherché : {originalClassName}</key>
+	<key id="title">bloc introuvable</key>
+	<key id="description">bloc recherché : {originalClassName}</key>
 </i18n>

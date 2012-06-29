@@ -837,8 +837,8 @@ class website_BlockController implements f_mvc_Controller
 		$this->actionRequest->setAttribute('invalidProperties', $invalidProperties);
 		foreach ($invalidProperties as $propertyName => $rawValue)
 		{
-			$array = array('field' => f_Locale::translate(BeanUtils::getBeanPropertyInfo($bean, $propertyName)->getLabelKey()), 'value' => $rawValue);
-			$this->getProcessedAction()->addError(f_Locale::translate('&framework.validation.validator.InvalidValue;', $array));
+			$array = array('field' => LocaleService::getInstance()->trans(BeanUtils::getBeanPropertyInfo($bean, $propertyName)->getLabelKey()), 'value' => $rawValue);
+			$this->getProcessedAction()->addError(LocaleService::getInstance()->trans('f.validation.validator.invalidvalue', array('ucf'), $array));
 		}
 			
 		$this->executePostPopulateFilters($bean, $this->actionRequest);
@@ -925,7 +925,7 @@ class website_BlockController implements f_mvc_Controller
 	private function isCacheEnabled()
 	{
 		return $this->useCache && f_DataCacheService::getInstance()->isEnabled() &&
-		 (!defined("AG_DISABLE_BLOCK_CACHE") || !AG_DISABLE_BLOCK_CACHE) &&
+		 (!defined("DISABLE_BLOCK_CACHE") || !DISABLE_BLOCK_CACHE) &&
 		 !$this->blockContext->getAttribute(website_BlockAction::BLOCK_BO_MODE_ATTRIBUTE, false);
 	}
 

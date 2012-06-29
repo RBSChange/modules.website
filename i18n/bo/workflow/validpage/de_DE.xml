@@ -1,18 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.bo.workflow.validpage" lcid="de_DE">
-  <key id="user-task-title">Veröffentlichung einer Seite bestätigen</key>
-  <key id="accept">bestätigen</key>
-  <key id="refuse">ablehnen</key>
-  <key id="user-task-help">Sie müssen die unten angezeigten Einstellungen und Inhalte bestätigen. Der Reiter ″Seiteneinstellungen″ zeigt die allgemeneinen Informationen des Namens, der Referenzierung, des Seitetenmodells und des Veröffentlichungsdatums an. Der Reiter ″Seiteninhalt″ zeigt den Inhalt so an, wie ihn der Besucher sehen wird, wenn die Seite veröffentlicht wird.
+	<key id="user-task-title">Veröffentlichung einer Seite bestätigen</key>
+	<key id="accept">bestätigen</key>
+	<key id="refuse">ablehnen</key>
+	<key id="user-task-help">Sie müssen die unten angezeigten Einstellungen und Inhalte bestätigen. Der Reiter ″Seiteneinstellungen″ zeigt die allgemeneinen Informationen des Namens, der Referenzierung, des Seitetenmodells und des Veröffentlichungsdatums an. Der Reiter ″Seiteninhalt″ zeigt den Inhalt so an, wie ihn der Besucher sehen wird, wenn die Seite veröffentlicht wird.
 							Um fortzufahren, fügen Sie bitte einen Kommentar ein, der dem Seitenautor geschickt wird, und clicken Sie oben rechts entweder auf ″freigeben″ oder ″ablehnen″.</key>
-  <key id="user-task-decision-commentary">Kommentar</key>
-  <key id="indexing-status-activate">JA</key>
-  <key id="indexing-status-no-activate">NEIN</key>
-  <key id="documentinformation">zu bestätigende Informationen</key>
-  <key id="originaldocumentinformation">Informationen der aktuell veröffentlichten Version</key>
-  <key id="contenttovalidate">zu bestätigender Inhalt</key>
-  <key id="contentinproduction">Inhalt der Version in Produktion</key>
-  <key id="synchscrolldata">Informationsablauf synchronisieren</key>
-  <key id="datavalidation">Seiteneinstellungen</key>
-  <key id="contentvalidation">Seiteninhalt</key>
+	<key id="user-task-decision-commentary">Kommentar</key>
+	<key id="indexing-status-activate">JA</key>
+	<key id="indexing-status-no-activate">NEIN</key>
+	<key id="documentinformation">zu bestätigende Informationen</key>
+	<key id="originaldocumentinformation">Informationen der aktuell veröffentlichten Version</key>
+	<key id="contenttovalidate">zu bestätigender Inhalt</key>
+	<key id="contentinproduction">Inhalt der Version in Produktion</key>
+	<key id="synchscrolldata">Informationsablauf synchronisieren</key>
+	<key id="datavalidation">Seiteneinstellungen</key>
+	<key id="contentvalidation">Seiteninhalt</key>
 </i18n>

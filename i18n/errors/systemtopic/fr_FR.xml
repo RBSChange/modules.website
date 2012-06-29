@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.errors.systemtopic" lcid="fr_FR">
-  <key id="cannot-delete-non-empty-node">Vous ne pouvez pas supprimer une rubrique système contenant des documents.</key>
+	<key id="cannot-delete-non-empty-node">Vous ne pouvez pas supprimer une rubrique système contenant des documents.</key>
 </i18n>

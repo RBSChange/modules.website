@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.document.menuitemdocument.active" lcid="en_GB">
-  <key id="subdocnotpublished">The target document is not published</key>
-  <key id="subdocnotvisible">The target document is not shown in a menu</key>
+	<key id="subdocnotpublished">The target document is not published</key>
+	<key id="subdocnotvisible">The target document is not shown in a menu</key>
 </i18n>

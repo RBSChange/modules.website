@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.bo.blocks.dashboardlastmodifiedpages" lcid="fr_FR">
-  <key id="title">dernières pages modifiées</key>
+	<key id="title">dernières pages modifiées</key>
 </i18n>

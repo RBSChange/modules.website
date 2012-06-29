@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.bo.general.protocol" lcid="fr_FR">
-  <key id="http">Non (HTTP)</key>
-  <key id="https">Oui (HTTPS)</key>
+	<key id="http">Non (HTTP)</key>
+	<key id="https">Oui (HTTPS)</key>
 </i18n>

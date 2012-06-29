@@ -27,11 +27,11 @@ class website_ListAvailablelangsforwebsiteService extends change_BaseService imp
 		
 		if ($website !== null)
 		{
-			foreach (explode(' ', AG_SUPPORTED_LANGUAGES) as $lang)
+			foreach (explode(' ', SUPPORTED_LANGUAGES) as $lang)
 			{
 				if ($website->isLangAvailable($lang))
 				{
-					$items[] = new list_Item(f_Locale::translateUI('&modules.uixul.bo.languages.' . ucfirst($lang) . ';'), $lang);
+					$items[] = new list_Item(LocaleService::getInstance()->trans('m.uixul.bo.languages.' . strtolower($lang), array('ucf')), $lang);
 				}
 			}
 		}

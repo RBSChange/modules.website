@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.document.systemtopic.publication" lcid="fr_FR">
-  <key id="no-published-page-or-subtopic">ne contient aucune page ni aucune sous-rubrique publiée</key>
+	<key id="no-published-page-or-subtopic">ne contient aucune page ni aucune sous-rubrique publiée</key>
 </i18n>

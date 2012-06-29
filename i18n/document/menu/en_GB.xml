@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.document.menu" lcid="en_GB">
-  <key id="document-name">menu</key>
-  <key id="edition-form-title">menu properties</key>
-  <key id="label">menu name</key>
-  <key id="label-help">The menu name must be unique, since it is an identifier used to automatically generate the menus. This name does not appear on the website.</key>
+	<key id="document-name">menu</key>
+	<key id="edition-form-title">menu properties</key>
+	<key id="label">menu name</key>
+	<key id="label-help">The menu name must be unique, since it is an identifier used to automatically generate the menus. This name does not appear on the website.</key>
 </i18n>

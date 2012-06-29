@@ -1,19 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.paginator" lcid="fr_FR">
-  <key id="detail">page {currentPage} sur les {pageCount} pages de la liste {listName}</key>
-  <key id="detail-no-name">page {currentPage} sur {pageCount}</key>
-  <key id="next">suivante ›</key>
-  <key id="next-title">page suivante de la liste {listName}</key>
-  <key id="next-title-no-name">page suivante</key>
-  <key id="previous">‹ Précédente</key>
-  <key id="previous-title">page précédente de la liste {listName}</key>
-  <key id="previous-title-no-name">page précédente</key>
-  <key id="first">« Première</key>
-  <key id="first-title">première page de la liste {listName}</key>
-  <key id="first-title-no-name">première page</key>
-  <key id="last">dernière »</key>
-  <key id="last-title">dernière page de la liste {listName}</key>
-  <key id="last-title-no-name">dernière page</key>
-  <key id="page-title">page {pageNumber} de la liste {listName}</key>
-  <key id="page-title-no-name">page {pageNumber}</key>
+	<key id="detail">page {currentPage} sur les {pageCount} pages de la liste {listName}</key>
+	<key id="detail-no-name">page {currentPage} sur {pageCount}</key>
+	<key id="next">suivante ›</key>
+	<key id="next-title">page suivante de la liste {listName}</key>
+	<key id="next-title-no-name">page suivante</key>
+	<key id="previous">‹ Précédente</key>
+	<key id="previous-title">page précédente de la liste {listName}</key>
+	<key id="previous-title-no-name">page précédente</key>
+	<key id="first">« Première</key>
+	<key id="first-title">première page de la liste {listName}</key>
+	<key id="first-title-no-name">première page</key>
+	<key id="last">dernière »</key>
+	<key id="last-title">dernière page de la liste {listName}</key>
+	<key id="last-title-no-name">dernière page</key>
+	<key id="page-title">page {pageNumber} de la liste {listName}</key>
+	<key id="page-title-no-name">page {pageNumber}</key>
 </i18n>

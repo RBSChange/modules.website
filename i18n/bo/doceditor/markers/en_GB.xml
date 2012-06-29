@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <i18n baseKey="m.website.bo.doceditor.markers" lcid="en_GB">
-  <key id="add-marker-section">add a marker</key>
-  <key id="newmarkeraccount">ID</key>
-  <key id="newmarkeraccount-help">Marker identifier</key>
-  <key id="newmarkertype">Type</key>
-  <key id="newmarkertype-help">Marker type</key>
+	<key id="add-marker-section">add a marker</key>
+	<key id="newmarkeraccount">ID</key>
+	<key id="newmarkeraccount-help">Marker identifier</key>
+	<key id="newmarkertype">Type</key>
+	<key id="newmarkertype-help">Marker type</key>
 </i18n>

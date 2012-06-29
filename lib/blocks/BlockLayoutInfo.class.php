@@ -21,6 +21,6 @@ class website_BlockLayoutInfo extends block_BlockInfo
 	
 	protected function __construct()
 	{
-		parent::__construct(array('type' => 'layout', 'columns' => 2, 'icon' => 'layout-2-columns', 'label' => '&modules.website.bo.blocks.Two-col'));
+		parent::__construct(array('type' => 'layout', 'columns' => 2, 'icon' => 'layout-2-columns', 'labeli18n' => 'm.website.bo.blocks.two-col'));
 	}
 }
