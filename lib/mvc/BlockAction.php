@@ -330,45 +330,80 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	{
 		return website_BlockView::INPUT;
 	}
-
+	
 	/**
+	 *
 	 * @see f_mvc_Action::findParameterValue()
 	 *
-	 * @param unknown_type $parameterName
+	 * @param string $parameterName        	
+	 * @param string $contextOrder
+	 *        	C=Configuration Parameter, A=Request Attribute, S=Session
+	 *        	Attribute, P=Request Parameter, G=Request Global Parameter,
+	 *        	D=Block Default getter
+	 * @return mixed NULL
 	 */
-	public final function findParameterValue($parameterName)
+	public final function findParameterValue($parameterName, $contextOrder = 'CASPGD')
 	{
-		if ($this->hasNonEmptyConfigurationParameter($parameterName))
+		if (!is_string($contextOrder))
 		{
-			return $this->getConfigurationParameter($parameterName);
+			$contextOrder = 'CASPGD';
 		}
-
-		$actionRequest = website_BlockController::getInstance()->getRequest();
-		if ($actionRequest->hasAttribute($parameterName))
+		for ($i = 0; $i < strlen($contextOrder); $i++)
 		{
-			return $actionRequest->getAttribute($parameterName);
+			switch ($contextOrder[$i])
+			{
+				case 'C' :
+					if ($this->hasNonEmptyConfigurationParameter($parameterName))
+					{
+						return $this->getConfigurationParameter($parameterName);
+					}
+					break;
+				case 'A' :
+					$actionRequest = website_BlockController::getInstance()->getRequest();
+					if ($actionRequest->hasAttribute($parameterName))
+					{
+						return $actionRequest->getAttribute($parameterName);
+					}
+					break;
+				case 'S' :
+					$value = $this->getStorage()->read($parameterName);
+					if ($value !== null)
+					{
+						return $value;
+					}
+					break;
+				case 'P' :
+					$actionRequest = website_BlockController::getInstance()->getRequest();
+					if ($actionRequest->hasNonEmptyParameter($parameterName))
+					{
+						return $actionRequest->getParameter($parameterName);
+					}
+					break;
+				case 'G' :
+					$globalRequest = change_Controller::getInstance()->getRequest();
+					if ($globalRequest->hasNonEmptyParameter($parameterName))
+					{
+						return $globalRequest->getParameter($parameterName);
+					}
+					break;
+				case 'D' :
+					$getter = 'getDefault' . ucfirst($parameterName);
+					if (method_exists($this, $getter))
+					{
+						$result = call_user_func(array($this, $getter));
+						if ($result !== null)
+						{
+							return $result;
+						}
+					}
+					break;
+				default :
+					Framework::warn(__METHOD__ . ' Undefined context key: ' . $contextOrder[$i]);
+			}
 		}
-
-		$storage = $this->getStorage();
-		if ($storage->read($parameterName))
-		{
-			return $storage->read($parameterName);
-		}
-
-
-		if ($actionRequest->hasNonEmptyParameter($parameterName))
-		{
-			return $actionRequest->getParameter($parameterName);
-		}
-		$globalRequest = change_Controller::getInstance()->getRequest();
-		if ($globalRequest->hasNonEmptyParameter($parameterName))
-		{
-			return $globalRequest->getParameter($parameterName);
-		}
-
 		return null;
 	}
-
+	
 	/**
 	 * @param website_BlockActionRequest $request
 	 * @return array
@@ -1138,9 +1173,10 @@ abstract class f_mvc_Action
 
 	/**
 	 * @param string $parameterName
+	 * @param string $contextOrder C=Configuration Parameter, A=Request Attribute, S=Session Attribute, P=Request Parameter, G=Request Global Parameter, D=Block Default getter
+	 * @return mixed|NULL
 	 */
-	abstract protected function findParameterValue($parameterName);
-	
+	abstract protected function findParameterValue($parameterName, $contextOrder = 'CASPGD');
 	
 	/**
 	 * @deprecated (will be removed in RBS Change 5.0)
