@@ -1,31 +1,26 @@
 <?php
 class block_BlockPropertyInfo extends PropertyInfo
 {
-	private static $DEFAULT = array('name'=> null, 'type' => 'String',  
+	private static $DEFAULT = array('name'=> null, 'type' => 'String', 'document-type' => null, 'constraints' => null, 
 		'min-occurs' => 0, 'max-occurs' => 1, 'default-value' => null, 'from-list' => null,
 		'label' => null, 'helptext' => null, 'hidden' => false);
 	/**
-	 * @var String
+	 * @var string
 	 */
 	private $m_label = null;
 
 	/**
-	 * @var String
+	 * @var string
 	 */
 	private $m_helpText = null;
-
-	/**
-	 * @var String
-	 */
-	private $m_listId = null;
 	
 	/**
-	 * @var Boolean
+	 * @var boolean
 	 */
 	private $m_hidden = false;	
 
 	/**
-	 * @var Array
+	 * @var array
 	 */
 	private $m_extendedAttributes = array();
 	
@@ -34,25 +29,23 @@ class block_BlockPropertyInfo extends PropertyInfo
 		$p = array_merge(self::$DEFAULT, $propertyInfoArray);
 		$name = $p['name'];
 		$type = $p['type'];
-		$minOccurs = intval($p['min-occurs']);
+		parent::__construct($name, $type);
 		$maxOccurs = intval($p['max-occurs']);
-		$isDocument = strpos($type, 'modules_') === 0;
-		$isArray = $isDocument && $maxOccurs != 1;
+		if (abs($maxOccurs) != 1) {$this->setMaxOccurs($maxOccurs);}
+		$minOccurs = intval($p['min-occurs']);
+		if ($minOccurs != 0) {$this->setMinOccurs($minOccurs);}
 		$defaultValue = $p['default-value'];
+		if ($defaultValue !== null) {$this->setDefaultValue($defaultValue);}		
 		$fromList = $p['from-list'];
-		$constraints = '';
+		if ($fromList !== null) {$this->setFromList($fromList);}
 		
-		parent::__construct($name, $type, $minOccurs, $maxOccurs, '', '', false, false, false, 
-			$isArray, $isDocument, $defaultValue, $constraints, 
-			false, false, false, $fromList);
-	
-		$this->setLabel($p['label']);
-		$this->setHelpText($p['helptext']);
-		$this->setListId($fromList);
-		$this->setHidden($p['hidden']);
+		if (isset($p['hidden'])) {$this->setHidden($p['hidden']);}
+		if (isset($p['helptext'])) {$this->setHelpText($p['helptext']);}
+		if (isset($p['constraints'])) {$this->setConstraints($p['constraints']);}
+		
 		$this->m_extendedAttributes = array_diff($propertyInfoArray, self::$DEFAULT);
 	}
-		
+			
 	/**
 	 * @param string $value
 	 * @return block_BlockPropertyInfo
@@ -98,21 +91,11 @@ class block_BlockPropertyInfo extends PropertyInfo
 	}
 
 	/**
-	 * @param string $value
-	 * @return block_BlockPropertyInfo
-	 */
-	public function setListId($value)
-	{
-		$this->m_listId = $value;
-		return $this;
-	}
-
-	/**
 	 * @return boolean
 	 */
 	public function hasListId()
 	{
-		return $this->m_listId !== null;
+		return $this->getFromList() !== null;
 	}
 
 	/**
@@ -120,11 +103,11 @@ class block_BlockPropertyInfo extends PropertyInfo
 	 */
 	public function getListId()
 	{
-		return $this->m_listId;
+		return $this->getFromList();
 	}
 
 	/**
-	 * @param  Boolean
+	 * @param boolean
 	 * @return block_BlockPropertyInfo
 	 */
 	public function setRequired($bool)
@@ -138,14 +121,6 @@ class block_BlockPropertyInfo extends PropertyInfo
 			$this->setMinOccurs(0);
 		}
 		return $this;
-	}
-
-	/**
-	 * @return boolean
-	 */
-	public function isRequired()
-	{
-		return $this->getMinOccurs() > 0;
 	}
 	
 	/**

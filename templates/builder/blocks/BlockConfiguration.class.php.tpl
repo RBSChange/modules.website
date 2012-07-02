@@ -38,7 +38,7 @@ class <{$className}> extends block_BlockConfiguration
 	}
 	
 	/**
-	 * @return int
+	 * @return integer
 	 */
 	public function getCacheTtl()
 	{
@@ -79,9 +79,12 @@ class <{$className}> extends block_BlockConfiguration
 		return true;
 	}
 <{/if}>
-
 <{foreach from=$blockInfo->getParametersInfoArray() item=property}>
-	<{if $property->getType() == "Boolean"}>	
+	<{if $property->getType() == "Boolean"}>
+
+	/**
+	 * @return <{$property->getPHPType()}>
+	 */
 	public function <{$property->getPhpGetter()}>()
 	{
 		if ($this->hasConfigurationParameter('<{$property->getName()}>'))
@@ -90,7 +93,10 @@ class <{$className}> extends block_BlockConfiguration
 		}
 		return $this-><{$property->getPhpGetter()}>DefaultValue();
 	}
-	
+
+	/**
+	 * @return <{$property->getPHPType()}>
+	 */	
 	public function <{$property->getPhpGetter()}>DefaultValue()
 	{
 <{if $property->hasDefaultValue()}>
@@ -104,7 +110,10 @@ class <{$className}> extends block_BlockConfiguration
 <{/if}>
 	}	
 	<{elseif $property->getType() == "Integer"}>
-	
+
+	/**
+	 * @return <{$property->getPHPType()}>
+	 */
 	public function <{$property->getPhpGetter()}>()
 	{
 		if ($this->hasConfigurationParameter('<{$property->getName()}>'))
@@ -113,7 +122,10 @@ class <{$className}> extends block_BlockConfiguration
 		}
 		return $this-><{$property->getPhpGetter()}>DefaultValue();
 	}
-	
+
+	/**
+	 * @return <{$property->getPHPType()}>
+	 */	
 	public function <{$property->getPhpGetter()}>DefaultValue()
 	{
 <{if $property->hasDefaultValue()}>
@@ -127,7 +139,10 @@ class <{$className}> extends block_BlockConfiguration
 <{/if}>
 	}	
 	<{elseif $property->getType() == "Double"}>
-	
+
+	/**
+	 * @return <{$property->getPHPType()}>
+	 */	
 	public function <{$property->getPhpGetter()}>()
 	{
 		if ($this->hasConfigurationParameter('<{$property->getName()}>'))
@@ -136,7 +151,10 @@ class <{$className}> extends block_BlockConfiguration
 		}
 		return $this-><{$property->getPhpGetter()}>DefaultValue();
 	}
-	
+
+	/**
+	 * @return <{$property->getPHPType()}>
+	 */	
 	public function <{$property->getPhpGetter()}>DefaultValue()
 	{
 <{if $property->hasDefaultValue()}>
@@ -147,7 +165,10 @@ class <{$className}> extends block_BlockConfiguration
 	}
 	<{elseif $property->isDocument()}>
 		<{if $property->isArray()}>
-		
+
+	/**
+	 * @return <{$property->getPHPType()}>
+	 */		
 	public function <{$property->getPhpGetter()}>()
 	{
 		$result = array();
@@ -164,7 +185,10 @@ class <{$className}> extends block_BlockConfiguration
 		}
 		return $result;
 	}
-	
+
+	/**
+	 * @return <{$property->getPHPType()}>
+	 */	
 	public function <{$property->getPhpGetter()}>Safe()
 	{
 		$result = array();
@@ -173,22 +197,16 @@ class <{$className}> extends block_BlockConfiguration
 			$ids = explode(',', $this->configurationArray['<{$property->getName()}>']);
 			foreach ($ids as $id) 
 			{
-				if (is_numeric($id))
+				$doc = DocumentHelper::getDocumentInstanceIfExists($id);
+				if ($doc !== null)
 				{
-					try
-					{
-						$result[] = DocumentHelper::getDocumentInstance($id);
-					}
-					catch (Exception $e)
-					{
-						Framework::warn(__METHOD__." ".$e->getMessage());
-					}
+					$result[] = $doc;
 				}
 			}
 		}
 		return $result;
 	}
-		
+
 	/**
 	 * @return integer[]
 	 */	
@@ -209,7 +227,10 @@ class <{$className}> extends block_BlockConfiguration
 		return $result;
 	}	
 		<{else}>
-				
+
+	/**
+	 * @return <{$property->getPHPType()}>
+	 */				
 	public function <{$property->getPhpGetter()}>()
 	{
 		if ($this->hasConfigurationParameter('<{$property->getName()}>'))
@@ -221,28 +242,21 @@ class <{$className}> extends block_BlockConfiguration
 		}
 		return null;
 	}
-	
+
+	/**
+	 * @return <{$property->getPHPType()}>|NULL
+	 */	
 	public function <{$property->getPhpGetter()}>Safe()
 	{
 		if ($this->hasConfigurationParameter('<{$property->getName()}>'))
 		{
-			if (is_numeric($this->configurationArray['<{$property->getName()}>']))
-			{
-				try
-				{
-					return DocumentHelper::getDocumentInstance($this->configurationArray['<{$property->getName()}>']);
-				}
-				catch (Exception $e)
-				{
-					Framework::warn(__METHOD__." ".$e->getMessage());
-				}
-			}
+			return DocumentHelper::getDocumentInstanceIfExists($this->configurationArray['<{$property->getName()}>']);
 		}
 		return null;
 	}
 
 	/**
-	 * @return integer
+	 * @return integer|NULL
 	 */
 	public function <{$property->getPhpGetter()}>Id()
 	{
@@ -256,8 +270,11 @@ class <{$className}> extends block_BlockConfiguration
 		return null;
 	}		
 		<{/if}>	
-	<{else}>	
-	
+	<{else}>
+
+	/**
+	 * @return string|NULL
+	 */		
 	public function <{$property->getPhpGetter()}>()
 	{
 		if ($this->hasConfigurationParameter('<{$property->getName()}>'))
@@ -267,6 +284,9 @@ class <{$className}> extends block_BlockConfiguration
 		return $this-><{$property->getPhpGetter()}>DefaultValue();
 	}
 	
+	/**
+	 * @return string|NULL
+	 */		
 	public function <{$property->getPhpGetter()}>AsHtml()
 	{
 <{if $property->getType() == "XHTMLFragment"}>
@@ -276,6 +296,9 @@ class <{$className}> extends block_BlockConfiguration
 <{/if}>	
 	}
 	
+	/**
+	 * @return string|NULL
+	 */		
 	public function <{$property->getPhpGetter()}>DefaultValue()
 	{
 <{if $property->hasDefaultValue()}>
@@ -286,4 +309,5 @@ class <{$className}> extends block_BlockConfiguration
 	}	
 	<{/if}>
 <{/foreach}>
+
 }

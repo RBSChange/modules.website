@@ -364,6 +364,7 @@ class block_BlockService extends change_BaseService
 			$nodeParamList = $domDoc->find('parameters/parameter', $blockElm);
 			for ($paramIdx = 0; $paramIdx < $nodeParamList->length; $paramIdx++)
 			{
+				/* @var $paramElm DOMElement */
 				$paramElm = $nodeParamList->item($paramIdx);
 				$paramName = $paramElm->getAttribute('name');
 				if (in_array(strtolower($paramName), $reservedParameterNames))
@@ -384,12 +385,7 @@ class block_BlockService extends change_BaseService
 				$length = $attributes->length;
 				for ($j = 0; $j < $length; ++$j)
 				{
-					$attName = $attributes->item($j)->name;
-					if ($attName === 'list-id')
-					{
-						$attName = 'from-list';
-					}
-					
+					$attName = $attributes->item($j)->name;					
 					$attVal = $paramElm->getAttribute($attName);
 					if ($attVal === 'false')
 					{
@@ -400,6 +396,35 @@ class block_BlockService extends change_BaseService
 						$attVal = true;
 					}
 					$blockInfoArray[$blockId]['parameters'][$paramName][$attName] = $attVal;
+				}
+				
+				$constraints = array();
+				foreach ($paramElm->getElementsByTagName('constraint') as $cn)
+				{
+					/* @var $cn DOMElement */
+					$params = array();
+					$name = null;
+					foreach ($cn->attributes as $attr)
+					{
+						if ($attr->name === 'name')
+						{
+							$name = $attr->value;
+						}
+						else
+						{
+							$v = $attr->value;
+							if ($v === 'true') {$v = true;} elseif ($v === 'false') {$v = false;}
+							$params[$attr->name] = $v;
+						}
+					}
+					if ($name)
+					{
+						$constraints[$name] = $params;
+					}
+				}
+				if (count($constraints))
+				{
+					$blockInfoArray[$blockId]['parameters'][$paramName]['constraints'] = $constraints;
 				}
 			}
 			
@@ -595,7 +620,7 @@ class block_BlockService extends change_BaseService
 	private function buildBlockConfiguration($blocLists)
 	{
 		$templateDir = f_util_FileUtils::buildProjectPath("modules", "website", "templates", "builder", "blocks");
-		$blocWrapper = new block_blockInfoBuilder($this);
+		$blocWrapper = new website_BlockInfoBuilder($this);
 		$author = 'Auto Generated at ' . date_Calendar::getInstance()->toString();
 		foreach ($blocLists as $blockType => $blockInfos)
 		{
@@ -654,7 +679,7 @@ class block_BlockService extends change_BaseService
 	private function buildBlockInfo($blocLists)
 	{
 		$templateDir = f_util_FileUtils::buildProjectPath("modules", "website", "templates", "builder", "blocks");
-		$blocWrapper = new block_blockInfoBuilder($this);
+		$blocWrapper = new website_BlockInfoBuilder($this);
 		$author = 'Auto Generated at ' . date_Calendar::getInstance()->toString();
 		foreach ($blocLists as $blockType => $blockInfos)
 		{
@@ -706,212 +731,5 @@ class block_BlockService extends change_BaseService
 			return $blockInfo->getAttribute($attributeName);
 		}
 		return null;
-	}
-}
-
-class block_blockInfoBuilder
-{
-	/**
-	 * @var block_BlockService
-	 */
-	private $bs;
-	
-	private $blockInfos;
-	
-	public function __construct($bs)
-	{
-		$this->bs = $bs;
-	}
-	
-	/**
-	 * @param array $blockInfos
-	 * @return block_blockInfoBuilder
-	 */
-	public function setBlocInfoArray($blockInfos)
-	{
-		$this->blockInfos = $blockInfos;
-		return $this;
-	}
-	
-	public function getRequestModule()
-	{
-		return $this->blockInfos['requestModule'];
-	}
-	
-	public function getTemplateModule()
-	{
-		return $this->blockInfos['templateModule'];
-	}
-	
-	public function isCached()
-	{
-		return isset($this->blockInfos['cache']) && ($this->blockInfos['cache'] === true || is_numeric($this->blockInfos['cache']));
-	}
-	
-	public function getCacheTime()
-	{
-		return isset($this->blockInfos['cacheTime']) ? $this->blockInfos['cacheTime'] : 'null';
-	}
-	
-	public function getType()
-	{
-		return $this->blockInfos['type'];
-	}
-	
-	public function getBeforeAll()
-	{
-		return isset($this->blockInfos['beforeAll']) ? $this->blockInfos['beforeAll'] : false;
-	}
-	
-	public function getAfterAll()
-	{
-		return isset($this->blockInfos['afterAll']) ? $this->blockInfos['afterAll'] : false;
-	}
-	
-	public function getBlockActionClassName()
-	{
-		return $this->blockInfos['phpBlockClass'];
-	}
-	
-	public function getVarExportInfo()
-	{
-		$array = array();
-		foreach ($this->blockInfos as $name => $value)
-		{
-			if ($name !== 'parameters' && $name !== 'metas')
-			{
-				$array[$name] = $value;
-			}
-		}
-		
-		return var_export($array, true);
-	}
-	
-	public function getParametersInfoArray()
-	{
-		$array = array();
-		foreach ($this->blockInfos['parameters'] as $propertyInfoArray)
-		{
-			$array[] = new block_blockInfoParameterBuilder($propertyInfoArray);
-		}
-		return $array;
-	}
-	
-	public function getAttributes()
-	{
-		$array = array();
-		foreach ($this->blockInfos['parameters'] as $name => $propertyInfoArray)
-		{
-			if (isset($propertyInfoArray['default-value']))
-			{
-				if (is_bool($propertyInfoArray['default-value']))
-				{
-					$array['__' . $name] = $propertyInfoArray['default-value'] ? 'true' : 'false';
-				}
-				else
-				{
-					$array['__' . $name] = $propertyInfoArray['default-value'];
-				}
-			}
-		}
-		return $array;
-	}
-	
-	public function getSerializedMetas()
-	{
-		return serialize(array_keys($this->blockInfos['metas']));
-	}
-	
-	public function getSerializedTitleMetas()
-	{
-		$array = array();
-		foreach ($this->blockInfos['metas'] as $name => $allow)
-		{
-			if ($allow === true || strpos($allow, 'title') !== false)
-			{
-				$array[] = $name;
-			}
-		}
-		return serialize($array);
-	}
-	
-	public function getSerializedDescriptionMetas()
-	{
-		$array = array();
-		foreach ($this->blockInfos['metas'] as $name => $allow)
-		{
-			if ($allow === true || strpos($allow, 'description') !== false)
-			{
-				$array[] = $name;
-			}
-		}
-		return serialize($array);
-	}
-	
-	public function getSerializedKeywordsMetas()
-	{
-		$array = array();
-		foreach ($this->blockInfos['metas'] as $name => $allow)
-		{
-			if ($allow === true || strpos($allow, 'keywords') !== false)
-			{
-				$array[] = $name;
-			}
-		}
-		return serialize($array);
-	}
-}
-
-class block_blockInfoParameterBuilder
-{
-	private $propertyInfoArray;
-	
-	public function __construct($propertyInfoArray)
-	{
-		$this->propertyInfoArray = $propertyInfoArray;
-		if (!isset($this->propertyInfoArray['type']))
-		{
-			$this->propertyInfoArray['type'] = 'String';
-	}
-	}
-	
-	public function getName()
-	{
-		return $this->propertyInfoArray['name'];
-	}
-	
-	public function getType()
-	{
-		return $this->propertyInfoArray['type'];
-	}
-	
-	public function getPhpGetter()
-	{
-		return 'get' . ucfirst($this->getName());
-	}
-	
-	public function hasDefaultValue()
-	{
-		return isset($this->propertyInfoArray['default-value']);
-	}
-	
-	public function getDefaultValue()
-	{
-		return isset($this->propertyInfoArray['default-value']) ? $this->propertyInfoArray['default-value'] : null;
-	}
-	
-	public function isDocument()
-	{
-		return strpos($this->getType(), 'modules_') === 0;
-	}
-	
-	public function isArray()
-	{
-		return $this->isDocument() && isset($this->propertyInfoArray['max-occurs']) && $this->propertyInfoArray['max-occurs'] != 1;
-	}
-	
-	public function getVarExportInfo()
-	{
-		return var_export($this->propertyInfoArray, true);
 	}
 }
