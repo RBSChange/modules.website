@@ -328,38 +328,67 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	/**
 	 * @see f_mvc_Action::findParameterValue()
 	 *
-	 * @param unknown_type $parameterName
+	 * @param string $parameterName
+	 * @param string $contextOrder C=Configuration Parameter, A=Request Attribute, S=Session Attribute, P=Request Parameter, G=Request Global Parameter, D=Block Default getter
+	 * @return mixed|NULL
 	 */
-	public final function findParameterValue($parameterName)
+	public final function findParameterValue($parameterName, $contextOrder = 'CASPGD')
 	{
-		if ($this->hasNonEmptyConfigurationParameter($parameterName))
+		if (!is_string($contextOrder)) {$contextOrder = 'CASPGD';}
+		for ($i = 0; $i < strlen($contextOrder); $i++)
 		{
-			return $this->getConfigurationParameter($parameterName);
+			switch ($contextOrder[$i])
+			{
+				case 'C':
+					if ($this->hasNonEmptyConfigurationParameter($parameterName))
+					{
+						return $this->getConfigurationParameter($parameterName);
+					}
+					break;
+				case 'A':
+					$actionRequest = website_BlockController::getInstance()->getRequest();
+					if ($actionRequest->hasAttribute($parameterName))
+					{
+						return $actionRequest->getAttribute($parameterName);
+					}
+					break;
+				case 'S':
+					$globalRequest = f_mvc_HTTPRequest::getInstance();
+					$session = $globalRequest->getSession();
+					if ($session->hasAttribute($parameterName))
+					{
+						return $session->getAttribute($parameterName);
+					}
+					break;
+				case 'P':
+					$actionRequest = website_BlockController::getInstance()->getRequest();
+					if ($actionRequest->hasNonEmptyParameter($parameterName))
+					{
+						return $actionRequest->getParameter($parameterName);
+					}
+					break;
+				case 'G':
+					$globalRequest = f_mvc_HTTPRequest::getInstance();
+					if ($globalRequest->hasNonEmptyParameter($parameterName))
+					{
+						return $globalRequest->getParameter($parameterName);
+					}
+					break;	
+				case 'D':
+					$getter = 'getDefault' . ucfirst($parameterName);
+					if (method_exists($this, $getter))
+					{
+						$result = call_user_func(array($this, $getter));
+						if ($result !== null)
+						{
+							return $result;
+						}
+					}
+					break;
+				default:
+					Framework::warn(__METHOD__ . ' Undefined context key: ' . $contextOrder[$i]);
+			}
 		}
-
-		$actionRequest = website_BlockController::getInstance()->getRequest();
-		if ($actionRequest->hasAttribute($parameterName))
-		{
-			return $actionRequest->getAttribute($parameterName);
-		}
-
-		$globalRequest = f_mvc_HTTPRequest::getInstance();
-		$session = $globalRequest->getSession();
-		if ($session->hasAttribute($parameterName))
-		{
-			return $session->getAttribute($parameterName);
-		}
-
-		if ($actionRequest->hasNonEmptyParameter($parameterName))
-		{
-			return $actionRequest->getParameter($parameterName);
-		}
-
-		if ($globalRequest->hasNonEmptyParameter($parameterName))
-		{
-			return $globalRequest->getParameter($parameterName);
-		}
-
 		return null;
 	}
 
