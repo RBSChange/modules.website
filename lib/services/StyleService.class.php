@@ -1,7 +1,7 @@
 <?php
 /**
  * @package modules.website
- * @method website_SystemtopicService getInstance()
+ * @method website_StyleService getInstance()
  */
 class website_StyleService extends change_BaseService
 {
