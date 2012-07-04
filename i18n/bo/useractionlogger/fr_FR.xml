@@ -184,4 +184,6 @@
   <key id="log-deletelocalization-menuitemfunction">log deletelocalization menuitemfunction</key>
   <key id="delete-menuitemfunction">delete.menuitemfunction {documentlabel} {lang}</key>
   <key id="log-delete-menuitemfunction">log delete menuitemfunction</key>
+  <key id="purgedocument-pagereference">purgedocument.pagereference {lang} {documentlabel} {path}</key>
+  <key id="log-purgedocument-pagereference">log purgedocument pagereference</key>
 </i18n>

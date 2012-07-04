@@ -159,7 +159,7 @@ class website_TopicService extends f_persistentdocument_DocumentService
 		{
 			foreach ($pageRefChildren as $pageReference)
 			{
-				$pagereferenceService->deleteAll($pageReference);
+				$pagereferenceService->purgeDocument($pageReference);
 			}
 		}
 	}

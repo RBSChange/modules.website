@@ -29,4 +29,5 @@
   <key id="navigationvisibility-help">visibilité dans les menus de navigation</key>
   <key id="ishomepage">page d'accueil du site</key>
   <key id="isindexpage">page d'index de la rubrique parente</key>
+  <key id="referenceofid-error">La page référencée n'est plus valide.</key>
 </i18n>
