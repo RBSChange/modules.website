@@ -292,9 +292,9 @@ class website_PagereferenceService extends website_PageService
 		$tn = TreeService::getInstance()->getInstanceByDocument($document);
 		if ($tn)
 		{
-			$page = DocumentHelper::getDocumentInstanceIfExists($document->getReferenceofid());
-			if ($page)
+			if ($this->getPersistentProvider()->getDocumentModelName($document->getReferenceofid()))
 			{
+				$page = DocumentHelper::getDocumentInstance($document->getReferenceofid());
 				$ptn = TreeService::getInstance()->getInstanceByDocument($page);
 				if ($ptn && in_array($ptn->getParentId(), array_slice($tn->getAncestorsId(),0, -1)))
 				{
