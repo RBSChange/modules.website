@@ -245,13 +245,34 @@ class website_PagereferenceService extends website_PageService
 		}
 	}
 	
-	// Deprecated
-
 	/**
-	 * @deprecated use purgeDocument
+	 * @param website_persistentdocument_pagereference $document
+	 * @param string $forModuleName
+	 * @param array $allowedSections
+	 * @return array
 	 */
-	public function deleteAll($document)
+	public function getResume($document, $forModuleName, $allowedSections = null)
 	{
-		$this->purgeDocument($document);
+		$data = parent::getResume($document, $forModuleName, $allowedSections);
+		$tn = TreeService::getInstance()->getInstanceByDocument($document);
+		if ($tn)
+		{
+			$page = DocumentHelper::getDocumentInstanceIfExists($document->getReferenceofid());
+			if ($page)
+			{
+				$ptn = TreeService::getInstance()->getInstanceByDocument($page);
+				if ($ptn && in_array($ptn->getParentId(), array_slice($tn->getAncestorsId(),0, -1)))
+				{
+					$data['properties']['purgeDocument'] = array('hidden' => 'true');
+				}
+			}
+		}
+	
+		if (!isset($data['properties']['purgeDocument']))
+		{
+			$data['properties']['purgeDocument'] = array('hidden' => 'false',
+				'label' => LocaleService::getInstance()->trans('m.website.document.pagereference.referenceofid-error', array('ucf')));
+		}
+		return $data;
 	}
 }

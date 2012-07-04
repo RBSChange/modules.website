@@ -743,13 +743,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 				$pgrefService->purgeDocument($page);
 			}
 		}
-		else
-		{
-			if (Framework::isDebugEnabled())
-			{
-				Framework::debug(__METHOD__ . '(' . $page->__toString() . ') has ' . count($tags) . ' tags.');
-			}
-		}
 	}
 	
 	/**

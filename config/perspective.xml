@@ -269,6 +269,7 @@
 		<toolbarbutton name="openPage" />
 	</toolbar>
 	<actions>
+		<action name="purgeDocument" single="true" permission="PurgeDocument" icon="purge" labeli18n="m.uixul.bo.actions.purge-document" />
 		<action name="refresh" single="true" icon="refresh" labeli18n="m.uixul.bo.actions.refresh" />
 		<action name="delete" permission="Delete" icon="delete" labeli18n="m.uixul.bo.actions.delete" />
 		<action name="edit" single="true" permission="Load" icon="edit" labeli18n="m.uixul.bo.actions.edit" />

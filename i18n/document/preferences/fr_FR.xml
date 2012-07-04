@@ -4,4 +4,6 @@
 	<key id="edition-form-title">préférences des sites et des pages</key>
 	<key id="checkersrecipient">destinataire des vérifications</key>
 	<key id="checkersrecipient-help">liste des utilisateurs recevant les notifications des processus de vérifications (liens, etc.)</key>
+	<key id="referenceofid-error">La page référencée n'est plus valide.</key>
+	<key id="purgedocument">Supprimer</key>
 </i18n>

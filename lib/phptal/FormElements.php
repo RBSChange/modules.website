@@ -32,7 +32,7 @@ class PHPTAL_Php_Attribute_CHANGE_Submit extends FormElement
 }
 
 /**
- * Use in HTML: <anytag change:textinput="name toto; label &modules.tutu.tata.titiLabel"/>
+ * Use in HTML: <anytag change:textinput="name toto; labeli18n m.tutu.tata.titilabel"/>
  */
 class PHPTAL_Php_Attribute_CHANGE_Textinput extends FormElement
 {
@@ -74,7 +74,7 @@ class PHPTAL_Php_Attribute_CHANGE_Listmultifield extends FormElement
 }
 
 /**
- * Use in HTML: <anytag change:dateinput="name toto; label &modules.tutu.tata.titiLabel; format dd/yy/uu"/>
+ * Use in HTML: <anytag change:dateinput="name toto; labeli18n m.tutu.tata.titilabel; format dd/yy/uu"/>
  */
 class PHPTAL_Php_Attribute_CHANGE_Dateinput extends FormElement
 {

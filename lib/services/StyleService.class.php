@@ -252,7 +252,7 @@ class website_StyleService extends change_BaseService
 				if ($this->currentThemeName === false)
 				{
 					$this->currentThemeName = null;
-					$currentPageId = website_WebsiteModuleService::getInstance()->getCurrentPageId();
+					$currentPageId = website_PageService::getInstance()->getCurrentPageId();
 					if ($currentPageId)
 					{
 						$currentPage = DocumentHelper::getDocumentInstance($currentPageId, "modules_website/page");
@@ -262,7 +262,7 @@ class website_StyleService extends change_BaseService
 				
 				if ($this->currentThemeName !== null)
 				{
-					$fileResolver->addPotentialDirectory(f_util_FileUtils::buildWebeditPath('themes', $this->currentThemeName));
+					$fileResolver->addPotentialDirectory(f_util_FileUtils::buildProjectPath('themes', $this->currentThemeName));
 					$fileResolver->addPotentialDirectory(f_util_FileUtils::buildOverridePath('themes', $this->currentThemeName));
 				}
 

@@ -236,7 +236,7 @@
 			window.setTimeout(function(){
 				if (pageDeck.hasAttribute('editorLoaded')) {wCore.debug("editor is loaded"); return;}
 				designFrame.setAttribute("src", "about:blank"); 
-				alert("&modules.uixul.bo.general.PageEditorLoadError;");  
+				alert("${trans:m.uixul.bo.general.pageeditorloaderror,ucf,js}");  
 				pageDeck.selectedIndex = 0;
 				}, 30000);			
 		]]></body>

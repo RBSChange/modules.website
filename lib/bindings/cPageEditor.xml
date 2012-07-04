@@ -64,7 +64,7 @@
 				<parameter name="rowData" />			
 				<body><![CDATA[
 					if (this.disabled) {return;}
-					if (confirm("&modules.website.bo.doceditor.page-version-list.Confirm-delete-version;"))
+					if (confirm("${trans:m.website.bo.doceditor.page-version-list.confirm-delete-version,ucf,js}"))
 					{
 						var me = this;
 						var callBack = function(result) {me.onDeleted(result);};
@@ -86,7 +86,7 @@
 				<parameter name="rowData" />			
 				<body><![CDATA[
 					if (this.disabled) {return;}
-					if (confirm("&modules.website.bo.doceditor.page-version-list.Confirm-duplicate-version;"))
+					if (confirm("${trans:m.website.bo.doceditor.page-version-list.confirm-duplicate-version,ucf,js}"))
 					{
 						this.getPanel().onDuplicateVersion(rowData.id);
 					}

@@ -335,11 +335,11 @@ class website_BlockAction extends f_mvc_Action implements website_PageBlock
 	 *
 	 * @see f_mvc_Action::findParameterValue()
 	 *
-	 * @param string $parameterName        	
+	 * @param string $parameterName			
 	 * @param string $contextOrder
-	 *        	C=Configuration Parameter, A=Request Attribute, S=Session
-	 *        	Attribute, P=Request Parameter, G=Request Global Parameter,
-	 *        	D=Block Default getter
+	 *			C=Configuration Parameter, A=Request Attribute, S=Session
+	 *			Attribute, P=Request Parameter, G=Request Global Parameter,
+	 *			D=Block Default getter
 	 * @return mixed NULL
 	 */
 	public final function findParameterValue($parameterName, $contextOrder = 'CASPGD')
