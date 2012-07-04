@@ -211,45 +211,11 @@ class website_PagereferenceService extends website_PageService
 	}
 
 	/**
-	 * @param website_persistentdocument_pagereference $document
+	 * @deprecated use purgeDocument
 	 */
 	public function deleteAll($document)
 	{
-		$requestContext = RequestContext::getInstance();
-		$vo = $document->getLang();
-		
-		foreach ($requestContext->getSupportedLanguages() as $lang)
-		{
-			if ($lang == $vo)
-			{
-				continue;
-			}
-			
-			try
-			{
-				$requestContext->beginI18nWork($lang);
-				if ($document->isContextLangAvailable())
-				{
-					$this->delete($document);
-				}
-				$requestContext->endI18nWork();
-			}
-			catch (Exception $e)
-			{
-				$requestContext->endI18nWork($e);
-			}			
-		}
-		
-		try
-		{
-			$requestContext->beginI18nWork($vo);
-			$this->delete($document);
-			$requestContext->endI18nWork();
-		}
-		catch (Exception $e)
-		{
-			$requestContext->endI18nWork($e);
-		}
+		$this->purgeDocument($document);
 	}
 	
 	/**
@@ -312,5 +278,36 @@ class website_PagereferenceService extends website_PageService
 		parent::addTreeAttributes($document, $moduleName, $treeType, $nodeAttributes);
 		$label = $document->isContextLangAvailable() ? $document->getLabel() : $document->getVoLabel();
 		$nodeAttributes['label'] = $this->getPathOf(DocumentHelper::getDocumentInstance($document->getReferenceofid()));
-	}	
+	}
+	
+	/**
+	 * @param website_persistentdocument_pagereference $document
+	 * @param string $forModuleName
+	 * @param array $allowedSections
+	 * @return array
+	 */
+	public function getResume($document, $forModuleName, $allowedSections = null)
+	{
+		$data = parent::getResume($document, $forModuleName, $allowedSections);		
+		$tn = TreeService::getInstance()->getInstanceByDocument($document);
+		if ($tn)
+		{
+			$page = DocumentHelper::getDocumentInstanceIfExists($document->getReferenceofid());
+			if ($page)
+			{
+				$ptn = TreeService::getInstance()->getInstanceByDocument($page);
+				if ($ptn && in_array($ptn->getParentId(), array_slice($tn->getAncestorsId(),0, -1)))
+				{
+					$data['properties']['purgeDocument'] = array('hidden' => 'true');
+				}
+			}	
+		}
+		
+		if (!isset($data['properties']['purgeDocument']))
+		{
+			$data['properties']['purgeDocument'] = array('hidden' => 'false', 
+				'label' => LocaleService::getInstance()->transBO('m.website.document.pagereference.referenceofid-error', array('ucf')));
+		}
+		return $data;
+	}
 }

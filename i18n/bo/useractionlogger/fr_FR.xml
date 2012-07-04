@@ -174,4 +174,16 @@
   <key id="log-savepermissions-website">log savepermissions website</key>
   <key id="updatetranslation-menu">updatetranslation.menu {lang} {documentlabel}</key>
   <key id="log-updatetranslation-menu">log updatetranslation menu</key>
+  <key id="deletelocalization-menuitemdocument">deletelocalization.menuitemdocument {documentlabel} {lang}</key>
+  <key id="log-deletelocalization-menuitemdocument">log deletelocalization menuitemdocument</key>
+  <key id="savepermissions-page">savepermissions.page {lang} {documentlabel} {path}</key>
+  <key id="log-savepermissions-page">log savepermissions page</key>
+  <key id="saveredirectinfo-pageexternal">saveredirectinfo.pageexternal {lang} {documentlabel} {path}</key>
+  <key id="log-saveredirectinfo-pageexternal">log saveredirectinfo pageexternal</key>
+  <key id="deletelocalization-menuitemfunction">deletelocalization.menuitemfunction {documentlabel} {lang}</key>
+  <key id="log-deletelocalization-menuitemfunction">log deletelocalization menuitemfunction</key>
+  <key id="delete-menuitemfunction">delete.menuitemfunction {documentlabel} {lang}</key>
+  <key id="log-delete-menuitemfunction">log delete menuitemfunction</key>
+  <key id="purgedocument-pagereference">purgedocument.pagereference {lang} {documentlabel} {path}</key>
+  <key id="log-purgedocument-pagereference">log purgedocument pagereference</key>
 </i18n>

@@ -691,19 +691,13 @@ class website_PageService extends f_persistentdocument_DocumentService
 
 			foreach ($pagesReference as $pageReference)
 			{
-				$pgrefService->deleteAll($pageReference);
+				
+				$pgrefService->purgeDocument($pageReference);
 			}
 
 			if ($deletePage)
 			{
-				$pgrefService->deleteAll($page);
-			}
-		} 
-		else
-		{
-			if (Framework::isDebugEnabled())
-			{
-				Framework::debug(__METHOD__ . '(' . $page->__toString() . ') has ' . count($tags) . ' tags.');
+				$pgrefService->purgeDocument($page);
 			}
 		}
 	}

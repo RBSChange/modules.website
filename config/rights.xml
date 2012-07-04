@@ -19,6 +19,7 @@
       <action name="SetTopicIndexPage"/>
       <action name="RemoveIndexPage"/>
     </document>
+    <document name="pagereference"/>
     <document name="template"/>
     <document name="menufolder"/>
     <document name="menu"/>
@@ -44,6 +45,7 @@
   <roles>
     <role name="Admin">
       <permission name="*"/>
+      <permission name="PurgeDocument.*"/>
       <permission name="LoadPermissions.*"/>
       <permission name="SavePermissions.*"/>
       <permission name="GetPreferencesDocument"/>
