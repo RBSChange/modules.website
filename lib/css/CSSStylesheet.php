@@ -387,9 +387,7 @@ class website_CSSStylesheet
 	private function importCSS($url)
 	{
 		$parts = explode('/', $url);
-		$path = FileResolver::getInstance()
-		->setPackageName($parts[1]. '_' . $parts[2])
-		->setDirectory($parts[3])->getPath($parts[4]);
+		$path = change_FileResolver::getNewInstance()->getPath($parts[1], $parts[2], $parts[3], $parts[4]);
 		if ($path)
 		{
 			$engPart = explode('.', $parts[4]);

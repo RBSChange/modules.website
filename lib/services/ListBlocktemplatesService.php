@@ -39,7 +39,7 @@ class website_ListBlocktemplatesService extends change_BaseService implements li
 			
 			// Handle global templates.
 			$namesToIgnore = array('Error', 'Input');
-			$paths = FileResolver::getInstance()->setPackageName('modules_' . $blockModule)->getPaths('templates');
+			$paths = change_FileResolver::getNewInstance()->getPaths('modules' , $blockModule, 'templates');
 			foreach ($paths as $path)
 			{
 				$dir = dir($path);
@@ -66,7 +66,7 @@ class website_ListBlocktemplatesService extends change_BaseService implements li
 				/* @var $theme theme_persistentdocument_theme */
 				$themeCode = $theme->getCodename();
 				$themesByCode[$themeCode] = $theme;
-				$paths = FileResolver::getInstance()->setPackageName('themes_' . $themeCode)->getPaths('modules'. DIRECTORY_SEPARATOR . $blockModule . DIRECTORY_SEPARATOR . 'templates');
+				$paths = change_FileResolver::getNewInstance()->getPaths('themes',  $themeCode, 'modules', $blockModule, 'templates');
 				if (is_array($paths))
 				{
 					foreach ($paths as $path)
@@ -74,9 +74,9 @@ class website_ListBlocktemplatesService extends change_BaseService implements li
 						$dir = dir($path);
 						while (false !== ($entry = $dir->read()))
 						{
-							if (f_util_StringUtils::beginsWith($entry, $templatePrefix, f_util_StringUtils::CASE_SENSITIVE) && f_util_StringUtils::endsWith($entry, '.all.all.html', f_util_StringUtils::CASE_SENSITIVE))
+							if (f_util_StringUtils::beginsWith($entry, $templatePrefix, f_util_StringUtils::CASE_SENSITIVE) && f_util_StringUtils::endsWith($entry, '.html', f_util_StringUtils::CASE_SENSITIVE))
 							{
-								$value = str_replace($templatePrefix, '', str_replace('.all.all.html', '', $entry));
+								$value = str_replace($templatePrefix, '', str_replace('.html', '', $entry));
 								if (in_array($value, $namesToIgnore))
 								{
 									continue;

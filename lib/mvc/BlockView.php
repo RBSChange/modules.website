@@ -148,17 +148,19 @@ class website_BlockView
 			$moduleName = $this->getTemplateModule($request);
 			
 			$templateName = ucfirst($moduleName) .'-'. $this->getName($request);
-			$this->templateObject = TemplateLoader::getInstance()->setMimeContentType('html')
-										->setDirectory('templates')->setPackageName( 'modules_' . $moduleName)->load($templateName);
+			$this->templateObject = change_TemplateLoader::getNewInstance()->setExtension('html')
+					->load('modules', $moduleName, 'templates', $templateName);
 		}
 		
-		$template = $this->templateObject;
-		$model = array_merge($request->getParameters(), $request->getAttributes());
-		$model["session_Attributes"] = change_Controller::getInstance()->getStorage()->readAll();
-		$model["context"] = $request->getContext();
-		$model["website_page"] = $request->getContext();
-		$template->importAttributes($model);
-		$response->getWriter()->write($template->execute());
-
+		if ($this->templateObject !== null)
+		{
+			$template = $this->templateObject;
+			$model = array_merge($request->getParameters(), $request->getAttributes());
+			$model["session_Attributes"] = change_Controller::getInstance()->getStorage()->readAll();
+			$model["context"] = $request->getContext();
+			$model["website_page"] = $request->getContext();
+			$template->importAttributes($model);
+			$response->getWriter()->write($template->execute());
+		}
 	}
 }

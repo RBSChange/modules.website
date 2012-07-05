@@ -30,10 +30,8 @@ class website_ListStylesheetsService extends change_BaseService implements list_
 	 */
 	protected function getWebsiteAndTopicStylesheets()
 	{
-		$availablePaths = FileResolver::getInstance()->setPackageName('modules_website')->setDirectory('style')->getPaths('');
-		
-		$styles = array();
-		
+		$availablePaths = change_FileResolver::getNewInstance()->getPaths('modules', 'website', 'style');		
+		$styles = array();		
 		foreach ($availablePaths as $availablePath)
 		{
 			if (is_dir($availablePath))

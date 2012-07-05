@@ -59,7 +59,7 @@ class website_XHTMLCleanerHelper
 
 	private static function generateCleanerXSLT()
 	{
-		$defaultXslPath = FileResolver::getInstance()->setPackageName('modules_website')->setDirectory('lib')->getPath('cleanXHTMLFragment.xsl');
+		$defaultXslPath = change_FileResolver::getNewInstance()->getPath('modules', 'website', 'lib', 'cleanXHTMLFragment.xsl');
 		$xsl = new DOMDocument('1.0', 'UTF-8');
 		$xsl->load($defaultXslPath);
 		foreach (self::getProjectStyle() as $rule)

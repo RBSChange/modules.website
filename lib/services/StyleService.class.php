@@ -243,9 +243,7 @@ class website_StyleService extends change_BaseService
 		$styleRessource = explode('.', $id);
 		if (count($styleRessource) > 2)
 		{
-			$fileResolver = FileResolver::getInstance();
-			
-			
+			$fileResolver = change_FileResolver::getNewInstance();
 			if ($styleRessource[0] === 'modules')
 			{
 				//Add Theme override
@@ -258,15 +256,11 @@ class website_StyleService extends change_BaseService
 						$currentPage = DocumentHelper::getDocumentInstance($currentPageId, "modules_website/page");
 						list($this->currentThemeName, ) = explode('/', $currentPage->getTemplate());
 					}
-				}
-				
+				}				
 				if ($this->currentThemeName !== null)
 				{
-					$fileResolver->addPotentialDirectory(f_util_FileUtils::buildProjectPath('themes', $this->currentThemeName));
-					$fileResolver->addPotentialDirectory(f_util_FileUtils::buildOverridePath('themes', $this->currentThemeName));
+					$fileResolver->addThemePotentialDirectories($this->currentThemeName);
 				}
-
-	
 			}			
 							
 			$relativePath = array_slice($styleRessource, 2, -1);
@@ -280,7 +274,7 @@ class website_StyleService extends change_BaseService
 			}
 			$fileName = end($styleRessource) . $suffix . '.css';
 				
-			$path = $fileResolver->setPackageName($styleRessource[0] . '_' . $styleRessource[1])->setDirectory('style')->getPath($fileName);
+			$path = $fileResolver->getPath($styleRessource[0] , $styleRessource[1], 'style', $fileName);
 			if ($path !== null) 
 			{
 				return $path;

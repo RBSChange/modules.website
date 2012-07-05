@@ -70,7 +70,7 @@ class website_ModuleService extends ModuleBaseService
 	public function inititalizeStructure($container, $module, $attributes, $script)
 	{
 		$scriptFile = $script . (!f_util_StringUtils::endsWith($script, '.xml') ? '.xml' : '');
-		$scriptPath = FileResolver::getInstance()->setPackageName('modules_'.$module)->setDirectory('setup')->getPath($scriptFile);
+		$scriptPath = change_FileResolver::getNewInstance()->getPath('modules', $module, 'setup', $scriptFile);
 		if ($scriptPath === null)
 		{
 			throw new BaseException('Import script not found!', 'modules.website.bo.general.Import-script-not-found');

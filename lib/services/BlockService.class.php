@@ -259,8 +259,8 @@ class block_BlockService extends change_BaseService
 	{
 		$moduleName = substr($packageName, 0, 8) == 'modules_' ? substr($packageName, 8) : $packageName;
 		$blockInfoArray = array();
-		$blockFiles = FileResolver::getInstance()->setPackageName('modules_' . $moduleName)->getPaths('config/blocks.xml');
-		if ($blockFiles === NULL)
+		$blockFiles = change_FileResolver::getNewInstance()->getPaths('modules', $moduleName, 'config', 'blocks.xml');
+		if (!count($blockFiles))
 		{
 			return;
 		}

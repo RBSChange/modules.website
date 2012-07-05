@@ -58,18 +58,13 @@ class website_MarkerService extends f_persistentdocument_DocumentService
 	public function getHtmlBody($marker)
 	{
 		$model = $marker->getPersistentModel();
-		try 
+		$templateLoader = change_TemplateLoader::getNewInstance()->setExtension('html');
+		$template = $templateLoader->load('modules' , $model->getModuleName(), 'templates', ucfirst($model->getModuleName()) , '-marker-Inc');
+		if ($template !== null)
 		{
-			$templateLoader = TemplateLoader::getInstance()->setMimeContentType('html');
-			$templateLoader->setPackageName('modules_' . $model->getModuleName());
-			$template = $templateLoader->load(ucfirst($model->getModuleName()) . '-marker-Inc');
 			$template->setAttribute('codeMarker', $marker->getAccount());
 			$template->setAttribute('marker', $marker);
 			return $template->execute();
-		}
-		catch (TemplateNotFoundException $e)
-		{
-			Framework::info(__METHOD__ . $e->getMessage());
 		}		
 		return '';
 	}
@@ -81,19 +76,14 @@ class website_MarkerService extends f_persistentdocument_DocumentService
 	public function getHtmlHead($marker)
 	{
 		$model = $marker->getPersistentModel();
-		try 
+		$templateLoader = change_TemplateLoader::getNewInstance()->setExtension('html');
+		$template = $templateLoader->load('modules' , $model->getModuleName(), 'templates', ucfirst($model->getModuleName()) , '-marker-IncHead');
+		if ($template !== null)
 		{
-			$templateLoader = TemplateLoader::getInstance()->setMimeContentType('html');
-			$templateLoader->setPackageName('modules_' . $model->getModuleName());
-			$template = $templateLoader->load(ucfirst($model->getModuleName()) . '-marker-IncHead');
 			$template->setAttribute('codeMarker', $marker->getAccount());
 			$template->setAttribute('marker', $marker);
 			return $template->execute();
-		}
-		catch (TemplateNotFoundException $e)
-		{
-			Framework::info(__METHOD__ . $e->getMessage());
-		}		
+		}	
 		return '';
 	}
 	

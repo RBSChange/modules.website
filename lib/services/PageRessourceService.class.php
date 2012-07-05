@@ -97,14 +97,12 @@ class website_PageRessourceService extends change_BaseService
 		if ($DOMDocument->documentElement->hasAttribute('templateType'))
 		{
 			$this->templateType = $DOMDocument->documentElement->getAttribute('templateType');
-			$xslPath = FileResolver::getInstance()->setPackageName('modules_website')
-				->setDirectory('lib')->getPath($this->templateType . 'RenderContent.xsl');
+			$xslPath = change_FileResolver::getNewInstance()->getPath('modules', 'website', 'lib', $this->templateType . 'RenderContent.xsl');
 		}
 		else
 		{
 			$this->templateType = "freeLayout";
-			$xslPath = FileResolver::getInstance()->setPackageName('modules_website')
-				->setDirectory('lib')->getPath('pageRenderContentTransform.xsl');
+			$xslPath = change_FileResolver::getNewInstance()->getPath('modules', 'website', 'lib', 'pageRenderContentTransform.xsl');
 		}		
 		$resultXPath = new DOMXPath($DOMDocument);
 		$resultXPath->registerNameSpace('change', self::CHANGE_PAGE_EDITOR_NS);
@@ -123,14 +121,12 @@ class website_PageRessourceService extends change_BaseService
 		if ($DOMDocument->documentElement->hasAttribute('templateType'))
 		{
 			$this->templateType = $DOMDocument->documentElement->getAttribute('templateType');
-			$xslPath = FileResolver::getInstance()->setPackageName('modules_website')
-				->setDirectory('lib')->getPath($this->templateType . 'EditContent.xsl');	
+			$xslPath = change_FileResolver::getNewInstance()->getPath('modules', 'website', 'lib', $this->templateType . 'EditContent.xsl');	
 		}
 		else
 		{
 			$this->templateType = "freeLayout";
-			$xslPath = FileResolver::getInstance()->setPackageName('modules_website')
-				->setDirectory('lib')->getPath('pageEditContentTransform.xsl');
+			$xslPath = change_FileResolver::getNewInstance()->getPath('modules', 'website', 'lib','pageEditContentTransform.xsl');
 		}
 				
 		$resultXPath = new DOMXPath($DOMDocument);
@@ -556,9 +552,7 @@ class website_PageRessourceService extends change_BaseService
 	 */
 	public function getGlobalTemplate()
 	{
-		return TemplateResolver::getInstance()->setPackageName('modules_website')->setDirectory('templates')
-		->setMimeContentType('php')
-		->getPath($this->globalTemplateName);
+		return change_TemplateLoader::getNewInstance()->setExtension('php')->getPath('modules', 'website', 'templates', $this->globalTemplateName);
 	}
 
 	/**

@@ -1441,10 +1441,10 @@ class website_UrlRewritingService extends change_BaseService
 	private function getXMLConfigFiles()
 	{
 		$fileContent = array();
-		$modules = ModuleService::getInstance()->getPackageNames();
-		foreach ($modules as $package)
+		$ms =  ModuleService::getInstance();
+		foreach ($ms->getPackageNames() as $package)
 		{
-			$filePath = FileResolver::getInstance()->setPackageName($package)->getPath('/config/urlrewriting.xml');
+			$filePath = change_FileResolver::getNewInstance()->getPath('modules', $ms->getShortModuleName($package), 'config', 'urlrewriting.xml');
 			if ($filePath)
 			{
 				$fileContent[$package] = f_util_FileUtils::read($filePath);

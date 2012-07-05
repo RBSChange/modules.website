@@ -286,7 +286,7 @@ class website_JsService extends change_BaseService
 	{
 		$appLogLevel = Framework::getLogLevelName();
 		$moduleService = ModuleService::getInstance();
-		$fileResolver = FileResolver::getInstance();
+		$fileResolver = change_FileResolver::getNewInstance();
 		$declaredDependencies = array();
 		$noReplacementScripts = array();
 		$localizedScripts = array();
@@ -299,8 +299,7 @@ class website_JsService extends change_BaseService
 
 		foreach ($moduleService->getPackageNames() as $packageName)
 		{
-			$fileResolver->setPackageName($packageName)->setDirectory('config');
-			$jsDepsFilePath = $fileResolver->getPath("jsDependencies.xml");
+			$jsDepsFilePath = $fileResolver->getPath('modules', $moduleService->getShortModuleName($packageName), 'config', 'jsDependencies.xml');
 			if ($jsDepsFilePath === null)
 			{
 				continue;
@@ -532,24 +531,19 @@ class website_JsService extends change_BaseService
 		$match = null;
 		if (preg_match('/^modules\.(\w+)\.(.*)/i', $script, $match))
 		{
-			$package = 'modules_' . $match[1];
 			$path = $this->makeSystemPath($match[2]) . '.js';
-				
-			$fileLocation = FileResolver::getInstance()->setPackageName($package)->setDirectory(dirname($path))->getPath(basename($path));
-				
-			if (is_readable($fileLocation))
+			$fileLocation = change_FileResolver::getNewInstance()->getPath('modules', $match[1], $path);			
+			if ($fileLocation && is_readable($fileLocation))
 			{
 				return $fileLocation;
 			}
 		}
 		else if (preg_match('/^themes\.(\w+)\.(.*)/i', $script, $match))
 		{
-			$package = 'themes_' . $match[1];
+
 			$path = $this->makeSystemPath($match[2]) . '.js';
-				
-			$fileLocation = FileResolver::getInstance()->setPackageName($package)->setDirectory(dirname($path))->getPath(basename($path));
-				
-			if (is_readable($fileLocation))
+			$fileLocation = change_FileResolver::getNewInstance()->getPath('themes', $match[1], $path);			
+			if ($fileLocation && is_readable($fileLocation))
 			{
 				return $fileLocation;
 			}
