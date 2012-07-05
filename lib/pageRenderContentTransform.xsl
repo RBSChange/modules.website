@@ -17,7 +17,7 @@
 			<xsl:apply-templates />
 		</div>
 	</xsl:template>
-
+	
 	<xsl:template match="div[not(descendant::*)]">
 		<div><xsl:copy-of select="@*[not(name() = 'orient' or name() = 'flex')]"/>&#160;</div>
 	</xsl:template>
@@ -28,7 +28,7 @@
 		<body>
 			<xsl:copy-of select="@id" />
 			<xsl:copy-of select="@class" />
-				<xsl:apply-templates />
+			<xsl:apply-templates />
 		</body>
 	</xsl:template>
 
@@ -38,7 +38,7 @@
 			<xsl:apply-templates />
 		</div>
 	</xsl:template>
-
+	
 	<xsl:template match="change:content[not(descendant::*)]">
 		<div><xsl:copy-of select="@*" />&#160;</div>
 	</xsl:template>
@@ -92,7 +92,12 @@
 						<xsl:value-of select="concat('margin-right:', string(@marginRight), 'px;')" />
 					</xsl:attribute>
 				</xsl:if>
-			<xsl:apply-templates />
+				<xsl:choose>
+					<xsl:when test="descendant::*">
+						<xsl:apply-templates />	
+					</xsl:when>
+					<xsl:otherwise>&#160;</xsl:otherwise>
+				</xsl:choose>
 			</div>	
 		</div>
 	</xsl:template>
@@ -104,7 +109,12 @@
 					<xsl:value-of select="concat('margin-bottom:', string(@marginBottom), 'px;')" />
 				</xsl:attribute>
 			</xsl:if>
-			<xsl:apply-templates />	
+			<xsl:choose>
+				<xsl:when test="descendant::*">
+					<xsl:apply-templates />	
+				</xsl:when>
+				<xsl:otherwise>&#160;</xsl:otherwise>
+			</xsl:choose>
 		</div>
 	</xsl:template>
 
