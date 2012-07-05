@@ -391,6 +391,10 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$website = website_persistentdocument_website::getInstanceById($this->getWebsiteId($document));
 			return $urlRewritingService->getRewriteLink($website, $lang, '/', $parameters);
 		}
+		elseif ($document->getIsIndexPage() && $document->getNavigationVisibility() != website_ModuleService::VISIBLE)
+		{
+			return $urlRewritingService->getDocumentLinkForWebsite($document->getTopic(), $website, $lang, $parameters);
+		}
 		return null;
 	}
 	
