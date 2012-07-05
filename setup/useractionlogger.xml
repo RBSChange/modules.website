@@ -1,102 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <script>
-  <binding fileName="modules/useractionlogger/persistentdocument/import/useractionlogger_binding.xml"/>
-  <actiondef modulename="website" actionname="insert.website" label="modules.website.bo.useractionlogger.insert-website"/>
-  <actiondef modulename="website" actionname="update.website" label="modules.website.bo.useractionlogger.update-website"/>
-  <actiondef modulename="website" actionname="updatetranslation.website" label="modules.website.bo.useractionlogger.updatetranslation-website"/>
-  <actiondef modulename="website" actionname="delete.website" label="modules.website.bo.useractionlogger.delete-website"/>
-  <actiondef modulename="website" actionname="deletelocalization.website" label="modules.website.bo.useractionlogger.deletelocalization-website"/>
-  <actiondef modulename="website" actionname="insert.topic" label="modules.website.bo.useractionlogger.insert-topic"/>
-  <actiondef modulename="website" actionname="update.topic" label="modules.website.bo.useractionlogger.update-topic"/>
-  <actiondef modulename="website" actionname="updatetranslation.topic" label="modules.website.bo.useractionlogger.updatetranslation-topic"/>
-  <actiondef modulename="website" actionname="delete.topic" label="modules.website.bo.useractionlogger.delete-topic"/>
-  <actiondef modulename="website" actionname="deletelocalization.topic" label="modules.website.bo.useractionlogger.deletelocalization-topic"/>
-  <actiondef modulename="website" actionname="move.topic" label="modules.website.bo.useractionlogger.move-topic"/>
-  <actiondef modulename="website" actionname="insert.page" label="modules.website.bo.useractionlogger.insert-page"/>
-  <actiondef modulename="website" actionname="update.page" label="modules.website.bo.useractionlogger.update-page"/>
-  <actiondef modulename="website" actionname="updatetranslation.page" label="modules.website.bo.useractionlogger.updatetranslation-page"/>
-  <actiondef modulename="website" actionname="savecontent.page" label="modules.website.bo.useractionlogger.savecontent-page"/>
-  <actiondef modulename="website" actionname="delete.page" label="modules.website.bo.useractionlogger.delete-page"/>
-  <actiondef modulename="website" actionname="deletecorrection.page" label="modules.website.bo.useractionlogger.deletecorrection-page"/>
-  <actiondef modulename="website" actionname="deletelocalization.page" label="modules.website.bo.useractionlogger.deletelocalization-page"/>
-  <actiondef modulename="website" actionname="createworkflowinstance.page" label="modules.website.bo.useractionlogger.createworkflowinstance-page"/>
-  <actiondef modulename="website" actionname="activate.page" label="modules.website.bo.useractionlogger.activate-page"/>
-  <actiondef modulename="website" actionname="deactivated.page" label="modules.website.bo.useractionlogger.deactivated-page"/>
-  <actiondef modulename="website" actionname="reactivate.page" label="modules.website.bo.useractionlogger.reactivate-page"/>
-  <actiondef modulename="website" actionname="addtag.page" label="modules.website.bo.useractionlogger.addtag-page"/>
-  <actiondef modulename="website" actionname="removetag.page" label="modules.website.bo.useractionlogger.removetag-page"/>
-  <actiondef modulename="website" actionname="duplicate.page" label="modules.website.bo.useractionlogger.duplicate-page"/>
-  <actiondef modulename="website" actionname="move.page" label="modules.website.bo.useractionlogger.move-page"/>
-  <actiondef modulename="website" actionname="sethomepage.page" label="modules.website.bo.useractionlogger.sethomepage-page"/>
-  <actiondef modulename="website" actionname="settopicindexpage.page" label="modules.website.bo.useractionlogger.settopicindexpage-page"/>
-  <actiondef modulename="website" actionname="removeindexpage.page" label="modules.website.bo.useractionlogger.removeindexpage-page"/>
-  <actiondef modulename="website" actionname="insert.pageversion" label="modules.website.bo.useractionlogger.insert-pageversion"/>
-  <actiondef modulename="website" actionname="update.pageversion" label="modules.website.bo.useractionlogger.update-pageversion"/>
-  <actiondef modulename="website" actionname="updatetranslation.pageversion" label="modules.website.bo.useractionlogger.updatetranslation-pageversion"/>
-  <actiondef modulename="website" actionname="savecontent.pageversion" label="modules.website.bo.useractionlogger.savecontent-pageversion"/>
-  <actiondef modulename="website" actionname="delete.pageversion" label="modules.website.bo.useractionlogger.delete-pageversion"/>
-  <actiondef modulename="website" actionname="deletecorrection.pageversion" label="modules.website.bo.useractionlogger.deletecorrection-pageversion"/>
-  <actiondef modulename="website" actionname="deletelocalization.pageversion" label="modules.website.bo.useractionlogger.deletelocalization-pageversion"/>
-  <actiondef modulename="website" actionname="createworkflowinstance.pageversion" label="modules.website.bo.useractionlogger.createworkflowinstance-pageversion"/>
-  <actiondef modulename="website" actionname="activate.pageversion" label="modules.website.bo.useractionlogger.activate-pageversion"/>
-  <actiondef modulename="website" actionname="deactivated.pageversion" label="modules.website.bo.useractionlogger.deactivated-pageversion"/>
-  <actiondef modulename="website" actionname="reactivate.pageversion" label="modules.website.bo.useractionlogger.reactivate-pageversion"/>
-  <actiondef modulename="website" actionname="insert.pageexternal" label="modules.website.bo.useractionlogger.insert-pageexternal"/>
-  <actiondef modulename="website" actionname="update.pageexternal" label="modules.website.bo.useractionlogger.update-pageexternal"/>
-  <actiondef modulename="website" actionname="updatetranslation.pageexternal" label="modules.website.bo.useractionlogger.updatetranslation-pageexternal"/>
-  <actiondef modulename="website" actionname="delete.pageexternal" label="modules.website.bo.useractionlogger.delete-pageexternal"/>
-  <actiondef modulename="website" actionname="deletecorrection.pageexternal" label="modules.website.bo.useractionlogger.deletecorrection-pageexternal"/>
-  <actiondef modulename="website" actionname="deletelocalization.pageexternal" label="modules.website.bo.useractionlogger.deletelocalization-pageexternal"/>
-  <actiondef modulename="website" actionname="deactivated.pageexternal" label="modules.website.bo.useractionlogger.deactivated-pageexternal"/>
-  <actiondef modulename="website" actionname="reactivate.pageexternal" label="modules.website.bo.useractionlogger.reactivate-pageexternal"/>
-  <actiondef modulename="website" actionname="addtag.pageexternal" label="modules.website.bo.useractionlogger.addtag-pageexternal"/>
-  <actiondef modulename="website" actionname="removetag.pageexternal" label="modules.website.bo.useractionlogger.removetag-pageexternal"/>
-  <actiondef modulename="website" actionname="duplicate.pageexternal" label="modules.website.bo.useractionlogger.duplicate-pageexternal"/>
-  <actiondef modulename="website" actionname="move.pageexternal" label="modules.website.bo.useractionlogger.move-pageexternal"/>
-  <actiondef modulename="website" actionname="update.menuitemfunction" label="modules.website.bo.useractionlogger.update-menuitemfunction"/>
-  <actiondef modulename="website" actionname="insert.menu" label="modules.website.bo.useractionlogger.insert-menu"/>
-  <actiondef modulename="website" actionname="update.menu" label="modules.website.bo.useractionlogger.update-menu"/>
-  <actiondef modulename="website" actionname="insert.menuitemfunction" label="modules.website.bo.useractionlogger.insert-menuitemfunction"/>
-  <actiondef modulename="website" actionname="deactivated.menuitemfunction" label="modules.website.bo.useractionlogger.deactivated-menuitemfunction"/>
-  <actiondef modulename="website" actionname="reactivate.menuitemfunction" label="modules.website.bo.useractionlogger.reactivate-menuitemfunction"/>
-  <actiondef modulename="website" actionname="insert.menuitemtext" label="modules.website.bo.useractionlogger.insert-menuitemtext"/>
-  <actiondef modulename="website" actionname="insert.menuitemdocument" label="modules.website.bo.useractionlogger.insert-menuitemdocument"/>
-  <actiondef modulename="website" actionname="savepermissions.topic" label="modules.website.bo.useractionlogger.savepermissions-topic"/>
-  <actiondef modulename="website" actionname="update.menuitemdocument" label="modules.website.bo.useractionlogger.update-menuitemdocument"/>
-  <actiondef modulename="website" actionname="removeindexpage.pagereference" label="modules.website.bo.useractionlogger.removeindexpage-pagereference"/>
-  <actiondef modulename="website" actionname="settopicindexpage.pagereference" label="modules.website.bo.useractionlogger.settopicindexpage-pagereference"/>
-  <actiondef modulename="website" actionname="delete.menuitemdocument" label="modules.website.bo.useractionlogger.delete-menuitemdocument"/>
-  <actiondef modulename="website" actionname="deletelocalization.pagegroup" label="modules.website.bo.useractionlogger.deletelocalization-pagegroup"/>
-  <actiondef modulename="website" actionname="delete.menu" label="modules.website.bo.useractionlogger.delete-menu"/>
-  <actiondef modulename="website" actionname="update.menuitemtext" label="modules.website.bo.useractionlogger.update-menuitemtext"/>
-  <actiondef modulename="website" actionname="saveredirectinfo.page" label="modules.website.bo.useractionlogger.saveredirectinfo-page"/>
-  <actiondef modulename="website" actionname="deactivated.website" label="modules.website.bo.useractionlogger.deactivated-website"/>
-  <actiondef modulename="website" actionname="reactivate.website" label="modules.website.bo.useractionlogger.reactivate-website"/>
-  <actiondef modulename="website" actionname="savepermissions.rootfolder" label="modules.website.bo.useractionlogger.savepermissions-rootfolder"/>
-  <actiondef modulename="website" actionname="update.systemtopic" label="modules.website.bo.useractionlogger.update-systemtopic"/>
-  <actiondef modulename="website" actionname="update.systemtopic" label="modules.website.bo.useractionlogger.update-systemtopic"/>
-  <actiondef modulename="website" actionname="savetemplate.template" label="modules.website.bo.useractionlogger.savetemplate-template"/>
-  <actiondef modulename="website" actionname="savepermissions.systemtopic" label="modules.website.bo.useractionlogger.savepermissions-systemtopic"/>
-  <actiondef modulename="website" actionname="savepermissions.privateshop" label="m.website.bo.useractionlogger.savepermissions-privateshop"/>
-  <actiondef modulename="website" actionname="update.markergas" label="m.website.bo.useractionlogger.update-markergas"/>
-  <actiondef modulename="website" actionname="update.markergas" label="m.website.bo.useractionlogger.update-markergas"/>
-  <actiondef modulename="website" actionname="insert.markergas" label="m.website.bo.useractionlogger.insert-markergas"/>
-  <actiondef modulename="website" actionname="insert.markergmaps" label="m.website.bo.useractionlogger.insert-markergmaps"/>
-  <actiondef modulename="website" actionname="update.markergmaps" label="m.website.bo.useractionlogger.update-markergmaps"/>
-  <actiondef modulename="website" actionname="delete.markergas" label="m.website.bo.useractionlogger.delete-markergas"/>
-  <actiondef modulename="website" actionname="deactivated.markergmaps" label="m.website.bo.useractionlogger.deactivated-markergmaps"/>
-  <actiondef modulename="website" actionname="reactivate.markergmaps" label="m.website.bo.useractionlogger.reactivate-markergmaps"/>
-  <actiondef modulename="website" actionname="deactivated.markergas" label="m.website.bo.useractionlogger.deactivated-markergas"/>
-  <actiondef modulename="website" actionname="saveredirectinfo.topic" label="m.website.bo.useractionlogger.saveredirectinfo-topic"/>
-  <actiondef modulename="website" actionname="savepermissions.website" label="m.website.bo.useractionlogger.savepermissions-website"/>
-  <actiondef modulename="website" actionname="updatetranslation.menu" label="m.website.bo.useractionlogger.updatetranslation-menu"/>
-  <actiondef modulename="website" actionname="settopicindexpage.pagegroup" label="m.website.bo.useractionlogger.settopicindexpage-pagegroup"/>
-  <actiondef modulename="website" actionname="sethomepage.pagegroup" label="m.website.bo.useractionlogger.sethomepage-pagegroup"/>
-  <actiondef modulename="website" actionname="removeindexpage.pagegroup" label="m.website.bo.useractionlogger.removeindexpage-pagegroup"/>
-  <actiondef modulename="website" actionname="deletelocalization.menuitemdocument" label="m.website.bo.useractionlogger.deletelocalization-menuitemdocument"/>
-  <actiondef modulename="website" actionname="savepermissions.page" label="m.website.bo.useractionlogger.savepermissions-page"/>
-  <actiondef modulename="website" actionname="saveredirectinfo.pageexternal" label="m.website.bo.useractionlogger.saveredirectinfo-pageexternal"/>
-  <actiondef modulename="website" actionname="deletelocalization.menuitemfunction" label="m.website.bo.useractionlogger.deletelocalization-menuitemfunction"/>
-  <actiondef modulename="website" actionname="delete.menuitemfunction" label="m.website.bo.useractionlogger.delete-menuitemfunction"/>
-  <actiondef modulename="website" actionname="purgedocument.pagereference" label="m.website.bo.useractionlogger.purgedocument-pagereference"/>
+	<binding fileName="modules/useractionlogger/persistentdocument/import/useractionlogger_binding.xml" />
+	<actiondef modulename="website" actionname="insert.website" label="modules.website.bo.useractionlogger.insert-website" />
+	<actiondef modulename="website" actionname="update.website" label="modules.website.bo.useractionlogger.update-website" />
+	<actiondef modulename="website" actionname="updatetranslation.website" label="modules.website.bo.useractionlogger.updatetranslation-website" />
+	<actiondef modulename="website" actionname="delete.website" label="modules.website.bo.useractionlogger.delete-website" />
+	<actiondef modulename="website" actionname="deletelocalization.website" label="modules.website.bo.useractionlogger.deletelocalization-website" />
+	<actiondef modulename="website" actionname="insert.topic" label="modules.website.bo.useractionlogger.insert-topic" />
+	<actiondef modulename="website" actionname="update.topic" label="modules.website.bo.useractionlogger.update-topic" />
+	<actiondef modulename="website" actionname="updatetranslation.topic" label="modules.website.bo.useractionlogger.updatetranslation-topic" />
+	<actiondef modulename="website" actionname="delete.topic" label="modules.website.bo.useractionlogger.delete-topic" />
+	<actiondef modulename="website" actionname="deletelocalization.topic" label="modules.website.bo.useractionlogger.deletelocalization-topic" />
+	<actiondef modulename="website" actionname="move.topic" label="modules.website.bo.useractionlogger.move-topic" />
+	<actiondef modulename="website" actionname="insert.page" label="modules.website.bo.useractionlogger.insert-page" />
+	<actiondef modulename="website" actionname="update.page" label="modules.website.bo.useractionlogger.update-page" />
+	<actiondef modulename="website" actionname="updatetranslation.page" label="modules.website.bo.useractionlogger.updatetranslation-page" />
+	<actiondef modulename="website" actionname="savecontent.page" label="modules.website.bo.useractionlogger.savecontent-page" />
+	<actiondef modulename="website" actionname="delete.page" label="modules.website.bo.useractionlogger.delete-page" />
+	<actiondef modulename="website" actionname="deletecorrection.page" label="modules.website.bo.useractionlogger.deletecorrection-page" />
+	<actiondef modulename="website" actionname="deletelocalization.page" label="modules.website.bo.useractionlogger.deletelocalization-page" />
+	<actiondef modulename="website" actionname="createworkflowinstance.page" label="modules.website.bo.useractionlogger.createworkflowinstance-page" />
+	<actiondef modulename="website" actionname="activate.page" label="modules.website.bo.useractionlogger.activate-page" />
+	<actiondef modulename="website" actionname="deactivated.page" label="modules.website.bo.useractionlogger.deactivated-page" />
+	<actiondef modulename="website" actionname="reactivate.page" label="modules.website.bo.useractionlogger.reactivate-page" />
+	<actiondef modulename="website" actionname="addtag.page" label="modules.website.bo.useractionlogger.addtag-page" />
+	<actiondef modulename="website" actionname="removetag.page" label="modules.website.bo.useractionlogger.removetag-page" />
+	<actiondef modulename="website" actionname="duplicate.page" label="modules.website.bo.useractionlogger.duplicate-page" />
+	<actiondef modulename="website" actionname="move.page" label="modules.website.bo.useractionlogger.move-page" />
+	<actiondef modulename="website" actionname="sethomepage.page" label="modules.website.bo.useractionlogger.sethomepage-page" />
+	<actiondef modulename="website" actionname="settopicindexpage.page" label="modules.website.bo.useractionlogger.settopicindexpage-page" />
+	<actiondef modulename="website" actionname="removeindexpage.page" label="modules.website.bo.useractionlogger.removeindexpage-page" />
+	<actiondef modulename="website" actionname="insert.pageversion" label="modules.website.bo.useractionlogger.insert-pageversion" />
+	<actiondef modulename="website" actionname="update.pageversion" label="modules.website.bo.useractionlogger.update-pageversion" />
+	<actiondef modulename="website" actionname="updatetranslation.pageversion" label="modules.website.bo.useractionlogger.updatetranslation-pageversion" />
+	<actiondef modulename="website" actionname="savecontent.pageversion" label="modules.website.bo.useractionlogger.savecontent-pageversion" />
+	<actiondef modulename="website" actionname="delete.pageversion" label="modules.website.bo.useractionlogger.delete-pageversion" />
+	<actiondef modulename="website" actionname="deletecorrection.pageversion" label="modules.website.bo.useractionlogger.deletecorrection-pageversion" />
+	<actiondef modulename="website" actionname="deletelocalization.pageversion" label="modules.website.bo.useractionlogger.deletelocalization-pageversion" />
+	<actiondef modulename="website" actionname="createworkflowinstance.pageversion" label="modules.website.bo.useractionlogger.createworkflowinstance-pageversion" />
+	<actiondef modulename="website" actionname="activate.pageversion" label="modules.website.bo.useractionlogger.activate-pageversion" />
+	<actiondef modulename="website" actionname="deactivated.pageversion" label="modules.website.bo.useractionlogger.deactivated-pageversion" />
+	<actiondef modulename="website" actionname="reactivate.pageversion" label="modules.website.bo.useractionlogger.reactivate-pageversion" />
+	<actiondef modulename="website" actionname="insert.pageexternal" label="modules.website.bo.useractionlogger.insert-pageexternal" />
+	<actiondef modulename="website" actionname="update.pageexternal" label="modules.website.bo.useractionlogger.update-pageexternal" />
+	<actiondef modulename="website" actionname="updatetranslation.pageexternal" label="modules.website.bo.useractionlogger.updatetranslation-pageexternal" />
+	<actiondef modulename="website" actionname="delete.pageexternal" label="modules.website.bo.useractionlogger.delete-pageexternal" />
+	<actiondef modulename="website" actionname="deletecorrection.pageexternal" label="modules.website.bo.useractionlogger.deletecorrection-pageexternal" />
+	<actiondef modulename="website" actionname="deletelocalization.pageexternal" label="modules.website.bo.useractionlogger.deletelocalization-pageexternal" />
+	<actiondef modulename="website" actionname="deactivated.pageexternal" label="modules.website.bo.useractionlogger.deactivated-pageexternal" />
+	<actiondef modulename="website" actionname="reactivate.pageexternal" label="modules.website.bo.useractionlogger.reactivate-pageexternal" />
+	<actiondef modulename="website" actionname="addtag.pageexternal" label="modules.website.bo.useractionlogger.addtag-pageexternal" />
+	<actiondef modulename="website" actionname="removetag.pageexternal" label="modules.website.bo.useractionlogger.removetag-pageexternal" />
+	<actiondef modulename="website" actionname="duplicate.pageexternal" label="modules.website.bo.useractionlogger.duplicate-pageexternal" />
+	<actiondef modulename="website" actionname="move.pageexternal" label="modules.website.bo.useractionlogger.move-pageexternal" />
+	<actiondef modulename="website" actionname="update.menuitemfunction" label="modules.website.bo.useractionlogger.update-menuitemfunction" />
+	<actiondef modulename="website" actionname="insert.menu" label="modules.website.bo.useractionlogger.insert-menu" />
+	<actiondef modulename="website" actionname="update.menu" label="modules.website.bo.useractionlogger.update-menu" />
+	<actiondef modulename="website" actionname="insert.menuitemfunction" label="modules.website.bo.useractionlogger.insert-menuitemfunction" />
+	<actiondef modulename="website" actionname="deactivated.menuitemfunction" label="modules.website.bo.useractionlogger.deactivated-menuitemfunction" />
+	<actiondef modulename="website" actionname="reactivate.menuitemfunction" label="modules.website.bo.useractionlogger.reactivate-menuitemfunction" />
+	<actiondef modulename="website" actionname="insert.menuitemtext" label="modules.website.bo.useractionlogger.insert-menuitemtext" />
+	<actiondef modulename="website" actionname="insert.menuitemdocument" label="modules.website.bo.useractionlogger.insert-menuitemdocument" />
+	<actiondef modulename="website" actionname="savepermissions.topic" label="modules.website.bo.useractionlogger.savepermissions-topic" />
+	<actiondef modulename="website" actionname="update.menuitemdocument" label="modules.website.bo.useractionlogger.update-menuitemdocument" />
+	<actiondef modulename="website" actionname="removeindexpage.pagereference" label="modules.website.bo.useractionlogger.removeindexpage-pagereference" />
+	<actiondef modulename="website" actionname="settopicindexpage.pagereference" label="modules.website.bo.useractionlogger.settopicindexpage-pagereference" />
+	<actiondef modulename="website" actionname="delete.menuitemdocument" label="modules.website.bo.useractionlogger.delete-menuitemdocument" />
+	<actiondef modulename="website" actionname="deletelocalization.pagegroup" label="modules.website.bo.useractionlogger.deletelocalization-pagegroup" />
+	<actiondef modulename="website" actionname="delete.menu" label="modules.website.bo.useractionlogger.delete-menu" />
+	<actiondef modulename="website" actionname="update.menuitemtext" label="modules.website.bo.useractionlogger.update-menuitemtext" />
+	<actiondef modulename="website" actionname="saveredirectinfo.page" label="modules.website.bo.useractionlogger.saveredirectinfo-page" />
+	<actiondef modulename="website" actionname="deactivated.website" label="modules.website.bo.useractionlogger.deactivated-website" />
+	<actiondef modulename="website" actionname="reactivate.website" label="modules.website.bo.useractionlogger.reactivate-website" />
+	<actiondef modulename="website" actionname="savepermissions.rootfolder" label="modules.website.bo.useractionlogger.savepermissions-rootfolder" />
+	<actiondef modulename="website" actionname="update.systemtopic" label="modules.website.bo.useractionlogger.update-systemtopic" />
+	<actiondef modulename="website" actionname="update.systemtopic" label="modules.website.bo.useractionlogger.update-systemtopic" />
+	<actiondef modulename="website" actionname="savetemplate.template" label="modules.website.bo.useractionlogger.savetemplate-template" />
+	<actiondef modulename="website" actionname="savepermissions.systemtopic" label="modules.website.bo.useractionlogger.savepermissions-systemtopic" />
+	<actiondef modulename="website" actionname="savepermissions.privateshop" label="m.website.bo.useractionlogger.savepermissions-privateshop" />
+	<actiondef modulename="website" actionname="update.markergas" label="m.website.bo.useractionlogger.update-markergas" />
+	<actiondef modulename="website" actionname="update.markergas" label="m.website.bo.useractionlogger.update-markergas" />
+	<actiondef modulename="website" actionname="insert.markergas" label="m.website.bo.useractionlogger.insert-markergas" />
+	<actiondef modulename="website" actionname="insert.markergmaps" label="m.website.bo.useractionlogger.insert-markergmaps" />
+	<actiondef modulename="website" actionname="update.markergmaps" label="m.website.bo.useractionlogger.update-markergmaps" />
+	<actiondef modulename="website" actionname="delete.markergas" label="m.website.bo.useractionlogger.delete-markergas" />
+	<actiondef modulename="website" actionname="deactivated.markergmaps" label="m.website.bo.useractionlogger.deactivated-markergmaps" />
+	<actiondef modulename="website" actionname="reactivate.markergmaps" label="m.website.bo.useractionlogger.reactivate-markergmaps" />
+	<actiondef modulename="website" actionname="deactivated.markergas" label="m.website.bo.useractionlogger.deactivated-markergas" />
+	<actiondef modulename="website" actionname="saveredirectinfo.topic" label="m.website.bo.useractionlogger.saveredirectinfo-topic" />
+	<actiondef modulename="website" actionname="savepermissions.website" label="m.website.bo.useractionlogger.savepermissions-website" />
+	<actiondef modulename="website" actionname="updatetranslation.menu" label="m.website.bo.useractionlogger.updatetranslation-menu" />
+	<actiondef modulename="website" actionname="settopicindexpage.pagegroup" label="m.website.bo.useractionlogger.settopicindexpage-pagegroup" />
+	<actiondef modulename="website" actionname="sethomepage.pagegroup" label="m.website.bo.useractionlogger.sethomepage-pagegroup" />
+	<actiondef modulename="website" actionname="removeindexpage.pagegroup" label="m.website.bo.useractionlogger.removeindexpage-pagegroup" />
+	<actiondef modulename="website" actionname="deletelocalization.menuitemdocument" label="m.website.bo.useractionlogger.deletelocalization-menuitemdocument" />
+	<actiondef modulename="website" actionname="savepermissions.page" label="m.website.bo.useractionlogger.savepermissions-page" />
+	<actiondef modulename="website" actionname="saveredirectinfo.pageexternal" label="m.website.bo.useractionlogger.saveredirectinfo-pageexternal" />
+	<actiondef modulename="website" actionname="deletelocalization.menuitemfunction" label="m.website.bo.useractionlogger.deletelocalization-menuitemfunction" />
+	<actiondef modulename="website" actionname="delete.menuitemfunction" label="m.website.bo.useractionlogger.delete-menuitemfunction" />
+	<actiondef modulename="website" actionname="purgedocument.pagereference" label="m.website.bo.useractionlogger.purgedocument-pagereference" />
 </script>

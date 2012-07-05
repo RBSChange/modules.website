@@ -2,7 +2,7 @@
 <document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/schema/persistentdocument-4.0.xsd" model-version="1.0" icon="template" use-publication-dates="false" has-url="false">
 	<properties>
 		<property name="description" type="LongString" />
-		<property name="template" type="String" min-occurs="1" from-list="modules_website/templates" />
+		<property name="template" type="String" from-list="modules_website/templates" required="true" />
 		<property name="content" type="LongString" />
 	</properties>
 	<statuses default="ACTIVE" />

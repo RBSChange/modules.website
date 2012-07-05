@@ -2,40 +2,32 @@
 <script>
 	<binding fileName="modules/website/persistentdocument/import/website_binding.xml" />
 	<binding fileName="modules/media/persistentdocument/import/media_binding.xml" />
-	
 	<website byTag="default_modules_website_default-website">
 		<documentRef type="modules_website/topic" byLabel="Outils">
 			<documentRef type="modules_website/page" id="unePage" byLabel="Aide" />
 			<documentRef type="modules_website/page" id="uneAutrePage" byTag="contextual_website_website_legal" />
 		</documentRef>
-		
 		<topic id="top1" byLabel="Multilingue">
 			<page id="pg1" byLabel="page test">
 				<changecontent for="content-block">
-					<changeblock type="richtext">
-						<![CDATA[
+					<changeblock type="richtext"><![CDATA[
 							<h2>Bloc dans un layout implicite</h2>
 							<p>Un peu de contenu...</p>
 							<p>Lien vers une page : <a lang="fr" cmpref="{ref-id:unePage}">Aide qsd</a></p>
-						]]>
-					</changeblock>
+						]]></changeblock>
 				</changecontent>
 			</page>
 		</topic>
-		
 	</website>
-	
 	<i18n lang="en">
 		<topic byRefid="top1" label="Multilingue en">
 			<page byRefid="pg1" label="page test en">
 				<changecontent for="content-block">
-					<changeblock type="richtext">
-						<![CDATA[
+					<changeblock type="richtext"><![CDATA[
 							<h2>Block in an implicit layout</h2>
 							<p>Some contents...</p>
 							<p>Link to a page : <a lang="en" cmpref="{ref-id:uneAutrePage}">Legal notice</a></p>
-						]]>
-					</changeblock>
+						]]></changeblock>
 				</changecontent>
 			</page>
 		</topic>

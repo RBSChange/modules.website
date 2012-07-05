@@ -5,7 +5,7 @@
 		<property name="description" type="LongString" localized="true" />
 		<property name="stylesheet" type="String" from-list="modules_website/stylesheets" />
 		<property name="indexPage" type="Document" document-type="modules_website/page" />
-		<property name="navigationVisibility" type="Integer" min-occurs="1" from-list="modules_website/navigationvisibility" default-value="1" localized="true" />
+		<property name="navigationVisibility" type="Integer" from-list="modules_website/navigationvisibility" default-value="1" localized="true" required="true" />
 		<property name="skin" type="Document" document-type="modules_skin/skin" />
 		<property name="advancedreferencing" type="XHTMLFragment" localized="true" />
 		<property name="allowedpagetemplate" type="DocumentArray" document-type="modules_theme/pagetemplate" />

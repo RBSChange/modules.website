@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/schema/persistentdocument-4.0.xsd" model-version="3.0" icon="menu" use-publication-dates="false" has-url="false">
 	<properties>
-		<property name="label" type="String" min-occurs="1" localized="true" />
+		<property name="label" type="String" localized="true" required="true" />
 		<property name="menuItem" type="DocumentArray" tree-node="true" inverse="true" cascade-delete="true" document-type="modules_website/menuitem" />
 		<property name="publicationstatus" localized="true" />
 	</properties>

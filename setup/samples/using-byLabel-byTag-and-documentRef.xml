@@ -2,7 +2,6 @@
 <script>
 	<binding fileName="modules/website/persistentdocument/import/website_binding.xml" />
 	<binding fileName="modules/media/persistentdocument/import/media_binding.xml" />
-
 	<rootfolder module="media">
 		<folder byLabel="Exemple de media Actualité">
 			<documentRef type="modules_media/media" id="uneImage" byLabel="Anniversaire 3">
@@ -10,7 +9,6 @@
 			</documentRef>
 		</folder>
 	</rootfolder>
-
 	<website byTag="default_modules_website_default-website">
 		<documentRef type="modules_website/topic" byLabel="Outils">
 			<documentRef type="modules_website/page" id="unePage" byLabel="Ajouter aux favoris" />
@@ -27,16 +25,14 @@
 			</topic>
 			<page label="page test" template-attr="templateNosidebar">
 				<changecontent for="content-block">
-					<changeblock type="richtext">
-						<![CDATA[
+					<changeblock type="richtext"><![CDATA[
 							<h2>Bloc dans un layout implicite</h2>
 							<p>Un peu de contenu...</p>
 							<p>
 								Lien vers une page : <a lang="fr" cmpref="{ref-id:unePage}">Ajouter aux favoris qsd</a><br/><br/>
 								Image : <img lang="fr" alt="RBS Change 4" cmpref="{ref-id:uneImage}" />
 							</p>
-						]]>
-					</changeblock>
+						]]></changeblock>
 				</changecontent>
 			</page>
 		</topic>

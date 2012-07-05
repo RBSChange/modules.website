@@ -2,14 +2,14 @@
 <document xmlns="http://www.rbs.fr/schema/change-document/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.rbs.fr/schema/change-document/1.0 http://www.rbschange.fr/schema/persistentdocument-4.0.xsd" model-version="1.0" icon="page-external">
 	<properties>
 		<property name="publicationstatus" localized="true" />
-		<property name="navigationtitle" type="String" localized="true" min-occurs="1" db-size="80" />
+		<property name="navigationtitle" type="String" localized="true" db-size="80" required="true" />
 		<property name="description" type="LongString" indexed="description" />
-		<property name="url" type="String" min-occurs="1">
+		<property name="url" type="String" required="true">
 			<constraint name="url" />
 		</property>
-		<property name="navigationVisibility" type="Integer" min-occurs="1" from-list="modules_website/navigationvisibility" default-value="1" localized="true" />
-		<property name="isIndexPage" type="Boolean" min-occurs="1" default-value="0" />
-		<property name="isHomePage" type="Boolean" min-occurs="1" default-value="0" />
+		<property name="navigationVisibility" type="Integer" from-list="modules_website/navigationvisibility" default-value="1" localized="true" required="true" />
+		<property name="isIndexPage" type="Boolean" default-value="0" />
+		<property name="isHomePage" type="Boolean" default-value="0" />
 		<property name="useurl" type="Boolean" default-value="true" />
 	</properties>
 	<statuses default="ACTIVE" />

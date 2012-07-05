@@ -3,10 +3,10 @@
 	<properties>
 		<property name="publicationstatus" localized="true" />
 		<property name="description" type="LongString" localized="true" />
-		<property name="localizebypath" type="Boolean" max-occurs="1" default-value="0" />
-		<property name="url" type="String" min-occurs="1" localized="true" />
-		<property name="protocol" type="String" min-occurs="1" db-size="10" from-list="modules_website/protocol" default-value="http" />
-		<property name="domain" type="String" min-occurs="1" localized="true" db-size="100">
+		<property name="localizebypath" type="Boolean" default-value="0" />
+		<property name="url" type="String" localized="true" required="true" />
+		<property name="protocol" type="String" db-size="10" from-list="modules_website/protocol" default-value="http" required="true" />
+		<property name="domain" type="String" localized="true" db-size="100" required="true">
 			<constraint name="domain" />
 			<constraint name="unique" propertyName="domain" modelName="modules_website/website" />
 		</property>
