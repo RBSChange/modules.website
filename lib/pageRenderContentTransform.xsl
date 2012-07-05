@@ -28,7 +28,7 @@
 		<body>
 			<xsl:copy-of select="@id" />
 			<xsl:copy-of select="@class" />
-				<xsl:apply-templates />
+			<xsl:apply-templates />
 		</body>
 	</xsl:template>
 
@@ -92,7 +92,12 @@
 						<xsl:value-of select="concat('margin-right:', string(@marginRight), 'px;')" />
 					</xsl:attribute>
 				</xsl:if>
-			<xsl:apply-templates />
+				<xsl:choose>
+					<xsl:when test="descendant::*">
+						<xsl:apply-templates />	
+					</xsl:when>
+					<xsl:otherwise>&#160;</xsl:otherwise>
+				</xsl:choose>
 			</div>	
 		</div>
 	</xsl:template>
@@ -104,7 +109,12 @@
 					<xsl:value-of select="concat('margin-bottom:', string(@marginBottom), 'px;')" />
 				</xsl:attribute>
 			</xsl:if>
-			<xsl:apply-templates />	
+			<xsl:choose>
+				<xsl:when test="descendant::*">
+					<xsl:apply-templates />	
+				</xsl:when>
+				<xsl:otherwise>&#160;</xsl:otherwise>
+			</xsl:choose>
 		</div>
 	</xsl:template>
 
