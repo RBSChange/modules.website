@@ -1,12 +1,12 @@
 <?php
-
 class website_BlockSwitchlanguageAction extends website_BlockAction
 {
+	/**
+	 * @var integer
+	 */
 	private $detailId = null;
 	
 	/**
-	 * @see f_mvc_Action::getCacheDependencies()
-	 *
 	 * @return string[string]
 	 */ 
 	public function getCacheDependencies()
@@ -22,24 +22,22 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 	 * @param website_BlockActionRequest $request
 	 * @return array<mixed>
 	 */
-	
 	public function getCacheKeyParameters($request)
 	{
 		return array("detailId" => $this->getDetailId());
 	}
 	
+	/**
+	 * @return integer
+	 */	
 	private function getDetailId()
 	{
 		if ($this->detailId === null)
 		{
-			$params = change_Controller::getInstance()->getContext()->getRequest()->getParameters();
-			
-			if (isset($params['wemod']) 
-				&& isset($params[$params['wemod'].'Param']) 
-				&& is_array($params[$params['wemod'].'Param']) 
-				&& isset($params[$params['wemod'].'Param']['cmpref']))
+			$globalRequest = change_Controller::getInstance()->getRequest();
+			if ($globalRequest->hasParameter('detail_cmpref'))
 			{
-				$this->detailId = intval($params[$params['wemod'].'Param']['cmpref']);
+				$this->detailId = intval($globalRequest->getParameter('detail_cmpref'));
 			}
 			else 
 			{
@@ -50,13 +48,11 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 	}
 
 	/**
-	 * @see website_BlockAction::execute()
-	 *
 	 * @param website_BlockActionRequest $request
 	 * @param website_BlockActionResponse $response
 	 * @return string
 	 */
-	function execute($request, $response)
+	public function execute($request, $response)
 	{
 		$viewall = $this->getConfiguration()->getViewall();
 		$request->setAttribute('viewall', $viewall);
@@ -133,6 +129,10 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 		return website_BlockView::SUCCESS;
 	}
 	
+	/**
+	 * @param string $lang
+	 * @return string
+	 */
 	private function getLangLabel($lang)
 	{
 		$key = 'm.website.frontoffice.version-in-lang';
@@ -144,6 +144,10 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 		return strtoupper($lang);
 	}
 	
+	/**
+	 * @param string $lang
+	 * @return string
+	 */
 	private function getFlagIcon($lang)
 	{
 		return 'flags/' . $lang;

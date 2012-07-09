@@ -1664,10 +1664,10 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			if ($pageDocument->getNavigationVisibility() == website_ModuleService::HIDDEN)
 			{
-				$params = change_Controller::getInstance()->getContext()->getRequest()->getParameters();
-				if (isset($params['wemod']) && isset($params[$params['wemod'] . 'Param']) && is_array($params[$params['wemod'] . 'Param']) && isset($params[$params['wemod'] . 'Param']['cmpref']))
+				$globalRequest = change_Controller::getInstance()->getRequest();
+				if ($globalRequest->hasParameter('detail_cmpref'))
 				{
-					$detail = DocumentHelper::getDocumentInstanceIfExists(intval($params[$params['wemod'] . 'Param']['cmpref']));
+					$detail = DocumentHelper::getDocumentInstanceIfExists(intval($globalRequest->getParameter('detail_cmpref')));
 					if ($detail)
 					{
 						$navigationtitle = $detail->getDocumentService()->getNavigationLabel($detail);
