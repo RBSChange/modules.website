@@ -2,12 +2,12 @@
 class website_BlockSwitchlanguageAction extends website_BlockAction
 {
 	/**
-	 * @return var
+	 * @var integer
 	 */
 	private $detailId = null;
 	
 	/**
-	 * @return String[string]
+	 * @return string[string]
 	 */ 
 	public function getCacheDependencies()
 	{
@@ -34,14 +34,10 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 	{
 		if ($this->detailId === null)
 		{
-			$params = HttpController::getInstance()->getContext()->getRequest()->getParameters();
-			
-			if (isset($params['wemod']) 
-				&& isset($params[$params['wemod'].'Param']) 
-				&& is_array($params[$params['wemod'].'Param']) 
-				&& isset($params[$params['wemod'].'Param']['cmpref']))
+			$globalRequest = Controller::getInstance()->getContext()->getRequest();
+			if ($globalRequest->hasParameter('detail_cmpref'))
 			{
-				$this->detailId = intval($params[$params['wemod'].'Param']['cmpref']);
+				$this->detailId = intval($globalRequest->getParameter('detail_cmpref'));
 			}
 			else 
 			{
