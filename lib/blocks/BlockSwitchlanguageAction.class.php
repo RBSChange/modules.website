@@ -82,10 +82,10 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 				Framework::warn($e->getMessage());
 			}
 		}
-		
 		$parameters = $this->getCleanGlobalParameters(Controller::getInstance()->getContext()->getRequest()->getParameters(), $detailDoc);
 		$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
 		$homePage = $website->getIndexPage();
+		$generateLinks = Controller::getInstance()->getContext()->getRequest()->getMethod() === Request::GET;
 		
 		foreach ($rc->getSupportedLanguages() as $lang)
 		{
@@ -107,7 +107,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 					$switchArray[$lang]['flagicon'] = MediaHelper::getIcon($this->getFlagIcon($lang), $showflag);
 				}
 				
-				if ($lang != $currentLang)
+				if ($lang != $currentLang && $generateLinks)
 				{
 					$hasLink = true;
 					if ($isPageLink)
