@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <panel>
 	<section labeli18n="modules.uixul.bo.doceditor.fieldsgroup.Title">
-		<field name="allowedpagetemplate" />
+		<field name="allowedpagetemplate" allow="[modules_theme/pagetemplate]" />
 		<field name="skin" />
 		<field name="navigationVisibility" />
 		<field name="stylesheet" emptylabel="" />
