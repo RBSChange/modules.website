@@ -80,14 +80,13 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 		$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
 		$homePage = $website->getIndexPage();
 		$generateLinks = Controller::getInstance()->getContext()->getRequest()->getMethod() === Request::GET;
-		
 		$switchArray = array();
 		$otherLangsInfos = array();
 		$currentLangInfos = null;
 		foreach ($rc->getSupportedLanguages() as $lang)
 		{
 			$rc->beginI18nWork($lang);
-			$isPageLink = ($page->isContextLangAvailable() && $page->isPublished());
+			$isPageLink = ($generateLinks && $page->isContextLangAvailable() && $page->isPublished());
 			if ($detailDoc && $isPageLink)
 			{
 				$isPageLink = $detailDoc->isContextLangAvailable() && $detailDoc->isPublished();
@@ -105,7 +104,8 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 					$langInfos['flagicon'] = MediaHelper::getIcon($this->getFlagIcon($lang), $showflag);
 				}
 				
-				if ($lang != $currentLang && $generateLinks)
+				Framework::fatal(__METHOD__ . ' ' . var_export($generateLinks, true));
+				if ($lang != $currentLang)
 				{
 					$hasLink = true;
 					if ($isPageLink)
