@@ -126,25 +126,27 @@ class website_Page implements f_mvc_Context
 	}
 
 	/**
-	 * Just for compatibility
-	 * @return website_Page
-	 */
-	public function getPage()
-	{
-		return $this;
-	}
-
-	/**
 	 * @return website_persistentdocument_page
 	 */
 	function getPersistentPage()
 	{
 		return $this->page;
 	}
-
+	
+	/**
+	 * @return integer
+	 */
 	public function getId()
 	{
 		return $this->page->getId();
+	}
+	
+	/**
+	 * @return integer
+	 */
+	public function getDetailDocumentId()
+	{
+		return Controller::getInstance()->getContext()->getRequest()->getParameter('detail_cmpref' /*, $this->getId()*/);
 	}
 
 	/**
@@ -642,6 +644,14 @@ class website_Page implements f_mvc_Context
 	
 	// Deprecated
 	
+	/**
+	 * @deprecated
+	 */
+	public function getPage()
+	{
+		return $this;
+	}
+
 	/**
 	 * @deprecated (will be removed in 4.0) use block meta mechanism instead and implement getMeta() on your block
 	 */
