@@ -82,11 +82,12 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 		$parameters = $this->getCleanGlobalParameters(change_Controller::getInstance()->getContext()->getRequest()->getParameters(), $detailDoc);
 		$website = website_WebsiteService::getInstance()->getCurrentWebsite();
 		$homePage = $website->getIndexPage();
+		$generateLinks = Controller::getInstance()->getContext()->getRequest()->getMethod() === Request::GET;
 		
 		foreach ($rc->getSupportedLanguages() as $lang)
 		{
 			$rc->beginI18nWork($lang);
-			$isPageLink = ($page->isContextLangAvailable() && $page->isPublished());
+			$isPageLink = ($generateLinks && $page->isContextLangAvailable() && $page->isPublished());
 			if ($detailDoc && $isPageLink)
 			{
 				$isPageLink = $detailDoc->isContextLangAvailable() && $detailDoc->isPublished();
