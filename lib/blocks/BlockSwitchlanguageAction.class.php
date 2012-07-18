@@ -90,7 +90,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 		foreach ($rc->getSupportedLanguages() as $lang)
 		{
 			$rc->beginI18nWork($lang);
-			$isPageLink = ($page->isContextLangAvailable() && $page->isPublished());
+			$isPageLink = ($generateLinks && $page->isContextLangAvailable() && $page->isPublished());
 			if ($detailDoc && $isPageLink)
 			{
 				$isPageLink = $detailDoc->isContextLangAvailable() && $detailDoc->isPublished();
@@ -107,7 +107,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 					$switchArray[$lang]['flagicon'] = MediaHelper::getIcon($this->getFlagIcon($lang), $showflag);
 				}
 				
-				if ($lang != $currentLang && $generateLinks)
+				if ($lang != $currentLang)
 				{
 					$hasLink = true;
 					if ($isPageLink)
