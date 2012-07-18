@@ -104,7 +104,6 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 					$langInfos['flagicon'] = MediaHelper::getIcon($this->getFlagIcon($lang), $showflag);
 				}
 				
-				Framework::fatal(__METHOD__ . ' ' . var_export($generateLinks, true));
 				if ($lang != $currentLang)
 				{
 					$hasLink = true;
