@@ -267,7 +267,12 @@ class website_MenuEntry
 	 */
 	public function getOnClick()
 	{
-		return $this->onClick;
+		$onClick = $this->onClick;
+		if (!$onClick && $this->isPopup())
+		{
+			$onClick = 'return accessiblePopup(this);';
+		}
+		return $onClick;
 	}
 
 	/**
@@ -324,5 +329,29 @@ class website_MenuEntry
 	public function getMenuClass()
 	{
 		return 'level' . strval($this->level);
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getLinkClass()
+	{
+		if ($this->isPopup())
+		{
+			return 'link popup';
+		}
+		return 'link';
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getLinkTitle()
+	{
+		if ($this->isPopup())
+		{
+			return '(' . LocaleService::getInstance()->trans('m.website.frontoffice.in-a-new-window') . ')';
+		}
+		return null;
 	}
 }

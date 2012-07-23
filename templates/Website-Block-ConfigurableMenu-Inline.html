@@ -4,7 +4,7 @@
 		<li tal:repeat="entry root/getChildren" tal:attributes="class entry/getNavigationClass">
 			<strong tal:condition="entry/isCurrent">${entry/getLabel}</strong>
 			<tal:block tal:condition="not:entry/isCurrent">
-				<a tal:condition="entry/hasUrl" href="${entry/getUrl}" tal:attributes="onclick entry/getOnClick" class="link">${entry/getLabel}</a>
+				<a tal:condition="entry/hasUrl" href="${entry/getUrl}" class="${entry/getLinkClass}" tal:attributes="onclick entry/getOnClick; title entry/getLinkTitle">${entry/getLabel}</a>
 				<span tal:condition="not: entry/hasUrl">${entry/getLabel}</span>
 			</tal:block>
 			<span class="separator" tal:condition="not:repeat/entry/end"> | </span>

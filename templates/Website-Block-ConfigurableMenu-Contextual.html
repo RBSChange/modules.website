@@ -3,7 +3,7 @@
 		<li tal:repeat="entry parent/getChildren" tal:attributes="class entry/getNavigationClass">
 			<strong tal:condition="entry/isCurrent">${entry/getLabel}</strong>
 			<tal:block tal:condition="not:entry/isCurrent">
-				<a tal:condition="entry/hasUrl" href="${entry/getUrl}" tal:attributes="onclick entry/getOnClick" class="link">${entry/getLabel}</a>
+				<a tal:condition="entry/hasUrl" href="${entry/getUrl}" class="${entry/getLinkClass}" tal:attributes="onclick entry/getOnClick; title entry/getLinkTitle">${entry/getLabel}</a>
 				<span tal:condition="not: entry/hasUrl">${entry/getLabel}</span>
 			</tal:block>
 			<tal:block tal:define="parent entry" metal:use-macro="menuLevel" />
@@ -12,7 +12,7 @@
 </tal:block>
 <div class="contextual" tal:attributes="class menuClass">
 	<h3 change:h="" tal:condition="configuration/getShowTitle">
-		<a tal:condition="root/hasUrl" href="${root/getUrl}" tal:attributes="onclick root/getOnClick" class="link">${root/getLabel}</a>
+		<a tal:condition="root/hasUrl" href="${root/getUrl}" class="${root/getLinkClass}" tal:attributes="onclick root/getOnClick; title root/getLinkTitle">${root/getLabel}</a>
 		<tal:block tal:condition="not: root/hasUrl">${root/getLabel}</tal:block>
 	</h3>
 	<tal:block tal:define="parent root" metal:use-macro="menuLevel" />
