@@ -12,7 +12,7 @@
 			<parameter name="separator" type="String" default-value="/" />
 		</parameters>
 	</block>
-	<block type="modules_website_ConfigurableMenu" icon="menu" dropModels="[modules_website/menu]" cache-deps="modules_website/menu,[modules_website/menuitem],[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
+	<block type="modules_website_ConfigurableMenu" icon="menu" dropModels="[modules_website/menu]" cache-deps="tags/contextual_website_website_*,modules_website/menu,[modules_website/menuitem],[modules_website/page],modules_website/pageexternal,[modules_website/topic],modules_website/website">
 		<parameters>
 			<parameter name="displayMode" type="String" default-value="Default" min-occurs="1" fieldtype="dropdownlist" hidehelp="true" />
 			<parameter name="showTitle" type="Boolean" default-value="false" />
