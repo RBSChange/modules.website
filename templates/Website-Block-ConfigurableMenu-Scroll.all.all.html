@@ -3,7 +3,7 @@
 		<li tal:repeat="entry parent/getChildren" tal:attributes="class entry/getNavigationClass">
 			<strong tal:condition="entry/isCurrent">${entry/getLabelAsHtml}</strong>
 			<tal:block tal:condition="not:entry/isCurrent">
-				<a tal:condition="entry/hasUrl" href="${entry/getUrl}" tal:attributes="onclick entry/getOnClick" class="link">${entry/getLabelAsHtml}</a>
+				<a tal:condition="entry/hasUrl" href="${entry/getUrl}" class="${entry/getLinkClass}" tal:attributes="onclick entry/getOnClick; title entry/getLinkTitle">${entry/getLabelAsHtml}</a>
 				<span tal:condition="not: entry/hasUrl">${entry/getLabelAsHtml}</span>
 			</tal:block>
 			<tal:block tal:condition="entry/hasChildren" tal:define="parent entry" metal:use-macro="menuLevel" />
