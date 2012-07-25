@@ -64,7 +64,10 @@ class website_BlockStaticrichtextAction extends website_BlockAction
 		        {
 		        	$lang = $media->getLang();
 		        }
-				$attrs["src"] = LinkHelper::getDocumentUrl($media, $lang, $formatInfo);
+		        
+		        $attrs["src"] = website_UrlRewritingService::getInstance()->getDocumentLinkForWebsite($media, null, $lang, $formatInfo)
+		        ->setArgSeparator(f_web_HttpLink::ESCAPE_SEPARATOR)
+		        ->getUrl();
 			}
 			catch (Exception $e)
 			{
