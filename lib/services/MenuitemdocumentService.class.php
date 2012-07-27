@@ -91,9 +91,10 @@ class website_MenuitemdocumentService extends website_MenuitemService
 
 	/**
 	 * @param website_persistentdocument_menuitemdocument $document
+	 * @param Integer $parentNodeId Parent node ID where to save the document (optionnal).
 	 * @return void
 	 */
-	protected function preSave($document)
+	protected function preSave($document, $parentNodeId)
 	{
 		$this->refreshLabel($document);
 	}

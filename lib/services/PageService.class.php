@@ -2133,10 +2133,11 @@ class website_PageService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_page $document
-	 * @param string $actionType
+	 * @param string[] $propertiesNames
 	 * @param array $formProperties
+	 * @param integer $parentId
 	 */
-	public function addFormProperties($document, $propertiesNames, &$formProperties)
+	public function addFormProperties($document, $propertiesNames, &$formProperties, $parentId = null)
 	{
 		$metainfos = $this->getBlockMetaInfos($document);
 		$jsonMeta = array();

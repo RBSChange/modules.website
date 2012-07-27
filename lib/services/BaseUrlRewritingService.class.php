@@ -344,10 +344,10 @@ class website_BaseRewritingService extends BaseService
 	 *
 	 * @param f_persistentdocument_PersistentDocument $document
 	 * @param string $lang
-	 * @param array $parameters
+	 * @param array $additionnalParameters
 	 * @return string
 	 */
-	public function getDocumentUrl($document, $lang = null, &$additionnalParameters = array())
+	public function getDocumentUrl($document, $lang = null, $additionnalParameters = array())
 	{
 		if ($lang === null)
 		{

@@ -565,7 +565,7 @@ class website_FormHelper
 	 * @param array $params
 	 * @return String
 	 */
-	private function buildRichtextinput($params)
+	private static function buildRichtextinput($params)
 	{
 		$name = $params['name'];
 		if (self::$context !== null && self::$context->hasAttribute(website_BlockAction::BLOCK_BO_MODE_ATTRIBUTE, false))
@@ -584,7 +584,7 @@ class website_FormHelper
 	/**
 	 * @deprecated (will be removed in 4.0) use change:bbcodeinput instead of change:richtextinput="mode 'bbcode'"
 	 */
-	private function buildBBeditorinput($params)
+	private static function buildBBeditorinput($params)
 	{
 		return website_BBCodeService::getInstance()->buildEditor($params, self::$context);
 	}
@@ -1697,7 +1697,7 @@ jQuery(document).ready(function() {
 	 * @param Boolean $isLast
 	 * @return String
 	 */
-	private function buildListItem($msg, $isFirst = false, $isLast = false)
+	private static function buildListItem($msg, $isFirst = false, $isLast = false)
 	{
 		$string = "";
 		$cssClass = array();
@@ -1921,7 +1921,7 @@ jQuery(document).ready(function() {
 	 * @param Array $params
 	 * @return String
 	 */
-	private function renderInputCode($params)
+	private static function renderInputCode($params)
 	{
 		if (isset($params['label']))
 		{
@@ -2015,7 +2015,7 @@ jQuery(document).ready(function() {
 	 * @param Boolean $close
 	 * @return String
 	 */
-	private function buildLabel($params, $close = true, $contentPrefix = '')
+	private static function buildLabel($params, $close = true, $contentPrefix = '')
 	{
 		$ls = LocaleService::getInstance();
 		self::setDefaultValue('useFor', isset($params["id"]), $params);
@@ -2143,7 +2143,7 @@ jQuery(document).ready(function() {
 	 * @param array $params
 	 * @return String
 	 */
-	private function buildSelectProperty($propertyName, $listItems, &$params)
+	private static function buildSelectProperty($propertyName, $listItems, &$params)
 	{
 		self::buildNameAndId($params);
 		if (!array_key_exists('value', $params))
@@ -2191,7 +2191,7 @@ jQuery(document).ready(function() {
 	 * @param Array $params
 	 * @return String
 	 */
-	private function buildNameAndId(&$params, $defaultValue = 'defaultFieldName')
+	private static function buildNameAndId(&$params, $defaultValue = 'defaultFieldName')
 	{
 		if (isset($params["shortInputName"]))
 		{
@@ -2228,7 +2228,7 @@ jQuery(document).ready(function() {
 	 * @param String $listId
 	 * @return Array
 	 */
-	private function getListItems($listId)
+	private static function getListItems($listId)
 	{
 		$list = list_ListService::getInstance()->getByListId($listId);
 		if ($list === null)
@@ -2243,7 +2243,7 @@ jQuery(document).ready(function() {
 	 * @param Mixed $value
 	 * @return String
 	 */
-	private function buildArrayOptions($listItems, $value)
+	private static function buildArrayOptions($listItems, $value)
 	{
 		$result = '';
 		if (is_array($value))
@@ -2674,7 +2674,7 @@ jQuery(document).ready(function() {
 	 * @param array $params
 	 * @return String
 	 */
-	private function buildCheckboxProperty($propertyName, $listItems, &$params)
+	private static function buildCheckboxProperty($propertyName, $listItems, &$params)
 	{
 		self::buildNameAndId($params);
 		if (!array_key_exists('value', $params))

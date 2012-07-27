@@ -307,10 +307,11 @@ class website_RewriteruleService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_rewriterule $document
-	 * @param String[] $propertiesName
-	 * @param Array $datas
+	 * @param string[] $propertiesName
+	 * @param array $datas
+	 * @param integer $parentId
 	 */
-	public function addFormProperties($document, $propertiesName, &$datas)
+	public function addFormProperties($document, $propertiesName, &$datas, $parentId = null)
 	{
 		if (in_array('template', $propertiesName) && $document->getModelName())
 		{
