@@ -4,7 +4,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 	/**
 	 * @var integer
 	 */
-	private $detailId = null;
+	protected $detailId = null;
 	
 	/**
 	 * @return string[string]
@@ -24,25 +24,20 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 	 */	
 	public function getCacheKeyParameters($request)
 	{
-		return array("detailId" => $this->getDetailId());
+		$detailId = $this->getDetailId();
+		$p = $this->getCleanGlobalParameters($detailId);
+		$p['detailId']=  $this->$detailId;
+		return $p;
 	}
 	
 	/**
 	 * @return integer
 	 */
-	private function getDetailId()
+	protected function getDetailId()
 	{
 		if ($this->detailId === null)
 		{
-			$globalRequest = Controller::getInstance()->getContext()->getRequest();
-			if ($globalRequest->hasParameter('detail_cmpref'))
-			{
-				$this->detailId = intval($globalRequest->getParameter('detail_cmpref'));
-			}
-			else 
-			{
-				$this->detailId = 0;
-			}
+			$this->detailId = intval($this->getContext()->getDetailDocumentId());
 		}
 		return $this->detailId;
 	}
@@ -63,20 +58,8 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 		$page = $this->getPage()->getPersistentPage();
 		
 		$hasLink = false;
-		$detailId = $this->getDetailId($request);
-		$detailDoc = null;
-		if (intval($detailId) > 0)
-		{
-			try 
-			{
-				$detailDoc = DocumentHelper::getDocumentInstance($detailId);
-			}
-			catch (Exception $e)
-			{
-				Framework::warn($e->getMessage());
-			}
-		}
-		$parameters = $this->getCleanGlobalParameters(Controller::getInstance()->getContext()->getRequest()->getParameters(), $detailDoc);
+		$detailId = $this->getDetailId();
+		$detailDoc =  DocumentHelper::getDocumentInstanceIfExists($detailId);
 		$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
 		$homePage = $website->getIndexPage();
 		$generateLinks = Controller::getInstance()->getContext()->getRequest()->getMethod() === Request::GET;
@@ -109,7 +92,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 					$hasLink = true;
 					if ($isPageLink)
 					{
-						$pageUrl = LinkHelper::getDocumentUrl($detailDoc ? $detailDoc : $page, $lang, $parameters);
+						$pageUrl = LinkHelper::getDocumentUrlForWebsite($detailDoc ? $detailDoc : $page, $website, $lang, $this->getCleanGlobalParameters($detailId));
 						$langInfos['url'] = $pageUrl;
 						$this->getPage()->addLink("alternate", "text/html", $pageUrl, LocaleService::getInstance()->transFO("m.website.frontoffice.this-page-in-mylang", array(), null, $lang), $lang);
 					}
@@ -141,7 +124,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 	/**
 	 * @param string $lang
 	 */
-	private function getLangLabel($lang)
+	protected function getLangLabel($lang)
 	{
 		/* @deprected (will be removed in 4.0) use the locale instead */
 		if (Framework::hasConfiguration('languages/' . $lang . '/label'))
@@ -161,7 +144,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 	/**
 	 * @param string $lang
 	 */	
-	private function getFlagIcon($lang)
+	protected function getFlagIcon($lang)
 	{
 		/* @deprected (will be removed in 4.0) override the icons instead */
 		if (Framework::hasConfiguration('languages/' . $lang . '/flag'))
@@ -173,23 +156,11 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 	}
 	
 	/**
-	 * @param array $parameters
-	 * @param f_persistentdocument_PersistentDocument $detailDoc
+	 * @param integer $detailId
+	 * @return array
 	 */
-	private function getCleanGlobalParameters($parameters, $detailDoc)
+	protected function getCleanGlobalParameters($detailId)
 	{
-		unset($parameters[K::LANG_ACCESSOR]);
-		unset($parameters[K::PAGE_REF_ACCESSOR]);
-		unset($parameters[K::COMPONENT_ID_ACCESSOR]);
-		unset($parameters[K::URL_REWRITE_PAGE_NAME_ACCESSOR]);
-		unset($parameters['websiteParam']);
-		unset($parameters['module']);
-		unset($parameters['action']);
-		if ($detailDoc)
-		{
-			unset($parameters[$parameters['wemod'].'Param']);
-			unset($parameters['wemod']);
-		}
-		return $parameters;
+		return array();
 	}
 }
