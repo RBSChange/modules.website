@@ -199,7 +199,7 @@ class block_BlockService extends BaseService
 	public function compileBlocks($callback = null)
 	{
 		$blocLists = array();
-		foreach (ModuleService::getInstance()->getModules() as $packageName)
+		foreach (ModuleService::getInstance()->getPackageNames() as $packageName)
 		{
 			try
 			{
@@ -437,10 +437,11 @@ class block_BlockService extends BaseService
 		$injections = array();
 		foreach ($blocLists as $blockType => $blockInfos)
 		{
-			if (!isset($blockInfos['inject']))
+			if (!isset($blockInfos['inject']) || $blockInfos['inject'] == '')
 			{
 				continue;
 			}
+			
 			$injectedType = $blockInfos['inject'];
 			$injections[] = $blockType;
 			if (!isset($blocLists[$injectedType]))
