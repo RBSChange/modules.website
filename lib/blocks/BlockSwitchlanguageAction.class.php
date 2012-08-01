@@ -26,7 +26,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 	{
 		$detailId = $this->getDetailId();
 		$p = $this->getCleanGlobalParameters($detailId);
-		$p['detailId']=  $this->$detailId;
+		$p['detailId']=  $detailId;
 		return $p;
 	}
 	

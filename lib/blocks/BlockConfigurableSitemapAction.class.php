@@ -82,13 +82,9 @@ class website_BlockConfigurableSitemapAction extends website_BlockAction
 			return null;
 		}
 		/* @var $entry website_MenuEntry */
-		$entry->setLevel($level);
-	
-		$doc = $entry->getDocument(); // For menuitem documents $doc may differ from $entry->getDocument().
-		$docId = $entry->getDocument()->getId();
-		$entry->setCurrent($currentId == $docId);
-		$entry->setInPath(in_array($docId, $ancestorIds));
-	
+		$entry->setLevel($level);	
+		$doc = $entry->getDocument();
+		
 		// Generate children entries.
 		if ($entry->isContainer() && $level < $maxLevel)
 		{

@@ -462,6 +462,14 @@ class website_TopicService extends f_persistentdocument_DocumentService
 			$entry->setUrl(LinkHelper::getDocumentUrl($document));
 		}
 		$entry->setContainer(true);
+		if (in_array($document->getId(), website_WebsiteModuleService::getInstance()->getCurrentPageAncestorsIds()))
+		{
+			$entry->setInPath(true);
+			if ($document->getIndexPage() && $document->getIndexPage()->getId() == website_WebsiteModuleService::getInstance()->getCurrentPageId())
+			{
+				$entry->setCurrent(true);
+			}
+		}
 		return $entry;
 	}
 	

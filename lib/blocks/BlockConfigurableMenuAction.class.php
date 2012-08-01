@@ -109,16 +109,9 @@ class website_BlockConfigurableMenuAction extends website_BlockAction
 		}
 		/* @var $entry website_MenuEntry */
 		$entry->setLevel($level);
-		
-		$doc = $entry->getDocument(); // For menuitem documents $doc may differ from $entry->getDocument().
-		$docId = $entry->getDocument()->getId(); 
-		$isCurrent = ($currentId == $docId);
-		$inPath = in_array($docId, $ancestorIds);
-		$entry->setCurrent($isCurrent);
-		$entry->setInPath($inPath);
-		
+		$doc = $entry->getDocument();
 		// Generate children entries.
-		if ($entry->isContainer() && $level < $maxLevel && ($deployAll || $inPath || $isCurrent))
+		if ($entry->isContainer() && $level < $maxLevel && ($deployAll || $entry->isInPath() || $entry->isCurrent()))
 		{
 			$children = array();
 			foreach ($doc->getDocumentService()->getChildrenDocumentsForMenu($doc) as $childDoc)
