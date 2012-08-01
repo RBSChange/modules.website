@@ -22,7 +22,7 @@
 	<pagetemplate byCodename-attr="template" id="tplTwo" />
 	
 	<website id="website" byDocumentId-attr="" label-attr="" protocol-attr="" localizebypath-attr="" allowedpagetemplate-refids="tplOne,tplTwo">
-		<page id="homepage" label="Accueil" isHomePage="true" template-attr="templateHome" >
+		<page id="homepage" label="Accueil" isHomePage="true" template-attr="templateHome">
 			<changecontent for="content-block">
 				<changeblock type="richtext">
 					<![CDATA[<h1>Bienvenue</h1><p>...</p>]]>
@@ -58,14 +58,16 @@
 		</topic>
 
 		<topic id="systemtop" label="Système" navigationVisibility="hidden">
-			<page id="p404" label="Page non trouvée (404)" indexingstatus="false" navigationVisibility="hidden" byTag="contextual_website_website_error404">
+			<page id="p404" label="Page non trouvée (404)" indexingstatus="false" navigationVisibility="hidden" template-attr="templateHome"
+				byTag="contextual_website_website_error404">
 				<changecontent for="content-block">
 				   <changeblock type="richtext">
 					 <![CDATA[<h1>Page non trouvée (Erreur 404)</h1><p>La page demandée n'existe pas.<br/><a rel="cmpref:{ref-id:website}" href="#">Retour à l'accueil</a>.</p>]]>
 				   </changeblock>
 				</changecontent>
 			</page>
-			<page id="p500" label="Erreur générale (500)" indexingstatus="false" navigationVisibility="hidden" byTag="contextual_website_website_server-error">
+			<page id="p500" label="Erreur générale (500)" indexingstatus="false" navigationVisibility="hidden" template-attr="templateHome"
+				byTag="contextual_website_website_server-error">
 				<changecontent for="content-block">
 				   <changeblock type="richtext">
 					 <![CDATA[<h1>Erreur serveur</h1>]]>
@@ -73,7 +75,8 @@
 				   <changeblock type="modules_website_exception" />
 				</changecontent>
 			</page>
-			<page id="p401" label="Accès restreint (401.1)" indexingstatus="false" navigationVisibility="hidden" byTag="contextual_website_website_error401-1">
+			<page id="p401" label="Accès restreint (401.1)" indexingstatus="false" navigationVisibility="hidden" template-attr="templateHome"
+				byTag="contextual_website_website_error401-1">
 				<changecontent for="content-block">
 				   <changeblock type="richtext">
 					 <![CDATA[<h1>L'accès à cette page est protégé</h1><p>Veuillez vous identifier en utilisant le formulaire ci-dessous.</p>]]>
@@ -81,7 +84,16 @@
 				   <changeblock type="modules_users_authentication" />
 				</changecontent>
 			</page>
-			<page id="print" label="Imprimer" indexingstatus="false" byTag="contextual_website_website_print">
+			<page id="p403" label="Accès refusé" indexingstatus="false" navigationVisibility="hidden" template-attr="templateHome"
+				byTag="contextual_website_website_error403">
+				<changecontent for="content-block">
+				   <changeblock type="richtext">
+					 <![CDATA[<h1>Accès refusé</h1><p>Vous n'avez pas l'autorisation pour accéder à cette ressource.</p>]]>
+				   </changeblock>
+				</changecontent>
+			</page>
+			<page id="print" label="Imprimer" indexingstatus="false" navigationVisibility="hidden" template-attr="templateHome"
+				byTag="contextual_website_website_print">
 				<documenturl lang="fr" url="/imprimer" />
 				<changecontent for="content-block">
 					<changeblock type="richtext">
@@ -89,7 +101,8 @@
 					</changeblock>
 				</changecontent>
 			</page>
-			<page id="addtofavorites" label="Ajouter aux favoris" indexingstatus="false" navigationVisibility="hidden" byTag="contextual_website_website_favorite">
+			<page id="addtofavorites" label="Ajouter aux favoris" indexingstatus="false" navigationVisibility="hidden" template-attr="templateHome"
+				byTag="contextual_website_website_favorite">
 				<documenturl lang="fr" url="/ajouter-aux-favoris" />
 				<changecontent for="content-block">
 					<changeblock type="richtext">
@@ -97,7 +110,8 @@
 					</changeblock>
 				</changecontent>
 			</page>
-			<page id="searchresult" label="Résultat de recherche" indexingstatus="false" navigationVisibility="hidden"  byTag="contextual_website_website_modules_solrsearch_page-results">
+			<page id="searchresult" label="Résultat de recherche" indexingstatus="false" navigationVisibility="hidden" template-attr="templateHome"  
+				byTag="contextual_website_website_modules_solrsearch_page-results">
 			    <changecontent for="content-block">
 			    	<changeblock type="modules_solrsearch_results" />
 				</changecontent>
@@ -192,6 +206,13 @@
 					 <![CDATA[<h1>This is a restricted area</h1><p>Please log in using the following form.</p>]]>
 				   </changeblock>
 				   <changeblock type="modules_users_authentication" />
+				</changecontent>
+			</page>
+			<page byRefid="p403" label="Forbidden" navigationVisibility="hidden">
+				<changecontent for="content-block">
+				   <changeblock type="richtext">
+					 <![CDATA[<h1>Forbidden</h1><p>You don't have permission to access this page.</p>]]>
+				   </changeblock>
 				</changecontent>
 			</page>
 			<page byRefid="print" label="Print" navigationVisibility="hidden">

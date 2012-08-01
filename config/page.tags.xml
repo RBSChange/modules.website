@@ -1,9 +1,11 @@
 <?xml version="1.0"?>
 <tags>
 	<!-- error pages -->
-	<tag label="&amp;modules.website.bo.tags.Page-not-found;" icon="delete">contextual_website_website_error404</tag>
 	<tag label="&amp;modules.website.bo.tags.Server-error;" icon="error">contextual_website_website_server-error</tag>
 	<tag label="&amp;modules.website.bo.tags.Unauthorized-access;" icon="forbidden">contextual_website_website_error401-1</tag>
+	<tag label="&amp;modules.website.bo.tags.Forbidden;" icon="forbidden">contextual_website_website_error403</tag>
+	<tag label="&amp;modules.website.bo.tags.Page-not-found;" icon="delete">contextual_website_website_error404</tag>
+	
 
 	<!-- special content pages -->
 	<tag label="&amp;modules.website.bo.tags.Print;" icon="printer">contextual_website_website_print</tag>

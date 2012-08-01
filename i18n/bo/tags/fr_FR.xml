@@ -2,6 +2,7 @@
 <i18n baseKey="m.website.bo.tags" lcid="fr_FR">
   <key id="page-not-found">erreur 'non trouvé' (404)</key>
   <key id="unauthorized-access">Accès non autorisé (401.1)</key>
+  <key id="forbidden">Accès refusé</key>
   <key id="server-error">erreur générale (500)</key>
   <key id="sales-condition">conditions générales de ventes</key>
   <key id="print">modalités d'impression</key>
