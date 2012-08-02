@@ -12,7 +12,7 @@
 			<constructor><![CDATA[
 				if (getController().hasModule('twitterconnect'))
 				{
-					this.addTab('tweets', "&modules.twitterconnect.bo.doceditor.tab.Tweets;", 'tweet');
+					this.addTab('tweets', "&modules.twitterconnect.bo.doceditor.tab.Tweets;", 'tweet', null);
 				}
 			]]></constructor>
 		</javascript>

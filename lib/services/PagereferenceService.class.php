@@ -9,7 +9,7 @@ class website_PagereferenceService extends website_PageService
 	 * @var website_PagereferenceService
 	 */
 	private static $instance;
-
+	
 	/**
 	 * @return website_PagereferenceService
 	 */
@@ -21,7 +21,7 @@ class website_PagereferenceService extends website_PageService
 		}
 		return self::$instance;
 	}
-
+	
 	/**
 	 * @return website_persistentdocument_pagereference
 	 */
@@ -29,7 +29,7 @@ class website_PagereferenceService extends website_PageService
 	{
 		return $this->getNewDocumentInstanceByModelName('modules_website/pagereference');
 	}
-
+	
 	/**
 	 * Create a query based on 'modules_website/pagereference' model
 	 * @return f_persistentdocument_criteria_Query
@@ -39,8 +39,6 @@ class website_PagereferenceService extends website_PageService
 		return $this->pp->createQuery('modules_website/pagereference');
 	}
 	
-	
-
 	/**
 	 * @param website_persistentdocument_pagereference $pageReference
 	 * @param website_persistentdocument_page $page
@@ -55,15 +53,22 @@ class website_PagereferenceService extends website_PageService
 		{
 			/* @var $propertyInfos propertyInfo */
 			$name = $propertyInfos->getName();
-			if (in_array($name, $exludedNames)) {continue;}
+			if (in_array($name, $exludedNames))
+			{
+				continue;
+			}
 			$propsNames[] = $name;
-			if ($propertyInfos->isLocalized()) {$i18nPropsNames[] = $name;};
+			if ($propertyInfos->isLocalized())
+			{
+				$i18nPropsNames[] = $name;
+			}
+			;
 		}
 		
 		try
 		{
 			$this->getTransactionManager()->beginTransaction();
-
+			
 			$rc = RequestContext::getInstance();
 			$useI18nSynchro = $rc->hasI18nSynchro();
 			if ($useI18nSynchro)
@@ -73,8 +78,8 @@ class website_PagereferenceService extends website_PageService
 			}
 			
 			$vo = $page->getLang();
-									
-			foreach ($page->getI18nInfo()->getLangs()  as $lang)
+			
+			foreach ($page->getI18nInfo()->getLangs() as $lang)
 			{
 				if ($useI18nSynchro && (!isset($i18nSynchroStates[$lang]) || $i18nSynchroStates[$lang]['status'] == LocaleService::SYNCHRO_SYNCHRONIZED))
 				{
@@ -91,8 +96,8 @@ class website_PagereferenceService extends website_PageService
 					else
 					{
 						$page->copyPropertiesListTo($pageReference, $i18nPropsNames, false);
-					}	
-										
+					}
+					
 					$this->save($pageReference, $topicId);
 					$rc->endI18nWork();
 				}
@@ -103,7 +108,7 @@ class website_PagereferenceService extends website_PageService
 			}
 			
 			$this->updateTags($pageReference, $page);
-			$this->getTransactionManager()->commit();	
+			$this->getTransactionManager()->commit();
 		}
 		catch (Exception $e)
 		{
@@ -118,7 +123,7 @@ class website_PagereferenceService extends website_PageService
 	{
 		return;
 	}
-
+	
 	/**
 	 * Synchronisation des tags de $pageReference en fonction des tags de $page
 	 * @param website_persistentdocument_pagereference $pageReference
@@ -127,7 +132,7 @@ class website_PagereferenceService extends website_PageService
 	private function updateTags($pageReference, $page)
 	{
 		$tagService = TagService::getInstance();
-
+		
 		$pageTags = $tagService->getTags($page);
 		$refTags = $tagService->getTags($pageReference);
 		
@@ -139,7 +144,7 @@ class website_PagereferenceService extends website_PageService
 				$tagService->addTag($pageReference, $tag);
 			}
 		}
-
+		
 		foreach ($refTags as $tag)
 		{
 			if (array_search($tag, $pageTags) === false)
@@ -149,7 +154,7 @@ class website_PagereferenceService extends website_PageService
 			}
 		}
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_pagereference $document
 	 * @param String $tag
@@ -159,7 +164,7 @@ class website_PagereferenceService extends website_PageService
 	{
 		return;
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_pagereference $document
 	 * @param String $tag
@@ -169,7 +174,7 @@ class website_PagereferenceService extends website_PageService
 	{
 		return;
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_pagereference $fromDocument
 	 * @param website_persistentdocument_pagereference $toDocument
@@ -180,7 +185,7 @@ class website_PagereferenceService extends website_PageService
 	{
 		return;
 	}
-
+	
 	/**
 	 * @param website_persistentdocument_pagereference $newDocument
 	 * @param website_persistentdocument_pagereference $originalDocument
@@ -190,7 +195,7 @@ class website_PagereferenceService extends website_PageService
 	{
 		throw new IllegalOperationException('This document cannot be duplicated.');
 	}
-
+	
 	/**
 	 * @deprecated use purgeDocument
 	 */
@@ -211,25 +216,23 @@ class website_PagereferenceService extends website_PageService
 	/**
 	 * @param website_persistentdocument_page $page
 	 * @return array<website_persistentdocument_pagereference>
-	 */	
+	 */
 	public function getPagesReferenceByPage($page)
 	{
-		$query = $this->createQuery()->add(Restrictions::eq('referenceofid', $page->getId()));				
+		$query = $this->createQuery()->add(Restrictions::eq('referenceofid', $page->getId()));
 		return $query->find();
 	}
 	
 	/**
 	 * @param website_persistentdocument_page $page
 	 * @return integer
-	 */	
+	 */
 	public function getCountPagesReferenceByPage($page)
 	{
-		$results = $this->createQuery()->add(Restrictions::eq('referenceofid', $page->getId()))
-			->setProjection(Projections::rowCount('count'))
-			->findColumn('count');
+		$results = $this->createQuery()->add(Restrictions::eq('referenceofid', $page->getId()))->setProjection(Projections::rowCount('count'))->findColumn('count');
 		return (count($results) == 1) ? $results[0] : 0;
 	}
-		
+	
 	/**
 	 * @param website_persistentdocument_pagereference $document
 	 * @param String $oldPublicationStatus
@@ -243,17 +246,18 @@ class website_PagereferenceService extends website_PageService
 		{
 			if ($parentDocument->isPublished() != $document->isPublished())
 			{
-				website_TopicService::getInstance()->publishDocumentIfPossible($parentDocument, array('childrenPublicationStatusChanged' => $document));
+				website_TopicService::getInstance()->publishDocumentIfPossible($parentDocument, array(
+					'childrenPublicationStatusChanged' => $document));
 			}
 		}
 	}
-	    
+	
 	/**
 	 * @param website_persistentdocument_pagereference $document
 	 * @param string $moduleName
 	 * @param string $treeType
 	 * @param array<string, string> $nodeAttributes
-	 */	
+	 */
 	public function addTreeAttributes($document, $moduleName, $treeType, &$nodeAttributes)
 	{
 		parent::addTreeAttributes($document, $moduleName, $treeType, $nodeAttributes);
@@ -269,7 +273,27 @@ class website_PagereferenceService extends website_PageService
 	 */
 	public function getResume($document, $forModuleName, $allowedSections = null)
 	{
-		$data = parent::getResume($document, $forModuleName, $allowedSections);		
+		$data = parent::getResume($document, $forModuleName, $allowedSections);
+		if ($this->hasOriginPage($document))
+		{
+			$data['properties']['purgeDocument'] = array('hidden' => 'true');
+		}
+		else
+		{
+			$data['properties']['purgeDocument'] = array('hidden' => 'false', 
+				'label' => LocaleService::getInstance()->transBO('m.website.document.pagereference.referenceofid-error', array('ucf')));
+		}
+		
+		return $data;
+	}
+	
+	/**
+	 * Check if the origin page of reference exists
+	 * @param website_persistentdocument_pagereference $document
+	 * @return boolean
+	 */
+	public function hasOriginPage($document)
+	{
 		$tn = TreeService::getInstance()->getInstanceByDocument($document);
 		if ($tn)
 		{
@@ -277,18 +301,12 @@ class website_PagereferenceService extends website_PageService
 			if ($page)
 			{
 				$ptn = TreeService::getInstance()->getInstanceByDocument($page);
-				if ($ptn && in_array($ptn->getParentId(), array_slice($tn->getAncestorsId(),0, -1)))
+				if ($ptn && in_array($ptn->getParentId(), array_slice($tn->getAncestorsId(), 0, -1)))
 				{
-					$data['properties']['purgeDocument'] = array('hidden' => 'true');
+					return true;
 				}
-			}	
+			}
 		}
-		
-		if (!isset($data['properties']['purgeDocument']))
-		{
-			$data['properties']['purgeDocument'] = array('hidden' => 'false', 
-				'label' => LocaleService::getInstance()->transBO('m.website.document.pagereference.referenceofid-error', array('ucf')));
-		}
-		return $data;
+		return false;
 	}
 }
