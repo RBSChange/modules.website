@@ -52,6 +52,10 @@ class website_ModuleService extends ModuleBaseService
 			return website_MenuService::getInstance()->createQuery()
 				->add(Restrictions::eq('menuItem', $document))->findUnique();
 		}
+		else
+		{
+			return $document->getDocumentService()->getParentOf($document);
+		}
 		return null;
 	}
 	
