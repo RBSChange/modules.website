@@ -89,7 +89,7 @@
 					</changeblock>
 				</changecontent>
 			</page>
-			<page label="Résultat de recherche" indexingstatus="false" navigationVisibility="hidden" template-attr="templateHome"
+			<page label="Résultat de recherche" indexingstatus="false" navigationVisibility="hidden"
 				byTag="contextual_website_website_modules_solrsearch_page-results">
 			    <changecontent for="content-block">
 					<changeblock type="modules_solrsearch_results" />
