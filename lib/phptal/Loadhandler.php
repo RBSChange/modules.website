@@ -22,8 +22,7 @@ if (!isset($blockController))
 	$blockController = website_BlockController::getInstance();
 	$request = $blockController->getRequest();
 	$response = $blockController->getResponse();
-	$template = website_BlockView::getCurrentTemplate();
-	$fakeRequest = new website_TemplateRequest($request, $template);
+	$fakeRequest = new website_TemplateRequest($request, $tpl);
 }
 $loadHandler = new '.$handlerClassName.'();';
 		if (isset($this->tag->attributes['args']))
@@ -55,13 +54,13 @@ class website_TemplateRequest
 	 */
 	private $request;
 	/**
-	 * @var TemplateObject
+	 * @var PHPTal
 	 */
 	private $template;
 
 	/**
 	 * @param website_BlockActionRequest $request
-	 * @param TemplateObject $template
+	 * @param PHPTal $template
 	 */
 	function __construct($request, $template)
 	{
@@ -72,7 +71,7 @@ class website_TemplateRequest
 	function setAttribute($attrName, $attrValue)
 	{
 		$this->request->setAttribute($attrName, $attrValue);
-		$this->template->setAttribute($attrName, $attrValue);
+		$this->template->set($attrName, $attrValue);
 	}
 
 	function hasAttribute($attrName)
