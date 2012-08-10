@@ -1773,22 +1773,41 @@ class website_PageService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_page $page
+	 * @param string[] $blockIdArray
 	 */	
-	public function getRenderedBlock($page)
+	public function getRenderedBlock($page, $blockIdArray = array())
 	{
 		$wsprs = website_PageRessourceService::getInstance();
 		$pageContent = $wsprs->getPagetemplateAsDOMDocument($page);
-		
-		$blocks = $this->generateBlocks($pageContent);
-		$controller = website_BlockController::getInstance();
-		$controller->setPage($page);
-		$pageContext = $controller->getContext();
-		$this->populateHTMLBlocks($controller, $blocks);
-		$results = array();
-		foreach ($blocks as $blockId => $block)
+		if (is_array($blockIdArray) && count($blockIdArray))
 		{
-			$key = isset($block['id']) ? $block['id'] : 'b_' . $blockId;
-			$results[$key] = $block['html'];
+			$blocks = array();		
+			foreach ($this->generateBlocks($pageContent) as $blockId => $block)
+			{
+				$key = isset($block['id']) ? $block['id'] : 'b_' . $blockId;
+				if (in_array($key, $blockIdArray))
+				{
+					$blocks[$blockId] = $block;
+				}
+			}
+		}
+		else
+		{
+			$blocks = $this->generateBlocks($pageContent);
+		}
+		
+		$results = array();
+		if (count($blocks))
+		{	
+			$controller = website_BlockController::getInstance();
+			$controller->setPage($page);
+			$pageContext = $controller->getContext();
+			$this->populateHTMLBlocks($controller, $blocks);		
+			foreach ($blocks as $blockId => $block)
+			{
+				$key = isset($block['id']) ? $block['id'] : 'b_' . $blockId;
+				$results[$key] = $block['html'];
+			}
 		}
 		return 	$results;
 	}
