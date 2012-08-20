@@ -42,13 +42,55 @@ class website_PageversionService extends website_PageService
 	 */
 	protected function preInsert($document, $parentNodeId = null)
 	{
-		$page = $this->getDocumentInstance($parentNodeId);
+		if ($document->getVersionofid() == null)
+		{
+			$page = DocumentHelper::getDocumentInstance($parentNodeId);
+		}
+		else
+		{
+			$page = DocumentHelper::getDocumentInstance($document->getVersionofid());
+		}
 		if (!($page instanceof website_persistentdocument_pagegroup))
 		{
 			throw new Exception('Invalide parent type '. $page->getDocumentModelName() .' for pageversion');
 		}
-		$document->setVersionofid($parentNodeId);
-		website_WebsiteModuleService::getInstance()->setWebsiteMetaFromParentId($document, $parentNodeId);
+		
+		$document->setVersionofid($page->getId());
+		website_WebsiteModuleService::getInstance()->setWebsiteMetaFromParentId($document, $page->getId());
+		$rc = RequestContext::getInstance();
+		$propertiesNames = null;
+		foreach ($page->getI18nInfo()->getLangs() as $lang)
+		{
+			try
+			{
+				$rc->beginI18nWork($lang);
+				if ($document->getLabel() === null)
+				{
+					if ($propertiesNames === null)
+					{
+						$propertiesNames = array();
+						foreach ($document->getPersistentModel()->getPropertiesInfos() as $pi)
+						{
+							/* @var $pi propertyInfo */
+							if ($pi->isLocalized())
+							{
+								$propertiesNames[] = $pi->getName();
+							}
+						}
+					}
+					
+					$page->copyPropertiesListTo($document, $propertiesNames, false);
+					$document->setPublicationstatus(f_persistentdocument_PersistentDocument::STATUS_DRAFT);
+				}
+				$rc->endI18nWork();
+			} 
+			catch (Exception $e) 
+			{
+				Framework::exception($e);
+				$rc->endI18nWork();
+			}
+		}
+		
 	}
 
 

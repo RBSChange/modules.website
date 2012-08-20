@@ -326,7 +326,7 @@ class website_Page implements f_mvc_Context
 		{
 			foreach ($this->attributes['links'] as $link)
 			{
-				if ($href == $link['href'] && $relation == $link['rel'] && $type == $link['type'])
+				if ($relation == $link['rel'] && $type == $link['type'] && $href == (isset($link['href']) ? $link['href'] : null))
 				{
 					return;
 				}

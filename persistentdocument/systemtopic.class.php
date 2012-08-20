@@ -6,15 +6,11 @@
 class website_persistentdocument_systemtopic extends website_persistentdocument_systemtopicbase
 {
 	/**
-	 * @return f_persistentdocument_PersistentDocument
+	 * @return f_persistentdocument_PersistentDocument|null
 	 */
 	public function getReference()
 	{
-		if ($this->getReferenceId())
-		{
-			return DocumentHelper::getDocumentInstance($this->getReferenceId());
-		}
-		return null;
+		return DocumentHelper::getDocumentInstanceIfExists($this->getReferenceId());
 	}
 	
 	public function getReferenceURI()
