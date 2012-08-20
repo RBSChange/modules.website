@@ -28,7 +28,7 @@ class website_BlockAsynchContentAction extends f_action_BaseAction
 			}
 			else
 			{
-				$blockId = (is_string($blockId) && f_util_StringUtils::isNotEmpty($blockId)) ? array($blockId): array();		
+				$blockIdParam = (is_string($blockId) && f_util_StringUtils::isNotEmpty($blockId)) ? array($blockId): array();	 	
 				$moduleName = $request->getParameter('blockModule');			
 				$section = $request->getParameter('section', 'All');
 				
@@ -37,7 +37,7 @@ class website_BlockAsynchContentAction extends f_action_BaseAction
 				$moduleParams[$blockId.'_section'] = $section;
 				$request->setParameter($moduleName. 'Param', $moduleParams);
 				
-				$result = website_PageService::getInstance()->getRenderedBlock($page, $blockId);
+				$result = website_PageService::getInstance()->getRenderedBlock($page, $blockIdParam);
 				if (isset($result[$blockId]))
 				{
 					$json = array($section => $result[$blockId]);
