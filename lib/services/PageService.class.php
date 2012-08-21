@@ -410,10 +410,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$website = website_persistentdocument_website::getInstanceById($this->getWebsiteId($document));
 			return $urlRewritingService->getRewriteLink($website, $lang, '/', $parameters);
 		}
-		elseif ($document->getIsIndexPage() && $document->getNavigationVisibility() != website_ModuleService::VISIBLE)
-		{
-			return $urlRewritingService->getDocumentLinkForWebsite($document->getTopic(), $website, $lang, $parameters);
-		}
 		return null;
 	}
 
@@ -1540,7 +1536,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		foreach ($pageContext->getAncestorIds() as $ancestorId)
 		{
 			$ancestor = DocumentHelper::getDocumentInstance($ancestorId);
-			if (! $ancestor->isPublished())
+			if (!$ancestor->isPublished())
 			{
 				continue;
 			}
@@ -1561,12 +1557,12 @@ class website_PageService extends f_persistentdocument_DocumentService
 			}
 			else if ($ancestor instanceof website_persistentdocument_topic)
 			{
-				if ($ancestor->getNavigationVisibility() != website_ModuleService::HIDDEN)
+				if ($ancestor->getNavigationVisibility() == website_ModuleService::VISIBLE)
 				{
-					$lastAncestorPage = $ancestor->getIndexPage();
-					$navigationtitle = $ancestor->getLabel();	
+					$navigationtitle = $ancestor->getNavigationLabel();
 					if ($navigationtitle)
 					{
+						$lastAncestorPage = $ancestor->getIndexPage();
 						$href = ($lastAncestorPage && $lastAncestorPage !== $pageDocument) ? LinkHelper::getDocumentUrl($ancestor) : null;
 						$breadcrumb->addElement($navigationtitle, $href);
 					}
@@ -1574,9 +1570,9 @@ class website_PageService extends f_persistentdocument_DocumentService
 			}
 		}
 		
-		if ($lastAncestorPage !== $pageDocument)
+		if ($lastAncestorPage !== $pageDocument || $pageDocument->getNavigationVisibility() == website_ModuleService::VISIBLE)
 		{
-			if ($pageDocument->getNavigationVisibility() == website_ModuleService::HIDDEN)
+			if ($pageDocument->getNavigationVisibility() != website_ModuleService::VISIBLE)
 			{
 				$globalRequest = Controller::getInstance()->getContext()->getRequest();
 				if ($globalRequest->hasParameter('detail_cmpref'))

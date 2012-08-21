@@ -4,7 +4,6 @@
   <panel name="properties"/>
   <panel name="localization"/>
   <panel name="publication"/>
-  <panel name="redirect"/>
   <panel name="permission"/>
   <panel name="history"/>
   <panel name="create"/>
