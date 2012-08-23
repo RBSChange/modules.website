@@ -40,8 +40,8 @@
   <key id="deleteupload-help">Delete the file</key>
   <key id="exception-thrown">an exception was thrown: {message}</key>
   <key id="for-more-information-view-logs">For more information, please consult the application logs.</key>
-  <key id="in-a-new-window">in a new window</key>
-  <key id="link-broken">broken link</key>
+  <key id="in-a-new-window">(in a new window)</key>
+  <key id="link-broken">(broken link)</key>
   <key id="no-exception">No exception has been returned.</key>
   <key id="pending-document-list">list of pending documents</key>
   <key id="pending-document-list-actions">actions</key>

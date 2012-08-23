@@ -106,7 +106,7 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 			Framework::exception($exception);
 			$hrefCode = '#';
 			$classes[] = 'link-broken';
-			self::addLocaleToTitle($title, '&modules.website.frontoffice.link-broken;');
+			self::addLocaleToTitle($title, 'm.website.frontoffice.link-broken');
 		}
 		else if ($module !== null)
 		{
@@ -148,7 +148,7 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 		if ($popup)
 		{
 			$classes[] = 'popup';
-			self::addLocaleToTitle($title, '&modules.website.frontoffice.in-a-new-window;');
+			self::addLocaleToTitle($title, 'm.website.frontoffice.in-a-new-window');
 			$this->tag->attributes['onclick'] = 'return accessiblePopup(this);';
 		}
 
@@ -351,7 +351,7 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 	 */
 	private static function addLocaleToTitle(&$title, $locale)
 	{
-		$message = "(".f_Locale::translate($locale).")";
+		$message = LocaleService::getInstance()->transFO($locale, array('attr'));
 		$title .= ($title ? '' : ' ') . $message;
 	}
 
