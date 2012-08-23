@@ -15,6 +15,7 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 		if ($genTag)
 		{
 			$this->_generateBlockTag($blockName, $icon);
+			TagService::getInstance()->regenerateTags();
 		}
 		block_BlockService::getInstance()->compileBlocks();
 		return $blockPath;
@@ -69,6 +70,14 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 	protected function getBlockSuccessViewInfo()
 	{
 		return array('blocks', 'BlockActionSuccess.html.tpl');
+	}
+	
+	/**
+	 * @return string[] [$folder, $tplName]
+	 */
+	protected function getBlocksXmlInfo()
+	{
+		return array('modules', 'blocks.tpl');
 	}
 
 	/**
@@ -125,7 +134,8 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 			$dom = f_util_DOMUtils::fromPath($blocksFile);
 			if (!$dom->exists("//block[@type = '$blockType']"))
 			{
-				$result = $this->_getTpl('modules', 'blocks.tpl', $blockName, $icon);
+				list($tplFolder, $tplName) = $this->getBlocksXmlInfo();
+				$result = $this->_getTpl($tplFolder, $tplName, $blockName, $icon);
 				$block = f_util_DOMUtils::fromString($result);
 				$blockElement = $block->getElementsByTagName('block')->item(0);
 				$domElements = $dom->getElementsByTagName('blocks')->item(0);
@@ -140,7 +150,7 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 		}
 		else
 		{
-			$result = $this->_getTpl('modules', 'blocks.tpl', $blockName, $icon);
+			$result = $this->getBlocksXmlTpl($blockName, $icon);
 			echo "Generating $blocksFile, creating $blockType block entry.\n";
 			f_util_FileUtils::write($blocksFile, $result);
 		}

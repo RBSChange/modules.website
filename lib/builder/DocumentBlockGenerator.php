@@ -5,49 +5,59 @@ class builder_DocumentBlockGenerator extends builder_BlockGenerator
 	 * @var f_persistentdocument_PersistentDocumentModel
 	 */
 	protected $documentModel;
-
+	
 	/**
-	 * @var String
+	 * @var string
 	 */
 	protected $blockType;
-
+	
 	/**
-	 * @var String
+	 * @var string
 	 */
-	protected $blockIcon;
-
+	protected $blockIcon = 'block';
+	
 	/**
-	 * @var Boolean
+	 * @var boolean
 	 */
 	protected $genTag;
-
-	function setDocument($moduleName, $docName)
+	
+	/**
+	 * @param string $moduleName
+	 * @param string $docName
+	 */
+	public function setDocument($moduleName, $docName)
 	{
-		$this->documentModel = f_persistentdocument_PersistentDocumentModel::getInstanceFromDocumentModelName("modules_".$moduleName."/".$docName);
+		$this->documentModel = f_persistentdocument_PersistentDocumentModel::getInstanceFromDocumentModelName("modules_" . $moduleName . "/" . $docName);
 	}
-
-	function setBlockType($type)
+	
+	/**
+	 * @param string $icon
+	 */
+	public function setBlockType($type)
 	{
 		$this->blockType = $type;
 	}
-
-	function setBlockIcon($icon)
+	
+	/**
+	 * @param string $icon
+	 */
+	public function setBlockIcon($icon)
 	{
 		$this->blockIcon = $icon;
 	}
-
+	
 	/**
-	 * @return String the path of generated PHP class
+	 * @return string the path of generated PHP class
 	 */
-	function generate()
+	public function generate()
 	{
-		$tplPath = f_util_FileUtils::buildWebeditPath("modules", "website", "templates", "builder", "documentblocks", "Block".ucfirst($this->blockType)."Action.php.tpl");
+		$tplPath = f_util_FileUtils::buildWebeditPath("modules", "website", "templates", "builder", "documentblocks", "Block" . ucfirst($this->blockType) . "Action.php.tpl");
 		if (!file_exists($tplPath))
 		{
-			throw new Exception("Unknown document block type ".$this->blockType." ($tplPath)");
+			throw new Exception("Unknown document block type " . $this->blockType . " ($tplPath)");
 		}
-		$infoPath = f_util_FileUtils::buildWebeditPath("modules", "website", "templates", "builder", "documentblocks", "Block".ucfirst($this->blockType)."Action.php.inc");
-
+		$infoPath = f_util_FileUtils::buildWebeditPath("modules", "website", "templates", "builder", "documentblocks", "Block" . ucfirst($this->blockType) . "Action.php.inc");
+		
 		if (!file_exists($infoPath))
 		{
 			throw new Exception("$infoPath does not exists");
@@ -55,40 +65,51 @@ class builder_DocumentBlockGenerator extends builder_BlockGenerator
 		// Info Template can define $blockName && $genTag
 		$blockName = null;
 		$genTag = null;
-		require($infoPath);
+		require ($infoPath);
 		if (!isset($blockName))
 		{
 			throw new Exception("$infoPath does not define \$blockName variable");
 		}
-
+		
 		$this->genTag = isset($genTag) && $genTag;
 		return $this->generateBlock(ucfirst($blockName), $this->genTag, $this->blockIcon);
 	}
 	
 	/**
-	 * @return Boolean
+	 * @return boolean
 	 */
-	function hasTag()
+	public function hasTag()
 	{
 		return $this->genTag;
 	}
-
+	
 	/**
-	 * @return String[] [$folder, $tplName]
+	 * @return string[] [$folder, $tplName]
 	 */
 	protected function getBlockTemplateInfo()
 	{
-		return array('documentblocks', 'Block'.ucfirst($this->blockType).'Action.php.tpl');
+		return array('documentblocks', 'Block' . ucfirst($this->blockType) . 'Action.php.tpl');
 	}
-
+	
 	/**
-	 * @return String[] [$folder, $tplName]
+	 * @return string[] [$folder, $tplName]
 	 */
 	protected function getBlockSuccessViewInfo()
 	{
-		return array('documentblocks', 'Block'.ucfirst($this->blockType).'Success.html.tpl');
+		return array('documentblocks', 'Block' . ucfirst($this->blockType) . 'Success.html.tpl');
 	}
-
+	
+	/**
+	 * @return string[] [$folder, $tplName]
+	 */
+	protected function getBlocksXmlInfo()
+	{
+		return array('documentblocks', 'Block' . ucfirst($this->blockType) . '.xml.tpl');
+	}
+	
+	/**
+	 * @return array
+	 */
 	protected function getAdditionalTplVariables()
 	{
 		$vars = parent::getAdditionalTplVariables();

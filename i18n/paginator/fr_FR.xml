@@ -16,4 +16,5 @@
   <key id="last-title-no-name">dernière page</key>
   <key id="page-title">page {pageNumber} de la liste {listName}</key>
   <key id="page-title-no-name">page {pageNumber}</key>
+  <key id="no-result">Aucun document à afficher.</key>
 </i18n>

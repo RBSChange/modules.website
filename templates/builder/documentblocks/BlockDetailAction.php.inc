@@ -1,3 +1,5 @@
 <?php 
-$blockName = $this->documentModel->getDocumentName();
-$genTag = true;
+/* @var $this builder_DocumentBlockGenerator */
+$blockName = ucfirst($this->documentModel->getDocumentName());
+$this->setBlockIcon($this->documentModel->getIcon());
+$genTag = false;

@@ -1,39 +1,64 @@
 <?php
 /**
- * <{$module}>_Block<{$blockName}>Action
- * @package modules.<{$module}>.lib.blocks
+ * @package modules.<{$module}>
+ * @method <{$module}>_Block<{$blockName}>Configuration getConfiguration()
  */
-class <{$module}>_Block<{$blockName}>Action extends <{if $genTag }>website_TaggerBlockAction<{else}>website_BlockAction<{/if}>
-
+class <{$module}>_Block<{$blockName}>Action extends website_BlockAction
 {
 	/**
-	 * @see website_BlockAction::execute()
-	 *
 	 * @param f_mvc_Request $request
 	 * @param f_mvc_Response $response
 	 * @return String
 	 */
 	public function execute($request, $response)
 	{
-		if ($this->isInBackoffice())
+		if ($this->isInBackofficeEdition())
 		{
-			return website_BlockView::NULL;
+			return website_BlockView::NONE;
 		}
 		
-		// Get published documents.
-		$orderProperty = $request->getParameter('orderBy', 'label');
-		$request->setAttribute('orderBy', $orderProperty);
-		$orderDirection = $request->getParameter('orderByDirection', 'asc');
-		$request->setAttribute('orderByDirection', $orderDirection);
-		$order = Order::byString($orderProperty, $orderDirection);
-		$<{$documentModel->getDocumentName()}>s = <{$module}>_<{$documentModel->getDocumentName()|ucfirst}>Service::getInstance()->getPublished($order);
+		$count = $this->getDocumentCount($request);
+		$request->setAttribute('count', $count);
 		
-		// <{$documentModel->getDocumentName()}>s pagination.
-		$pageIndex = $request->getParameter('page', 1);
-		$itemPerPage = $this->getConfigurationParameter('itemPerPage', 10);
-		$paginator = new paginator_Paginator('<{$module}>', $pageIndex, $<{$documentModel->getDocumentName()}>s, $itemPerPage);
-		$request->setAttribute('<{$documentModel->getDocumentName()}>s', $paginator);
-
-		return website_BlockView::SUCCESS;
+		$itemsPerPage = $this->getConfiguration()->getItemsPerPage();
+		$pageNumber = $request->getParameter('page');
+		if (!is_numeric($pageNumber) || $pageNumber < 1 || $pageNumber > ceil($count / $itemsPerPage))
+		{
+			$pageNumber = 1;
+		}
+		$offset = ($pageNumber - 1) * $itemsPerPage;
+		$this->getContext()->addCanonicalParam('page', $pageNumber > 1 ? $pageNumber : null, $this->getModuleName());
+		
+		if ($count > 0)
+		{
+			$docs = $this->getDocumentArray($request, $pageNumber, $itemsPerPage);
+			$paginator = new paginator_Paginator($this->getModuleName(), $pageNumber, $docs, $itemsPerPage, $count);
+			$request->setAttribute('docs', $paginator);
+		}
+		
+		return $this->getConfiguration()->getDisplayMode();
+	}
+	
+	/**
+	 * @param f_mvc_Request $request
+	 * @return integer
+	 */
+	protected function getDocumentCount($request)
+	{
+		// TODO: Get complete document count.
+		return 0;
+	}
+	
+	/**
+	 * @param f_mvc_Request $request
+	 * @param integer $pageNumber
+	 * @param integer $itemsPerPage
+	 * @return <{$module}>_persistentdocument_<{$documentModel->getDocumentName()}>[]
+	 */
+	protected function getDocumentArray($request, $pageNumber, $itemsPerPage)
+	{
+		$offset = ($pageNumber - 1) * $itemsPerPage;
+		// TODO: Get the documents for the current page.
+		return array();
 	}
 }

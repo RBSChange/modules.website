@@ -2,11 +2,11 @@
 class commands_AddDocumentBlock extends commands_AbstractChangedevCommand
 {
 	/**
-	 * @return String
+	 * @return string
 	 */
-	function getUsage()
+	public function getUsage()
 	{
-		$usage = "<moduleName> <documentName> <blockType> [icon].
+		$usage = "<moduleName> <documentName> <blockType>
 Where <blockType> in:\n";
 		foreach ($this->getValidTypes() as $type)
 		{
@@ -16,9 +16,9 @@ Where <blockType> in:\n";
 	}
 
 	/**
-	 * @return String
+	 * @return string
 	 */
-	function getDescription()
+	public function getDescription()
 	{
 		return "initialize a block for some specific work";
 	}
@@ -29,7 +29,38 @@ Where <blockType> in:\n";
 	 */
 	protected function validateArgs($params, $options)
 	{
-		return count($params) >= 3;
+		if (count($params) === 3)
+		{
+			$moduleName = strtolower($params[0]);
+			if (!file_exists(f_util_FileUtils::buildWebeditPath('modules', $moduleName)))
+			{
+				$this->errorMessage('Module "' . $moduleName . '" doesn\'t exist.');
+				return false;
+			}
+			$docName = strtolower($params[1]);
+			if (!file_exists(f_util_FileUtils::buildWebeditPath('modules', $moduleName, 'persistentdocument', $docName . '.xml')))
+			{
+				$this->errorMessage('Document "' . $moduleName . '/' . $docName . '" doesn\'t exist.');
+				return false;
+			}
+			$type = $params[2];
+			if (!in_array($type, $this->getValidTypes()))
+			{
+				$this->errorMessage('Invalid type "' . $type . '".');
+				return false;
+			}
+			return true;
+		}
+		elseif (count($params) < 3)
+		{
+			$this->errorMessage('The 3 arguments are required.');
+			return false;
+		}
+		else
+		{
+			$this->errorMessage('Too many arguments.');
+			return false;
+		}
 	}
 
 	/**
@@ -38,7 +69,7 @@ Where <blockType> in:\n";
 	 * @param array<String, String> $options where the option array key is the option name, the potential option value or true
 	 * @return String[] or null
 	 */
-	function getParameters($completeParamCount, $params, $options, $current)
+	public function getParameters($completeParamCount, $params, $options, $current)
 	{
 		if ($completeParamCount == 0)
 		{
@@ -71,56 +102,30 @@ Where <blockType> in:\n";
 	 * @param array<String, String> $options where the option array key is the option name, the potential option value or true
 	 * @see c_ChangescriptCommand::parseArgs($args)
 	 */
-	function _execute($params, $options)
+	public function _execute($params, $options)
 	{
-		$moduleName = $params[0];
-		$docName = $params[1];
+		$moduleName = strtolower($params[0]);
+		$docName = strtolower($params[1]);
 		$type = $params[2];
-		if (!in_array($type, $this->getValidTypes()))
-		{
-			throw new Exception("Unknown type $type!");
-		}
 
 		$this->message("== Add $type document block for $moduleName/$docName ==");
-		
-		if (isset($params[3]))
-		{
-			$icon = $params[3];
-		}
-		else 
-		{
-			switch ($type)
-			{
-				case 'list': 
-					$icon = 'list-block';
-					break;
-
-				case 'detail': 
-					$model = f_persistentdocument_PersistentDocumentModel::getInstance($moduleName, $docName);
-					$icon = $model->getIcon();
-					break;
-					
-				default:
-					$icon = '';
-					break;
-			}
-		}
-
 		$this->loadFramework();
 		$blockGenerator = new builder_DocumentBlockGenerator($moduleName);
-		$blockGenerator->setAuthor($this->getAuthor());
 		$blockGenerator->setDocument($moduleName, $docName);
 		$blockGenerator->setBlockType($type);
-		$blockGenerator->setBlockIcon($icon);
 		$blockPath = $blockGenerator->generate();
-		
-		if ($blockGenerator->hasTag())
-		{
-			$this->getParent()->executeCommand("compile-tags");
-		}
 
 		$this->quitOk("Block of type $type added for document $docName in module '$moduleName'.
 Please now edit ".$blockPath.".");
+	}
+	
+	/**
+	 * @param string $blockName
+	 * @param string $icon
+	 */
+	protected function getBlocksXmlTpl($blockName, $icon)
+	{
+		return $this->_getTpl('documentblocks', $this->get, $blockName, $icon);
 	}
 	
 	/**

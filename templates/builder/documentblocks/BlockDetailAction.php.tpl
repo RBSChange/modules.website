@@ -1,42 +1,82 @@
 <?php
 /**
- * <{$module}>_Block<{$blockName}>Action
- * @package modules.<{$module}>.lib.blocks
+ * @package modules.<{$module}>
+ * @method <{$module}>_Block<{$blockName}>Configuration getConfiguration()
  */
-class <{$module}>_Block<{$blockName}>Action extends <{if $genTag }>website_TaggerBlockAction<{else}>website_BlockAction<{/if}>
-
+class <{$module}>_Block<{$blockName}>Action extends website_BlockAction
 {
 	/**
-	 * @see website_BlockAction::execute()
-	 *
-	 * @param f_mvc_Request $request
-	 * @param f_mvc_Response $response
+	 * @var <{$module}>_persistentdocument_<{$documentModel->getDocumentName()}>|null
+	 */
+	protected $published<{$documentModel->getDocumentName()|ucfirst}> = false;
+	
+	/**
+	 * @return <{$module}>_persistentdocument_<{$documentModel->getDocumentName()}>|null
+	 */
+	protected function getPublished<{$documentModel->getDocumentName()|ucfirst}>()
+	{
+		if ($this->published<{$documentModel->getDocumentName()|ucfirst}> === false)
+		{
+			$doc = DocumentHelper::getDocumentInstanceIfExists($this->getDocumentIdParameter());
+			if ($doc instanceof <{$module}>_persistentdocument_<{$documentModel->getDocumentName()}> && $doc->isPublished())
+			{
+				$this->published<{$documentModel->getDocumentName()|ucfirst}> = $doc;
+			}
+			else
+			{
+				$this->published<{$documentModel->getDocumentName()|ucfirst}> = null;
+			}
+		}
+		return $this->published<{$documentModel->getDocumentName()|ucfirst}>;
+	}
+	
+	/**
+	 * @param f_mvc_Request documentquest
+	 * @param f_mvc_Response documentsponse
 	 * @return String
 	 */
-	function execute($request, $response)
+	public function execute($request, $response)
 	{
-		if ($this->isInBackoffice())
+		if ($this->isInBackofficeEdition())
 		{
-			// We choose to do nothing in back-office
-			return null;
+			return website_BlockView::NONE;
 		}
-
-		$<{$documentModel->getDocumentName()}> = $this->getDocumentParameter(K::COMPONENT_ID_ACCESSOR, "<{$documentModel->getDocumentClassName()}>");
-		if ($<{$documentModel->getDocumentName()}> === null)
-		{
-			// We choose not to throw anything if document parameter is missing
-			return null;
-		}
-
-		// We transmit the document to the view
-		$request->setAttribute('<{$documentModel->getDocumentName()}>', $<{$documentModel->getDocumentName()}>);
 		
-		if (!$<{$documentModel->getDocumentName()}>->isPublished())
+		$document = $this->getPublished<{$documentModel->getDocumentName()|ucfirst}>();
+		$isOnDetailPage = $this->isOnDetailPage($document);
+		$request->setAttribute('isOnDetailPage', $isOnDetailPage);
+		if ($document === null)
 		{
-			// Un-published documents must not be seen in front-office
-			return $this->genericView('Unavailable');
+			if ($isOnDetailPage && !$this->isInBackofficePreview())
+			{
+				HttpController::getInstance()->redirect('website', 'Error404');
+			}
+			return website_BlockView::NONE;
 		}
-
-		return website_BlockView::SUCCESS;
+		$request->setAttribute('doc', $document);
+		
+		return $this->getConfiguration()->getDisplayMode();
+	}
+	
+	/**
+	 * @return array<String, String>
+	 */
+	public function getMetas()
+	{
+		$doc = $this->getPublished<{$documentModel->getDocumentName()|ucfirst}>();
+		if ($doc !== null)
+		{
+			return array('label' => $doc->getNavigationLabel());
+		}
+		return array();
+	}
+	
+	/**
+	 * @param <{$module}>_persistentdocument_<{$documentModel->getDocumentName()}> $document
+	 * @return boolean
+	 */
+	protected function isOnDetailPage($document)
+	{
+		return $document !== null && $document->getId() == $this->getContext()->getDetailDocumentId();
 	}
 }
