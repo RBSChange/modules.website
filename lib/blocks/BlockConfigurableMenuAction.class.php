@@ -27,7 +27,7 @@ class website_BlockConfigurableMenuAction extends website_BlockAction
 				
 			case 'tag':
 				$website = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
-				$doc = TagService::getInstance()->getDocumentByContextualTag($config->getTag(), $website);
+				$doc = TagService::getInstance()->getDocumentByContextualTag($config->getTag(), $website, false);
 				break;
 				
 			case 'contextual':
