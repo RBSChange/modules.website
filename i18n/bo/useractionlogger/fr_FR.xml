@@ -186,4 +186,6 @@
   <key id="log-delete-menuitemfunction">log delete menuitemfunction</key>
   <key id="purgedocument-pagereference">purgedocument.pagereference {lang} {documentlabel} {path}</key>
   <key id="log-purgedocument-pagereference">log purgedocument pagereference</key>
+  <key id="purgedocument-pageversion">purgedocument.pageversion {lang} {documentlabel} {path}</key>
+  <key id="log-purgedocument-pageversion">log purgedocument pageversion</key>
 </i18n>

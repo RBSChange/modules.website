@@ -69,7 +69,7 @@
 					{
 						var me = this;
 						var callBack = function(result) {me.onDeleted(result);};
-						wCore.executeJSON('website', 'DeleteJSON', {cmpref: rowData.id, lang: rowData.lang}, callBack, true);
+						wCore.executeJSON('website', 'PurgeDocument', {cmpref: rowData.id, lang: rowData.lang}, callBack, true);
 					}
 				]]></body>
 			</method>
@@ -98,7 +98,7 @@
 				<parameter name="result" />
 				<body><![CDATA[
 					var panel = this.getPanel();
-					if (result.status = 'OK' && result.contents.id == 0 && this.getRowCount() == 2)
+					if (result.status = 'OK' && this.getRowCount() == 2)
 					{
 						panel.documentEditor.executeBackToList();
 						return;

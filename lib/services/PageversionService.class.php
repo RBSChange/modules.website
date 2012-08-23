@@ -104,7 +104,10 @@ class website_PageversionService extends website_PageService
 		if ($document instanceof website_persistentdocument_pageversion)
 		{
 			$pagegroup = $this->getPageGroupByPageVersion($document);
-			website_PagegroupService::getInstance()->setCurrentVersion($pagegroup);
+			if ($pagegroup)
+			{
+				website_PagegroupService::getInstance()->setCurrentVersion($pagegroup);
+			}
 		}
 	}
 
@@ -114,51 +117,61 @@ class website_PageversionService extends website_PageService
 	 */
 	protected function postDelete($document)
 	{
-		if (Framework::isDebugEnabled())
-		{
-			Framework::debug(__METHOD__ . ' $document :' . $document->__toString());
-		}	
 		parent::postDelete($document);
 		
 		if ($document->getPersistentModel()->useCorrection() && $document->getCorrectionofid())
 		{
-			if (Framework::isDebugEnabled())
-			{
-				Framework::debug(__METHOD__ . ' IS CORRECTION, IGNORED');
-			}
 			return;
 		}
-		$pagegrpsrv = website_PagegroupService::getInstance();	
-		$pagegroup = $this->getPageGroupByPageVersion($document);
 		
-		$versions = $pagegroup->getChildrenVersions();
-		if (Framework::isDebugEnabled())
+		$pagegroup = $this->getPageGroupByPageVersion($document);
+		if ($pagegroup)
 		{
-			Framework::debug(__METHOD__ . ' version count :' . count($versions));
+			$pagegrpsrv = $pagegroup->getDocumentService();			
+			$versions = $pagegroup->getChildrenVersions();
+			switch (count($versions))
+			{
+				case 0:
+					$pagegrpsrv->removeCurrentVersion($pagegroup);
+					break;
+				case 1:
+					$pagegrpsrv->setCurrentVersion($pagegroup);
+					$pagegrpsrv->removeCurrentVersion($pagegroup, $versions);
+					break;
+				default:
+					$pagegrpsrv->setCurrentVersion($pagegroup);
+					break;
+			}
 		}
-		switch (count($versions))
-		{
-			case 0:
-				$pagegrpsrv->removeCurrentVersion($pagegroup);
-				break;
-			case 1:
-				$pagegrpsrv->setCurrentVersion($pagegroup);
-				$this->delete($versions[0]);
-				break;
-			default:
-				$pagegrpsrv->setCurrentVersion($pagegroup);
-				break;
-		}
-
 	}
-	
+		
+	/**
+	 * @param website_persistentdocument_pageversion $document
+	 * @return void
+	 */
+	protected function postDeleteLocalized($document)
+	{
+		parent::postDeleteLocalized($document);
+		
+		$pagegroup = $this->getPageGroupByPageVersion($document);
+		if ($pagegroup)
+		{
+			$pagegroup->getDocumentService()->setCurrentVersion($pagegroup);
+		}
+	}
+
 	/**
 	 * @param website_persistentdocument_pageversion $document
 	 * @return website_persistentdocument_pagegroup
 	 */
 	private function getPageGroupByPageVersion($document)
 	{
-		return $this->getDocumentInstance($document->getVersionofid(), 'modules_website/pagegroup');
+		$pagegroup = DocumentHelper::getDocumentInstanceIfExists($document->getVersionofid());
+		if ($pagegroup instanceof website_persistentdocument_pagegroup)
+		{
+			return $pagegroup;
+		}
+		return null;
 	}
 
 	/**
@@ -173,7 +186,10 @@ class website_PageversionService extends website_PageService
 		if ($document instanceof website_persistentdocument_pageversion)
 		{
 			$pagegroup = $this->getPageGroupByPageVersion($document);
-			website_PagegroupService::getInstance()->setCurrentVersion($pagegroup);
+			if ($pagegroup)
+			{
+				website_PagegroupService::getInstance()->setCurrentVersion($pagegroup);
+			}
 		}
 	}
 
