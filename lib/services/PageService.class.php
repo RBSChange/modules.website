@@ -107,18 +107,10 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	protected function preInsert($document, $parentNodeId = null)
 	{
-		if ($document->getNavigationtitle() !== null)
+		if ($document->getMetatitle() === null)
 		{
-			if ($document->getLabel() === null)
-			{
-				$document->setLabel($document->getNavigationtitle());
-			}
-			if ($document->getMetatitle() === null)
-			{
-				$document->setMetatitle($document->getNavigationtitle());
-			}
+			$document->setMetatitle('{page.label}');
 		}
-
 		if ($document->getContent() === null)
 		{
 			$this->initContent($document);
@@ -169,7 +161,8 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	public function getNavigationLabel($document)
 	{
-		return $document->getNavigationtitle();
+		$nl = $document->getNavigationtitle();
+		return ($nl) ? $nl : parent::getNavigationLabel($document);
 	}
 	
 	/**
@@ -1732,7 +1725,18 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 
 		$pageContext->setDoctype($docType);
-		
+		if (!$page->isNew())
+		{
+			$pageContext->addBlockMeta('page.label', $page->getLabel());
+			$pageContext->addBlockMeta('page.navigationLabel', $page->getNavigationLabel());
+			
+			$d = DocumentHelper::getDocumentInstanceIfExists($pageContext->getDetailDocumentId());
+			$pageContext->addBlockMeta('detail.navigationLabel', ($d) ? $d->getNavigationLabel() : '');
+			$ws = website_WebsiteModuleService::getInstance()->getCurrentWebsite();
+			$pageContext->addBlockMeta('website.label', $ws->isNew() ? '' : $ws->getLabel());
+			$p = $pageContext->getParent();
+			$pageContext->addBlockMeta('topic.label', ($p instanceof website_persistentdocument_topic) ? $p->getLabel() : '');
+		}
 		$this->populateHTMLBlocks($controller, $blocks);
 		$this->addBenchTime('blocksGenerating');
 
@@ -2155,10 +2159,19 @@ class website_PageService extends f_persistentdocument_DocumentService
 	public function addFormProperties($document, $propertiesNames, &$formProperties, $parentId = null)
 	{
 		$metainfos = $this->getBlockMetaInfos($document);
+		$ls = LocaleService::getInstance();
 		$jsonMeta = array();
 		foreach ($metainfos as $zone => $metas)
 		{
 			$jsonMeta[$zone] = array();
+			if ($zone === 'title')
+			{
+				$jsonMeta[$zone][] = array("value" => '{page.label}', "label" => $ls->transBO("m.website.bo.blocks.metas-page-label"));
+				$jsonMeta[$zone][] = array("value" => '{page.navigationLabel}', "label" => $ls->transBO("m.website.bo.blocks.metas-page-navigationlabel"));
+				$jsonMeta[$zone][] = array("value" => '{detail.navigationLabel}', "label" => $ls->transBO("m.website.bo.blocks.metas-detail-navigationlabel"));
+				$jsonMeta[$zone][] = array("value" => '{website.label}', "label" => $ls->transBO("m.website.bo.blocks.metas-website-label"));
+				$jsonMeta[$zone][] = array("value" => '{topic.label}', "label" => $ls->transBO("m.website.bo.blocks.metas-topic-label"));
+			}
 			foreach ($metas as $meta)
 			{
 				$dummyInfo1 = explode(".", $meta);
@@ -2167,7 +2180,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 				$moduleName = $dummyInfo2[0];
 				$blockName = $dummyInfo2[1];
 				
-				$ls = LocaleService::getInstance();
+				
 				$jsonMeta[$zone][] = array("value" => "{".$meta."}", "label" => $ls->transBO("m.$moduleName.bo.blocks.$blockName.metas.$shortMetaName"));
 			}
 		}

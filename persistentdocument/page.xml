@@ -7,7 +7,7 @@
 		<add name="endpublicationdate" localized="true"/>
 		<add name="publicationstatus" localized="true"/>
 
-		<add name="navigationtitle" type="String" min-occurs="1" localized="true" db-size="80" />
+		<add name="navigationtitle" type="String" localized="true" db-size="80" />
 
 		<add name="metatitle" type="LongString" localized="true" />
 		<add name="description" type="LongString" localized="true" />

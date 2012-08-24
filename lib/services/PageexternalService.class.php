@@ -46,7 +46,6 @@ class website_PageexternalService extends f_persistentdocument_DocumentService
 	    return $page->getUrl() && parent::isPublishable($page);
 	}
 
-
 	/**
 	 * Returns an associative array of attributes to display in the backoffice
 	 * preview panel.
@@ -155,8 +154,11 @@ class website_PageexternalService extends f_persistentdocument_DocumentService
 	 */
 	public function getNavigationLabel($document)
 	{
-		return $document->getNavigationtitle();
+		$nl = $document->getNavigationtitle();
+		return ($nl) ? $nl : parent::getNavigationLabel($document);
 	}
+	
+	
 	
 	/**
 	 * @param website_persistentdocument_pageexternal $document

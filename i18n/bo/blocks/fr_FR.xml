@@ -15,4 +15,10 @@
   <key id="contextualmenu">Menu contextuel</key>
   
   <key id="switchlanguage">Selecteur de langue</key>
+  
+  <key id="metas-page-label">Libellé de la page</key>
+  <key id="metas-page-navigationlabel">Texte de lien de la page</key>
+  <key id="metas-detail-navigationlabel">Libellé de l'élement de détail</key>
+  <key id="metas-website-label">Libellé du site</key>
+  <key id="metas-topic-label">Libellé de la rubrique parente</key>
 </i18n>
