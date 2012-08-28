@@ -38,7 +38,7 @@ class framework_FunctionCallRecorder
 	 * @param array $arguments
 	 * @return mixed the return of the call of methodName on wrappedObject
 	 */
-	public function __call($methodName, array $arguments)
+	public function __call($methodName, $arguments)
 	{
 		if (in_array($methodName, $this->recordedMethodNames))
 		{
@@ -46,53 +46,57 @@ class framework_FunctionCallRecorder
 			$i = 0;
 			foreach ($arguments as $arg)
 			{
-				if ($i > 0)
-				{
-					$record .= ', ';
-				}
-				if (is_object($arg))
-				{
-					$varName = '$obj'.$this->varCount;
-					$this->records[] = $varName.' = unserialize('.var_export(serialize($arg), true).');';
-					$record .= $varName;
-					$this->varCount += 1;
-				}
-				elseif (is_array($arg))
-				{
-					// TODO : refactor
-					$record .= "array(";
-					foreach ($arg as $key => $value)
-					{
-						$record .= var_export($key, true). "=>";
-						if (is_object($value))
-						{
-							$varName = '$obj'.$this->varCount;
-							$this->records[] = $varName.' = unserialize('.var_export(serialize($value), true).');';
-							$record .= $varName;
-							$this->varCount += 1;
-						}
-						else
-						{
-							$record .= var_export($value, true);
-						}
-						$record .= ",";
-					}
-					$record .= ")";
-				}
-				else
-				{
-					$record .= var_export($arg, true);
-				}
+				if ($i > 0) {$record .= ', ';}
+				$record .= $this->buildRecord($arg);
 				$i++;
 			}
 			$record .= ');';
-			$this->records[] = $record;
+			$this->addRecord($record);
 		}
-		return f_util_ClassUtils::callMethodArgsOn($this->wrappedObject, $methodName, $arguments);
+		return call_user_func_array(array($this->wrappedObject, $methodName), $arguments);
 	}
 	
 	/**
-	 * @param String $record
+	 * @param mixed $arg
+	 * @return string
+	 */
+	protected function buildRecord($arg)
+	{
+		$record = array();
+		if ($arg instanceof f_persistentdocument_PersistentDocument)
+		{
+			$varName = '$obj'.$this->varCount;
+			$this->addRecord($varName.' = DocumentHelper::getDocumentInstanceIfExists('.$arg->getId().');');
+			$record[] = $varName;
+			$this->varCount += 1;
+		}
+		elseif (is_object($arg))
+		{
+			$varName = '$obj'.$this->varCount;
+			$this->addRecord($varName.' = unserialize('.var_export(serialize($arg), true).');');
+			$record[] = $varName;
+			$this->varCount += 1;
+		}
+		elseif (is_array($arg))
+		{
+			$record[] = "array(";
+			foreach ($arg as $key => $value)
+			{
+				$record[] = var_export($key, true). " => ";
+				$record[] = $this->buildRecord($value);
+				$record[] = ", ";
+			}
+			$record[] = ")";
+		}
+		else
+		{
+			$record[] = var_export($arg, true);
+		}
+		return implode('', $record);
+	}
+	
+	/**
+	 * @param string $record
 	 */
 	protected function addRecord($record)
 	{
@@ -100,7 +104,7 @@ class framework_FunctionCallRecorder
 	}
 
 	/**
-	 * @return String[]
+	 * @return string[]
 	 */
 	public function getRecords()
 	{
