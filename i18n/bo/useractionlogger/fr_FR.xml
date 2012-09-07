@@ -188,4 +188,6 @@
   <key id="log-purgedocument-pagereference">log purgedocument pagereference</key>
   <key id="purgedocument-pageversion">purgedocument.pageversion {lang} {documentlabel} {path}</key>
   <key id="log-purgedocument-pageversion">log purgedocument pageversion</key>
+  <key id="saveredirectinfo-pagegroup">saveredirectinfo.pagegroup {lang} {documentlabel} {path}</key>
+  <key id="log-saveredirectinfo-pagegroup">log saveredirectinfo pagegroup</key>
 </i18n>

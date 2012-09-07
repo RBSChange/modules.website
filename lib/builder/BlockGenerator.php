@@ -150,7 +150,8 @@ class builder_BlockGenerator extends builder_ModuleGenerator
 		}
 		else
 		{
-			$result = $this->getBlocksXmlTpl($blockName, $icon);
+			list($tplFolder, $tplName) = $this->getBlocksXmlInfo();
+			$result = $this->_getTpl($tplFolder, $tplName, $blockName, $icon);
 			echo "Generating $blocksFile, creating $blockType block entry.\n";
 			f_util_FileUtils::write($blocksFile, $result);
 		}
