@@ -234,7 +234,7 @@ class website_JsService extends change_BaseService
 			throw new Exception(__METHOD__ . ": could not load $path as a valid XML file");
 		}
 		$xpath = new DOMXPath($doc);
-		$appLogLevel = Framework::getLogLevelName();
+		$appLogLevel = change_LoggingService::getInstance()->getLogLevelName();
 		foreach ($xpath->query("script") as $scriptNode)
 		{
 			$scriptName = $scriptNode->getAttribute("name");
@@ -284,7 +284,7 @@ class website_JsService extends change_BaseService
 	 */
 	public function compileScriptDependencies()
 	{
-		$appLogLevel = Framework::getLogLevelName();
+		$appLogLevel = change_LoggingService::getInstance()->getLogLevelName();
 		$moduleService = ModuleService::getInstance();
 		$fileResolver = change_FileResolver::getNewInstance();
 		$declaredDependencies = array();
@@ -598,7 +598,7 @@ class website_JsService extends change_BaseService
 		$attributes['UIHOST_PREFIX'] = Framework::getUIProtocol() . '://';
 		$attributes['UIHOST'] = Framework::getUIDefaultHost();
 		$attributes['UIBASEURL'] = Framework::getUIBaseUrl();
-		$attributes['LOG_LEVEL'] = Framework::getLogPriority();
+		$attributes['LOG_LEVEL'] = change_LoggingService::getInstance()->getLogPriority();
 		$attributes['DEV_MODE'] = Framework::inDevelopmentMode();
 		$attributes['inDragSession'] = false;
 		$attributes['RICHTEXT_PRESERVE_H1_TAGS'] = (defined('RICHTEXT_PRESERVE_H1_TAGS') && RICHTEXT_PRESERVE_H1_TAGS == 'true');
