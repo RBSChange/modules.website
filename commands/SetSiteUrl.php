@@ -33,16 +33,15 @@ class commands_SetSiteUrl extends c_ChangescriptCommand
 		
 		$this->loadFramework();
 		RequestContext::getInstance()->setLang(RequestContext::getInstance()->getDefaultLang());
-		$url = Framework::getConfiguration('general/server-fqdn');
 		$tm = f_persistentdocument_TransactionManager::getInstance();
 		try
 		{
 			$tm->beginTransaction();
 			$website = website_WebsiteService::getInstance()->getDefaultWebsite();
-			$website->setDomain($url);
+			$website->setDomain(DEFAULT_HOST);
 			// TODO: handle secure protocol
 			$website->setProtocol('http');
-			$website->setUrl('http://'.$url);
+			$website->setUrl('http://'. DEFAULT_HOST);
 			$website->save();
 			$tm->commit();
 		}
@@ -51,6 +50,6 @@ class commands_SetSiteUrl extends c_ChangescriptCommand
 			throw $tm->rollBack($e);
 		}
 		
-		$this->quitOk("Default website URL is now http://$url");	
+		$this->quitOk("Default website URL is now http://" . DEFAULT_HOST);	
 	}
 }
