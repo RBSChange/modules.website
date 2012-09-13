@@ -634,10 +634,10 @@ class block_BlockService extends change_BaseService
 			f_util_FileUtils::mkdir(dirname($destFilePath));
 			$generator = new builder_Generator();
 			$generator->setTemplateDir($templateDir);
-			$generator->assign_by_ref('moduleName', $moduleName);
-			$generator->assign_by_ref('author', $author);
-			$generator->assign_by_ref('className', $configClassName);
-			$generator->assign_by_ref('blockInfo', $blocWrapper->setBlocInfoArray($blockInfos));
+			$generator->assign('moduleName', $moduleName);
+			$generator->assign('author', $author);
+			$generator->assign('className', $configClassName);
+			$generator->assign('blockInfo', $blocWrapper->setBlocInfoArray($blockInfos));
 			
 			// Cache keys
 			$configuredCacheKeys = isset($blockInfos['cache-key']) ? explode(",", $blockInfos['cache-key']) : array();
@@ -694,10 +694,10 @@ class block_BlockService extends change_BaseService
 		
 			$generator = new builder_Generator();
 			$generator->setTemplateDir($templateDir);
-			$generator->assign_by_ref('moduleName', $moduleName);
+			$generator->assign('moduleName', $moduleName);
 			$generator->assign('author', $author);
-			$generator->assign_by_ref('className', $infoClassName);
-			$generator->assign_by_ref('blockInfo', $blocWrapper->setBlocInfoArray($blockInfos));
+			$generator->assign('className', $infoClassName);
+			$generator->assign('blockInfo', $blocWrapper->setBlocInfoArray($blockInfos));
 			
 			f_util_FileUtils::write($destFilePath, $generator->fetch('BlockInfo.class.php.tpl'), f_util_FileUtils::OVERRIDE);
 			change_AutoloadBuilder::getInstance()->appendFile($destFilePath);

@@ -28,7 +28,7 @@ class website_ListStylesheetsService extends change_BaseService implements list_
 	/**
 	 * @return array<string, string>
 	 */
-	protected function getWebsiteAndTopicStylesheets()
+	public function getWebsiteAndTopicStylesheets()
 	{
 		$availablePaths = change_FileResolver::getNewInstance()->getPaths('modules', 'website', 'style');		
 		$styles = array();		

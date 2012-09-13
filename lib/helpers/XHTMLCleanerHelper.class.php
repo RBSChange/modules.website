@@ -13,16 +13,10 @@ class website_XHTMLCleanerHelper
 		$domTemplate = new DOMDocument('1.0', 'UTF-8');
 		$domTemplate->substituteEntities = false;
 		$domTemplate->resolveExternals = true;
-		if (DIRECTORY_SEPARATOR !== '/')
-		{
-			$dtdPath = 'file:///' . str_replace(array(DIRECTORY_SEPARATOR, ' '), array('/', '%20'), realpath(PROJECT_HOME .'/framework/f_web/dtd/xhtml1-transitional.dtd'));
-		}
-		else
-		{
-			$dtdPath = 'file://' . str_replace(' ', '%20', realpath(PROJECT_HOME .'/framework/f_web/dtd/xhtml1-transitional.dtd'));
-		}	
 		
-		$xml = '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "'.$dtdPath.'"><body>' . $XHTMLFragment . '</body>';
+		$dtd = str_replace(array(DIRECTORY_SEPARATOR, ' '), array('/', '%20'), f_util_FileUtils::buildFrameworkPath('f_web', 'dtd', 'xhtml1-transitional.dtd'));
+		if ($dtd[0] != '/') {$dtd = '/' . $dtd;}
+		$xml = '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "file://'.$dtd.'"><body>' . $XHTMLFragment . '</body>';
 		if (!$domTemplate->loadXML($xml))
 		{
 			throw new Exception("Could not load $xml as XML");
