@@ -248,8 +248,7 @@ class website_BlockController implements f_mvc_Controller
 		{
 			$this->stopCacheRecorders();
 		}
-		$classes = Framework::getConfiguration('mvc/classes');
-		$fakeRequest = new $classes['change_Request'];
+		$fakeRequest = new change_Request();
 		$fakeRequest->setParameters($parameters);
 		$this->process($this->getActionInstanceByModuleAndName($moduleName, $actionName), $fakeRequest);
 		$this->shouldRedirect = true;
@@ -1020,8 +1019,7 @@ class website_BlockController implements f_mvc_Controller
 				{
 					$parameters[$forcedParamName] = $forcedParamValue;
 				}
-				$classes = Framework::getConfiguration('mvc/classes');
-				$request = new $classes['change_Request'];
+				$request = new change_Request();
 				$request->setParameters(array($moduleName.'Param' => $parameters));
 				
 				$this->processByName($moduleName, $subBlock["actionName"], $request, $subBlock["configParams"], true);

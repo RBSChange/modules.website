@@ -176,9 +176,8 @@ class website_ChangeBlockRenderer
 	private function executeBlockAction($parameters, $configParameters, $useCache)
 	{
 		$controller = website_BlockController::getInstance();
-		$classes = Framework::getConfiguration('mvc/classes');
 		/* @var $fakeRequest change_Request */
-		$fakeRequest = new $classes['change_Request'];
+		$fakeRequest = new change_Request();
 		$fakeRequest->setParameters($parameters);
 		try
 		{
