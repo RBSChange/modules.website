@@ -4,7 +4,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 	/**
 	 * @var integer
 	 */
-	private $detailId = null;
+	protected $detailId = null;
 	
 	/**
 	 * @return string[string]
@@ -24,25 +24,20 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 	 */
 	public function getCacheKeyParameters($request)
 	{
-		return array("detailId" => $this->getDetailId());
+		$detailId = $this->getDetailId();
+		$p = $this->getCleanGlobalParameters($detailId);
+		$p['detailId'] = $detailId;
+		return $p;
 	}
 	
 	/**
 	 * @return integer
 	 */	
-	private function getDetailId()
+	protected function getDetailId()
 	{
 		if ($this->detailId === null)
 		{
-			$globalRequest = change_Controller::getInstance()->getRequest();
-			if ($globalRequest->hasParameter('detail_cmpref'))
-			{
-				$this->detailId = intval($globalRequest->getParameter('detail_cmpref'));
-			}
-			else 
-			{
-				$this->detailId = 0;
-			}
+			$this->detailId = intval($this->getContext()->getDetailDocumentId());
 		}
 		return $this->detailId;
 	}
@@ -65,21 +60,8 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 		
 		$switchArray = array();
 		$hasLink = false;
-		$detailId = $this->getDetailId($request);
-		$detailDoc = null;
-		if (intval($detailId) > 0)
-		{
-			try 
-			{
-				$detailDoc = DocumentHelper::getDocumentInstance($detailId);
-			}
-			catch (Exception $e)
-			{
-				Framework::warn($e->getMessage());
-			}
-		}
-		
-		$parameters = $this->getCleanGlobalParameters(change_Controller::getInstance()->getContext()->getRequest()->getParameters(), $detailDoc);
+		$detailId = $this->getDetailId();
+		$detailDoc =  DocumentHelper::getDocumentInstanceIfExists($detailId);
 		$website = website_WebsiteService::getInstance()->getCurrentWebsite();
 		$homePage = $website->getIndexPage();
 		$generateLinks = change_Controller::getInstance()->getContext()->getRequest()->getMethod() === change_Request::GET;
@@ -109,7 +91,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 					$hasLink = true;
 					if ($isPageLink)
 					{
-						$pageUrl = LinkHelper::getDocumentUrl($detailDoc ? $detailDoc : $page, $lang, $parameters);
+						$pageUrl = LinkHelper::getDocumentUrlForWebsite($detailDoc ? $detailDoc : $page, $website, $lang, $this->getCleanGlobalParameters($detailId));
 						$switchArray[$lang]['url'] = $pageUrl;
 						$this->getContext()->addLink("alternate", "text/html", $pageUrl, LocaleService::getInstance()->trans("m.website.frontoffice.this-page-in-mylang", array(), null, $lang), $lang);
 					}
@@ -134,7 +116,7 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 	 * @param string $lang
 	 * @return string
 	 */
-	private function getLangLabel($lang)
+	protected function getLangLabel($lang)
 	{
 		$key = 'm.website.frontoffice.version-in-lang';
 		$text = LocaleService::getInstance()->formatKey($lang, $key, array('ucf'));
@@ -149,29 +131,17 @@ class website_BlockSwitchlanguageAction extends website_BlockAction
 	 * @param string $lang
 	 * @return string
 	 */
-	private function getFlagIcon($lang)
+	protected function getFlagIcon($lang)
 	{
 		return 'flags/' . $lang;
 	}
 	
 	/**
-	 * @param array $parameters
-	 * @param f_persistentdocument_PersistentDocument $detailDoc
+	 * @param integer $detailId
+	 * @return array
 	 */
-	private function getCleanGlobalParameters($parameters, $detailDoc)
+	protected function getCleanGlobalParameters($detailId)
 	{
-		unset($parameters['lang']);
-		unset($parameters['pageref']);
-		unset($parameters[change_Request::DOCUMENT_ID]);
-		unset($parameters['pagename']);
-		unset($parameters['websiteParam']);
-		unset($parameters['module']);
-		unset($parameters['action']);
-		if ($detailDoc)
-		{
-			unset($parameters[$parameters['wemod'].'Param']);
-			unset($parameters['wemod']);
-		}
-		return $parameters;
+		return array();
 	}
 }

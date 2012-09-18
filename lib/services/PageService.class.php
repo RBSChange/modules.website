@@ -93,16 +93,9 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	protected function preInsert($document, $parentNodeId = null)
 	{
-		if ($document->getNavigationtitle() !== null)
+		if ($document->getMetatitle() === null)
 		{
-			if ($document->getLabel() === null)
-			{
-				$document->setLabel($document->getNavigationtitle());
-			}
-			if ($document->getMetatitle() === null)
-			{
-				$document->setMetatitle($document->getNavigationtitle());
-			}
+			$document->setMetatitle('{page.label}');
 		}
 		
 		if ($document->getContent() === null)
@@ -155,7 +148,8 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	public function getNavigationLabel($document)
 	{
-		return $document->getNavigationtitle();
+		$nl = $document->getNavigationtitle();
+		return ($nl) ? $nl : parent::getNavigationLabel($document);
 	}
 	
 	/**
@@ -390,10 +384,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			$website = website_persistentdocument_website::getInstanceById($this->getWebsiteId($document));
 			return $urlRewritingService->getRewriteLink($website, $lang, '/', $parameters);
-		}
-		elseif ($document->getIsIndexPage() && $document->getNavigationVisibility() != website_ModuleService::VISIBLE)
-		{
-			return $urlRewritingService->getDocumentLinkForWebsite($document->getTopic(), $website, $lang, $parameters);
 		}
 		return null;
 	}
@@ -1613,7 +1603,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 * @param websitePage $pageContext
 	 * @return website_Breadcrumb
 	 */
-	function getDefaultBreadcrumb($pageContext)
+	public function getDefaultBreadcrumb($pageContext)
 	{
 		$pageDocument = $pageContext->getPersistentPage();
 		
@@ -1647,12 +1637,12 @@ class website_PageService extends f_persistentdocument_DocumentService
 			}
 			else if ($ancestor instanceof website_persistentdocument_topic)
 			{
-				if ($ancestor->getNavigationVisibility() != website_ModuleService::HIDDEN)
+				if ($ancestor->getNavigationVisibility() == website_ModuleService::VISIBLE)
 				{
-					$lastAncestorPage = $ancestor->getIndexPage();
-					$navigationtitle = $ancestor->getLabel();
+					$navigationtitle = $ancestor->getNavigationLabel();
 					if ($navigationtitle)
 					{
+						$lastAncestorPage = $ancestor->getIndexPage();
 						$href = ($lastAncestorPage && $lastAncestorPage !== $pageDocument) ? LinkHelper::getDocumentUrl($ancestor) : null;
 						$breadcrumb->addElement($navigationtitle, $href);
 					}
@@ -1660,9 +1650,9 @@ class website_PageService extends f_persistentdocument_DocumentService
 			}
 		}
 		
-		if ($lastAncestorPage !== $pageDocument)
+		if ($lastAncestorPage !== $pageDocument || $pageDocument->getNavigationVisibility() == website_ModuleService::VISIBLE)
 		{
-			if ($pageDocument->getNavigationVisibility() == website_ModuleService::HIDDEN)
+			if ($pageDocument->getNavigationVisibility() != website_ModuleService::VISIBLE)
 			{
 				$globalRequest = change_Controller::getInstance()->getRequest();
 				if ($globalRequest->hasParameter('detail_cmpref'))
@@ -1824,7 +1814,18 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		
 		$pageContext->setDoctype($docType);
-		
+		if (!$page->isNew())
+		{
+			$pageContext->addBlockMeta('page.label', $page->getLabel());
+			$pageContext->addBlockMeta('page.navigationLabel', $page->getNavigationLabel());
+				
+			$d = DocumentHelper::getDocumentInstanceIfExists($pageContext->getDetailDocumentId());
+			$pageContext->addBlockMeta('detail.navigationLabel', ($d) ? $d->getNavigationLabel() : '');
+			$ws = website_WebsiteService::getInstance()->getCurrentWebsite();
+			$pageContext->addBlockMeta('website.label', $ws->isNew() ? '' : $ws->getLabel());
+			$p = $pageContext->getParent();
+			$pageContext->addBlockMeta('topic.label', ($p instanceof website_persistentdocument_topic) ? $p->getLabel() : '');
+		}
 		$this->populateHTMLBlocks($controller, $blocks);
 		$this->addBenchTime('blocksGenerating');
 		
@@ -1860,22 +1861,42 @@ class website_PageService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_page $page
+	 * @param string[] $blockIdArray
 	 */
-	public function getRenderedBlock($page)
+	public function getRenderedBlock($page, $blockIdArray = array())
 	{
 		$wsprs = website_PageRessourceService::getInstance();
 		$pageContent = $wsprs->getPagetemplateAsDOMDocument($page);
-		
-		$blocks = $this->generateBlocks($pageContent);
-		$controller = website_BlockController::getInstance();
-		$controller->setPage($page);
-		$pageContext = $controller->getContext();
-		$this->populateHTMLBlocks($controller, $blocks);
-		$results = array();
-		foreach ($blocks as $blockId => $block)
+		if (is_array($blockIdArray) && count($blockIdArray))
 		{
-			$key = isset($block['id']) ? $block['id'] : 'b_' . $blockId;
-			$results[$key] = $block['html'];
+			$blocks = array();
+			foreach ($this->generateBlocks($pageContent) as $blockId => $block)
+			{
+				$key = isset($block['id']) ? $block['id'] : 'b_' . $blockId;
+				if (in_array($key, $blockIdArray))
+				{
+					$blocks[$blockId] = $block;
+				}
+			}
+		}
+		else
+		{
+			$blocks = $this->generateBlocks($pageContent);
+		}
+		
+		$results = array();
+		if (count($blocks))
+		{
+			$controller = website_BlockController::getInstance();
+			$controller->setPage($page);
+			$pageContext = $controller->getContext();
+			$this->populateHTMLBlocks($controller, $blocks);
+			$results = array();
+			foreach ($blocks as $blockId => $block)
+			{
+				$key = isset($block['id']) ? $block['id'] : 'b_' . $blockId;
+				$results[$key] = $block['html'];
+			}
 		}
 		return $results;
 	}
@@ -2179,16 +2200,26 @@ class website_PageService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_page $document
-	 * @param string $actionType
+	 * @param string[] $propertiesNames
 	 * @param array $formProperties
+	 * @param integer $parentId
 	 */
-	public function addFormProperties($document, $propertiesNames, &$formProperties)
+	public function addFormProperties($document, $propertiesNames, &$formProperties, $parentId = null)
 	{
 		$metainfos = $this->getBlockMetaInfos($document);
+		$ls = LocaleService::getInstance();
 		$jsonMeta = array();
 		foreach ($metainfos as $zone => $metas)
 		{
 			$jsonMeta[$zone] = array();
+			if ($zone === 'title')
+			{
+				$jsonMeta[$zone][] = array("value" => '{page.label}', "label" => $ls->trans("m.website.bo.blocks.metas-page-label"));
+				$jsonMeta[$zone][] = array("value" => '{page.navigationLabel}', "label" => $ls->trans("m.website.bo.blocks.metas-page-navigationlabel"));
+				$jsonMeta[$zone][] = array("value" => '{detail.navigationLabel}', "label" => $ls->trans("m.website.bo.blocks.metas-detail-navigationlabel"));
+				$jsonMeta[$zone][] = array("value" => '{website.label}', "label" => $ls->trans("m.website.bo.blocks.metas-website-label"));
+				$jsonMeta[$zone][] = array("value" => '{topic.label}', "label" => $ls->trans("m.website.bo.blocks.metas-topic-label"));
+			}
 			foreach ($metas as $meta)
 			{
 				$dummyInfo1 = explode(".", $meta);
@@ -2196,10 +2227,8 @@ class website_PageService extends f_persistentdocument_DocumentService
 				$dummyInfo2 = explode("_", $dummyInfo1[0]);
 				$moduleName = $dummyInfo2[0];
 				$blockName = $dummyInfo2[1];
-				
-				$ls = LocaleService::getInstance();
-				$jsonMeta[$zone][] = array("value" => "{" . $meta . "}", 
-					"label" => $ls->trans("m.$moduleName.bo.blocks.$blockName.metas.$shortMetaName"));
+				$label = $ls->trans("m.$moduleName.bo.blocks.$blockName.metas.$shortMetaName");
+				$jsonMeta[$zone][] = array("value" => "{" . $meta . "}", "label" => $label);
 			}
 		}
 		$formProperties["metainfo"] = $jsonMeta;
@@ -2258,6 +2287,10 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$entry->setDocument($document);
 		$entry->setLabel($document->getNavigationLabel());
 		$entry->setUrl(LinkHelper::getDocumentUrl($document));
+		if ($document->getId() == website_PageService::getInstance()->getCurrentPageId())
+		{
+			$entry->setCurrent(true);
+		}
 		return $entry;
 	}
 }

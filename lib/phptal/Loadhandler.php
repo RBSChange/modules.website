@@ -61,6 +61,7 @@ class website_TemplateRequest
 	 * @var website_BlockActionRequest
 	 */
 	private $request;
+	
 	/**
 	 * @var PHPTAL_Context
 	 */

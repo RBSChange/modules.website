@@ -175,11 +175,8 @@ class block_BlockService extends change_BaseService
 		return  $this->editorDropModelBlocType;
 	}
 	
-	//
 	// Blocks compilation methods.
-	//
 	
-
 	/**
 	 * @return void
 	 */
@@ -216,8 +213,6 @@ class block_BlockService extends change_BaseService
 		$this->buildBlockConfiguration($blocLists);
 		
 		$this->buildBlockInfo($blocLists);
-		
-		//$this->debugInformation($blocLists);
 	}
 	
 	private function debugInformation($blocLists)
@@ -450,7 +445,7 @@ class block_BlockService extends change_BaseService
 		$injections = array();
 		foreach ($blocLists as $blockType => $blockInfos)
 		{
-			if (!isset($blockInfos['inject']))
+			if (!isset($blockInfos['inject']) || $blockInfos['inject'] == '')
 			{
 				continue;
 			}

@@ -46,7 +46,6 @@ class website_PagereferenceService extends website_PageService
 			{
 				$i18nPropsNames[] = $name;
 			}
-			;
 		}
 		
 		try
@@ -254,6 +253,26 @@ class website_PagereferenceService extends website_PageService
 	public function getResume($document, $forModuleName, $allowedSections = null)
 	{
 		$data = parent::getResume($document, $forModuleName, $allowedSections);
+		if ($this->hasOriginPage($document))
+		{
+			$data['properties']['purgeDocument'] = array('hidden' => 'true');
+		}
+		else
+		{
+			$label = LocaleService::getInstance()->trans('m.website.document.pagereference.referenceofid-error', array('ucf'));
+			$data['properties']['purgeDocument'] = array('hidden' => 'false', 'label' => $label);
+		}
+		
+		return $data;
+	}
+	
+	/**
+	 * Check if the origin page of reference exists
+	 * @param website_persistentdocument_pagereference $document
+	 * @return boolean
+	 */
+	public function hasOriginPage($document)
+	{
 		$tn = TreeService::getInstance()->getInstanceByDocument($document);
 		if ($tn)
 		{
@@ -261,18 +280,12 @@ class website_PagereferenceService extends website_PageService
 			if ($page)
 			{
 				$ptn = TreeService::getInstance()->getInstanceByDocument($page);
-				if ($ptn && in_array($ptn->getParentId(), array_slice($tn->getAncestorsId(),0, -1)))
+				if ($ptn && in_array($ptn->getParentId(), array_slice($tn->getAncestorsId(), 0, -1)))
 				{
-					$data['properties']['purgeDocument'] = array('hidden' => 'true');
+					return true;
 				}
 			}
 		}
-	
-		if (!isset($data['properties']['purgeDocument']))
-		{
-			$data['properties']['purgeDocument'] = array('hidden' => 'false',
-				'label' => LocaleService::getInstance()->trans('m.website.document.pagereference.referenceofid-error', array('ucf')));
-		}
-		return $data;
+		return false;
 	}
 }

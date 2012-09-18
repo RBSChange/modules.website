@@ -4,7 +4,7 @@
 		<property name="startpublicationdate" localized="true" />
 		<property name="endpublicationdate" localized="true" />
 		<property name="publicationstatus" localized="true" />
-		<property name="navigationtitle" type="String" localized="true" db-size="80" required="true" />
+		<property name="navigationtitle" type="String" localized="true" db-size="80" />
 		<property name="metatitle" type="LongString" localized="true" />
 		<property name="description" type="LongString" localized="true" />
 		<property name="keywords" type="LongString" localized="true" />

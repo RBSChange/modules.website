@@ -121,13 +121,17 @@ class website_DisplayAction extends change_Action
 	 */
 	protected function onMissingPermission($login, $permission, $nodeId)
 	{
-		if (Framework::isDebugEnabled())
+		$controller = $this->getContext()->getController();
+		if (users_UserService::getInstance()->getCurrentFrontEndUser() === null)
 		{
-			Framework::debug(__METHOD__ . " ($login, $permission, $nodeId)");
-			Framework::debug(__METHOD__ . " users_illegalAccessPage : " . $_SERVER["REQUEST_URI"]);
+			$user = $this->getContext()->getUser();
+			$user->setAttribute('illegalAccessPage', $_SERVER["REQUEST_URI"]);
+			$controller->forward('website', 'Error401');
 		}
-		change_Controller::getInstance()->getStorage()->writeForUser('users_illegalAccessPage', $_SERVER["REQUEST_URI"]);
-		$this->getContext()->getController()->forward('website', 'Error401');
+		else
+		{
+			$controller->forward('website', 'Error403');
+		}
 	}
 	
 	/**

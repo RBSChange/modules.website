@@ -35,10 +35,10 @@ class website_PopInAction extends change_Action
 		change_Controller::setNoCache();
 		$this->setContentType('text/html');
 		$pageId = $this->getDocumentIdFromRequest($request);
-		if (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'])
-		{
-			RequestContext::getInstance()->setAjaxMode(true, $_SERVER['HTTP_REFERER']);
-		}
+		
+		$fromURL = $request->getParameter('fromURL', (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null);
+		RequestContext::getInstance()->setAjaxMode(true, $fromURL);
+		
 		try
 		{
 			$page = website_persistentdocument_page::getInstanceById($pageId);		

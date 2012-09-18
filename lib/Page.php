@@ -164,15 +164,6 @@ class website_Page implements f_mvc_Context
 	}
 
 	/**
-	 * Just for compatibility
-	 * @return website_Page
-	 */
-	public function getPage()
-	{
-		return $this;
-	}
-
-	/**
 	 * @return website_persistentdocument_page
 	 */
 	function getPersistentPage()
@@ -180,9 +171,20 @@ class website_Page implements f_mvc_Context
 		return $this->page;
 	}
 
+	/**
+	 * @return integer
+	 */
 	public function getId()
 	{
 		return $this->page->getId();
+	}
+	
+	/**
+	 * @return integer
+	 */
+	public function getDetailDocumentId()
+	{
+		return change_Controller::getInstance()->getContext()->getRequest()->getParameter('detail_cmpref');
 	}
 
 	/**
@@ -362,7 +364,7 @@ class website_Page implements f_mvc_Context
 		{
 			foreach ($this->attributes['links'] as $link)
 			{
-				if ($href == $link['href'] && $relation == $link['rel'] && $type == $link['type'])
+				if ($relation == $link['rel'] && $type == $link['type'] && $href == (isset($link['href']) ? $link['href'] : null))
 				{
 					return;
 				}

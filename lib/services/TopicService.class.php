@@ -109,8 +109,6 @@ class website_TopicService extends f_persistentdocument_DocumentService
 	}
 	
 	/**
-	 * @see f_persistentdocument_DocumentService::getWebsiteId()
-	 *
 	 * @param website_persistentdocument_topic $document
 	 * @return integer
 	 */
@@ -119,6 +117,33 @@ class website_TopicService extends f_persistentdocument_DocumentService
 		return $document->getMeta("websiteId");
 	}
 	
+	/**
+	 * @param website_UrlRewritingService $urlRewritingService
+	 * @param website_persistentdocument_topic $document
+	 * @param website_persistentdocument_website $website
+	 * @param string $lang
+	 * @param array $parameters
+	 * @return f_web_Link | null
+	 */
+	public function getWebLink($urlRewritingService, $document, $website, $lang, $parameters)
+	{
+		$page = $document->getIndexPage();
+		if ($page)
+		{
+			return $urlRewritingService->getDocumentLinkForWebsite($page, $website, $lang, $parameters);
+		}
+		return null;
+	}
+	
+	/**
+	 * @param website_persistentdocument_topic $document
+	 * @return website_persistentdocument_page
+	 */
+	public function getDisplayPage($document)
+	{
+		$page = $document->getIndexPage();
+		return ($page && $page->isPublished()) ? $page : null;
+	}
 	
 	/**
 	 * @param website_persistentdocument_topic $document
@@ -425,20 +450,6 @@ class website_TopicService extends f_persistentdocument_DocumentService
 	
 	/**
 	 * @param website_persistentdocument_topic $document
-	 * @return website_persistentdocument_page
-	 */
-	public function getDisplayPage($document)
-	{
-		$model = $document->getPersistentModel();
-		if ($model->hasURL() && $document->isPublished() && $document->getIndexPageId())
-		{
-			return $document->getIndexPage();
-		}
-		return null;
-	}
-	
-	/**
-	 * @param website_persistentdocument_topic $document
 	 * @param array<string, string> $attributes
 	 * @param integer $mode
 	 * @param string $moduleName
@@ -494,6 +505,14 @@ class website_TopicService extends f_persistentdocument_DocumentService
 			$entry->setUrl(LinkHelper::getDocumentUrl($document));
 		}
 		$entry->setContainer(true);
+		if (in_array($document->getId(), website_PageService::getInstance()->getCurrentPageAncestorsIds()))
+		{
+			$entry->setInPath(true);
+			if ($document->getIndexPage() && $document->getIndexPage()->getId() == website_PageService::getInstance()->getCurrentPageId())
+			{
+				$entry->setCurrent(true);
+			}
+		}
 		return $entry;
 	}
 	

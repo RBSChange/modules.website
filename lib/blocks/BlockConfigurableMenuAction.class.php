@@ -27,7 +27,7 @@ class website_BlockConfigurableMenuAction extends website_BlockAction
 				
 			case 'tag':
 				$website = website_WebsiteService::getInstance()->getCurrentWebsite();
-				$doc = TagService::getInstance()->getDocumentByContextualTag($config->getTag(), $website);
+				$doc = TagService::getInstance()->getDocumentByContextualTag($config->getTag(), $website, false);
 				break;
 				
 			case 'contextual':
@@ -110,17 +110,11 @@ class website_BlockConfigurableMenuAction extends website_BlockAction
 		/* @var $entry website_MenuEntry */
 		$entry->setLevel($level);
 		
-		$doc = $entry->getDocument(); // For menuitem documents $doc may differ from $entry->getDocument().
-		$docId = $entry->getDocument()->getId(); 
-		$isCurrent = ($currentId == $docId);
-		$inPath = in_array($docId, $ancestorIds);
-		$entry->setCurrent($isCurrent);
-		$entry->setInPath($inPath);
-		
 		// Generate children entries.
-		if ($entry->isContainer() && $level < $maxLevel && ($deployAll || $inPath || $isCurrent))
+		if ($entry->isContainer() && $level < $maxLevel && ($deployAll || $entry->isInPath() || $entry->isCurrent()))
 		{
 			$children = array();
+			$doc = $entry->getDocument(); // For menuitem documents $doc may differ from $entry->getDocument().
 			foreach ($doc->getDocumentService()->getChildrenDocumentsForMenu($doc) as $childDoc)
 			{
 				$childEntry = $this->getMenuEntries($childDoc, $level+1, $maxLevel, $currentId, $ancestorIds, $deployAll);

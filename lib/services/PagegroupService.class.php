@@ -35,26 +35,6 @@ class website_PagegroupService extends website_PageService
 	protected function preDuplicate($newDocument, $originalDocument, $parentNodeId)
 	{
 		throw new IllegalOperationException('This document cannot be duplicated.');
-		/*
-		$requestContext = RequestContext::getInstance();		
-		foreach ($requestContext->getSupportedLanguages() as $lang)
-		{
-			try
-			{
-				$requestContext->beginI18nWork($lang);
-				if ($newDocument->isContextLangAvailable())
-				{
-					$newDocument->setCurrentversionid(0);
-				}
-				$requestContext->endI18nWork();
-			} 
-			catch (Exception $e)
-			{
-				$requestContext->endI18nWork($e);
-			}
-		}
-		parent::preDuplicate($newDocument, $originalDocument, $parentNodeId);
-		*/
 	}
 	
 	/**
@@ -63,11 +43,6 @@ class website_PagegroupService extends website_PageService
 	 */
 	public function setCurrentVersion($pagegroup, $chooserName = 'publicated')
 	{
-		if (Framework::isDebugEnabled())
-		{
-			Framework::debug(__METHOD__ . '->' . $pagegroup->__toString());
-		}
-		
 		$requestContext = RequestContext::getInstance();
 		$className = 'website_Pagegroup' . ucfirst($chooserName) . 'Chooser';
 		$chooser = f_util_ClassUtils::callMethod($className, 'getInstance');
@@ -91,8 +66,9 @@ class website_PagegroupService extends website_PageService
 	
 	/**
 	 * @param website_persistentdocument_pagegroup $pagegroup
+	 * @param website_persistentdocument_pageversion[] $versions
 	 */
-	public function removeCurrentVersion($pagegroup)
+	public function removeCurrentVersion($pagegroup, $versions = null)
 	{
 		if (Framework::isDebugEnabled())
 		{
@@ -100,16 +76,12 @@ class website_PagegroupService extends website_PageService
 		}
 		
 		$requestContext = RequestContext::getInstance();
-		$langs = $requestContext->getSupportedLanguages();
-		foreach ($langs as $lang)
+		foreach ($pagegroup->getI18nInfo()->getLangs() as $lang)
 		{
 			try
 			{
 				$requestContext->beginI18nWork($lang);
-				if ($pagegroup->isContextLangAvailable())
-				{
-					$pagegroup->setCurrentversionid(0);
-				}
+				$pagegroup->setCurrentversionid(0);
 				$requestContext->endI18nWork();
 			} 
 			catch (Exception $e)
@@ -121,6 +93,14 @@ class website_PagegroupService extends website_PageService
 		
 		$page = $this->transform($pagegroup, 'modules_website/page');
 		$page->getDocumentService()->publishDocumentIfPossible($page, array('cause' => 'DELETE'));
+		
+		if (is_array($versions))
+		{
+			foreach ($versions as $version)
+			{
+				$this->purgeDocument($version);
+			}
+		}
 	}
 	
 	/**
@@ -130,6 +110,7 @@ class website_PagegroupService extends website_PageService
 	 */
 	private function setCurrentVersionForLang($pagegroup, $versions, $chooser)
 	{
+		$lang = RequestContext::getInstance()->getLang();
 		$version = $chooser->select($versions);
 		if (is_null($version))
 		{
@@ -139,23 +120,12 @@ class website_PagegroupService extends website_PageService
 			}
 		} else
 		{
-			if (Framework::isDebugEnabled())
-			{
-				$lang = RequestContext::getInstance()->getLang();
-				Framework::debug("Page " . $pagegroup->__toString() . "in ($lang) is set to version" . $version->__toString());
-			}
-
 			$oldPublicationStatus = $pagegroup->getPublicationstatus();
-
-			$version->copyPropertiesListTo($pagegroup, self::$propertiesNames, false);
+			$version->copyPropertiesListTo($pagegroup, self::$propertiesNames, $lang == $pagegroup->getLang());
 			$pagegroup->setCurrentversionid($version->getId());
 
 			if ($pagegroup->isModified())
 			{
-				if (Framework::isDebugEnabled())
-				{
-					Framework::debug("Save page info " . $pagegroup->__toString());
-				}
 				try
 				{
 					$this->getTransactionManager()->beginTransaction();
@@ -165,16 +135,15 @@ class website_PagegroupService extends website_PageService
 					$this->synchronizeReferences($pagegroup);
 
 					$this->getTransactionManager()->commit();
-				} catch (Exception $e)
+				}
+				catch (Exception $e)
 				{
 					$this->getTransactionManager()->rollBack($e);
 				}
 
 				$newPublicationStatus = $pagegroup->getPublicationstatus();
 
-				/**
-				 * Dispatch event
-				 */
+				// Dispatch event.
 				f_event_EventManager::dispatchEvent('persistentDocumentUpdated', $this, array("document" => $pagegroup));
 
 				if ($oldPublicationStatus != $newPublicationStatus)
@@ -182,11 +151,13 @@ class website_PagegroupService extends website_PageService
 					if ($newPublicationStatus == 'PUBLICATED')
 					{
 						$this->dispatchPublicationStatusChanged($pagegroup, $oldPublicationStatus, 'persistentDocumentPublished', array("cause" => "update"));
-					} else if ($oldPublicationStatus == 'PUBLICATED')
+					} 
+					else if ($oldPublicationStatus == 'PUBLICATED')
 					{
 						$this->dispatchPublicationStatusChanged($pagegroup, $oldPublicationStatus, 'persistentDocumentUnpublished', array("cause" => "update"));
 					}
-				} else if ($newPublicationStatus == 'PUBLICATED')
+				} 
+				else if ($newPublicationStatus == 'PUBLICATED')
 				{
 					$this->synchronizeReferences($pagegroup);
 				}

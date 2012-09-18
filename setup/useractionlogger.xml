@@ -99,4 +99,6 @@
 	<actiondef modulename="website" actionname="deletelocalization.menuitemfunction" label="m.website.bo.useractionlogger.deletelocalization-menuitemfunction" />
 	<actiondef modulename="website" actionname="delete.menuitemfunction" label="m.website.bo.useractionlogger.delete-menuitemfunction" />
 	<actiondef modulename="website" actionname="purgedocument.pagereference" label="m.website.bo.useractionlogger.purgedocument-pagereference" />
+	<actiondef modulename="website" actionname="purgedocument.pageversion" label="m.website.bo.useractionlogger.purgedocument-pageversion" />
+	<actiondef modulename="website" actionname="saveredirectinfo.pagegroup" label="m.website.bo.useractionlogger.saveredirectinfo-pagegroup" />
 </script>

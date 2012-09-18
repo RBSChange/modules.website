@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <panel>
 	<section labeli18n="m.website.document.page.titleinformations">
-		<field name="navigationtitle" />
+		<field name="label" />
 		<field name="defaultContent" type="dropdownlist" required="true" label="Gabarit de la page" nocache="true" />
 	</section>
 	<xul>
@@ -16,21 +16,12 @@
 					{		
 						var pid = this.documentEditor.parentid;
 						var field = this.fields.defaultContent;
-						wCore.debug('parentid: '+ pid);
 						field.replaceItems({parentid: pid,cmpref:"modules_website/templates"});
 					}
 					catch (e)
 					{
 						wCore.error("page.createpanel.fireInitializeCompleteExtend", [result], e);
 					}
-				]]></body>
-			</method>
-			<method name="preparePropertiesValues">
-				<parameter name="values" />
-				<body><![CDATA[
-					values.label = values.navigationtitle;
-					values.metatitle = values.navigationtitle;
-					values.documentproperties += ',label,metatitle';
 				]]></body>
 			</method>
 		</javascript>

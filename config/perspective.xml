@@ -116,7 +116,6 @@
 			<contextactions>
 				<contextaction name="edit" />
 				<contextaction name="duplicate" />
-				<contextaction name="delete" />
 				<contextaction name="openPage" />
 				<contextaction name="editPageContent" />
 				<contextaction name="setAsIndexPage" />
@@ -131,6 +130,7 @@
 				<contextaction name="createPageVersionFromPage" />
 				<contextaction name="openUrlRewritingPanel" />
 				<contextaction name="removeFromMenu" />
+				<contextaction name="delete" />
 			</contextactions>
 		</model>
 		<model name="modules_website/pagereference">
@@ -165,15 +165,16 @@
 				<contextaction name="reactivate" />
 				<contextaction name="createEmptyPageVersionFromPage" />
 				<contextaction name="createPageVersionFromPage" />
+				<contextaction name="delete" />
 			</contextactions>
 		</model>
 		<model name="modules_website/pageexternal">
 			<contextactions>
 				<contextaction name="edit" />
-				<contextaction name="delete" />
 				<contextaction name="openTags" />
 				<contextaction name="openPage" />
 				<contextaction name="removeFromMenu" />
+				<contextaction name="delete" />
 			</contextactions>
 		</model>
 		<model name="modules_website/menufolder">
@@ -229,9 +230,9 @@
 		<model name="modules_website/menuitemfunction">
 			<contextactions>
 				<contextaction name="edit" />
-				<contextaction name="delete" />
 				<contextaction name="deactivated" />
 				<contextaction name="reactivate" />
+				<contextaction name="delete" />
 			</contextactions>
 		</model>
 		<model name="modules_website/menuitemtext">
@@ -261,12 +262,12 @@
 	<toolbar>
 		<toolbarbutton name="edit" />
 		<toolbarbutton name="duplicate" />
-		<toolbarbutton name="delete" />
 		<toolbarbutton name="activate" />
 		<toolbarbutton name="deactivated" />
 		<toolbarbutton name="reactivate" />
 		<toolbarbutton name="editPageContent" />
 		<toolbarbutton name="openPage" />
+		<toolbarbutton name="delete" />
 	</toolbar>
 	<actions>
 		<action name="purgeDocument" single="true" permission="PurgeDocument" icon="purge" labeli18n="m.uixul.bo.actions.purge-document" />

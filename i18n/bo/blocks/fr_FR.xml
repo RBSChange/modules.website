@@ -7,4 +7,9 @@
 	<key id="enablemetas-help">Ce bloc expose des méta-données utilisable pour renseignement des méta-données de la page (titre, description, mots clefs). Choisissez ″oui″ pour les rendre disponibles à la page.</key>
 	<key id="usecache">Activer le cache</key>
 	<key id="usecache-help">Ce bloc gère un cache, vous pouvez le désactiver</key>
+	<key id="metas-page-label">Libellé de la page</key>
+	<key id="metas-page-navigationlabel">Texte de lien de la page</key>
+	<key id="metas-detail-navigationlabel">Libellé de l'élement de détail</key>
+	<key id="metas-website-label">Libellé du site</key>
+	<key id="metas-topic-label">Libellé de la rubrique parente</key>
 </i18n>

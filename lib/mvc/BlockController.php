@@ -955,7 +955,10 @@ class website_BlockController implements f_mvc_Controller
 			// htmlContent & page variables used in cached code
 			$page = $this->getContext();
 			$controller = $this;
-			eval($code);
+			if (eval($code) === false)
+			{
+				Framework::error(__METHOD__ . ' Invalid cached code : '. PHP_EOL . $code);
+			}
 		}
 		$this->getResponse()->getWriter()->write($htmlContent);
 	}
@@ -1162,8 +1165,9 @@ class website_FunctionCallRecorder
 
 class website_PageContextRecorder extends website_FunctionCallRecorder
 {
-	private static $recordedMethodNames = array("setAttribute", "removeAttribute", "addScript", "addStyle", "addMeta", "addRssFeed", "addLink", "addBlockMeta");
-
+	private static $recordedMethodNames = array("setAttribute", "removeAttribute", "setMetatitle", "addScript", "setKeywords", "setDescription", 
+		"setTitle", "appendToDescription", "addStyle", "addKeyword", "addMeta", "addRssFeed", "addLink", "addBlockMeta");
+	
 	/**
 	 * @param website_Page $page
 	 */
@@ -1172,15 +1176,18 @@ class website_PageContextRecorder extends website_FunctionCallRecorder
 		parent::__construct($page, self::$recordedMethodNames, "page");
 	}
 	
-	function addSubBlock($moduleName, $actionName, $configParams, $inheritedParamNames, $forcedParams)
+	public function addSubBlock($moduleName, $actionName, $configParams, $inheritedParamNames, $forcedParams)
 	{
-		$this->addRecord('$controller->addSubBlock('.var_export($moduleName, true).','.
-			var_export($actionName, true).','.var_export($configParams, true).','.
-			var_export($inheritedParamNames, true).','.var_export($forcedParams, true).');');
+		$record = array('$controller->addSubBlock(');
+		$record[] = $this->buildRecord($moduleName) . ',';
+		$record[] = $this->buildRecord($actionName) . ',';
+		$record[] = $this->buildRecord($configParams) . ',';
+		$record[] = $this->buildRecord($inheritedParamNames) . ',';
+		$record[] = $this->buildRecord($forcedParams) . ');';
+		$this->addRecord(implode('', $record));
 	}
 	
 	/**
-	 * (non-PHPdoc)
 	 * @see website_BlockCacheFunctionCallRecorder::getRecords()
 	 */
 	public function getRecords()

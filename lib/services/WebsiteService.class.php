@@ -725,6 +725,11 @@ class website_WebsiteService extends f_persistentdocument_DocumentService
 		$entry->setLabel($document->getNavigationLabel());
 		$entry->setUrl(LinkHelper::getDocumentUrl($document));
 		$entry->setContainer(true);
+		$entry->setInPath(true);
+		if ($document->getIndexPage() && $document->getIndexPage()->getId() == website_PageService::getInstance()->getCurrentPageId())
+		{
+			$entry->setCurrent(true);
+		}
 		return $entry;
 	}
 	

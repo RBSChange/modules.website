@@ -11,7 +11,6 @@ class PHPTAL_Php_Attribute_CHANGE_Tabs extends ChangeTalAttribute
 	private static $tabs;
 	private $parametersString;
 
-	
 	/**
 	 * @return boolean
 	 */
@@ -71,13 +70,14 @@ class PHPTAL_Php_Attribute_CHANGE_Tabs extends ChangeTalAttribute
 		self::$tabs[$id] = $label;
 	}
 	
+	/**
+	 * @return integer
+	 */
 	public static function getCurrentId()
 	{
 		return self::$id;
 	}
 	
-
-
 	/**
 	 * @param array $params
 	 * @return string
@@ -104,7 +104,7 @@ class PHPTAL_Php_Attribute_CHANGE_Tabs extends ChangeTalAttribute
 		
 		if (!self::$called)
 		{
-			$pageContext = website_BlockController::getInstance()->getContext()->getPage();
+			$pageContext = website_BlockController::getInstance()->getContext();
 			$pageContext->addScript("modules.website.lib.js.jquery-ui-tabs");
 			self::$called = true;
 		}

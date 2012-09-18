@@ -6,13 +6,8 @@
 class website_persistentdocument_systemtopic extends website_persistentdocument_systemtopicbase
 {
 	/**
-	 * @deprecated use getReferenceIdInstance
+	 * @return string | null
 	 */
-	public function getReference()
-	{
-		return $this->getReferenceIdInstance();
-	}
-	
 	public function getReferenceURI()
 	{
 		$ref = $this->getReferenceIdInstance();
@@ -24,5 +19,15 @@ class website_persistentdocument_systemtopic extends website_persistentdocument_
 			return implode(',', $uri);
 		}
 		return null;
+	}
+	
+	// Deprecated.
+	
+	/**
+	 * @deprecated use getReferenceIdInstance
+	 */
+	public function getReference()
+	{
+		return $this->getReferenceIdInstance();
 	}
 }

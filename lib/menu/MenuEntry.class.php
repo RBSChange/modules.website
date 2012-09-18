@@ -350,7 +350,7 @@ class website_MenuEntry
 	{
 		if ($this->isPopup())
 		{
-			return '(' . LocaleService::getInstance()->trans('m.website.frontoffice.in-a-new-window') . ')';
+			return LocaleService::getInstance()->trans('m.website.frontoffice.in-a-new-window', array('html'));
 		}
 		return null;
 	}

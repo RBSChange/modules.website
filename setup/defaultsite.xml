@@ -28,41 +28,41 @@
 			</page>
 		</topic>
 		<topic label="Système" navigationVisibility="hidden">
-			<page label="Page non trouvée (404)" indexingstatus="false" navigationVisibility="hidden">
-				<tag name="contextual_website_website_error404" />
+			<page label="Page non trouvée (404)" indexingstatus="false" navigationVisibility="hidden" template-attr="templateNosidebar" byTag="contextual_website_website_error404">
 				<changecontent for="content-block">
 					<changeblock type="richtext"><![CDATA[<h1>Page non trouvée (Erreur 404)</h1><p>La page demandée n'existe pas.<br/><a href="/">Retour à l'accueil</a>.</p>]]></changeblock>
 				</changecontent>
 			</page>
-			<page label="Erreur générale (500)" indexingstatus="false" navigationVisibility="hidden">
-				<tag name="contextual_website_website_server-error" />
+			<page label="Erreur générale (500)" indexingstatus="false" navigationVisibility="hidden" template-attr="templateNosidebar" byTag="contextual_website_website_server-error">
 				<changecontent for="content-block">
 					<changeblock type="richtext"><![CDATA[<h1>Erreur serveur</h1>]]></changeblock>
 					<changeblock type="modules_website_exception" />
 				</changecontent>
 			</page>
-			<page label="Accès restreint (401.1)" indexingstatus="false" navigationVisibility="hidden">
-				<tag name="contextual_website_website_error401-1" />
+			<page label="Accès restreint (401.1)" indexingstatus="false" navigationVisibility="hidden" template-attr="templateNosidebar" byTag="contextual_website_website_error401-1">
 				<changecontent for="content-block">
 					<changeblock type="richtext"><![CDATA[<h1>L'accès à cette page est protégé</h1><p>Veuillez vous identifier en utilisant le formulaire ci-dessous.</p>]]></changeblock>
 					<changeblock type="modules_users_authentication" />
 				</changecontent>
 			</page>
-			<page label="Imprimer" indexingstatus="false" navigationVisibility="hidden">
-				<tag name="contextual_website_website_print" />
+			<page label="Accès refusé" indexingstatus="false" navigationVisibility="hidden" byTag="contextual_website_website_error403">
+				<changecontent for="content-block">
+					<changeblock type="richtext"><![CDATA[<h1>Accès refusé</h1><p>Vous n'avez pas l'autorisation pour accéder à cette ressource.</p>]]></changeblock>
+				</changecontent>
+			</page>
+			<page label="Imprimer" indexingstatus="false" navigationVisibility="hidden" template-attr="templateNosidebar" byTag="contextual_website_website_print">
 				<documenturl lang="fr" url="/imprimer" />
 				<changecontent for="content-block">
 					<changeblock type="richtext"><![CDATA[<p>Ici vos instructions pour imprimer une page. (Cette page n'est utilisée que lorsque javascript n'est pas activé)</p>]]></changeblock>
 				</changecontent>
 			</page>
-			<page label="Ajouter aux favoris" indexingstatus="false" navigationVisibility="hidden">
-				<tag name="contextual_website_website_favorite" />
+			<page label="Ajouter aux favoris" indexingstatus="false" navigationVisibility="hidden" template-attr="templateNosidebar" byTag="contextual_website_website_favorite">
 				<documenturl lang="fr" url="/ajouter-aux-favoris" />
 				<changecontent for="content-block">
 					<changeblock type="richtext"><![CDATA[<p>Ici vos instructions pour ajouter une page aux favoris. (Cette page n'est utilisée que lorsque javascript n'est pas activé)</p>]]></changeblock>
 				</changecontent>
 			</page>
-			<page label="Résultat de recherche" indexingstatus="false" navigationVisibility="hidden" byTag="contextual_website_website_modules_solrsearch_page-results">
+			<page label="Résultat de recherche" indexingstatus="false" navigationVisibility="hidden" template-attr="templateNosidebar" byTag="contextual_website_website_modules_solrsearch_page-results">
 				<changecontent for="content-block">
 					<changeblock type="modules_solrsearch_results" />
 				</changecontent>

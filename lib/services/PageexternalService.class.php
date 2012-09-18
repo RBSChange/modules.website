@@ -140,7 +140,8 @@ class website_PageexternalService extends f_persistentdocument_DocumentService
 	 */
 	public function getNavigationLabel($document)
 	{
-		return $document->getNavigationtitle();
+		$nl = $document->getNavigationtitle();
+		return ($nl) ? $nl : parent::getNavigationLabel($document);
 	}
 	
 	/**

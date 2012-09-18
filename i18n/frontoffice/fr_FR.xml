@@ -27,8 +27,8 @@
 	<key id="not-found-long-message">Désolé, la page demandée n'existe pas sur ce serveur.Si vous avez entré l'adresse manuellement dans votre navigateur, veuillez vérifier cette adresse.Si vous avez suivi un lien qui vous a amené vers cette page d'erreur, veuillez contacter le site d'origine et l'informer que la page n'existe plus.Nous nous excusons pour le désagrément et vous remercions de votre compréhension.</key>
 	<key id="back-to-homepage">Retour à la page d'accueil de ce site</key>
 	<key id="back-to-previous-visited-page">Retour à la dernière page vue</key>
-	<key id="in-a-new-window">dans une nouvelle fenêtre</key>
-	<key id="link-broken">lien brisé</key>
+	<key id="in-a-new-window">(dans une nouvelle fenêtre)</key>
+	<key id="link-broken">(lien brisé)</key>
 	<key id="selectoption">selectionnez un élément</key>
 	<key id="this-field-is-mandatory">Ce champ est obligatoire</key>
 	<key id="append-title-separator"> - </key>
