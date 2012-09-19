@@ -34,7 +34,7 @@
 						<toolbarseparator />
 
 						<toolbarbutton image="{IconsBase}/small/printer.png" label="Print page content" i18n:attributes="label &amp;modules.uixul.bo.layout.Print;"
-							oncommand="wToolkit.printFrame(document.getElementById('website-previewFrame'));" />
+							oncommand="var wincontent = new XPCNativeWrapper(document.getElementById('website-previewFrame').contentWindow);wincontent.print();" />
 						<toolbarspacer flex="1" />
 					</toolbar>
 				</toolbox>
