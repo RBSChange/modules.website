@@ -31,7 +31,7 @@ class website_Setup extends object_InitDataSetup
 
 		// Import datas (lists, workflows, etc).
 		$this->executeModuleScript('init.xml');
-		$this->executeModuleScript('workflow2.xml');
+		$this->executeModuleScript('workflow.xml');
 		
 		$tasks = task_PlannedtaskService::getInstance()->getBySystemtaskclassname('website_CleanCSSAndJSCacheTask');
 		if (count($tasks) == 0)
