@@ -40,17 +40,6 @@ class website_PageScriptDocumentElement extends import_ScriptDocumentElement
 		{
 			$page->url = $properties['url'];
 		}
-		if (isset($properties['label']))
-		{
-			if (!isset($properties['navigationtitle']))
-			{
-				$properties['navigationtitle'] = $properties['label'];
-			}
-			if (!isset($properties['metatitle']))
-			{
-				$properties['metatitle'] = $properties['label'];
-			}
-		}
 		
 		if (in_array($page->getPublicationstatus(), array('ACTIVE', 'PUBLICATED', 'DEACTIVATED')))
 		{
@@ -59,9 +48,6 @@ class website_PageScriptDocumentElement extends import_ScriptDocumentElement
 				$properties['publicationstatus'] = 'DRAFT';
 			}
 		}
-		
-		// Handle xxx-<lang> attributes.
-		$this->getDocumentLocalizedProperties($properties, $page);
 		
 		if (isset($properties['isHomePage']))
 		{
@@ -146,56 +132,7 @@ class website_PageScriptDocumentElement extends import_ScriptDocumentElement
 			website_UrlRewritingService::getInstance()->setCustomPath($document->url, $document, $website, $lang);
 		}
 	}
-	
-	/**
-	 * @param Array<String, Mixed> $properties
-	 * @param website_persistentdocument_page $page
-	 * @deprecated
-	 */
-	private function getDocumentLocalizedProperties(&$properties, $page)
-	{
-		$rc = RequestContext::getInstance();
-		foreach ($rc->getSupportedLanguages() as $lang)
-		{
-			try
-			{
-				$rc->beginI18nWork($lang);
-				if (!($page->isLangAvailable($lang)))
-				{
-					if (isset($properties['label-'.$lang]))
-					{
-						if (!isset($properties['navigationtitle-'.$lang]))
-						{
-							$properties['navigationtitle-'.$lang] = $properties['label-'.$lang];
-						}
-						if (!isset($properties['metatitle-'.$lang]))
-						{
-							$properties['metatitle-'.$lang] = $properties['label-'.$lang];
-						}
-					}
-				}
-				// This must be done if the document is not new to be able to update an ACTIVE/PUBLISHED/DEACTIVATED page.
-				else if (in_array($page->getPublicationstatus(), array('DRAFT', 'ACTIVE', 'PUBLICATED', 'DEACTIVATED')))
-				{
-					if (!isset($properties['publicationstatus-'.$lang]))
-					{
-						$properties['publicationstatus-'.$lang] = 'DRAFT';
-					}
-				}
-				// In case of invalid status, throw an exception.
-				else
-				{
-					throw new Exception('Invalid page status! (id = ' . $page->getId() . ', status = ' . $page->getPublicationstatus() . ')');
-				}
-				$rc->endI18nWork();
-			}
-			catch (Exception $e)
-			{
-				$rc->endI18nWork($e);
-			}
-		}
-	}
-	
+		
 	/**
 	 * @param import_ScriptExecuteElement $scriptExecute
 	 */
