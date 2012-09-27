@@ -134,18 +134,8 @@ class website_JsService extends change_BaseService
 	 * @param boolean $compact Compact generated content
 	 * @return string Scripts URL
 	 */
-	public function execute($mimeContentType = null, $compact = false, $excluded = null)
+	public function execute($mimeContentType = 'html', $compact = false, $excluded = null)
 	{
-		$rc = RequestContext::getInstance();
-		if (is_null($mimeContentType))
-		{
-			$mimeContentType = $rc->getMimeContentType();
-		}
-		else
-		{
-			$rc->setMimeContentType($mimeContentType);
-		}
-		
 		if ($this === self::getInstance())
 		{
 			$scriptNames = array_keys(self::$scriptRegistry);
@@ -154,6 +144,7 @@ class website_JsService extends change_BaseService
 		{
 			$scriptNames = array_keys($this->registery);
 		}
+		
 		if (count($scriptNames) === 0)
 		{
 			return null;
@@ -163,7 +154,7 @@ class website_JsService extends change_BaseService
 		$websiteId = website_WebsiteService::getInstance()->getDefaultWebsite()->getId();	
 		if ($websiteId <= 0) {$websiteId = 0;}
 		$protocol = website_WebsiteService::getInstance()->getDefaultWebsite()->getProtocol();
-		$pathPart = array('', 'cache', 'www', 'js', $protocol, $websiteId, $rc->getLang(), 0, $names);				
+		$pathPart = array('', 'cache', 'www', 'js', $protocol, $websiteId, RequestContext::getInstance()->getLang(), 0, $names);				
 		$inclusionSrc = LinkHelper::getRessourceLink(implode('/', $pathPart))->getUrl();
 		return '<script src="' . $inclusionSrc . '" type="text/javascript"></script>';
 	}
@@ -173,20 +164,11 @@ class website_JsService extends change_BaseService
 	 * @param boolean $compact
 	 * @return string
 	 */
-	public function executeInline($mimeContentType = null, $compact = false)
+	public function executeInline($mimeContentType = 'html', $compact = false)
 	{
-		$rc = RequestContext::getInstance();
-		if ($mimeContentType === null)
-		{
-			$mimeContentType = $rc->getMimeContentType();
-		}
-		else
-		{
-			$rc->setMimeContentType($mimeContentType);
-		}	
-		
 		$scriptRegistryOrdered = $this->getComputedRegisteredScripts();
-		$script = array();		
+		$script = array();	
+		if ($mimeContentType !== 'xul') {$mimeContentType = 'html';}
 		if ($mimeContentType == 'html')
 		{
 			$script[] = '<script type="text/javascript">';

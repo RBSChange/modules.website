@@ -73,8 +73,9 @@ class website_StyleService extends change_BaseService
 	 * @param website_CSSVariables $skin
 	 * @return string | null
 	 */
-	public function getStylePath($styleNames, $contentType = null, $skin = null)
+	public function getStylePath($styleNames, $contentType = 'html', $skin = null)
 	{
+		if ($contentType !== 'xul') {$contentType = 'html';}
 		if (!is_array($styleNames))
 		{
 			$fileSystemName = $this->getFileSystemName($styleNames, $contentType, $skin);
@@ -86,10 +87,6 @@ class website_StyleService extends change_BaseService
 		}
 
 		$rc = RequestContext::getInstance();
-		if ($contentType === null)
-		{
-			$contentType = $rc->getMimeContentType();
-		}
 		$engine = $this->getFullEngineName($contentType);
 		$skin = $this->normalizeSkin($skin);
 		
@@ -155,6 +152,7 @@ class website_StyleService extends change_BaseService
 		$globalFileSystemName = $this->getStylePath($styleNames, $contentType, $skin);
 		if ($globalFileSystemName !== null)
 		{
+			Framework::fatal(__METHOD__ . ' ' . $globalFileSystemName);
 			return LinkHelper::getRessourceLink(self::CACHE_LOCATION . basename($globalFileSystemName))->getUrl();
 		}
 		return null;
@@ -308,15 +306,14 @@ class website_StyleService extends change_BaseService
 	 * @param string $protocol
 	 * @return string
 	 */
-	private function buildFilePathName($style, $contentType = null, $skin = null, $protocol = null)
+	private function buildFilePathName($style, $contentType = 'html', $skin = null, $protocol = null)
 	{
 		$requestContext = RequestContext::getInstance();
-		if (is_null($contentType)) 
-		{ 
-			$contentType = $requestContext->getMimeContentType();
-		}
 		$lang = strtolower($requestContext->getLang());
+		if ($contentType !== 'xul') {$contentType = 'html';}
+		
 		$engine = $this->getFullEngineName($contentType);
+		
 		if ($contentType === 'xul')
 		{
 			$fileSystemName = $style . '.' . $engine. '.' . $lang . '.';	
