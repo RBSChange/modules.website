@@ -1,0 +1,6 @@
+{
+	"name": "rbschange/website",
+	"description": "RBS Change Website module",
+	"type": "rbschange-compatibility-module",
+	"license":"AGPL-3.0"
+}
