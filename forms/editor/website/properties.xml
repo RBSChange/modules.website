@@ -4,7 +4,7 @@
 		<field name="label" />
 		<field name="domain" />
 		<field name="localizebypath" />
-		<field name="allowedpagetemplate" allow="[modules_theme/pagetemplate]" />
+		<field name="allowedpagetemplate" moduleselector="theme" allow="[modules_theme_pagetemplate]" />
 		<field name="skin" />
 		<field name="description" />
 		<field name="group" />
