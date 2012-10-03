@@ -28,7 +28,7 @@ class commands_CompileHtaccess extends c_ChangescriptCommand
 	public function getEvents()
 	{
 		return array(
-			array('target' => 'compile-config'),
+			//array('target' => 'compile-config'),
 		);
 	}	
 
