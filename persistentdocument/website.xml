@@ -32,5 +32,5 @@
 		<child name="externalPages" type="modules_website/pageexternal" />
 		<child name="menus" type="modules_website/menu" />
 	</children>
-	<statuses default="PUBLICATED" />
+	<statuses default="PUBLISHED" />
 </document>

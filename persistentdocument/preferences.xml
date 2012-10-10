@@ -4,5 +4,5 @@
 		<property name="label" default-value="preferences" />
 		<property name="checkersrecipient" type="DocumentArray" document-type="modules_users/user" />
 	</properties>
-	<statuses default="PUBLICATED" />
+	<statuses default="PUBLISHED" />
 </document>

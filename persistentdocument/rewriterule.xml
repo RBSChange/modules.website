@@ -7,5 +7,5 @@
 		<property name="template" type="String" localized="true" />
 		<property name="definition" type="Lob" />
 	</properties>
-	<statuses default="PUBLICATED" />
+	<statuses default="PUBLISHED" />
 </document>

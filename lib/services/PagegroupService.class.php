@@ -148,16 +148,16 @@ class website_PagegroupService extends website_PageService
 
 				if ($oldPublicationStatus != $newPublicationStatus)
 				{
-					if ($newPublicationStatus == 'PUBLICATED')
+					if ($newPublicationStatus == 'PUBLISHED')
 					{
 						$this->dispatchPublicationStatusChanged($pagegroup, $oldPublicationStatus, 'persistentDocumentPublished', array("cause" => "update"));
 					} 
-					else if ($oldPublicationStatus == 'PUBLICATED')
+					else if ($oldPublicationStatus == 'PUBLISHED')
 					{
 						$this->dispatchPublicationStatusChanged($pagegroup, $oldPublicationStatus, 'persistentDocumentUnpublished', array("cause" => "update"));
 					}
 				} 
-				else if ($newPublicationStatus == 'PUBLICATED')
+				else if ($newPublicationStatus == 'PUBLISHED')
 				{
 					$this->synchronizeReferences($pagegroup);
 				}

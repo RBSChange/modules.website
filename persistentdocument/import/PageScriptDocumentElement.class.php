@@ -41,7 +41,7 @@ class website_PageScriptDocumentElement extends import_ScriptDocumentElement
 			$page->url = $properties['url'];
 		}
 		
-		if (in_array($page->getPublicationstatus(), array('ACTIVE', 'PUBLICATED', 'DEACTIVATED')))
+		if (in_array($page->getPublicationstatus(), array('ACTIVE', 'PUBLISHED', 'DEACTIVATED')))
 		{
 			if (!isset($properties['publicationstatus']))
 			{
