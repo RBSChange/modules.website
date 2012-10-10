@@ -1,13 +1,13 @@
 <?php
-class website_PagegroupPublicatedChooser extends change_BaseService
+class website_PagegroupPublishedChooser extends change_BaseService
 {
 	/**
-	 * @var website_PagegroupPublicatedChooser
+	 * @var website_PagegroupPublishedChooser
 	 */
 	private static $instance;
 
 	/**
-	 * @return website_PagegroupPublicatedChooser
+	 * @return website_PagegroupPublishedChooser
 	 */
 	public static function getInstance()
 	{

@@ -41,7 +41,7 @@ class website_PagegroupService extends website_PageService
 	 * @param website_persistentdocument_pagegroup $pagegroup
 	 * @param integer $versionId
 	 */
-	public function setCurrentVersion($pagegroup, $chooserName = 'publicated')
+	public function setCurrentVersion($pagegroup, $chooserName = 'published')
 	{
 		$requestContext = RequestContext::getInstance();
 		$className = 'website_Pagegroup' . ucfirst($chooserName) . 'Chooser';
@@ -106,7 +106,7 @@ class website_PagegroupService extends website_PageService
 	/**
 	 * @param website_persistentdocument_pagegroup $pagegroup
 	 * @param array<website_persistentdocument_pageversion> $versions
-	 * @param website_PagegroupPublicatedChooser $chooser
+	 * @param website_PagegroupPublishedChooser $chooser
 	 */
 	private function setCurrentVersionForLang($pagegroup, $versions, $chooser)
 	{
