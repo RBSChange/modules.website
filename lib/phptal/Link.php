@@ -121,7 +121,7 @@ class PHPTAL_Php_Attribute_CHANGE_Link extends PHPTAL_Php_Attribute
 			}
 			else
 			{
-				$websiteId = website_WebsiteService::getInstance()->getCurrentWebsite()->getId();
+				$websiteId = 'website_WebsiteService::getInstance()->getCurrentWebsite()->getId()';
 			}
 			$hrefCode = $this->_getHrefCode($websiteId, $lang, $parameters, $anchor, $forWebsiteId);
 		}
