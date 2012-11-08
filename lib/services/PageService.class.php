@@ -1581,7 +1581,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 					}
 				}
 			}
-			else
+			else if (!$pageDocument->getIsHomePage()) // The website's home page should never be added.
 			{
 				$breadcrumb->addElement($pageContext->getNavigationtitle());
 			}

@@ -13,7 +13,6 @@ class PHPTAL_Php_Attribute_CHANGE_link extends PHPTAL_Php_Attribute
 {
 	public function start()
 	{
-		Framework::fatal("######## LINK ########");
 		$parameters = array();
 		$lang = null;
 		$anchor = 'null';
