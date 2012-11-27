@@ -98,7 +98,7 @@
 				<parameter name="result" />
 				<body><![CDATA[
 					var panel = this.getPanel();
-					if (result.status = 'OK' && this.getRowCount() == 2)
+					if (result.status == 'OK' && this.getRowCount() == 2)
 					{
 						panel.documentEditor.executeBackToList();
 						return;
