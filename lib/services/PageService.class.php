@@ -1502,11 +1502,16 @@ class website_PageService extends f_persistentdocument_DocumentService
 		return $xulContent;
 	}
 
+	/**
+	 * @param string $blockType
+	 * @return string
+	 */
 	private function getBlockLabelFromBlockType($blockType)
 	{
 		try
 		{
-			return f_Locale::translateUI(block_BlockService::getInstance()->getBlockLabelFromBlockName($blockType));
+			$label = f_Locale::translateUI(block_BlockService::getInstance()->getBlockLabelFromBlockName($blockType));
+			return f_util_HtmlUtils::textToHtml($label);
 		}
 		catch (Exception $e)
 		{
