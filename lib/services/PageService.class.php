@@ -36,7 +36,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	protected function synchronizeReferences($page)
 	{
-		
 		if ($page instanceof website_persistentdocument_page)
 		{
 			$query = $this->getPersistentProvider()->createQuery('modules_website/pagereference')->add(Restrictions::eq('referenceofid', $page->getId()));
@@ -935,7 +934,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 * @var integer[]
 	 */
 	private $currentPageAncestorsIds = array();
-	
 	private $currentPageAncestors = array();
 	
 	/**
@@ -1002,7 +1000,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		return $this->currentPageAncestors;
 	}
-	
 	const CHANGE_PAGE_EDITOR_NS = "http://www.rbs.fr/change/1.0/schema";
 	const CHANGE_TEMPLATE_TYPE_HTML = "html";
 	const CHANGE_TEMPLATE_TYPE_XUL = "xul";
@@ -1103,7 +1100,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		return $doc;
 	}
-	
 	private function hasBlockInOtherLangs($page, $type, &$otherLangsBlocks)
 	{
 		$rq = RequestContext::getInstance();
@@ -1227,7 +1223,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		return $blocks;
 	}
-	
 	private function getBlockClassNameFromType($type)
 	{
 		$typeInfo = explode("_", $type);
@@ -1315,7 +1310,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		$query = $this->createQuery()->add(Restrictions::published())->add(Restrictions::eq('isorphan', true))->addOrder(Order::desc('document_modificationdate'))->setMaxResults(50);
 		return $query->find();
-	
 	}
 	
 	/**
@@ -1325,7 +1319,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 	{
 		$query = $this->createQuery()->add(Restrictions::published())->add(Restrictions::eq('isorphan', true))->addOrder(Order::desc('document_modificationdate'))->add(Restrictions::descendentOf($websiteId))->setMaxResults(50);
 		return $query->find();
-	
 	}
 	
 	/**
@@ -1336,7 +1329,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$query = $this->createQuery()->add(Restrictions::published())->add(Restrictions::eq('isorphan', true))->addOrder(Order::desc('document_creationdate'))->setProjection(Projections::rowCount('count'));
 		$result = $query->find();
 		return $result[0]['count'];
-	
 	}
 	
 	/**
@@ -1347,7 +1339,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 		$query = $this->createQuery()->add(Restrictions::published())->add(Restrictions::eq('isorphan', true))->addOrder(Order::desc('document_creationdate'))->add(Restrictions::descendentOf($websiteId))->setProjection(Projections::rowCount('count'));
 		$result = $query->find();
 		return $result[0]['count'];
-	
 	}
 	
 	/**
@@ -1458,21 +1449,23 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		
 		$contentData = array(
-			'pagecomposition' => LocaleService::getInstance()->trans('m.website.bo.doceditor.current-page-composition', array('ucf'), array(
-				"blockCount" => $blockCount, "richtextCount" => $richtextCount)));
+			'pagecomposition' => LocaleService::getInstance()->trans('m.website.bo.doceditor.current-page-composition', array(
+				'ucf'), array("blockCount" => $blockCount, "richtextCount" => $richtextCount)));
 		
 		if ($wordCount == 0)
 		{
-			$contentData['freecontent'] = LocaleService::getInstance()->trans('m.website.bo.doceditor.current-word-count-empty', array('ucf'));
+			$contentData['freecontent'] = LocaleService::getInstance()->trans('m.website.bo.doceditor.current-word-count-empty', array(
+				'ucf'));
 		}
 		else if ($wordCount == 1)
 		{
-			$contentData['freecontent'] = LocaleService::getInstance()->trans('m.website.bo.doceditor.current-word-count-singular', array('ucf'));
+			$contentData['freecontent'] = LocaleService::getInstance()->trans('m.website.bo.doceditor.current-word-count-singular', array(
+				'ucf'));
 		}
 		else
 		{
-			$contentData['freecontent'] = LocaleService::getInstance()->trans('m.website.bo.doceditor.current-word-count', array('ucf'), array(
-				'wordCount' => $wordCount));
+			$contentData['freecontent'] = LocaleService::getInstance()->trans('m.website.bo.doceditor.current-word-count', array(
+				'ucf'), array('wordCount' => $wordCount));
 		}
 		$data['content'] = $contentData;
 		return $data;
@@ -1586,11 +1579,16 @@ class website_PageService extends f_persistentdocument_DocumentService
 		return $xulContent;
 	}
 	
+	/**
+	 * @param string $blockType
+	 * @return string
+	 */
 	private function getBlockLabelFromBlockType($blockType)
 	{
 		try
 		{
-			return LocaleService::getInstance()->trans(block_BlockService::getInstance()->getBlockLabelFromBlockName($blockType));
+			$label = f_Locale::translateUI(block_BlockService::getInstance()->getBlockLabelFromBlockName($blockType));
+			return f_util_HtmlUtils::textToHtml($label);
 		}
 		catch (Exception $e)
 		{
@@ -1720,9 +1718,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 			return '<div xmlns="http://www.w3.org/1999/xhtml" class="' . $class . '"><strong style="color:red;">' . $this->getBlockLabelFromBlockType($block['type']) . ' : Invalid XML</strong></div>';
 		}
 	}
-	
 	private $benchTimes = null;
-	
 	private function addBenchTime($key)
 	{
 		if ($this->benchTimes !== null)
@@ -1818,7 +1814,7 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			$pageContext->addBlockMeta('page.label', $page->getLabel());
 			$pageContext->addBlockMeta('page.navigationLabel', $page->getNavigationLabel());
-				
+			
 			$d = DocumentHelper::getDocumentInstanceIfExists($pageContext->getDetailDocumentId());
 			$pageContext->addBlockMeta('detail.navigationLabel', ($d) ? $d->getNavigationLabel() : '');
 			$ws = website_WebsiteService::getInstance()->getCurrentWebsite();
@@ -1954,7 +1950,6 @@ class website_PageService extends f_persistentdocument_DocumentService
 		}
 		return $result;
 	}
-	
 	public function buildBlockInfo($type, $parameters = array(), $lang = null, $blockwidth = null, $editable = true, $DomNode = null)
 	{
 		$blockInfos = array('type' => $type);
@@ -2144,9 +2139,10 @@ class website_PageService extends f_persistentdocument_DocumentService
 	 */
 	public function getReplacementsForTweet($document, $websiteId)
 	{
-		$label = array('name' => 'label', 'label' => LocaleService::getInstance()->trans('m.website.document.page.label', array('ucf')), 
-			'maxLength' => 80);
-		$shortUrl = array('name' => 'shortUrl', 'label' => LocaleService::getInstance()->trans('m.twitterconnect.bo.general.short-url', array('ucf')), 
+		$label = array('name' => 'label', 
+			'label' => LocaleService::getInstance()->trans('m.website.document.page.label', array('ucf')), 'maxLength' => 80);
+		$shortUrl = array('name' => 'shortUrl', 
+			'label' => LocaleService::getInstance()->trans('m.twitterconnect.bo.general.short-url', array('ucf')), 
 			'maxLength' => 30);
 		if ($document !== null)
 		{
@@ -2214,11 +2210,16 @@ class website_PageService extends f_persistentdocument_DocumentService
 			$jsonMeta[$zone] = array();
 			if ($zone === 'title')
 			{
-				$jsonMeta[$zone][] = array("value" => '{page.label}', "label" => $ls->trans("m.website.bo.blocks.metas-page-label"));
-				$jsonMeta[$zone][] = array("value" => '{page.navigationLabel}', "label" => $ls->trans("m.website.bo.blocks.metas-page-navigationlabel"));
-				$jsonMeta[$zone][] = array("value" => '{detail.navigationLabel}', "label" => $ls->trans("m.website.bo.blocks.metas-detail-navigationlabel"));
-				$jsonMeta[$zone][] = array("value" => '{website.label}', "label" => $ls->trans("m.website.bo.blocks.metas-website-label"));
-				$jsonMeta[$zone][] = array("value" => '{topic.label}', "label" => $ls->trans("m.website.bo.blocks.metas-topic-label"));
+				$jsonMeta[$zone][] = array("value" => '{page.label}', 
+					"label" => $ls->trans("m.website.bo.blocks.metas-page-label"));
+				$jsonMeta[$zone][] = array("value" => '{page.navigationLabel}', 
+					"label" => $ls->trans("m.website.bo.blocks.metas-page-navigationlabel"));
+				$jsonMeta[$zone][] = array("value" => '{detail.navigationLabel}', 
+					"label" => $ls->trans("m.website.bo.blocks.metas-detail-navigationlabel"));
+				$jsonMeta[$zone][] = array("value" => '{website.label}', 
+					"label" => $ls->trans("m.website.bo.blocks.metas-website-label"));
+				$jsonMeta[$zone][] = array("value" => '{topic.label}', 
+					"label" => $ls->trans("m.website.bo.blocks.metas-topic-label"));
 			}
 			foreach ($metas as $meta)
 			{
