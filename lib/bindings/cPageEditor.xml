@@ -83,7 +83,7 @@
 			
 			<method name="execute_newversion">
 				<parameter name="rowNode" />
-				<parameter name="rowData" />			
+				<parameter name="rowData" />
 				<body><![CDATA[
 					if (this.disabled) {return;}
 					if (confirm("${trans:m.website.bo.doceditor.page-version-list.confirm-duplicate-version,ucf,js}"))
@@ -92,12 +92,12 @@
 					}
 				]]></body>
 			</method>
-						
+			
 			<method name="onDeleted">
 				<parameter name="result" />
 				<body><![CDATA[
 					var panel = this.getPanel();
-					if (result.status = 'OK' && this.getRowCount() == 2)
+					if (result.status == 'OK' && this.getRowCount() == 2)
 					{
 						panel.documentEditor.executeBackToList();
 						return;
@@ -107,21 +107,21 @@
 					panel.documentEditor.executeServerAction('properties', 'Initialize');
 				]]></body>
 			</method>	
-				
+			
 			<method name="setCellValue">
 				<parameter name="cell" />
 				<parameter name="name" />
 				<parameter name="dataRow" />
 				<body><![CDATA[	
-					var value = dataRow[name];			
+					var value = dataRow[name];
 					switch (name)
 					{
-						case 'startpublicationdate': 
+						case 'startpublicationdate':
 							value = dataRow['uistartpublicationdate'];
 							break;
-						case 'endpublicationdate': 
+						case 'endpublicationdate':
 							value = dataRow['uiendpublicationdate'];
-							break;							
+							break;
 					}
 					
 					if ('value' in cell)
@@ -133,7 +133,7 @@
 						cell.setAttribute('value', value);
 					}
 				]]></body>
-			</method>						
+			</method>
 		</implementation>
 			
 		<content>
