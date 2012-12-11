@@ -83,7 +83,10 @@ class website_UrlRewritingService extends website_BaseRewritingService
 		if (empty($str)) {return '';};
 		$str = f_util_StringUtils::strip_accents($str);
 		$str = preg_replace(array('/[^a-zA-Z0-9_\-]+/', '/\-+/'), array('-', '-'), $str);
-		$str = trim($str, '-');
+		if ($str != '-')
+		{
+			$str = trim($str, '-');
+		}
 		return $str;
 	}
 	
