@@ -1902,7 +1902,7 @@ jQuery(document).ready(function() {
 	// TODO: includeAttributes by type !
 	private static $includeAttributes = array("readonly" => true , "rows" => true , "cols" => true , "size" => true , "maxlength" => true , "minlength" => true , "value" => true , "label" => true , "labeli18n" => true, "checked" => true , "selected" => true , "for" => true , "type" => true , "name" => true , "id" => true , "class" => true , "hidden" => true , "disabled" => true , "onclick" => true, "style" => true, "onchange" => true, "multiple" => true, "title" => true, 
 		// New HTML5 attributes.
-		"autocomplete" => true, "autocorrect" => true, "autocapitalize" => true);
+		"autocomplete" => true, "autocorrect" => true, "autocapitalize" => true, "autofocus" => true, "list" => true, "contextmenu" => true, "pattern" => true, "placeholder" => true, "step" => true, "wrap" => true);
 	
 	/**
 	 * @param Array $params
