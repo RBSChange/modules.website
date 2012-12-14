@@ -979,7 +979,7 @@ class website_UrlRewritingService extends change_BaseService
 		{
 			foreach ($website->getI18nInfo()->getLangs() as $lang) 
 			{
-				$rc->setLang($lang);
+				$rc->beginI18nWork($lang);
 				$key = $website->getId(). '/' . $lang;
 				if (!isset($result['definedrules'][$key]))
 				{
@@ -1015,6 +1015,7 @@ class website_UrlRewritingService extends change_BaseService
 						}
 					}	
 				}
+				$rc->endI18nWork();
 			}
 		}
 		$result['rules'] = $rules;
