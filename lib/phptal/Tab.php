@@ -1,23 +1,28 @@
 <?php
-//   <a change:tab="name tab1" labeli18n="m.mymodule...tab1-title">bla</a>
 /**
- * @package phptal.php.attribute
+ * @deprecated
  */
 class PHPTAL_Php_Attribute_CHANGE_tab extends ChangeTalAttribute
 {
+	/**
+	 * @deprecated
+	 */
 	public function start()
 	{
 		$this->tag->headFootDisabled = true;
 		parent::start();
 	}
 	
+	/**
+	 * @deprecated
+	 */
 	protected function getDefaultValues()
 	{
 		return array("doTitle" => "true", "titleLevel" => "3", "genTitleClass" => "true");
 	}
 
 	/**
-	 * @see ChangeTalAttribute::end()
+	 * @deprecated
 	 */
 	public function end()
 	{
@@ -25,8 +30,7 @@ class PHPTAL_Php_Attribute_CHANGE_tab extends ChangeTalAttribute
 	}
 
 	/**
-	 * @param array $params
-	 * @return String
+	 * @deprecated
 	 */
 	public static function renderTab($params)
 	{
@@ -64,13 +68,16 @@ class PHPTAL_Php_Attribute_CHANGE_tab extends ChangeTalAttribute
 		return $html;
 	}
 	
+	/**
+	 * @deprecated
+	 */
 	static function renderEndTag()
 	{
 		return "</div>";
 	}
 
 	/**
-	 * @return Boolean
+	 * @deprecated
 	 */
 	protected function evaluateAll()
 	{

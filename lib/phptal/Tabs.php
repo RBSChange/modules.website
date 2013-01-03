@@ -1,8 +1,6 @@
 <?php
-// change:actionlink()
-//   <a change:actionlink="module 'news'; id news/getId">bla</a>
 /**
- * @package phptal.php.attribute
+ * @deprecated
  */
 class PHPTAL_Php_Attribute_CHANGE_tabs extends ChangeTalAttribute
 {
@@ -11,6 +9,9 @@ class PHPTAL_Php_Attribute_CHANGE_tabs extends ChangeTalAttribute
 	private static $tabs;
 	private $parametersString;
 	
+	/**
+	 * @deprecated
+	 */
 	public function start()
 	{
 		$this->tag->headFootDisabled = true;
@@ -20,8 +21,7 @@ class PHPTAL_Php_Attribute_CHANGE_tabs extends ChangeTalAttribute
 	}
 	
 	/**
-	 * @param array<String, mixed> $params
-	 * @param $ctx
+	 * @deprecated
 	 */
 	static function startTabs($params, $ctx)
 	{
@@ -34,27 +34,31 @@ class PHPTAL_Php_Attribute_CHANGE_tabs extends ChangeTalAttribute
 	}
 	
 	/**
-	 * @param String $id
-	 * @param String $label
-	 * @return void
+	 * @deprecated
 	 */
 	static function addTab($id, $label)
 	{
 		self::$tabs[$id] = $label;
 	}
 	
+	/**
+	 * @deprecated
+	 */
 	public static function getCurrentId()
 	{
 		return self::$id;
 	}
 	
+	/**
+	 * @deprecated
+	 */
 	protected function getDefaultValues()
 	{
 		return array("collapsible" => "false");
 	}
 
 	/**
-	 * @see ChangeTalAttribute::end()
+	 * @deprecated
 	 */
 	public function end()
 	{
@@ -65,8 +69,7 @@ class PHPTAL_Php_Attribute_CHANGE_tabs extends ChangeTalAttribute
 	}
 
 	/**
-	 * @param array $params
-	 * @return String
+	 * @deprecated
 	 */
 	public static function renderTabs($params)
 	{
@@ -106,6 +109,9 @@ class PHPTAL_Php_Attribute_CHANGE_tabs extends ChangeTalAttribute
 		return $html;
 	}
 	
+	/**
+	 * @deprecated
+	 */
 	static function renderEndTag()
 	{
 		// TODO: nested tabs
@@ -115,7 +121,7 @@ class PHPTAL_Php_Attribute_CHANGE_tabs extends ChangeTalAttribute
 	}
 
 	/**
-	 * @return Boolean
+	 * @deprecated
 	 */
 	protected function evaluateAll()
 	{
