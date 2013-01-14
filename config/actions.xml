@@ -1,12 +1,26 @@
 <?xml version="1.0"?>
 <actions>
-
 	<action name="onModuleInit">
 		<body><![CDATA[
 			this.executeJSON("CheckModuleInit", {cmpref: this.mRootFolderId, lang:this.getContextLang()});
+			
+			var base = this.openDocumentEditor;
+			var me = this;
+			var pageDeck = this.getElementByAnonId('pageDeck');
+			this.openDocumentEditor = function() {
+				if (pageDeck.selectedIndex != 0)
+				{
+					if (!confirm("${transui:m.uixul.bo.general.form.confirmloosemodifications,ucf,js}"))
+					{
+						return null;
+					}
+					pageDeck.selectedIndex = 0;
+				}
+				return base.apply(me, arguments);
+			}
 		]]></body>
 	</action>
-	
+
 	<action name="onCheckModuleInitSuccess">
 		<parameter name="result" />
 		<body><![CDATA[
@@ -34,7 +48,7 @@
 	</action>
 
 	<action name="setAsIndexPage">
-		<parameter name="listWidget"/>
+		<parameter name="listWidget" />
 		<body><![CDATA[
 			var id = listWidget.getSelectedIds()[0];
 			var lang = this.getContextLang();
@@ -42,14 +56,14 @@
 		]]></body>
 	</action>
 	<action name="setAsIndexPageIsActive">
-		<parameter name="itemData"/>
+		<parameter name="itemData" />
 		<body><![CDATA[
 			return itemData.isIndexPage !== 'isIndexPage' && itemData.isHomePage !== 'isHomePage';
 		]]></body>
 	</action>
-	
+
 	<action name="setAsIndexPageRef">
-		<parameter name="listWidget"/>
+		<parameter name="listWidget" />
 		<body><![CDATA[
 			var id = listWidget.getSelectedIds()[0];
 			var lang = this.getContextLang();
@@ -57,15 +71,15 @@
 		]]></body>
 	</action>
 	<action name="setAsIndexPageRefIsActive">
-		<parameter name="itemData"/>
+		<parameter name="itemData" />
 		<body><![CDATA[
 			return itemData.hasPageRef;
 		]]></body>
-	</action>	
-	
-   
+	</action>
+
+
 	<action name="removeIndexPage">
-		<parameter name="listWidget"/>
+		<parameter name="listWidget" />
 		<body><![CDATA[
 			var id = listWidget.getSelectedIds()[0];
 			var lang = this.getContextLang();
@@ -73,14 +87,14 @@
 		]]></body>
 	</action>
 	<action name="removeIndexPageIsActive">
-		<parameter name="itemData"/>
+		<parameter name="itemData" />
 		<body><![CDATA[
 			return itemData.isIndexPage === 'isIndexPage';
 		]]></body>
 	</action>
-  
+
 	<action name="setAsHomePage">
-		<parameter name="listWidget"/>
+		<parameter name="listWidget" />
 		<body><![CDATA[
 			var id = listWidget.getSelectedIds()[0];
 			var lang = this.getContextLang();
@@ -91,90 +105,90 @@
 		]]></body>
 	</action>
 	<action name="setAsHomePageIsActive">
-		<parameter name="itemData"/>
+		<parameter name="itemData" />
 		<body><![CDATA[
 			return itemData.isHomePage !== 'isHomePage';
 		]]></body>
 	</action>
-  
-   
+
+
 	<action name="createPage">
-		<parameter name="listWidget"/>
+		<parameter name="listWidget" />
 		<body><![CDATA[
 			this.createDocumentEditor('modules_website_page', listWidget.getSelectedItems()[0].id);
 		]]></body>
 	</action>
-  
+
 	<action name="createExternalPage">
-		<parameter name="listWidget"/>
+		<parameter name="listWidget" />
 		<body><![CDATA[
 			this.createDocumentEditor('modules_website_pageexternal', listWidget.getSelectedItems()[0].id);
 		]]></body>
 	</action>
-  
+
 	<action name="createTopic">
-		<parameter name="listWidget"/>
+		<parameter name="listWidget" />
 		<body><![CDATA[
 			this.createDocumentEditor('modules_website_topic', listWidget.getSelectedItems()[0].id);
 		]]></body>
 	</action>
-    
+
 	<action name="createWebsite">
-		<parameter name="listWidget"/>
+		<parameter name="listWidget" />
 		<body><![CDATA[
 			this.createDocumentEditor('modules_website_website', listWidget.getSelectedItems()[0].id);
 		]]></body>
 	</action>
-  
+
 	<action name="createEmptyPageVersionFromPage">
-		<parameter name="listWidget"/>
+		<parameter name="listWidget" />
 		<body><![CDATA[
 			var editor = this.getDocumentEditor('modules_website_pageversion');
 			editor.removeAttribute('duplicate');
 			this.createDocumentEditor('modules_website_pageversion', listWidget.getSelectedItems()[0].id);
 		]]></body>
 	</action>
-  
+
 	<action name="createPageVersionFromPage">
-		<parameter name="listWidget"/>
+		<parameter name="listWidget" />
 		<body><![CDATA[
 			var editor = this.getDocumentEditor('modules_website_pageversion');
 			editor.setAttribute('duplicate', 'true');
 			this.createDocumentEditor('modules_website_pageversion', listWidget.getSelectedItems()[0].id);
 		]]></body>
 	</action>
-  
+
 	<action name="createMenu">
-		<parameter name="listWidget"/>
+		<parameter name="listWidget" />
 		<body><![CDATA[
 			this.createDocumentEditor('modules_website_menu', listWidget.getSelectedItems()[0].id);
 		]]></body>
 	</action>
-  
+
 	<action name="createMenuitemfunction">
-		<parameter name="listWidget"/>
+		<parameter name="listWidget" />
 		<body><![CDATA[
 			this.createDocumentEditor('modules_website_menuitemfunction', listWidget.getSelectedItems()[0].id);
 		]]></body>
 	</action>
-  
+
 	<action name="createMenuitemtext">
-		<parameter name="listWidget"/>
+		<parameter name="listWidget" />
 		<body><![CDATA[
 			this.createDocumentEditor('modules_website_menuitemtext', listWidget.getSelectedItems()[0].id);
 		]]></body>
 	</action>
-	
+
 	<action name="createMenuitemdocument">
-		<parameter name="listWidget"/>
+		<parameter name="listWidget" />
 		<body><![CDATA[
 			this.createDocumentEditor('modules_website_menuitemdocument', listWidget.getSelectedItems()[0].id);
 		]]></body>
 	</action>
-  
+
 	<action name="addToMenu">
-		<parameter name="listWidget"/>
-		<parameter name="dropInfos"/>
+		<parameter name="listWidget" />
+		<parameter name="dropInfos" />
 		<body><![CDATA[
 			var lang = this.getContextLang();
 			wCore.debug('addToMenu' + wCore.dump(dropInfos));
@@ -183,14 +197,14 @@
 		]]></body>
 	</action>
 	<action name="onAddToMenuSuccess">
-		<parameter name="result"/>
+		<parameter name="result" />
 		<body><![CDATA[
 			getController().alert(result.contents.message);
 		]]></body>
-	</action> 
- 
+	</action>
+
 	<action name="openPage">
-		<parameter name="listWidget"/>
+		<parameter name="listWidget" />
 		<body><![CDATA[
 			var document = listWidget.getSelectedItems()[0];
 			var href = wCore.buildeServerUrl('website', 'BoDisplay', {cmpref:document.id, lang:this.getContextLang()});
@@ -198,14 +212,14 @@
 		]]></body>
 	</action>
 	<action name="openPageIsActive">
-		<parameter name="itemData"/>
+		<parameter name="itemData" />
 		<body><![CDATA[
 			return itemData.langAvailable;
 		]]></body>
-	</action> 
-    
+	</action>
+
 	<action name="editPageContent">
-		<parameter name="listWidget"/>
+		<parameter name="listWidget" />
 		<body><![CDATA[
 			var document = listWidget.getSelectedItems()[0];
 			this.getModuleHeader().setEditedItem(document);
@@ -214,15 +228,15 @@
 		]]></body>
 	</action>
 	<action name="editPageContentIsActive">
-		<parameter name="itemData"/>
+		<parameter name="itemData" />
 		<body><![CDATA[
 			return itemData.langAvailable;
 		]]></body>
 	</action>
-	
+
 	<action name="editPageContentFromDocument">
-		<parameter name="documentId"/>
-		<parameter name="lang"/>
+		<parameter name="documentId" />
+		<parameter name="lang" />
 		<body><![CDATA[			
 			var params = {cmpref: documentId, lang: lang};
 			var editUrl =  wToolkit.buildXulURL('website', 'EditContent', params, true);
@@ -230,7 +244,7 @@
 			var pageDeck = this.getElementByAnonId("pageDeck");
 			pageDeck.removeAttribute('editorLoaded');
 
-			var designFrame = this.getElementByAnonId("designFrame");    			
+			var designFrame = this.getElementByAnonId("designFrame");
 			designFrame.setAttribute("src", editUrl);
 			pageDeck.selectedIndex = 3;
 
@@ -239,10 +253,10 @@
 				designFrame.setAttribute("src", "about:blank"); 
 				alert("&modules.uixul.bo.general.PageEditorLoadError;");  
 				pageDeck.selectedIndex = 0;
-				}, 30000);			
+				}, 30000);
 		]]></body>
 	</action>
-	  
+
 	<action name="refreshFromEditor">
 		<body><![CDATA[
 			this.getElementByAnonId("pageDeck").setAttribute('selectedIndex', 0);
@@ -259,37 +273,37 @@
 			   wincontent.wrappedJSObject.backToContentEditing();
 		]]></body>
 	</action>
-  
+
 	<action name="removeFromMenu">
-		<parameter name="listWidget"/>
+		<parameter name="listWidget" />
 		<body><![CDATA[
 			var document = listWidget.getSelectedItems()[0];
 			this.executeJSON("RemoveFromMenu", {cmpref: document.id});
 		]]></body>
 	</action>
-	
+
 	<action name="onRemoveFromMenuSuccess">
-		<parameter name="result"/>
+		<parameter name="result" />
 		<body><![CDATA[
 			alert('&modules.website.bo.actions.Remove-from-menu-Success; : ' + result.contents.deleteCount);
 			this.refresh();
 		]]></body>
 	</action>
-     
+
 	<action name="orderMenuItems">
-		<parameter name="listWidget"/>
+		<parameter name="listWidget" />
 		<body><![CDATA[
 			this.openOrderChildrenPanel(listWidget, 'menuItem');
 		]]></body>
 	</action>
-  
+
 	<action name="openTreeNodeOrder">
 		<parameter name="listWidget" />
 		<body><![CDATA[
 			this.openOrderChildrenPanel(listWidget, null, ['modules_generic/folder', 'modules_website/website', 'modules_website/topic', 'modules_website/page', 'modules_website/pageexternal']);
 		]]></body>
 	</action>
-	
+
 	<action name="initDefaultStruct">
 		<parameter name="listWidget" />
 		<body><![CDATA[
@@ -308,10 +322,10 @@
 			}
 		]]></body>
 	</action>
-	
-	<!-- @deprecated (will be removed in 4.0) -->	
+
+	<!-- @deprecated (will be removed in 4.0) -->
 	<action name="checkLink">
-		<parameter name="listWidget"/>
+		<parameter name="listWidget" />
 		<body><![CDATA[
 			var selectedIds = listWidget.getSelectedIds();
 			var lang = this.getContextLang();
