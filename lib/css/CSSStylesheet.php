@@ -204,10 +204,17 @@ class website_CSSStylesheet
 			}
 			// handle @-rules
 			// Rules like @xxx ...; //@charset, @namespace, @phonetic-alphabet
-			// -> These @-rules are not very used, so we choose to ignore them here: using these rules will cause an error!
+			// -> These @-rules are not often used and have specific position constraints in the stylesheet, so we choose to ignore them here.
 			else if ($cssText[$i] === '@' && $inSelector && !$inComment && (substr($cssText, $i, 8) === '@charset' || substr($cssText, $i, 10) === '@namespace' || substr($cssText, $i, 18) === '@phonetic-alphabet'))
 			{
-				throw new Exception('@charset, @namespace and @phonetic-alphabet are not handeled.');
+				$idx = strpos($cssText, ";", $i);
+				if (!$idx)
+				{
+					throw new Exception('Invalid directive @charset, @namespace and @phonetic-alphabet syntax');
+				}
+				$directive = substr($cssText, $i, $idx - $i);
+				Framework::warn(__METHOD__ . ' @charset, @namespace and @phonetic-alphabet are not handeled. The following rule was removed: ' . $directive . ';');
+				$i = $idx;
 			}
 			// Rules like @xxx { ... }; //@page, @font-face
 			// -> These @-rules work like selectors, so nothing specific to do.
