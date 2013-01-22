@@ -154,6 +154,7 @@ class website_SystemtopicService extends website_TopicService
 		$reference = $document->getReference();
 		if ($reference === null)
 		{
+			$this->setActivePublicationStatusInfo($document, '&modules.website.document.systemtopic.publication.reference-not-found;', array('referenceId' => $document->getReferenceId()));
 			return false;
 		}
 		$ds = $reference->getDocumentService();
