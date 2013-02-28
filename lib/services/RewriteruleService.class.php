@@ -317,27 +317,36 @@ class website_RewriteruleService extends f_persistentdocument_DocumentService
 		{
 			$vars = array();
 			$ruleData = $document->getRuleData();
-			foreach ($ruleData['parameters'] as $name => $value) 
+			foreach ($ruleData['parameters'] as $name => $value)
 			{
 				$vars[$name] = array('label' => $name, 'value' => '${' . $name . '}');
 			}
-			
-			$model = f_persistentdocument_PersistentDocumentModel::getInstanceFromDocumentModelName($document->getModelName());	 
-			foreach (array_reverse($model->getEditablePropertiesInfos())  as $property) 
-			{
-				if ($property instanceof PropertyInfo) 
-				{
-					$name = $property->getName();
-					switch ($property->getType()) 
-					{
-						case f_persistentdocument_PersistentDocument::PROPERTYTYPE_STRING:
-						case f_persistentdocument_PersistentDocument::PROPERTYTYPE_INTEGER:
-							$vars[$name] = array('label' => $name, 'value' => '${' . $name . '}');
-							break;
-					}
-				}
-			}
+			$vars = array_merge($vars, $this->getTemplateVarsByModelName($document->getModelName()));
 			$datas['templatevars'] = array_values($vars);
 		}
+	}
+	
+	/**
+	 * @param website_persistentdocument_rewriterule $document
+	 * @return array
+	 */
+	public function getTemplateVarsByModelName($modelName)
+	{
+		$model = f_persistentdocument_PersistentDocumentModel::getInstanceFromDocumentModelName($modelName);
+		foreach (array_reverse($model->getEditablePropertiesInfos())  as $property)
+		{
+			if ($property instanceof PropertyInfo)
+			{
+				$name = $property->getName();
+				switch ($property->getType())
+				{
+					case f_persistentdocument_PersistentDocument::PROPERTYTYPE_STRING:
+					case f_persistentdocument_PersistentDocument::PROPERTYTYPE_INTEGER:
+						$vars[$name] = array('label' => $name, 'value' => '${' . $name . '}');
+						break;
+				}
+			}
+		}
+		return $vars;
 	}
 }
