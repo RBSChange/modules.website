@@ -31,7 +31,7 @@ class website_ListBlocktemplatesService extends BaseService implements list_List
 	 * @see list_persistentdocument_dynamiclist::getItems()
 	 * @return list_Item[]
 	 */
-	public final function getItems()
+	public function getItems()
 	{
 		$request = Controller::getInstance()->getContext()->getRequest();
 		if (!$request->hasParameter('blockModule'))
@@ -83,7 +83,7 @@ class website_ListBlocktemplatesService extends BaseService implements list_List
 				/* @var $theme theme_persistentdocument_theme */
 				$themeCode = $theme->getCodename();
 				$themesByCode[$themeCode] = $theme;
-				$paths = FileResolver::getInstance()->setPackageName('themes_' . $themeCode)->getPaths('modules'. DIRECTORY_SEPARATOR . $blockModule . DIRECTORY_SEPARATOR . 'templates');
+				$paths = FileResolver::getInstance()->setPackageName('themes_' . $themeCode)->getPaths('modules' . DIRECTORY_SEPARATOR . $blockModule . DIRECTORY_SEPARATOR . 'templates');
 				if (is_array($paths))
 				{
 					foreach ($paths as $path)
@@ -117,7 +117,7 @@ class website_ListBlocktemplatesService extends BaseService implements list_List
 	
 	/**
 	 * @see list_persistentdocument_dynamiclist::getListService()
-	 * @param $parameters array       	
+	 * @param $parameters array
 	 */
 	public function setParameters($parameters)
 	{

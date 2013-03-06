@@ -26,7 +26,7 @@ class website_ListMenutagsService extends BaseService implements list_ListItemsS
 	 * @see list_persistentdocument_dynamiclist::getItems()
 	 * @return list_Item[]
 	 */
-	public final function getItems()
+	public function getItems()
 	{
 		$items = array();
 		foreach (TagService::getInstance()->getAvailableTagsInfoByModel('modules_website/menu') as $tag => $tagInfos)
