@@ -2344,88 +2344,147 @@ jQuery(document).ready(function() {
 		return $result;
 	}
 	
-	
 	public static function renderDateCombo($params, $ctx)
 	{
 		self::addDatePickerScript();
 		$ls = LocaleService::getInstance();
-
-		$months = array("1 (".$ls->transFO("f.date.date.abbr.january").")",
-						"2 (".$ls->transFO("f.date.date.abbr.february").")",
-						"3 (".$ls->transFO("f.date.date.abbr.march").")",
-						"4 (".$ls->transFO("f.date.date.abbr.april").")",
-						"5 (".$ls->transFO("f.date.date.abbr.may").")",
-						"6 (".$ls->transFO("f.date.date.abbr.june").")",
-						"7 (".$ls->transFO("f.date.date.abbr.july").")",
-						"8 (".$ls->transFO("f.date.date.abbr.august").")",
-						"9 (".$ls->transFO("f.date.date.abbr.september").")",
-						"10 (".$ls->transFO("f.date.date.abbr.october").")",
-						"11 (".$ls->transFO("f.date.date.abbr.november").")",
-						"12 (".$ls->transFO("f.date.date.abbr.december").")"
-						);
-
-		$thisYear = date_Calendar::now()->getYear();
-		$years = array();
-		for ($i = $thisYear; $i >= 1900; $i--)
-		{
-			$years[$i] = $i;
-		}
-		
-		$days = array();
-		for ($i = 1; $i <= 31; $i++)
-		{
-			$days[$i] = $i;
-		}
 		
 		self::buildNameAndId($params);
 		$baseId = str_replace('.', '', $params['id']);
 		$params['id'] = $baseId;
+		$mode = isset($params['mode']) ? $params['mode'] : 'date'; // 'date', 'datetime' or 'time'.
+		$showFields = '';
+		
+		// Calculate format.
+		switch ($mode)
+		{
+			case 'time' :
+				$format = $ls->transFO('m.website.frontoffice.date.format-timecombo-js');
+				$humanFormat = $ls->transFO('m.website.frontoffice.date.format-timecombo-human');
+				break;
+			case 'datetime' :
+				$format = $ls->transFO('m.website.frontoffice.date.format-datetimecombo-js');
+				$humanFormat = $ls->transFO('m.website.frontoffice.date.format-datetimecombo-human');
+				break;
+			case 'date' :
+			default :
+				$mode = 'date';
+				$format = $ls->transFO('m.website.frontoffice.date.format-datecombo-js');
+				$humanFormat = $ls->transFO('m.website.frontoffice.date.format-datecombo-human');
+				break;
+		}
+		
+		// Generate fields for date.
+		$years = array();
+		$months = array();
+		$days = array();
+		if ($mode == 'date' || $mode == 'datetime')
+		{
+			$thisYear = date_Calendar::now()->getYear();
+			for ($i = $thisYear; $i >= 1900; $i--)
+			{
+				$years[$i] = $i;
+			}
+			
+			$months = array(
+				'1 ('.$ls->transFO('f.date.date.abbr.january').')',
+				'2 ('.$ls->transFO('f.date.date.abbr.february').')',
+				'3 ('.$ls->transFO('f.date.date.abbr.march').')',
+				'4 ('.$ls->transFO('f.date.date.abbr.april').')',
+				'5 ('.$ls->transFO('f.date.date.abbr.may').')',
+				'6 ('.$ls->transFO('f.date.date.abbr.june').')',
+				'7 ('.$ls->transFO('f.date.date.abbr.july').')',
+				'8 ('.$ls->transFO('f.date.date.abbr.august').')',
+				'9 ('.$ls->transFO('f.date.date.abbr.september').')',
+				'10 ('.$ls->transFO('f.date.date.abbr.october').')',
+				'11 ('.$ls->transFO('f.date.date.abbr.november').')',
+				'12 ('.$ls->transFO('f.date.date.abbr.december').')'
+			);
+			
+			for ($i = 1; $i <= 31; $i++)
+			{
+				$days[$i] = $i;
+			}
+			
+			$showFields .= PHP_EOL . '					jQuery("#'. $baseId . '_year").show();';
+			$showFields .= PHP_EOL . '					jQuery("#'. $baseId . '_month").show();';
+			$showFields .= PHP_EOL . '					jQuery("#'. $baseId . '_day").show();';
+		}
+		
+		// Generate fields for time.
+		$hours = array();
+		$minutes = array();
+		if ($mode == 'time' || $mode == 'datetime')
+		{
+			for ($i = 0; $i <= 23; $i++)
+			{
+				$hours[$i] = $i;
+			}
+			
+			for ($i = 0; $i <= 59; $i++)
+			{
+				$minutes[$i] = $i;
+			}
+			$showFields .= PHP_EOL . '					jQuery("#'. $baseId . '_hour").show();';
+			$showFields .= PHP_EOL . '					jQuery("#'. $baseId . '_minute").show();';
+		}
+		
+		$dateFormatTitle = $ls->transFO('m.form.frontoffice.datepicker.format-help', array('ucf', 'attr'));
 		$html = array(
 			self::renderInputByType("text", $params),
-			self::buildSelectInputForDateCombo('day', $days, $baseId),
-			self::buildSelectInputForDateCombo('month',$months, $baseId),
-			self::buildSelectInputForDateCombo('year', $years, $baseId),
+			self::buildSelectInputForDateCombo('day', $days, $baseId, $ls->transFO('m.website.frontoffice.date.day', array('ucf'))),
+			self::buildSelectInputForDateCombo('month',$months, $baseId, $ls->transFO('m.website.frontoffice.date.month', array('ucf'))),
+			self::buildSelectInputForDateCombo('year', $years, $baseId, $ls->transFO('m.website.frontoffice.date.year', array('ucf'))),
+			self::buildSelectInputForDateCombo('hour', $hours, $baseId, $ls->transFO('m.website.frontoffice.date.hour', array('ucf'))),
+			self::buildSelectInputForDateCombo('minute', $minutes, $baseId, $ls->transFO('m.website.frontoffice.date.minute', array('ucf'))),
+			'<span class="date-format nojs" title="(' . $dateFormatTitle . ')">' . $humanFormat . '</span>',
 			'<script type="text/javascript">//<![CDATA[ 
-     			 jQuery(document).ready(function() {
-					var format = "'.LocaleService::getInstance()->transFO('f.date.date.default-date-format-for-jquery-datepicker').'";			 
-     			 	var dateStr = jQuery("#'.  $params['id'] . '").val();
-     			 	if (dateStr.length > 0)
-     			 	{
+				jQuery(document).ready(function() {
+					var format = "' . $format . '";
+					var dateStr = jQuery("#'.  $params['id'] . '").val();
+					if (dateStr.length > 0)
+					{
 						var iY = format.indexOf("yyyy"); if (iY > -1) {jQuery("#'. $baseId . '_year").val(Number(dateStr.substr(iY, 4)));};
 						var iD = format.indexOf("dd"); if (iD > -1) {jQuery("#'. $baseId . '_day").val(Number(dateStr.substr(iD, 2)));};
-						var iM = format.indexOf("mm"); if (iM > -1) {jQuery("#'. $baseId . '_month").val(Number(dateStr.substr(iM, 2)) - 1);};						
-	         		}
-	         		jQuery("#'. $baseId . '_year").show();
-	         		jQuery("#'. $baseId . '_month").show();
-	         		jQuery("#'. $baseId . '_day").show();
-	         		jQuery("#'. $baseId . '").hide();
-			
+						var iM = format.indexOf("mm"); if (iM > -1) {jQuery("#'. $baseId . '_month").val(Number(dateStr.substr(iM, 2)) - 1);};
+						var iH = format.indexOf("hh"); if (iH > -1) {jQuery("#'. $baseId . '_hour").val(Number(dateStr.substr(iH, 2)));};
+						var iI = format.indexOf("ii"); if (iI > -1) {jQuery("#'. $baseId . '_minute").val(Number(dateStr.substr(iI, 2)));};
+					}
+					' . $showFields . '
+					jQuery("#'. $baseId . '").hide();
+					
 					var _zeroPad = function(num) {var s = "0"+num; return s.substring(s.length-2);};
 					var updHidden = function() {
-						var date = new Date(jQuery("#'.  $baseId . '_year").val(), jQuery("#'.  $baseId . '_month").val(), jQuery("#'.  $baseId . '_day").val());	
-						var ds = format.split("yyyy").join(date.getFullYear()).split("mm").join(_zeroPad(date.getMonth()+1)).split("dd").join(_zeroPad(date.getDate()));
+						var date = new Date(jQuery("#'.  $baseId . '_year").val(), jQuery("#'.  $baseId . '_month").val(), jQuery("#'.  $baseId . '_day").val(), jQuery("#'.  $baseId . '_hour").val(), jQuery("#'.  $baseId . '_minute").val());
+						var ds = format.split("yyyy").join(date.getFullYear())
+							.split("mm").join(_zeroPad(date.getMonth()+1))
+							.split("dd").join(_zeroPad(date.getDate()))
+							.split("hh").join(_zeroPad(date.getHours()))
+							.split("ii").join(_zeroPad(date.getMinutes()));
 						jQuery("#'.  $baseId . '").val(ds);
 					}
 					jQuery("#' . $baseId . '_day").change(updHidden); 
-					jQuery("#' . $baseId . '_month").change(updHidden); 
+					jQuery("#' . $baseId . '_month").change(updHidden);
 					jQuery("#' . $baseId . '_year").change(updHidden);
-      			});				
+					jQuery("#' . $baseId . '_hour").change(updHidden);
+					jQuery("#' . $baseId . '_minute").change(updHidden);
+				});
 			//]]></script> '
-			);
-			
-		return implode("", $html);
+		);
+		
+		return implode(PHP_EOL, $html);
 	}
 	
-	private static function buildSelectInputForDateCombo($name, $optionsArray, $baseId)
+	private static function buildSelectInputForDateCombo($name, $optionsArray, $baseId, $title)
 	{
 		$selectId = $baseId . "_" .$name;
 		$result = array();
-		$result[] = '<select name="'.$name.'" id="' . $selectId.'" style="display:none"><option value=""></option>';		
+		$result[] = ' <select name="'.$name.'" id="' . $selectId.'" style="display:none" title="' . $title . '"><option value=""></option>';		
 		foreach ($optionsArray as $key => $option)
 		{
 			$result[] = '<option value="'.$key.'">'.$option.'</option>';
 		}
-		$result[] = '</select>';
+		$result[] = '</select> ';
 		return implode('', $result);
 	}
 

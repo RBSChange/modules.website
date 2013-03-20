@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n baseKey="m.website.frontoffice.date" lcid="fr_FR">
+	<key id="year">année</key>
+	<key id="month">mois</key>
+	<key id="day">jour</key>
+	<key id="hour">heure</key>
+	<key id="minute">minute</key>
+	<key id="second">seconde</key>
+	<key id="format-datecombo-php">d/m/Y</key>
+	<key id="format-datecombo-js">dd/mm/yyyy</key>
+	<key id="format-datecombo-human">jj/mm/aaaa</key>
+	<key id="format-datetimecombo-php">d/m/Y H:i</key>
+	<key id="format-datetimecombo-js">dd/mm/yyyy hh:ii</key>
+	<key id="format-datetimecombo-human">jj/mm/aaaa hh:mm</key>
+	<key id="format-timecombo-php">H:i</key>
+	<key id="format-timecombo-js">hh:ii</key>
+	<key id="format-timecombo-human">hh:mm</key>
+</i18n>
