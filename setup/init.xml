@@ -60,7 +60,6 @@
 		<staticlist listid="modules_website/defaultstructure"
 			label="Structure par défaut">
 				<staticitem label="m.website.bo.general.structure.default" value="defaultsite.xml"/>
-				<staticitem label="m.website.bo.general.structure.sample" value="sample.xml"/>
 		</staticlist>
 
 		<staticlist listid="modules_website/linkspositions" label="m.website.list.linkspositions-label"
