@@ -56,5 +56,7 @@ class website_PHPTAL_CHANGE
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeSurround('actionlink', 30));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeSurround('permission', 7));
 		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeReplace('loadhandler', 30));
+		
+		$namespaceCHANGE->addAttribute(new PHPTAL_NamespaceAttributeSurround('spaceless', 7));
 	}
 }
