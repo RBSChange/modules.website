@@ -1,0 +1,5 @@
+Version: 3.6.5
+
+Set "modules/website/useBeanPopulateStrictMode" project configuration value to "false" on existing projects.
+
+For an optimal security, you may set it back to "true" manually if you validated the compatibility of your specific developpements.
