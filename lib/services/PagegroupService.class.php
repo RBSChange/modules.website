@@ -6,7 +6,7 @@ class website_PagegroupService extends website_PageService
 	 */
 	private static $instance;
 	
-	private static $propertiesNames = array('label', 'author', 'creationdate', 'publicationstatus', 'modelversion', 'startpublicationdate', 'endpublicationdate', 'navigationtitle', 'metatitle', 'description', 'keywords', 'indexingstatus', 'template', 'content', 'skin', 'navigationVisibility', 'isIndexPage', 'isHomePage', 'advancedreferencing', 'robotsmeta');
+	private static $propertiesNames = array('label', 'author', 'creationdate', 'publicationstatus', 'modelversion', 'startpublicationdate', 'endpublicationdate', 'navigationtitle', 'metatitle', 'description', 'keywords', 'indexingstatus', 'template', 'content', 'skin', 'navigationVisibility', 'advancedreferencing', 'robotsmeta');
 	
 	
 	/**

@@ -38,6 +38,7 @@ class website_PageversionService extends website_PageService
 	/**
 	 * @param website_persistentdocument_pageversion $document
 	 * @param Integer $parentNodeId Parent node ID where to save the document (optionnal => can be null !).
+	 * @throws Exception
 	 * @return void
 	 */
 	protected function preInsert($document, $parentNodeId = null)
@@ -52,9 +53,12 @@ class website_PageversionService extends website_PageService
 		}
 		if (!($page instanceof website_persistentdocument_pagegroup))
 		{
-			throw new Exception('Invalide parent type '. $page->getDocumentModelName() .' for pageversion');
+			throw new Exception('Invalid parent type '. $page->getDocumentModelName() .' for pageversion');
 		}
-		
+
+		$document->setIsHomePage($page->getIsHomePage());
+		$document->setIsIndexPage($page->getIsIndexPage());
+
 		$document->setVersionofid($page->getId());
 		website_WebsiteModuleService::getInstance()->setWebsiteMetaFromParentId($document, $page->getId());
 		$rc = RequestContext::getInstance();
@@ -90,7 +94,6 @@ class website_PageversionService extends website_PageService
 				$rc->endI18nWork();
 			}
 		}
-		
 	}
 
 
