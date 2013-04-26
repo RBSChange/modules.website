@@ -16,7 +16,7 @@ echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" ?>
 		<?php echo $this->getStyles(); ?>
         <?php echo $this->getLinkTags(); ?>
         <script type="text/javascript">
-			var pageHandler = <?php echo $this->getJSONHandler(); ?>
+			var pageHandler = <?php echo $this->getJSONHandler(); ?>;
 	        function initialize()
 	        {
 				updateOrientation();
