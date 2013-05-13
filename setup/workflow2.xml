@@ -3,20 +3,21 @@
 	<binding fileName="modules/notification/persistentdocument/import/notification_binding.xml" />
 	<binding fileName="modules/workflow/persistentdocument/import/workflow_binding.xml" />
 
-	<systemfolder module="notification" relatedmodule="website">	
+	<systemfolder module="notification" relatedmodule="website">
 			<notification id="ncreate"
 				label="Validation du contenu d'une page"
 				codename="modules_website/newPageValidation"
-				availableparameters="{documentId}, {documentLabel}, {documentLang}, {documentPath}, {workflowId}, {workflowLabel}, {transitionId}, {transitionLabel}, {currentUserId}, {currentUserFullname}, {__LAST_COMMENTARY}, {__LAST_DECISION}"
+				availableparameters="{documentId}, {documentLabel}, {documentLang}, {documentPath}, {workflowId}, {workflowLabel}, {transitionId}, {transitionLabel}, {currentUserId}, {currentUserFullname}, {START_COMMENT}"
 				subject="Demande de validation de la page : {documentLabel}"
 				header="Processus de validation d'une page"
-				body="{workflowAuthor} vous a demandé de valider la page &lt;strong&gt;{documentPath}&lt;/strong&gt;."
+				body="{workflowAuthor} vous a demandé de valider la page &lt;strong&gt;{documentPath}&lt;/strong&gt;.&lt;br/&gt;
+- Commentaire du demandeur : {START_COMMENT}"
 				footer="Veuillez vous connecter a &lt;a href=&quot;{UIHOST}/admin&quot; class=&quot;link&quot; &gt;l'interface d'administration&lt;/a&gt; pour effectuer cette tâche." />
-				
+
 			<notification id="nterminate"
 				label="Validation du contenu d'une page effectuée"
 				codename="modules_website/PageValidationTermination"
-				availableparameters="{documentId}, {documentLabel}, {documentLang}, {documentPath}, {workflowId}, {workflowLabel}, {transitionId}, {transitionLabel}, {currentUserId}, {currentUserFullname}, {__LAST_COMMENTARY}, {__LAST_DECISION}"
+				availableparameters="{documentId}, {documentLabel}, {documentLang}, {documentPath}, {workflowId}, {workflowLabel}, {transitionId}, {transitionLabel}, {currentUserId}, {currentUserFullname}, {START_COMMENT}, {__LAST_COMMENTARY}, {__LAST_DECISION}"
 				subject="Vous avez traité la validation de la page : {documentLabel}"
 				header="Processus de validation d'une page"
 				body="Récapitulatif des informations :&lt;br/&gt;
@@ -27,7 +28,7 @@
 			
 			<notification label="Confirmation de la validation d'une page à l'auteur" 
 				codename="modules_website/sendactivatetoauthor"
-				availableparameters="{documentId}, {documentLabel}, {documentLang}, {documentPath}, {workflowId}, {workflowLabel}, {transitionId}, {transitionLabel}, {currentUserId}, {currentUserFullname}, {__LAST_COMMENTARY}, {__LAST_DECISION}" 				
+				availableparameters="{documentId}, {documentLabel}, {documentLang}, {documentPath}, {workflowId}, {workflowLabel}, {transitionId}, {transitionLabel}, {currentUserId}, {currentUserFullname}, {START_COMMENT}, {__LAST_COMMENTARY}, {__LAST_DECISION}"
 				subject="Votre demande de validation à été acceptée pour la page : {documentLabel}"
 				body="Votre travail sur la page &lt;strong&gt;{documentPath}&lt;/strong&gt; à été validé par {currentUserFullname}.&lt;br/&gt;
 - Commentaire : {__LAST_COMMENTARY}"
@@ -35,7 +36,7 @@
 			
 			<notification label="Refus de la validation d'une page à l'auteur" 
 				codename="modules_website/sendcanceltoauthor"
-				availableparameters="{documentId}, {documentLabel}, {documentLang}, {documentPath}, {workflowId}, {workflowLabel}, {transitionId}, {transitionLabel}, {currentUserId}, {currentUserFullname}, {__LAST_COMMENTARY}, {__LAST_DECISION}" 				
+				availableparameters="{documentId}, {documentLabel}, {documentLang}, {documentPath}, {workflowId}, {workflowLabel}, {transitionId}, {transitionLabel}, {currentUserId}, {currentUserFullname}, {START_COMMENT}, {__LAST_COMMENTARY}, {__LAST_DECISION}"
 				subject="Votre demande de validation à été refusée pour la page : {documentLabel}"
 				body="Votre travail sur la page &lt;strong&gt;{documentPath}&lt;/strong&gt; à été refusé par {currentUserFullname}.&lt;br/&gt;
 - Commentaire : {__LAST_COMMENTARY}"
@@ -59,19 +60,19 @@
 				<endplace id="pEnd" label="Validation terminée" description="Fin du workflow."/>
 			</places>
 			
-			<transitions>			
+			<transitions>
 				<transition id="t0" label="Cherche un validateur" description="Cherche le validateur adéquat"
 						taskid="VALIDATIONPAGE" 
 						trigger="AUTO" roleid="Validator"
 						actionname="website_SelectNextActorsWorkflowaction" />
-																				
+
 				<transition id="t2" label="Validation du contenu d'une page" description="Le contenu est validé ou refusé."
 						taskid="VALIDATIONPAGE" 
 						trigger="USER" roleid="Validator"
 						actionname="website_ValidPageWorkflowaction" 
 						creationnotification-refid="ncreate"
 						terminationnotification-refid="nterminate" />
-							
+
 				<transition id="t3" label="Activation de la page" description="Le contenu a été validé, la page peut être activée"
 						taskid="VALIDATIONPAGE" 
 						trigger="AUTO"
@@ -89,7 +90,7 @@
 				<arc direction="OUT" transition-refid="t0"  place-refid="p6" arctype="EX_OR_SP" precondition="AUTO" />
 				<arc direction="IN" place-refid="p6" transition-refid="t3" arctype="SEQ" />
 				
-				<arc direction="OUT" transition-refid="t0"  place-refid="p2" arctype="EX_OR_SP" precondition="FOUNDED" />					
+				<arc direction="OUT" transition-refid="t0"  place-refid="p2" arctype="EX_OR_SP" precondition="FOUNDED" />
 				<arc direction="IN" place-refid="p2" transition-refid="t2" arctype="SEQ" />
 			
 				<arc direction="OUT" transition-refid="t2"  place-refid="p4" arctype="EX_OR_SP" precondition="ACCEPTED" />
@@ -101,6 +102,6 @@
 				<arc direction="OUT" transition-refid="t3"  place-refid="pEnd" arctype="SEQ" />
 				<arc direction="OUT" transition-refid="t4"  place-refid="pEnd" arctype="SEQ" />
 			</arcs>
-		</workflow>		
+		</workflow>
 	</systemfolder>
 </script>
