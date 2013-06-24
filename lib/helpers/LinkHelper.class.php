@@ -109,8 +109,7 @@ class LinkHelper
 	}
 	
 	/**
-	 * @param string $ressourceName
-	 * @return f_web_ResourceLink
+	 * @deprecated 
 	 */
 	public static function getUIChromeRessourceLink($ressourceName)
 	{
