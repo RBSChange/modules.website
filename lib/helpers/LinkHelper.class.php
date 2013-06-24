@@ -102,23 +102,6 @@ class LinkHelper
 	    $link->setPath($ressourceName);
 	    return $link;
 	}
-	
-	/**
-	 * @param string $ressourceName
-	 * @return f_web_ResourceLink
-	 */
-	public static function getUIChromeRessourceLink($ressourceName)
-	{
-		if (!isset($_SESSION['ChromeBaseUri']))
-		{
-			return self::getUIRessourceLink($ressourceName);
-		}
-		
-	    $link = new f_web_ChromeParametrizedLink($_SESSION['ChromeBaseUri']);
-	    $link->setArgSeparator(f_web_HttpLink::ESCAPE_SEPARATOR);
-	    $link->setQueryParameters(array('module' => 'uixul', 'action' => 'GetChromeRessource', 'path' => $ressourceName));
-	    return $link;
-	}	
 
 	/**
 	 * @param f_persistentdocument_PersistentDocument $document
@@ -702,5 +685,21 @@ class LinkHelper
 	public static function _buildLink($document, $lang = null, $class = 'link', $title = '', $popup = false, $attributes = null)
 	{
 		return self::buildLink($document, $lang, $class, $title, $popup, $attributes);
+	}
+
+	/**
+	 * @deprecated
+	 */
+	public static function getUIChromeRessourceLink($ressourceName)
+	{
+		if (!isset($_SESSION['ChromeBaseUri']))
+		{
+			return self::getUIRessourceLink($ressourceName);
+		}
+
+		$link = new f_web_ChromeParametrizedLink($_SESSION['ChromeBaseUri']);
+		$link->setArgSeparator(f_web_HttpLink::ESCAPE_SEPARATOR);
+		$link->setQueryParameters(array('module' => 'uixul', 'action' => 'GetChromeRessource', 'path' => $ressourceName));
+		return $link;
 	}
 }
