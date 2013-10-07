@@ -1257,21 +1257,31 @@ jQuery(document).ready(function() {
 		$params['class'] = 'date-picker ' . $params['class'];
 		// TODO: unifiy
 		$ls = LocaleService::getInstance();
-		
+
 		$dateFormat = $ls->transFO("f.date.short");
+		$endDate = date_Calendar::now();
 		if (!isset($params['startdate']))
 		{
 			$params['startdate'] = "1901-01-01";
 		}
 
-		$params['startdate'] = date_Formatter::format(date_Calendar::getInstance($params['startdate']), $dateFormat);
-
+		$startDate = date_Calendar::getInstance($params['startdate']);
+		$params['startdate'] = date_Formatter::format($startDate, $dateFormat);
 		self::addDatePickerScript();
 		$datePickerParam = '{minDate:"' . $params['startdate'] . '"';
 		if (isset($params['enddate']))
 		{
-			$datePickerParam .= ', maxDate:"' . date_DateFormat::format(date_Calendar::getInstance($params['enddate']), $dateFormat) . '"';
+			$endDate = date_Calendar::getInstance($params['enddate']);
+			$datePickerParam .= ', maxDate:"' . date_DateFormat::format($endDate, $dateFormat) . '"';
+		}
 
+		if (isset($params['yearrange']))
+		{
+			$datePickerParam .= ', yearRange: "'.$params['yearrange'].'"';
+		}
+		else
+		{
+			$datePickerParam .= ', yearRange: "'.$startDate->getYear() . ':' . $endDate->getYear() . '"';
 		}
 		$datePickerParam .= ', changeMonth: true, changeYear: true}';
 		
