@@ -102,23 +102,26 @@ class website_ChangeBlockRenderer
 		else
 		{
 			$useCache = !isset($params["useCache"]) || $params["useCache"] == "true";
+			$blockAction = website_BlockController::getInstance()->getActionInstanceByModuleAndName($this->moduleName, $this->actionName);
+			$requestParameters = $this->getRequestParameters($params, $blockAction->getRequestModuleNames());
+			
 			if (isset($params['container']))
 			{
 				if (f_util_StringUtils::isEmpty($params['container']))
 				{
-					$this->executeBlockAction($this->getRequestParameters($params, $this->moduleName), $configParameters, $useCache);
+					$this->executeBlockAction($requestParameters, $configParameters, $useCache);
 				}
 				else
 				{
 					echo '<' . $params['container'] .' class="modules-'. $this->moduleName .'-'.  $this->actionName  .' modules-' . $this->moduleName . '">';
-					$this->executeBlockAction($this->getRequestParameters($params, $this->moduleName), $configParameters, $useCache);
+					$this->executeBlockAction($requestParameters, $configParameters, $useCache);
 					echo '</' . $params['container'] .'>';
 				}
 			}
 			else
 			{
 				echo '<div class="modules-'. $this->moduleName .'-'.  $this->actionName  .' modules-' . $this->moduleName . '">';
-				$this->executeBlockAction($this->getRequestParameters($params, $this->moduleName), $configParameters, $useCache);
+				$this->executeBlockAction($requestParameters, $configParameters, $useCache);
 				echo '</div>';
 			}
 		}
@@ -140,17 +143,21 @@ class website_ChangeBlockRenderer
 	}
 	
 	/**
+	 * @see website_BlockController::buildActionRequestParameters()
 	 * @param Array $extensionParams
-	 * @param String $moduleName
+	 * @param Array $moduleName
 	 * @return Array
 	 */
-	private function getRequestParameters($extensionParams, $moduleName)
+	private function getRequestParameters($extensionParams, $moduleNames = array())
 	{
 		$parameters = array();
 		$globalRequest = HttpController::getInstance()->getContext()->getRequest();
-		if ($globalRequest->hasParameter($moduleName.'Param'))
+		foreach ($moduleNames as $moduleName)
 		{
-			$parameters = $globalRequest->getParameter($moduleName.'Param');
+			if ($globalRequest->hasParameter($moduleName.'Param'))
+			{
+				$parameters = array_merge($globalRequest->getParameter($moduleName.'Param'), $parameters);
+			}
 		}
 		
 		if (isset($extensionParams['inheritedParams']))
