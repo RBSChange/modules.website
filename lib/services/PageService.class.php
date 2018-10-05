@@ -115,6 +115,11 @@ class website_PageService extends f_persistentdocument_DocumentService
 		{
 			$this->initContent($document);
 		}
+
+		if (Framework::getUIProtocol() == 'https' && !in_array('usehttps', $document->getModifiedPropertyNames())) {
+			$document->setUsehttps(true);
+		}
+
 		website_WebsiteModuleService::getInstance()->setWebsiteMetaFromParentId($document, $parentNodeId);
 	}
 
